@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+version = '1.0'
+jar {
+	
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+    }
+}
+
+configurations {
+	provided
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "https://repository.jboss.org" }
+	maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
+}
+
+dependencies {
+	compile 'javax.validation:validation-api:1.1.0.Final'
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.2.0.Final'
+	compile "org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:1.0.0.Final"
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+task connectToDb << {
+	def props = [user: 'dbUser', password: 'dbPassword', allowMultiQueries: 'true'] as Properties
+	def url = 'jdbc:mysql://54.209.220.65:3306/Config'
+	def driver = 'com.mysql.jdbc.Driver'
+	def sql = Sql.newInstance(url, props, driver)
+
+	sql.eachRow('show tables') { row ->
+		println row[0]
+	}
+}
+
+task deploy(dependsOn: 'build') << {
+	println "Deploy to wildfly dir " + wildflyHome
+	println "Archive " + jar.archiveName
+	copy {
+		from "build/libs/" + jar.archiveName
+		into wildflyHome + '/standalone/deployments'
+	}
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
