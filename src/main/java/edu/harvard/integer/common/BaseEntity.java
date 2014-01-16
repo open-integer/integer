@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
  *
  */
 @MappedSuperclass
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class BaseEntity implements IDInterface {
 
 	@Id
