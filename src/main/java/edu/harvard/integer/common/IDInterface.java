@@ -32,7 +32,10 @@
  */
 package edu.harvard.integer.common;
 
-
+/**
+ * @author David Taylor
+ *
+ */
 public interface IDInterface {
 	
 	/**

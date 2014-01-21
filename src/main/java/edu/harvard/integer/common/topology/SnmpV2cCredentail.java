@@ -33,7 +33,10 @@
 package edu.harvard.integer.common.topology;
 
 import javax.persistence.Entity;
-
+/**
+ * @author David Taylor
+ *
+ */
 @Entity
 public class SnmpV2cCredentail extends Credential {
 	private String readCommunity = null;

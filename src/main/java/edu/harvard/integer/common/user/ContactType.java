@@ -31,7 +31,10 @@
  *      
  */
 package edu.harvard.integer.common.user;
-
+/**
+ * @author David Taylor
+ *
+ */
 public enum ContactType {
 	Technical,
 	Business,

@@ -45,7 +45,10 @@ import javax.validation.constraints.NotNull;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.Orginization;
-
+/**
+ * @author David Taylor
+ *
+ */
 @Entity
 public class User extends BaseEntity {
 //
@@ -59,7 +62,7 @@ public class User extends BaseEntity {
 	@OneToMany
 	private List<Orginization> orginizations = null;
 
-	@NotNull
+	@NotNull(message="User.UUID must not be null!")
 	private String uuid = null;
 	
 	private String firstName = null;

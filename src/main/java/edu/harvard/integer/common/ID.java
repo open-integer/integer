@@ -34,7 +34,10 @@ package edu.harvard.integer.common;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
-
+/**
+ * @author David Taylor
+ *
+ */
 @Embeddable
 public class ID implements IDInterface {
 

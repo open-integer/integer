@@ -32,7 +32,10 @@
  */
 package edu.harvard.integer.common.topology;
 
-
+/**
+ * @author David Taylor
+ *
+ */
 
 public enum FCAPSEnum {
 	Fault, 

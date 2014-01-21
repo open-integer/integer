@@ -45,7 +45,7 @@ import javax.validation.constraints.Size;
  *      
  */
 /**
- * @author dtaylor
+ * @author David Taylor
  *
  */
 @MappedSuperclass

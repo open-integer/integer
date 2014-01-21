@@ -31,7 +31,10 @@
  *      
  */
 package edu.harvard.integer.common.topology;
-
+/**
+ * @author David Taylor
+ *
+ */
 public enum MaxAccess {
 	ReadOnly, ReadWrite, WriteOnly;
 }

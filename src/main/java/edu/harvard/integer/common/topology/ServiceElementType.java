@@ -31,7 +31,10 @@
  *      
  */
 package edu.harvard.integer.common.topology;
-
+/**
+ * @author David Taylor
+ *
+ */
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;

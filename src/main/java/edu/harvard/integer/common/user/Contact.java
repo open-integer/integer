@@ -40,7 +40,10 @@ import javax.persistence.Entity;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.EmailAddress;
 import edu.harvard.integer.common.PhoneNumber;
-
+/**
+ * @author David Taylor
+ *
+ */
 @Entity
 public class Contact extends BaseEntity {
 
@@ -236,4 +239,6 @@ public class Contact extends BaseEntity {
 	public void setSmsPhone(PhoneNumber smsPhone) {
 		this.smsPhone = smsPhone;
 	}
+
+	
 }

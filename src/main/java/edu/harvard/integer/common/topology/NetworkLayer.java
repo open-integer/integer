@@ -31,7 +31,10 @@
  *      
  */
 package edu.harvard.integer.common.topology;
-
+/**
+ * @author David Taylor
+ *
+ */
 public enum NetworkLayer {
 	Layer1, Layer2, Layer3;
 }

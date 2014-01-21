@@ -37,6 +37,10 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+/**
+ * @author David Taylor
+ *
+ */
 @Entity
 public class Orginization extends BaseEntity {
 

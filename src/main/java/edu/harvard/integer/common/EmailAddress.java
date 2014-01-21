@@ -30,6 +30,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+/**
+ * @author David Taylor
+ *
+ */
 package edu.harvard.integer.common;
 
 import javax.persistence.Embeddable;

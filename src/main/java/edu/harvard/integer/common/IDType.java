@@ -33,7 +33,10 @@
 package edu.harvard.integer.common;
 
 import javax.persistence.Embeddable;
-
+/**
+ * @author David Taylor
+ *
+ */
 
 @Embeddable
 public class IDType {
