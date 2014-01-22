@@ -4,3 +4,15 @@
 *.jar
 *.war
 *.ear
+.gradle/1.10/taskArtifacts/cache.properties
+.gradle/1.10/taskArtifacts/cache.properties.lock
+.gradle/1.10/taskArtifacts/fileHashes.bin
+.gradle/1.10/taskArtifacts/fileSnapshots.bin
+.gradle/1.10/taskArtifacts/outputFileStates.bin
+.gradle/1.10/taskArtifacts/taskArtifacts.bin
+.gradle/1.5/taskArtifacts/cache.properties
+.gradle/1.5/taskArtifacts/cache.properties.lock
+.gradle/1.5/taskArtifacts/fileHashes.bin
+.gradle/1.5/taskArtifacts/fileSnapshots.bin
+.gradle/1.5/taskArtifacts/outputFileStates.bin
+.gradle/1.5/taskArtifacts/taskArtifacts.bin
