@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,46 +30,86 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+
+package edu.harvard.integer.common.snmp;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import edu.harvard.integer.common.BaseEntity;
+
 /**
  * @author David Taylor
- *
+ * 
  */
 @Entity
-public class SnmpV2cCredentail extends Credential {
-	private String readCommunity = null;
-	private String writeCommunity = null;
+public class SNMPModule extends BaseEntity {
+	private String oid = null;
+	private Date lastUpdated = null;
+	private String description = null;
+	@OneToMany
+	private List<SNMPModuleHistory> history = null;
 
 	/**
-	 * @return the readCommunity
+	 * @return the oid
 	 */
-	public String getReadCommunity() {
-		return readCommunity;
+	public String getOid() {
+		return oid;
 	}
 
 	/**
-	 * @param readCommunity
-	 *            the readCommunity to set
+	 * @param oid
+	 *            the oid to set
 	 */
-	public void setReadCommunity(String readCommunity) {
-		this.readCommunity = readCommunity;
+	public void setOid(String oid) {
+		this.oid = oid;
 	}
 
 	/**
-	 * @return the writeCommunity
+	 * @return the lastUpdated
 	 */
-	public String getWriteCommunity() {
-		return writeCommunity;
+	public Date getLastUpdated() {
+		return lastUpdated;
 	}
 
 	/**
-	 * @param writeCommunity
-	 *            the writeCommunity to set
+	 * @param lastUpdated
+	 *            the lastUpdated to set
 	 */
-	public void setWriteCommunity(String writeCommunity) {
-		this.writeCommunity = writeCommunity;
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the history
+	 */
+	public List<SNMPModuleHistory> getHistory() {
+		return history;
+	}
+
+	/**
+	 * @param history
+	 *            the history to set
+	 */
+	public void setHistory(List<SNMPModuleHistory> history) {
+		this.history = history;
+	}
 }

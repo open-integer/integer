@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014 Harvard University and the persons
+ *  Copyright (c) 2013 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,45 +30,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-
-package edu.harvard.integer.capability.snmp;
-
-import java.io.File;
-import java.util.List;
-
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
-
+package edu.harvard.integer.common.snmp;
 /**
  * @author David Taylor
  *
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
-
-	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
-	 */
-	public abstract void importMib(String mibFile);
-
-	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
-	 */
-	public abstract List<File> getImportedMibs();
-
-	/**
-	 * Get All capabilities that are in the 
-	 * @return
-	 */
-	public abstract List<Capability> getAllSNMPCapabilites();
-
-	public abstract Capability setSNMP(Capability capability, SNMP snmpObject);
-
+public enum MaxAccess {
+	ReadOnly, ReadWrite, WriteOnly;
 }

@@ -64,7 +64,10 @@ public class DatabaseService implements DatabaseServiceEJB {
 
 	@PersistenceContext
 	private EntityManager em;
-		
+	
+	@Inject
+	private DatabaseManager dbm;
+	
 	@Inject
 	private Logger logger;
 	
@@ -85,7 +88,7 @@ public class DatabaseService implements DatabaseServiceEJB {
 		u.setLastName("Taylor");
 		u.setUuid("123456789");
 		
-		em.persist(u);
+		dbm.update(u);
 		
 	}
 	

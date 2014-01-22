@@ -37,6 +37,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
 
 import org.slf4j.Logger;
 
@@ -45,30 +46,50 @@ import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.database.DatabaseManager;
 
 /**
  * @author David Taylor
  * 
  */
 @Stateless
-public class ManagementObjectCapabilityManager implements ManagementObjectCapabilityManagerLocalInterface {
+public class ManagementObjectCapabilityManager implements
+		ManagementObjectCapabilityManagerLocalInterface {
 
 	@Inject
 	private Logger log;
-
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#addCapability(edu.harvard.integer.common.topology.Capability)
+	
+	@Inject
+	DatabaseManager dbm;
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #addCapability(edu.harvard.integer.common.topology.Capability)
 	 */
 	@Override
 	public Capability addCapability(Capability capability) {
 
 		log.debug("Add capability " + capability.getName());
+
+		try {
+			dbm.update(capability);
 		
+		} catch (EntityExistsException e) {
+			log.error("Capability already exists! " + e.getMessage());
+		}
 		return capability;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#addManagementObjectsToCapability(edu.harvard.integer.common.topology.Capability, java.util.List)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #addManagementObjectsToCapability
+	 * (edu.harvard.integer.common.topology.Capability, java.util.List)
 	 */
 	@Override
 	public Capability addManagementObjectsToCapability(Capability capability,
@@ -77,8 +98,12 @@ public class ManagementObjectCapabilityManager implements ManagementObjectCapabi
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#getAccessMethods(edu.harvard.integer.common.topology.Capability)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #getAccessMethods(edu.harvard.integer.common.topology.Capability)
 	 */
 	@Override
 	public List<AccessMethod> getAccessMethods(Capability capability) {
@@ -86,8 +111,12 @@ public class ManagementObjectCapabilityManager implements ManagementObjectCapabi
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#getAccessMethods(edu.harvard.integer.common.ID)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #getAccessMethods(edu.harvard.integer.common.ID)
 	 */
 	@Override
 	public List<AccessMethod> getAccessMethods(ID capabilityId) {
@@ -95,8 +124,13 @@ public class ManagementObjectCapabilityManager implements ManagementObjectCapabi
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#getAssociatedServiceElementManagementObjects(edu.harvard.integer.common.topology.Capability)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #getAssociatedServiceElementManagementObjects
+	 * (edu.harvard.integer.common.topology.Capability)
 	 */
 	@Override
 	public List<ServiceElementManagementObject> getAssociatedServiceElementManagementObjects(
@@ -105,16 +139,23 @@ public class ManagementObjectCapabilityManager implements ManagementObjectCapabi
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#getCapabilities()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface#getCapabilities()
 	 */
 	@Override
 	public List<Capability> getCapabilities() {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#getMechanisms(java.util.List)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #getMechanisms(java.util.List)
 	 */
 	@Override
 	public List<Mechanism> getMechanisms(List<Capability> capabilites) {
@@ -122,25 +163,39 @@ public class ManagementObjectCapabilityManager implements ManagementObjectCapabi
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#setMechamism(edu.harvard.integer.common.topology.Capability, edu.harvard.integer.common.topology.Mechanism)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #setMechamism(edu.harvard.integer.common.topology.Capability,
+	 * edu.harvard.integer.common.topology.Mechanism)
 	 */
 	@Override
 	public Mechanism setMechamism(Capability capability, Mechanism mechanism) {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#setServiceElementManagementObjects(edu.harvard.integer.common.topology.Capability, java.util.List)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #setServiceElementManagementObjects
+	 * (edu.harvard.integer.common.topology.Capability, java.util.List)
 	 */
 	@Override
-	public Capability setServiceElementManagementObjects(Capability capability, 
+	public Capability setServiceElementManagementObjects(Capability capability,
 			List<ServiceElementManagementObject> managementObjects) {
 		return capability;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#getAllServiceElementManagementObjects()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #getAllServiceElementManagementObjects()
 	 */
 	@Override
 	public List<ServiceElementManagementObject> getAllServiceElementManagementObjects() {
@@ -148,8 +203,12 @@ public class ManagementObjectCapabilityManager implements ManagementObjectCapabi
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.ManagementObjectCapabilityManagerLocalInterface#getUnassignedServiceElementManagementObjects()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.capability.
+	 * ManagementObjectCapabilityManagerLocalInterface
+	 * #getUnassignedServiceElementManagementObjects()
 	 */
 	@Override
 	public List<ServiceElementManagementObject> getUnassignedServiceElementManagementObjects() {

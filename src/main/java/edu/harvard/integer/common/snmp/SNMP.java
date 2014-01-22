@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014 Harvard University and the persons
+ *  Copyright (c) 2013 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,45 +30,60 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.common.snmp;
 
-package edu.harvard.integer.capability.snmp;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
-import java.io.File;
-import java.util.List;
-
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
-
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 /**
  * @author David Taylor
  *
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
+@Entity
+public class SNMP extends ServiceElementManagementObject {
 
-	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "snmpModuleId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "snmpModuleType")),
+			@AttributeOverride(name = "name", column = @Column(name = "snmpModuleName")) })
+	private ID snmpModuleId = null;
+	/*
+	 * Description of the object as found in the MIB Module. In some cases, this
+	 * description can be quite long.
 	 */
-	public abstract void importMib(String mibFile);
+	public String description = null;
 
-	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
+	/*
+	 * This defines the read, read/write, or some objects (bad objects) are
+	 * write only. This is a function of the object definition, not the access
+	 * policy.
 	 */
-	public abstract List<File> getImportedMibs();
+	public MaxAccess maxAccess = null;
 
-	/**
-	 * Get All capabilities that are in the 
-	 * @return
+
+	/*
+	 * The fully specified OID of the object (minus the instance data). For
+	 * tables this would include the table glue.
 	 */
-	public abstract List<Capability> getAllSNMPCapabilites();
+	public String oid = null;
 
-	public abstract Capability setSNMP(Capability capability, SNMP snmpObject);
+	/*
+	 * From the object definition.
+	 */
+	public String textualConvetion = null;
+
+	/*
+	 * In some cases this information is not appropriate (orther than say
+	 * string). In others degrees, or other information may be useful. In some
+	 * cases this may come from or be equal to the Textual convention
+	 * information.
+	 */
+	public String units = null;
 
 }

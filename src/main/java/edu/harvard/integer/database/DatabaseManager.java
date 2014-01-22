@@ -33,8 +33,13 @@
 package edu.harvard.integer.database;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.BaseEntity;
 /**
  * @author David Taylor
  * 
@@ -45,4 +50,18 @@ public class DatabaseManager {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@Inject
+	Logger logger;
+	
+	public BaseEntity update(BaseEntity entity) {
+		
+		if (entity.getIdentifier() == null)
+			em.persist(entity);
+		else if (!em.contains(entity))
+			em.merge(entity);
+	
+		logger.info("Added " + entity.getName() + " ID: " + entity.getIdentifier());
+		
+		return entity;
+	}
 }

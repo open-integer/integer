@@ -38,8 +38,8 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
-import edu.harvard.integer.common.topology.SNMP;
 
 /**
  * @author David Taylor

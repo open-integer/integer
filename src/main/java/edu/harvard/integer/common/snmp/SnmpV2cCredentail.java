@@ -30,11 +30,48 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.common.snmp;
+
+import javax.persistence.Entity;
+
+import edu.harvard.integer.common.topology.Credential;
 /**
  * @author David Taylor
  *
  */
-public enum MaxAccess {
-	ReadOnly, ReadWrite, WriteOnly;
+@Entity
+public class SnmpV2cCredentail extends Credential {
+	private String readCommunity = null;
+	private String writeCommunity = null;
+
+	/**
+	 * @return the readCommunity
+	 */
+	public String getReadCommunity() {
+		return readCommunity;
+	}
+
+	/**
+	 * @param readCommunity
+	 *            the readCommunity to set
+	 */
+	public void setReadCommunity(String readCommunity) {
+		this.readCommunity = readCommunity;
+	}
+
+	/**
+	 * @return the writeCommunity
+	 */
+	public String getWriteCommunity() {
+		return writeCommunity;
+	}
+
+	/**
+	 * @param writeCommunity
+	 *            the writeCommunity to set
+	 */
+	public void setWriteCommunity(String writeCommunity) {
+		this.writeCommunity = writeCommunity;
+	}
+
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,59 +30,52 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+
+package edu.harvard.integer.common.snmp;
+
+import java.util.Date;
 
 import javax.persistence.Entity;
+
+import edu.harvard.integer.common.BaseEntity;
+
 /**
  * @author David Taylor
- *
+ * 
  */
 @Entity
-public class SNMP extends ServiceElementManagementObject {
+public class SNMPModuleHistory extends BaseEntity {
 
-	/*
-	 * Description of the object as found in the MIB Module. In some cases, this
-	 * description can be quite long.
+	private Date date;
+	private String description;
+
+	/**
+	 * @return the description
 	 */
-	public String description = null;
+	public String getDescription() {
+		return description;
+	}
 
-	/*
-	 * This defines the read, read/write, or some objects (bad objects) are
-	 * write only. This is a function of the object definition, not the access
-	 * policy.
+	/**
+	 * @param description
+	 *            the description to set
 	 */
-	public MaxAccess maxAccess = null;
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-
-	/*
-	 * The fully specified OID of the object (minus the instance data). For
-	 * tables this would include the table glue.
+	/**
+	 * @return the date
 	 */
-	public String oid = null;
+	public Date getDate() {
+		return date;
+	}
 
-	/*
-	 * From the object definition.
+	/**
+	 * @param date
+	 *            the date to set
 	 */
-	public String textualConvetion = null;
-
-	/*
-	 * In some cases this information is not appropriate (orther than say
-	 * string). In others degrees, or other information may be useful. In some
-	 * cases this may come from or be equal to the Textual convention
-	 * information.
-	 */
-	public String units = null;
-
-	/*
-	 * The value of an instance of this object. The context of this value is
-	 * dependent on the context in which it is viewed. It can be contained in a
-	 * list that represent the configured or operational state of a service
-	 * element as it is retrieved from a device - that is the real world value
-	 * of the object at a specific instant of time.
-	 * 
-	 * This value is blank in the portion of the system where objects are
-	 * defined.
-	 */
-	//public Object value = null;
-
+	public void setDate(Date date) {
+		this.date = date;
+	}
 }

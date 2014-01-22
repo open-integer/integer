@@ -31,44 +31,35 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
+package edu.harvard.integer.common.snmp;
 
-import java.io.File;
 import java.util.List;
 
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
+@Entity
+public class SNMPTable extends SNMP {
+
+	@OneToMany
+	private List<SNMP> index = null;
 
 	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
+	 * @return the index
 	 */
-	public abstract void importMib(String mibFile);
+	public List<SNMP> getIndex() {
+		return index;
+	}
 
 	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
+	 * @param index
+	 *            the index to set
 	 */
-	public abstract List<File> getImportedMibs();
-
-	/**
-	 * Get All capabilities that are in the 
-	 * @return
-	 */
-	public abstract List<Capability> getAllSNMPCapabilites();
-
-	public abstract Capability setSNMP(Capability capability, SNMP snmpObject);
-
+	public void setIndex(List<SNMP> index) {
+		this.index = index;
+	}
 }
