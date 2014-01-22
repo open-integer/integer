@@ -37,6 +37,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -46,6 +47,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import org.slf4j.Logger;
 
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.user.User;
@@ -62,12 +65,15 @@ public class DatabaseService implements DatabaseServiceEJB {
 	@PersistenceContext
 	private EntityManager em;
 		
+	@Inject
+	private Logger logger;
+	
 	@PostConstruct
 	public void init() {
 		
 		IntegerApplication.register(this);
 
-		System.out.println("Create user dtaylor");
+		logger.info("Create user dtaylor");
 		
 		User u = new User();
 		u.setName("dtaylor");

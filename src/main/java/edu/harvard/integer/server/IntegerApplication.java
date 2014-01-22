@@ -37,9 +37,12 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
+
+import org.slf4j.Logger;
 
 
 /**
@@ -49,7 +52,8 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/Integer")
 public class IntegerApplication extends Application {
 
-	//private static final Logger logger = Logger.getLogger(IntegerApplication.class);
+	@Inject
+	private Logger logger;
 	
 	private Set<Object> singletons = new HashSet<Object>();
 	private Set<Class<?>> classes = new HashSet<Class<?>>();
@@ -72,6 +76,9 @@ public class IntegerApplication extends Application {
 		}
 	}
 	
+	private Logger getLogger() {
+		return logger;
+	}
 	
 	public String getIndexPage() {
 		StringBuffer b = new StringBuffer();
@@ -101,7 +108,7 @@ public class IntegerApplication extends Application {
 					b.append(fieldPath.value()).append("\">");
 					b.append(fieldPath.value().substring(1));
 					b.append("</a></li>");
-				//	logger.info("Add Rest path " + clazz.getSimpleName() + "/" + fieldPath.toString());
+					logger.info("Add Rest path " + clazz.getSimpleName() + "/" + fieldPath.toString());
 				}
 			}
 		}
@@ -122,8 +129,10 @@ public class IntegerApplication extends Application {
 				Path fieldPath = method.getAnnotation(Path.class);
 				if  (fieldPath != null) {
 					foundOne = true;
-					//logger.info("Add Rest path " + annotation.toString() + "/" + fieldPath.toString());
-					System.out.println("Add Rest path " + annotation.toString() + "/" + fieldPath.toString());
+					if (getInstance().getLogger() != null)
+						getInstance().getLogger().info("Add Rest path " + annotation.toString() + "/" + fieldPath.toString());
+					else
+						System.out.println("NULL LOGGER!!! Add Rest path " + annotation.toString() + "/" + fieldPath.toString());
 				}
 			}
 			
