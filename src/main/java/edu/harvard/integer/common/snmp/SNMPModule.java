@@ -50,6 +50,7 @@ public class SNMPModule extends BaseEntity {
 	private String oid = null;
 	private Date lastUpdated = null;
 	private String description = null;
+	
 	@OneToMany
 	private List<SNMPModuleHistory> history = null;
 
