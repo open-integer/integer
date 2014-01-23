@@ -47,7 +47,7 @@ public class SNMPTable extends SNMP {
 
 	@OneToMany
 	private List<SNMP> index = null;
-
+	
 	/**
 	 * @return the index
 	 */
