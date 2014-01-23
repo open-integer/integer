@@ -1,0 +1,85 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+sourceCompatibility = 1.7
+version = '1.0'
+jar {
+	
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+    }
+}
+
+configurations {
+	provided
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "https://repository.jboss.org" }
+	maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
+}
+
+dependencies {
+	compile 'javax.validation:validation-api:1.1.0.Final'
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.2.0.Final'
+	compile "org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:1.0.0.Final"
+	compile "javax.ws.rs:javax.ws.rs-api:2.0-rc3"
+	compile "javax.inject:javax.inject-tck:1"
+	compile "javax.enterprise:cdi-api:1.1.EDR1"
+	compile "org.slf4j:slf4j-log4j12:1.7.5"
+	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:1.1.2.Final"
+	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:1.1.2.Final"
+	//testCompile "org.jboss.arquillian:arquillian-junit:1.1.2.Final"
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+    	
+    testRuntime ('org.wildfly:wildfly-arquillian-container-remote:8.0.0.CR1') {
+   			    exclude module: 'wildfly-ee'
+   				exclude module: 'wildfly-server'
+ 				exclude module: 'wildfly-osgi-service'
+	            exclude module: 'wildfly-jmx'
+	            exclude module: 'wildfly-arquillian-protocol-jmx'
+	            exclude module: 'wildfly-arquillian-testenricher-msc'
+	            exclude module: 'arquillian-testenricher-osgi'
+	            exclude group: 'org.jboss.shrinkwrap.resolver'
+      }
+    testRuntime "org.jboss:jboss-common-core:2.2.17.GA"
+
+  // testManaged 'org.wildfly:wildfly-arquillian-container-managed:8.0.0.CR1'
+	
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+task connectToDb << {
+	def props = [user: 'dbUser', password: 'dbPassword', allowMultiQueries: 'true'] as Properties
+	def url = 'jdbc:mysql://54.209.220.65:3306/Config'
+	def driver = 'com.mysql.jdbc.Driver'
+	def sql = Sql.newInstance(url, props, driver)
+
+	sql.eachRow('show tables') { row ->
+		println row[0]
+	}
+}
+
+task deploy(dependsOn: 'build') << {
+	println "Deploy to wildfly dir " + wildflyHome
+	println "Archive " + war.archiveName
+	copy {
+		from "build/libs/" + war.archiveName
+		into wildflyHome + '/standalone/deployments'
+	}
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}

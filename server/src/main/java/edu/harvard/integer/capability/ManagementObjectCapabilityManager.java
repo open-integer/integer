@@ -42,6 +42,7 @@ import javax.persistence.EntityExistsException;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
@@ -79,6 +80,9 @@ public class ManagementObjectCapabilityManager implements
 		
 		} catch (EntityExistsException e) {
 			log.error("Capability already exists! " + e.getMessage());
+		} catch (IntegerException e) {
+			log.error("Erro saveing capability " + capability.getName() + ". " + e, e);
+			e.printStackTrace();
 		}
 		return capability;
 	}

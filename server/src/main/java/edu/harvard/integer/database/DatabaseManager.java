@@ -32,14 +32,18 @@
  */
 package edu.harvard.integer.database;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.exception.IntegerException;
 /**
  * @author David Taylor
  * 
@@ -53,8 +57,9 @@ public class DatabaseManager {
 	@Inject
 	Logger logger;
 	
-	public BaseEntity update(BaseEntity entity) {
+	public BaseEntity update(BaseEntity entity) throws IntegerException {
 		
+		try {
 		if (entity.getIdentifier() == null)
 			em.persist(entity);
 		else if (!em.contains(entity))
@@ -62,6 +67,18 @@ public class DatabaseManager {
 	
 		logger.info("Added " + entity.getName() + " ID: " + entity.getIdentifier());
 		
+		} catch (EntityExistsException ee) {
+			
+		}
 		return entity;
+	}
+	
+	public List<BaseEntity> update(List<BaseEntity> entities) throws IntegerException {
+		
+		for (BaseEntity baseEntity : entities) {
+			update(baseEntity);
+		}
+		
+		return entities;
 	}
 }

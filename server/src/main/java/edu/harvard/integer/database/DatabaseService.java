@@ -51,6 +51,7 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.server.IntegerApplication;
 /**
@@ -88,7 +89,12 @@ public class DatabaseService implements DatabaseServiceEJB {
 		u.setLastName("Taylor");
 		u.setUuid("123456789");
 		
-		dbm.update(u);
+		try {
+			dbm.update(u);
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
