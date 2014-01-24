@@ -62,7 +62,7 @@ public class ManagementObjectCapabilityManager implements
 	
 	@Inject
 	DatabaseManager dbm;
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
