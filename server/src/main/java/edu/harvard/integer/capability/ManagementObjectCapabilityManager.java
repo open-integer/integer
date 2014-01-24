@@ -59,7 +59,7 @@ public class ManagementObjectCapabilityManager implements
 
 	@Inject
 	private Logger log;
-	
+
 	@Inject
 	DatabaseManager dbm;
 
