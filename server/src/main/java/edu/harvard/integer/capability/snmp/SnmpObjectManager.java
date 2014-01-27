@@ -54,7 +54,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
 	 */
 	@Override
-	public MIBImportResult importMib(MIBImportInfo[] mibFile) {
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) {
 		
 		return null;
 	}

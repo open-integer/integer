@@ -58,7 +58,7 @@ public interface SnmpObjectManagerLocalInterface {
 	 * @param mibFile - Contents of MIB to import
 	 * @return TODO
 	 */
-	public MIBImportResult importMib(MIBImportInfo[] mibFile);
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile);
 
 	/**
 	 * Get the list of MIB's that have been imported into the system.
