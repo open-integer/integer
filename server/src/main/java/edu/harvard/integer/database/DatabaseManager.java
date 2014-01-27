@@ -32,6 +32,7 @@
  */
 package edu.harvard.integer.database;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -39,12 +40,18 @@ import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.user.User;
 /**
  * @author David Taylor
  * 
@@ -81,5 +88,55 @@ public class DatabaseManager {
 		}
 		
 		return entities;
+	}
+	
+	public void delete(BaseEntity entity) throws IntegerException {
+		if (!em.contains(entity))
+			em.merge(entity);
+		
+		em.remove(entity);
+	}
+	
+	public void delete(ID entityId) throws IntegerException {
+		BaseEntity entity = findById(entityId);
+		
+		delete(entity);
+	}
+	
+	public BaseEntity findById(ID id) throws IntegerException {
+		
+
+		@SuppressWarnings("unchecked")
+		BaseEntity entity = (BaseEntity) em.find(id.getIdType().getClassType(), id.getIdentifier());
+		
+		return entity;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T[] findAll(IDType type) throws IntegerException {
+		
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(type.getClassType());
+		Root<T> from = query.from(type.getClassType());
+		query.select(from);
+		List<T> resultList = em.createQuery(query).getResultList();
+		
+		if (resultList != null) {
+			T[] objs = (T[]) Array.newInstance(type.getClassType(), resultList.size());
+		
+			for (int i = 0; i < resultList.size(); i++) {
+				T t = resultList.get(i);
+				if (t instanceof BaseEntity)
+					logger.info("Found " + ((BaseEntity) t).getName() + " ID " + ((BaseEntity)t).getIdentifier());
+				else
+					logger.info("Found Non-BaseEntity " + t);
+				
+				objs[i] = t;
+			}
+			
+			return objs;
+		}
+		return null;
 	}
 }
