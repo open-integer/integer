@@ -33,11 +33,13 @@
 
 package edu.harvard.integer.capability.snmp;
 
-import java.io.File;
 import java.util.List;
 
 import javax.ejb.Stateless;
 
+import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
 
@@ -52,15 +54,16 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
 	 */
 	@Override
-	public void importMib(String mibFile) {
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) {
 		
+		return null;
 	}
 	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
 	 */
 	@Override
-	public List<File> getImportedMibs() {
+	public MIBInfo[] getImportedMibs() {
 		return null;
 	}
 	
