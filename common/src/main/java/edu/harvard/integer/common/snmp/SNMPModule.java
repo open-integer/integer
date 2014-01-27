@@ -53,7 +53,7 @@ public class SNMPModule extends BaseEntity {
 	
 	@OneToMany
 	private List<SNMPModuleHistory> history = null;
-
+	
 	/**
 	 * @return the oid
 	 */
@@ -113,4 +113,5 @@ public class SNMPModule extends BaseEntity {
 	public void setHistory(List<SNMPModuleHistory> history) {
 		this.history = history;
 	}
+	
 }
