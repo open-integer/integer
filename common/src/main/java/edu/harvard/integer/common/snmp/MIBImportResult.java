@@ -31,58 +31,28 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
-
-import java.util.List;
-
-import javax.ejb.Stateless;
-
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+package edu.harvard.integer.common.snmp;
 
 /**
  * @author David Taylor
  *
  */
-@Stateless
-public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
+public class MIBImportResult extends MIBImportInfo {
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
+	private String[] errors = null;
+
+	/**
+	 * @return the errors
 	 */
-	@Override
-	public MIBImportResult importMib(MIBImportInfo[] mibFile) {
-		
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
-	 */
-	@Override
-	public MIBInfo[] getImportedMibs() {
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getAllSNMPCapabilites()
-	 */
-	@Override
-	public List<Capability> getAllSNMPCapabilites() {
-		
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#setSNMP(edu.harvard.integer.common.topology.Capability, edu.harvard.integer.common.topology.SNMP)
-	 */
-	@Override
-	public Capability setSNMP(Capability capability, SNMP snmpObject) {
-		
-		return capability;
+	public String[] getErrors() {
+		return errors;
 	}
 
+	/**
+	 * @param errors the errors to set
+	 */
+	public void setErrors(String[] errors) {
+		this.errors = errors;
+	}
+	
 }

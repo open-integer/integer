@@ -31,58 +31,38 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
-
-import java.util.List;
-
-import javax.ejb.Stateless;
-
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+package edu.harvard.integer.common.exception;
 
 /**
  * @author David Taylor
  *
  */
-@Stateless
-public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
+public enum DatabaseErrorCodes implements ErrorCodeInterface {
+	EntityAlreadyExists("EntityAlreadyExists", "Entity already exists in the databse!");
+
+	private String errorCode = null;
+	private String message = null;
+	
+	private DatabaseErrorCodes(String errorCode, String message) {
+		this.message = message;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getMessage()
+	 */
+	@Override
+	public String getMessage() {
+		
+		return message;
+	}
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
 	 */
 	@Override
-	public MIBImportResult importMib(MIBImportInfo[] mibFile) {
+	public String getErrorCode() {
 		
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
-	 */
-	@Override
-	public MIBInfo[] getImportedMibs() {
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getAllSNMPCapabilites()
-	 */
-	@Override
-	public List<Capability> getAllSNMPCapabilites() {
-		
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#setSNMP(edu.harvard.integer.common.topology.Capability, edu.harvard.integer.common.topology.SNMP)
-	 */
-	@Override
-	public Capability setSNMP(Capability capability, SNMP snmpObject) {
-		
-		return capability;
+		return errorCode;
 	}
 
 }

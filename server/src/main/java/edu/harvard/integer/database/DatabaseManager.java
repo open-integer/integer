@@ -43,6 +43,7 @@ import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 /**
  * @author David Taylor
@@ -68,8 +69,8 @@ public class DatabaseManager {
 		logger.info("Added " + entity.getName() + " ID: " + entity.getIdentifier());
 		
 		} catch (EntityExistsException ee) {
-			
-		}
+			throw new IntegerException(ee, DatabaseErrorCodes.EntityAlreadyExists);
+		} 
 		return entity;
 	}
 	

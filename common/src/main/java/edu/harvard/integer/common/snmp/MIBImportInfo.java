@@ -31,58 +31,50 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
+package edu.harvard.integer.common.snmp;
 
-import java.util.List;
+import javax.persistence.Entity;
 
-import javax.ejb.Stateless;
-
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-@Stateless
-public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
+@Entity
+public class MIBImportInfo extends BaseEntity {
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
-	 */
-	@Override
-	public MIBImportResult importMib(MIBImportInfo[] mibFile) {
-		
-		return null;
-	}
+	private String fileName = null;
 	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
-	 */
-	@Override
-	public MIBInfo[] getImportedMibs() {
-		return null;
-	}
+	private String mib = null;
+
 	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getAllSNMPCapabilites()
+	/**
+	 * @return the fileName
 	 */
-	@Override
-	public List<Capability> getAllSNMPCapabilites() {
-		
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#setSNMP(edu.harvard.integer.common.topology.Capability, edu.harvard.integer.common.topology.SNMP)
-	 */
-	@Override
-	public Capability setSNMP(Capability capability, SNMP snmpObject) {
-		
-		return capability;
+	public String getFileName() {
+		return fileName;
 	}
 
+	/**
+	 * @param fileName the fileName to set
+	 */
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	/**
+	 * @return the mib
+	 */
+	public String getMib() {
+		return mib;
+	}
+
+	/**
+	 * @param mib the mib to set
+	 */
+	public void setMib(String mib) {
+		this.mib = mib;
+	}
+	
 }
