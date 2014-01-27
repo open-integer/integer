@@ -1,0 +1,107 @@
+/**
+ * Gradle build config for GWT sdk
+ *
+ * @author lyhcode
+ */
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+// GWT Settings
+def gwtVersion = '2.5.1'                // GWT SDK version
+def gwtModule = 'edu.harvard.integer.client'  // GWT module name
+def gwtStartupUrl = 'client.html'     // Startup URL for Dev Mode
+def gwtWarPath = 'war'                  // WebContent directory
+
+def gwtServerHost = 'localhost'
+def gwtServerPort = 8888
+
+//targetCompatibility = 1.6
+//sourceCompatibility = 1.6
+
+group = 'example'
+version = '1.0'
+
+sourceSets.main.java.srcDirs = ['src']
+
+// Jetty Web Container
+//jettyRun.daemon = true                              // Specifies whether the Jetty server should run in the background.
+jettyRun.contextPath = ''                           // The context path to use to deploy the web application.
+jettyRun.webAppSourceDirectory = file(gwtWarPath)   // The directory containing the web application source files.
+jettyRun.httpPort = gwtServerPort                   // The TCP port for Jetty to listen on for incoming HTTP requests.
+jettyRun.scanIntervalSeconds = 5                    // The interval in seconds between scanning the web app for file changes.
+
+// Package War
+war {
+    from gwtWarPath
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Compile GWT libs, needed for gwtCompile and the javaCompile
+    // Also includes the servlet-api
+    providedCompile "com.google.gwt:gwt-user:${gwtVersion}"
+    providedCompile "com.google.gwt:gwt-dev:${gwtVersion}"
+
+    // Needed for GWT compile and at runtime for RequestBuilder
+    // Specify two artifacts as workaround for GRADLE-1934
+    compile('javax.validation:validation-api:1.0.0.GA') {
+        artifact {
+            name = 'validation-api'
+            type = 'jar'
+        }
+        artifact {
+            name = 'validation-api'
+            type = 'jar'
+            classifier = 'sources'
+        }
+    }
+}
+
+task gwtc (dependsOn: classes, type: JavaExec) {
+
+    description = "GWT compile to JavaScript (production mode)"
+ 
+    main = 'com.google.gwt.dev.Compiler'
+ 
+    classpath {[
+        sourceSets.main.java.srcDirs,
+        configurations.compile
+    ]}
+
+    args = [
+        gwtModule,
+        '-war', gwtWarPath
+    ]
+ 
+    maxHeapSize = '256M'
+}
+
+task devmode (dependsOn: classes, type: JavaExec) {
+
+    description = "Run development mode"
+ 
+    main = 'com.google.gwt.dev.DevMode'
+ 
+    classpath {[
+        sourceSets.main.java.srcDirs,           // Java source
+        sourceSets.main.output.resourcesDir,    // Generated resources
+        sourceSets.main.output.classesDir,      // Generated classes
+        sourceSets.main.compileClasspath,       // Deps
+        configurations.compile
+    ]}
+ 
+    args = (gwtModule instanceof List)?gwtModule:[gwtModule]
+    args += [
+        '-startupUrl', "http://${gwtServerHost}:${gwtServerPort}/${gwtStartupUrl}",
+        '-war', gwtWarPath
+    ]
+ 
+    maxHeapSize = '256M'
+}
