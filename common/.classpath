@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
 	<classpathentry kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer" exported="true"/>
 	<classpathentry kind="output" path="bin"/>
-	<classpathentry kind="src" path="/common" exported="true"/>
 	<classpathentry sourcepath="/Users/dtaylor/.gradle/caches/modules-2/files-2.1/javax.validation/validation-api/1.1.0.Final/7d49b53caed9bd81d172807c3e096d24f3c57090/validation-api-1.1.0.Final-sources.jar" kind="lib" path="/Users/dtaylor/.gradle/caches/modules-2/files-2.1/javax.validation/validation-api/1.1.0.Final/8613ae82954779d518631e05daa73a6a954817d5/validation-api-1.1.0.Final.jar" exported="true"/>
 	<classpathentry sourcepath="/Users/dtaylor/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2/73d0340eaecbb0ec9d3e0ace90547ef08cbfaf27/commons-collections-3.2-sources.jar" kind="lib" path="/Users/dtaylor/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2/f951934aa5ae5a88d7e6dfaa6d32307d834a88be/commons-collections-3.2.jar" exported="true"/>
 	<classpathentry sourcepath="/Users/dtaylor/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-core/4.2.0.Final/4afcfa399c304f1362191da1bbcd12c6aff063ef/hibernate-core-4.2.0.Final-sources.jar" kind="lib" path="/Users/dtaylor/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-core/4.2.0.Final/8542d0dbc6a68509efe9033e804bfe36005ba805/hibernate-core-4.2.0.Final.jar" exported="true"/>

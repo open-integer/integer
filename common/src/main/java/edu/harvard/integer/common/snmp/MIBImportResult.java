@@ -31,47 +31,28 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
-
-import java.util.List;
-
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+package edu.harvard.integer.common.snmp;
 
 /**
  * @author David Taylor
  *
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
+public class MIBImportResult extends MIBImportInfo {
+
+	private String[] errors = null;
 
 	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
-	 * @return TODO
+	 * @return the errors
 	 */
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile);
+	public String[] getErrors() {
+		return errors;
+	}
 
 	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
+	 * @param errors the errors to set
 	 */
-	public MIBInfo[] getImportedMibs();
-
-	/**
-	 * Get All capabilities that are in the 
-	 * @return
-	 */
-	public List<Capability> getAllSNMPCapabilites();
-
-	public Capability setSNMP(Capability capability, SNMP snmpObject);
-
+	public void setErrors(String[] errors) {
+		this.errors = errors;
+	}
+	
 }

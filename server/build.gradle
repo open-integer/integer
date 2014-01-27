@@ -7,7 +7,7 @@ version = '1.0'
 jar {
 	
     manifest {
-        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+        attributes 'Implementation-Title': 'Integer-server', 'Implementation-Version': version
     }
 }
 
@@ -23,6 +23,7 @@ repositories {
 }
 
 dependencies {
+	compile project(':common')
 	compile 'javax.validation:validation-api:1.1.0.Final'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
 	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.2.0.Final'

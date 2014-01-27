@@ -31,47 +31,38 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
-
-import java.util.List;
-
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+package edu.harvard.integer.common.exception;
 
 /**
  * @author David Taylor
  *
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
+public enum DatabaseErrorCodes implements ErrorCodeInterface {
+	EntityAlreadyExists("EntityAlreadyExists", "Entity already exists in the databse!");
 
-	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
-	 * @return TODO
+	private String errorCode = null;
+	private String message = null;
+	
+	private DatabaseErrorCodes(String errorCode, String message) {
+		this.message = message;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getMessage()
 	 */
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile);
+	@Override
+	public String getMessage() {
+		
+		return message;
+	}
 
-	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
 	 */
-	public MIBInfo[] getImportedMibs();
-
-	/**
-	 * Get All capabilities that are in the 
-	 * @return
-	 */
-	public List<Capability> getAllSNMPCapabilites();
-
-	public Capability setSNMP(Capability capability, SNMP snmpObject);
+	@Override
+	public String getErrorCode() {
+		
+		return errorCode;
+	}
 
 }

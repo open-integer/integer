@@ -47,6 +47,7 @@ import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.database.DatabaseManager;
 
 /**
@@ -59,9 +60,25 @@ public class ManagementObjectCapabilityManager implements
 
 	@Inject
 	private Logger log;
-	
+
 	@Inject
 	DatabaseManager dbm;
+
+	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
+	
+		log.debug("Add ServiceElementType " + serviceElementType);
+		
+		try {
+			dbm.update(serviceElementType);
+		}catch (EntityExistsException e) {
+			log.error("ServiceElementType already exists! " + e.getMessage());
+		} catch (IntegerException e) {
+			log.error("Erro saveing ServiceElementType " + serviceElementType.getName() + ". " + e, e);
+			e.printStackTrace();
+		}
+		
+		return serviceElementType;
+	}
 	
 	/*
 	 * (non-Javadoc)

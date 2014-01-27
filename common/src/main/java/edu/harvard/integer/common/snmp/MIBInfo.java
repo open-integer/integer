@@ -31,47 +31,84 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
+package edu.harvard.integer.common.snmp;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
  *
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
+public class MIBInfo extends BaseEntity {
+
+	private SNMPModule module = null;
+
+	private List<SNMPTable> tables = null;
+
+	private List<SNMP> scalors = null;
+
+	private String vendor = null;
 
 	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
-	 * @return TODO
+	 * @return the module
 	 */
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile);
+	public SNMPModule getModule() {
+		return module;
+	}
 
 	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
+	 * @param module
+	 *            the module to set
 	 */
-	public MIBInfo[] getImportedMibs();
+	public void setModule(SNMPModule module) {
+		this.module = module;
+	}
 
 	/**
-	 * Get All capabilities that are in the 
-	 * @return
+	 * @return the tables
 	 */
-	public List<Capability> getAllSNMPCapabilites();
+	public List<SNMPTable> getTables() {
+		return tables;
+	}
 
-	public Capability setSNMP(Capability capability, SNMP snmpObject);
+	/**
+	 * @param tables
+	 *            the tables to set
+	 */
+	public void setTables(List<SNMPTable> tables) {
+		this.tables = tables;
+	}
+
+	/**
+	 * @return the scalors
+	 */
+	public List<SNMP> getScalors() {
+		return scalors;
+	}
+
+	/**
+	 * @param scalors
+	 *            the scalors to set
+	 */
+	public void setScalors(List<SNMP> scalors) {
+		this.scalors = scalors;
+	}
+
+	/**
+	 * @return the vendor
+	 */
+	public String getVendor() {
+		return vendor;
+	}
+
+	/**
+	 * @param vendor
+	 *            the vendor to set
+	 */
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
 
 }
