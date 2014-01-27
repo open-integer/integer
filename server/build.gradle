@@ -1,6 +1,6 @@
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'war'
 
 sourceCompatibility = 1.7
 version = '1.0'
@@ -32,11 +32,13 @@ dependencies {
 	compile "javax.inject:javax.inject-tck:1"
 	compile "javax.enterprise:cdi-api:1.1.EDR1"
 	compile "org.slf4j:slf4j-log4j12:1.7.5"
+	
+	testCompile group: 'commons-logging', name: 'commons-logging', version:'1.1.1'
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:1.1.2.Final"
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:1.1.2.Final"
 	//testCompile "org.jboss.arquillian:arquillian-junit:1.1.2.Final"
     testCompile group: 'junit', name: 'junit', version: '4.+'
-    	
+    
     testRuntime ('org.wildfly:wildfly-arquillian-container-remote:8.0.0.CR1') {
    			    exclude module: 'wildfly-ee'
    				exclude module: 'wildfly-server'
@@ -54,7 +56,7 @@ dependencies {
 }
 
 test {
-    systemProperties 'property': 'value'
+	println "home dir " + System.getProperty("user.home")
 }
 
 task connectToDb << {
@@ -68,12 +70,13 @@ task connectToDb << {
 	}
 }
 
-task deploy(dependsOn: 'build') << {
-	println "Deploy to wildfly dir " + wildflyHome
-	println "Archive " + war.archiveName
+task deployServer(dependsOn: 'build') << {
+	println "Deploy to wildfly dir " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
+	println "Archive " + jar.archiveName
 	copy {
-		from "build/libs/" + war.archiveName
-		into wildflyHome + '/standalone/deployments'
+		from "build/libs/" + jar.archiveName
+		into System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
+		
 	}
 }
 
@@ -84,3 +87,4 @@ uploadArchives {
        }
     }
 }
+

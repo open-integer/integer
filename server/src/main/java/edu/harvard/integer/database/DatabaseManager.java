@@ -127,6 +127,7 @@ public class DatabaseManager {
 		
 			for (int i = 0; i < resultList.size(); i++) {
 				T t = resultList.get(i);
+				
 				if (t instanceof BaseEntity)
 					logger.info("Found " + ((BaseEntity) t).getName() + " ID " + ((BaseEntity)t).getIdentifier());
 				else
