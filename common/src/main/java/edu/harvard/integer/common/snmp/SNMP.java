@@ -86,4 +86,6 @@ public class SNMP extends ServiceElementManagementObject {
 	 */
 	public String units = null;
 
+	// TODO: Add constraints. Could be min/max or max or enum list or ..
+	
 }
