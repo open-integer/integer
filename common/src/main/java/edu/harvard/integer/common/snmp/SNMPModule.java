@@ -44,13 +44,29 @@ import edu.harvard.integer.common.BaseEntity;
 /**
  * @author David Taylor
  * 
+ * This class holds the definition of a SNMP Module. 
+ * 
  */
 @Entity
 public class SNMPModule extends BaseEntity {
+	/**
+	 * OID that identifies the module.
+	 */
 	private String oid = null;
+	
+	/**
+	 * Last time the Module was updated.
+	 */
 	private Date lastUpdated = null;
+	
+	/**
+	 * Description of the MIB module.
+	 */
 	private String description = null;
 	
+	/**
+	 * History of the MIB Module.
+	 */
 	@OneToMany
 	private List<SNMPModuleHistory> history = null;
 	

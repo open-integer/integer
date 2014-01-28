@@ -42,11 +42,21 @@ import edu.harvard.integer.common.BaseEntity;
 /**
  * @author David Taylor
  * 
+ * This class holds the history of a MIB module. There will be one instance of this
+ * class created for each revision of a MIB module.
+ * 
  */
 @Entity
 public class SNMPModuleHistory extends BaseEntity {
 
+	/**
+	 * Date the MIB module was updated.
+	 */
 	private Date date;
+	
+	/**
+	 * Description/comment for the change to the MIB.
+	 */
 	private String description;
 
 	/**
