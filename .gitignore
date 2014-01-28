@@ -21,6 +21,7 @@ build/reports/tests/edu.harvard.integer.common.user.html
 build/test-results/TEST-edu.harvard.integer.common.user.UserTest.xml
 build/test-results/binary/test/results.bin
 build
+client.gwt.xml
 .metadata
 .settings
 *.swp
