@@ -35,9 +35,13 @@ package edu.harvard.integer.common;
 import java.net.Inet4Address;
 
 import javax.persistence.Entity;
+
 /**
  * @author David Taylor
- *
+ * 
+ *         This class holds an IPV4 address and allows for validation of IPV4
+ *         addresses.
+ * 
  */
 @Entity
 public class IpV4Address extends Address {

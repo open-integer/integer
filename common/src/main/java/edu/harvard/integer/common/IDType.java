@@ -35,7 +35,8 @@ package edu.harvard.integer.common;
 import javax.persistence.Embeddable;
 /**
  * @author David Taylor
- *
+ * 
+ * This class encapsulates the type of object. 
  */
 
 @Embeddable

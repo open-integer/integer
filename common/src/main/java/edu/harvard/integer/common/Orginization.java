@@ -34,22 +34,40 @@ package edu.harvard.integer.common;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 /**
  * @author David Taylor
- *
+ * 
+ *         Identifies an organization. Organizations have
+ *         hierarchies/containment. That is why this element can contain more
+ *         Organizations.
  */
 @Entity
 public class Orginization extends BaseEntity {
 
-	
 	private String orginizationType = null;
 
+	/**
+	 * This is a list of the id of the Id class instances associated with
+	 * location objects for this organization. Generally an organization will
+	 * have several locations each with a different 'type'. For example, support
+	 * center, development center, business office, etc.
+	 */
+	@ElementCollection(fetch=FetchType.LAZY)
+    @CollectionTable(joinColumns=@JoinColumn(name = "orginizationId"))
+	private List<ID> locations = null;
+	
+	/**
+	 * list of orinizations that this orginization belongs to.
+	 */
 	@OneToMany
 	private List<Orginization> orinizations = null;
-
 
 	/**
 	 * @return the type

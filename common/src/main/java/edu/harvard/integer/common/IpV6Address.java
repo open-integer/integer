@@ -37,9 +37,10 @@ import java.net.Inet6Address;
 import javax.persistence.Entity;
 /**
  * @author David Taylor
- *
+ * 
+ *         This class holds an IPV6 address and allows for validation of IPV6
+ *         addresses.
  */
-
 @Entity
 public class IpV6Address extends Address {
 	private Inet6Address v6address = null;
