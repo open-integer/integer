@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.harvard.integer.client.widget.HuitDialogBox;
 import edu.harvard.integer.client.widget.HuitFlexTable;
 import edu.harvard.integer.shared.FieldVerifier;
 
@@ -134,8 +135,7 @@ public class MainClient implements EntryPoint {
 		} catch (AssertionError e) {
 			Window.alert("AssertionError");
 		}
-		
-		DOM.getElementById("Mib");
+
 		Element element = (Element) Document.get().getElementById("Mib");
 		Anchor testAnchor = Anchor.wrap(element);
 		testAnchor.addClickHandler(new ClickHandler() {
@@ -168,6 +168,18 @@ public class MainClient implements EntryPoint {
 					RootPanel.get("root").remove(currentWidget);
 				currentWidget = flexTable;
 				RootPanel.get("root").add(currentWidget);
+			}
+		});
+		
+		Element importElement = (Element) Document.get().getElementById("MibImport");
+		Anchor importAnchor = Anchor.wrap(importElement);
+		importAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				HuitDialogBox importDialog = new HuitDialogBox("Import MIB");
+				importDialog.center();
+				importDialog.show();
 			}
 		});
 
