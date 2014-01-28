@@ -45,7 +45,7 @@ repositories {
 
 dependencies {
 	compile project(':common')
-//	compile project(':server')
+	compile project(':server')
     // Compile GWT libs, needed for gwtCompile and the javaCompile
     // Also includes the servlet-api
     compile "com.google.gwt:gwt-user:${gwtVersion}"
