@@ -1,0 +1,13 @@
+
+apply plugin: 'ear'
+	
+dependencies {
+	deploy project(path: ':client', configuration: 'archives')
+	deploy project(':common')
+	deploy project(':server')
+    testCompile 'junit:junit:4.+'
+}
+
+version = '1.0'
+
+
