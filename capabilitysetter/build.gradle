@@ -1,0 +1,11 @@
+apply plugin: 'application'
+apply plugin: 'java'
+
+dependencies {
+    compile files("$projectDir/libs/grammatica-1.5.jar")
+    compile files("$projectDir/libs/mibble-parser-2.9.3.jar")
+    compile files("$projectDir/libs/mibble-parser-2.9.3.jar")
+    compile project(":common") 
+}
+
+mainClassName = "edu.harvard.integer.capability.CapabilityMain"
