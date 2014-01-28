@@ -46,7 +46,10 @@ import javax.validation.constraints.Size;
  */
 /**
  * @author David Taylor
- *
+ * 
+ *         Base class for all data objects in the Integer system. This class
+ *         defines the database identifier, name and type used by all the data
+ *         objects in the Integer system.
  */
 @MappedSuperclass
 public abstract class BaseEntity implements IDInterface {
