@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import edu.harvard.integer.client.widget.HuitFlexTable;
 import edu.harvard.integer.shared.FieldVerifier;
@@ -28,6 +29,7 @@ import edu.harvard.integer.shared.FieldVerifier;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class MainClient implements EntryPoint {
+	private Widget currentWidget;
 	private HuitFlexTable flexTable = new HuitFlexTable();
 	/**
 	 * The message displayed to the user when the server cannot be reached or
@@ -96,6 +98,7 @@ public class MainClient implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					final int HeaderRowIndex = 0;
+					flexTable = new HuitFlexTable();
 					flexTable.insertRow(0);
 					flexTable.getRowFormatter().addStyleName(HeaderRowIndex,
 							"FlexTable-Header");
@@ -122,12 +125,51 @@ public class MainClient implements EntryPoint {
 					}
 					flexTable.applyDataRowStyles();
 
-					RootPanel.get("root").add(flexTable);
+					if (currentWidget != null)
+						RootPanel.get("root").remove(currentWidget);
+					currentWidget = flexTable;
+					RootPanel.get("root").add(currentWidget);
 				}
 			});
 		} catch (AssertionError e) {
 			Window.alert("AssertionError");
 		}
+		
+		DOM.getElementById("Mib");
+		Element element = (Element) Document.get().getElementById("Mib");
+		Anchor testAnchor = Anchor.wrap(element);
+		testAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				final int HeaderRowIndex = 0;
+				flexTable = new HuitFlexTable();
+				flexTable.insertRow(0);
+				flexTable.getRowFormatter().addStyleName(HeaderRowIndex,
+						"FlexTable-Header");
+
+				flexTable.addColumn("Module");
+				flexTable.addColumn("Last Updated");
+				flexTable.addColumn("Oid");
+				flexTable.addColumn("Vendor");
+
+				flexTable.getRowFormatter().addStyleName(0, "flexTableHeader");
+
+				for (int row = 1; row < 5; row++) {
+					Object[] rowData = { "module " + row,
+							row + ":00 Jan 28",
+							"1.2.3.4.5.7.8.9.10.11.12." + row,
+							"Cisco" + row};
+					flexTable.addRow(rowData);
+				}
+				flexTable.applyDataRowStyles();
+
+				if (currentWidget != null)
+					RootPanel.get("root").remove(currentWidget);
+				currentWidget = flexTable;
+				RootPanel.get("root").add(currentWidget);
+			}
+		});
 
 		// Add a handler to close the DialogBox
 		closeButton.addClickHandler(new ClickHandler() {

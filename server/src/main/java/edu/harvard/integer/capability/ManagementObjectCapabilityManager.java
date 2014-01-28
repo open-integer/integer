@@ -42,6 +42,7 @@ import javax.persistence.EntityExistsException;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
@@ -73,11 +74,33 @@ public class ManagementObjectCapabilityManager implements
 		}catch (EntityExistsException e) {
 			log.error("ServiceElementType already exists! " + e.getMessage());
 		} catch (IntegerException e) {
-			log.error("Erro saveing ServiceElementType " + serviceElementType.getName() + ". " + e, e);
+			log.error("Unexpected Error saveing ServiceElementType " + serviceElementType.getName() + ". " + e, e);
 			e.printStackTrace();
 		}
 		
 		return serviceElementType;
+	}
+	
+	public void deleteServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
+	
+		log.info("Delete service element " + serviceElementType.getName());
+		
+		dbm.delete(serviceElementType);
+	}
+
+	public void deleteServiceElementType(ID serviceElementTypeId) throws IntegerException {
+		
+		log.info("Delete service element " + serviceElementTypeId.getName());
+		
+		dbm.delete(serviceElementTypeId);
+	}
+
+	
+	public ServiceElementType[] getAllServiceElementTypes() throws IntegerException {
+		IDType type = new IDType();
+		type.setClassType(ServiceElementType.class);
+		
+		return dbm.findAll(type);
 	}
 	
 	/*
@@ -98,7 +121,7 @@ public class ManagementObjectCapabilityManager implements
 		} catch (EntityExistsException e) {
 			log.error("Capability already exists! " + e.getMessage());
 		} catch (IntegerException e) {
-			log.error("Erro saveing capability " + capability.getName() + ". " + e, e);
+			log.error("Unexpected Error saveing capability " + capability.getName() + ". " + e, e);
 			e.printStackTrace();
 		}
 		return capability;

@@ -36,6 +36,9 @@ import javax.persistence.Entity;
 /**
  * @author David Taylor
  *
+ *
+ * Base class for IPV4 and IPV6 address. 
+ * 
  */
 @Entity
 public abstract class Address extends BaseEntity {

@@ -78,42 +78,56 @@ public class DatabaseService implements DatabaseServiceEJB {
 		IntegerApplication.register(this);
 
 		logger.info("Create user dtaylor");
-		
-		User u = new User();
-		u.setName("dtaylor");
-		
-		IDType userType = new IDType();
-		userType.setClassType(User.class);
-		u.setIdType(userType);
-		u.setFirstName("Dave");
-		u.setLastName("Taylor");
-		u.setUuid("123456789");
-		
+//		
+//		User u = new User();
+//		u.setName("dtaylor");
+//		
+//		IDType userType = new IDType();
+//		userType.setClassType(User.class);
+//		u.setIdType(userType);
+//		u.setFirstName("Dave");
+//		u.setLastName("Taylor");
+//		u.setUuid("123456789");
+//		
+//		try {
+//			dbm.update(u);
+//		} catch (IntegerException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	
 		try {
-			dbm.update(u);
+			logger.info("Users " + showUsers());
 		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 
 	@GET
 	@Path("/Users")
 	@Produces(value=MediaType.TEXT_HTML)
-	public String showUsers() {
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	public String showUsers() throws IntegerException {
+		IDType type = new IDType();
+		type.setClassType(User.class);
 		
-		CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-		Root<User> from = query.from(User.class);
-		query.select(from);
-		List<User> resultList = em.createQuery(query).getResultList();
+		User[] resultList = dbm.findAll(type);
+//		
+//		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+//		
+//		CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+//		Root<User> from = query.from(User.class);
+//		query.select(from);
+//		List<User> resultList = em.createQuery(query).getResultList();
 		
 		StringBuffer b = new StringBuffer();
 		b.append("<ul>");
 		for (User obj : resultList) {
-			b.append("<li>User " + obj.getIdentifier() + " " + obj.getFirstName() + " " + obj.getLastName() + " UUID: " + obj.getUuid() + "</li>");
+			if (obj != null)
+				b.append("<li>User " + obj.getIdentifier() + " " + obj.getFirstName() + " " + obj.getLastName() + " UUID: " + obj.getUuid() + "</li>");
+			else
+				b.append("<li>User is NULL!!</li>");
 			
 		}
 		b.append("</ul>");	

@@ -33,11 +33,13 @@
 package edu.harvard.integer.common;
 
 import javax.persistence.Embeddable;
+
 /**
  * @author David Taylor
- *
+ * 
+ *         This class ecapsulates a phone number and allows for phone number
+ *         validation.
  */
-
 @Embeddable
 public class PhoneNumber {
 

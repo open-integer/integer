@@ -1,18 +1,23 @@
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'eclipse'
 
-    repositories {
-       mavenCentral()
-    }
+apply plugin: 'ear'
+apply plugin: 'java'
 
-    dependencies {
-        testCompile 'junit:junit:4.+'
-    }
-
-    version = '1.0'
-
-    jar {
-        manifest.attributes provider: 'Integer'
-    }
+dependencies {
+	deploy project(path: ':client', configuration: 'archives')
+	deploy project(':server')
+	deploy project(':common')
 }
+
+ear {
+	
+	deploymentDescriptor {
+		applicationName = "integer"
+		initializeInOrder = true
+		displayName = "Integer EAR"
+	
+	}
+}
+
+version = '1.0'
+
+

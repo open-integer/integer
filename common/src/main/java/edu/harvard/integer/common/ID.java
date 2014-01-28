@@ -34,21 +34,22 @@ package edu.harvard.integer.common;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
+
 /**
  * @author David Taylor
- *
+ * 
+ *         This class is used to pass the identifier of a data object in the
+ *         Integer system. The name and type are included so the GUI can display
+ *         the object correctly and allows for a common way to ask for an object.
  */
 @Embeddable
 public class ID implements IDInterface {
 
-	
 	protected Long identifier = null;
 
-	
 	@Size(min = 1, max = 50)
 	private String name = null;
 
-	
 	private IDType idType = null;
 
 	/**
