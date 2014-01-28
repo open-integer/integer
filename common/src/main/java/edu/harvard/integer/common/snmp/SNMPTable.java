@@ -41,10 +41,16 @@ import javax.persistence.OneToMany;
 /**
  * @author David Taylor
  * 
+ * This class holds the definition of a MIB Table. 
+ * 
  */
 @Entity
 public class SNMPTable extends SNMP {
 
+	/**
+	 * List of index OID's for this table. 
+	 * 
+	 */
 	@OneToMany
 	private List<SNMP> index = null;
 	

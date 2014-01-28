@@ -36,6 +36,8 @@ package edu.harvard.integer.common.snmp;
 /**
  * @author David Taylor
  *
+ * Hold the result of a MIB import.
+ *  
  */
 public class MIBImportResult extends MIBImportInfo {
 

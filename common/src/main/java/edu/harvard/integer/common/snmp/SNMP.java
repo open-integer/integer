@@ -42,7 +42,9 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 /**
  * @author David Taylor
- *
+ * 
+ * This class holds the definition of an SNMP OID. 
+ * 
  */
 @Entity
 public class SNMP extends ServiceElementManagementObject {
@@ -53,6 +55,7 @@ public class SNMP extends ServiceElementManagementObject {
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "snmpModuleType")),
 			@AttributeOverride(name = "name", column = @Column(name = "snmpModuleName")) })
 	private ID snmpModuleId = null;
+	
 	/*
 	 * Description of the object as found in the MIB Module. In some cases, this
 	 * description can be quite long.

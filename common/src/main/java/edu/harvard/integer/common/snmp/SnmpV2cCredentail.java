@@ -35,9 +35,12 @@ package edu.harvard.integer.common.snmp;
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.topology.Credential;
+
 /**
  * @author David Taylor
- *
+ * 
+ *         Holder for SNMP V2 credentials (community strings) needed to talk to
+ *         an SNMP device.
  */
 @Entity
 public class SnmpV2cCredentail extends Credential {

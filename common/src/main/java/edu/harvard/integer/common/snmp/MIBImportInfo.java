@@ -40,16 +40,29 @@ import edu.harvard.integer.common.BaseEntity;
 /**
  * @author David Taylor
  * 
+ *         Holder for MIB's that have been or are in the process of being
+ *         imported into the Integer system. Once the MIB has been import a
+ *         MIBImportResult will be created that contins the result of the
+ *         import.
  */
 @Entity
 public class MIBImportInfo extends BaseEntity {
 
+	/**
+	 * Name of the MIB as given by the user.
+	 */
 	private String fileName = null;
-	
+
+	/**
+	 * contents of the MIB.
+	 */
 	private String mib = null;
 
+	/**
+	 * Flag that if set == true to indicate that this is a standard MIB.
+	 */
 	private boolean standardMib = false;
-	
+
 	/**
 	 * @return the fileName
 	 */
@@ -58,7 +71,8 @@ public class MIBImportInfo extends BaseEntity {
 	}
 
 	/**
-	 * @param fileName the fileName to set
+	 * @param fileName
+	 *            the fileName to set
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
@@ -72,7 +86,8 @@ public class MIBImportInfo extends BaseEntity {
 	}
 
 	/**
-	 * @param mib the mib to set
+	 * @param mib
+	 *            the mib to set
 	 */
 	public void setMib(String mib) {
 		this.mib = mib;
@@ -86,10 +101,11 @@ public class MIBImportInfo extends BaseEntity {
 	}
 
 	/**
-	 * @param standardMib the standardMib to set
+	 * @param standardMib
+	 *            the standardMib to set
 	 */
 	public void setStandardMib(boolean standardMib) {
 		this.standardMib = standardMib;
 	}
-	
+
 }

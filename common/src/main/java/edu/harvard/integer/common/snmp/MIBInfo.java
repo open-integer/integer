@@ -39,7 +39,10 @@ import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
- *
+ * 
+ * This class holds the definition of a MIB. The process of importing a MIB
+ * into the system will create an instance of this class.
+ * 
  */
 public class MIBInfo extends BaseEntity {
 
