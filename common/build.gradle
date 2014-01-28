@@ -34,10 +34,6 @@ dependencies {
 	
 }
 
-test {
-    systemProperties 'property': 'value'
-}
-
 
 uploadArchives {
     repositories {

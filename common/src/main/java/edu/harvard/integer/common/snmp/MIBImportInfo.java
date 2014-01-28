@@ -48,6 +48,7 @@ public class MIBImportInfo extends BaseEntity {
 	
 	private String mib = null;
 
+	private boolean standardMib = false;
 	
 	/**
 	 * @return the fileName
@@ -75,6 +76,20 @@ public class MIBImportInfo extends BaseEntity {
 	 */
 	public void setMib(String mib) {
 		this.mib = mib;
+	}
+
+	/**
+	 * @return the standardMib
+	 */
+	public boolean isStandardMib() {
+		return standardMib;
+	}
+
+	/**
+	 * @param standardMib the standardMib to set
+	 */
+	public void setStandardMib(boolean standardMib) {
+		this.standardMib = standardMib;
 	}
 	
 }
