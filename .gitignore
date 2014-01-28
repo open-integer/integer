@@ -12,3 +12,6 @@ client.gwt.xml
 .metadata
 .settings
 *.swp
+capabilitysetter/src/main/java/edu/harvard/integer/capabilitySetter/Test.java
+capabilitysetter/src/main/webapp/WEB-INF/view/formPage.jsp
+capabilitysetter/src/main/webapp/WEB-INF/view/home.jsp

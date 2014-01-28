@@ -1,9 +1,11 @@
+
 package edu.harvard.integer.capabilitySetter.snmp.moduleLoader;
 
 import net.percederberg.mibble.Mib;
 import net.percederberg.mibble.MibLoader;
 import net.percederberg.mibble.MibLoaderException;
 import net.percederberg.mibble.MibLoaderLog;
+import net.percederberg.mibble.MibLoaderLog.LogEntry;
 import net.percederberg.mibble.MibSymbol;
 import net.percederberg.mibble.MibType;
 import net.percederberg.mibble.MibValue;
@@ -13,36 +15,45 @@ import net.percederberg.mibble.snmp.SnmpObjectType;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
+import java.io.Writer;
 import java.net.URL;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import edu.harvard.integer.capabilitySetter.CapabilitySetterException;
 import edu.harvard.integer.capabilitySetter.CapabilitySetterMain;
+import edu.harvard.integer.capabilitySetter.ImportReturn;
 import edu.harvard.integer.capabilitySetter.ModuleLoadingLog;
 import edu.harvard.integer.capabilitySetter.ModuleLoadingLog.ErrorTypeE;
 import edu.harvard.integer.capabilitySetter.SNMPModuleCache;
 import edu.harvard.integer.capabilitySetter.snmp.MibParser;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPTable;
 
 
-
+/**
+ * @author dchan
+ *
+ */
 public class MibbleParser implements MibParser{
 	
 	public static String MibResourceDir = "mibs/ietf/";
+	
 	private HashMap<String, SNMPModuleCache>  snmpCache = new HashMap<>();
 	
 	
@@ -50,8 +61,7 @@ public class MibbleParser implements MibParser{
 	private static MibbleParser source = null;
 	
 	private MibbleParser() throws CapabilitySetterException {
-		
-		System.out.println("In MibSources constructor");		
+				
 		mibLocation =  new File(System.getProperty(CapabilitySetterMain.MIBFILELOCATON));
 		if ( !mibLocation.isDirectory() ) {
 			throw new CapabilitySetterException("No MIB Directory defined." );
@@ -76,8 +86,7 @@ public class MibbleParser implements MibParser{
 			
             for ( File f : files ) {
 		    	
-				if ( f.getName().equals(CapabilitySetterMain.IETFMIB) 
-						                || f.getName().equals(CapabilitySetterMain.IANA)) {
+				if ( f.getName().equals(CapabilitySetterMain.IETFMIB) ) {
 					mibLoader.addDir(f);
 				}	    	
 		    }
@@ -250,7 +259,16 @@ public class MibbleParser implements MibParser{
 			} 
  	    	catch (MibLoaderException e) {
  	    		
- 	    		e.getLog().printTo(System.out);
+ 	    		MibLoaderLog mlog = e.getLog();
+ 	    		Iterator it = mlog.entries();
+ 	    		while ( it.hasNext() ) {
+ 	    			
+ 	    			LogEntry log = (LogEntry) it.next();
+ 	    			if ( log.isError() ) 
+ 	    			{
+ 	    				System.out.println(log.getMessage());
+ 	    			}
+ 	    		}
 			}
  	    }
 	}
@@ -278,7 +296,7 @@ public class MibbleParser implements MibParser{
 	
 	
 	@Override
-	public List<String>  getSupportModuleNames() throws CapabilitySetterException {
+	public List<String>  getSupportVendorModuleNames() throws CapabilitySetterException {
 		
 	    ClassLoader  loader = mibLoader.getClass().getClassLoader();
 	    CodeSource src = mibLoader.getClass().getProtectionDomain().getCodeSource();
@@ -378,51 +396,109 @@ public class MibbleParser implements MibParser{
 
 
 	@Override
-	public List<ModuleLoadingLog> importMIB(List<MIBImportInfo> mibinfos) throws CapabilitySetterException {
+	public ImportReturn importMIB(List<MIBImportInfo> mibinfos) throws CapabilitySetterException {
 	
 		File[] files = mibLocation.listFiles();
 		mibLoader.removeAllDirs();	
-		try {
-			
+		List<ImportFileInfo> importList = null;
+		
+		try {			
+			ImportReturn importReturn = new ImportReturn();
             for ( File f : files ) {
 		    	
 				if ( f.getName().equals(CapabilitySetterMain.IETFMIB) 
-						                || f.getName().equals(CapabilitySetterMain.IANA) 
 						                || f.getName().equals(CapabilitySetterMain.VENDORMIB)  ) {
 					mibLoader.addDir(f);
 				}	    	
 		    }
-    		
-    		List<ModuleLoadingLog>  logs = new ArrayList<>();
-    		for ( MIBImportInfo mInfo : mibinfos ) {
-    			
-    			BufferedReader bufReader = new BufferedReader(new StringReader(mInfo.getMib()));
-    			/**
-    			 * If the vendor information is null, it is assume it is a common MIB.
-    			 */
-    			String mibName = null;
-    			String line=null;
-    			while( (line=bufReader.readLine()) != null )
-    			{
-                    if ( line.indexOf("DEFINITIONS") >= 0 && line.indexOf("BEGIN") >= 0 && line.indexOf("::") >= 0 ) {
-                    	String[] contents = line.split(" ");
-                    	
-                    	mibName = contents[0];
-                    	break;
-                    }
-    			}
-    			if ( mibName == null || mibName.equals("") ) {
+            importList = skipExistingFile(mibinfos);
+            for ( ImportFileInfo importMib : importList ) {
+            	
+            	Writer writer = null;
+    			try {
+    				String mibFilefull = null;
+    				if ( importMib.isCommon ) {
+    					mibFilefull = mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.IETFMIB + 
+			                       File.separator + importMib.fileName;
+    				}
+    				else {
+    					mibFilefull = mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.VENDORMIB + 
+			                       File.separator + importMib.fileName;
+    				}    				
+    				FileOutputStream outputStream = new FileOutputStream(mibFilefull);	
+    			    writer = new BufferedWriter(new OutputStreamWriter(outputStream, "utf-8"));
+    			    writer.write(importMib.importInfo.getMib());
+    			    importMib.importSuccess = true;
+    			} 
+    			catch (IOException ex) {
     			 
-    				ModuleLoadingLog log = new ModuleLoadingLog(mInfo);
-    				log.setErr(ErrorTypeE.OtherError);
-    				log.setErrDescription("This file seems to be not a MIB file");
-    				
-    				continue;
-    			}   		
-    			
-    			
-    		}
-    		return logs;
+    				// Do nothing and continue;
+    				importMib.importSuccess = false;
+    			} 
+    			finally {
+    			   try {writer.close();} catch (Exception ex) {}
+    			}
+            	
+            }
+            for ( ImportFileInfo importMib : importList ) {
+            	
+            	if ( importMib.importSuccess ) {
+            		
+            		importMib.importSuccess = false;
+            		try {
+        				mibLoader.load(importMib.fileName);
+        				/*
+        				 * TDB Insert the success module into the database.
+        				 *  
+        				 */
+        				
+        				/**
+        				 * At this point, the module can be mark as successful loaded.
+        				 */
+        				importMib.importSuccess = true;
+        				importReturn.getLoadedMib().add(importMib.fileName);
+        				
+        			}
+        			catch (IOException e) {
+        				
+        				ModuleLoadingLog log = new ModuleLoadingLog(importMib.importInfo);
+        				log.setError(ErrorTypeE.IOError, "IO error on module " + importMib.fileName);
+        			} 
+         	    	catch (MibLoaderException e) {
+         	    		
+         	    		List<String> errors = new ArrayList<>();
+         	    		
+         	    		MibLoaderLog mlog = e.getLog();
+         	    		Iterator it = mlog.entries();
+         	    		boolean exist = false;
+         	    		
+         	    		while ( it.hasNext() ) {
+         	    			
+         	    			LogEntry log = (LogEntry) it.next();
+         	    			if ( log.isError() ) {
+         	    				
+         	    				String errStr = log.getMessage() + " on line: " + log.getLineNumber() + " on " + importMib.fileName;
+         	    				
+         	    				
+         	    				for ( String s : errors ) {
+         	    					if ( s.equalsIgnoreCase(errStr) ) {
+         	    						exist = true;
+         	    					}
+         	    				}
+         	    				if ( !exist ) {
+         	    					errors.add(errStr);
+         	    				}         	    				
+         	    			}
+         	    		}
+         	    		for ( String s : errors ) {
+         	    			System.out.println("End **************** " + s);
+         	    		}
+         	    		
+        			}
+            	}
+            }
+           
+    		return importReturn;
     		
 		}
 		catch ( Exception e ) {
@@ -438,7 +514,172 @@ public class MibbleParser implements MibParser{
 			}
 			throw new CapabilitySetterException(e.getClass().getName(), message);
 		}
+		finally {
+			
+			/**
+			 * Remove any module in the import list which fails to imported.
+			 */
+			 for ( ImportFileInfo importMib : importList ) {
+				 
+				 if ( !importMib.importSuccess ) {
+					 String mibFilefull = null;
+	    			 if ( importMib.isCommon ) {
+	    					mibFilefull = mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.IETFMIB + 
+				                       File.separator + importMib.fileName;
+	    			 }
+	    			 else {
+	    				mibFilefull = mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.VENDORMIB + 
+				                       File.separator + importMib.fileName;
+	    			 }
+	    		     File f = new File(mibFilefull);
+	    		     f.delete();	    			 
+				 }
+			 }
+		}
 	}
 	
+	/**
+	 * 
+	 * @param rename -- If rename is true, rename the import files, else delete them
+	 */
+	public void cleanupImpoertFile( List<String> importFiles ) {
+	
+		File[] files = mibLocation.listFiles();
+		for ( File f : files ) {
+	    	
+			if ( f.getName().equals(CapabilitySetterMain.IETFMIB) 
+					                || f.getName().equals(CapabilitySetterMain.VENDORMIB)  ) {
+				File[] existings =  f.listFiles();
+				
+				for ( File existing : existings ) {
+					
+					for ( String importFile : importFiles ) {
+						
+						if ( existing.getName().equals(importFile) ) {
+							
+							existing.delete();
+							break;
+						}
+					}
+				}
+			}	    	
+	    }
+	}
+	
+	
+	/**
+	 * Used to skip MIB which already exist in the repository.
+	 * 
+	 * @param mibFile  -- Import MIB from UI.
+	 * @return  -- A list of file ready for import.
+	 * 
+	 * @throws IOException 
+	 */
+	private List<ImportFileInfo>  skipExistingFile( List<MIBImportInfo> mibFile ) {
+		
+		List<ImportFileInfo> finalList = new ArrayList<>();
+		File[] files = mibLocation.listFiles();
+		File[] commonMibs = null;
+		File[] vendorMibs = null;
+		
+        for ( File f : files ) {
+	    	
+			if ( f.getName().equals(CapabilitySetterMain.IETFMIB) ) {
+				commonMibs = f.listFiles();
+			}
+			if ( f.getName().equals(CapabilitySetterMain.VENDORMIB) ) {
+			
+				vendorMibs = f.listFiles();
+			}			
+        }
+		
+		for ( MIBImportInfo mInfo : mibFile ) {
+			
+			BufferedReader bufReader = new BufferedReader(new StringReader(mInfo.getMib()));
+			/**
+			 * If the vendor information is null, it is assume it is a common MIB.
+			 */
+			String mibName = null;
+			String line=null;
+			
+			try {
+				while( (line = bufReader.readLine()) != null )
+				{
+					line = line.trim();
+	                if ( line.indexOf("DEFINITIONS") >= 0 && line.indexOf("BEGIN") >= 0 && line.indexOf("::") >= 0 ) {
+	                	String[] contents = line.split(" ");
+	                	
+	                	mibName = contents[0];
+	                	break;
+	                }
+				}
+			}
+			catch ( Exception e ) {
+				
+				//Skip this one and move on.
+				continue;
+			}
+			
+			if ( mibName == null || mibName.equals("") ) {
+			 
+				ModuleLoadingLog log = new ModuleLoadingLog(mInfo);
+				log.setErr(ErrorTypeE.OtherError);
+				log.setErrDescription("This file seems to be not a MIB file");
+				
+				continue;
+			}   
+			
+			boolean exist = false;
+			for ( File f : commonMibs ) {
+				
+				if ( mibName.equalsIgnoreCase(f.getName()) ) {
+					exist = true;
+					break;
+				}
+			}
+			if ( exist ) {
+				continue;
+			}
+            for ( File f : vendorMibs ) {
+				
+				if ( mibName.equalsIgnoreCase(f.getName()) ) {
+					exist = true;
+					break;
+				}
+			}
+            if ( exist ) {
+            	continue;
+            }
+			ImportFileInfo fileInfo = new ImportFileInfo(mInfo);
+			fileInfo.fileName = mibName;
+			fileInfo.isCommon = true;
+			
+			finalList.add(fileInfo);			
+		}
+		return finalList;
+	}
+	
+	
+	public class ImportFileInfo {
+		
+		String fileName;
+		
+		boolean isCommon;
+		boolean importSuccess;
+		MIBImportInfo importInfo;
+		
+		public ImportFileInfo( MIBImportInfo mInfo ) {
+		
+			this.importInfo = mInfo;
+		}
+		
+	}
 
+
+	@Override
+	public void removeMibInRepository(List<String> moduleNames) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
