@@ -31,14 +31,15 @@
  *      
  */
 package edu.harvard.integer.common.topology;
+
 /**
  * @author David Taylor
  *
+ * Every service element can be only one type.
  */
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
-
 
 @Entity
 public class ServiceElementType extends BaseEntity {
@@ -49,6 +50,11 @@ public class ServiceElementType extends BaseEntity {
 	private String vendor = null;
 
 	private String elementType = null;
+
+	/**
+	 * A specific set of options installed.
+	 */
+	private String featureSet = null;
 
 	/**
 	 * @return the firmware
@@ -108,6 +114,21 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	public void setElementType(String elementType) {
 		this.elementType = elementType;
+	}
+
+	/**
+	 * @return the featureSet
+	 */
+	public String getFeatureSet() {
+		return featureSet;
+	}
+
+	/**
+	 * @param featureSet
+	 *            the featureSet to set
+	 */
+	public void setFeatureSet(String featureSet) {
+		this.featureSet = featureSet;
 	}
 
 }

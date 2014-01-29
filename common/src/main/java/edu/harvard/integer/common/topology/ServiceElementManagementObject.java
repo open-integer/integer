@@ -121,21 +121,6 @@ public abstract class ServiceElementManagementObject extends BaseEntity {
 		this.namespace = namespace;
 	}
 
-//	/**
-//	 * @return the capability
-//	 */
-//	public Capability getCapability() {
-//		return capability;
-//	}
-//
-//	/**
-//	 * @param capability
-//	 *            the capability to set
-//	 */
-//	public void setCapability(Capability capability) {
-//		this.capability = capability;
-//	}
-
 	/**
 	 * @return the displayName
 	 */

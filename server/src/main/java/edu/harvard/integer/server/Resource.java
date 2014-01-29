@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,17 +30,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.database;
 
-import edu.harvard.integer.common.exception.IntegerException;
+package edu.harvard.integer.server;
+
+
+
+
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author David Taylor
  *
  */
+public class Resource {
 
-public interface DatabaseServiceEJB {
-	public void init();
-	
-	public String showUsers() throws IntegerException;
+    @Produces
+    public Logger produceLog(InjectionPoint injectionPoint) {
+    
+    	return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
+    }
+
+
 }

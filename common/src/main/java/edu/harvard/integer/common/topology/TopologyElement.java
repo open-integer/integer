@@ -31,12 +31,15 @@
  *      
  */
 package edu.harvard.integer.common.topology;
+
 /**
  * @author David Taylor
  *
  */
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
@@ -48,6 +51,27 @@ import edu.harvard.integer.common.BaseEntity;
 @Entity
 public class TopologyElement extends BaseEntity {
 
-	@ManyToOne
-	private Address address = null;
+	/**
+	 * Address is separate from layer since a layer like IP might have
+	 * different address types, e.g., IPv4 or IPv6. A topology element may exist
+	 * at only one layer. Multiple addresses are possible for an
+	 * element at a given layer.
+	 */
+	@OneToMany
+	private List<Address> address = null;
+
+	/**
+	 * @return the address
+	 */
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address
+	 *            the address to set
+	 */
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
 }

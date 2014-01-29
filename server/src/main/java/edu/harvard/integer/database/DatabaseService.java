@@ -78,7 +78,8 @@ public class DatabaseService implements DatabaseServiceEJB {
 		IntegerApplication.register(this);
 
 		logger.info("Create user dtaylor");
-//		
+		
+		// TODO: Move to JUnit
 //		User u = new User();
 //		u.setName("dtaylor");
 //		

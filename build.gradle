@@ -3,9 +3,9 @@ apply plugin: 'ear'
 apply plugin: 'java'
 
 dependencies {
-	deploy project(path: ':client', configuration: 'archives')
-	deploy project(':server')
 	deploy project(':common')
+	deploy project(':server')
+	deploy project(path: ':client', configuration: 'archives')
 }
 
 ear {

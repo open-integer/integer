@@ -51,7 +51,6 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.user.User;
 /**
  * @author David Taylor
  * 
