@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.widget.HuitDialogBox;
 import edu.harvard.integer.client.widget.HuitFlexTable;
 import edu.harvard.integer.shared.FieldVerifier;
@@ -120,8 +121,7 @@ public class MainClient implements EntryPoint {
 						Object[] rowData = { "Huit " + row,
 								"192.168.55." + row,
 								"255.255.255.255.100." + row, "Fiber " + row,
-								"Normal" + row,
-								"sw" + row, "hw" + row };
+								"Normal" + row, "sw" + row, "hw" + row };
 						flexTable.addRow(rowData);
 					}
 					flexTable.applyDataRowStyles();
@@ -156,10 +156,8 @@ public class MainClient implements EntryPoint {
 				flexTable.getRowFormatter().addStyleName(0, "flexTableHeader");
 
 				for (int row = 1; row < 5; row++) {
-					Object[] rowData = { "module " + row,
-							row + ":00 Jan 28",
-							"1.2.3.4.5.7.8.9.10.11.12." + row,
-							"Cisco" + row};
+					Object[] rowData = { "module " + row, row + ":00 Jan 28",
+							"1.2.3.4.5.7.8.9.10.11.12." + row, "Cisco" + row };
 					flexTable.addRow(rowData);
 				}
 				flexTable.applyDataRowStyles();
@@ -170,14 +168,18 @@ public class MainClient implements EntryPoint {
 				RootPanel.get("root").add(currentWidget);
 			}
 		});
-		
-		Element importElement = (Element) Document.get().getElementById("MibImport");
+
+		Element importElement = (Element) Document.get().getElementById(
+				"MibImport");
 		Anchor importAnchor = Anchor.wrap(importElement);
 		importAnchor.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				HuitDialogBox importDialog = new HuitDialogBox("Import MIB");
+				MIBImportPanel importPanel = new MIBImportPanel();
+				HuitDialogBox importDialog = new HuitDialogBox("Import MIB",
+						importPanel);
+				importDialog.setSize("400px", "400px");
 				importDialog.center();
 				importDialog.show();
 			}

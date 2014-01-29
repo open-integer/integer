@@ -69,7 +69,14 @@ h1 {
   margin: 15px 6px 6px;
 }
 
+.gwt-CheckBox {
+  margin-left:  0;
+  margin-right: auto;
+}
 
+.gwt-FileUpload {
+	height: 25px;
+}
 
 .cw-FlexTable td {
   border: 1px solid #BBBBBB;

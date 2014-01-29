@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -13,7 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class HuitDialogBox extends DialogBox {
-	private VerticalPanel contentPanel = new VerticalPanel();
+	private FormPanel formPanel;
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private HorizontalPanel leftButtonPanel = new HorizontalPanel();
 	private HorizontalPanel rightButtonPanel = new HorizontalPanel();
@@ -21,7 +22,8 @@ public class HuitDialogBox extends DialogBox {
 	private Button closeButton = new Button("Close");
 	private Button okButton = new Button("OK");
 
-	public HuitDialogBox(String title) {
+	public HuitDialogBox(String title, FormPanel formPanel) {
+		this.formPanel = formPanel;
 		setText(title);
 		setGlassEnabled(true);
 	    setAnimationEnabled(true);
@@ -55,7 +57,7 @@ public class HuitDialogBox extends DialogBox {
 	    rightButtonPanel.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
 	    
 	    
-		dialogContents.add(contentPanel);
+		dialogContents.add(formPanel);
 		dialogContents.add(buttonPanel);
 		
 	}
@@ -68,7 +70,8 @@ public class HuitDialogBox extends DialogBox {
 	
 	private ClickHandler okHandler = new ClickHandler() {
 		public void onClick(ClickEvent event) {
-			hide();
+			if (formPanel != null)
+				formPanel.submit();
 		}
 	};
 }
