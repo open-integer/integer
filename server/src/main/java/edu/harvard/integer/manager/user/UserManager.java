@@ -38,6 +38,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.Contact;
 import edu.harvard.integer.common.user.User;
@@ -79,24 +80,31 @@ public class UserManager {
 		return user;
 	}
 	
-	public User modifyUser(User user) {
+	public User modifyUser(User user)  throws IntegerException {
 		logger.info("Modify User (" + user.getAlias() + ") " + user.getFirstName() + " " + user.getLastName());
 		return user;
 	}
 	
-	public void deleteUser(User user) {
+	public void deleteUser(User user)  throws IntegerException {
 		logger.info("Delete User (" + user.getAlias() + ") " + user.getFirstName() + " " + user.getLastName());
 	}
+
+	public User[] getAllUsers() throws IntegerException {
+		IDType type = new IDType();
+		type.setClassType(User.class);
 	
-	public Contact addContact(Contact contact) {
+		return dbm.findAll(type);
+	}
+	
+	public Contact addContact(Contact contact)  throws IntegerException {
 		return contact;
 	}
 	
-	public Contact modifyContact(Contact contact) {
+	public Contact modifyContact(Contact contact)  throws IntegerException {
 		return contact;
 	}
 	
-	public void deleteContact(Contact contact) {
+	public void deleteContact(Contact contact)  throws IntegerException {
 		
 	}
 	

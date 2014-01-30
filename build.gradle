@@ -6,6 +6,7 @@ dependencies {
 	deploy project(':common')
 	deploy project(':server')
 	deploy project(path: ':client', configuration: 'archives')
+	
 }
 
 ear {
@@ -19,5 +20,4 @@ ear {
 }
 
 version = '1.0'
-
 

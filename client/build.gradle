@@ -65,10 +65,7 @@ dependencies {
 			classifier = 'sources'
 		}
 	}
-}
-
-task ear(dependsOn: 'gwtc') {
-	printf("GWT compile client")	
+	
 }
 
 task gwtc (dependsOn: classes, type: JavaExec) {

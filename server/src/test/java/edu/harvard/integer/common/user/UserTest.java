@@ -33,7 +33,7 @@
 
 package edu.harvard.integer.common.user;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import javax.inject.Inject;
 
@@ -47,9 +47,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.EmailAddress;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDInterface;
 import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.Orginization;
+import edu.harvard.integer.common.PhoneNumber;
+import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.util.Resource;
+import edu.harvard.integer.database.DatabaseManager;
 import edu.harvard.integer.manager.user.UserManager;
 
 /**
@@ -59,50 +67,51 @@ import edu.harvard.integer.manager.user.UserManager;
 @RunWith(Arquillian.class)
 public class UserTest {
 
-//	@Inject
-//	private UserManager userManager;
-//	
-//	@Inject
-//	private Logger logger;
-//	
-//	 @Deployment
-//	    public static Archive<?> createTestArchive() {
-//	        return ShrinkWrap.create(WebArchive.class, "test.war")
-//	                .addClasses(Resource.class)
-//	                .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
-//	                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-//	                // Deploy our test datasource
-//	                .addAsWebInfResource("test-ds.xml");
-//	    }
-//
-//	@Test
-//	public void addOneUser() {
-//		logger.info("Create user dtaylor");
-//		
-//		User u = new User();
-//		u.setName("dtaylor");
-//		
-//		IDType userType = new IDType();
-//		userType.setClassType(User.class);
-//		u.setIdType(userType);
-//		u.setFirstName("Dave");
-//		u.setLastName("Taylor");
-//		u.setUuid("123456789");
-//		
-//		try {
-//			userManager.addUser(u);
-//			
-//		} catch (IntegerException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("Error saveing user " + e);
-//		}
-//		
-//		
-//	}
+	@Inject
+	private UserManager userManager;
+	
+	@Inject
+	private Logger logger;
+	
+	 @Deployment
+	public static Archive<?> createTestArchive() {
+		return ShrinkWrap
+				.create(WebArchive.class, "test.war")
+				.addClasses(Resource.class)
+				.addClasses(User.class, BaseEntity.class, IDInterface.class, ID.class, Orginization.class, IDType.class)
+				.addClasses(UserManager.class, DatabaseManager.class, ErrorCodeInterface.class, IntegerException.class)
+				.addClasses(Contact.class, ContactType.class, EmailAddress.class, PhoneNumber.class)
+				.addAsResource("META-INF/test-persistence.xml",
+						"META-INF/persistence.xml")
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+				// Deploy our test datasource
+				.addAsWebInfResource("test-ds.xml");
+	}
+	
+
 
 	@Test
 	public void addOneUser() {
+		logger.info("Create user dtaylor");
+		
+		User u = new User();
+		u.setName("dtaylor");
+		
+		IDType userType = new IDType();
+		userType.setClassType(User.class);
+		u.setIdType(userType);
+		u.setFirstName("Dave");
+		u.setLastName("Taylor");
+		u.setUuid("123456789");
+		
+		try {
+			userManager.addUser(u);
+			
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Error saveing user " + e);
+		}
 		
 	}
 }
