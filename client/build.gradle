@@ -36,75 +36,79 @@ jettyRun.scanIntervalSeconds = 5                    // The interval in seconds b
 
 // Package War
 war {
-    from gwtWarPath
+	from gwtWarPath
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
 	providedCompile project(':common')
 	providedCompile project(':server')
-	// compile project(':server')
-    // Compile GWT libs, needed for gwtCompile and the javaCompile
-    // Also includes the servlet-api
-    compile "com.google.gwt:gwt-user:${gwtVersion}"
-    compile "com.google.gwt:gwt-dev:${gwtVersion}"
 
-    // Needed for GWT compile and at runtime for RequestBuilder
-    // Specify two artifacts as workaround for GRADLE-1934
-    compile('javax.validation:validation-api:1.0.0.GA') {
-        artifact {
-            name = 'validation-api'
-            type = 'jar'
-        }
-        artifact {
-            name = 'validation-api'
-            type = 'jar'
-            classifier = 'sources'
-        }
-    }
+	// Compile GWT libs, needed for gwtCompile and the javaCompile
+	// Also includes the servlet-api
+	compile "com.google.gwt:gwt-user:${gwtVersion}"
+	compile "com.google.gwt:gwt-dev:${gwtVersion}"
+
+	// Needed for GWT compile and at runtime for RequestBuilder
+	// Specify two artifacts as workaround for GRADLE-1934
+	compile('javax.validation:validation-api:1.0.0.GA') {
+		artifact {
+			name = 'validation-api'
+			type = 'jar'
+		}
+		artifact {
+			name = 'validation-api'
+			type = 'jar'
+			classifier = 'sources'
+		}
+	}
+}
+
+task ear(dependsOn: 'gwtc') {
+	printf("GWT compile client")	
 }
 
 task gwtc (dependsOn: classes, type: JavaExec) {
 
-    description = "GWT compile to JavaScript (production mode)"
- 
-    main = 'com.google.gwt.dev.Compiler'
- 
-    classpath {[
-        sourceSets.main.java.srcDirs,
-        configurations.compile
-    ]}
+	description = "GWT compile to JavaScript (production mode)"
 
-    args = [
-        gwtModule,
-        '-war', gwtWarPath
-    ]
- 
-    maxHeapSize = '256M'
+	main = 'com.google.gwt.dev.Compiler'
+
+	classpath {[
+			sourceSets.main.java.srcDirs,
+			configurations.compile
+		]}
+
+	args = [
+		gwtModule,
+		'-war', gwtWarPath
+	]
+
+	maxHeapSize = '256M'
 }
 
 task devmode (dependsOn: classes, type: JavaExec) {
 
-    description = "Run development mode"
- 
-    main = 'com.google.gwt.dev.DevMode'
- 
-    classpath {[
-        sourceSets.main.java.srcDirs,           // Java source
-        sourceSets.main.output.resourcesDir,    // Generated resources
-        sourceSets.main.output.classesDir,      // Generated classes
-        sourceSets.main.compileClasspath,       // Deps
-        configurations.compile
-    ]}
- 
-    args = (gwtModule instanceof List)?gwtModule:[gwtModule]
-    args += [
-        '-startupUrl', "http://${gwtServerHost}:${gwtServerPort}/${gwtStartupUrl}",
-        '-war', gwtWarPath
-    ]
- 
-    maxHeapSize = '256M'
+	description = "Run development mode"
+
+	main = 'com.google.gwt.dev.DevMode'
+
+	classpath {[
+			sourceSets.main.java.srcDirs,           // Java source
+			sourceSets.main.output.resourcesDir,    // Generated resources
+			sourceSets.main.output.classesDir,      // Generated classes
+			sourceSets.main.compileClasspath,       // Deps
+			configurations.compile
+		]}
+
+	args = (gwtModule instanceof List)?gwtModule:[gwtModule]
+	args += [
+		'-startupUrl', "http://${gwtServerHost}:${gwtServerPort}/${gwtStartupUrl}",
+		'-war', gwtWarPath
+	]
+
+	maxHeapSize = '256M'
 }
