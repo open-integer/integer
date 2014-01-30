@@ -114,4 +114,25 @@ public class UserTest {
 		}
 		
 	}
+	
+	@Test
+	public void findUser() {
+		logger.info("Find users");
+		
+		addOneUser();
+		
+		try {
+			User[] users = userManager.getAllUsers();
+			logger.info("Found " + users.length + " users");
+			
+			for (User user : users) {
+				logger.info("Found user " + user.getFirstName() + " " + user.getLastName());
+			}
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			
+			fail("Error finding all users " + e.getMessage());
+		}
+	}
 }
