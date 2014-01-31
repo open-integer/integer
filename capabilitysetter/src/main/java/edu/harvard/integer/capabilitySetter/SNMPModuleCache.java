@@ -35,22 +35,41 @@ package edu.harvard.integer.capabilitySetter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPTable;
 
 /**
+ * This class contains all application needed information. 
+ * It is contains Module information and tables and scale if any on that module.
+ * 
  * @author dchan
  *
  */
 public class SNMPModuleCache {
 
+	/**
+	 * Contain module information.
+	 */
 	private SNMPModule module;
+	
+	/**
+	 * SNMP tables contained by the module.
+	 */
 	private List<SNMPTable> tbllist = new ArrayList<>();
+	
+	/**
+	 * Any scale contained by the module.
+	 */
 	private List<SNMP> scalelist = new ArrayList<>();
 	
-	private Map<String, SNMP> attMap;
+	/**
+	 * A map for fast searching based on OID.
+	 */
+	private Map<String, SNMP> attMap = new ConcurrentHashMap<String, SNMP>();
+	
 	
 	public SNMPModuleCache( SNMPModule module ) 
 	{

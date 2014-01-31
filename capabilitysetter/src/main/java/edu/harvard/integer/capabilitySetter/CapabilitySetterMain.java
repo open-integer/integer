@@ -42,74 +42,204 @@ import java.util.List;
 import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory;
 import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory.ParserProvider;
 import edu.harvard.integer.capabilitySetter.snmp.MibParser;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 
-
 /**
+ * This Class is the main class for doing parser SNMP MIB using CLI. It provides
+ * the following functionalities:
+ * 
+ * Import MIB into the repository -- Can be imported all Modules in a directory
+ * or a file. Verify any error on the current repository. Check what MODULEs
+ * containing in the repository.
+ * 
+ * That repository contains two directories:
+ * 
+ * ietf -- Contains all common MIBs. vendors -- Contians all vendor MIBs.
+ * 
+ * 
  * @author dchan
- *
  */
 public class CapabilitySetterMain {
 
-public static String MibResourceDir = "mibs/ietf/";
-	
-	public static String IANA = "iana";	
-	public static String MIBFILELOCATON = "mibFileLocation";
-	public static String IETFMIB = "ietf";
-	public static String VENDORMIB = "vendors";
-	
-	public static void main(String[] args)  {
+	/**
+	 * The Enum ParserCmdE.
+	 */
+	public enum ParserCmdE {
 
-		List<MIBImportInfo>  importMibs = new ArrayList<>();
-		String readMibs = "/Users/dchan/sandbox/integer/capabilitysetter/testfinal/ietf";
-		File dirf = new File(readMibs);
-		
-		File[] fs = dirf.listFiles();
-		for ( File f : fs ) {
-			
-			if ( f.isFile() ) {
-				
-				try {
-										
-				    String content = getFileContents(f);
-				    MIBImportInfo minfo = new MIBImportInfo();
-				    minfo.setMib(content);
-				    
-				    minfo.setFileName(f.getName());
-				    importMibs.add(minfo);
-				}
-				catch ( Exception e) 
-				{
-					
-				}
+ 		ImportDir, 
+        ImportFile, 
+        Verify, 
+        GetCommonInfo, 
+        GetVendorInfo,
+	}
+
+	/** The repository local directory location. */
+	public static String MIBFILELOCATON = "mibFileLocation";
+
+	/**  Specify common MIB directory. */
+	public static String IETFMIB = "ietf";
+
+	/**  Specify vendors MIB directory. */
+	public static String VENDORMIB = "vendors";
+
+	/** CLI cmd. */
+	private ParserCmdE cmd;
+	
+	/** The install directory to hold MIB modules. */
+	private String installDir;
+	
+	/** The import directory to import MIB modules. */
+	private String importDir;
+	
+	/** The import file. */
+	private String importFile;
+
+	/**
+	 * Gets the usage to display help.
+	 *
+	 * @return the usage
+	 */
+	private String getUsage() {
+
+		StringBuffer helpBuf = new StringBuffer();
+		helpBuf.append("\nMib parser utility. \n\n");
+		helpBuf.append("Usage: \n");
+		helpBuf.append("  parserutil ...\n\n");
+
+		helpBuf.append("\n");
+		helpBuf.append("--help\n");
+
+		return helpBuf.toString();
+	}
+
+	/**
+	 * The main method.
+	 * 
+	 * @param args
+	 *         <p>
+	 *            the arguments contain following options: <br>
+	 *               -impDir xxx yyy --- Import all modules in a directory "xxx" import modules
+	 *                                   directory. "yyy" output modules location. <br>
+	 *               -impFile xxx yyy --- Import a file into a repository. "xxx" file to be imported.
+	 *                                    The repository directory.   <br>
+	 *               -verify xxx --- "xxx" the directory contains SNMP module files to be verified.  <br>
+	 *               -getComm xxx ---  Check Common Module in the repository xxx.  <br>
+	 *               -getVen xxx --- Check Vendors Modules int the repository xxx   <br>
+	 *           </p>
+	 * 
+	 */
+	public static void main(String[] args) {
+
+		CapabilitySetterMain service = new CapabilitySetterMain();
+		for (int i = 0; i < args.length; i++) {
+			if (args[i].trim().equalsIgnoreCase("-impdir")) {
+				service.cmd = ParserCmdE.ImportDir;
+				service.importDir = args[++i];
+				service.installDir = args[++i];
+			} else if (args[i].trim().equalsIgnoreCase("-verify")) {
+
+				service.cmd = ParserCmdE.Verify;
+				service.installDir = args[++i];
 			}
 		}
-		System.setProperty(MIBFILELOCATON, "/Users/dchan/sandbox/integer/capabilitysetter/testmibs");
-		MibParser mibParser =  MibParserFactory.getModuleSource(ParserProvider.MIBBLE);
+
+		if ( service.cmd == null ) {
+			System.out.println(service.getUsage());
+		}
+		switch (service.cmd) {
+
+		case GetCommonInfo:
+			break;
+
+		case GetVendorInfo:
+			break;
+
+		case ImportDir:
+			service.doImportDir();
+			break;
+
+		case ImportFile:
+			break;
+
+		case Verify:
+			break;
+
+		default:
+			System.out.println(service.getUsage());
+		}
+	}
+
+	/**
+	 * Do import dir.
+	 */
+	private void doImportDir() {
+
+		List<MIBImportInfo> importMibs = new ArrayList<>();
+		String commonDir = importDir + "/ietf";
+		File dirf = new File(commonDir);
+		File[] fs = dirf.listFiles();
+		
+		importFiles(importMibs, fs, true);
+		
+		String vendorDir = importDir + "/vendors";
+		dirf = new File(vendorDir);
+		fs = dirf.listFiles();
+		importFiles(importMibs, fs, false);
+		
+		System.setProperty(MIBFILELOCATON, installDir);
 		try {
-			mibParser.importMIB(importMibs);
-		} 
-		catch (CapabilitySetterException e) {
+			MibParser mibParser = MibParserFactory.getParserSource(ParserProvider.MIBBLE);
+			mibParser.importMIB(importMibs.toArray(new MIBImportInfo[importMibs.size()]), true);
+		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		/*
-		
-		try {
-			mibParser.getLoadedSNMPObjects();
-		} 
-		catch (CapabilitySetterException e) {
-			e.printStackTrace();
-		}
-		*/		
-		System.out.println("After mib parser ... ");
+
 	}
 
-	static String getFileContents(File file)  throws IOException {
-		
+	
+	
+	/**
+	 * Import files into importMibs for fs.
+	 *
+	 * @param importMibs the import mibs
+	 * @param fs the fs
+	 * @param isCommon if 
+	 */
+	private void importFiles(List<MIBImportInfo> importMibs, File[] fs, boolean isCommon) {
+
+		for (File f : fs) {
+
+			if (f.isFile()) {
+				try {
+
+					String content = getFileContents(f);
+					MIBImportInfo minfo = new MIBImportInfo();
+					minfo.setMib(content);
+
+					minfo.setStandardMib(isCommon);
+					minfo.setFileName(f.getName());
+					importMibs.add(minfo);
+				} 
+				catch (Exception e) {}
+			}
+		}
+	}
+
+	/**
+	 * Gets the file contents.
+	 * 
+	 * @param file
+	 *            the file
+	 * @return the file contents
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	static String getFileContents(File file) throws IOException {
+
 		String p = file.getAbsolutePath();
-		String content = new String(Files.readAllBytes(Paths.get(p)));		
+		String content = new String(Files.readAllBytes(Paths.get(p)));
 		return content;
-     }
+	}
 }
