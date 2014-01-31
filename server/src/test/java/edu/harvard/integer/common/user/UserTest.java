@@ -92,7 +92,6 @@ public class UserTest {
 	}
 	
 
-
 	@Test
 	public void addOneUser() {
 		logger.info("Create user dtaylor");
