@@ -74,6 +74,8 @@ import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
+import edu.harvard.integer.common.util.DisplayableInterface;
 
 
 /**
@@ -479,7 +481,8 @@ public class MibbleParser implements MibParser{
 		} 
 		catch ( IOException ioe ) {
 			
-			throw new IntegerException(ioe, CommonErrorCodes.IOError, ioe.getMessage());
+			throw new IntegerException(ioe, CommonErrorCodes.IOError, 
+					new DisplayableInterface[] { new NonLocaleErrorMessage(ioe.getMessage()) } );
 		}
 		catch ( MibLoaderException e) {
 			
@@ -511,7 +514,8 @@ public class MibbleParser implements MibParser{
 	    		
 	    		sb.append(s + "\n");
 	    	}	    	
-			throw new IntegerException(e, CommonErrorCodes.ParserError, sb.toString());
+			throw new IntegerException(e, CommonErrorCodes.ParserError, 
+					new DisplayableInterface[] { new NonLocaleErrorMessage(sb.toString()) } );
 		}
 	}
 
@@ -575,7 +579,8 @@ public class MibbleParser implements MibParser{
 			else {				
 				message = e.getMessage();
 			}
-			throw new IntegerException(e, CommonErrorCodes.RunTimeError,  message);
+			throw new IntegerException(e, CommonErrorCodes.RunTimeError,  
+					new DisplayableInterface[] { new NonLocaleErrorMessage(message) });
 		}
 		finally {
 			
@@ -882,7 +887,9 @@ public class MibbleParser implements MibParser{
 		}
 		else if ( !dir.mkdir() )  {
 			
-			throw new IntegerException(null, CommonErrorCodes.IOError, "Can not create a tmp directory for processing"); 
+			// TODO: this message needs to be moved to the locale bundle.
+			throw new IntegerException(null, CommonErrorCodes.IOError,
+					new DisplayableInterface[] { new NonLocaleErrorMessage("Can not create a tmp directory for processing")}); 
 		}
 		dir = new File( mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.VENDORMIB + 
                 File.separator + TmpFilePrefix );
@@ -892,8 +899,9 @@ public class MibbleParser implements MibParser{
              }
         }
         else if ( !dir.mkdir() )  {
-
-             throw new IntegerException(null, CommonErrorCodes.IOError, "Can not create a tmp directory for processing"); 
+        	// TODO: this message needs to be moved to the locale bundle.
+             throw new IntegerException(null, CommonErrorCodes.IOError, 
+            		 new DisplayableInterface[] { new NonLocaleErrorMessage("Can not create a tmp directory for processing")} ); 
         }
 	}
 	

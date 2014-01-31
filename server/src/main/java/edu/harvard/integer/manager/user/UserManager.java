@@ -78,6 +78,11 @@ public class UserManager implements UserManagerInterface {
 	@Inject
 	private DatabaseManager dbm;
 
+	public UserManager() {
+		logger.info("Create UserManager");
+		
+	}
+	
 	/**
 	 * Add one user to the system. The user will be saved into the database. All
 	 * setup for the user will be done after the call completes.

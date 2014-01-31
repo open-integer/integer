@@ -56,9 +56,11 @@ import edu.harvard.integer.common.Orginization;
 import edu.harvard.integer.common.PhoneNumber;
 import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.common.util.Resource;
 import edu.harvard.integer.database.DatabaseManager;
 import edu.harvard.integer.manager.user.UserManager;
+import edu.harvard.integer.manager.user.UserManagerInterface;
 
 /**
  * @author David Taylor
@@ -67,8 +69,10 @@ import edu.harvard.integer.manager.user.UserManager;
 @RunWith(Arquillian.class)
 public class UserTest {
 
-	@Inject
-	private UserManager userManager;
+//	@Inject
+//	private UserManager userManager;
+	
+	@Inject DatabaseManager dbm;
 	
 	@Inject
 	private Logger logger;
@@ -80,6 +84,7 @@ public class UserTest {
 				.addClasses(Resource.class)
 				.addClasses(User.class, BaseEntity.class, IDInterface.class, ID.class, Orginization.class, IDType.class)
 				.addClasses(UserManager.class, DatabaseManager.class, ErrorCodeInterface.class, IntegerException.class)
+				.addClasses(DisplayableInterface.class, UserManagerInterface.class)
 				.addClasses(Contact.class, ContactType.class, EmailAddress.class, PhoneNumber.class)
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -105,7 +110,8 @@ public class UserTest {
 		u.setUuid("123456789");
 		
 		try {
-			userManager.addUser(u);
+			//userManager.addUser(u);
+			dbm.update(u);
 			
 		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
@@ -122,7 +128,10 @@ public class UserTest {
 		addOneUser();
 		
 		try {
-			User[] users = userManager.getAllUsers();
+			//User[] users = userManager.getAllUsers();
+			IDType type = new IDType();
+			type.setClassType(User.class);
+			User[] users = dbm.findAll(type);
 			logger.info("Found " + users.length + " users");
 			
 			for (User user : users) {

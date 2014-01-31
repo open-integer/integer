@@ -42,22 +42,19 @@ public enum CommonErrorCodes implements ErrorCodeInterface {
 	
 	
 	/** The IO error indicate IO error accessing a system resource such as file. */
-	IOError("IOError", "IO Error"),
+	IOError("IOError"),
 	
 	/**  The Run time error is. */
-	RunTimeError("RuntimeError", "Run time error"),
+	RunTimeError("RuntimeError"),
 	
 	/** The Parser error for parser MIB or scripts. */
-	ParserError("ParserError", "Parser Error"),
+	ParserError("ParserError"),
 	
 	/** The Directory not valid. */
-	DirectoryNotValid("DirectoryNotValid", "Directory is not valid");
+	DirectoryNotValid("DirectoryNotValid");
 
 	/** The error code. */
 	private String errorCode = null;
-	
-	/** The message. */
-	private String message = null;
 	
 	/**
 	 * Instantiates a new common error codes.
@@ -65,18 +62,10 @@ public enum CommonErrorCodes implements ErrorCodeInterface {
 	 * @param errorCode the error code
 	 * @param message the message
 	 */
-	private CommonErrorCodes(String errorCode, String message) {
-		this.message = message;
+	private CommonErrorCodes(String errorCode) {
+		this.errorCode = errorCode;
 	}
 	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getMessage()
-	 */
-	@Override
-	public String getMessage() {
-		return message;
-	}
-
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
 	 */

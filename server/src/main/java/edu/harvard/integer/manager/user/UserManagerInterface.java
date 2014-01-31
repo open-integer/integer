@@ -33,12 +33,15 @@
 
 package edu.harvard.integer.manager.user;
 
+import javax.ejb.Local;
+
 import edu.harvard.integer.common.exception.IntegerException;
 
 /**
  * @author David Taylor
  *
  */
+@Local
 public interface UserManagerInterface {
 
 	public String showUsers() throws IntegerException;

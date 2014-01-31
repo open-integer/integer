@@ -31,18 +31,34 @@
  *      
  */
 
-package edu.harvard.integer.common.util;
+package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
+
+import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
  * @author David Taylor
  *
- * Interface that must be implemented by any object that is to be displayed on the GUI. This 
- * will allow for the object to be displayed in the users locale.
+ * This is a wrapper around a String that can not be converted to a users locale. This should only be used 
+ * for things like exception messages that are not handled. So the message must be passed as is.
  * 
  */
-public interface DisplayableInterface {
+public class NonLocaleErrorMessage implements DisplayableInterface {
 
-	public String toDisplayString(Locale local);
+	public String message = null;
+	
+	public NonLocaleErrorMessage(String message) {
+		this.message = message;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
+	 */
+	@Override
+	public String toDisplayString(Locale local) {
+		
+		return message;
+	}
+
 }
