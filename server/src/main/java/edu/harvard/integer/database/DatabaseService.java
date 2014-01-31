@@ -32,27 +32,16 @@
  */
 package edu.harvard.integer.database;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.IDType;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.server.IntegerApplication;
 /**
  * @author David Taylor
@@ -72,66 +61,17 @@ public class DatabaseService implements DatabaseServiceEJB {
 	@Inject
 	private Logger logger;
 	
+	/**
+	 * All DatabaseService initialization occurs here. 
+	 */
 	@PostConstruct
 	public void init() {
-		
+
+		logger.debug("DatabaseService starting");
+
+		// Register the application for RESTfull interface
 		IntegerApplication.register(this);
 
-		logger.info("Create user dtaylor");
-		
-		// TODO: Move to JUnit
-//		User u = new User();
-//		u.setName("dtaylor");
-//		
-//		IDType userType = new IDType();
-//		userType.setClassType(User.class);
-//		u.setIdType(userType);
-//		u.setFirstName("Dave");
-//		u.setLastName("Taylor");
-//		u.setUuid("123456789");
-//		
-//		try {
-//			dbm.update(u);
-//		} catch (IntegerException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	
-		try {
-			logger.info("Users " + showUsers());
-		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
-
-	@GET
-	@Path("/Users")
-	@Produces(value=MediaType.TEXT_HTML)
-	public String showUsers() throws IntegerException {
-		IDType type = new IDType();
-		type.setClassType(User.class);
-		
-		User[] resultList = dbm.findAll(type);
-//		
-//		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-//		Root<User> from = query.from(User.class);
-//		query.select(from);
-//		List<User> resultList = em.createQuery(query).getResultList();
-		
-		StringBuffer b = new StringBuffer();
-		b.append("<ul>");
-		for (User obj : resultList) {
-			if (obj != null)
-				b.append("<li>User " + obj.getIdentifier() + " " + obj.getFirstName() + " " + obj.getLastName() + " UUID: " + obj.getUuid() + "</li>");
-			else
-				b.append("<li>User is NULL!!</li>");
-			
-		}
-		b.append("</ul>");	
-		return b.toString();
-	}
 }

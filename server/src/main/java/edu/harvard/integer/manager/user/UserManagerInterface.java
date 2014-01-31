@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,15 +30,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.database;
 
+package edu.harvard.integer.manager.user;
+
+import edu.harvard.integer.common.exception.IntegerException;
 
 /**
  * @author David Taylor
  *
  */
+public interface UserManagerInterface {
 
-public interface DatabaseServiceEJB {
-	public void init();
+	public String showUsers() throws IntegerException;
 	
 }

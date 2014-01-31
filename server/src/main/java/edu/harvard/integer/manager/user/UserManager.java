@@ -35,6 +35,10 @@ package edu.harvard.integer.manager.user;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 
@@ -67,45 +71,137 @@ import edu.harvard.integer.database.DatabaseManager;
  * 
  */
 @Stateless
-public class UserManager {
+public class UserManager implements UserManagerInterface {
 	@Inject
 	private Logger logger;
-	
+
 	@Inject
 	private DatabaseManager dbm;
-	
+
+	/**
+	 * Add one user to the system. The user will be saved into the database. All
+	 * setup for the user will be done after the call completes.
+	 * 
+	 * TODO: add initialization steps once known what the initialization steps
+	 * are.
+	 * 
+	 * @param user
+	 * @return User. The newly created user.
+	 * @throws IntegerException
+	 */
 	public User addUser(User user) throws IntegerException {
-		logger.info("Add User (" + user.getAlias() + ") " + user.getFirstName() + " " + user.getLastName());
+		logger.info("Add User (" + user.getAlias() + ") " + user.getFirstName()
+				+ " " + user.getLastName());
 		dbm.update(user);
 		return user;
 	}
-	
-	public User modifyUser(User user)  throws IntegerException {
-		logger.info("Modify User (" + user.getAlias() + ") " + user.getFirstName() + " " + user.getLastName());
+
+	/**
+	 * 
+	 * Modify the user.
+	 * 
+	 * @param user
+	 * @return User. The modified user.
+	 * @throws IntegerException
+	 */
+	public User modifyUser(User user) throws IntegerException {
+		logger.info("Modify User (" + user.getAlias() + ") "
+				+ user.getFirstName() + " " + user.getLastName());
+
+		dbm.update(user);
+
 		return user;
 	}
-	
-	public void deleteUser(User user)  throws IntegerException {
-		logger.info("Delete User (" + user.getAlias() + ") " + user.getFirstName() + " " + user.getLastName());
+
+	/**
+	 * Delete the user. This will clean up any data associated with the user.
+	 * 
+	 * 
+	 * @param user
+	 * @throws IntegerException
+	 */
+	public void deleteUser(User user) throws IntegerException {
+		logger.info("Delete User (" + user.getAlias() + ") "
+				+ user.getFirstName() + " " + user.getLastName());
+		dbm.delete(user);
 	}
 
+	/**
+	 * Return a list of all users.
+	 * 
+	 * @return User[]. All users.
+	 * @throws IntegerException
+	 */
 	public User[] getAllUsers() throws IntegerException {
 		IDType type = new IDType();
 		type.setClassType(User.class);
-	
+
 		return dbm.findAll(type);
 	}
-	
-	public Contact addContact(Contact contact)  throws IntegerException {
+
+	/**
+	 * Add a Contact to the system.
+	 * 
+	 * @param contact
+	 * @return Contact. The newly created user.
+	 * @throws IntegerException
+	 */
+	public Contact addContact(Contact contact) throws IntegerException {
 		return contact;
 	}
-	
-	public Contact modifyContact(Contact contact)  throws IntegerException {
+
+	/**
+	 * Modify the Contact.
+	 * 
+	 * @param contact
+	 * @return Contact. The modified Contact.
+	 * @throws IntegerException
+	 */
+	public Contact modifyContact(Contact contact) throws IntegerException {
 		return contact;
 	}
-	
-	public void deleteContact(Contact contact)  throws IntegerException {
-		
+
+	/**
+	 * Delete the Contact. The contact must not be associated with any user,
+	 * service element or organization for the delete to succeed. If the contact
+	 * is being used an IntegerException will be thrown with a error code of
+	 * ContactInUseCanNotDelete.
+	 * 
+	 * 
+	 * @param contact
+	 * @throws IntegerException. If
+	 *             the Contact is in Use with an error code of
+	 *             ContactInUseCanNotDelete.
+	 */
+	public void deleteContact(Contact contact) throws IntegerException {
+
 	}
-	
+
+	/**
+	 * Show the users VIA rest interface. This will list all users
+	 * in the system.
+	 */
+	@GET
+	@Path("/Users")
+	@Produces(value = MediaType.TEXT_HTML)
+	public String showUsers() throws IntegerException {
+		IDType type = new IDType();
+		type.setClassType(User.class);
+
+		User[] resultList = dbm.findAll(type);
+
+		StringBuffer b = new StringBuffer();
+		b.append("<ul>");
+		for (User obj : resultList) {
+			if (obj != null)
+				b.append("<li>User " + obj.getIdentifier() + " "
+						+ obj.getFirstName() + " " + obj.getLastName()
+						+ " UUID: " + obj.getUuid() + "</li>");
+			else
+				b.append("<li>User is NULL!!</li>");
+
+		}
+		b.append("</ul>");
+		return b.toString();
+	}
 }
