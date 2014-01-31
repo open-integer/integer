@@ -36,6 +36,7 @@ package edu.harvard.integer.manager.user;
 import javax.ejb.Local;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.user.User;
 
 /**
  * @author David Taylor
@@ -43,7 +44,11 @@ import edu.harvard.integer.common.exception.IntegerException;
  */
 @Local
 public interface UserManagerInterface {
-
+	public User addUser(User user) throws IntegerException ;
+	public User modifyUser(User user) throws IntegerException;
+	public void deleteUser(User user) throws IntegerException;
+	public User[] getAllUsers() throws IntegerException;
+	
 	public String showUsers() throws IntegerException;
 	
 }

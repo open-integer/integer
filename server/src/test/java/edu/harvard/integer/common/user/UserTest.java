@@ -68,11 +68,9 @@ import edu.harvard.integer.manager.user.UserManagerInterface;
  */
 @RunWith(Arquillian.class)
 public class UserTest {
-
-//	@Inject
-//	private UserManager userManager;
 	
-	@Inject DatabaseManager dbm;
+	@Inject 
+	private UserManagerInterface userManager;
 	
 	@Inject
 	private Logger logger;
@@ -110,8 +108,7 @@ public class UserTest {
 		u.setUuid("123456789");
 		
 		try {
-			//userManager.addUser(u);
-			dbm.update(u);
+			userManager.addUser(u);
 			
 		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
@@ -128,10 +125,8 @@ public class UserTest {
 		addOneUser();
 		
 		try {
-			//User[] users = userManager.getAllUsers();
-			IDType type = new IDType();
-			type.setClassType(User.class);
-			User[] users = dbm.findAll(type);
+			User[] users = userManager.getAllUsers();
+
 			logger.info("Found " + users.length + " users");
 			
 			for (User user : users) {

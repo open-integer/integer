@@ -79,7 +79,7 @@ public class UserManager implements UserManagerInterface {
 	private DatabaseManager dbm;
 
 	public UserManager() {
-		logger.info("Create UserManager");
+		
 		
 	}
 	

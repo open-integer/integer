@@ -6,7 +6,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.harvard.integer.client.GreetingService;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.database.DatabaseServiceEJB;
+import edu.harvard.integer.manager.user.UserManager;
 import edu.harvard.integer.shared.FieldVerifier;
 
 /**
@@ -16,8 +16,9 @@ import edu.harvard.integer.shared.FieldVerifier;
 public class GreetingServiceImpl extends RemoteServiceServlet implements
 		GreetingService {
 
+
 	@EJB
-	DatabaseServiceEJB dbService;
+	UserManager userManager;
 	
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
@@ -37,15 +38,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		
 		String users = null;
 		try {
-			users = dbService.showUsers();
+			users = userManager.showUsers();
 			System.out.println(users);
 		} catch (IntegerException e) {
 			System.out.println("Error in show users");
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo
+		return "Hello, users " + users + "!<br><br>I am running " + serverInfo
 				+ ".<br><br>Users = " + users
 				+ ".<br><br>It looks like you are using:<br>" + userAgent;
 	}
