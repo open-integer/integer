@@ -38,24 +38,14 @@ package edu.harvard.integer.common.exception;
  *
  */
 public enum DatabaseErrorCodes implements ErrorCodeInterface {
-	EntityAlreadyExists("EntityAlreadyExists", "Entity already exists in the databse!");
+	EntityAlreadyExists("EntityAlreadyExists");
 
 	private String errorCode = null;
-	private String message = null;
 	
-	private DatabaseErrorCodes(String errorCode, String message) {
-		this.message = message;
+	private DatabaseErrorCodes(String errorCode) {
+	
 	}
 	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getMessage()
-	 */
-	@Override
-	public String getMessage() {
-		
-		return message;
-	}
-
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
 	 */

@@ -31,13 +31,16 @@
  *      
  */
 
-package edu.harvard.integer.common.exception;
+package edu.harvard.integer.common.util;
+
+import java.util.Locale;
 
 /**
  * @author David Taylor
  *
+ * 
  */
-public interface ErrorCodeInterface {
+public interface DisplayableInterface {
 
-	public String getErrorCode();
+	public String toDisplayString(Locale local);
 }

@@ -33,11 +33,31 @@
 
 package edu.harvard.integer.common.exception;
 
+
 /**
  * @author David Taylor
  *
+ * Error codes that can be thrown for the user, contact and organization.
+ * 
  */
-public interface ErrorCodeInterface {
+public enum UserErrorCodes implements ErrorCodeInterface {
+	ContactInUseCanNotDelete("Contact in use. Can not delete."),
+	UserInUseCanNotDelete("User in use. Can not delete.");
 
-	public String getErrorCode();
+	private String errorCode = null;
+	
+	private UserErrorCodes(String errorCode) {
+		
+	}
+	
+	/* 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
+	 */
+	@Override
+	public String getErrorCode() {
+		
+		return errorCode;
+	}
+
 }

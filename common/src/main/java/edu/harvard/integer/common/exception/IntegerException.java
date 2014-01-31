@@ -33,26 +33,64 @@
 
 package edu.harvard.integer.common.exception;
 
+import java.util.Locale;
+
+import edu.harvard.integer.common.util.DisplayableInterface;
+
 /**
  * @author David Taylor
  * 
+ *         All exceptions created by the Integer system will be an
+ *         IntegerException. The exception will take an ErrorCode and optional
+ *         arguments. The cause of the exception may be includes when known.
+ * 
  */
-public class IntegerException extends Exception {
+public class IntegerException extends Exception implements DisplayableInterface {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Throwable cause = null;
 	private ErrorCodeInterface errorCode = null;
+	private DisplayableInterface[] arguments = null;
 
-	public IntegerException (Throwable cause, ErrorCodeInterface errorCode) {
+	public IntegerException(Throwable cause, ErrorCodeInterface errorCode) {
 		super(cause);
 	}
-	
-	public IntegerException (Throwable cause, ErrorCodeInterface errorCode, String message) {
-		super(message, cause);
+
+	/**
+	 * Create an exception with error code and arguments for the message of the
+	 * exception.
+	 * 
+	 * @param cause
+	 * @param errorCode
+	 * @param arguments
+	 */
+	public IntegerException(Throwable cause, ErrorCodeInterface errorCode,
+			DisplayableInterface[] arguments) {
+		super(errorCode.getErrorCode(), cause);
+		this.arguments = arguments;
 	}
-	
+
+	/**
+	 * Create a localized message for this exception.
+	 */
+	public String toDisplayString(Locale locale) {
+		// TODO: the message must be converted to a localized message. Once the
+		// bundles are added this must be implemented.
+
+		return errorCode.getErrorCode();
+	}
+
+	/**
+	 * Return the arguments for this exception.
+	 * 
+	 * @return
+	 */
+	public DisplayableInterface[] getMessageArguments() {
+		return arguments;
+	}
+
 	/**
 	 * @return the cause
 	 */
