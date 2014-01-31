@@ -30,78 +30,59 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.common.exception;
 
-package edu.harvard.integer.common.snmp;
-
-import java.util.List;
-
+// TODO: Auto-generated Javadoc
 /**
+ * The Enum for common error codes which are not target to a component.
  *
- * @author David Taylor
- * 
- * Hold the result of a MIB import.
+ * @author dchan
  */
-public class MIBImportResult extends MIBImportInfo {
+public enum CommonErrorCodes implements ErrorCodeInterface {
+	
+	
+	/** The IO error indicate IO error accessing a system resource such as file. */
+	IOError("IOError", "IO Error"),
+	
+	/**  The Run time error is. */
+	RunTimeError("RuntimeError", "Run time error"),
+	
+	/** The Parser error for parser MIB or scripts. */
+	ParserError("ParserError", "Parser Error"),
+	
+	/** The Directory not valid. */
+	DirectoryNotValid("DirectoryNotValid", "Directory is not valid");
 
-	/**
-	 * The SNMP module.  It can be null if the imported MIB does not pass parser.
-	 */
-	private SNMPModule module;
+	/** The error code. */
+	private String errorCode = null;
+	
+	/** The message. */
+	private String message = null;
 	
 	/**
-	 * SNMP table list in the module.  It can be null if table is not available
-	 */
-	private List<SNMPTable>  snmpTable;
-	
-	/**
-	 * SNMP scalar list in the module.  It can be null if table is not available
-	 */
-	private List<SNMP>  snmpScalars;
-	
-	private String[] errors = null;
-
-	
-	/**
-	 * Gets the errors.
+	 * Instantiates a new common error codes.
 	 *
-	 * @return the errors
+	 * @param errorCode the error code
+	 * @param message the message
 	 */
-	public String[] getErrors() {
-		return errors;
+	private CommonErrorCodes(String errorCode, String message) {
+		this.message = message;
 	}
-
-	/**
-	 * Sets the errors.
-	 *
-	 * @param errors the errors to set
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getMessage()
 	 */
-	public void setErrors(String[] errors) {
-		this.errors = errors;
-	}
-	
-	public SNMPModule getModule() {
-		return module;
+	@Override
+	public String getMessage() {
+		return message;
 	}
 
-	public List<SNMPTable> getSnmpTable() {
-		return snmpTable;
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
+	 */
+	@Override
+	public String getErrorCode() {
+		return errorCode;
 	}
 
-	public void setSnmpTable(List<SNMPTable> snmpTable) {
-		this.snmpTable = snmpTable;
-	}
-
-	public List<SNMP> getSnmpScalars() {
-		return snmpScalars;
-	}
-
-	public void setSnmpScalars(List<SNMP> snmpScalars) {
-		this.snmpScalars = snmpScalars;
-	}
-
-	public void setModule(SNMPModule module) {
-		this.module = module;
-	}
-	
-	
 }

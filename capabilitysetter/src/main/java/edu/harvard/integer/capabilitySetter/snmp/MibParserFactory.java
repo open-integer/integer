@@ -33,18 +33,32 @@
 package edu.harvard.integer.capabilitySetter.snmp;
 
 import edu.harvard.integer.capabilitySetter.snmp.moduleLoader.MibbleParser;
+import edu.harvard.integer.common.exception.IntegerException;
 
 /**
+ * A Factory class provides MIB parser provider.
+ * Currently only provider based on Mibble is provided.
+ * 
  * @author dchan
  *
  */
 public class MibParserFactory {
 
+	/**
+	 * The Enum ParserProvider specify avaiable MIB parser provider.
+	 */
 	public enum ParserProvider {
-	    MIBBLE   	
+    	MIBBLE   	
 	}
 	
-	public static MibParser getModuleSource( ParserProvider provider ){
+	/**
+	 * Gets the parser source.
+	 *
+	 * @param provider -- Specify which provider
+	 * @return the parser source
+	 * @throws IntegerException  An Integer exception during parsing.
+	 */
+	public static MibParser getParserSource( ParserProvider provider ) throws IntegerException {
 		
 		switch (provider) {
 		   

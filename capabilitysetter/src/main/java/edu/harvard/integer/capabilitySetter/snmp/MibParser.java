@@ -35,10 +35,9 @@ package edu.harvard.integer.capabilitySetter.snmp;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-
-import edu.harvard.integer.capabilitySetter.CapabilitySetterException;
-import edu.harvard.integer.capabilitySetter.ImportReturn;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
 
 /**
@@ -51,9 +50,9 @@ public interface MibParser {
 	 * 
 	 * @return List of common Modules supported in the repository'
 	 * 
-	 * @throws CapabilitySetterException
+	 * @throws IntegerException
 	 */
-	public List<String>  getSupportCommonModuleNames() throws CapabilitySetterException;
+	public List<String>  getSupportCommonModuleNames() throws IntegerException;
 	
 	/**
 	 * 
@@ -61,7 +60,7 @@ public interface MibParser {
 	 * 
 	 * @throws CapabilitySetterException
 	 */
-	public List<String>  getSupportVendorModuleNames() throws CapabilitySetterException;
+	public List<String>  getSupportVendorModuleNames() throws IntegerException;
 	
 	/**
 	 * Load a module file into the system.
@@ -70,7 +69,7 @@ public interface MibParser {
 	 * 
 	 * @throws CapabilitySetterException
 	 */
-	public void loadModule( File moduleFile) throws CapabilitySetterException;
+	public void loadModule( File moduleFile) throws IntegerException;
 	
 	/**
 	 * Import mib module into the system.  
@@ -83,7 +82,7 @@ public interface MibParser {
 	 * 
 	 * @throws CapabilitySetterException
 	 */
-	public ImportReturn importMIB( List<MIBImportInfo> mibinfos ) throws CapabilitySetterException;
+	public MIBImportResult[] importMIB( MIBImportInfo[] mibinfos, boolean replaceExist ) throws IntegerException;
 	
 	
 	/**
@@ -91,14 +90,6 @@ public interface MibParser {
 	 * @return
 	 * @throws CapabilitySetterException
 	 */
-	public HashMap<String, SNMP>  getLoadedSNMPObjects() throws CapabilitySetterException;
-	
-	/**
-	 * Remove all modules in the repository.  The modules will be removed without considering other modules
-	 * which reference to it.
-	 *  
-	 * @param moduleNames
-	 */
-	public void removeMibInRepository( List<String> moduleNames );
+	public HashMap<String, SNMP>  getLoadedSNMPObjects() throws IntegerException;
 	
 }
