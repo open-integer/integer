@@ -6,7 +6,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.harvard.integer.client.GreetingService;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.manager.user.UserManager;
+import edu.harvard.integer.service.user.UserManagerInterface;
 import edu.harvard.integer.shared.FieldVerifier;
 
 /**
@@ -18,7 +18,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 
 	@EJB
-	UserManager userManager;
+	UserManagerInterface userManager;
 	
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
