@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.manager.user;
+package edu.harvard.integer.service.user;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -46,7 +46,7 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.Contact;
 import edu.harvard.integer.common.user.User;
-import edu.harvard.integer.database.DatabaseManager;
+import edu.harvard.integer.service.persistance.DatabaseManager;
 
 /**
  * The user contact and role manager controls addition, creation and modification of users and contacts in the system.

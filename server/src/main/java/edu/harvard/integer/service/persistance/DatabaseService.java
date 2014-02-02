@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014 Harvard University and the persons
+ *  Copyright (c) 2013 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,48 +30,48 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.service.persistance;
 
-package edu.harvard.integer.capability.snmp;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.ws.rs.Path;
 
-import java.util.List;
+import org.slf4j.Logger;
 
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
-
+import edu.harvard.integer.server.IntegerApplication;
 /**
  * @author David Taylor
  *
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
+@Singleton
+@Startup
+@Path("/Database")
+public class DatabaseService implements DatabaseServiceEJB {
 
+	@PersistenceContext
+	private EntityManager em;
+	
+	@Inject
+	private DatabaseManager dbm;
+	
+	@Inject
+	private Logger logger;
+	
 	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
-	 * @return TODO
+	 * All DatabaseService initialization occurs here. 
 	 */
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile);
+	@PostConstruct
+	public void init() {
 
-	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
-	 */
-	public MIBInfo[] getImportedMibs();
+		logger.debug("DatabaseService starting");
 
-	/**
-	 * Get All capabilities that are in the 
-	 * @return
-	 */
-	public List<Capability> getAllSNMPCapabilites();
+		// Register the application for RESTfull interface
+		IntegerApplication.register(this);
 
-	public Capability setSNMP(Capability capability, SNMP snmpObject);
-
+	}
+	
 }

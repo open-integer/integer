@@ -31,24 +31,47 @@
  *      
  */
 
-package edu.harvard.integer.manager.user;
+package edu.harvard.integer.service.managementobject.snmp;
+
+import java.util.List;
 
 import javax.ejb.Local;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.user.User;
+import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.Capability;
 
 /**
  * @author David Taylor
  *
  */
 @Local
-public interface UserManagerInterface {
-	public User addUser(User user) throws IntegerException ;
-	public User modifyUser(User user) throws IntegerException;
-	public void deleteUser(User user) throws IntegerException;
-	public User[] getAllUsers() throws IntegerException;
-	
-	public String showUsers() throws IntegerException;
-	
+public interface SnmpObjectManagerLocalInterface {
+
+	/**
+	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
+	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
+	 * processed.
+	 *  
+	 * @param mibFile - Contents of MIB to import
+	 * @return TODO
+	 */
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile);
+
+	/**
+	 * Get the list of MIB's that have been imported into the system.
+	 * @return List<File>. The list of imported mibs.
+	 */
+	public MIBInfo[] getImportedMibs();
+
+	/**
+	 * Get All capabilities that are in the 
+	 * @return
+	 */
+	public List<Capability> getAllSNMPCapabilites();
+
+	public Capability setSNMP(Capability capability, SNMP snmpObject);
+
 }

@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.capability;
+package edu.harvard.integer.service.managementobject;
 
 import java.util.List;
 

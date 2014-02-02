@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.database;
+package edu.harvard.integer.service.persistance;
 
 import javax.ejb.Local;
 

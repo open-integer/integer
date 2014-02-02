@@ -30,48 +30,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.database;
+package edu.harvard.integer.service.persistance;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.ws.rs.Path;
 
-import org.slf4j.Logger;
-
-import edu.harvard.integer.server.IntegerApplication;
 /**
  * @author David Taylor
  *
  */
-@Singleton
-@Startup
-@Path("/Database")
-public class DatabaseService implements DatabaseServiceEJB {
 
-	@PersistenceContext
-	private EntityManager em;
-	
-	@Inject
-	private DatabaseManager dbm;
-	
-	@Inject
-	private Logger logger;
-	
-	/**
-	 * All DatabaseService initialization occurs here. 
-	 */
-	@PostConstruct
-	public void init() {
-
-		logger.debug("DatabaseService starting");
-
-		// Register the application for RESTfull interface
-		IntegerApplication.register(this);
-
-	}
+public interface DatabaseServiceEJB {
+	public void init();
 	
 }

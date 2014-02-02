@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,15 +30,25 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.database;
 
+package edu.harvard.integer.service.user;
+
+import javax.ejb.Local;
+
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.user.User;
 
 /**
  * @author David Taylor
  *
  */
-
-public interface DatabaseServiceEJB {
-	public void init();
+@Local
+public interface UserManagerInterface {
+	public User addUser(User user) throws IntegerException ;
+	public User modifyUser(User user) throws IntegerException;
+	public void deleteUser(User user) throws IntegerException;
+	public User[] getAllUsers() throws IntegerException;
+	
+	public String showUsers() throws IntegerException;
 	
 }

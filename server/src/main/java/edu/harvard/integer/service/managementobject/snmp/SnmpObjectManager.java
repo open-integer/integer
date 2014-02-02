@@ -31,12 +31,17 @@
  *      
  */
 
-package edu.harvard.integer.capability.snmp;
+package edu.harvard.integer.service.managementobject.snmp;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
 
+import edu.harvard.integer.capabilitySetter.CapabilitySetterException;
+import edu.harvard.integer.capabilitySetter.snmp.MibParser;
+import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory;
+import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory.ParserProvider;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
@@ -51,24 +56,34 @@ import edu.harvard.integer.common.topology.Capability;
 public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
 	 */
 	@Override
 	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) {
+
+		System.setProperty("mibFileLocation", "/Users/dtaylor/git/integer/capabilitysetter/mibs");
+//		MibParser mibParser =  MibParserFactory.getParserSource(ParserProvider.MIBBLE);
+//		try {
+//			mibParser.importMIB(mibinfos, replaceExist));(Arrays.asList(mibFile));
+//		} 
+//		catch (CapabilitySetterException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		return null;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
+	 */
+	@Override
+	public MIBInfo[] getImportedMibs() {
 		
 		return null;
 	}
 	
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
-	 */
-	@Override
-	public MIBInfo[] getImportedMibs() {
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#getAllSNMPCapabilites()
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#getAllSNMPCapabilites()
 	 */
 	@Override
 	public List<Capability> getAllSNMPCapabilites() {
@@ -77,7 +92,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	}
 	
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.capability.snmp.SnmpObjectManagerLocalInterface#setSNMP(edu.harvard.integer.common.topology.Capability, edu.harvard.integer.common.topology.SNMP)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#setSNMP(edu.harvard.integer.common.topology.Capability, edu.harvard.integer.common.topology.SNMP)
 	 */
 	@Override
 	public Capability setSNMP(Capability capability, SNMP snmpObject) {

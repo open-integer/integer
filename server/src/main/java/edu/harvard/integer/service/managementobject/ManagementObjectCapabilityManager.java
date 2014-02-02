@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.capability;
+package edu.harvard.integer.service.managementobject;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
-import edu.harvard.integer.database.DatabaseManager;
+import edu.harvard.integer.service.persistance.DatabaseManager;
 
 /**
  * @author David Taylor
@@ -106,7 +106,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #addCapability(edu.harvard.integer.common.topology.Capability)
 	 */
@@ -130,7 +130,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #addManagementObjectsToCapability
 	 * (edu.harvard.integer.common.topology.Capability, java.util.List)
@@ -145,7 +145,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #getAccessMethods(edu.harvard.integer.common.topology.Capability)
 	 */
@@ -158,7 +158,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #getAccessMethods(edu.harvard.integer.common.ID)
 	 */
@@ -171,7 +171,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #getAssociatedServiceElementManagementObjects
 	 * (edu.harvard.integer.common.topology.Capability)
@@ -186,7 +186,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface#getCapabilities()
 	 */
 	@Override
@@ -197,7 +197,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #getMechanisms(java.util.List)
 	 */
@@ -210,7 +210,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #setMechamism(edu.harvard.integer.common.topology.Capability,
 	 * edu.harvard.integer.common.topology.Mechanism)
@@ -223,7 +223,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #setServiceElementManagementObjects
 	 * (edu.harvard.integer.common.topology.Capability, java.util.List)
@@ -237,7 +237,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #getAllServiceElementManagementObjects()
 	 */
@@ -250,7 +250,7 @@ public class ManagementObjectCapabilityManager implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.capability.
+	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerLocalInterface
 	 * #getUnassignedServiceElementManagementObjects()
 	 */

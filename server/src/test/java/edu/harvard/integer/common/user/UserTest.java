@@ -58,9 +58,9 @@ import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.common.util.Resource;
-import edu.harvard.integer.database.DatabaseManager;
-import edu.harvard.integer.manager.user.UserManager;
-import edu.harvard.integer.manager.user.UserManagerInterface;
+import edu.harvard.integer.service.persistance.DatabaseManager;
+import edu.harvard.integer.service.user.UserManager;
+import edu.harvard.integer.service.user.UserManagerInterface;
 
 /**
  * @author David Taylor
@@ -110,7 +110,7 @@ public class UserTest {
 			userManager.addUser(u);
 			
 		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			fail("Error saveing user " + e);
 		}
@@ -138,4 +138,6 @@ public class UserTest {
 			fail("Error finding all users " + e.getMessage());
 		}
 	}
+	
+	
 }

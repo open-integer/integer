@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.database;
+package edu.harvard.integer.service.persistance;
 
 import java.lang.reflect.Array;
 import java.util.List;
