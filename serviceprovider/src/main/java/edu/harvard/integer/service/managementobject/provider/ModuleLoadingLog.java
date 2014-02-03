@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.capabilitySetter;
+package edu.harvard.integer.service.managementobject.provider;
 
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 

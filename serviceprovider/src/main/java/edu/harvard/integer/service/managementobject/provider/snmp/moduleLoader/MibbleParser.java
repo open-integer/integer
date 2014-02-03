@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. *      
  */      
-package edu.harvard.integer.capabilitySetter.snmp.moduleLoader;
+package edu.harvard.integer.service.managementobject.provider.snmp.moduleLoader;
 
 import net.percederberg.mibble.Mib;
 import net.percederberg.mibble.MibLoader;
@@ -60,12 +60,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import edu.harvard.integer.capabilitySetter.CapabilitySetterException;
-import edu.harvard.integer.capabilitySetter.CapabilitySetterMain;
-import edu.harvard.integer.capabilitySetter.ModuleLoadingLog;
-import edu.harvard.integer.capabilitySetter.ModuleLoadingLog.ErrorTypeE;
-import edu.harvard.integer.capabilitySetter.SNMPModuleCache;
-import edu.harvard.integer.capabilitySetter.snmp.MibParser;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -76,6 +70,11 @@ import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
 import edu.harvard.integer.common.util.DisplayableInterface;
+import edu.harvard.integer.service.managementobject.provider.ServiceProviderMain;
+import edu.harvard.integer.service.managementobject.provider.ModuleLoadingLog;
+import edu.harvard.integer.service.managementobject.provider.SNMPModuleCache;
+import edu.harvard.integer.service.managementobject.provider.ModuleLoadingLog.ErrorTypeE;
+import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
 
 
 /**
@@ -109,7 +108,7 @@ public class MibbleParser implements MibParser{
 	 */
 	private MibbleParser() throws IntegerException {
 				
-		mibLocation =  new File(System.getProperty(CapabilitySetterMain.MIBFILELOCATON));
+		mibLocation =  new File(System.getProperty(ServiceProviderMain.MIBFILELOCATON));
 		if ( !mibLocation.isDirectory() ) {
 			
 			throw new IntegerException(null, CommonErrorCodes.DirectoryNotValid);
@@ -124,7 +123,7 @@ public class MibbleParser implements MibParser{
 	 * @return the module map from repository.  The key is the module name.
 	 * @throws CapabilitySetterException the capability setter exception
 	 */
-	public HashMap<String, SNMPModuleCache> getModuleMapFromRepository() throws CapabilitySetterException {
+	public HashMap<String, SNMPModuleCache> getModuleMapFromRepository() throws IntegerException {
 		
 		HashMap<String, SNMPModuleCache>  snmpCache = new HashMap<>();
 		mibLoader.removeAllDirs();		
@@ -137,19 +136,19 @@ public class MibbleParser implements MibParser{
 			
             for ( File f : files ) {
 		    	
-				if ( f.getName().equals(CapabilitySetterMain.IETFMIB) ) {
+				if ( f.getName().equals(ServiceProviderMain.IETFMIB) ) {
 					mibLoader.addDir(f);
 				}	    	
 		    }
 			for ( File f : files ) {
 		    	
-				if ( f.getName().equals(CapabilitySetterMain.IETFMIB)) {
+				if ( f.getName().equals(ServiceProviderMain.IETFMIB)) {
 					loadFile(f);
 				}	    	
 		    }
 	        for ( File f : files ) {
 		    	
-				if ( f.getName().equals(CapabilitySetterMain.VENDORMIB)) {
+				if ( f.getName().equals(ServiceProviderMain.VENDORMIB)) {
 					
 					mibLoader.addDir(f);
 					loadFile(f);
@@ -157,7 +156,9 @@ public class MibbleParser implements MibParser{
 		    }
 		}
 		catch ( Exception e ) {
-			throw new CapabilitySetterException(e.getClass().getName(), e.getMessage());
+			
+			throw new IntegerException(e, CommonErrorCodes.RunTimeError, 
+					new DisplayableInterface[] { new NonLocaleErrorMessage(e.getMessage()) } );
 		}
 	    Mib[] mibs = mibLoader.getAllMibs();
 	    for ( Mib mib : mibs ) {
@@ -669,10 +670,10 @@ public class MibbleParser implements MibParser{
         }
         for ( File f : files ) {
 	    	
-			if ( f.getName().equals(CapabilitySetterMain.IETFMIB) && isCommon )  {
+			if ( f.getName().equals(ServiceProviderMain.IETFMIB) && isCommon )  {
 				mibLoader.addDir(f);
 			}	
-			else if ( f.getName().equals(CapabilitySetterMain.VENDORMIB ) && !isCommon ) {
+			else if ( f.getName().equals(ServiceProviderMain.VENDORMIB ) && !isCommon ) {
 				mibLoader.addDir(f);
 			}		                
 	    }
@@ -783,10 +784,10 @@ public class MibbleParser implements MibParser{
 		
         for ( File f : files ) {
 	    	
-			if ( f.getName().equals(CapabilitySetterMain.IETFMIB) && isCommon ) {
+			if ( f.getName().equals(ServiceProviderMain.IETFMIB) && isCommon ) {
 				mibs = f.listFiles();
 			}
-			else if ( f.getName().equals(CapabilitySetterMain.VENDORMIB) && !isCommon ) {
+			else if ( f.getName().equals(ServiceProviderMain.VENDORMIB) && !isCommon ) {
 			
 				mibs = f.listFiles();
 			}			
@@ -840,11 +841,11 @@ public class MibbleParser implements MibParser{
 	public String getFullName(String fileName, boolean isCommon ) {
 		
 		if ( isCommon ) {
-			return mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.IETFMIB + 
+			return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.IETFMIB + 
                        File.separator + fileName;
 	    }
 	    else {
-		   return mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.VENDORMIB + 
+		   return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.VENDORMIB + 
                        File.separator + fileName;
 	    }
 	}
@@ -860,11 +861,11 @@ public class MibbleParser implements MibParser{
     public String getFullTmpName(String fileName, boolean isCommon ) {
 		
 		if ( isCommon ) {
-			return mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.IETFMIB + 
+			return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.IETFMIB + 
                        File.separator + TmpFilePrefix + File.separator +  fileName;
 	    }
 	    else {
-		   return mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.VENDORMIB + 
+		   return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.VENDORMIB + 
                        File.separator + TmpFilePrefix + File.separator + fileName;
 	    }
 	}
@@ -878,7 +879,7 @@ public class MibbleParser implements MibParser{
 	 */
 	private void createTmpDirs() throws IntegerException {
 		
-		File dir = new File( mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.IETFMIB + 
+		File dir = new File( mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.IETFMIB + 
                                                        File.separator + TmpFilePrefix );
 		if ( dir.exists() ) {			
 			for ( File f : dir.listFiles() ) {
@@ -891,7 +892,7 @@ public class MibbleParser implements MibParser{
 			throw new IntegerException(null, CommonErrorCodes.IOError,
 					new DisplayableInterface[] { new NonLocaleErrorMessage("Can not create a tmp directory for processing")}); 
 		}
-		dir = new File( mibLocation.getAbsolutePath() + File.separator + CapabilitySetterMain.VENDORMIB + 
+		dir = new File( mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.VENDORMIB + 
                 File.separator + TmpFilePrefix );
         if ( dir.exists() ) {			
              for ( File f : dir.listFiles() ) {

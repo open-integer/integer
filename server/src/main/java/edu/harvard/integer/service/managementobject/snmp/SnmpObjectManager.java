@@ -33,20 +33,18 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
 
-import edu.harvard.integer.capabilitySetter.CapabilitySetterException;
-import edu.harvard.integer.capabilitySetter.snmp.MibParser;
-import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory;
-import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory.ParserProvider;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
+import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFactory;
 
 /**
  * @author David Taylor
@@ -62,14 +60,13 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) {
 
 		System.setProperty("mibFileLocation", "/Users/dtaylor/git/integer/capabilitysetter/mibs");
-//		MibParser mibParser =  MibParserFactory.getParserSource(ParserProvider.MIBBLE);
-//		try {
-//			mibParser.importMIB(mibinfos, replaceExist));(Arrays.asList(mibFile));
-//		} 
-//		catch (CapabilitySetterException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			MibParser mibParser =  MibParserFactory.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
+			return mibParser.importMIB(mibFile, true);
+		}
+    	catch (IntegerException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
