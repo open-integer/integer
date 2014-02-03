@@ -51,14 +51,13 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 /**
  * @author David Taylor
  * 
  */
 @Stateless
 public class PersistenceManager {
-
-	// Persistence
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -140,5 +139,14 @@ public class PersistenceManager {
 			return objs;
 		}
 		return null;
+	}
+	
+	/**
+	 * Get the SNMPModuleDAO. 
+	 * 
+	 * @return SNMPModuleDAO. 
+	 */
+	public SNMPModuleDAO getSNMPModuleDAO() {
+		return new SNMPModuleDAO(em);
 	}
 }

@@ -47,19 +47,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.EmailAddress;
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDInterface;
 import edu.harvard.integer.common.IDType;
-import edu.harvard.integer.common.Orginization;
-import edu.harvard.integer.common.PhoneNumber;
-import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.util.DisplayableInterface;
-import edu.harvard.integer.common.util.Resource;
-import edu.harvard.integer.service.persistance.PersistenceManager;
-import edu.harvard.integer.service.user.UserManager;
 import edu.harvard.integer.service.user.UserManagerInterface;
 
 /**
@@ -79,11 +68,7 @@ public class UserTest {
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addClasses(Resource.class)
-				.addClasses(User.class, BaseEntity.class, IDInterface.class, ID.class, Orginization.class, IDType.class)
-				.addClasses(UserManager.class, PersistenceManager.class, ErrorCodeInterface.class, IntegerException.class)
-				.addClasses(DisplayableInterface.class, UserManagerInterface.class)
-				.addClasses(Contact.class, ContactType.class, EmailAddress.class, PhoneNumber.class)
+				.addPackages(true, "edu.harvard.integer")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")

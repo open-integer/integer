@@ -33,7 +33,14 @@
 
 package edu.harvard.integer.service.persistance;
 
+import java.util.List;
+
 import javax.ejb.Local;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.exception.IntegerException;
 
 /**
  * @author David Taylor
@@ -42,5 +49,13 @@ import javax.ejb.Local;
 
 @Local
 public interface PersistenceManagerLocalInterface {
-
+	public BaseEntity update(BaseEntity entity) throws IntegerException;
+	public List<BaseEntity> update(List<BaseEntity> entities) throws IntegerException;
+	public void delete(BaseEntity entity) throws IntegerException;
+	public void delete(ID entityId) throws IntegerException;
+	
+	public BaseEntity findById(ID id) throws IntegerException;
+	public <T> T[] findAll(IDType type) throws IntegerException;
+	
 }
+	

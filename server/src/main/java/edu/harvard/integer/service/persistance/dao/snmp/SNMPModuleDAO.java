@@ -31,48 +31,53 @@
  *      
  */
 
-package edu.harvard.integer.service.managementobject.snmp;
+package edu.harvard.integer.service.persistance.dao.snmp;
 
 import java.util.List;
 
-import javax.ejb.Local;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.service.persistance.BaseDAO;
 
 /**
  * @author David Taylor
  *
+ * DAO for SNMPModule. This will hold all the query's to lookup the SNMPModule's. 
+ * 
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
-
+public class SNMPModuleDAO extends BaseDAO {
+	
 	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
-	 * @return TODO
+	 * Create SNMPModule with the supplied EntityManager. 
+	 * 
+	 * @param persistenceManger
 	 */
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException;
+	public SNMPModuleDAO(EntityManager persistenceManger) {
+		super(persistenceManger);
+		
+	}
 
 	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
-	 */
-	public MIBInfo[] getImportedMibs();
-
-	/**
-	 * Get All capabilities that are in the 
+	 * Find the SNMPModule that has the given OID.
 	 * @return
 	 */
-	public List<Capability> getAllSNMPCapabilites();
-
-	public Capability setSNMP(Capability capability, SNMP snmpObject);
-
+	public SNMPModule findByOid(String oidString) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		CriteriaQuery<SNMPModule> query = criteriaBuilder.createQuery(SNMPModule.class);
+		//query.where()
+		Root<SNMPModule> from = query.from(SNMPModule.class);
+		query.select(from);
+		List<SNMPModule> resultList = getEntityManager().createQuery(query).getResultList();
+		
+		if (resultList.size() > 0)
+			return resultList.get(0);
+		else
+			return null;
+		
+	}
 }
