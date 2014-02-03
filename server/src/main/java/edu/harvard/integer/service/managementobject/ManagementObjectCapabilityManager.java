@@ -49,7 +49,7 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
-import edu.harvard.integer.service.persistance.DatabaseManager;
+import edu.harvard.integer.service.persistance.PersistenceManager;
 
 /**
  * @author David Taylor
@@ -63,7 +63,7 @@ public class ManagementObjectCapabilityManager implements
 	private Logger log;
 
 	@Inject
-	DatabaseManager dbm;
+	PersistenceManager dbm;
 
 	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	

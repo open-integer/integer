@@ -46,7 +46,7 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.Contact;
 import edu.harvard.integer.common.user.User;
-import edu.harvard.integer.service.persistance.DatabaseManager;
+import edu.harvard.integer.service.persistance.PersistenceManager;
 
 /**
  * The user contact and role manager controls addition, creation and modification of users and contacts in the system.
@@ -76,7 +76,7 @@ public class UserManager implements UserManagerInterface {
 	private Logger logger;
 
 	@Inject
-	private DatabaseManager dbm;
+	private PersistenceManager dbm;
 
 	public UserManager() {
 		

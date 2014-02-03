@@ -58,7 +58,7 @@ import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.common.util.Resource;
-import edu.harvard.integer.service.persistance.DatabaseManager;
+import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.user.UserManager;
 import edu.harvard.integer.service.user.UserManagerInterface;
 
@@ -81,7 +81,7 @@ public class UserTest {
 				.create(WebArchive.class, "test.war")
 				.addClasses(Resource.class)
 				.addClasses(User.class, BaseEntity.class, IDInterface.class, ID.class, Orginization.class, IDType.class)
-				.addClasses(UserManager.class, DatabaseManager.class, ErrorCodeInterface.class, IntegerException.class)
+				.addClasses(UserManager.class, PersistenceManager.class, ErrorCodeInterface.class, IntegerException.class)
 				.addClasses(DisplayableInterface.class, UserManagerInterface.class)
 				.addClasses(Contact.class, ContactType.class, EmailAddress.class, PhoneNumber.class)
 				.addAsResource("META-INF/test-persistence.xml",

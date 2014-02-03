@@ -50,24 +50,24 @@ import edu.harvard.integer.server.IntegerApplication;
 @Singleton
 @Startup
 @Path("/Database")
-public class DatabaseService implements DatabaseServiceEJB {
+public class PersistenceService implements PersistenceServiceEJB {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@Inject
-	private DatabaseManager dbm;
+	private PersistenceManager dbm;
 	
 	@Inject
 	private Logger logger;
 	
 	/**
-	 * All DatabaseService initialization occurs here. 
+	 * All PersistenceService initialization occurs here. 
 	 */
 	@PostConstruct
 	public void init() {
 
-		logger.debug("DatabaseService starting");
+		logger.debug("PersistenceService starting");
 
 		// Register the application for RESTfull interface
 		IntegerApplication.register(this);

@@ -38,7 +38,7 @@ package edu.harvard.integer.service.persistance;
  *
  */
 
-public interface DatabaseServiceEJB {
+public interface PersistenceServiceEJB {
 	public void init();
 	
 }

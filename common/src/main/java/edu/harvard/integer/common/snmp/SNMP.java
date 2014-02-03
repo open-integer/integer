@@ -40,10 +40,11 @@ import javax.persistence.Entity;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+
 /**
  * @author David Taylor
  * 
- * This class holds the definition of an SNMP OID. 
+ *         This class holds the definition of an SNMP OID.
  * 
  */
 @Entity
@@ -55,7 +56,7 @@ public class SNMP extends ServiceElementManagementObject {
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "snmpModuleType")),
 			@AttributeOverride(name = "name", column = @Column(name = "snmpModuleName")) })
 	private ID snmpModuleId = null;
-	
+
 	/*
 	 * Description of the object as found in the MIB Module. In some cases, this
 	 * description can be quite long.
@@ -68,7 +69,6 @@ public class SNMP extends ServiceElementManagementObject {
 	 * policy.
 	 */
 	public MaxAccess maxAccess = null;
-
 
 	/*
 	 * The fully specified OID of the object (minus the instance data). For
@@ -89,6 +89,96 @@ public class SNMP extends ServiceElementManagementObject {
 	 */
 	public String units = null;
 
+	/**
+	 * @return the snmpModuleId
+	 */
+	public ID getSnmpModuleId() {
+		return snmpModuleId;
+	}
+
+	/**
+	 * @param snmpModuleId
+	 *            the snmpModuleId to set
+	 */
+	public void setSnmpModuleId(ID snmpModuleId) {
+		this.snmpModuleId = snmpModuleId;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the maxAccess
+	 */
+	public MaxAccess getMaxAccess() {
+		return maxAccess;
+	}
+
+	/**
+	 * @param maxAccess
+	 *            the maxAccess to set
+	 */
+	public void setMaxAccess(MaxAccess maxAccess) {
+		this.maxAccess = maxAccess;
+	}
+
+	/**
+	 * @return the oid
+	 */
+	public String getOid() {
+		return oid;
+	}
+
+	/**
+	 * @param oid
+	 *            the oid to set
+	 */
+	public void setOid(String oid) {
+		this.oid = oid;
+	}
+
+	/**
+	 * @return the textualConvetion
+	 */
+	public String getTextualConvetion() {
+		return textualConvetion;
+	}
+
+	/**
+	 * @param textualConvetion
+	 *            the textualConvetion to set
+	 */
+	public void setTextualConvetion(String textualConvetion) {
+		this.textualConvetion = textualConvetion;
+	}
+
+	/**
+	 * @return the units
+	 */
+	public String getUnits() {
+		return units;
+	}
+
+	/**
+	 * @param units
+	 *            the units to set
+	 */
+	public void setUnits(String units) {
+		this.units = units;
+	}
+
 	// TODO: Add constraints. Could be min/max or max or enum list or ..
-	
+
 }

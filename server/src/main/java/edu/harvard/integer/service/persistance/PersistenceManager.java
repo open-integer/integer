@@ -56,8 +56,10 @@ import edu.harvard.integer.common.exception.IntegerException;
  * 
  */
 @Stateless
-public class DatabaseManager {
+public class PersistenceManager {
 
+	// Persistence
+	
 	@PersistenceContext
 	private EntityManager em;
 	

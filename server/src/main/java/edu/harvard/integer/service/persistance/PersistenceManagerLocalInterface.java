@@ -41,6 +41,6 @@ import javax.ejb.Local;
  */
 
 @Local
-public interface DatabaseManagerLocalInterface {
+public interface PersistenceManagerLocalInterface {
 
 }
