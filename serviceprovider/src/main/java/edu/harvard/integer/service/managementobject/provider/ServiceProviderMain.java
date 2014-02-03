@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.capabilitySetter;
+package edu.harvard.integer.service.managementobject.provider;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,11 +39,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory;
-import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory.ParserProvider;
-import edu.harvard.integer.capabilitySetter.snmp.MibParser;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
+import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFactory;
+import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFactory.ParserProvider;
 
 /**
  * This Class is the main class for doing parser SNMP MIB using CLI. It provides
@@ -60,7 +60,7 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
  * 
  * @author dchan
  */
-public class CapabilitySetterMain {
+public class ServiceProviderMain {
 
 	/**
 	 * The Enum ParserCmdE.
@@ -131,7 +131,7 @@ public class CapabilitySetterMain {
 	 */
 	public static void main(String[] args) {
 
-		CapabilitySetterMain service = new CapabilitySetterMain();
+		ServiceProviderMain service = new ServiceProviderMain();
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].trim().equalsIgnoreCase("-impdir")) {
 				service.cmd = ParserCmdE.ImportDir;

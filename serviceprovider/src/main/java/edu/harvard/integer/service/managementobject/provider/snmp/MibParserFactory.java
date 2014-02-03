@@ -30,10 +30,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.capabilitySetter.snmp;
+package edu.harvard.integer.service.managementobject.provider.snmp;
 
-import edu.harvard.integer.capabilitySetter.snmp.moduleLoader.MibbleParser;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.managementobject.provider.snmp.moduleLoader.MibbleParser;
 
 /**
  * A Factory class provides MIB parser provider.
