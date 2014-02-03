@@ -36,14 +36,12 @@ package edu.harvard.integer.service.managementobject.snmp;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFactory;
@@ -55,8 +53,8 @@ import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFacto
 @Stateless
 public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	
-	@Inject
-	MibLoader mibLoader;
+//	@Inject
+//	MibLoader mibLoader;
 	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
