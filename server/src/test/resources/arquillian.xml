@@ -31,9 +31,11 @@
      <!-- Example configuration for a remote JBoss Enterprise Application Platform 6 or AS 7 instance -->
    <container qualifier="jboss" default="true">
         <!-- By default, arquillian will use the JBOSS_HOME environment variable.  Alternatively, the configuration below can be uncommented. -->
+         
         <configuration>
-        <property name="jbossHome">/Users/dtaylor/Integer/wildfly</property>
+<!--         <property name="jbossHome">Integer/wildfly</property> -->
         </configuration>
+       
    </container>
 
 </arquillian>
