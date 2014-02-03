@@ -37,16 +37,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import edu.harvard.integer.capabilitySetter.CapabilitySetterException;
 import edu.harvard.integer.capabilitySetter.snmp.MibParser;
 import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory;
 import edu.harvard.integer.capabilitySetter.snmp.MibParserFactory.ParserProvider;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.service.persistance.PersistenceManager;
 
 /**
  * @author David Taylor
@@ -54,17 +58,32 @@ import edu.harvard.integer.common.topology.Capability;
  */
 @Stateless
 public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
-
+	
+	@Inject
+	MibLoader mibLoader;
+	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
 	 */
 	@Override
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) {
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException {
 
-		System.setProperty("mibFileLocation", "/Users/dtaylor/git/integer/capabilitysetter/mibs");
+		for (MIBImportInfo mibImportInfo : mibFile) {
+			MIBImportResult result = new MIBImportResult();
+			result.setMib(mibImportInfo.getMib());
+			result.setFileName(mibImportInfo.getFileName());
+			
+			SNMPModule module = new SNMPModule();
+			module.setName("IfMib");
+			module.setOid("1.2.3.4");
+			result.setModule(module);
+			
+			mibLoader.load(result);
+		}
+		
 //		MibParser mibParser =  MibParserFactory.getParserSource(ParserProvider.MIBBLE);
 //		try {
-//			mibParser.importMIB(mibinfos, replaceExist));(Arrays.asList(mibFile));
+//			mibParser.importMIB(mibinfos, replaceExist));
 //		} 
 //		catch (CapabilitySetterException e) {
 //			// TODO Auto-generated catch block
