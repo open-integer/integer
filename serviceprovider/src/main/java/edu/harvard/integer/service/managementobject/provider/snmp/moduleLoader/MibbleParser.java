@@ -45,7 +45,6 @@ import net.percederberg.mibble.snmp.SnmpAccess;
 import net.percederberg.mibble.snmp.SnmpIndex;
 import net.percederberg.mibble.snmp.SnmpObjectType;
 import net.percederberg.mibble.snmp.SnmpTextualConvention;
-import net.percederberg.mibble.snmp.SnmpType;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
 
 import java.io.BufferedWriter;
@@ -232,18 +231,20 @@ public class MibbleParser implements MibParser{
     			{
     				SNMPTable snmpTbl = new SNMPTable();
     				MibValueSymbol[] avss = vs.getChildren();
-    				SNMP[] variables = new SNMP[avss.length];
+    				List<SNMP> variables = new ArrayList<>();
     				
-    				snmpTbl.setVariables(variables);
+    				snmpTbl.setTableOids(variables);
     				SnmpObjectType mt =  (SnmpObjectType) vs.getType();
     				ArrayList<SnmpIndex> sis =  mt.getIndex();
     				
     				if ( sis.size() > 0 ) {
-    					SNMP[] index = new SNMP[sis.size()];
+    					
+    					List<SNMP> index = new ArrayList<>();
     					snmpTbl.setIndex(index);
-    				}
-    				
+    				}    				
     				snmpTbl.displayName = vs.getName();
+    				
+    				snmpTbl.setName(vs.getName());
     				snmpTbl.oid = vs.getValue().toString();
     				
     				for (int i=0; i<avss.length; i++ ) 
@@ -257,15 +258,14 @@ public class MibbleParser implements MibParser{
     					{
     						ObjectIdentifierValue obj = (ObjectIdentifierValue) avs.getValue();
     						SNMP snmp = createSNMP( obj, snmpType );
-    						snmpTbl.getVaiables()[i] = snmp;
+    						snmpTbl.getTableOids().add(snmp);
     					}
     				}    				
     				for ( int i=0; i<sis.size(); i++ ) {
     					
     					SnmpIndex si = sis.get(i);
     					SNMP snmp = createSNMP(si);
-    					
-    					snmpTbl.getIndex()[i] = snmp;
+  					    snmpTbl.getIndex().add(snmp);
     					
     				}    				
     				tblList.add(snmpTbl);
