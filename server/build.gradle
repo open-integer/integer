@@ -17,7 +17,6 @@ configurations {
 
 repositories {
 	mavenCentral()
-	maven { url "http://repo.spring.io/libs-milestone" }
 	maven { url "https://repository.jboss.org" }
 	maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
 }
@@ -55,6 +54,7 @@ dependencies {
 		exclude group: 'org.jboss.logging'
 	}
 	
+	testRuntime('mysql:mysql-connector-java:5.1.28')
 }
 
 test {
