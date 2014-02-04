@@ -227,8 +227,8 @@ public class MibbleParser implements MibParser{
     			if (vs.isTableRow())
     			{
     				SNMPTable snmpTbl = new SNMPTable();
-    				snmpTbl.setIndex(new ArrayList<SNMP>());
-    					
+    				List<SNMP> oids = new ArrayList<SNMP>();
+    				
     				snmpTbl.setName(vs.getName());
     				snmpTbl.oid = vs.getValue().toString();
     				
@@ -243,9 +243,11 @@ public class MibbleParser implements MibParser{
     					{
     						ObjectIdentifierValue obj = (ObjectIdentifierValue) vs.getValue();
     						SNMP snmp = createSNMP( obj, snmpType );
-    					    snmpTbl.getIndex().add(snmp);
+    					    oids.add(snmp);
     					}
     				}
+    				snmpTbl.setIndex(oids);
+    				
     				tblList.add(snmpTbl);
     			} 
     			else if (vs.isScalar())

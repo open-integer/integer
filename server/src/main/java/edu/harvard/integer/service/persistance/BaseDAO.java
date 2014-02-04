@@ -33,7 +33,14 @@
 
 package edu.harvard.integer.service.persistance;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.exception.DatabaseErrorCodes;
+import edu.harvard.integer.common.exception.IntegerException;
 
 /**
  * @author David Taylor
@@ -45,11 +52,38 @@ public class BaseDAO {
 	
 	private EntityManager entityManger = null;
 	
-	public BaseDAO(EntityManager entityManger) {
+	private Logger logger = null;
+	
+	public BaseDAO(EntityManager entityManger, Logger logger) {
 		this.entityManger = entityManger;
 	}
 	
 	protected EntityManager getEntityManager() {
 		return entityManger;
 	}
+
+	/**
+	 * @return the logger
+	 */
+	public Logger getLogger() {
+		return logger;
+	}
+	
+	public BaseEntity update(BaseEntity entity) throws IntegerException {
+		
+		try {
+			if (entity.getIdentifier() == null)
+				getEntityManager().persist(entity);
+			else if (!getEntityManager().contains(entity))
+				getEntityManager().merge(entity);
+
+			getLogger().info("Added " + entity.getName() + " ID: " + entity.getIdentifier());
+
+		} catch (EntityExistsException ee) {
+			throw new IntegerException(ee, DatabaseErrorCodes.EntityAlreadyExists);
+		} 
+		return entity;
+	}
+
+
 }

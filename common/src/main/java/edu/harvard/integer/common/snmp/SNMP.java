@@ -61,8 +61,9 @@ public class SNMP extends ServiceElementManagementObject {
 	 * Description of the object as found in the MIB Module. In some cases, this
 	 * description can be quite long.
 	 */
+	@Column(columnDefinition="LONGTEXT")
 	public String description = null;
-
+	
 	/*
 	 * This defines the read, read/write, or some objects (bad objects) are
 	 * write only. This is a function of the object definition, not the access

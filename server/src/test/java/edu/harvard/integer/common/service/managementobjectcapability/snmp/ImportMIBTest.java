@@ -56,7 +56,9 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.service.managementobject.provider.ServiceProviderMain;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 import edu.harvard.integer.service.persistance.PersistenceManager;
@@ -119,7 +121,6 @@ public class ImportMIBTest {
 			fail("Error loading MIB: "+ e.getMessage());
 		}
 		
-		
 		MIBImportInfo importInfo = new MIBImportInfo();
 		importInfo.setFileName("RFC1213-MIB");
 		importInfo.setMib(content);
@@ -143,8 +144,21 @@ public class ImportMIBTest {
 				logger.info("Errors      :   " + Arrays.toString(mibImportResult.getErrors()));
 				
 				logger.info("Num of Tables:  " + mibImportResult.getSnmpTable().size());
-				logger.info("Num of Scalors: " + mibImportResult.getSnmpScalars().size());
+				for (SNMPTable snmpTable : mibImportResult.getSnmpTable()) {
+					logger.info("Table: " + snmpTable.getIdentifier() + " " + snmpTable.getName() + " " + snmpTable.getOid());
+					
+					if (snmpTable.getTableOids() != null) {
+						logger.info("Num of table oids: " + snmpTable.getTableOids().size());
+						for (SNMP snmpOid : snmpTable.getTableOids()) {
+							logger.info("Oid: " + snmpOid.getIdentifier() + " " + snmpOid.getDisplayName() + " " + snmpOid.getOid());
+						}
+					}
+				}
 				
+				logger.info("Num of Scalors: " + mibImportResult.getSnmpScalars().size());
+				for (SNMP snmpOid : mibImportResult.getSnmpScalars()) {
+					logger.info("Oid: " + snmpOid.getIdentifier() + " " + snmpOid.getDisplayName() + " " + snmpOid.getOid());
+				}
 			}
 			
 			IDType type = new IDType();

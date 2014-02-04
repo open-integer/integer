@@ -40,17 +40,17 @@ import edu.harvard.integer.common.BaseEntity;
 /**
  * @author David Taylor
  * 
- * This class holds the definition of a MIB. The process of importing a MIB
- * into the system will create an instance of this class.
+ *         This class holds the definition of a MIB. The process of importing a
+ *         MIB into the system will create an instance of this class.
  * 
  */
 public class MIBInfo extends BaseEntity {
 
 	private SNMPModule module = null;
 
-	private List<SNMPTable> tables = null;
+	private SNMPTable[] tables = null;
 
-	private List<SNMP> scalors = null;
+	private SNMP[] scalors = null;
 
 	private String vendor = null;
 
@@ -72,7 +72,7 @@ public class MIBInfo extends BaseEntity {
 	/**
 	 * @return the tables
 	 */
-	public List<SNMPTable> getTables() {
+	public SNMPTable[] getTables() {
 		return tables;
 	}
 
@@ -80,14 +80,14 @@ public class MIBInfo extends BaseEntity {
 	 * @param tables
 	 *            the tables to set
 	 */
-	public void setTables(List<SNMPTable> tables) {
+	public void setTables(SNMPTable[] tables) {
 		this.tables = tables;
 	}
 
 	/**
 	 * @return the scalors
 	 */
-	public List<SNMP> getScalors() {
+	public SNMP[] getScalors() {
 		return scalors;
 	}
 
@@ -95,7 +95,7 @@ public class MIBInfo extends BaseEntity {
 	 * @param scalors
 	 *            the scalors to set
 	 */
-	public void setScalors(List<SNMP> scalors) {
+	public void setScalors(SNMP[] scalors) {
 		this.scalors = scalors;
 	}
 

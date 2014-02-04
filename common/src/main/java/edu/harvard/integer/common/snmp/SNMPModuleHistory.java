@@ -36,6 +36,7 @@ package edu.harvard.integer.common.snmp;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 
@@ -57,6 +58,7 @@ public class SNMPModuleHistory extends BaseEntity {
 	/**
 	 * Description/comment for the change to the MIB.
 	 */
+	@Size(min=1, max=512)
 	private String description;
 
 	/**

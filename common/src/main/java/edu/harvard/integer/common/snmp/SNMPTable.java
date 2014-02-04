@@ -35,25 +35,37 @@ package edu.harvard.integer.common.snmp;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 /**
  * @author David Taylor
  * 
- * This class holds the definition of a MIB Table. 
+ *         This class holds the definition of a MIB Table.
  * 
  */
 @Entity
 public class SNMPTable extends SNMP {
 
 	/**
-	 * List of index OID's for this table. 
+	 * List of index OID's for this table.
 	 * 
 	 */
-	@OneToMany
+	@ElementCollection
+	@OrderColumn(name = "tableIndexIdx")
+	@CollectionTable(name = "SNMPTable_Index")
 	private List<SNMP> index = null;
-	
+
+	/**
+	 * 
+	 */
+	@ElementCollection
+	@OrderColumn(name = "tableOidIdx")
+	@CollectionTable(name = "SNMPTable_OIDS")
+	private List<SNMP> tableOids = null;
+
 	/**
 	 * @return the index
 	 */
@@ -68,4 +80,20 @@ public class SNMPTable extends SNMP {
 	public void setIndex(List<SNMP> index) {
 		this.index = index;
 	}
+
+	/**
+	 * @return the tableOids
+	 */
+	public List<SNMP> getTableOids() {
+		return tableOids;
+	}
+
+	/**
+	 * @param tableOids
+	 *            the tableOids to set
+	 */
+	public void setTableOids(List<SNMP> tableOids) {
+		this.tableOids = tableOids;
+	}
+
 }
