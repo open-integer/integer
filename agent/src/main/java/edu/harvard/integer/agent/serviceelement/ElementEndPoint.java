@@ -30,57 +30,77 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-
-package edu.harvard.integer.common.snmp;
-
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+package edu.harvard.integer.agent.serviceelement;
 
 /**
- * @author David Taylor
- * 
- * This class holds the definition of a MIB Table. 
- * 
+ * The Class ElementEndPoint contains information to access an element.
+ * All elements are considering an IP based element.
+ *
+ * @author dchan
  */
-@Entity
-public class SNMPTable extends SNMP {
-
-	/**
-	 * List of index OID's for this table. 
-	 * It can be null if it is unavailable.
-	 * 
-	 */
-	@OneToMany
-	private SNMP[] index = null;
+public class ElementEndPoint {
+	
+	/** The ip address of the element */
+	private String ipAddress;
+	
+	/** The access port to access the element */
+	private int  accessPort;
+	
+	/** The access object containing information such as key, community string. */
+	private Access  access;
 	
 	/**
-	 * List Variables for this table
+	 * Gets the ip address.
+	 *
+	 * @return the ip address
 	 */
-	@OneToMany
-	private SNMP[] vaiables;
+	public String getIpAddress() {
+		return ipAddress;
+	}
 	
 	/**
-	 * @return the index
+	 * Sets the ip address.
+	 *
+	 * @param ipAddress the new ip address
 	 */
-	public SNMP[] getIndex() {
-		return index;
-	}
-
-	/**
-	 * @param index
-	 *            the index to set
-	 */
-	public void setIndex(SNMP[] index) {
-		this.index = index;
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 	
-	public SNMP[] getVaiables() {
-		return vaiables;
+	/**
+	 * Gets the access port.
+	 *
+	 * @return the access port
+	 */
+	public int getAccessPort() {
+		return accessPort;
 	}
-
-	public void setVariables(SNMP[] variables) {
-		this.vaiables = variables;
+	
+	/**
+	 * Sets the access port.
+	 *
+	 * @param accessPort the new access port
+	 */
+	public void setAccessPort(int accessPort) {
+		this.accessPort = accessPort;
 	}
+	
+	/**
+	 * Gets the access.
+	 *
+	 * @return the access
+	 */
+	public Access getAccess() {
+		return access;
+	}
+	
+	/**
+	 * Sets the access.
+	 *
+	 * @param access the new access
+	 */
+	public void setAccess(Access access) {
+		this.access = access;
+	}
+	
 }

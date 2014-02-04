@@ -1,1 +1,1 @@
-include ':common', ':server', ':client', ':serviceprovider'
+include ':common', ':server', ':client', ':serviceprovider', 'agent'

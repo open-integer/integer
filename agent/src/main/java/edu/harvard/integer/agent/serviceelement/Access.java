@@ -30,57 +30,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-
-package edu.harvard.integer.common.snmp;
-
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+package edu.harvard.integer.agent.serviceelement;
 
 /**
- * @author David Taylor
- * 
- * This class holds the definition of a MIB Table. 
- * 
+ * The Access is an interface used to identify it is an access object.
+ *
+ * @author dchan
  */
-@Entity
-public class SNMPTable extends SNMP {
+public interface Access {
 
-	/**
-	 * List of index OID's for this table. 
-	 * It can be null if it is unavailable.
-	 * 
-	 */
-	@OneToMany
-	private SNMP[] index = null;
-	
-	/**
-	 * List Variables for this table
-	 */
-	@OneToMany
-	private SNMP[] vaiables;
-	
-	/**
-	 * @return the index
-	 */
-	public SNMP[] getIndex() {
-		return index;
-	}
-
-	/**
-	 * @param index
-	 *            the index to set
-	 */
-	public void setIndex(SNMP[] index) {
-		this.index = index;
-	}
-	
-	public SNMP[] getVaiables() {
-		return vaiables;
-	}
-
-	public void setVariables(SNMP[] variables) {
-		this.vaiables = variables;
-	}
 }

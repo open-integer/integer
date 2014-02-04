@@ -38,10 +38,14 @@ import net.percederberg.mibble.MibLoaderLog;
 import net.percederberg.mibble.MibLoaderLog.LogEntry;
 import net.percederberg.mibble.MibSymbol;
 import net.percederberg.mibble.MibType;
+import net.percederberg.mibble.MibTypeSymbol;
 import net.percederberg.mibble.MibValue;
 import net.percederberg.mibble.MibValueSymbol;
 import net.percederberg.mibble.snmp.SnmpAccess;
+import net.percederberg.mibble.snmp.SnmpIndex;
 import net.percederberg.mibble.snmp.SnmpObjectType;
+import net.percederberg.mibble.snmp.SnmpTextualConvention;
+import net.percederberg.mibble.snmp.SnmpType;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
 
 import java.io.BufferedWriter;
@@ -227,25 +231,43 @@ public class MibbleParser implements MibParser{
     			if (vs.isTableRow())
     			{
     				SNMPTable snmpTbl = new SNMPTable();
-    				snmpTbl.setIndex(new ArrayList<SNMP>());
-    					
-    				snmpTbl.setName(vs.getName());
+    				MibValueSymbol[] avss = vs.getChildren();
+    				SNMP[] variables = new SNMP[avss.length];
+    				
+    				snmpTbl.setVariables(variables);
+    				SnmpObjectType mt =  (SnmpObjectType) vs.getType();
+    				ArrayList<SnmpIndex> sis =  mt.getIndex();
+    				
+    				if ( sis.size() > 0 ) {
+    					SNMP[] index = new SNMP[sis.size()];
+    					snmpTbl.setIndex(index);
+    				}
+    				
+    				snmpTbl.displayName = vs.getName();
     				snmpTbl.oid = vs.getValue().toString();
     				
-    				MibValueSymbol[] avss = vs.getChildren();
-    				for (MibValueSymbol avs : avss)
+    				for (int i=0; i<avss.length; i++ ) 
     				{
+    					MibValueSymbol avs = avss[i];
     					/**
-    					 * Only card if it is accessable.
+    					 * Only card if it is accessible.
     					 */
     					SnmpObjectType snmpType = (SnmpObjectType) avs.getType();
     					if (snmpType.getAccess().canRead() || snmpType.getAccess().canRead() )
     					{
-    						ObjectIdentifierValue obj = (ObjectIdentifierValue) vs.getValue();
+    						ObjectIdentifierValue obj = (ObjectIdentifierValue) avs.getValue();
     						SNMP snmp = createSNMP( obj, snmpType );
-    					    snmpTbl.getIndex().add(snmp);
+    						snmpTbl.getVaiables()[i] = snmp;
     					}
-    				}
+    				}    				
+    				for ( int i=0; i<sis.size(); i++ ) {
+    					
+    					SnmpIndex si = sis.get(i);
+    					SNMP snmp = createSNMP(si);
+    					
+    					snmpTbl.getIndex()[i] = snmp;
+    					
+    				}    				
     				tblList.add(snmpTbl);
     			} 
     			else if (vs.isScalar())
@@ -258,7 +280,7 @@ public class MibbleParser implements MibParser{
     					
     					scaleList.add(snmp);				    	
     				}
-    			}
+    			}   			
     		}
     	}
     	if ( tblList.size() > 0 || scaleList.size() > 0 ) {
@@ -322,6 +344,7 @@ public class MibbleParser implements MibParser{
 		
 	    SNMP snmp = new SNMP();
 	    snmp.displayName = obj.getName();
+	    
 	    snmp.oid = obj.toObject().toString();
 	    snmp.description = snmpType.getDescription();
 	     					    
@@ -342,11 +365,36 @@ public class MibbleParser implements MibParser{
 	    
 	    if ( oType instanceof SnmpObjectType ) {
 	    	snmp.units = ((SnmpObjectType) oType).getSyntax().getName();
+	    	MibTypeSymbol ms =  ((SnmpObjectType) oType).getSyntax().getReferenceSymbol();
+	    	if ( ms != null && ms.getType() instanceof SnmpTextualConvention ) {
+	    		snmp.textualConvetion = ms.getName(); 
+	    	}
 	    }
 	    else {
 	    	System.out.println("Not an snmpObjectType .... ");
 	    }
-	    
+	    return snmp;
+	}
+	
+	
+	/**
+	 * 
+	 * Create an index SNNP object based on Mibble SnmpIndex.
+	 * For the time being, the index implied information is ignored, we may need it if
+     * we are using the index information to construct the instance oid.
+	 * 
+	 */
+	private SNMP createSNMP( SnmpIndex si ) {
+		
+		SNMP snmp = new SNMP();	  
+		ObjectIdentifierValue mv = (ObjectIdentifierValue) si.getValue();
+		snmp.displayName = mv.getName();
+		snmp.oid = mv.toObject().toString();
+		MibValueSymbol ms =  mv.getSymbol();
+		MibType mt = ms.getType();
+		if ( mt instanceof SnmpObjectType ) {
+			snmp.units = ((SnmpObjectType) mt).getSyntax().getName();
+		}
 	    return snmp;
 	}
 	
@@ -548,12 +596,12 @@ public class MibbleParser implements MibParser{
 	 */
 	@Override
 	public MIBImportResult[] importMIB( MIBImportInfo[] mibinfos,
-			                                boolean useExisting) throws IntegerException {
+			                                boolean replaceExisting) throws IntegerException {
 	
 		File[] files = mibLocation.listFiles();
 		mibLoader.removeAllDirs();	
 		
-		if ( useExisting ) {
+		if ( replaceExisting ) {
 			createTmpDirs();
 		}
 		List<MibProcessingInfo> processingList = new ArrayList<>();
@@ -561,8 +609,8 @@ public class MibbleParser implements MibParser{
 		try {			
 			List<MIBImportResult> importReturn = new ArrayList<>();	
 			
-			loadMib(files, true, useExisting, mibinfos, importReturn, processingList);
-			loadMib(files, false, useExisting, mibinfos, importReturn, processingList);
+			loadMib(files, true, replaceExisting, mibinfos, importReturn, processingList);
+			loadMib(files, false, replaceExisting, mibinfos, importReturn, processingList);
 			
     		return importReturn.toArray(new MIBImportResult[importReturn.size()]);
     		

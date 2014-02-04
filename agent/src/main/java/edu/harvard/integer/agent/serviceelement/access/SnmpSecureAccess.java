@@ -30,57 +30,54 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.agent.serviceelement.access;
 
-package edu.harvard.integer.common.snmp;
-
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import edu.harvard.integer.agent.serviceelement.Access;
 
 /**
- * @author David Taylor
- * 
- * This class holds the definition of a MIB Table. 
- * 
+ * @author dchan
+ *
  */
-@Entity
-public class SNMPTable extends SNMP {
+public class SnmpSecureAccess implements Access {
 
-	/**
-	 * List of index OID's for this table. 
-	 * It can be null if it is unavailable.
-	 * 
-	 */
-	@OneToMany
-	private SNMP[] index = null;
+	private int securityLevel;
+	private int securityModel;
+	private String securityName;
+	private byte[]  engineID;
 	
-	/**
-	 * List Variables for this table
-	 */
-	@OneToMany
-	private SNMP[] vaiables;
 	
-	/**
-	 * @return the index
-	 */
-	public SNMP[] getIndex() {
-		return index;
-	}
-
-	/**
-	 * @param index
-	 *            the index to set
-	 */
-	public void setIndex(SNMP[] index) {
-		this.index = index;
+	public int getSecurityLevel() {
+		return securityLevel;
 	}
 	
-	public SNMP[] getVaiables() {
-		return vaiables;
+	public void setSecurityLevel(int securityLevel) {
+		this.securityLevel = securityLevel;
+	}
+	
+	public int getSecurityModel() {
+		return securityModel;
+	}
+	
+	public void setSecurityModel(int securityModel) {
+		this.securityModel = securityModel;
+	}
+	
+	public String getSecurityName() {
+		return securityName;
+	}
+	
+	public void setSecurityName(String securityName) {
+		this.securityName = securityName;
+	}
+	
+
+	public byte[] getEngineID() {
+		return engineID;
 	}
 
-	public void setVariables(SNMP[] variables) {
-		this.vaiables = variables;
+	public void setEngineID(byte[] engineID) {
+		this.engineID = engineID;
 	}
+
+	
 }
