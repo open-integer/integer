@@ -109,3 +109,7 @@ task devmode (dependsOn: classes, type: JavaExec) {
 
 	maxHeapSize = '256M'
 }
+
+javadoc {
+   options.addStringOption("sourcepath",'src')
+}
