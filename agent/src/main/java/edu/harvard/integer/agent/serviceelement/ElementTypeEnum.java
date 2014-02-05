@@ -30,13 +30,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.agent.serviceelement;
 
 /**
- * @author dchan
+ * The ElementTypeEnum used by the discovery engine to specify
+ * what basic attributes are associated with each element type.
  *
+ * @author dchan
  */
-public class ElementDiscoverConst {
+public enum ElementTypeEnum {
 
+	/** The Network element module. */
+	NetworkElmModule,
+	
+	/** The Network element chassis. */
+	NetworkElmChassis,
+	
+	/** The Network element port. */
+	NetworkElmPort,
+	
+	/** The Netwrok element service. */
+	NetwrokElmService,
+	
+	/** The Firewall element  */
+	FirewallService,
+	
+	/** The db. */
+	DB,
+	
+	/** The VPN service. */
+	VPNService,
+	
+	/** The Application element such as linux server. */
+	ApplicationElm,
+	
+	/** AWS VPC */
+	AWSVpc,
 	
 }

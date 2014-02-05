@@ -33,10 +33,13 @@
 package edu.harvard.integer.agent.serviceelement.discovery;
 
 /**
- * @author dchan
+ * 
+ * The Class DiscoveryPolicy contains discovery configuration such as seed element
+ * filters based on network etc.
  *
+ * @author dchan
  */
-public class ElementDiscoverConst {
+public class DiscoveryPolicy {
 
 	
 }

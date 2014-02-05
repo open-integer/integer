@@ -30,13 +30,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * @author dchan
  *
  */
-public class ElementDiscoverConst {
+public class SNMPElementDiscover implements ElementDiscoveryBase {
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.ElementDiscoveryBase#discoverElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	 */
+	@Override
+	public ServiceElement discoverElement(ElementEndPoint endEpt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 }

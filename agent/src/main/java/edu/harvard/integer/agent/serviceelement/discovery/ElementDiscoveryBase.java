@@ -32,11 +32,17 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.common.topology.ServiceElement;
+
 /**
+ * This interface layout the methods for discover regarding to SNMP devices or
+ * non SNMP devices or service. 
+ * 
  * @author dchan
  *
  */
-public class ElementDiscoverConst {
+public interface ElementDiscoveryBase {
 
-	
+	public ServiceElement discoverElement( ElementEndPoint endEpt );
 }
