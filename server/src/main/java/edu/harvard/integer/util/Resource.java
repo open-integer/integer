@@ -31,16 +31,14 @@
  *      
  */
 
-package edu.harvard.integer.common.util;
-
-
-
+package edu.harvard.integer.util;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * @author David Taylor
@@ -53,6 +51,5 @@ public class Resource {
     
     	return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
     }
-
 
 }

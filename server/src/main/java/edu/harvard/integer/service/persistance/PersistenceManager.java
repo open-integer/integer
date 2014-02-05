@@ -119,6 +119,7 @@ public class PersistenceManager {
 		
 		CriteriaQuery<T> query = criteriaBuilder.createQuery(type.getClassType());
 		Root<T> from = query.from(type.getClassType());
+	
 		query.select(from);
 		List<T> resultList = em.createQuery(query).getResultList();
 		
@@ -147,6 +148,6 @@ public class PersistenceManager {
 	 * @return SNMPModuleDAO. 
 	 */
 	public SNMPModuleDAO getSNMPModuleDAO() {
-		return new SNMPModuleDAO(em);
+		return new SNMPModuleDAO(em, logger);
 	}
 }

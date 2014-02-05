@@ -37,6 +37,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -61,6 +62,7 @@ public class SNMP extends ServiceElementManagementObject {
 	 * Description of the object as found in the MIB Module. In some cases, this
 	 * description can be quite long.
 	 */
+	@Size(min=1, max=2000)
 	public String description = null;
 
 	/*

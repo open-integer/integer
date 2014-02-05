@@ -36,6 +36,9 @@ package edu.harvard.integer.service.managementobject.snmp;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -53,9 +56,12 @@ import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFacto
 @Stateless
 public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	
-//	@Inject
-//	MibLoader mibLoader;
-	
+	@Inject
+	private MibLoader mibLoader;
+
+	@Inject
+	private Logger logger;
+
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
 	 */
@@ -64,7 +70,14 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 
 		try {
 			MibParser mibParser =  MibParserFactory.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
-			return mibParser.importMIB(mibFile, true);
+			MIBImportResult[] results = mibParser.importMIB(mibFile, true);
+			for (MIBImportResult result : results) {
+				mibLoader.load(result);	
+			}
+			
+			logger.info("Load of mibs complete!");	
+
+			return results;
 		}
     	catch (IntegerException e) {
 			e.printStackTrace();

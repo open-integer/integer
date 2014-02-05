@@ -36,8 +36,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Path;
 
 import org.slf4j.Logger;
@@ -52,12 +50,6 @@ import edu.harvard.integer.server.IntegerApplication;
 @Path("/Database")
 public class PersistenceService implements PersistenceServiceEJB {
 
-	@PersistenceContext
-	private EntityManager em;
-	
-	@Inject
-	private PersistenceManager dbm;
-	
 	@Inject
 	private Logger logger;
 	

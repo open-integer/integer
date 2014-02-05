@@ -36,8 +36,10 @@ package edu.harvard.integer.common.snmp;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 
@@ -62,12 +64,13 @@ public class SNMPModule extends BaseEntity {
 	/**
 	 * Description of the MIB module.
 	 */
+	@Size(min=1, max=2000)
 	private String description = null;
 	
 	/**
 	 * History of the MIB Module.
 	 */
-	@OneToMany
+	@ElementCollection
 	private List<SNMPModuleHistory> history = null;
 	
 	/**
@@ -101,21 +104,6 @@ public class SNMPModule extends BaseEntity {
 	}
 
 	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * @param description
-	 *            the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
 	 * @return the history
 	 */
 	public List<SNMPModuleHistory> getHistory() {
@@ -123,11 +111,24 @@ public class SNMPModule extends BaseEntity {
 	}
 
 	/**
-	 * @param history
-	 *            the history to set
+	 * @param history the history to set
 	 */
 	public void setHistory(List<SNMPModuleHistory> history) {
 		this.history = history;
 	}
-	
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

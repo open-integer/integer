@@ -50,15 +50,13 @@ import javax.persistence.OrderColumn;
 public class SNMPTable extends SNMP {
 
 	/**
-	 * List of index OID's for this table. 
-	 * It can be null if it is unavailable.
+	 * List of index OID's for this table.
 	 * 
 	 */
 	@ElementCollection
 	@OrderColumn(name = "tableIndexIdx")
 	@CollectionTable(name = "SNMPTable_Index")
 	private List<SNMP> index = null;
-
 
 	/**
 	 * 
@@ -68,7 +66,20 @@ public class SNMPTable extends SNMP {
 	@CollectionTable(name = "SNMPTable_OIDS")
 	private List<SNMP> tableOids = null;
 
+	/**
+	 * @return the index
+	 */
+	public List<SNMP> getIndex() {
+		return index;
+	}
 
+	/**
+	 * @param index
+	 *            the index to set
+	 */
+	public void setIndex(List<SNMP> index) {
+		this.index = index;
+	}
 
 	/**
 	 * @return the tableOids
@@ -83,14 +94,6 @@ public class SNMPTable extends SNMP {
 	 */
 	public void setTableOids(List<SNMP> tableOids) {
 		this.tableOids = tableOids;
-	}
-	
-	public List<SNMP> getIndex() {
-		return index;
-	}
-
-	public void setIndex(List<SNMP> index) {
-		this.index = index;
 	}
 
 }

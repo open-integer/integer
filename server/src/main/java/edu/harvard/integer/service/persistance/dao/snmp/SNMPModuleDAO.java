@@ -36,9 +36,14 @@ package edu.harvard.integer.service.persistance.dao.snmp;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
+
+import org.apache.commons.collections.buffer.CircularFifoBuffer;
+import org.slf4j.Logger;
 
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.service.persistance.BaseDAO;
@@ -56,8 +61,8 @@ public class SNMPModuleDAO extends BaseDAO {
 	 * 
 	 * @param persistenceManger
 	 */
-	public SNMPModuleDAO(EntityManager persistenceManger) {
-		super(persistenceManger);
+	public SNMPModuleDAO(EntityManager persistenceManger, Logger logger) {
+		super(persistenceManger, logger);
 		
 	}
 
@@ -72,7 +77,14 @@ public class SNMPModuleDAO extends BaseDAO {
 		//query.where()
 		Root<SNMPModule> from = query.from(SNMPModule.class);
 		query.select(from);
-		List<SNMPModule> resultList = getEntityManager().createQuery(query).getResultList();
+		
+		ParameterExpression<String> oid = criteriaBuilder.parameter(String.class);
+		query.select(from).where(criteriaBuilder.equal(from.get("oid"), oid));
+		
+		TypedQuery<SNMPModule> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, oidString);
+		
+		List<SNMPModule> resultList = typeQuery.getResultList();
 		
 		if (resultList.size() > 0)
 			return resultList.get(0);

@@ -36,34 +36,33 @@ package edu.harvard.integer.common.snmp;
 import java.util.List;
 
 /**
- *
+ * 
  * @author David Taylor
  * 
- * Hold the result of a MIB import.
+ *         Hold the result of a MIB import.
  */
 public class MIBImportResult extends MIBImportInfo {
 
 	/**
-	 * The SNMP module.  It can be null if the imported MIB does not pass parser.
+	 * The SNMP module. It can be null if the imported MIB does not pass parser.
 	 */
 	private SNMPModule module;
-	
+
 	/**
-	 * SNMP table list in the module.  It can be null if table is not available
+	 * SNMP table list in the module. It can be null if table is not available
 	 */
-	private List<SNMPTable>  snmpTable;
-	
+	private List<SNMPTable> snmpTable;
+
 	/**
-	 * SNMP scalar list in the module.  It can be null if table is not available
+	 * SNMP scalar list in the module. It can be null if table is not available
 	 */
-	private List<SNMP>  snmpScalars;
-	
+	private List<SNMP> snmpScalars;
+
 	private String[] errors = null;
 
-	
 	/**
 	 * Gets the errors.
-	 *
+	 * 
 	 * @return the errors
 	 */
 	public String[] getErrors() {
@@ -72,36 +71,49 @@ public class MIBImportResult extends MIBImportInfo {
 
 	/**
 	 * Sets the errors.
-	 *
-	 * @param errors the errors to set
+	 * 
+	 * @param errors
+	 *            the errors to set
 	 */
 	public void setErrors(String[] errors) {
 		this.errors = errors;
 	}
-	
+
 	public SNMPModule getModule() {
 		return module;
-	}
-
-	public List<SNMPTable> getSnmpTable() {
-		return snmpTable;
-	}
-
-	public void setSnmpTable(List<SNMPTable> snmpTable) {
-		this.snmpTable = snmpTable;
-	}
-
-	public List<SNMP> getSnmpScalars() {
-		return snmpScalars;
-	}
-
-	public void setSnmpScalars(List<SNMP> snmpScalars) {
-		this.snmpScalars = snmpScalars;
 	}
 
 	public void setModule(SNMPModule module) {
 		this.module = module;
 	}
-	
+
+	/**
+	 * @return the snmpTable
+	 */
+	public List<SNMPTable> getSnmpTable() {
+		return snmpTable;
+	}
+
+	/**
+	 * @param snmpTable the snmpTable to set
+	 */
+	public void setSnmpTable(List<SNMPTable> snmpTable) {
+		this.snmpTable = snmpTable;
+	}
+
+	/**
+	 * @return the snmpScalars
+	 */
+	public List<SNMP> getSnmpScalars() {
+		return snmpScalars;
+	}
+
+	/**
+	 * @param snmpScalars the snmpScalars to set
+	 */
+	public void setSnmpScalars(List<SNMP> snmpScalars) {
+		this.snmpScalars = snmpScalars;
+	}
+
 	
 }
