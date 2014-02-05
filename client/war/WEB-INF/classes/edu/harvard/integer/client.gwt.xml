@@ -18,6 +18,9 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
+  <inherits name='edu.harvard.integer.common'/>
+  
+  <inherits name='org.vectomatic.libgwtfile'/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='edu.harvard.integer.client.MainClient'/>

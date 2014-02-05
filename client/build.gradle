@@ -16,6 +16,9 @@ def gwtModule = 'edu.harvard.integer.client'  // GWT module name
 def gwtStartupUrl = 'client.html'     // Startup URL for Dev Mode
 def gwtWarPath = 'war'                  // WebContent directory
 
+// lib-gwt-file
+def libGwtFileVersion = '0.3.3'			// lib-gwt-file version
+
 def gwtServerHost = 'localhost'
 def gwtServerPort = 8888
 
@@ -65,6 +68,9 @@ dependencies {
 			classifier = 'sources'
 		}
 	}
+	
+	// Compile lib-gwt-file, needed for FileUpload
+	compile "org.vectomatic:lib-gwt-file:${libGwtFileVersion}"
 	
 }
 
