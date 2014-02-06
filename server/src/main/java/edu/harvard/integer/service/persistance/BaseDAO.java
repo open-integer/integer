@@ -33,8 +33,16 @@
 
 package edu.harvard.integer.service.persistance;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
@@ -54,8 +62,12 @@ public class BaseDAO {
 	
 	private Logger logger = null;
 	
-	public BaseDAO(EntityManager entityManger, Logger logger) {
+	private Class clazz = null;
+	
+	public BaseDAO(EntityManager entityManger, Logger logger, Class<? extends BaseEntity> clazz) {
 		this.entityManger = entityManger;
+		this.logger = logger;
+		this.clazz = clazz;
 	}
 	
 	protected EntityManager getEntityManager() {
@@ -69,7 +81,7 @@ public class BaseDAO {
 		return logger;
 	}
 	
-	public BaseEntity update(BaseEntity entity) throws IntegerException {
+	public <T extends BaseEntity> T update(T entity) throws IntegerException {
 		
 		try {
 			if (entity.getIdentifier() == null)
@@ -86,4 +98,55 @@ public class BaseDAO {
 	}
 
 
+	public <T> T findByStringField(String fieldValue, String fieldName, Class<T> clazz) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+
+		Root<T> from = query.from(clazz);
+		query.select(from);
+		
+		ParameterExpression<String> oid = criteriaBuilder.parameter(String.class);
+		query.select(from).where(criteriaBuilder.equal(from.get(fieldName), oid));
+		
+		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, fieldValue);
+		
+		List<T> resultList = typeQuery.getResultList();
+		
+		if (resultList.size() > 0)
+			return resultList.get(0);
+		else
+			return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected <T> T[] findAll() throws IntegerException {
+		
+		CriteriaBuilder criteriaBuilder = entityManger.getCriteriaBuilder();
+		
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+		Root<T> from = query.from(clazz);
+	
+		query.select(from);
+		List<T> resultList = entityManger.createQuery(query).getResultList();
+		
+		if (resultList != null) {
+			T[] objs = (T[]) Array.newInstance(clazz, resultList.size());
+		
+			for (int i = 0; i < resultList.size(); i++) {
+				T t = resultList.get(i);
+				
+				if (t instanceof BaseEntity)
+					logger.info("Found " + ((BaseEntity) t).getName() + " ID " + ((BaseEntity)t).getIdentifier());
+				else
+					logger.info("Found Non-BaseEntity " + t);
+				
+				objs[i] = t;
+			}
+			
+			return objs;
+		}
+		return null;
+	}
 }

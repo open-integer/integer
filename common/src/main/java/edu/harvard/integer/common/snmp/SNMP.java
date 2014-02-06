@@ -181,6 +181,14 @@ public class SNMP extends ServiceElementManagementObject {
 		this.units = units;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SNMP [oid=" + oid + ", displayName=" + displayName + "]";
+	}
+
 	// TODO: Add constraints. Could be min/max or max or enum list or ..
 
 }

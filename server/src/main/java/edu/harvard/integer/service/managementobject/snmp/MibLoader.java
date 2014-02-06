@@ -48,6 +48,8 @@ import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 
 /**
@@ -58,16 +60,20 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
  * 
  */
 @Stateless
-public class MibLoader {
+public class MibLoader implements MibLoaderLocalInterface {
 
 	@Inject
 	private PersistenceManager persistenceManager;
 
 	@Inject
 	private Logger logger;
-
+	
+	private SNMPDAO snmpDao = null;
+	private SNMPModuleDAO snmpModuleDAO = null;
+	private MIBInfoDAO mibInfoDAO = null;
+	
 	public MibLoader() {
-
+	
 	}
 
 	/**
@@ -78,7 +84,10 @@ public class MibLoader {
 	 * @throws IntegerException
 	 */
 	public void load(MIBImportResult result) throws IntegerException {
-
+		snmpDao = persistenceManager.getSNMPDAO();
+		snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
+		mibInfoDAO = persistenceManager.getMIBInfoDAO();
+		
 		result.setModule(saveSNMPModule(result.getModule()));
 
 		logger.info("Loaded module " + result.getModule().getDescription());
@@ -90,6 +99,28 @@ public class MibLoader {
 		result.setSnmpTable(saveTableOids(result.getSnmpTable()));
 
 		logger.info("Loaded " + result.getSnmpTable().size() + " table oids");
+		
+		logger.info("MIB filename:   " + result.getFileName());
+		logger.info("SNMPModlue  :   " + result.getModule().getOid());
+		logger.info("Description :   " + result.getModule().getDescription());
+		logger.info("Errors      :   " + Arrays.toString(result.getErrors()));
+		
+		logger.info("Num of Tables:  " + result.getSnmpTable().size());
+		for (SNMPTable snmpTable : result.getSnmpTable()) {
+			logger.info("Table: " + snmpTable.getIdentifier() + " " + snmpTable.getName() + " " + snmpTable.getOid());
+			
+			if (snmpTable.getTableOids() != null) {
+				logger.info("Num of table oids: " + snmpTable.getTableOids().size());
+				for (SNMP snmpOid : snmpTable.getTableOids()) {
+					logger.info("Oid: " + snmpOid.getIdentifier() + " " + snmpOid.getDisplayName() + " " + snmpOid.getOid());
+				}
+			}
+		}
+		
+		logger.info("Num of Scalors: " + result.getSnmpScalars().size());
+		for (SNMP snmpOid : result.getSnmpScalars()) {
+			logger.info("Oid: " + snmpOid.getIdentifier() + " " + snmpOid.getDisplayName() + " " + snmpOid.getOid());
+		}
 	}
 
 	private List<SNMP> saveOids(List<SNMP> oids) throws IntegerException {
@@ -106,7 +137,17 @@ public class MibLoader {
 			throws IntegerException {
 
 		for (int i = 0; i < oids.size(); i++) {
-			oids.set(i, (SNMPTable) saveSNMPOid(oids.get(i)));
+			SNMP snmpOid = oids.get(i);
+			((SNMPTable) snmpOid).setTableOids( saveOids(((SNMPTable) snmpOid).getTableOids()));
+			
+			snmpOid = saveSNMPOid(snmpOid);
+			
+			if (snmpOid instanceof SNMPTable)
+				oids.set(i, (SNMPTable) snmpOid);
+			else
+				logger.error("OID: " + snmpOid.getName() + " " + snmpOid.getOid() + " Is NOT an SNMPTable!! "
+						+ " Passed in " +oids.get(i).getClass().getSimpleName());
+			
 		}
 
 		return oids;
@@ -126,13 +167,13 @@ public class MibLoader {
 		logger.info("Save SNMPModule " + module.getName() + " OID: "
 				+ module.getOid());
 		try {
-			SNMPModuleDAO snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
+			
 			SNMPModule dbModule = snmpModuleDAO.findByOid(module.getOid());
 			if (dbModule != null) {
 				dbModule.setDescription(module.getDescription());
 				dbModule.setLastUpdated(module.getLastUpdated());
 				
-				if (dbModule.getHistory() != null) {
+				if (dbModule.getHistory() != null && module.getHistory() != null) {
 					if (dbModule.getHistory().size() < module.getHistory().size()) {
 						for (int i = dbModule.getHistory().size(); i < module.getHistory().size(); i++)
 							dbModule.getHistory().add(module.getHistory().get(i));
@@ -158,7 +199,8 @@ public class MibLoader {
 				}
 			}
 			
-			module = (SNMPModule) persistenceManager.update(dbModule);
+			module = snmpModuleDAO.update(dbModule);
+			
 		} catch (IntegerException e) {
 			logger.error("Error saveing SNMPModule " + module);
 
@@ -181,17 +223,39 @@ public class MibLoader {
 		logger.info("Save SNMP Oid: " + snmpOid.getDisplayName() + " OID: "
 				+ snmpOid.getOid() + " " + snmpOid.getClass().getSimpleName());
 		try {
-			if (snmpOid instanceof SNMPTable) {
+			
+			SNMP dbOid = snmpDao.findByOid(snmpOid.getOid());
+			if (dbOid != null) {
+				dbOid.setAccessMethod(snmpOid.getAccessMethod());
+				dbOid.setDescription(snmpOid.getDescription());
+				dbOid.setMaxAccess(snmpOid.getMaxAccess());
+				dbOid.setName(snmpOid.getName());
+				dbOid.setNamespace(snmpOid.getNamespace());
+				dbOid.setServiceElementTypes(snmpOid.getServiceElementTypes());
+				dbOid.setSnmpModuleId(snmpOid.getSnmpModuleId());
+				
+				if (dbOid instanceof SNMPTable) {
+					SNMPTable dbTable = (SNMPTable) dbOid;
+					SNMPTable table = (SNMPTable) snmpOid;
+					
+					dbTable.setIndex(table.getIndex());
+					dbTable.setTableOids(table.getTableOids());
+					
+					if (((SNMPTable) snmpOid).getIndex() != null) {
+						logger.info("Save Index "
+								+ Arrays.toString(((SNMPTable) snmpOid).getIndex()
+										.toArray(new SNMP[0])) + " for OID "
+										+ snmpOid.getOid());
 
-				logger.info("Save Index "
-						+ Arrays.toString(((SNMPTable) snmpOid).getIndex()
-								.toArray(new SNMP[0])) + " for OID "
-						+ snmpOid.getOid());
-				((SNMPTable) snmpOid).setIndex(saveOids(((SNMPTable) snmpOid)
-						.getIndex()));
-			}
-
-			snmpOid = (SNMP) persistenceManager.update(snmpOid);
+						((SNMPTable) snmpOid).setIndex(saveOids(((SNMPTable) snmpOid)
+								.getIndex()));
+					}
+				}
+				
+				snmpOid = snmpDao.update(dbOid);
+			} else
+				snmpOid = snmpDao.update(snmpOid);
+			
 		} catch (IntegerException e) {
 			logger.error("Error saveing SNMPModule " + snmpOid);
 

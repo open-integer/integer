@@ -31,64 +31,18 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.snmp;
+package edu.harvard.integer.service.managementobject.snmp;
 
-import java.util.List;
+import javax.ejb.Local;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.snmp.SNMPModule;
-import edu.harvard.integer.service.persistance.BaseDAO;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.MIBImportResult;
 
 /**
  * @author David Taylor
  *
- * DAO for SNMPModule. This will hold all the query's to lookup the SNMPModule's. 
- * 
  */
-public class SNMPModuleDAO extends BaseDAO {
-	
-	/**
-	 * Create SNMPModule with the supplied EntityManager. 
-	 * 
-	 * @param persistenceManger
-	 */
-	public SNMPModuleDAO(EntityManager persistenceManger, Logger logger) {
-		super(persistenceManger, logger, SNMPModule.class);
-		
-	}
-
-	/**
-	 * Find the SNMPModule that has the given OID.
-	 * @return
-	 */
-	public SNMPModule findByOid(String oidString) {
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		
-		CriteriaQuery<SNMPModule> query = criteriaBuilder.createQuery(SNMPModule.class);
-
-		Root<SNMPModule> from = query.from(SNMPModule.class);
-		query.select(from);
-		
-		ParameterExpression<String> oid = criteriaBuilder.parameter(String.class);
-		query.select(from).where(criteriaBuilder.equal(from.get("oid"), oid));
-		
-		TypedQuery<SNMPModule> typeQuery = getEntityManager().createQuery(query);
-		typeQuery.setParameter(oid, oidString);
-		
-		List<SNMPModule> resultList = typeQuery.getResultList();
-		
-		if (resultList.size() > 0)
-			return resultList.get(0);
-		else
-			return null;
-		
-	}
+@Local
+public interface MibLoaderLocalInterface {
+	public void load(MIBImportResult result) throws IntegerException;
 }

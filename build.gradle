@@ -2,7 +2,6 @@
 apply plugin: 'ear'
 apply plugin: 'java'
 
-
 dependencies {
 	deploy project(':common')
 	deploy project(':serviceprovider')
@@ -21,7 +20,6 @@ ear {
 }
 
 version = '1.0'
-
 
 task deployServer(dependsOn: 'build') << {
 	println "Deploy to wildfly dir " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'

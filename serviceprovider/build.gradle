@@ -2,11 +2,19 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+version = '1.0'
+jar {
+	
+	manifest {
+		attributes 'Implementation-Title': 'Integer-MIBParser', 'Implementation-Version': version
+	}
+}
+
 repositories {
     mavenCentral()
     maven { url "http://repo.spring.io/libs-milestone" }
     maven { url "https://repository.jboss.org" }
-        maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
+    maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
 }
 
 

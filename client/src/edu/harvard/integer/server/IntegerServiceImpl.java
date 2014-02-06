@@ -40,7 +40,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		List<MIBImportInfo> mibList = new ArrayList<MIBImportInfo>();
 		mibList.add(mibImportInfo);
 		try {
-			snmpService.importMib((MIBImportInfo[]) mibList.toArray());
+			snmpService.importMib(mibList.toArray(new MIBImportInfo[0]));
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			return e.getMessage();

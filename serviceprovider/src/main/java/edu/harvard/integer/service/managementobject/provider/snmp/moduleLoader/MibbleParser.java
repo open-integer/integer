@@ -111,7 +111,8 @@ public class MibbleParser implements MibParser{
 	 */
 	private MibbleParser() throws IntegerException {
 				
-		mibLocation =  new File(System.getProperty(ServiceProviderMain.MIBFILELOCATON));
+		//mibLocation =  new File(System.getProperty(ServiceProviderMain.MIBFILELOCATON));
+		mibLocation =  new File("mibs");
 		if ( !mibLocation.isDirectory() ) {
 			
 			throw new IntegerException(null, CommonErrorCodes.DirectoryNotValid);
@@ -260,20 +261,15 @@ public class MibbleParser implements MibParser{
     					 * Only card if it is accessable.
     					 */
     					snmpType = (SnmpObjectType) avs.getType();
-    					if (snmpType.getAccess().canRead() || snmpType.getAccess().canWrite() )
+    					if (snmpType.getAccess().canRead() || snmpType.getAccess().canRead() )
     					{
     						ObjectIdentifierValue obj = (ObjectIdentifierValue) avs.getValue();
     						SNMP snmp = createSNMP( obj, snmpType );
     					    oids.add(snmp);
     					}
     				}
-                    for ( int i=0; i<sis.size(); i++ ) {
-    					
-    					SnmpIndex si = sis.get(i);
-    					SNMP snmp = createSNMP(si);
-  					    snmpTbl.getIndex().add(snmp);
-    					
-    				}  
+    				snmpTbl.setTableOids(oids);
+    				
     				tblList.add(snmpTbl);
     			} 
     			else if (vs.isScalar())
@@ -328,13 +324,14 @@ public class MibbleParser implements MibParser{
 		
 		SNMPModuleCache moduleCache = new SNMPModuleCache(snmpModule);
 		boolean containInfo = fillUpMibInfo(moduleCache, mib);
-		if ( !containInfo ) {
-			
-			System.out.println("Module without table or scalar. " + moduleCache.getName());
+		if ( containInfo ) {
+		    return moduleCache;	
 		}
-		return moduleCache;		
+		else {
+			return null;
+		}
+		
 	}
-	
 	
 	
 	/**
@@ -609,7 +606,6 @@ public class MibbleParser implements MibParser{
 		}
 	}
 	
-	
 	/**
 	 * Creates SNMP object based on Mibble  ObjectIdentifierValue and SnmpObjectType
 	 *
@@ -680,6 +676,8 @@ public class MibbleParser implements MibParser{
 	
 	
 	
+	/**
+
 	/**
 	 * Load mib.
 	 *
@@ -809,7 +807,7 @@ public class MibbleParser implements MibParser{
      	    			}
      	    		}
      	    		
-     	    		String[] errs  = (String[]) errors.toArray();
+     	    		String[] errs  = (String[]) errors.toArray(new String[0]);
      	    		mResult.setErrors(errs);
     			}
         	}

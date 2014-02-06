@@ -51,6 +51,8 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 /**
  * @author David Taylor
@@ -73,7 +75,8 @@ public class PersistenceManager {
 		else if (!em.contains(entity))
 			em.merge(entity);
 	
-		logger.info("Added " + entity.getName() + " ID: " + entity.getIdentifier());
+		if (logger.isDebugEnabled())
+			logger.info("Added " + entity.getName() + " ID: " + entity.getIdentifier());
 		
 		} catch (EntityExistsException ee) {
 			throw new IntegerException(ee, DatabaseErrorCodes.EntityAlreadyExists);
@@ -149,5 +152,13 @@ public class PersistenceManager {
 	 */
 	public SNMPModuleDAO getSNMPModuleDAO() {
 		return new SNMPModuleDAO(em, logger);
+	}
+	
+	public SNMPDAO getSNMPDAO() {
+		return new SNMPDAO(em, logger);
+	}
+	
+	public MIBInfoDAO getMIBInfoDAO() {
+		return new MIBInfoDAO(em, logger);
 	}
 }

@@ -1,2 +1,4 @@
 # Module client
 # RPC service class, partial path of RPC policy file
+edu.harvard.integer.client.IntegerService, 80AD1C2CB6F4220E9A9F5785B25F3C6D.gwt.rpc
+edu.harvard.integer.client.GreetingService, BD1D6B14386669B615F078CCB25208FF.gwt.rpc

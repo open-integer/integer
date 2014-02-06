@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -57,7 +58,7 @@ import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFacto
 public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	
 	@Inject
-	private MibLoader mibLoader;
+	private MibLoaderLocalInterface mibLoader;
 
 	@Inject
 	private Logger logger;
@@ -69,10 +70,31 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException {
 
 		try {
+			logger.info("Importing " + mibFile.length + " MIB's");
+			for (MIBImportInfo mibImportInfo : mibFile) {
+				String fileName = mibImportInfo.getFileName();
+				int fileNameIdx = fileName.lastIndexOf('/');
+				if (fileNameIdx > 0)
+					fileName = fileName.substring(fileNameIdx + 1);
+				
+				fileNameIdx = fileName.lastIndexOf('\\');
+				if (fileNameIdx > 0)
+					fileName = fileName.substring(fileNameIdx + 1);
+				
+				mibImportInfo.setFileName(fileName);
+				
+				
+				logger.info("MIB " + mibImportInfo.getFileName() + " Size " + mibImportInfo.getMib().length());
+			}
 			MibParser mibParser =  MibParserFactory.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
 			MIBImportResult[] results = mibParser.importMIB(mibFile, true);
 			for (MIBImportResult result : results) {
-				mibLoader.load(result);	
+				if (result.getErrors() == null || result.getErrors().length == 0)
+					mibLoader.load(result);	
+				else {
+					logger.error("Error importing " + result.getFileName() + " Errors " + Arrays.toString(result.getErrors()));
+				}
+					
 			}
 			
 			logger.info("Load of mibs complete!");	

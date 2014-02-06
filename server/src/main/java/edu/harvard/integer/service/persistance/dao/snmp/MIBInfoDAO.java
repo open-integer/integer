@@ -33,62 +33,26 @@
 
 package edu.harvard.integer.service.persistance.dao.snmp;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.persistance.BaseDAO;
 
 /**
  * @author David Taylor
  *
- * DAO for SNMPModule. This will hold all the query's to lookup the SNMPModule's. 
- * 
  */
-public class SNMPModuleDAO extends BaseDAO {
-	
+public class MIBInfoDAO extends BaseDAO {
+
 	/**
-	 * Create SNMPModule with the supplied EntityManager. 
-	 * 
-	 * @param persistenceManger
+	 * @param entityManger
+	 * @param logger
 	 */
-	public SNMPModuleDAO(EntityManager persistenceManger, Logger logger) {
-		super(persistenceManger, logger, SNMPModule.class);
+	public MIBInfoDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, MIBInfo.class);
 		
 	}
 
-	/**
-	 * Find the SNMPModule that has the given OID.
-	 * @return
-	 */
-	public SNMPModule findByOid(String oidString) {
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		
-		CriteriaQuery<SNMPModule> query = criteriaBuilder.createQuery(SNMPModule.class);
-
-		Root<SNMPModule> from = query.from(SNMPModule.class);
-		query.select(from);
-		
-		ParameterExpression<String> oid = criteriaBuilder.parameter(String.class);
-		query.select(from).where(criteriaBuilder.equal(from.get("oid"), oid));
-		
-		TypedQuery<SNMPModule> typeQuery = getEntityManager().createQuery(query);
-		typeQuery.setParameter(oid, oidString);
-		
-		List<SNMPModule> resultList = typeQuery.getResultList();
-		
-		if (resultList.size() > 0)
-			return resultList.get(0);
-		else
-			return null;
-		
-	}
 }
