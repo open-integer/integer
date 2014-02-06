@@ -5,9 +5,9 @@ apply plugin: 'java'
 
 dependencies {
 	deploy project(':common')
+	deploy project(':serviceprovider')
 	deploy project(':server')
 	deploy project(path: ':client', configuration: 'archives')
-	
 }
 
 ear {
@@ -22,3 +22,13 @@ ear {
 
 version = '1.0'
 
+
+task deployServer(dependsOn: 'build') << {
+	println "Deploy to wildfly dir " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
+	println "Archive " + jar.archiveName
+	copy {
+		from "build/libs/" + jar.archiveName
+		into System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
+
+	}
+}
