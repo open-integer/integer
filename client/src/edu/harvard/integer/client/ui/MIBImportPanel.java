@@ -94,6 +94,12 @@ public class MIBImportPanel extends FormPanel {
 				File file = files.getItem(0);
 				String fileType = file.getType();
 
+				if (!fileType.startsWith("text") && !fileType.isEmpty()) {
+					Window.alert("The file you selected \"" + filename + "\" is not a text file.");
+					submitEvent.cancel();
+					return;
+				}
+
 				// create file reader
 				final FileReader reader = new FileReader();
 				reader.addErrorHandler(new ErrorHandler() {
@@ -118,8 +124,8 @@ public class MIBImportPanel extends FormPanel {
 										// user
 										Window.alert("Import failed: "
 												+ caught.getMessage() + "\n\n"
-												+ "Contents of the file: \n"
-												+ mibContents);
+												+ "Mib file " + filename
+												+ ": \n\n" + mibContents);
 									}
 
 									public void onSuccess(String result) {
