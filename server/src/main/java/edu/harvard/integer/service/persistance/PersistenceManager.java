@@ -43,6 +43,7 @@ import edu.harvard.integer.service.persistance.dao.topology.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 /**
@@ -75,6 +76,15 @@ public class PersistenceManager {
 	 */
 	public SNMPDAO getSNMPDAO() {
 		return new SNMPDAO(em, logger);
+	}
+	
+	/**
+	 * Get the SNMPIndexDAO.
+	 * 
+	 * @return
+	 */
+	public SNMPIndexDAO getSNMPIndexDAO() {
+		return new SNMPIndexDAO(em, logger);
 	}
 	
 	/**
@@ -112,4 +122,5 @@ public class PersistenceManager {
 	public CapabilityDAO getCapabilityDAO() {
 		return new CapabilityDAO(em, logger);
 	}
+	
 }

@@ -71,8 +71,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 	
 	private SNMPDAO snmpDao = null;
 	private SNMPModuleDAO snmpModuleDAO = null;
-	private MIBInfoDAO mibInfoDAO = null;
-	
+
 	public MibLoader() {
 	
 	}
@@ -87,7 +86,6 @@ public class MibLoader implements MibLoaderLocalInterface {
 	public void load(MIBImportResult result) throws IntegerException {
 		snmpDao = persistenceManager.getSNMPDAO();
 		snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
-		mibInfoDAO = persistenceManager.getMIBInfoDAO();
 		
 		result.setModule(saveSNMPModule(result.getModule()));
 
@@ -160,7 +158,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 		for (int i = 0; i < oids.size(); i++) {
 			SNMP snmpOid = oids.get(i);
 			((SNMPTable) snmpOid).setTableOids( saveOids(((SNMPTable) snmpOid).getTableOids()));
-			
+			((SNMPTable) snmpOid).setIndex( saveOids(((SNMPTable) snmpOid).getIndex()));
 			snmpOid = saveSNMPOid(snmpOid);
 			
 			if (snmpOid instanceof SNMPTable)
