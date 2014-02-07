@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,86 +30,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.persistance;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+package edu.harvard.integer.service.persistance.dao.topology;
+
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.service.persistance.dao.topology.CapabilityDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
-import edu.harvard.integer.service.persistance.dao.user.UserDAO;
+import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.service.persistance.BaseDAO;
+
 /**
  * @author David Taylor
- * 
+ *
+ * All add, delete, modify, findXXX methods for the ServiceElementType object are done
+ * in this class. 
  */
-@Stateless
-public class PersistenceManager {
-	
-	@PersistenceContext
-	private EntityManager em;
-	
-	@Inject
-	Logger logger;
+public class ServiceElementTypeDAO extends BaseDAO {
+
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public ServiceElementTypeDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, ServiceElementType.class);
 		
-	
-	/**
-	 * Get the SNMPModuleDAO. 
-	 * 
-	 * @return SNMPModuleDAO. 
-	 */
-	public SNMPModuleDAO getSNMPModuleDAO() {
-		return new SNMPModuleDAO(em, logger);
 	}
-	
-	/**
-	 * Get the SNMPDAO.
-	 * 
-	 * @return
-	 */
-	public SNMPDAO getSNMPDAO() {
-		return new SNMPDAO(em, logger);
-	}
-	
-	/**
-	 * Get the MIBInfoDAO.
-	 * 
-	 * @return
-	 */
-	public MIBInfoDAO getMIBInfoDAO() {
-		return new MIBInfoDAO(em, logger);
-	}
-	
-	/**
-	 * Get the UserDAO
-	 * 
-	 * @return
-	 */
-	public UserDAO getUserDAO() {
-		return new UserDAO(em, logger);
-	}
-	
-	/**
-	 * Get teh ServiceElementTypeDAO
-	 * 
-	 * @return
-	 */
-	public ServiceElementTypeDAO getServiceElementTypeDAO() {
-		return new ServiceElementTypeDAO(em, logger);
-	}
-	
-	/**
-	 * Get the CapabilityDAO
-	 * 
-	 * @return
-	 */
-	public CapabilityDAO getCapabilityDAO() {
-		return new CapabilityDAO(em, logger);
-	}
+
 }

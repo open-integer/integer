@@ -33,6 +33,10 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
+<<<<<<< HEAD
+=======
+import java.io.File;
+>>>>>>> Save a MIBInfo in the DB.
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,6 +45,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
@@ -49,6 +55,8 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFactory;
+import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 
 /**
  * @author David Taylor
@@ -60,6 +68,9 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	@Inject
 	private MibLoaderLocalInterface mibLoader;
 
+	@Inject
+	private PersistenceManager persistenceManager;
+	
 	@Inject
 	private Logger logger;
 
@@ -89,15 +100,17 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 			MibParser mibParser =  MibParserFactory.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
 			MIBImportResult[] results = mibParser.importMIB(mibFile, true);
 			for (MIBImportResult result : results) {
+			
+				// Only save mib if the load was a success!
 				if (result.getErrors() == null || result.getErrors().length == 0)
-					mibLoader.load(result);	
+					mibLoader.load(result);
 				else {
-					logger.error("Error importing " + result.getFileName() + " Errors " + Arrays.toString(result.getErrors()));
+					logger.error("MIB " + result.getFileName() + " Not loaded!! " + Arrays.toString(result.getErrors()));
 				}
-					
+
 			}
 			
-			logger.info("Load of mibs complete!");	
+			logger.info("Load of mibs complete! Got " + results.length + " results");	
 
 			return results;
 		}
@@ -112,9 +125,21 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
 	 */
 	@Override
-	public MIBInfo[] getImportedMibs() {
+	public MIBInfo[] getImportedMibs() throws IntegerException {
 		
-		return null;
+		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
+		
+		MIBInfo[] mibInfos = mibInfoDAO.findAll();
+		
+		return mibInfos;
+	}
+	
+	public MIBInfo getMIBInfoByID(ID id) throws IntegerException {
+	
+		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
+		MIBInfo mibInfo = mibInfoDAO.findById(id);
+		
+		return mibInfo;
 	}
 	
 	/* (non-Javadoc)

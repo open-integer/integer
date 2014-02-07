@@ -42,7 +42,6 @@ import javax.persistence.EntityExistsException;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
@@ -53,6 +52,8 @@ import edu.harvard.integer.service.persistance.PersistenceManager;
 
 /**
  * @author David Taylor
+ * 
+ * Manages the associations of Capabilities with specific management objects.
  * 
  */
 @Stateless
@@ -70,7 +71,8 @@ public class ManagementObjectCapabilityManager implements
 		log.debug("Add ServiceElementType " + serviceElementType);
 		
 		try {
-			dbm.update(serviceElementType);
+			dbm.getServiceElementTypeDAO().update(serviceElementType);
+			
 		}catch (EntityExistsException e) {
 			log.error("ServiceElementType already exists! " + e.getMessage());
 		} catch (IntegerException e) {
@@ -85,22 +87,20 @@ public class ManagementObjectCapabilityManager implements
 	
 		log.info("Delete service element " + serviceElementType.getName());
 		
-		dbm.delete(serviceElementType);
+		dbm.getServiceElementTypeDAO().delete(serviceElementType);
 	}
 
 	public void deleteServiceElementType(ID serviceElementTypeId) throws IntegerException {
 		
 		log.info("Delete service element " + serviceElementTypeId.getName());
 		
-		dbm.delete(serviceElementTypeId);
+		dbm.getServiceElementTypeDAO().delete(serviceElementTypeId);
 	}
 
 	
 	public ServiceElementType[] getAllServiceElementTypes() throws IntegerException {
-		IDType type = new IDType();
-		type.setClassType(ServiceElementType.class);
 		
-		return dbm.findAll(type);
+		return dbm.getServiceElementTypeDAO().findAll();
 	}
 	
 	/*
@@ -116,7 +116,7 @@ public class ManagementObjectCapabilityManager implements
 		log.debug("Add capability " + capability.getName());
 
 		try {
-			dbm.update(capability);
+			dbm.getCapabilityDAO().update(capability);
 		
 		} catch (EntityExistsException e) {
 			log.error("Capability already exists! " + e.getMessage());

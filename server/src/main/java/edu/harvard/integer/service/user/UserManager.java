@@ -47,6 +47,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.Contact;
 import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 
 /**
  * The user contact and role manager controls addition, creation and modification of users and contacts in the system.
@@ -97,7 +98,8 @@ public class UserManager implements UserManagerInterface {
 	public User addUser(User user) throws IntegerException {
 		logger.info("Add User (" + user.getAlias() + ") " + user.getFirstName()
 				+ " " + user.getLastName());
-		dbm.update(user);
+		UserDAO userDAO = dbm.getUserDAO();
+		userDAO.update(user);
 		return user;
 	}
 
@@ -113,7 +115,8 @@ public class UserManager implements UserManagerInterface {
 		logger.info("Modify User (" + user.getAlias() + ") "
 				+ user.getFirstName() + " " + user.getLastName());
 
-		dbm.update(user);
+		UserDAO userDAO = dbm.getUserDAO();
+		userDAO.update(user);
 
 		return user;
 	}
@@ -128,7 +131,8 @@ public class UserManager implements UserManagerInterface {
 	public void deleteUser(User user) throws IntegerException {
 		logger.info("Delete User (" + user.getAlias() + ") "
 				+ user.getFirstName() + " " + user.getLastName());
-		dbm.delete(user);
+		UserDAO userDAO = dbm.getUserDAO();
+		userDAO.delete(user);
 	}
 
 	/**
@@ -138,10 +142,10 @@ public class UserManager implements UserManagerInterface {
 	 * @throws IntegerException
 	 */
 	public User[] getAllUsers() throws IntegerException {
-		IDType type = new IDType();
-		type.setClassType(User.class);
 
-		return dbm.findAll(type);
+		UserDAO userDAO = dbm.getUserDAO();
+		
+		return userDAO.findAll();
 	}
 
 	/**
@@ -190,10 +194,9 @@ public class UserManager implements UserManagerInterface {
 	@Path("/Users")
 	@Produces(value = MediaType.TEXT_HTML)
 	public String showUsers() throws IntegerException {
-		IDType type = new IDType();
-		type.setClassType(User.class);
-
-		User[] resultList = dbm.findAll(type);
+		
+		UserDAO userDAO = dbm.getUserDAO();
+		User[] resultList = userDAO.findAll();
 
 		StringBuffer b = new StringBuffer();
 		b.append("<ul>");

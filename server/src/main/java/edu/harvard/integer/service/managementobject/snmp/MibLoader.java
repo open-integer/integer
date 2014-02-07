@@ -43,6 +43,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
@@ -100,6 +101,8 @@ public class MibLoader implements MibLoaderLocalInterface {
 
 		logger.info("Loaded " + result.getSnmpTable().size() + " table oids");
 		
+		createMibInfo(result);
+		
 		logger.info("MIB filename:   " + result.getFileName());
 		logger.info("SNMPModlue  :   " + result.getModule().getOid());
 		logger.info("Description :   " + result.getModule().getDescription());
@@ -121,6 +124,24 @@ public class MibLoader implements MibLoaderLocalInterface {
 		for (SNMP snmpOid : result.getSnmpScalars()) {
 			logger.info("Oid: " + snmpOid.getIdentifier() + " " + snmpOid.getDisplayName() + " " + snmpOid.getOid());
 		}
+	}
+
+	/**
+	 * @param result
+	 * @throws IntegerException 
+	 */
+	private MIBInfo createMibInfo(MIBImportResult result) throws IntegerException {
+		MIBInfo mibInfo = new MIBInfo();
+		
+		mibInfo.setModule(result.getModule());
+		mibInfo.setName(result.getModule().getName());
+		mibInfo.setScalors(result.getSnmpScalars());
+		mibInfo.setTables(result.getSnmpTable());
+		
+		MIBInfoDAO infoDAO = persistenceManager.getMIBInfoDAO();
+		mibInfo = infoDAO.update(mibInfo);
+		
+		return mibInfo;
 	}
 
 	private List<SNMP> saveOids(List<SNMP> oids) throws IntegerException {
@@ -186,16 +207,16 @@ public class MibLoader implements MibLoaderLocalInterface {
 				 
 			
 			if (dbModule.getHistory() != null) {
-
+				
+				SNMPModuleDAO snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
+				
 				for (int i = 0; i < dbModule.getHistory().size(); i++) {
 					SNMPModuleHistory history = dbModule.getHistory().get(i);
 
 					logger.info("Save module history " + history.getDate()
 							+ " " + history.getDescription());
 					dbModule.getHistory().set(
-							i,
-							(SNMPModuleHistory) persistenceManager
-									.update(history));
+							i, snmpModuleDAO.update(history));
 				}
 			}
 			

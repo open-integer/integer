@@ -42,7 +42,9 @@ import edu.harvard.integer.service.persistance.BaseDAO;
 
 /**
  * @author David Taylor
- *
+ * 
+ * All add, delete, modify, findXXX methods for the MIBInfo object are done
+ * in this class. 
  */
 public class MIBInfoDAO extends BaseDAO {
 

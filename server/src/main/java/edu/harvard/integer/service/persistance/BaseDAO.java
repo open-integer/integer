@@ -47,13 +47,15 @@ import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 
 /**
  * @author David Taylor
  *
- * Base object for all DAO classes. 
+ * Base object for all DAO classes. The common update, modify, delete, findByXXX methods will
+ * be defined here.
  * 
  */
 public class BaseDAO {
@@ -62,9 +64,17 @@ public class BaseDAO {
 	
 	private Logger logger = null;
 	
-	private Class clazz = null;
+	private Class<? extends BaseEntity> clazz = null;
 	
-	public BaseDAO(EntityManager entityManger, Logger logger, Class<? extends BaseEntity> clazz) {
+	/**
+	 * Create the DAO for this class type. All entities that are stored in the
+	 * database must extend BaseEntity.
+	 * 
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	protected BaseDAO(EntityManager entityManger, Logger logger, Class<? extends BaseEntity> clazz) {
 		this.entityManger = entityManger;
 		this.logger = logger;
 		this.clazz = clazz;
@@ -77,10 +87,19 @@ public class BaseDAO {
 	/**
 	 * @return the logger
 	 */
-	public Logger getLogger() {
+	protected Logger getLogger() {
 		return logger;
 	}
 	
+	/**
+	 * Create or update the entity in the database. If the identifier is set and this object
+	 * is not currently managed by the database then this object will update the entity
+	 * in the database with the same identifier.
+	 *  
+	 * @param entity
+	 * @return
+	 * @throws IntegerException
+	 */
 	public <T extends BaseEntity> T update(T entity) throws IntegerException {
 		
 		try {
@@ -98,7 +117,14 @@ public class BaseDAO {
 	}
 
 
-	public <T> T findByStringField(String fieldValue, String fieldName, Class<T> clazz) {
+	/**
+	 * Find the entity in the database by the specified field.
+	 * @param fieldValue
+	 * @param fieldName
+	 * @param clazz
+	 * @return
+	 */
+	protected <T extends BaseEntity> T findByStringField(String fieldValue, String fieldName, Class<T> clazz) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		
 		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
@@ -120,13 +146,19 @@ public class BaseDAO {
 			return null;
 	}
 
+	/**
+	 * Find all the entities in the database of the type of this DAO. ex. User
+	 * 
+	 * @return
+	 * @throws IntegerException
+	 */
 	@SuppressWarnings("unchecked")
-	protected <T> T[] findAll() throws IntegerException {
+	public <T extends BaseEntity> T[] findAll() throws IntegerException {
 		
 		CriteriaBuilder criteriaBuilder = entityManger.getCriteriaBuilder();
 		
-		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
-		Root<T> from = query.from(clazz);
+		CriteriaQuery<T> query = (CriteriaQuery<T>) criteriaBuilder.createQuery(clazz);
+		Root<T> from = (Root<T>) query.from(clazz);
 	
 		query.select(from);
 		List<T> resultList = entityManger.createQuery(query).getResultList();
@@ -149,4 +181,62 @@ public class BaseDAO {
 		}
 		return null;
 	}
+	
+	/**
+	 * Find the given entity by the specified ID.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws IntegerException
+	 */
+	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
+
+		@SuppressWarnings("unchecked")
+		T entity = (T) entityManger.find(id.getIdType().getClassType(), id.getIdentifier());
+		
+		return entity;
+	}
+
+	/**
+	 * Update a list of entities of the type of this DAO. ex User
+	 * @param entities
+	 * @return
+	 * @throws IntegerException
+	 */
+	public <T extends BaseEntity> List<T> update(List<T> entities) throws IntegerException {
+		
+		for (T baseEntity : entities) {
+			update(baseEntity);
+		}
+		
+		return entities;
+	}
+	
+	
+	/**
+	 * Delete the given entity.
+	 * 
+	 * @param entity
+	 * @throws IntegerException
+	 */
+	public <T extends BaseEntity> void delete(T entity) throws IntegerException {
+		if (!entityManger.contains(entity))
+			entityManger.merge(entity);
+		
+		entityManger.remove(entity);
+	}
+	
+	/**
+	 * Delete the entity specified by the ID.
+	 * 
+	 * @param entityId
+	 * @throws IntegerException
+	 */
+	public void delete(ID entityId) throws IntegerException {
+		BaseEntity entity = findById(entityId);
+		
+		delete(entity);
+	}
+	
+	
 }

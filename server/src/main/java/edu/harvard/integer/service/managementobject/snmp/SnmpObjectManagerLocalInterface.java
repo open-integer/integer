@@ -37,6 +37,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
@@ -64,9 +65,12 @@ public interface SnmpObjectManagerLocalInterface {
 	/**
 	 * Get the list of MIB's that have been imported into the system.
 	 * @return List<File>. The list of imported mibs.
+	 * @throws IntegerException 
 	 */
-	public MIBInfo[] getImportedMibs();
+	public MIBInfo[] getImportedMibs() throws IntegerException;
 
+	public MIBInfo getMIBInfoByID(ID id) throws IntegerException;
+	
 	/**
 	 * Get All capabilities that are in the 
 	 * @return

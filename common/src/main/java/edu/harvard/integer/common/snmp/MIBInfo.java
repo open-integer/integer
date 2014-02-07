@@ -35,6 +35,12 @@ package edu.harvard.integer.common.snmp;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+
 import edu.harvard.integer.common.BaseEntity;
 
 /**
@@ -44,12 +50,20 @@ import edu.harvard.integer.common.BaseEntity;
  * into the system will create an instance of this class.
  * 
  */
+@Entity
 public class MIBInfo extends BaseEntity {
 
+	@OneToOne
 	private SNMPModule module = null;
 
+	@ElementCollection
+	@OrderColumn(name = "tableIndexIdx")
+	@CollectionTable(name = "MIBInfo_SNMPTable")
 	private List<SNMPTable> tables = null;
 
+	@ElementCollection
+	@OrderColumn(name = "scalorIndexIdx")
+	@CollectionTable(name = "MIBInfo_SNMP")
 	private List<SNMP> scalors = null;
 
 	private String vendor = null;

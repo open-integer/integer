@@ -163,11 +163,8 @@ public class ImportMIBTest {
 				}
 			}
 			
-			IDType type = new IDType();
-			type.setClassType(SNMPModule.class);
-			
-			Object[] findAll = persistenceManager.findAll(type);
-			System.out.println("Found " + findAll.length + " type " + type.getClassType());
+			Object[] findAll = persistenceManager.getSNMPModuleDAO().findAll();
+			System.out.println("Found " + findAll.length + " SNMPModule");
 			
 			for (Object object : findAll) {
 				System.out.println("Found " + object);

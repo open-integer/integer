@@ -36,7 +36,6 @@ package edu.harvard.integer.common.snmp;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
