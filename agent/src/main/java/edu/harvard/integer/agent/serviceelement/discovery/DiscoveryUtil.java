@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.snmp;
+package edu.harvard.integer.agent.serviceelement.discovery;
+
+import edu.harvard.integer.common.topology.ServiceElementType;
+
 /**
- * @author David Taylor
+ * The Class DiscoveryUtil provides some basic methods using for discovery
  *
+ * @author dchan
  */
-public enum MaxAccess {
-	ReadOnly, ReadWrite, WriteOnly, ReadCreate, NotAccessible;
+public class DiscoveryUtil {
+
+	/**
+	 * Gets the element type based on element class and vendor.
+	 * The value of the element class and vendor is the value retrieve from element.
+	 *
+	 * @param elmClz the elm clz
+	 * @param vendor the vendor
+	 * @return the element type based on class
+	 */
+	public ServiceElementType getElementTypeBasedOnClass( String elmClz, String vendor ) {
+		
+		ServiceElementType elmType = null;
+		/**
+		 * Retrieve an existing element type from DB.  If null, create service element.
+		 */
+		if ( elmType == null ) {
+		
+			elmType = new ServiceElementType();
+			
+		}		
+		return elmType;
+	}
 }

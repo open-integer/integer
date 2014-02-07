@@ -38,10 +38,13 @@ import net.percederberg.mibble.MibLoaderLog;
 import net.percederberg.mibble.MibLoaderLog.LogEntry;
 import net.percederberg.mibble.MibSymbol;
 import net.percederberg.mibble.MibType;
+import net.percederberg.mibble.MibTypeSymbol;
 import net.percederberg.mibble.MibValue;
 import net.percederberg.mibble.MibValueSymbol;
 import net.percederberg.mibble.snmp.SnmpAccess;
+import net.percederberg.mibble.snmp.SnmpIndex;
 import net.percederberg.mibble.snmp.SnmpObjectType;
+import net.percederberg.mibble.snmp.SnmpTextualConvention;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
 
 import java.io.BufferedWriter;
@@ -226,11 +229,29 @@ public class MibbleParser implements MibParser{
     			 */
     			if (vs.isTableRow())
     			{
-    				SNMPTable snmpTbl = new SNMPTable();
-    				List<SNMP> oids = new ArrayList<SNMP>();
+    				SNMPTable snmpTbl = new SNMPTable();    				
+    				/**
+    				 * Table oids list
+    				 */
+    				List<SNMP> oids = new ArrayList<SNMP>();  				
+    				snmpTbl.setTableOids(oids);
+    				SnmpObjectType mt =  (SnmpObjectType) vs.getType();
+                    ArrayList<SnmpIndex> sis =  mt.getIndex();
+    				
+    				if ( sis.size() > 0 ) {
+    					
+    					/**
+    					 * Table index.
+    					 */
+    					List<SNMP> index = new ArrayList<>();
+    					snmpTbl.setIndex(index);
+    				}    		
     				
     				snmpTbl.setName(vs.getName());
     				snmpTbl.oid = vs.getValue().toString();
+    				SnmpObjectType snmpType = (SnmpObjectType) vs.getType();
+    				snmpTbl.description = snmpType.getDescription();
+    				snmpTbl.maxAccess = MaxAccess.NotAccessible;
     				
     				MibValueSymbol[] avss = vs.getChildren();
     				for (MibValueSymbol avs : avss)
@@ -238,16 +259,21 @@ public class MibbleParser implements MibParser{
     					/**
     					 * Only card if it is accessable.
     					 */
-    					SnmpObjectType snmpType = (SnmpObjectType) avs.getType();
-    					if (snmpType.getAccess().canRead() || snmpType.getAccess().canRead() )
+    					snmpType = (SnmpObjectType) avs.getType();
+    					if (snmpType.getAccess().canRead() || snmpType.getAccess().canWrite() )
     					{
-    						ObjectIdentifierValue obj = (ObjectIdentifierValue) vs.getValue();
+    						ObjectIdentifierValue obj = (ObjectIdentifierValue) avs.getValue();
     						SNMP snmp = createSNMP( obj, snmpType );
     					    oids.add(snmp);
     					}
     				}
-    				snmpTbl.setIndex(oids);
-    				
+                    for ( int i=0; i<sis.size(); i++ ) {
+    					
+    					SnmpIndex si = sis.get(i);
+    					SNMP snmp = createSNMP(si);
+  					    snmpTbl.getIndex().add(snmp);
+    					
+    				}  
     				tblList.add(snmpTbl);
     			} 
     			else if (vs.isScalar())
@@ -302,58 +328,12 @@ public class MibbleParser implements MibParser{
 		
 		SNMPModuleCache moduleCache = new SNMPModuleCache(snmpModule);
 		boolean containInfo = fillUpMibInfo(moduleCache, mib);
-		if ( containInfo ) {
-		    return moduleCache;	
+		if ( !containInfo ) {
+			
+			System.out.println("Module without table or scalar. " + moduleCache.getName());
 		}
-		else {
-			return null;
-		}
-		
+		return moduleCache;		
 	}
-	
-	/**
-	 * Creates SNMP object based on Mibble  ObjectIdentifierValue and SnmpObjectType
-	 *
-	 * @param obj the obj
-	 * @param snmpType the snmp type
-	 * @return the snmp
-	 */
-	private SNMP createSNMP( ObjectIdentifierValue obj, SnmpObjectType snmpType ) {
-		
-		MibType oType = (MibType) obj.getSymbol().getType();
-		
-	    SNMP snmp = new SNMP();
-	    snmp.displayName = obj.getName();
-	    snmp.oid = obj.toObject().toString();
-	    snmp.description = snmpType.getDescription();
-	     					    
-	    MaxAccess access = null;
-	    if ( snmpType.getAccess() == SnmpAccess.READ_ONLY ) {
-	    	access = MaxAccess.ReadOnly;
-	    }
-	    else if ( snmpType.getAccess() == SnmpAccess.READ_CREATE ) {
-	    	access = MaxAccess.ReadWrite;
-	    }
-	    else if ( snmpType.getAccess() == SnmpAccess.READ_WRITE ) {
-	    	access = MaxAccess.ReadWrite;
-	    }
-	    else if ( snmpType.getAccess() == SnmpAccess.WRITE_ONLY ) {
-	    	access = MaxAccess.WriteOnly;
-	    }
-	    snmp.maxAccess = access;
-	    
-	    if ( oType instanceof SnmpObjectType ) {
-	    	snmp.units = ((SnmpObjectType) oType).getSyntax().getName();
-	    }
-	    else {
-	    	System.out.println("Not an snmpObjectType .... ");
-	    }
-	    
-	    return snmp;
-	}
-	
-	
-	
 	
 	
 	
@@ -628,6 +608,76 @@ public class MibbleParser implements MibParser{
 			 }
 		}
 	}
+	
+	
+	/**
+	 * Creates SNMP object based on Mibble  ObjectIdentifierValue and SnmpObjectType
+	 *
+	 * @param obj the obj
+	 * @param snmpType the snmp type
+	 * @return the snmp
+	 */
+	private SNMP createSNMP( ObjectIdentifierValue obj, SnmpObjectType snmpType ) {
+		
+		MibType oType = (MibType) obj.getSymbol().getType();
+		
+	    SNMP snmp = new SNMP();
+	    snmp.displayName = obj.getName();
+	    
+	    snmp.oid = obj.toObject().toString();
+	    snmp.description = snmpType.getDescription();
+	     					    
+	    MaxAccess access = null;
+	    if ( snmpType.getAccess() == SnmpAccess.READ_ONLY ) {
+	    	access = MaxAccess.ReadOnly;
+	    }
+	    else if ( snmpType.getAccess() == SnmpAccess.READ_CREATE ) {
+	    	access = MaxAccess.ReadWrite;
+	    }
+	    else if ( snmpType.getAccess() == SnmpAccess.READ_WRITE ) {
+	    	access = MaxAccess.ReadWrite;
+	    }
+	    else if ( snmpType.getAccess() == SnmpAccess.WRITE_ONLY ) {
+	    	access = MaxAccess.WriteOnly;
+	    }
+	    snmp.maxAccess = access;
+	    
+	    if ( oType instanceof SnmpObjectType ) {
+	    	snmp.units = ((SnmpObjectType) oType).getSyntax().getName();
+	    	MibTypeSymbol ms =  ((SnmpObjectType) oType).getSyntax().getReferenceSymbol();
+	    	if ( ms != null && ms.getType() instanceof SnmpTextualConvention ) {
+	    		snmp.textualConvetion = ms.getName(); 
+	    	}
+	    }
+	    else {
+	    	System.out.println("Not an snmpObjectType .... ");
+	    }
+	    return snmp;
+	}
+	
+	
+	/**
+	 * 
+	 * Create an index SNNP object based on Mibble SnmpIndex.
+	 * For the time being, the index implied information is ignored, we may need it if
+     * we are using the index information to construct the instance oid.
+	 * 
+	 */
+	private SNMP createSNMP( SnmpIndex si ) {
+		
+		SNMP snmp = new SNMP();	  
+		ObjectIdentifierValue mv = (ObjectIdentifierValue) si.getValue();
+		snmp.displayName = mv.getName();
+		snmp.oid = mv.toObject().toString();
+		MibValueSymbol ms =  mv.getSymbol();
+		MibType mt = ms.getType();
+		if ( mt instanceof SnmpObjectType ) {
+			snmp.units = ((SnmpObjectType) mt).getSyntax().getName();
+		}
+	    return snmp;
+	}
+	
+	
 	
 	
 	/**

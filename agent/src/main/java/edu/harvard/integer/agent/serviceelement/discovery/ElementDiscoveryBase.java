@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.snmp;
+package edu.harvard.integer.agent.serviceelement.discovery;
+
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.common.topology.ServiceElement;
+
 /**
- * @author David Taylor
+ * This interface layout the methods for discover regarding to SNMP devices or
+ * non SNMP devices or service. 
+ * 
+ * @author dchan
  *
  */
-public enum MaxAccess {
-	ReadOnly, ReadWrite, WriteOnly, ReadCreate, NotAccessible;
+public interface ElementDiscoveryBase {
+
+	public ServiceElement discoverElement( ElementEndPoint endEpt );
 }

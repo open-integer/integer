@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.snmp;
+package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.common.topology.ServiceElement;
+
 /**
- * @author David Taylor
+ * @author dchan
  *
  */
-public enum MaxAccess {
-	ReadOnly, ReadWrite, WriteOnly, ReadCreate, NotAccessible;
+public class SNMPElementDiscover implements ElementDiscoveryBase {
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.ElementDiscoveryBase#discoverElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	 */
+	@Override
+	public ServiceElement discoverElement(ElementEndPoint endEpt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
