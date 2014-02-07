@@ -254,6 +254,7 @@ public class MibbleParser implements MibParser{
     				snmpTbl.description = snmpType.getDescription();
     				snmpTbl.maxAccess = MaxAccess.NotAccessible;
     				
+
     				MibValueSymbol[] avss = vs.getChildren();
     				for (MibValueSymbol avs : avss)
     				{
@@ -261,14 +262,23 @@ public class MibbleParser implements MibParser{
     					 * Only card if it is accessable.
     					 */
     					snmpType = (SnmpObjectType) avs.getType();
-    					if (snmpType.getAccess().canRead() || snmpType.getAccess().canRead() )
+
+    					if (snmpType.getAccess().canRead() || snmpType.getAccess().canWrite() )
     					{
     						ObjectIdentifierValue obj = (ObjectIdentifierValue) avs.getValue();
     						SNMP snmp = createSNMP( obj, snmpType );
     					    oids.add(snmp);
     					}
     				}
-    				snmpTbl.setTableOids(oids);
+    				
+                    for ( int i=0; i<sis.size(); i++ ) {
+    					
+    					SnmpIndex si = sis.get(i);
+    					SNMP snmp = createSNMP(si);
+  					    snmpTbl.getIndex().add(snmp);
+    					
+    				}  
+
     				
     				tblList.add(snmpTbl);
     			} 
@@ -324,13 +334,13 @@ public class MibbleParser implements MibParser{
 		
 		SNMPModuleCache moduleCache = new SNMPModuleCache(snmpModule);
 		boolean containInfo = fillUpMibInfo(moduleCache, mib);
-		if ( containInfo ) {
-		    return moduleCache;	
-		}
-		else {
-			return null;
-		}
+		if ( !containInfo ) {
+				
+			System.out.println("Module without table or scalar. " + moduleCache.getName());
+
+		} 
 		
+		return moduleCache;
 	}
 	
 	
@@ -618,7 +628,8 @@ public class MibbleParser implements MibParser{
 		MibType oType = (MibType) obj.getSymbol().getType();
 		
 	    SNMP snmp = new SNMP();
-	    snmp.displayName = obj.getName();
+
+	    snmp.setName(obj.getName());
 	    
 	    snmp.oid = obj.toObject().toString();
 	    snmp.description = snmpType.getDescription();
@@ -650,7 +661,7 @@ public class MibbleParser implements MibParser{
 	    }
 	    return snmp;
 	}
-	
+
 	
 	/**
 	 * 
@@ -663,7 +674,7 @@ public class MibbleParser implements MibParser{
 		
 		SNMP snmp = new SNMP();	  
 		ObjectIdentifierValue mv = (ObjectIdentifierValue) si.getValue();
-		snmp.displayName = mv.getName();
+		snmp.setName(mv.getName());
 		snmp.oid = mv.toObject().toString();
 		MibValueSymbol ms =  mv.getSymbol();
 		MibType mt = ms.getType();
@@ -674,10 +685,6 @@ public class MibbleParser implements MibParser{
 	}
 	
 	
-	
-	
-	/**
-
 	/**
 	 * Load mib.
 	 *
