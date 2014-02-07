@@ -69,6 +69,7 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPIndex;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
@@ -274,7 +275,7 @@ public class MibbleParser implements MibParser{
                     for ( int i=0; i<sis.size(); i++ ) {
     					
     					SnmpIndex si = sis.get(i);
-    					SNMP snmp = createSNMP(si);
+    					SNMP snmp = createSNMPIndex(si);
   					    snmpTbl.getIndex().add(snmp);
     					
     				}  
@@ -670,9 +671,9 @@ public class MibbleParser implements MibParser{
      * we are using the index information to construct the instance oid.
 	 * 
 	 */
-	private SNMP createSNMP( SnmpIndex si ) {
+	private SNMPIndex createSNMPIndex( SnmpIndex si ) {
 		
-		SNMP snmp = new SNMP();	  
+		SNMPIndex snmp = new SNMPIndex();	  
 		ObjectIdentifierValue mv = (ObjectIdentifierValue) si.getValue();
 		snmp.setName(mv.getName());
 		snmp.oid = mv.toObject().toString();
@@ -681,6 +682,7 @@ public class MibbleParser implements MibParser{
 		if ( mt instanceof SnmpObjectType ) {
 			snmp.units = ((SnmpObjectType) mt).getSyntax().getName();
 		}
+		snmp.setImplied(si.isImplied());
 	    return snmp;
 	}
 	
