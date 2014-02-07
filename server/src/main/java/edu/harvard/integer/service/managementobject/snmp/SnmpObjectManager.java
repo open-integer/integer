@@ -33,10 +33,6 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
-<<<<<<< HEAD
-=======
-import java.io.File;
->>>>>>> Save a MIBInfo in the DB.
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,7 +41,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -59,6 +54,7 @@ import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 
 /**
+ *
  * @author David Taylor
  *
  */
