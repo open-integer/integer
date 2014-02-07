@@ -18,5 +18,7 @@ capabilitysetter/src/main/webapp/WEB-INF/view/formPage.jsp
 capabilitysetter/src/main/webapp/WEB-INF/view/home.jsp
 client/gwt-unitCache
 client/war/WEB-INF/deploy/client/symbolMaps
+client/war/WEB-INF/deploy/client/rpcPolicyManifest
 client/war/client
+
 
