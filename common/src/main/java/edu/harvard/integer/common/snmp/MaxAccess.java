@@ -36,5 +36,5 @@ package edu.harvard.integer.common.snmp;
  *
  */
 public enum MaxAccess {
-	ReadOnly, ReadWrite, WriteOnly, ReadCreate;
+	ReadOnly, ReadWrite, WriteOnly, ReadCreate, NotAccessible;
 }
