@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.common.snmp;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +50,7 @@ import edu.harvard.integer.common.BaseEntity;
  * 
  */
 @Entity
-public class SNMPModule extends BaseEntity {
+public class SNMPModule extends BaseEntity implements Serializable {
 	/**
 	 * OID that identifies the module.
 	 */

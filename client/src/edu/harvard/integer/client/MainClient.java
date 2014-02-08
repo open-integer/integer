@@ -1,5 +1,7 @@
 package edu.harvard.integer.client;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -25,6 +27,7 @@ import com.google.gwt.user.client.ui.Widget;
 import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.widget.HuitDialogBox;
 import edu.harvard.integer.client.widget.HuitFlexTable;
+import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.shared.FieldVerifier;
 
 /**
@@ -48,6 +51,8 @@ public class MainClient implements EntryPoint {
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
 
+	private final IntegerServiceAsync integerService = GWT
+			.create(IntegerService.class);
 	/**
 	 * This is the entry point method.
 	 */
@@ -142,6 +147,34 @@ public class MainClient implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				integerService.getImportedMibs(new AsyncCallback<MIBInfo[]>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Cannot not get mibs");
+					}
+
+					@Override
+					public void onSuccess(MIBInfo[] result) {
+						if (result == null)
+							return;
+						
+						flexTable.clear();
+						
+						for (int row = 1; row < result.length; row++) {
+							MIBInfo mibInfo = result[row];
+							String moduleName = mibInfo.getModule().getName();
+							Date lastUpdate = mibInfo.getModule().getLastUpdated();
+							String oid = mibInfo.getModule().getOid();
+							String description = mibInfo.getModule().getDescription();
+							String vendor = mibInfo.getVendor();
+							Object[] rowData = { moduleName, lastUpdate, oid, description, vendor};
+							flexTable.addRow(rowData);
+						}
+					}
+					
+				});
+				
 				final int HeaderRowIndex = 0;
 				flexTable = new HuitFlexTable();
 				flexTable.insertRow(0);
@@ -151,15 +184,12 @@ public class MainClient implements EntryPoint {
 				flexTable.addColumn("Module");
 				flexTable.addColumn("Last Updated");
 				flexTable.addColumn("Oid");
+				flexTable.addColumn("Description");
 				flexTable.addColumn("Vendor");
 
 				flexTable.getRowFormatter().addStyleName(0, "flexTableHeader");
 
-				for (int row = 1; row < 5; row++) {
-					Object[] rowData = { "module " + row, row + ":00 Jan 28",
-							"1.2.3.4.5.7.8.9.10.11.12." + row, "Cisco" + row };
-					flexTable.addRow(rowData);
-				}
+				
 				flexTable.applyDataRowStyles();
 
 				if (currentWidget != null)
