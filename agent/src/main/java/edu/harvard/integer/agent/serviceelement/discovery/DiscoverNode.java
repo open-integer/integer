@@ -30,77 +30,40 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
+package edu.harvard.integer.agent.serviceelement.discovery;
+
+import java.util.List;
 
 import edu.harvard.integer.agent.serviceelement.Access;
 
 /**
- * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
- *
  * @author dchan
+ *
  */
-public class CommunityAccess implements Access {
+public class DiscoverNode {
 
-	/** The community string. */
-	private String community;
+	private String nodeIp;
+	private String netMask;
 	
-	/** Check if it is a V2c version or not.  If not, it is v1. */
-	private boolean isVersionV2c;
+	private List<Access> access;
 	
-	/** If it is true, it is a read community string.  Else it is write community string. */
-	private boolean isRead;
-	
-	/**
-	 * Gets the community string.
-	 *
-	 * @return the community
-	 */
-	public String getCommunity() {
-		return community;
+	public List<Access> getAccess() {
+		return access;
+	}
+	public void setAccess(List<Access> access) {
+		this.access = access;
 	}
 	
-	/**
-	 * Sets the community string.
-	 *
-	 * @param community the new community
-	 */
-	public void setCommunity(String community) {
-		this.community = community;
+	public String getNodeIp() {
+		return nodeIp;
 	}
-	
-	/**
-	 *
-	 * @return true, if is read community string, else it is write community string.
-	 */
-	public boolean isRead() {
-		
-		return isRead;
+	public void setNodeIp(String nodeIp) {
+		this.nodeIp = nodeIp;
 	}
-	
-	/**
-	 * Sets if it is a read community string.
-	 *
-	 * @param isRead -- Indication if it is a read or write community string.
-	 */
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
+	public String getNetMask() {
+		return netMask;
 	}
-	
-	/**
-	 * Checks if is version v2c.
-	 *
-	 * @return true, if is version v2c
-	 */
-	public boolean isVersionV2c() {
-		return isVersionV2c;
-	}
-	
-	/**
-	 * Sets SNMP v1 or v2c version indication.
-	 *
-	 * @param isVersionV2c 
-	 */
-	public void setVersionV2c(boolean isVersionV2c) {
-		this.isVersionV2c = isVersionV2c;
+	public void setNetMask(String netMask) {
+		this.netMask = netMask;
 	}
 }

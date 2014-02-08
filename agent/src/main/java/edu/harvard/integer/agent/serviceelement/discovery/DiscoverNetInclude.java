@@ -30,77 +30,85 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
+package edu.harvard.integer.agent.serviceelement.discovery;
+
+import java.util.List;
 
 import edu.harvard.integer.agent.serviceelement.Access;
 
+// TODO: Auto-generated Javadoc
 /**
- * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
+ * The Class DiscoverNetInclude.
  *
  * @author dchan
  */
-public class CommunityAccess implements Access {
+public class DiscoverNetInclude extends DiscoverNet {
 
-	/** The community string. */
-	private String community;
+	/**
+	 * Optional. If specify it will start to 
+	 */
+	private String startIp;
 	
-	/** Check if it is a V2c version or not.  If not, it is v1. */
-	private boolean isVersionV2c;
-	
-	/** If it is true, it is a read community string.  Else it is write community string. */
-	private boolean isRead;
+	/** The end ip. */
+	private String endIp;
 	
 	/**
-	 * Gets the community string.
-	 *
-	 * @return the community
+	 * Access list used on discover.
 	 */
-	public String getCommunity() {
-		return community;
+	private List<Access>  accessList;
+	
+
+	/**
+	 * Gets the start ip.
+	 *
+	 * @return the start ip
+	 */
+	public String getStartIp() {
+		return startIp;
 	}
 	
 	/**
-	 * Sets the community string.
+	 * Sets the start ip.
 	 *
-	 * @param community the new community
+	 * @param startIp the new start ip
 	 */
-	public void setCommunity(String community) {
-		this.community = community;
+	public void setStartIp(String startIp) {
+		this.startIp = startIp;
 	}
 	
 	/**
+	 * Gets the end ip.
 	 *
-	 * @return true, if is read community string, else it is write community string.
+	 * @return the end ip
 	 */
-	public boolean isRead() {
-		
-		return isRead;
+	public String getEndIp() {
+		return endIp;
 	}
 	
 	/**
-	 * Sets if it is a read community string.
+	 * Sets the end ip.
 	 *
-	 * @param isRead -- Indication if it is a read or write community string.
+	 * @param endIp the new end ip
 	 */
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
+	public void setEndIp(String endIp) {
+		this.endIp = endIp;
 	}
 	
 	/**
-	 * Checks if is version v2c.
+	 * Gets the access list.
 	 *
-	 * @return true, if is version v2c
+	 * @return the access list
 	 */
-	public boolean isVersionV2c() {
-		return isVersionV2c;
+	public List<Access> getAccessList() {
+		return accessList;
 	}
 	
 	/**
-	 * Sets SNMP v1 or v2c version indication.
+	 * Sets the access list.
 	 *
-	 * @param isVersionV2c 
+	 * @param accessList the new access list
 	 */
-	public void setVersionV2c(boolean isVersionV2c) {
-		this.isVersionV2c = isVersionV2c;
+	public void setAccessList(List<Access> accessList) {
+		this.accessList = accessList;
 	}
 }

@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
+import java.util.List;
+
 /**
  * 
  * The Class DiscoveryPolicy contains discovery configuration such as seed element
@@ -41,5 +43,14 @@ package edu.harvard.integer.agent.serviceelement.discovery;
  */
 public class DiscoveryPolicy {
 
+	private int snmpTimeout;
+	private int snmpRetries;
 	
+	private boolean useIcmp = true;
+	private int icmpTimeout;
+	private int icmpRetries;
+	
+	private List<DiscoverNode> discoverNodes;
+	private List<DiscoverNet>  discoverNets;
+    
 }
