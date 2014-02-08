@@ -46,7 +46,9 @@ public class ElementEndPoint {
 	/** The access port to access the element */
 	private int  accessPort;
 	
-	/** The access object containing information such as key, community string. */
+	/** The access object containing information such as key, community string to
+	 *  to communicate with the element. 
+	 */
 	private Access  access;
 	
 	/**

@@ -30,77 +30,54 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
-
-import edu.harvard.integer.agent.serviceelement.Access;
+package edu.harvard.integer.common.exception;
 
 /**
- * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
+ * The Enum NetworkErrorCodes specifies communication error codes.
  *
  * @author dchan
  */
-public class CommunityAccess implements Access {
+public enum NetworkErrorCodes implements ErrorCodeInterface {
+	
+	/** Device cannot be reached after tried SNMP and ICMP. */
+	CannotReach("CannotReach"),
+	
+	/** Null SNMP response. */
+	NullSNMPResponse("NullSNMPResponse"),
+	
+	/** IO error on SNMP request. */
+	SNMPIOError("SNMPIOError"),
+	
+	/** SNMP No such error. */
+	SNMPNoSuchError("SNMPNoSuchError"),
+	
+	/** Auth Error */
+	AuthError("AuthError"),
+	
+	/** SNMP error */
+	SNMPError("SnmpError"),
+	;
+	
 
-	/** The community string. */
-	private String community;
 	
-	/** Check if it is a V2c version or not.  If not, it is v1. */
-	private boolean isVersionV2c;
-	
-	/** If it is true, it is a read community string.  Else it is write community string. */
-	private boolean isRead;
+	/** The error code. */
+	private String errorCode = null;
 	
 	/**
-	 * Gets the community string.
+	 * Instantiates a new common error codes.
 	 *
-	 * @return the community
+	 * @param errorCode the error code
 	 */
-	public String getCommunity() {
-		return community;
+	private NetworkErrorCodes(String errorCode) {
+		this.errorCode = errorCode;
 	}
 	
-	/**
-	 * Sets the community string.
-	 *
-	 * @param community the new community
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
 	 */
-	public void setCommunity(String community) {
-		this.community = community;
+	@Override
+	public String getErrorCode() {
+		return errorCode;
 	}
-	
-	/**
-	 *
-	 * @return true, if is read community string, else it is write community string.
-	 */
-	public boolean isRead() {
-		
-		return isRead;
-	}
-	
-	/**
-	 * Sets if it is a read community string.
-	 *
-	 * @param isRead -- Indication if it is a read or write community string.
-	 */
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
-	}
-	
-	/**
-	 * Checks if is version v2c.
-	 *
-	 * @return true, if is version v2c
-	 */
-	public boolean isVersionV2c() {
-		return isVersionV2c;
-	}
-	
-	/**
-	 * Sets SNMP v1 or v2c version indication.
-	 *
-	 * @param isVersionV2c 
-	 */
-	public void setVersionV2c(boolean isVersionV2c) {
-		this.isVersionV2c = isVersionV2c;
-	}
+
 }

@@ -32,7 +32,6 @@
  */
 package edu.harvard.integer.common.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum for common error codes which are not target to a component.
  *

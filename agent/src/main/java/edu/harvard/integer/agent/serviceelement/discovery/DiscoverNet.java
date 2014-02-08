@@ -30,77 +30,81 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
-
-import edu.harvard.integer.agent.serviceelement.Access;
+package edu.harvard.integer.agent.serviceelement.discovery;
 
 /**
- * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
+ * The Class DiscoverNet is used to specify which net or node for discovery
+ * or need to be excluded.  There are two lists for discovery.  One contains the nodes and
+ * another one contains net. The discover engine will start the discover on nodes
+ * first.
  *
  * @author dchan
  */
-public class CommunityAccess implements Access {
+public class DiscoverNet {
 
-	/** The community string. */
-	private String community;
+	/**
+	 * Specify the network to discovery.  
+	 */
+	private String network;
 	
-	/** Check if it is a V2c version or not.  If not, it is v1. */
-	private boolean isVersionV2c;
+	/** Network Mask. */
+	private String netmask;
 	
-	/** If it is true, it is a read community string.  Else it is write community string. */
-	private boolean isRead;
+	/** The include. */
+	private boolean include = true;
 	
 	/**
-	 * Gets the community string.
+	 * Gets the network.
 	 *
-	 * @return the community
+	 * @return the network
 	 */
-	public String getCommunity() {
-		return community;
+	public String getNetwork() {
+		return network;
 	}
 	
 	/**
-	 * Sets the community string.
+	 * Sets the network.
 	 *
-	 * @param community the new community
+	 * @param network Specify which network to be discover.
 	 */
-	public void setCommunity(String community) {
-		this.community = community;
+	public void setNetwork(String network) {
+		this.network = network;
 	}
 	
 	/**
+	 * Gets the netmask.
 	 *
-	 * @return true, if is read community string, else it is write community string.
+	 * @return the netmask Specify the netmask on the network. 
 	 */
-	public boolean isRead() {
-		
-		return isRead;
+	public String getNetmask() {
+		return netmask;
 	}
 	
 	/**
-	 * Sets if it is a read community string.
+	 * Sets the netmask.
 	 *
-	 * @param isRead -- Indication if it is a read or write community string.
+	 * @param netmask The netmask
 	 */
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
+	public void setNetmask(String netmask) {
+		this.netmask = netmask;
 	}
 	
 	/**
-	 * Checks if is version v2c.
+	 * Checks if include is true or false.  True the current net will be discover.
 	 *
-	 * @return true, if is version v2c
+	 * @return true or false
 	 */
-	public boolean isVersionV2c() {
-		return isVersionV2c;
+	public boolean isInclude() {
+		return include;
 	}
 	
 	/**
-	 * Sets SNMP v1 or v2c version indication.
+	 * Sets the include to determine included on discover or not.
 	 *
-	 * @param isVersionV2c 
+	 * @param include true or false
 	 */
-	public void setVersionV2c(boolean isVersionV2c) {
-		this.isVersionV2c = isVersionV2c;
+	public void setInclude(boolean include) {
+		this.include = include;
 	}
+	
 }

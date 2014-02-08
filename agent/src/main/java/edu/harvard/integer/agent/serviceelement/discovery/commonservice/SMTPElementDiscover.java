@@ -30,77 +30,34 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
+package edu.harvard.integer.agent.serviceelement.discovery.commonservice;
 
-import edu.harvard.integer.agent.serviceelement.Access;
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
- *
  * @author dchan
+ *
  */
-public class CommunityAccess implements Access {
+public class SMTPElementDiscover implements ElementDiscoveryBase {
 
-	/** The community string. */
-	private String community;
-	
-	/** Check if it is a V2c version or not.  If not, it is v1. */
-	private boolean isVersionV2c;
-	
-	/** If it is true, it is a read community string.  Else it is write community string. */
-	private boolean isRead;
-	
-	/**
-	 * Gets the community string.
-	 *
-	 * @return the community
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#discoverElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
 	 */
-	public String getCommunity() {
-		return community;
+	@Override
+	public ServiceElement discoverElement(ElementEndPoint endEpt) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	/**
-	 * Sets the community string.
-	 *
-	 * @param community the new community
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#checkAlive(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
 	 */
-	public void setCommunity(String community) {
-		this.community = community;
+	@Override
+	public boolean checkAlive(ElementEndPoint endEpt) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	/**
-	 *
-	 * @return true, if is read community string, else it is write community string.
-	 */
-	public boolean isRead() {
-		
-		return isRead;
-	}
-	
-	/**
-	 * Sets if it is a read community string.
-	 *
-	 * @param isRead -- Indication if it is a read or write community string.
-	 */
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
-	}
-	
-	/**
-	 * Checks if is version v2c.
-	 *
-	 * @return true, if is version v2c
-	 */
-	public boolean isVersionV2c() {
-		return isVersionV2c;
-	}
-	
-	/**
-	 * Sets SNMP v1 or v2c version indication.
-	 *
-	 * @param isVersionV2c 
-	 */
-	public void setVersionV2c(boolean isVersionV2c) {
-		this.isVersionV2c = isVersionV2c;
-	}
+
 }

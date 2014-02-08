@@ -36,13 +36,27 @@ import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * This interface layout the methods for discover regarding to SNMP devices or
- * non SNMP devices or service. 
+ * This interface layout the methods for discover IP based service element
+ * which including SNMP elements and NON-SNMP elements.
  * 
  * @author dchan
  *
  */
 public interface ElementDiscoveryBase {
 
+	/**
+	 * Discover element based on elementEndPoint.
+	 *
+	 * @param endEpt the element endpoint which including IPAddress, port and access information.
+	 * @return the service element
+	 */
 	public ServiceElement discoverElement( ElementEndPoint endEpt );
+	
+	/**
+	 * Check alive for that element.
+	 *
+	 * @param endEpt the element endPoint.
+	 * @return true, if reachable.  
+	 */
+	public boolean checkAlive( ElementEndPoint endEpt );
 }

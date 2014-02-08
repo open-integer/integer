@@ -51,5 +51,14 @@ public class SNMPElementDiscover implements ElementDiscoveryBase {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#checkAlive(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	 */
+	@Override
+	public boolean checkAlive(ElementEndPoint endEpt) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 }
