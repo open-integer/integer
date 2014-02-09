@@ -43,6 +43,7 @@ import net.percederberg.mibble.MibValue;
 import net.percederberg.mibble.MibValueSymbol;
 import net.percederberg.mibble.snmp.SnmpAccess;
 import net.percederberg.mibble.snmp.SnmpIndex;
+import net.percederberg.mibble.snmp.SnmpModuleIdentity;
 import net.percederberg.mibble.snmp.SnmpObjectType;
 import net.percederberg.mibble.snmp.SnmpTextualConvention;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
@@ -56,6 +57,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.security.CodeSource;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,6 +73,7 @@ import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPIndex;
 import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
 import edu.harvard.integer.common.util.DisplayableInterface;
@@ -294,6 +297,54 @@ public class MibbleParser implements MibParser{
     					scaleList.add(snmp);				    	
     				}
     			}
+    			else if ( vs.getType() instanceof SnmpModuleIdentity ) {
+    				
+    				SnmpModuleIdentity snmpModule = (SnmpModuleIdentity) vs.getType();
+    				List<SNMPModuleHistory> moduleHistories = moduleCache.getModule().getHistory();
+    				if ( moduleHistories == null ) {
+    					moduleHistories = new ArrayList<>();
+    					moduleCache.getModule().setHistory(moduleHistories);
+    				}
+    				SNMPModuleHistory moduleHistory = new SNMPModuleHistory();
+    				moduleHistories.add(moduleHistory);
+    				
+    				moduleHistory.setDescription(snmpModule.getDescription());
+    				String ds = snmpModule.getLastUpdated();
+    				if ( ds != null ) {
+    					
+    					String y = null;
+    					String m = null;
+    					String d = null;
+    					String h = null;
+    					String mm = null;
+    					
+    					int i = 2;
+    					if ( ds.length() == 11 ) {
+    						y = "19" + ds.substring(0, i);
+    					}
+    					else {
+    						i = 4;
+    						y = ds.substring(0, 4);
+    					}    					
+    					m = ds.substring(i, i+2);
+    					i = i + 2;
+    					d = ds.substring(i, i+2);
+    					i = i + 2;
+    					h = ds.substring(i, i+2);
+    					i = i + 2;
+    					mm = ds.substring(i, i+2);
+    					
+    					Calendar c = Calendar.getInstance();
+    					c.set(Integer.parseInt(y), Integer.parseInt(m), Integer.parseInt(d), 
+    							Integer.parseInt(h), Integer.parseInt(mm));
+    					
+    					moduleHistory.setDate(c.getTime());
+    					
+    					System.out.println(moduleHistory.getDate().toString());
+    				}
+    				moduleHistory.setName(snmpModule.getName());
+    				
+    			}
     		}
     	}
     	if ( tblList.size() > 0 || scaleList.size() > 0 ) {
@@ -322,6 +373,7 @@ public class MibbleParser implements MibParser{
 		    
 		Mib mib = mibLoader.getMib(mibInfo.fileName);
     	SNMPModule snmpModule = new SNMPModule();
+    	
 		MibValue ident = null;
 		snmpModule.setName(mib.getName());
 		if ( mib.getRootSymbol() != null ) {
