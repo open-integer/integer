@@ -1,6 +1,3 @@
-/*
- * 
- */
 package edu.harvard.integer.server;
 
 import java.util.ArrayList;
@@ -13,6 +10,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 
 /**
@@ -47,6 +45,22 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		}
 		
 		return "";
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getImportedMibs()
+	 */
+	@Override
+	public MIBInfo[] getImportedMibs() throws Exception {
+		MIBInfo[] mibInfos = null;
+		try {
+			mibInfos = snmpService.getImportedMibs();
+		}
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return mibInfos;
 	}
 
 

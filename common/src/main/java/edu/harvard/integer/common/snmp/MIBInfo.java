@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.common.snmp;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -51,7 +52,7 @@ import edu.harvard.integer.common.BaseEntity;
  * 
  */
 @Entity
-public class MIBInfo extends BaseEntity {
+public class MIBInfo extends BaseEntity implements Serializable {
 
 	@OneToOne
 	private SNMPModule module = null;
