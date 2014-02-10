@@ -11,15 +11,15 @@ public class HuitFlexTable extends FlexTable {
 	private ScrollPanel scrollPanel;
 
 	public HuitFlexTable() {
-		setSize("90%", "90%");
+		setWidth("100%");
 		setCellSpacing(0);
 		addStyleName("flexTable");
+		
 		scrollPanel = new ScrollPanel(this);
 		scrollPanel.setSize("1000px", "500px");
-
 	}
 
-	public ScrollPanel getVisualPanel() {
+	public Widget getVisualPanel() {
 		return scrollPanel;
 	}
 
@@ -38,14 +38,7 @@ public class HuitFlexTable extends FlexTable {
 	public void addColumn(Object columnHeading) {
 	    Widget widget = createCellWidget(columnHeading);
 	    int cell = getCellCount(HeaderRowIndex);
-	    
-	    widget.setWidth("100%");
-	    widget.addStyleName("FlexTable-ColumnLabel");
-	    
 	    setWidget(HeaderRowIndex, cell, widget);
-	    
-	    getCellFormatter().addStyleName(
-	        HeaderRowIndex, cell,"FlexTable-ColumnLabelCell");
 	}
 	
 	private Widget createCellWidget(Object cellObject) {
@@ -65,9 +58,7 @@ public class HuitFlexTable extends FlexTable {
 
 		for (int cell = 0; cell < cellObjects.length; cell++) {
 			Widget widget = createCellWidget(cellObjects[cell]);
-			widget.setWidth("100%");
 			setWidget(rowIndex, cell, widget);
-			getCellFormatter().addStyleName(rowIndex, cell, "FlexTable-Cell");
 		}
 		rowIndex++;
 	}

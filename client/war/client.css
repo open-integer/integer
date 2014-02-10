@@ -92,38 +92,34 @@ h1 {
 }
 
 .flexTableHeader {
-	background-color:  #293352;
-	color: 		#ffffff;
-  	text-align:  center;
-  	height: 18px;
+	padding: 0px;
+	color: #545454;
+	text-align: center;
+	font-size: 13px;
+	background-image: none;
+	background-color: #cfcfcf;
+	height: 26px;
+	vertical-align: middle;
+	font-weight: bold;
+	text-shadow: 0 1px 1px rgba(255,255,255,.7);
 }
 
 .FlexTable-OddRow {
-  background-color: #f3f3f1;
+    background-color: #f3f3f1;
 }
 
 .FlexTable-EvenRow {
-  background-color: white;
-}
-
-
-.FlexTable-ColumnLabel {
-  color: white;
-  padding: 5px;
-}
-
-.FlexTable-ColumnLabelCell {
-  border-width: 0 0 1px 0;
-  border-style: solid;
-  border-color: white;
-  margin: 0;
-  padding: 0;
-  text-align: center;
+    background-color: white;
 }
 
 .FlexTable-Cell {
-  border-width: 0px 0px 0px 1px;
-  border-style: solid;
-  border-color: white;
-  padding: 5px;
+    border-width: 0px 0px 0px 1px;
+    border-style: solid;
+    border-color: white;
+    padding: 5px;
+    height: 26px;
+	overflow: hidden;
+	font-size: 12px;
+	color: #454545;
 }
+

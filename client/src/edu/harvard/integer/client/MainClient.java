@@ -133,7 +133,7 @@ public class MainClient implements EntryPoint {
 
 					if (currentWidget != null)
 						RootPanel.get("root").remove(currentWidget);
-					currentWidget = flexTable;
+					currentWidget = flexTable.getVisualPanel();
 					RootPanel.get("root").add(currentWidget);
 				}
 			});
@@ -151,7 +151,7 @@ public class MainClient implements EntryPoint {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert("Cannot not get mibs");
+						Window.alert("Failed to get all mib modules");
 					}
 
 					@Override
@@ -183,18 +183,22 @@ public class MainClient implements EntryPoint {
 
 				flexTable.addColumn("Module");
 				flexTable.addColumn("Last Updated");
-				flexTable.addColumn("Oid");
+				flexTable.addColumn("OID");
 				flexTable.addColumn("Description");
 				flexTable.addColumn("Vendor");
 
 				flexTable.getRowFormatter().addStyleName(0, "flexTableHeader");
 
+				for (int row = 1; row < 6; row++) {
+					Object[] rowData = { "cisco-" + row, "Feb. 5, 2014", "1.2.3.4.5.6."+row, "testing " + row, "Harvard IT"};
+					flexTable.addRow(rowData);
+				}
 				
 				flexTable.applyDataRowStyles();
 
 				if (currentWidget != null)
 					RootPanel.get("root").remove(currentWidget);
-				currentWidget = flexTable;
+				currentWidget = flexTable.getVisualPanel();
 				RootPanel.get("root").add(currentWidget);
 			}
 		});
