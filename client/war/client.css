@@ -106,10 +106,12 @@ h1 {
 
 .FlexTable-OddRow {
     background-color: #f3f3f1;
+    height: 26px;
 }
 
 .FlexTable-EvenRow {
     background-color: white;
+    height: 26px;
 }
 
 .FlexTable-Cell {
@@ -117,7 +119,6 @@ h1 {
     border-style: solid;
     border-color: white;
     padding: 5px;
-    height: 26px;
 	overflow: hidden;
 	font-size: 12px;
 	color: #454545;
