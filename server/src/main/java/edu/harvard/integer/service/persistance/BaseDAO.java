@@ -91,6 +91,10 @@ public class BaseDAO {
 		return logger;
 	}
 	
+	protected Class<? extends BaseEntity> getPersistentClass() {
+		return clazz;
+	}
+	
 	/**
 	 * Create or update the entity in the database. If the identifier is set and this object
 	 * is not currently managed by the database then this object will update the entity
@@ -173,6 +177,7 @@ public class BaseDAO {
 					logger.info("Found " + ((BaseEntity) t).getName() + " ID " + ((BaseEntity)t).getIdentifier());
 				else
 					logger.info("Found Non-BaseEntity " + t);
+				
 				
 				objs[i] = t;
 			}

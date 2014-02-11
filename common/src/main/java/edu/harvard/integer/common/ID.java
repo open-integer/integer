@@ -52,6 +52,21 @@ public class ID implements IDInterface {
 
 	private IDType idType = null;
 
+	public ID() {
+		
+	}
+	
+	/**
+	 * @param identifier2
+	 * @param name2
+	 * @param idType2
+	 */
+	public ID(Long identifier, String name, IDType idType) {
+		this.identifier = identifier;
+		this.name = name;
+		this.idType = idType;
+	}
+
 	/**
 	 * @return the identifier
 	 */

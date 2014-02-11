@@ -37,6 +37,7 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.persistance.BaseDAO;
 
@@ -57,4 +58,7 @@ public class MIBInfoDAO extends BaseDAO {
 		
 	}
 
+	public MIBInfo findByName(String name) throws IntegerException {
+		return (MIBInfo) findByStringField(name, "name", getPersistentClass());
+	}
 }

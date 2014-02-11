@@ -33,11 +33,22 @@
 
 package edu.harvard.integer.service.persistance.dao.snmp;
 
-import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
+import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.service.persistance.BaseDAO;
 
 /**
@@ -56,6 +67,40 @@ public class SNMPModuleHistoryDAO extends BaseDAO {
 	public SNMPModuleHistoryDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, SNMPModule.class);
 		
+	}
+
+	/**
+	 * @param history
+	 * @return 
+	 */
+	public SNMPModuleHistory[] findByHistories(List<ID> history) {
+		
+
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		CriteriaQuery<SNMPModuleHistory> query = criteriaBuilder.createQuery(SNMPModuleHistory.class);
+
+		Root<SNMPModuleHistory> from = query.from(SNMPModuleHistory.class);
+		query.select(from);
+		
+		List<ParameterExpression<Long>> parameters = new ArrayList<ParameterExpression<Long>>();
+		
+		for (int i = 0; i < history.size(); i++) {
+			ParameterExpression<Long> historyId = criteriaBuilder.parameter(Long.class);
+			parameters.add(historyId);
+			query.select(from).where(criteriaBuilder.or(criteriaBuilder.equal(from.get("identifier"), historyId)));
+		}
+		
+		TypedQuery<SNMPModuleHistory> createQuery = getEntityManager().createQuery(query);
+		
+		for (int i = 0; i < parameters.size(); i++) {
+			ParameterExpression<Long> historyId = parameters.get(i);
+			createQuery.setParameter(historyId, history.get(i).getIdentifier());
+		}
+		
+		
+		List<SNMPModuleHistory> resultList = createQuery.getResultList();
+		return resultList.toArray(new SNMPModuleHistory[0]);
 	}
 
 }

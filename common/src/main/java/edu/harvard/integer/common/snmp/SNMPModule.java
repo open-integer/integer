@@ -41,7 +41,11 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
@@ -71,7 +75,8 @@ public class SNMPModule extends BaseEntity implements Serializable {
 	 * History of the MIB Module.
 	 */
 	@ElementCollection
-	private List<SNMPModuleHistory> history = null;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<ID> history = null;
 	
 	/**
 	 * @return the oid
@@ -106,14 +111,14 @@ public class SNMPModule extends BaseEntity implements Serializable {
 	/**
 	 * @return the history
 	 */
-	public List<SNMPModuleHistory> getHistory() {
+	public List<ID> getHistory() {
 		return history;
 	}
 
 	/**
 	 * @param history the history to set
 	 */
-	public void setHistory(List<SNMPModuleHistory> history) {
+	public void setHistory(List<ID> history) {
 		this.history = history;
 	}
 

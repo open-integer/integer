@@ -48,6 +48,8 @@ public class MIBImportResult extends MIBImportInfo {
 	 */
 	private SNMPModule module;
 
+	private List<SNMPModuleHistory> history = null;
+
 	/**
 	 * SNMP table list in the module. It can be null if table is not available
 	 */
@@ -95,7 +97,8 @@ public class MIBImportResult extends MIBImportInfo {
 	}
 
 	/**
-	 * @param snmpTable the snmpTable to set
+	 * @param snmpTable
+	 *            the snmpTable to set
 	 */
 	public void setSnmpTable(List<SNMPTable> snmpTable) {
 		this.snmpTable = snmpTable;
@@ -109,11 +112,26 @@ public class MIBImportResult extends MIBImportInfo {
 	}
 
 	/**
-	 * @param snmpScalars the snmpScalars to set
+	 * @param snmpScalars
+	 *            the snmpScalars to set
 	 */
 	public void setSnmpScalars(List<SNMP> snmpScalars) {
 		this.snmpScalars = snmpScalars;
 	}
 
-	
+	/**
+	 * @return the history
+	 */
+	public List<SNMPModuleHistory> getHistory() {
+		return history;
+	}
+
+	/**
+	 * @param history
+	 *            the history to set
+	 */
+	public void setHistory(List<SNMPModuleHistory> history) {
+		this.history = history;
+	}
+
 }

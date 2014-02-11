@@ -52,6 +52,7 @@ import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
 
 /**
  * @author David Taylor
@@ -87,7 +88,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 		snmpDao = persistenceManager.getSNMPDAO();
 		snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
 		
-		result.setModule(saveSNMPModule(result.getModule()));
+		result.setModule(saveSNMPModule(result));
 
 		logger.info("Loaded module " + result.getModule().getDescription());
 
@@ -129,14 +130,20 @@ public class MibLoader implements MibLoaderLocalInterface {
 	 * @throws IntegerException 
 	 */
 	private MIBInfo createMibInfo(MIBImportResult result) throws IntegerException {
-		MIBInfo mibInfo = new MIBInfo();
+		MIBInfo mibInfo = null;
+		
+		MIBInfoDAO infoDAO = persistenceManager.getMIBInfoDAO();
+		
+		mibInfo = infoDAO.findByName(result.getModule().getName());
+		if (mibInfo == null)
+			mibInfo = new MIBInfo();
 		
 		mibInfo.setModule(result.getModule());
 		mibInfo.setName(result.getModule().getName());
 		mibInfo.setScalors(result.getSnmpScalars());
 		mibInfo.setTables(result.getSnmpTable());
 		
-		MIBInfoDAO infoDAO = persistenceManager.getMIBInfoDAO();
+		
 		mibInfo = infoDAO.update(mibInfo);
 		
 		return mibInfo;
@@ -172,7 +179,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 		return oids;
 	}
 
-	private SNMPModule saveSNMPModule(SNMPModule module)
+	private SNMPModule saveSNMPModule(MIBImportResult result)
 			throws IntegerException {
 
 		if (logger == null) {
@@ -183,50 +190,63 @@ public class MibLoader implements MibLoaderLocalInterface {
 			System.err.println("PersistenceManage is null!!!");
 
 		}
-		logger.info("Save SNMPModule " + module.getName() + " OID: "
-				+ module.getOid());
+		logger.info("Save SNMPModule " + result.getModule().getName() + " OID: "
+				+ result.getModule().getOid());
 		try {
 			
-			SNMPModule dbModule = snmpModuleDAO.findByOid(module.getOid());
+			SNMPModule dbModule = snmpModuleDAO.findByOid(result.getModule().getOid());
 			if (dbModule != null) {
-				dbModule.setDescription(module.getDescription());
-				dbModule.setLastUpdated(module.getLastUpdated());
+				dbModule.setDescription(result.getModule().getDescription());
+				dbModule.setLastUpdated(result.getModule().getLastUpdated());
 				
-				if (dbModule.getHistory() != null && module.getHistory() != null) {
-					if (dbModule.getHistory().size() < module.getHistory().size()) {
-						for (int i = dbModule.getHistory().size(); i < module.getHistory().size(); i++)
-							dbModule.getHistory().add(module.getHistory().get(i));
+				if (dbModule.getHistory() != null && result.getModule().getHistory() != null) {
+					if (dbModule.getHistory().size() < result.getModule().getHistory().size()) {
+						for (int i = dbModule.getHistory().size(); i < result.getModule().getHistory().size(); i++)
+							dbModule.getHistory().add(result.getModule().getHistory().get(i));
 					}
 				} else
-					dbModule.setHistory(module.getHistory());
+					dbModule.setHistory(result.getModule().getHistory());
 				
 			} else
-				dbModule = module;
+				dbModule = snmpModuleDAO.update(result.getModule());
 				 
 			
 			if (dbModule.getHistory() != null) {
-				
-				SNMPModuleDAO snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
-				
-				for (int i = 0; i < dbModule.getHistory().size(); i++) {
-					SNMPModuleHistory history = dbModule.getHistory().get(i);
 
-					logger.info("Save module history " + history.getDate()
-							+ " " + history.getDescription());
-					dbModule.getHistory().set(
-							i, snmpModuleDAO.update(history));
+				SNMPModuleDAO snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
+				SNMPModuleHistoryDAO historyDAO = persistenceManager.getSNMPModuleHistoryDAO();
+				SNMPModuleHistory[] dbHistories = historyDAO.findByHistories(result.getModule().getHistory());
+				if (dbHistories != null) {
+
+
+					for (int i = 0; i < dbHistories.length; i++) {
+						SNMPModuleHistory history = dbHistories[i];
+
+						logger.info("Save module history " + history.getDate()
+								+ " " + history.getDescription());
+						SNMPModuleHistory moduleHistory = snmpModuleDAO.update(history);
+
+						dbModule.getHistory().set(i, moduleHistory.getID());
+					}
 				}
 			}
 			
-			module = snmpModuleDAO.update(dbModule);
+			if (result.getModule().getHistory() != null) {
+				for (int i = dbModule.getHistory().size(); i < result.getModule().getHistory().size(); i++) {
+
+					SNMPModuleHistory moduleHistory = snmpModuleDAO.update(result.getHistory().get(i));
+
+					dbModule.getHistory().set(i, moduleHistory.getID());
+				}
+			}
 			
+
+			return dbModule;
 		} catch (IntegerException e) {
-			logger.error("Error saveing SNMPModule " + module);
+			logger.error("Error saveing SNMPModule " + result.getModule());
 
 			throw e;
 		}
-
-		return module;
 	}
 
 	private SNMP saveSNMPOid(SNMP snmpOid) throws IntegerException {

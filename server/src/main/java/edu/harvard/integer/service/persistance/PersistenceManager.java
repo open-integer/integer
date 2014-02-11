@@ -45,6 +45,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 /**
  * @author David Taylor
@@ -121,6 +122,14 @@ public class PersistenceManager {
 	 */
 	public CapabilityDAO getCapabilityDAO() {
 		return new CapabilityDAO(em, logger);
+	}
+
+	/**
+	 * @return
+	 */
+	public SNMPModuleHistoryDAO getSNMPModuleHistoryDAO() {
+		
+		return new SNMPModuleHistoryDAO(em, logger);
 	}
 	
 }

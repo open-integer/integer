@@ -42,6 +42,8 @@ import java.util.Arrays;
 
 import javax.inject.Inject;
 
+import net.percederberg.mibble.MibMacroSymbol;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -66,7 +68,7 @@ import edu.harvard.integer.service.persistance.PersistenceManager;
 /**
  * @author David Taylor
  * 
- * Test program for importing of MIB's into the Integer system.
+ *         Test program for importing of MIB's into the Integer system.
  * 
  */
 @RunWith(Arquillian.class)
@@ -77,10 +79,10 @@ public class ImportMIBTest {
 
 	@Inject
 	private PersistenceManager persistenceManager;
-	
+
 	@Inject
 	private Logger logger;
-	
+
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
@@ -94,89 +96,159 @@ public class ImportMIBTest {
 				.addAsWebInfResource("test-ds.xml");
 	}
 
+	@Test
+	public void importRFC1065_SMI() {
+		importIETFMIB("RFC1065-SMI");
+	}
+
+	@Test
+	public void importRFC1155_SMI() {
+		importIETFMIB("RFC1155-SMI");
+	}
+
 	/**
-	 * Test the importing of RFC1213. This will read in the MIB and create
-	 * the entries in the database for SNMPModule, SNMP (for scalors) 
-	 * and SNMPTable (for table oids)
+	 * Test the importing of RFC1213. This will read in the MIB and create the
+	 * entries in the database for SNMPModule, SNMP (for scalors) and SNMPTable
+	 * (for table oids)
 	 * 
 	 */
 	@Test
 	public void importRFC1213() {
+		importIETFMIB("RFC1213-MIB");
+	}
 
-		logger.info("Start test import of RFC1213");
-		
-		System.setProperty(ServiceProviderMain.MIBFILELOCATON, "../serviceprovider/mibs");
-		
-		File mibFile = new File("../serviceprovider/mibs/ietf/RFC1213-MIB");
+	private void importIETFMIB(String mibName) {
+		importMib("ietf/" + mibName);
+	}
+
+	private void importMib(String mibName) {
+
+		logger.info("Start test import of " + mibName);
+
+		System.setProperty(ServiceProviderMain.MIBFILELOCATON,
+				"../serviceprovider/mibs");
+
+		File mibFile = new File("../serviceprovider/mibs/" + mibName);
 		if (mibFile.exists())
 			System.out.println("Found rfc");
 		else
-			System.out.println("rfc not found! PATH: " + mibFile.getAbsolutePath());
-	
+			System.out.println("rfc not found! PATH: "
+					+ mibFile.getAbsolutePath());
+
 		String content = null;
 		try {
 			content = new String(Files.readAllBytes(mibFile.toPath()));
-			
+
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
-			fail("Error loading MIB: "+ e.getMessage());
+			fail("Error loading MIB: " + e.getMessage());
 		}
-		
+
 		MIBImportInfo importInfo = new MIBImportInfo();
-		importInfo.setFileName("RFC1213-MIB");
+		importInfo.setFileName(mibFile.getName());
 		importInfo.setMib(content);
 		importInfo.setStandardMib(true);
-		
+
 		MIBImportResult[] importMIBs = null;
 		try {
-			
-			MIBImportResult[] importMib = snmpObjectManager.importMib(new MIBImportInfo[] { importInfo });
-		
+
+			MIBImportResult[] importMib = snmpObjectManager
+					.importMib(new MIBImportInfo[] { importInfo });
+
 			if (importMib == null) {
 				logger.error("Got null back from importMIB");
 				return;
 			}
-			
+
 			System.out.println("Got " + importMib.length + " import results");
 			for (MIBImportResult mibImportResult : importMib) {
 				logger.info("MIB filename:   " + mibImportResult.getFileName());
-				logger.info("SNMPModlue  :   " + mibImportResult.getModule().getOid());
-				logger.info("Description :   " + mibImportResult.getModule().getDescription());
-				logger.info("Errors      :   " + Arrays.toString(mibImportResult.getErrors()));
-				
-				logger.info("Num of Tables:  " + mibImportResult.getSnmpTable().size());
-				for (SNMPTable snmpTable : mibImportResult.getSnmpTable()) {
-					logger.info("Table: " + snmpTable.getIdentifier() + " " + snmpTable.getName() + " " + snmpTable.getOid());
-					
-					if (snmpTable.getTableOids() != null) {
-						logger.info("Num of table oids: " + snmpTable.getTableOids().size());
-						for (SNMP snmpOid : snmpTable.getTableOids()) {
-							logger.info("Oid: " + snmpOid.getIdentifier() + " " + snmpOid.getDisplayName() + " " + snmpOid.getOid());
+				if (mibImportResult.getModule() != null) {
+					logger.info("SNMPModlue  :   "
+							+ mibImportResult.getModule().getOid());
+					logger.info("Description :   "
+							+ mibImportResult.getModule().getDescription());
+				} else
+					logger.info("SNMModule   :   MODULE IS NULL!!!!");
+
+				logger.info("Errors      :   "
+						+ Arrays.toString(mibImportResult.getErrors()));
+
+				if (mibImportResult.getSnmpTable() != null) {
+					logger.info("Num of Tables:  "
+							+ mibImportResult.getSnmpTable().size());
+					for (SNMPTable snmpTable : mibImportResult.getSnmpTable()) {
+						logger.info("Table: " + snmpTable.getIdentifier() + " "
+								+ snmpTable.getName() + " "
+								+ snmpTable.getOid());
+
+						if (snmpTable.getTableOids() != null) {
+							logger.info("Num of table oids: "
+									+ snmpTable.getTableOids().size());
+							for (SNMP snmpOid : snmpTable.getTableOids()) {
+								logger.info("Oid: " + snmpOid.getIdentifier()
+										+ " " + snmpOid.getDisplayName() + " "
+										+ snmpOid.getOid());
+							}
 						}
 					}
+				} else {
+					logger.error("NO TABLES for "
+							+ mibImportResult.getFileName());
 				}
-				
-				logger.info("Num of Scalors: " + mibImportResult.getSnmpScalars().size());
-				for (SNMP snmpOid : mibImportResult.getSnmpScalars()) {
-					logger.info("Oid: " + snmpOid.getIdentifier() + " " + snmpOid.getDisplayName() + " " + snmpOid.getOid());
+
+				if (mibImportResult.getSnmpScalars() != null) {
+					logger.info("Num of Scalors: "
+							+ mibImportResult.getSnmpScalars().size());
+					for (SNMP snmpOid : mibImportResult.getSnmpScalars()) {
+						logger.info("Oid: " + snmpOid.getIdentifier() + " "
+								+ snmpOid.getDisplayName() + " "
+								+ snmpOid.getOid());
+					}
+				} else {
+					logger.error("NO SCALORS for "
+							+ mibImportResult.getFileName());
 				}
 			}
-			
+
 			Object[] findAll = persistenceManager.getSNMPModuleDAO().findAll();
 			System.out.println("Found " + findAll.length + " SNMPModule");
-			
+
 			for (Object object : findAll) {
 				System.out.println("Found " + object);
 			}
-			
-			
+
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
 			fail("Error getting mib parser");
 		}
-		
+
 	}
 
+	@Test
+	public void importSNMPv2_SMI() {
+		importIETFMIB("SNMPv2-SMI");
+	}
+
+	@Test
+	public void importSNMPv2_TC() {
+		importIETFMIB("SNMPv2-TC");
+	}
+
+	@Test
+	public void importSNMPv2_CONF() {
+		importIETFMIB("SNMPv2-CONF");
+	}
+
+	@Test
+	public void importSNMPv2_MIB() {
+		importIETFMIB("SNMPv2-MIB");
+	}
+
+	@Test
+	public void importIANAifType_MIB() {
+		importIETFMIB("IANAifType-MIB");
+	}
 }
