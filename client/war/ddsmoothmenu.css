@@ -84,14 +84,14 @@ border-bottom: 1px solid gray;
 
 .downarrowclass{
 position: absolute;
-top: 12px;
 right: 7px;
+bottom:9px;
 }
 
 .rightarrowclass{
 position: absolute;
-top: 6px;
 right: 5px;
+bottom:7px;
 }
 
 /* ######### CSS for shadow added to sub menus  ######### */
