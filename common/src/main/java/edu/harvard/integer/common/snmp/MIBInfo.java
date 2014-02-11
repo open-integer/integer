@@ -52,7 +52,7 @@ import edu.harvard.integer.common.BaseEntity;
  * 
  */
 @Entity
-public class MIBInfo extends BaseEntity implements Serializable {
+public class MIBInfo extends BaseEntity {
 
 	@OneToOne
 	private SNMPModule module = null;
