@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +48,7 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFactory;
@@ -93,6 +95,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 				
 				logger.info("MIB " + mibImportInfo.getFileName() + " Size " + mibImportInfo.getMib().length());
 			}
+			
 			MibParser mibParser =  MibParserFactory.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
 			MIBImportResult[] results = mibParser.importMIB(mibFile, true);
 			for (MIBImportResult result : results) {
@@ -112,9 +115,8 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		}
     	catch (IntegerException e) {
 			e.printStackTrace();
+			throw e;
 		}
-
-		return null;
 	}
 	
 	/* (non-Javadoc)
@@ -126,10 +128,43 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
 		
 		MIBInfo[] mibInfos = mibInfoDAO.findAll();
+		MIBInfo[] mibs = new MIBInfo[mibInfos.length];
+		for (int i = 0; i < mibInfos.length; i++) {
+			mibs[i] = new MIBInfo();
+			mibs[i].setIdentifier(mibInfos[i].getIdentifier());
+			mibs[i].setName(mibInfos[i].getName());
+			mibs[i].setIdType(mibInfos[i].getIdType());
+			
+			mibs[i].setVendor(mibInfos[i].getVendor());
+			
+			mibs[i].setModule(copySNMPModule(mibInfos[i].getModule()));
+		}
 		
-		return mibInfos;
+		return mibs;
 	}
 	
+	/**
+	 * @param module
+	 * @return
+	 */
+	private SNMPModule copySNMPModule(SNMPModule dbModule) {
+		SNMPModule module = new SNMPModule();
+		module.setIdentifier(dbModule.getIdentifier());
+		module.setName(dbModule.getName());
+		module.setIdType(dbModule.getIdType());
+		module.setDescription(dbModule.getDescription());
+		module.setOid(dbModule.getOid());
+		
+		List<ID> history = new ArrayList<ID>();
+		for (ID historyId : dbModule.getHistory()) {
+			ID id = new ID(historyId.getIdentifier(), historyId.getName(), historyId.getIdType());
+			history.add(id);
+		}
+		module.setHistory(history);
+		
+		return module;
+	}
+
 	public MIBInfo getMIBInfoByID(ID id) throws IntegerException {
 	
 		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();

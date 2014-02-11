@@ -3,6 +3,8 @@
  */
 package edu.harvard.integer.common;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,7 +54,7 @@ import javax.validation.constraints.Size;
  *         objects in the Integer system.
  */
 @MappedSuperclass
-public abstract class BaseEntity implements IDInterface {
+public abstract class BaseEntity implements IDInterface, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,6 +110,10 @@ public abstract class BaseEntity implements IDInterface {
 		this.idType = idType;
 	}
 
+	public ID getID() {
+		return new ID(identifier, name, idType);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

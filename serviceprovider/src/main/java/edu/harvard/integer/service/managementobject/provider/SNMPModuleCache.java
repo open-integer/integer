@@ -39,14 +39,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
 
 /**
- * This class contains all application needed information. 
- * It is contains Module information and tables and scale if any on that module.
+ * This class contains all application needed information. It is contains Module
+ * information and tables and scale if any on that module.
  * 
  * @author dchan
- *
+ * 
  */
 public class SNMPModuleCache {
 
@@ -54,52 +55,61 @@ public class SNMPModuleCache {
 	 * Contain module information.
 	 */
 	private SNMPModule module;
-	
+
+	private List<SNMPModuleHistory> history = null;
+
 	/**
 	 * SNMP tables contained by the module.
 	 */
 	private List<SNMPTable> tbllist = new ArrayList<>();
-	
+
 	/**
 	 * Any scale contained by the module.
 	 */
 	private List<SNMP> scalelist = new ArrayList<>();
-	
+
 	/**
 	 * A map for fast searching based on OID.
 	 */
 	private Map<String, SNMP> attMap = new ConcurrentHashMap<String, SNMP>();
-	
-	
-	public SNMPModuleCache( SNMPModule module ) 
-	{
+
+	public SNMPModuleCache(SNMPModule module) {
 		this.module = module;
 	}
-	
-	
+
 	public SNMPModule getModule() {
 		return module;
 	}
-	
-	
+
 	public Map<String, SNMP> getAttMap() {
 		return attMap;
 	}
-	
-	
+
 	public List<SNMPTable> getTbllist() {
 		return tbllist;
 	}
-
 
 	public List<SNMP> getScalelist() {
 		return scalelist;
 	}
 
-	
-	public String getName() 
-	{
+	public String getName() {
 		return module.getName();
 	}
-	
+
+	/**
+	 * @return the history
+	 */
+	public List<SNMPModuleHistory> getHistory() {
+		return history;
+	}
+
+	/**
+	 * @param history
+	 *            the history to set
+	 */
+	public void setHistory(List<SNMPModuleHistory> history) {
+		this.history = history;
+	}
+
 }

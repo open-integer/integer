@@ -83,9 +83,12 @@ public class SNMPDAO extends BaseDAO {
 		
 		List<SNMP> resultList = typeQuery.getResultList();
 		
-		if (resultList.size() > 0)
+		if (resultList.size() > 0) {
+			if (getLogger().isDebugEnabled())
+				getLogger().debug("Found OID " + resultList.get(0).getIdentifier() + " " + resultList.get(0).getOid() + " " + resultList.get(0).getName());
+			
 			return resultList.get(0);
-		else
+		} else
 			return null;
 	}
 }

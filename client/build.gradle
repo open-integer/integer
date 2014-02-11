@@ -49,7 +49,7 @@ repositories {
 dependencies {
 	providedCompile project(':common')
 	providedCompile project(':server')
-
+	
 	// Compile GWT libs, needed for gwtCompile and the javaCompile
 	// Also includes the servlet-api
 	compile "com.google.gwt:gwt-user:${gwtVersion}"
@@ -80,6 +80,7 @@ task gwtc (dependsOn: classes, type: JavaExec) {
 
 	main = 'com.google.gwt.dev.Compiler'
 
+	println "src path: " + sourceSets.main.java.srcDirs 
 	classpath {[
 			sourceSets.main.java.srcDirs,
 			configurations.compile

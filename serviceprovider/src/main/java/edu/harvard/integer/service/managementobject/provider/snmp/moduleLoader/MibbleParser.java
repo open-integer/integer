@@ -118,6 +118,7 @@ public class MibbleParser implements MibParser{
 		//mibLocation =  new File(System.getProperty(ServiceProviderMain.MIBFILELOCATON));
 		mibLocation =  new File("mibs");
 		if ( !mibLocation.isDirectory() ) {
+			System.err.println("Error mibs directory path is not valid " + mibLocation.getAbsolutePath());
 			
 			throw new IntegerException(null, CommonErrorCodes.DirectoryNotValid);
 		}		
@@ -300,10 +301,10 @@ public class MibbleParser implements MibParser{
     			else if ( vs.getType() instanceof SnmpModuleIdentity ) {
     				
     				SnmpModuleIdentity snmpModule = (SnmpModuleIdentity) vs.getType();
-    				List<SNMPModuleHistory> moduleHistories = moduleCache.getModule().getHistory();
+    				List<SNMPModuleHistory> moduleHistories = moduleCache.getHistory();
     				if ( moduleHistories == null ) {
     					moduleHistories = new ArrayList<>();
-    					moduleCache.getModule().setHistory(moduleHistories);
+    					moduleCache.setHistory(moduleHistories);
     				}
     				SNMPModuleHistory moduleHistory = new SNMPModuleHistory();
     				moduleHistories.add(moduleHistory);
