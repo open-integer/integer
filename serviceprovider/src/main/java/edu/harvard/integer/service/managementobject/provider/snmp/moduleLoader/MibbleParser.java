@@ -117,14 +117,28 @@ public class MibbleParser implements MibParser{
 				
 		//mibLocation =  new File(System.getProperty(ServiceProviderMain.MIBFILELOCATON));
 		mibLocation =  new File("mibs");
-		if ( !mibLocation.isDirectory() ) {
-			System.err.println("Error mibs directory path is not valid " + mibLocation.getAbsolutePath());
+		if ( !makeDirIfNotExist("mibs") ||
+				!makeDirIfNotExist("mibs/ietf") ||
+				!makeDirIfNotExist("mibs/vendors")) {
 			
 			throw new IntegerException(null, CommonErrorCodes.DirectoryNotValid);
-		}		
+		
+		} 	
 	}
 
-	
+	private boolean makeDirIfNotExist(String path) {
+		File file = new File(path);
+		if (!file.isDirectory()) {
+			if (file.mkdir())
+				return true;
+			else {
+				System.err.println("Error Unable to create directory " + path);
+				return false;
+			}
+		}
+			
+		return true;
+	}
 	
 	/**
 	 * Used to get module map from the existing repository.  
