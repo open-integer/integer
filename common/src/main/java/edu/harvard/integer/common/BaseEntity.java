@@ -56,6 +56,11 @@ import javax.validation.constraints.Size;
 @MappedSuperclass
 public abstract class BaseEntity implements IDInterface, Serializable {
 
+	/**
+	 * Serialization version.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long identifier = null;

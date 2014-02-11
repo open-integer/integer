@@ -32,8 +32,6 @@
  */
 package edu.harvard.integer.common.snmp;
 
-import java.io.Serializable;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -51,7 +49,11 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
  * 
  */
 @Entity
-public class SNMP extends ServiceElementManagementObject implements Serializable {
+public class SNMP extends ServiceElementManagementObject {
+	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Embedded
 	@AttributeOverrides({

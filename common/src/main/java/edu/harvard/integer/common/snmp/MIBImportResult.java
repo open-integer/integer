@@ -42,6 +42,10 @@ import java.util.List;
  *         Hold the result of a MIB import.
  */
 public class MIBImportResult extends MIBImportInfo {
+	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The SNMP module. It can be null if the imported MIB does not pass parser.

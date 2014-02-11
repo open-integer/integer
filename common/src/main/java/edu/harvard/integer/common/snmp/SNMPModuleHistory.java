@@ -35,7 +35,6 @@ package edu.harvard.integer.common.snmp;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
 
@@ -51,6 +50,12 @@ import edu.harvard.integer.common.BaseEntity;
 @Entity
 public class SNMPModuleHistory extends BaseEntity {
 
+	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
 	/**
 	 * Date the MIB module was updated.
 	 */

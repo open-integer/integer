@@ -44,6 +44,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class SNMPIndex extends SNMP {
+	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean implied = false;
 

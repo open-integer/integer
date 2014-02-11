@@ -56,6 +56,12 @@ import edu.harvard.integer.common.ID;
 @Entity
 public class SNMPModule extends BaseEntity implements Serializable {
 	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
+	/**
 	 * OID that identifies the module.
 	 */
 	private String oid = null;

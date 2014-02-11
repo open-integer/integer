@@ -44,6 +44,12 @@ import edu.harvard.integer.common.topology.Credential;
  */
 @Entity
 public class SnmpV2cCredentail extends Credential {
+	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
 	private String readCommunity = null;
 	private String writeCommunity = null;
 

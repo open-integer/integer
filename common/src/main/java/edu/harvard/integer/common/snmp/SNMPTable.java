@@ -48,6 +48,10 @@ import javax.persistence.OrderColumn;
  */
 @Entity
 public class SNMPTable extends SNMP {
+	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * List of index OID's for this table.

@@ -47,6 +47,10 @@ import edu.harvard.integer.common.BaseEntity;
  */
 @Entity
 public class MIBImportInfo extends BaseEntity {
+	/**
+	 * Serialization version
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Name of the MIB as given by the user.
