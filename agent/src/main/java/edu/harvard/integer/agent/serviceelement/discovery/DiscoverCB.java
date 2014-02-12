@@ -30,43 +30,45 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+package edu.harvard.integer.agent.serviceelement.discovery;
 
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * @author dchan
+ * The Interface DiscoverCB defines callback methods during discovery.
+ * 
  *
+ * @author dchan
+ * @param <T> the generic type of ServiceElement
  */
-final public class SNMPElementDiscover implements ElementDiscoveryBase {
+public interface DiscoverCB <T extends ServiceElement> {
 
-	private static SNMPElementDiscover discover = new SNMPElementDiscover();
-	
-	public static SNMPElementDiscover getInstance() {		
-		return discover;
-	}
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.ElementDiscoveryBase#discoverElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	/**
+	 * Discovered topo network.  This method will be called after discover each topo network.
+	 *
+	 * @param tb the discovered topoNetwork.
 	 */
-	@Override
-	public ServiceElement discoverElement(ElementEndPoint endEpt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#checkAlive(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	public void discoveredTopoNet( TopoNetwork tb );
+	
+	/**
+	 * Discoverd element. -- Be called after discovered each service element.
+	 *
+	 * @param elm the discoverd element.
 	 */
-	@Override
-	public boolean checkAlive(ElementEndPoint endEpt) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	public void discoverdElement( T elm );
+	
+	/**
+	 * Error occur -- Call when errors occurs during discovering.
+	 *
+	 * @param errorCode the error code.
+	 * @param msg the associated message.
+	 */
+	public void errorOccur( NetworkErrorCodes errorCode, String msg );
+	
+	/**
+	 * Done. To be called after done with discovered.
+	 */
+	public void doneDiscover();
 	
 }

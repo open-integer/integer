@@ -35,10 +35,32 @@ package edu.harvard.integer.agent.serviceelement.discovery;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * @author dchan
+ * The Class DiscoveredNode is one kind of service element which is considering
+ * a topo node in topology map.,
  *
+ * @author dchan
  */
 public class DiscoveredNode extends ServiceElement {
 
+	/** The ip address of the node */
+	private String ipAddress;
+
+	/**
+	 * Gets the ip address.
+	 *
+	 * @return the ip address
+	 */
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	/**
+	 * Sets the ip address.
+	 *
+	 * @param ipAddress the new ip address
+	 */
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
 	
 }

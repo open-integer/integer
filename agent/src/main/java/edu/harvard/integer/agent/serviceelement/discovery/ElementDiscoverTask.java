@@ -32,25 +32,53 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
-import java.util.List;
+import java.util.concurrent.Callable;
+
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.common.topology.ServiceElement;
+
 
 /**
- * 
- * The Class DiscoveryPolicy contains discovery configuration such as seed element
- * filters based on network etc.
+ * The Class ElementDiscoverTask is used to discover network node ip element.
  *
  * @author dchan
  */
-public class DiscoveryPolicy {
+public class ElementDiscoverTask implements Callable<DiscoveredNode> {
 
-	private int snmpTimeout;
-	private int snmpRetries;
+	/** The callback client during discovery. */
+	private DiscoverCB<ServiceElement>  cb; 
 	
-	private boolean useIcmp = true;
-	private int icmpTimeout;
-	private int icmpRetries;
+	/** The network node service element endpoint. */
+	private ElementEndPoint elmEpt;
 	
-	private List<DiscoverNode> discoverNodes;
-	private List<DiscoverNet>  discoverNets;
-    
+	
+	/**
+	 * Instantiates a new element discover task.
+	 *
+	 * @param cb the callback client
+	 * @param elmEpt the network node service element.
+	 */
+	public ElementDiscoverTask( DiscoverCB<ServiceElement> cb, ElementEndPoint elmEpt ) {
+		
+		this.elmEpt = elmEpt;
+		this.cb = cb;
+	}
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see java.util.concurrent.Callable#call()
+	 */
+	@Override
+	public DiscoveredNode call() throws Exception {
+		
+	
+		
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 }

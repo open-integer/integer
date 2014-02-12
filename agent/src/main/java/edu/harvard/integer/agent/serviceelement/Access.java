@@ -39,4 +39,10 @@ package edu.harvard.integer.agent.serviceelement;
  */
 public interface Access {
 
+	public enum AccessTypeE {
+		SNMPv2c, SNMPv1, SNMPv3
+	}
+	
+	public AccessTypeE getAccessType();
+	
 }

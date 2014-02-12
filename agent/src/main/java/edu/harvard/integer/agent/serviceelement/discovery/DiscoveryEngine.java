@@ -32,14 +32,22 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
+
 /**
  * @author dchan
  *
  */
 public class DiscoveryEngine {
 
+
+	/** The Constant logger. */
+	
+	public DiscoveryEngine() {
+
+		System.out.println("Start Integer Discover Engine ********************************* ");
+	}
+	
 	public String hello()  {
-		
 		return "Hello it is Integer Agent. ";
 	}
 	

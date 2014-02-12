@@ -30,44 +30,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent;
-
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+package edu.harvard.integer.agent.serviceelement.discovery;
 
 /**
- * A singleton Integer Agent application context to prevent prevent instantiation
- * from other classes.
- *  
  * @author dchan
  *
  */
-public class IntegerAgentContext implements ApplicationContextAware {
+public class TopoNetwork {
 
-	private static ApplicationContext appContext;
-	 
-	// Private constructor prevents instantiation from other classes
-     private IntegerAgentContext() {}
- 
- 
-	
-	/* (non-Javadoc)
-	 * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.ApplicationContext)
-	 */
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
-		appContext = applicationContext;
-
-	}
-
-	/**
-	 * 
-	 * @param beanName
-	 * @return
-	 */
-	public static Object getBean(String beanName) {
-		return appContext.getBean(beanName);
-	}
 }

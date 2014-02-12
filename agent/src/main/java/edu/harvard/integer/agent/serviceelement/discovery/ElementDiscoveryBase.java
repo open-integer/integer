@@ -37,7 +37,8 @@ import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * This interface layout the methods for discover IP based service element
- * which including SNMP elements and NON-SNMP elements.
+ * which including SNMP elements and NON-SNMP elements.  For now discovery
+ * for each ip element is synchronized calls.  It may changed in future.
  * 
  * @author dchan
  *

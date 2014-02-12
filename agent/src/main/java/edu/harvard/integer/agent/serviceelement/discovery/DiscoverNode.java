@@ -32,9 +32,8 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
-import java.util.List;
 
-import edu.harvard.integer.agent.serviceelement.Access;
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
 
 /**
  * @author dchan
@@ -42,28 +41,21 @@ import edu.harvard.integer.agent.serviceelement.Access;
  */
 public class DiscoverNode {
 
-	private String nodeIp;
-	private String netMask;
+	final private ElementEndPoint elmEndPoint;
 	
-	private List<Access> access;
-	
-	public List<Access> getAccess() {
-		return access;
-	}
-	public void setAccess(List<Access> access) {
-		this.access = access;
+	public DiscoverNode( ElementEndPoint ept ) {
+		
+		this.elmEndPoint = ept;
 	}
 	
+
+	public ElementEndPoint getElmEndPoint() {
+		return elmEndPoint;
+	}
+
 	public String getNodeIp() {
-		return nodeIp;
+		
+		return elmEndPoint.getIpAddress();
 	}
-	public void setNodeIp(String nodeIp) {
-		this.nodeIp = nodeIp;
-	}
-	public String getNetMask() {
-		return netMask;
-	}
-	public void setNetMask(String netMask) {
-		this.netMask = netMask;
-	}
+	
 }

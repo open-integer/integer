@@ -35,48 +35,104 @@ package edu.harvard.integer.agent.serviceelement.access;
 import edu.harvard.integer.agent.serviceelement.Access;
 
 /**
- * @author dchan
+ * The Class SnmpSecureAccess contains SNMPv3 access information.
  *
+ * @author dchan
  */
 public class SnmpSecureAccess implements Access {
 
+	/** The security level. */
 	private int securityLevel;
+	
+	/** The security model. */
 	private int securityModel;
+	
+	/** The security name. */
 	private String securityName;
+	
+	/** The engine id. */
 	private byte[]  engineID;
 	
 	
+	/**
+	 * Gets the security level.
+	 *
+	 * @return the security level
+	 */
 	public int getSecurityLevel() {
 		return securityLevel;
 	}
 	
+	/**
+	 * Sets the security level.
+	 *
+	 * @param securityLevel the new security level
+	 */
 	public void setSecurityLevel(int securityLevel) {
 		this.securityLevel = securityLevel;
 	}
 	
+	/**
+	 * Gets the security model.
+	 *
+	 * @return the security model
+	 */
 	public int getSecurityModel() {
 		return securityModel;
 	}
 	
+	/**
+	 * Sets the security model.
+	 *
+	 * @param securityModel the new security model
+	 */
 	public void setSecurityModel(int securityModel) {
 		this.securityModel = securityModel;
 	}
 	
+	/**
+	 * Gets the security name.
+	 *
+	 * @return the security name
+	 */
 	public String getSecurityName() {
 		return securityName;
 	}
 	
+	/**
+	 * Sets the security name.
+	 *
+	 * @param securityName the new security name
+	 */
 	public void setSecurityName(String securityName) {
 		this.securityName = securityName;
 	}
 	
 
+	/**
+	 * Gets the engine id.
+	 *
+	 * @return the engine id
+	 */
 	public byte[] getEngineID() {
 		return engineID;
 	}
 
+	/**
+	 * Sets the engine id.
+	 *
+	 * @param engineID the new engine id
+	 */
 	public void setEngineID(byte[] engineID) {
 		this.engineID = engineID;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.Access#getAccessType()
+	 */
+	@Override
+	public AccessTypeE getAccessType() {
+		return AccessTypeE.SNMPv3;
 	}
 
 	

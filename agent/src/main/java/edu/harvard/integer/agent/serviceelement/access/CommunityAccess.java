@@ -103,4 +103,16 @@ public class CommunityAccess implements Access {
 	public void setVersionV2c(boolean isVersionV2c) {
 		this.isVersionV2c = isVersionV2c;
 	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.Access#getAccessType()
+	 */
+	@Override
+	public AccessTypeE getAccessType() {
+		
+		if ( isVersionV2c ) {
+			return AccessTypeE.SNMPv2c;
+		}
+		return AccessTypeE.SNMPv1;
+	}
 }

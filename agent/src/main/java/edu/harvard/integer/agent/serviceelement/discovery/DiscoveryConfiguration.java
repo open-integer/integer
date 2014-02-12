@@ -30,81 +30,107 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement;
+package edu.harvard.integer.agent.serviceelement.discovery;
 
 import java.util.List;
 
+import edu.harvard.integer.agent.serviceelement.Access;
+
 /**
- * The Class ElementEndPoint contains information to access an element.
- * All elements are considering an IP based element.
+ * 
+ * The Class DiscoveryPolicy contains discovery configuration such as seed element
+ * filters based on network etc.
  *
  * @author dchan
  */
-public class ElementEndPoint {
+public class DiscoveryConfiguration {
+
+	private int snmpTimeout;
+	private int snmpRetries;
 	
-	/** The ip address of the element */
-	private String ipAddress;
-	
-	/** The access port to access the element */
-	private int  accessPort;
-	
-	/** The access objects containing information such as key, community string to
-	 *  to communicate with the element. 
-	 */
-	private List<Access>  access;
+	private boolean useIcmp = true;
+	private int icmpTimeout;
+	private int icmpRetries;
 	
 	/**
-	 * Gets the ip address.
-	 *
-	 * @return the ip address
+	 * Discovered node which contains node ip.  Those nodes need to be discovered first.
 	 */
-	public String getIpAddress() {
-		return ipAddress;
-	}
+	private List<DiscoverNode> discoverNodes;
 	
 	/**
-	 * Sets the ip address.
-	 *
-	 * @param ipAddress the new ip address
+	 * Discovered subnet for auto discovered.  
 	 */
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
+	private List<DiscoverNet>  discoverNets;
 	
 	/**
-	 * Gets the access port.
-	 *
-	 * @return the access port
+	 * The access used for discovery.  Right now we assume access is shared on all the subnet.
+	 * However it may not be the case.
 	 */
-	public int getAccessPort() {
-		return accessPort;
-	}
+	private List<Access> access;
 	
-	/**
-	 * Sets the access port.
-	 *
-	 * @param accessPort the new access port
-	 */
-	public void setAccessPort(int accessPort) {
-		this.accessPort = accessPort;
-	}
 	
-	/**
-	 * Gets the access.
-	 *
-	 * @return the access
-	 */
 	public List<Access> getAccess() {
 		return access;
 	}
-	
-	/**
-	 * Sets the access.
-	 *
-	 * @param access the new access
-	 */
+
 	public void setAccess(List<Access> access) {
 		this.access = access;
 	}
+
+	public int getSnmpTimeout() {
+		return snmpTimeout;
+	}
 	
+	public void setSnmpTimeout(int snmpTimeout) {
+		this.snmpTimeout = snmpTimeout;
+	}
+	
+	public int getSnmpRetries() {
+		return snmpRetries;
+	}
+	
+	public void setSnmpRetries(int snmpRetries) {
+		this.snmpRetries = snmpRetries;
+	}
+	
+	public boolean isUseIcmp() {
+		return useIcmp;
+	}
+	
+	public void setUseIcmp(boolean useIcmp) {
+		this.useIcmp = useIcmp;
+	}
+	
+	public int getIcmpTimeout() {
+		return icmpTimeout;
+	}
+	
+	public void setIcmpTimeout(int icmpTimeout) {
+		this.icmpTimeout = icmpTimeout;
+	}
+	
+	public int getIcmpRetries() {
+		return icmpRetries;
+	}
+	
+	public void setIcmpRetries(int icmpRetries) {
+		this.icmpRetries = icmpRetries;
+	}
+	
+	public List<DiscoverNode> getDiscoverNodes() {
+		return discoverNodes;
+	}
+	
+	public void setDiscoverNodes(List<DiscoverNode> discoverNodes) {
+		this.discoverNodes = discoverNodes;
+	}
+	
+	public List<DiscoverNet> getDiscoverNets() {
+		return discoverNets;
+	}
+	
+	public void setDiscoverNets(List<DiscoverNet> discoverNets) {
+		this.discoverNets = discoverNets;
+	}
+    
 }

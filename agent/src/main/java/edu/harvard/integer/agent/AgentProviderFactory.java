@@ -32,32 +32,39 @@
  */
 package edu.harvard.integer.agent;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
-
-import edu.harvard.integer.agent.serviceelement.discovery.DiscoveryEngine;
-
-
+import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.agent.serviceelement.discovery.NetworkDiscoveryBase;
+import edu.harvard.integer.agent.serviceelement.discovery.snmp.SNMPElementDiscover;
 
 /**
- * 
  * @author dchan
  *
  */
+public class AgentProviderFactory {
 
-@Path("integer/agent")
-public class IntegerAgentRestService {
+	
+	
+	public enum ProtocolE {
+      
+		SNMP, CISCOCLI, PUPPET, AWS
+	}
+	
+	public static ElementDiscoveryBase  getElementDiscovery( ProtocolE p ) {
+		
+		switch (p) {
+		 
+		   case SNMP:			  
+			   return SNMPElementDiscover.getInstance();
 
-	@GET
-	@Path("/discover")
-	public Response discoverHelloMessage() {
-		
-		DiscoveryEngine discovery = (DiscoveryEngine)IntegerAgentContext.getBean("discoverEngine");
-		String result = discovery.hello();
-		
-		return Response.status(200).entity(result).build();
+		    default:
+			  break;
+		}	
+		return null;		
 	}
 	
 	
+	public static NetworkDiscoveryBase getNetworkDiscover() {
+		
+		return null;
+	}
 }

@@ -30,43 +30,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+package edu.harvard.integer.agent.serviceelement.discovery;
 
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * @author dchan
+ * The Interface NetworkDiscoveryBase.
  *
+ * @author dchan
  */
-final public class SNMPElementDiscover implements ElementDiscoveryBase {
+public interface NetworkDiscoveryBase {
 
-	private static SNMPElementDiscover discover = new SNMPElementDiscover();
-	
-	public static SNMPElementDiscover getInstance() {		
-		return discover;
-	}
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.ElementDiscoveryBase#discoverElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	/**
+	 * Discover network. It is an asynchronous call. The callers have to provide call back
+	 * discovery notification
+	 *  
+	 *
+	 * @param discoverConfig the discover config
+	 * @param cb the cb
 	 */
-	@Override
-	public ServiceElement discoverElement(ElementEndPoint endEpt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#checkAlive(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
-	 */
-	@Override
-	public boolean checkAlive(ElementEndPoint endEpt) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
+	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, DiscoverCB<ServiceElement> cb );
 }
