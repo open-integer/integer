@@ -39,14 +39,11 @@ import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -66,6 +63,11 @@ import edu.harvard.integer.common.ID;
 @Entity
 public class ServiceElement extends BaseEntity {
 
+	/**
+	 * Serialization ID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private NetworkLayer networkLayer = null;
 
 	private String description = null;
@@ -77,8 +79,9 @@ public class ServiceElement extends BaseEntity {
 			@AttributeOverride(name = "name", column = @Column(name = "parentIdName")) })
 	private ID parentId = null;
 
-	@OneToMany
-	private List<ServiceElement> children = null;
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> children = null;
 
 	// Since some ServiceElements will have many capabilities this attribute
 	// will list all the capabilities the serviceElement has. This does not mean
@@ -93,8 +96,9 @@ public class ServiceElement extends BaseEntity {
 	// It is found here instead of the ServiceElementType because order may be
 	// inpacted by local considerations such as hardware and software
 	// configuration.
-	@OneToMany
-	private List<Capability> capabilites = null;
+    @ElementCollection
+    @OrderColumn(name="idx")
+	private List<ID> capabilites = null;
 
 	// The id of the id object instance that identifies the Location instance to
 	// which this ServiceElement belongs.
@@ -144,16 +148,17 @@ public class ServiceElement extends BaseEntity {
 	 * set up and later used by the ServiceElementAccessManager will have this
 	 * information.
 	 */
-	@OneToMany
-	 private List<Credential> credentials = null;
+	@ElementCollection
+    @OrderColumn(name="idx")
+	 private List<ID> credentials = null;
 
 	/*
 	 * Listing of the id object instances that reference domains supported by
 	 * this service element. This list helps with scoping of configuration
 	 * sequencing and control.
 	 */
-    @ElementCollection(fetch=FetchType.LAZY)
-    @CollectionTable(joinColumns=@JoinColumn(name = "serviceElementId"))
+    @ElementCollection
+    @OrderColumn(name="idx")
     private List<ID> domainIds = null;
 
 	/*
@@ -162,7 +167,7 @@ public class ServiceElement extends BaseEntity {
 	 * sequencing and control.
 	 */
     @ElementCollection
-    @CollectionTable(joinColumns=@JoinColumn(name = "serviceElementId"))
+    @OrderColumn(name="idx")
     private List<ID> mechanismIds = null;
 
 	/*
@@ -222,7 +227,7 @@ public class ServiceElement extends BaseEntity {
 	/**
 	 * @return the children
 	 */
-	public List<ServiceElement> getChildren() {
+	public List<ID> getChildren() {
 		return children;
 	}
 
@@ -230,14 +235,14 @@ public class ServiceElement extends BaseEntity {
 	 * @param children
 	 *            the children to set
 	 */
-	public void setChildren(List<ServiceElement> children) {
+	public void setChildren(List<ID> children) {
 		this.children = children;
 	}
 
 	/**
 	 * @return the capabilites
 	 */
-	public List<Capability> getCapabilites() {
+	public List<ID> getCapabilites() {
 		return capabilites;
 	}
 
@@ -245,7 +250,7 @@ public class ServiceElement extends BaseEntity {
 	 * @param capabilites
 	 *            the capabilites to set
 	 */
-	public void setCapabilites(List<Capability> capabilites) {
+	public void setCapabilites(List<ID> capabilites) {
 		this.capabilites = capabilites;
 	}
 

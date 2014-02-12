@@ -37,12 +37,22 @@ package edu.harvard.integer.common.topology;
  *
  * Every service element can be only one type.
  */
+import java.util.List;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 @Entity
 public class ServiceElementType extends BaseEntity {
+	/**
+	 * Serialization version.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String firmware = null;
 
 	private String model = null;
@@ -56,6 +66,10 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	private String featureSet = null;
 
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> capabilityIds = null;
+	
 	/**
 	 * @return the firmware
 	 */
@@ -129,6 +143,20 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	public void setFeatureSet(String featureSet) {
 		this.featureSet = featureSet;
+	}
+
+	/**
+	 * @return the capabilityIds
+	 */
+	public List<ID> getCapabilityIds() {
+		return capabilityIds;
+	}
+
+	/**
+	 * @param capabilityIds the capabilityIds to set
+	 */
+	public void setCapabilityIds(List<ID> capabilityIds) {
+		this.capabilityIds = capabilityIds;
 	}
 
 }

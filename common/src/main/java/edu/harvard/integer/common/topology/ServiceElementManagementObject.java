@@ -37,19 +37,27 @@ package edu.harvard.integer.common.topology;
  */
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 @Entity
 public abstract class ServiceElementManagementObject extends BaseEntity {
 
+	/**
+	 * Serialition ID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/*
 	 * A list of the ServiceElementTypes that support this management object.
 	 */
-	@OneToMany
-	public List<ServiceElementType> serviceElementTypes = null;
+	@ElementCollection
+	@OrderColumn(name="idx")
+	public List<ID> serviceElementTypes = null;
 
 	/*
 	 * While it is possible for a ServiceElementManagementObject to be useful
@@ -78,7 +86,7 @@ public abstract class ServiceElementManagementObject extends BaseEntity {
 	/**
 	 * @return the serviceElementTypes
 	 */
-	public List<ServiceElementType> getServiceElementTypes() {
+	public List<ID> getServiceElementTypes() {
 		return serviceElementTypes;
 	}
 
@@ -87,7 +95,7 @@ public abstract class ServiceElementManagementObject extends BaseEntity {
 	 *            the serviceElementTypes to set
 	 */
 	public void setServiceElementTypes(
-			List<ServiceElementType> serviceElementTypes) {
+			List<ID> serviceElementTypes) {
 		this.serviceElementTypes = serviceElementTypes;
 	}
 

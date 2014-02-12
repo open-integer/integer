@@ -61,22 +61,22 @@ public class ManagementObjectCapabilityManager implements
 		ManagementObjectCapabilityManagerLocalInterface {
 
 	@Inject
-	private Logger log;
+	private Logger logger;
 
 	@Inject
 	PersistenceManager dbm;
 
 	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
-		log.debug("Add ServiceElementType " + serviceElementType);
+		logger.debug("Add ServiceElementType " + serviceElementType);
 		
 		try {
 			dbm.getServiceElementTypeDAO().update(serviceElementType);
 			
 		}catch (EntityExistsException e) {
-			log.error("ServiceElementType already exists! " + e.getMessage());
+			logger.error("ServiceElementType already exists! " + e.getMessage());
 		} catch (IntegerException e) {
-			log.error("Unexpected Error saveing ServiceElementType " + serviceElementType.getName() + ". " + e, e);
+			logger.error("Unexpected Error saveing ServiceElementType " + serviceElementType.getName() + ". " + e, e);
 			e.printStackTrace();
 		}
 		
@@ -85,14 +85,14 @@ public class ManagementObjectCapabilityManager implements
 	
 	public void deleteServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
-		log.info("Delete service element " + serviceElementType.getName());
+		logger.info("Delete service element " + serviceElementType.getName());
 		
 		dbm.getServiceElementTypeDAO().delete(serviceElementType);
 	}
 
 	public void deleteServiceElementType(ID serviceElementTypeId) throws IntegerException {
 		
-		log.info("Delete service element " + serviceElementTypeId.getName());
+		logger.info("Delete service element " + serviceElementTypeId.getName());
 		
 		dbm.getServiceElementTypeDAO().delete(serviceElementTypeId);
 	}
@@ -113,15 +113,15 @@ public class ManagementObjectCapabilityManager implements
 	@Override
 	public Capability addCapability(Capability capability) {
 
-		log.debug("Add capability " + capability.getName());
+		logger.debug("Add capability " + capability.getName());
 
 		try {
 			dbm.getCapabilityDAO().update(capability);
 		
 		} catch (EntityExistsException e) {
-			log.error("Capability already exists! " + e.getMessage());
+			logger.error("Capability already exists! " + e.getMessage());
 		} catch (IntegerException e) {
-			log.error("Unexpected Error saveing capability " + capability.getName() + ". " + e, e);
+			logger.error("Unexpected Error saveing capability " + capability.getName() + ". " + e, e);
 			e.printStackTrace();
 		}
 		return capability;

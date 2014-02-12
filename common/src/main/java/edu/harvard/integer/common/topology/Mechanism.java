@@ -35,11 +35,9 @@ package edu.harvard.integer.common.topology;
 
 import java.util.List;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -51,8 +49,13 @@ import edu.harvard.integer.common.ID;
 @Entity
 public class Mechanism extends BaseEntity {
 
-	@ElementCollection(fetch=FetchType.LAZY)
-    @CollectionTable(joinColumns=@JoinColumn(name = "mechanismId"))
+	/**
+	 * Serialization ID 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@ElementCollection
+	@OrderColumn(name="idx")
 	private List<ID> capabilities;
 
 	/**

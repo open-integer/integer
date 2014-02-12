@@ -81,7 +81,6 @@ public class SNMPModule extends BaseEntity implements Serializable {
 	 * History of the MIB Module.
 	 */
 	@ElementCollection
-	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ID> history = null;
 	
 	/**

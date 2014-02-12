@@ -46,8 +46,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /*
  * A capability represents the lowest layer of abstraction in the system before it becomes device and protocol 
@@ -68,6 +70,11 @@ import edu.harvard.integer.common.BaseEntity;
 @Entity
 public class Capability extends BaseEntity {
 
+	/**
+	 * Serialization ID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/*
 	 * Listing of all the FCAPS categories an instance of this capability
 	 * applies. Note that there is an extra 's' in this attribute to convey that
@@ -96,8 +103,9 @@ public class Capability extends BaseEntity {
 	 * ServiceElementProtocolSpecificManagementObjects depending on the
 	 * protocol.
 	 */
-	@OneToMany
-	private List<ServiceElementManagementObject> parameters = null;
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> parameters = null;
 	
 	/**
 	 * @return the fcaps

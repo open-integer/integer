@@ -41,5 +41,10 @@ import edu.harvard.integer.common.BaseEntity;
 
 @Entity
 public abstract class Credential extends BaseEntity {
+
+	/**
+	 * Serialization ID
+	 */
+	private static final long serialVersionUID = 1L;
 	
 }

@@ -37,9 +37,11 @@ import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotNull;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -51,7 +53,11 @@ import edu.harvard.integer.common.Orginization;
  */
 @Entity
 public class User extends BaseEntity {
-//
+	/**
+	 * Serializtion ID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "contactId")),
@@ -59,8 +65,9 @@ public class User extends BaseEntity {
 			@AttributeOverride(name = "name", column = @Column(name = "contactName")) })
 	private ID contactId = null;
 	
-	@OneToMany
-	private List<Orginization> orginizations = null;
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> orginizations = null;
 
 	@NotNull(message="User.UUID must not be null!")
 	private String uuid = null;
@@ -106,7 +113,7 @@ public class User extends BaseEntity {
 	/**
 	 * @return the orginizationList
 	 */
-	public List<Orginization> getOrginizations() {
+	public List<ID> getOrginizations() {
 		return orginizations;
 	}
 
@@ -114,7 +121,7 @@ public class User extends BaseEntity {
 	 * @param orginizationList
 	 *            the orginizationList to set
 	 */
-	public void setOrginizations(List<Orginization> orginizations) {
+	public void setOrginizations(List<ID> orginizations) {
 		this.orginizations = orginizations;
 	}
 

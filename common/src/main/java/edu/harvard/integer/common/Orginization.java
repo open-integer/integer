@@ -40,6 +40,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 /**
  * @author David Taylor
@@ -51,6 +52,11 @@ import javax.persistence.OneToMany;
 @Entity
 public class Orginization extends BaseEntity {
 
+	/**
+	 * Serialization ID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String orginizationType = null;
 
 	/**
@@ -59,15 +65,16 @@ public class Orginization extends BaseEntity {
 	 * have several locations each with a different 'type'. For example, support
 	 * center, development center, business office, etc.
 	 */
-	@ElementCollection(fetch=FetchType.LAZY)
-    @CollectionTable(joinColumns=@JoinColumn(name = "orginizationId"))
+	@ElementCollection
+	@OrderColumn(name="idx")
 	private List<ID> locations = null;
 	
 	/**
 	 * list of orinizations that this orginization belongs to.
 	 */
-	@OneToMany
-	private List<Orginization> orinizations = null;
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> orinizations = null;
 
 	/**
 	 * @return the type
@@ -87,7 +94,7 @@ public class Orginization extends BaseEntity {
 	/**
 	 * @return the orinizations
 	 */
-	public List<Orginization> getOrinizations() {
+	public List<ID> getOrinizations() {
 		return orinizations;
 	}
 
@@ -95,7 +102,7 @@ public class Orginization extends BaseEntity {
 	 * @param orinizations
 	 *            the orinizations to set
 	 */
-	public void setOrinizations(List<Orginization> orinizations) {
+	public void setOrinizations(List<ID> orinizations) {
 		this.orinizations = orinizations;
 	}
 
