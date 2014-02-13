@@ -44,6 +44,14 @@ public class IDType {
 
 	private Class classType = null;
 
+	private IDType() {
+		
+	}
+	
+	public IDType(Class clazz) {
+		this.classType = clazz;
+	}
+	
 	public Class getClassType() {
 		return classType;
 	}

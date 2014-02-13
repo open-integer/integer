@@ -41,11 +41,9 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 
 /**
  * @author David Taylor
@@ -82,6 +80,7 @@ public class SNMPModule extends BaseEntity implements Serializable {
 	 */
 	@ElementCollection
 	private List<ID> history = null;
+
 	
 	/**
 	 * @return the oid

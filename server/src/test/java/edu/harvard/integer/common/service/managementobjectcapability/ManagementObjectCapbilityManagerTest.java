@@ -147,9 +147,13 @@ public class ManagementObjectCapbilityManagerTest {
 		SNMP oid = new SNMP();
 		oid.setName("ifName");
 		oid.setOid("1.3.6.1.2.1.1");
-			
 		systemOids.add(oid);
 		
+		 oid = new SNMP();
+		 oid.setName("ifDescr");
+		 oid.setOid("1.3.6.1.2.1.2");
+		 systemOids.add(oid);
+			
 		assert(systemOids != null);
 		
 		for (ServiceElementManagementObject snmp : systemOids) {

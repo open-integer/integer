@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -170,15 +171,33 @@ public class MibLoader implements MibLoaderLocalInterface {
 
 		for (int i = 0; i < oids.size(); i++) {
 			SNMP snmpOid = oids.get(i);
-			((SNMPTable) snmpOid).setTableOids( saveOids(((SNMPTable) snmpOid).getTableOids()));
-			((SNMPTable) snmpOid).setIndex( saveOids(((SNMPTable) snmpOid).getIndex()));
-			snmpOid = saveSNMPOid(snmpOid);
 			
-			if (snmpOid instanceof SNMPTable)
-				oids.set(i, (SNMPTable) snmpOid);
+			SNMP dbTable = snmpDao.findByOid(snmpOid.getOid());
+			if (dbTable != null) {
+				logger.info("Found table " + 
+							snmpOid.getName() + "::" + snmpOid.getOid() + " In the database. Will update it.");
+				
+				try {
+					snmpDao.copyFields(dbTable, snmpOid);
+				} catch (IllegalAccessException | NoSuchMethodException
+						| InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error("Unable to merge in change from table " + 
+							snmpOid.getName() + "::" + snmpOid.getOid() + " to db table");
+				}
+			} else
+				dbTable = snmpOid;
+			
+			((SNMPTable) dbTable).setTableOids( saveOids(((SNMPTable) dbTable).getTableOids()));
+			((SNMPTable) dbTable).setIndex( saveOids(((SNMPTable) dbTable).getIndex()));
+			dbTable = saveSNMPOid(dbTable);
+			
+			if (dbTable instanceof SNMPTable)
+				oids.set(i, (SNMPTable) dbTable);
 			else
-				logger.error("OID: " + snmpOid.getName() + " " + snmpOid.getOid() + " Is NOT an SNMPTable!! "
-						+ " Passed in " +oids.get(i).getClass().getSimpleName());
+				logger.error("OID: " + dbTable.getName() + " " + dbTable.getOid() + " Is NOT an SNMPTable!! "
+						+ " Passed in " + oids.get(i).getClass().getSimpleName());
 			
 		}
 
@@ -271,6 +290,8 @@ public class MibLoader implements MibLoaderLocalInterface {
 			
 			SNMP dbOid = snmpDao.findByOid(snmpOid.getOid());
 			if (dbOid != null) {
+				logger.info("Update OID " + dbOid.getID());
+				
 				dbOid.setAccessMethod(snmpOid.getAccessMethod());
 				dbOid.setDescription(snmpOid.getDescription());
 				dbOid.setMaxAccess(snmpOid.getMaxAccess());

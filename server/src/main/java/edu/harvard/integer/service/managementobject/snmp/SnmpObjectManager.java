@@ -93,7 +93,6 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 				
 				mibImportInfo.setFileName(fileName);
 				
-				
 				logger.info("MIB " + mibImportInfo.getFileName() + " Size " + mibImportInfo.getMib().length());
 			}
 			
@@ -134,7 +133,6 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 			mibs[i] = new MIBInfo();
 			mibs[i].setIdentifier(mibInfos[i].getIdentifier());
 			mibs[i].setName(mibInfos[i].getName());
-			mibs[i].setIdType(mibInfos[i].getIdType());
 			
 			mibs[i].setVendor(mibInfos[i].getVendor());
 			
@@ -152,7 +150,6 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		SNMPModule module = new SNMPModule();
 		module.setIdentifier(dbModule.getIdentifier());
 		module.setName(dbModule.getName());
-		module.setIdType(dbModule.getIdType());
 		module.setDescription(dbModule.getDescription());
 		module.setOid(dbModule.getOid());
 		

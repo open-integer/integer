@@ -65,12 +65,6 @@ public interface IDInterface {
 	 */
 	public IDType getIdType();
 	
-	/**
-	 * @param idType
-	 *            the idType to set
-	 */
-	public void setIdType(IDType idType);
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */

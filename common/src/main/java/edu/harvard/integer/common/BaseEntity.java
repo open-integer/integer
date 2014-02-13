@@ -5,12 +5,9 @@ package edu.harvard.integer.common;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Size;
 
@@ -70,6 +67,16 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 	@Size(min = 1, max = 50)
 	private String name = null;
 
+	protected BaseEntity(IDType idType) {
+		this.idType = idType;
+	}
+	
+	protected BaseEntity() {
+		this.idType = new IDType(getClass());
+		
+	}
+
+	
 	/**
 	 * @return the identifier
 	 */
@@ -107,13 +114,6 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 		return idType;
 	}
 
-	/**
-	 * @param idType
-	 *            the idType to set
-	 */
-	public void setIdType(IDType idType) {
-		this.idType = idType;
-	}
 
 	public ID getID() {
 		return new ID(identifier, name, idType);

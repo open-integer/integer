@@ -36,6 +36,7 @@ package edu.harvard.integer.common.snmp;
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.IDType;
 
 /**
  * @author David Taylor
@@ -47,6 +48,7 @@ import edu.harvard.integer.common.BaseEntity;
  */
 @Entity
 public class MIBImportInfo extends BaseEntity {
+
 	/**
 	 * Serialization version
 	 */
@@ -67,6 +69,7 @@ public class MIBImportInfo extends BaseEntity {
 	 */
 	private boolean standardMib = false;
 
+	
 	/**
 	 * @return the fileName
 	 */

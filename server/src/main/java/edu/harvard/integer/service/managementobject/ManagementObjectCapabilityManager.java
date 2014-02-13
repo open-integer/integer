@@ -43,7 +43,6 @@ import javax.persistence.EntityExistsException;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -52,7 +51,6 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
-import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
@@ -147,9 +145,6 @@ public class ManagementObjectCapabilityManager implements
 			List<ServiceElementManagementObject> managementObjects) throws IntegerException {
 
 		CapabilityDAO dao = dbm.getCapabilityDAO();
-		IDType idType = new IDType();
-		idType.setClassType(Capability.class);
-		capability.setIdType(idType);
 		
 		logger.info("Lookup capablity by ID: " + capability.getID());
 		

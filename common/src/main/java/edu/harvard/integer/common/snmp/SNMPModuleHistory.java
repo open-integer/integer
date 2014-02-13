@@ -39,6 +39,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.IDType;
 
 /**
  * @author David Taylor
@@ -60,6 +61,7 @@ public class SNMPModuleHistory extends BaseEntity {
 	 * Date the MIB module was updated.
 	 */
 	private Date date;
+	
 	
 	/**
 	 * Description/comment for the change to the MIB.

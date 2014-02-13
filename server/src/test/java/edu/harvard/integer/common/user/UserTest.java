@@ -84,9 +84,7 @@ public class UserTest {
 		User u = new User();
 		u.setName("dtaylor");
 		
-		IDType userType = new IDType();
-		userType.setClassType(User.class);
-		u.setIdType(userType);
+		IDType userType = new IDType(User.class);
 		u.setFirstName("Dave");
 		u.setLastName("Taylor");
 		u.setUuid("123456789");

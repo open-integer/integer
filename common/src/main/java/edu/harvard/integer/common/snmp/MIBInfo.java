@@ -43,6 +43,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.IDType;
 
 /**
  * @author David Taylor
@@ -74,6 +75,7 @@ public class MIBInfo extends BaseEntity implements Serializable {
 
 	private String vendor = null;
 
+	
 	/**
 	 * @return the module
 	 */
