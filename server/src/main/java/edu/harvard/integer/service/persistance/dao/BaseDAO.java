@@ -31,9 +31,11 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance;
+package edu.harvard.integer.service.persistance.dao;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
@@ -243,5 +245,56 @@ public class BaseDAO {
 		delete(entity);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T> T createCleanCopy(T tInstance)
+			throws IllegalAccessException, NoSuchMethodException,
+			InvocationTargetException, IntegerException {
+
+		T cleanCopy = null;
+		try {
+			cleanCopy = (T) tInstance.getClass().newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+			throw new IntegerException(e, DatabaseErrorCodes.UnableToCreateCleanCopy);
+		}
+
+		return copyFields(cleanCopy, tInstance);
+	}
 	
+
+	/**
+	 * Copy the fields from the "fromInstance" to the "toInstance"
+	 * 
+	 * @param cleanCopy
+	 * @param tInstance
+	 * @return T toInstnace. This has the data from the fromInstnace. 
+	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IntegerException
+	 */
+	public <T> T copyFields(T toInstance, T fromInstance)
+			throws IllegalAccessException, NoSuchMethodException,
+			InvocationTargetException, IntegerException {
+
+		
+		for (Method f : fromInstance.getClass().getMethods()) {
+
+			if (f.getName().startsWith("set") && Character
+					.isUpperCase(f.getName().charAt(3))) {
+
+				f.setAccessible(true);
+
+				Method getter = fromInstance.getClass()
+						.getMethod("get" + f.getName().substring(3));
+
+				getter.setAccessible(true);
+
+				f.invoke(toInstance, getter.invoke(toInstance));
+			}
+
+		}
+
+		return toInstance;
+	}
 }

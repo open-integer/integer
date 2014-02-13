@@ -49,7 +49,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
-import edu.harvard.integer.service.persistance.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor

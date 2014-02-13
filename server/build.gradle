@@ -54,32 +54,16 @@ dependencies {
 	testRuntime ("org.jboss:jboss-common-core:2.2.22.GA") {
 		exclude group: 'org.jboss.logging'
 	}
-	
+ 	
 }
 
 test {
 	println "home dir " + System.getProperty("user.home")
 }
 
-task connectToDb << {
-	def props = [user: 'dbUser', password: 'dbPassword', allowMultiQueries: 'true'] as Properties
-	def url = 'jdbc:mysql://54.209.220.65:3306/Config'
-	def driver = 'com.mysql.jdbc.Driver'
-	def sql = Sql.newInstance(url, props, driver)
-
-	sql.eachRow('show tables') { row ->
-		println row[0]
-	}
-}
-
-task deployServer(dependsOn: 'build') << {
-	println "Deploy to wildfly dir " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
-	println "Archive " + jar.archiveName
-	copy {
-		from "build/libs/" + jar.archiveName
-		into System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
-
-	}
+task loadTestData {
+	println "Loading test data!"
+	
 }
 
 uploadArchives {

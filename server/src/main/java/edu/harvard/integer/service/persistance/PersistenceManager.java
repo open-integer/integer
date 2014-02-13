@@ -39,8 +39,9 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.service.persistance.dao.topology.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
@@ -52,7 +53,7 @@ import edu.harvard.integer.service.persistance.dao.user.UserDAO;
  * 
  */
 @Stateless
-public class PersistenceManager {
+public class PersistenceManager implements PersistenceManagerLocalInterface {
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -66,6 +67,7 @@ public class PersistenceManager {
 	 * 
 	 * @return SNMPModuleDAO. 
 	 */
+	@Override
 	public SNMPModuleDAO getSNMPModuleDAO() {
 		return new SNMPModuleDAO(em, logger);
 	}
@@ -75,6 +77,7 @@ public class PersistenceManager {
 	 * 
 	 * @return
 	 */
+	@Override
 	public SNMPDAO getSNMPDAO() {
 		return new SNMPDAO(em, logger);
 	}
@@ -84,6 +87,7 @@ public class PersistenceManager {
 	 * 
 	 * @return
 	 */
+	@Override
 	public SNMPIndexDAO getSNMPIndexDAO() {
 		return new SNMPIndexDAO(em, logger);
 	}
@@ -93,6 +97,7 @@ public class PersistenceManager {
 	 * 
 	 * @return
 	 */
+	@Override
 	public MIBInfoDAO getMIBInfoDAO() {
 		return new MIBInfoDAO(em, logger);
 	}
@@ -102,15 +107,17 @@ public class PersistenceManager {
 	 * 
 	 * @return
 	 */
+	@Override
 	public UserDAO getUserDAO() {
 		return new UserDAO(em, logger);
 	}
 	
 	/**
-	 * Get teh ServiceElementTypeDAO
+	 * Get the ServiceElementTypeDAO
 	 * 
 	 * @return
 	 */
+	@Override
 	public ServiceElementTypeDAO getServiceElementTypeDAO() {
 		return new ServiceElementTypeDAO(em, logger);
 	}
@@ -120,16 +127,29 @@ public class PersistenceManager {
 	 * 
 	 * @return
 	 */
+	@Override
 	public CapabilityDAO getCapabilityDAO() {
 		return new CapabilityDAO(em, logger);
 	}
 
 	/**
-	 * @return
+	 * Get the SNMPHistoryDAO()
+	 * 
+	 * @return SNMPHistoryDAO
 	 */
+	@Override
 	public SNMPModuleHistoryDAO getSNMPModuleHistoryDAO() {
 		
 		return new SNMPModuleHistoryDAO(em, logger);
 	}
 	
+	/**
+	 * Get the ServiceElementManagementObjectDAO
+	 * 
+	 * @return ServiceElementManagementObjectDAO
+	 */
+	@Override
+	public ServiceElementManagementObjectDAO getServiceElementManagementObjectDAO() {
+		return new ServiceElementManagementObjectDAO(em, logger);
+	}
 }

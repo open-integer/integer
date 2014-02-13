@@ -38,6 +38,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
@@ -66,10 +67,11 @@ public interface ManagementObjectCapabilityManagerLocalInterface {
 	 * @param capability
 	 * @param managementObjects
 	 * @return capability. The updated capability.
+	 * @throws IntegerException 
 	 */
 	public abstract Capability addManagementObjectsToCapability(
 			Capability capability,
-			List<ServiceElementManagementObject> managementObjects);
+			List<ServiceElementManagementObject> managementObjects) throws IntegerException;
 
 	/**
 	 * Retrieves access methods that have been configured to support a specific
@@ -105,8 +107,9 @@ public interface ManagementObjectCapabilityManagerLocalInterface {
 	 * Capabilities may be returned for each mechanism.
 	 * 
 	 * @return List<Capability>. Capabilities for this mechanism.
+	 * @throws IntegerException 
 	 */
-	public abstract List<Capability> getCapabilities();
+	public abstract List<Capability> getCapabilities() throws IntegerException;
 
 	/**
 	 * Returns a list of mechanisms that are associated with specific

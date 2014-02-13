@@ -152,4 +152,8 @@ public class ID implements IDInterface {
 
 	}
 
+	@Override
+	public String toString() {
+		return name + "[" + identifier + ":" + idType + "]";
+	}
 }

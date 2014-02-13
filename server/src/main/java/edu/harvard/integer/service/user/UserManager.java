@@ -47,6 +47,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.Contact;
 import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 
 /**
@@ -77,7 +78,7 @@ public class UserManager implements UserManagerInterface {
 	private Logger logger;
 
 	@Inject
-	private PersistenceManager dbm;
+	private PersistenceManagerLocalInterface dbm;
 
 	public UserManager() {
 		

@@ -42,8 +42,6 @@ import java.util.Arrays;
 
 import javax.inject.Inject;
 
-import net.percederberg.mibble.MibMacroSymbol;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -54,16 +52,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.service.managementobject.provider.ServiceProviderMain;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
-import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
 
 /**
  * @author David Taylor
@@ -78,7 +74,7 @@ public class ImportMIBTest {
 	private SnmpObjectManagerLocalInterface snmpObjectManager;
 
 	@Inject
-	private PersistenceManager persistenceManager;
+	private PersistenceManagerLocalInterface persistenceManager;
 
 	@Inject
 	private Logger logger;

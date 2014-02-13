@@ -37,7 +37,11 @@ package edu.harvard.integer.common.topology;
  */
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OrderColumn;
 
@@ -57,7 +61,7 @@ public abstract class ServiceElementManagementObject extends BaseEntity {
 	 */
 	@ElementCollection
 	@OrderColumn(name="idx")
-	public List<ID> serviceElementTypes = null;
+	private List<ID> serviceElementTypes = null;
 
 	/*
 	 * While it is possible for a ServiceElementManagementObject to be useful
@@ -67,21 +71,30 @@ public abstract class ServiceElementManagementObject extends BaseEntity {
 	 * other details (including security parameters for accessing the device)
 	 * will be different.
 	 */
-	public AccessMethod accessMethod = null;
+	private AccessMethod accessMethod = null;
 
 	/*
 	 * The namespace of the scopeName implemented in the object that realizes
 	 * this interface. For example Cisco CLI, SNMP, SNMP-Private vendor, etc.
 	 */
-	public String namespace = null;
+	private String namespace = null;
 
 
 	/*
 	 * A short name that can be used by the human interface to identify this
 	 * management object.
 	 */
-	public String displayName = null;
+	private String displayName = null;
 
+	/**
+	 * The ID of the capability that this protocol specific management object supports.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "capabilityId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "capabilityType")),
+			@AttributeOverride(name = "name", column = @Column(name = "capabilityName")) })
+	private ID capabilityId = null;
 	
 	/**
 	 * @return the serviceElementTypes
@@ -142,6 +155,20 @@ public abstract class ServiceElementManagementObject extends BaseEntity {
 	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+	/**
+	 * @return the capabilityId
+	 */
+	public ID getCapabilityId() {
+		return capabilityId;
+	}
+
+	/**
+	 * @param capabilityId the capabilityId to set
+	 */
+	public void setCapabilityId(ID capabilityId) {
+		this.capabilityId = capabilityId;
 	}
 
 }

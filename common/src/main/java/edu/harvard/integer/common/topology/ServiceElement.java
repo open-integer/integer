@@ -74,9 +74,9 @@ public class ServiceElement extends BaseEntity {
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "parentIdId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "parentIdType")),
-			@AttributeOverride(name = "name", column = @Column(name = "parentIdName")) })
+			@AttributeOverride(name = "identifier", column = @Column(name = "parentId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "parentType")),
+			@AttributeOverride(name = "name", column = @Column(name = "parentName")) })
 	private ID parentId = null;
 
 	@ElementCollection

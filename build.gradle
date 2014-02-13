@@ -22,10 +22,9 @@ ear {
 version = '1.0'
 
 task deployServer(dependsOn: 'build') << {
-	println "Deploy to wildfly dir " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
-	println "Archive " + jar.archiveName
+	println "Deploy " + ear.archiveName + " to wildfly dir " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
 	copy {
-		from "build/libs/" + jar.archiveName
+		from "build/libs/" + ear.archiveName
 		into System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
 
 	}

@@ -31,75 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance;
+package edu.harvard.integer.service.persistance.dao.topology;
 
-import javax.ejb.Local;
+import javax.persistence.EntityManager;
 
-import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
-import edu.harvard.integer.service.persistance.dao.user.UserDAO;
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
+public class ServiceElementManagementObjectDAO extends BaseDAO {
 
-@Local
-public interface PersistenceManagerLocalInterface {
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public ServiceElementManagementObjectDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, ServiceElementManagementObject.class);
 	
-	/**
-	 * @return
-	 */
-	SNMPModuleDAO getSNMPModuleDAO();
+	}
 
-	/**
-	 * @return
-	 */
-	SNMPDAO getSNMPDAO();
-
-	/**
-	 * @return
-	 */
-	SNMPIndexDAO getSNMPIndexDAO();
-
-	/**
-	 * @return
-	 */
-	MIBInfoDAO getMIBInfoDAO();
-
-	/**
-	 * @return
-	 */
-	UserDAO getUserDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementTypeDAO getServiceElementTypeDAO();
-
-	/**
-	 * @return
-	 */
-	CapabilityDAO getCapabilityDAO();
-
-	/**
-	 * @return
-	 */
-	SNMPModuleHistoryDAO getSNMPModuleHistoryDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementManagementObjectDAO getServiceElementManagementObjectDAO();
-	
-	
-	
-	
 }
-	

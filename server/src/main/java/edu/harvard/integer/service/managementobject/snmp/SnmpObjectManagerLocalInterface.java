@@ -43,7 +43,6 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.Capability;
 
 /**
  * @author David Taylor
@@ -70,13 +69,12 @@ public interface SnmpObjectManagerLocalInterface {
 	public MIBInfo[] getImportedMibs() throws IntegerException;
 
 	public MIBInfo getMIBInfoByID(ID id) throws IntegerException;
-	
+
 	/**
-	 * Get All capabilities that are in the 
+	 * @param name
 	 * @return
+	 * @throws IntegerException
 	 */
-	public List<Capability> getAllSNMPCapabilites();
-
-	public Capability setSNMP(Capability capability, SNMP snmpObject);
-
+	List<SNMP> findByNameStartsWith(String name) throws IntegerException;
+	
 }

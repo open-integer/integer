@@ -45,7 +45,7 @@ import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.service.persistance.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
@@ -90,5 +90,35 @@ public class SNMPDAO extends BaseDAO {
 			return resultList.get(0);
 		} else
 			return null;
+	}
+
+	/**
+	 * @param name
+	 */
+	public List<SNMP> findByOidSubtree(String name) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		CriteriaQuery<SNMP> query = criteriaBuilder.createQuery(SNMP.class);
+
+		Root<SNMP> from = query.from(SNMP.class);
+		query.select(from);
+		
+		ParameterExpression<String> oid = criteriaBuilder.parameter(String.class);
+		query.select(from).where(criteriaBuilder.like(oid, name + "%"));
+		
+		TypedQuery<SNMP> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, name);
+		
+		List<SNMP> resultList = typeQuery.getResultList();
+		
+		if (resultList.size() > 0) {
+			if (getLogger().isDebugEnabled())
+				getLogger().debug("Found OID " + resultList.get(0).getIdentifier() + " " + resultList.get(0).getOid() + " " + resultList.get(0).getName());
+			
+			return resultList;
+		} else
+			return null;
+		
+		
 	}
 }

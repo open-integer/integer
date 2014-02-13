@@ -190,7 +190,7 @@ public class SNMP extends ServiceElementManagementObject {
 	 */
 	@Override
 	public String toString() {
-		return "SNMP [oid=" + oid + ", displayName=" + displayName + "]";
+		return "SNMP [oid=" + oid + ", displayName=" + getName() + "]";
 	}
 
 	// TODO: Add constraints. Could be min/max or max or enum list or ..

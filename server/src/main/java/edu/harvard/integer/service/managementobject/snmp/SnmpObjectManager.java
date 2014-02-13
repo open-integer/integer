@@ -49,11 +49,12 @@ import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
-import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
 import edu.harvard.integer.service.managementobject.provider.snmp.MibParserFactory;
 import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
  *
@@ -67,7 +68,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	private MibLoaderLocalInterface mibLoader;
 
 	@Inject
-	private PersistenceManager persistenceManager;
+	private PersistenceManagerLocalInterface persistenceManager;
 	
 	@Inject
 	private Logger logger;
@@ -165,6 +166,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		return module;
 	}
 
+	@Override
 	public MIBInfo getMIBInfoByID(ID id) throws IntegerException {
 	
 		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
@@ -173,22 +175,10 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		return mibInfo;
 	}
 	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#getAllSNMPCapabilites()
-	 */
 	@Override
-	public List<Capability> getAllSNMPCapabilites() {
-		
-		return null;
+	public List<SNMP> findByNameStartsWith(String name) throws IntegerException {
+		SNMPDAO dao = persistenceManager.getSNMPDAO();
+		List<SNMP> oids = dao.findByOidSubtree(name);
+		return oids;
 	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#setSNMP(edu.harvard.integer.common.topology.Capability, edu.harvard.integer.common.topology.SNMP)
-	 */
-	@Override
-	public Capability setSNMP(Capability capability, SNMP snmpObject) {
-		
-		return capability;
-	}
-
 }

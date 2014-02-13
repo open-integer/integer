@@ -39,7 +39,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.service.persistance.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor

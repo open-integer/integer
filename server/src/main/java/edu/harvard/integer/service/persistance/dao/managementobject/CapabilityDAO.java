@@ -31,14 +31,14 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.topology;
+package edu.harvard.integer.service.persistance.dao.managementobject;
 
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.topology.Capability;
-import edu.harvard.integer.service.persistance.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor

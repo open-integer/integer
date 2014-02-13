@@ -47,6 +47,11 @@ import edu.harvard.integer.common.PhoneNumber;
 @Entity
 public class Contact extends BaseEntity {
 
+	/**
+	 * serialization ID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private ContactType contactType = null;
 	
 	@Embedded

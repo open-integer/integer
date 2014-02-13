@@ -33,6 +33,8 @@
 
 package edu.harvard.integer.service.managementobject;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -41,7 +43,9 @@ import javax.persistence.EntityExistsException;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
@@ -49,6 +53,9 @@ import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 
 /**
  * @author David Taylor
@@ -64,7 +71,7 @@ public class ManagementObjectCapabilityManager implements
 	private Logger logger;
 
 	@Inject
-	PersistenceManager dbm;
+	PersistenceManagerLocalInterface dbm;
 
 	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
@@ -137,9 +144,38 @@ public class ManagementObjectCapabilityManager implements
 	 */
 	@Override
 	public Capability addManagementObjectsToCapability(Capability capability,
-			List<ServiceElementManagementObject> managementObjects) {
+			List<ServiceElementManagementObject> managementObjects) throws IntegerException {
 
-		return null;
+		CapabilityDAO dao = dbm.getCapabilityDAO();
+		IDType idType = new IDType();
+		idType.setClassType(Capability.class);
+		capability.setIdType(idType);
+		
+		logger.info("Lookup capablity by ID: " + capability.getID());
+		
+		Capability dbCapability = dao.findById(capability.getID());
+		if (dbCapability != null) {
+			try {
+				dao.copyFields(dbCapability, capability);
+			} catch (IllegalAccessException | NoSuchMethodException
+					| InvocationTargetException e) {
+				
+				e.printStackTrace();
+				logger.error("Error coping fields to db capability!! " + e.toString());
+			}
+		} else
+			dbCapability = dao.update(capability);
+		
+		ServiceElementManagementObjectDAO serviceElementDao = dbm.getServiceElementManagementObjectDAO();
+		
+		for (ServiceElementManagementObject serviceElementManagementObject : managementObjects) {
+			serviceElementManagementObject = serviceElementDao.update(serviceElementManagementObject);
+			
+			serviceElementManagementObject.setCapabilityId(dbCapability.getID());
+		}
+		
+		
+		return dbCapability;
 	}
 
 	/*
@@ -190,8 +226,12 @@ public class ManagementObjectCapabilityManager implements
 	 * ManagementObjectCapabilityManagerLocalInterface#getCapabilities()
 	 */
 	@Override
-	public List<Capability> getCapabilities() {
-		return null;
+	public List<Capability> getCapabilities() throws IntegerException {
+		CapabilityDAO dao = dbm.getCapabilityDAO();
+		
+		Capability[] findAll = dao.findAll();
+		
+		return Arrays.asList(findAll);
 	}
 
 	/*
