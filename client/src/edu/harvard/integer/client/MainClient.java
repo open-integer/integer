@@ -1,6 +1,6 @@
 package edu.harvard.integer.client;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -35,7 +35,7 @@ import edu.harvard.integer.shared.FieldVerifier;
  */
 public class MainClient implements EntryPoint {
 	private Widget currentWidget;
-	private HuitFlexTable flexTable = new HuitFlexTable();
+	private HuitFlexTable flexTable;
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -104,22 +104,9 @@ public class MainClient implements EntryPoint {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					final int HeaderRowIndex = 0;
-					flexTable = new HuitFlexTable();
-					flexTable.insertRow(0);
-					flexTable.getRowFormatter().addStyleName(HeaderRowIndex,
-							"FlexTable-Header");
-
-					flexTable.addColumn("Name");
-					flexTable.addColumn("IP Address");
-					flexTable.addColumn("Mac Address");
-					flexTable.addColumn("Type");
-					flexTable.addColumn("State");
-					flexTable.addColumn("SW/ Version ");
-					flexTable.addColumn("H/W Version");
-
-					flexTable.getRowFormatter().addStyleName(0,
-							"flexTableHeader");
+					String[] headers = {"Name", "IP Address", "Mac Address", "Type", "State", "SW/Version", "H/W Version"};
+					flexTable = new HuitFlexTable(headers);
+					
 					int numRows = 50;
 
 					for (int row = 1; row < numRows; row++) {
@@ -156,45 +143,27 @@ public class MainClient implements EntryPoint {
 
 					@Override
 					public void onSuccess(MIBInfo[] result) {
-						if (result == null)
+						if (result == null || result.length == 0)
 							return;
 						
-						flexTable.clear();
+						flexTable.clean();
 						
-						for (int row = 1; row < result.length; row++) {
-							MIBInfo mibInfo = result[row];
-							String moduleName = mibInfo.getModule().getName();
-							Date lastUpdate = mibInfo.getModule().getLastUpdated();
-							String oid = mibInfo.getModule().getOid();
-							String description = mibInfo.getModule().getDescription();
-							String vendor = mibInfo.getVendor();
+						for (MIBInfo mibInfo : result) {
+							String moduleName = ""+mibInfo.getName();
+							String lastUpdate = ""+mibInfo.getModule().getLastUpdated();
+							String oid = ""+mibInfo.getModule().getOid();
+							String description = ""+mibInfo.getModule().getDescription();
+							String vendor = ""+mibInfo.getVendor();
 							Object[] rowData = { moduleName, lastUpdate, oid, description, vendor};
 							flexTable.addRow(rowData);
 						}
+						flexTable.applyDataRowStyles();
 					}
 					
 				});
-				
-				final int HeaderRowIndex = 0;
-				flexTable = new HuitFlexTable();
-				flexTable.insertRow(0);
-				flexTable.getRowFormatter().addStyleName(HeaderRowIndex,
-						"FlexTable-Header");
 
-				flexTable.addColumn("Module");
-				flexTable.addColumn("Last Updated");
-				flexTable.addColumn("OID");
-				flexTable.addColumn("Description");
-				flexTable.addColumn("Vendor");
-
-				flexTable.getRowFormatter().addStyleName(0, "flexTableHeader");
-
-				for (int row = 1; row < 6; row++) {
-					Object[] rowData = { "cisco-" + row, "Feb. 5, 2014", "1.2.3.4.5.6."+row, "testing " + row, "Harvard IT"};
-					flexTable.addRow(rowData);
-				}
-				
-				flexTable.applyDataRowStyles();
+				String[] hearders = {"Module", "Last Updated", "OID", "Description", "Vendor"};
+				flexTable = new HuitFlexTable(hearders);
 
 				if (currentWidget != null)
 					RootPanel.get("root").remove(currentWidget);

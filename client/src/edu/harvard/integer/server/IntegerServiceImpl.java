@@ -1,7 +1,6 @@
 package edu.harvard.integer.server;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.ejb.EJB;
 
@@ -35,7 +34,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		mibImportInfo.setMib(mib);
 		mibImportInfo.setStandardMib(standardMib);
 		
-		List<MIBImportInfo> mibList = new ArrayList<MIBImportInfo>();
+		ArrayList<MIBImportInfo> mibList = new ArrayList<MIBImportInfo>();
 		mibList.add(mibImportInfo);
 		try {
 			snmpService.importMib(mibList.toArray(new MIBImportInfo[0]));
@@ -52,15 +51,21 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws Exception {
-		MIBInfo[] mibInfos = null;
+		//ArrayList<MIBInfo> mibInfoList = new ArrayList<MIBInfo>();
+		MIBInfo[] results;
+		
 		try {
-			mibInfos = snmpService.getImportedMibs();
+			results = snmpService.getImportedMibs();
+			/*if (results != null && results.length > 0) {
+				for (MIBInfo mibInfo : results)
+					mibInfoList.add(mibInfo);
+			}*/
 		}
 		catch (IntegerException e) {
 			throw new Exception(e.getMessage());
 		}
 		
-		return mibInfos;
+		return results;
 	}
 
 

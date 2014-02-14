@@ -8,12 +8,17 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class HuitFlexTable extends FlexTable {
 	private static final int HeaderRowIndex = 0;
+	
+	private String[] headers;
 	private ScrollPanel scrollPanel;
 
-	public HuitFlexTable() {
+	public HuitFlexTable(String[] headers) {
 		setWidth("100%");
 		setCellSpacing(0);
 		addStyleName("flexTable");
+		
+		this.headers = headers;
+		addHeader();
 		
 		scrollPanel = new ScrollPanel(this);
 		scrollPanel.setSize("1000px", "500px");
@@ -33,6 +38,21 @@ public class HuitFlexTable extends FlexTable {
 				rf.addStyleName(row, "FlexTable-EvenRow");
 			}
 		}
+	}
+	
+	public void addHeader() {
+		insertRow(0);
+		getRowFormatter().addStyleName(HeaderRowIndex, "FlexTable-Header");
+
+		for (String columnHeader : headers)
+			addColumn(columnHeader);
+
+		getRowFormatter().addStyleName(0, "flexTableHeader");
+	}
+	
+	public void clean() {
+		removeAllRows();
+		addHeader();
 	}
 	
 	public void addColumn(Object columnHeading) {
