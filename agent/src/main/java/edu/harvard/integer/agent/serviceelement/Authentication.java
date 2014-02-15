@@ -33,16 +33,12 @@
 package edu.harvard.integer.agent.serviceelement;
 
 /**
- * The Access is an interface used to identify it is an access object.
+ * The Authentication an interface used for authentication to access topology node.
  *
  * @author dchan
  */
-public interface Access {
-
-	public enum AccessTypeE {
-		SNMPv2c, SNMPv1, SNMPv3
-	}
+public interface Authentication {
 	
-	public AccessTypeE getAccessType();
+	public AccessTypeEnum getAccessType();
 	
 }

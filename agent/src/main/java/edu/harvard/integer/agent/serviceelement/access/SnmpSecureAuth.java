@@ -30,82 +30,112 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.agent.serviceelement.access;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import edu.harvard.integer.agent.serviceelement.AccessTypeEnum;
 import edu.harvard.integer.agent.serviceelement.Authentication;
-import edu.harvard.integer.agent.serviceelement.ElementAccessTask;
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.access.AccessPort;
-import edu.harvard.integer.common.topology.ServiceElement;
-
 
 /**
- * The Class ElementDiscoverTask is used to discover network node ip element.
+ * The Class SnmpSecureAccess contains SNMPv3 access information.
  *
  * @author dchan
  */
-public class ElementDiscoverTask extends ElementAccessTask<DiscoveredNode> {
+public class SnmpSecureAuth implements Authentication {
 
-	/** The callback client during discovery. */
-	private ElementDiscoverCB<ServiceElement>  cb; 
+	/** The security level. */
+	private int securityLevel;
+	
+	/** The security model. */
+	private int securityModel;
+	
+	/** The security name. */
+	private String securityName;
+	
+	/** The engine id. */
+	private byte[]  engineID;
+	
 	
 	/**
-	 * Extra authentication used for discover.
-	 */
-	final private List<Authentication> otherAuths = new ArrayList<>();
-	
-	/**
-	 * Extra ports used for discover.
-	 */
-	final private List<AccessPort> otherPorts = new ArrayList<>();
-	
-	
-	/**
-	 * Instantiates a new element discover task.
+	 * Gets the security level.
 	 *
-	 * @param cb the callback client
-	 * @param elmEpt the network node service element.
+	 * @return the security level
 	 */
-	public ElementDiscoverTask( ElementDiscoverCB<ServiceElement> cb, ElementEndPoint elmEpt ) {
-		
-		super(elmEpt);
-		this.cb = cb;
+	public int getSecurityLevel() {
+		return securityLevel;
 	}
 	
 	
 	/**
-	 * Add another port for discover.
-	 * 
-	 * @param port
+	 * Sets the security level.
+	 *
+	 * @param securityLevel the new security level
 	 */
-	public void addOtherPort( AccessPort port ) {
-		otherPorts.add(port);
+	public void setSecurityLevel(int securityLevel) {
+		this.securityLevel = securityLevel;
 	}
-	
 	
 	/**
-	 * Add another auth for discover.
-	 * @param auth
+	 * Gets the security model.
+	 *
+	 * @return the security model
 	 */
-	public void addOtherAuth( Authentication auth ) {
-		otherAuths.add(auth);
+	public int getSecurityModel() {
+		return securityModel;
 	}
 	
+	/**
+	 * Sets the security model.
+	 *
+	 * @param securityModel the new security model
+	 */
+	public void setSecurityModel(int securityModel) {
+		this.securityModel = securityModel;
+	}
 	
+	/**
+	 * Gets the security name.
+	 *
+	 * @return the security name
+	 */
+	public String getSecurityName() {
+		return securityName;
+	}
+	
+	/**
+	 * Sets the security name.
+	 *
+	 * @param securityName the new security name
+	 */
+	public void setSecurityName(String securityName) {
+		this.securityName = securityName;
+	}
+	
+
+	/**
+	 * Gets the engine id.
+	 *
+	 * @return the engine id
+	 */
+	public byte[] getEngineID() {
+		return engineID;
+	}
+
+	/**
+	 * Sets the engine id.
+	 *
+	 * @param engineID the new engine id
+	 */
+	public void setEngineID(byte[] engineID) {
+		this.engineID = engineID;
+	}
+
 	/* (non-Javadoc)
-	 * @see java.util.concurrent.Callable#call()
+	 * @see edu.harvard.integer.agent.serviceelement.Access#getAccessType()
 	 */
 	@Override
-	public DiscoveredNode call() throws Exception {
-		
-		
-		// TODO Auto-generated method stub
-		return null;
+	public AccessTypeEnum getAccessType() {
+		return AccessTypeEnum.SNMPv3;
 	}
 
-	
 	
 }

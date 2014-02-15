@@ -34,7 +34,7 @@ package edu.harvard.integer.agent.serviceelement.discovery;
 
 import java.util.List;
 
-import edu.harvard.integer.agent.serviceelement.Access;
+import edu.harvard.integer.agent.serviceelement.Authentication;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -55,7 +55,7 @@ public class DiscoverNetInclude extends DiscoverNet {
 	/**
 	 * Access list used on discover.
 	 */
-	private List<Access>  accessList;
+	private List<Authentication>  accessList;
 	
 
 	/**
@@ -99,7 +99,7 @@ public class DiscoverNetInclude extends DiscoverNet {
 	 *
 	 * @return the access list
 	 */
-	public List<Access> getAccessList() {
+	public List<Authentication> getAccessList() {
 		return accessList;
 	}
 	
@@ -108,7 +108,7 @@ public class DiscoverNetInclude extends DiscoverNet {
 	 *
 	 * @param accessList the new access list
 	 */
-	public void setAccessList(List<Access> accessList) {
+	public void setAccessList(List<Authentication> accessList) {
 		this.accessList = accessList;
 	}
 }

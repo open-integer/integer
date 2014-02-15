@@ -32,16 +32,28 @@
  */
 package edu.harvard.integer.agent.serviceelement.access;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.snmp4j.AbstractTarget;
 import org.snmp4j.CommunityTarget;
+import org.snmp4j.PDU;
 import org.snmp4j.SecureTarget;
 import org.snmp4j.UserTarget;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
+import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
+import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.common.exception.CommonErrorCodes;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
+import edu.harvard.integer.common.util.DisplayableInterface;
 
 
 /**
@@ -52,18 +64,18 @@ import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
 public class SnmpCollectionUtil {
  
 	/**
-	 * Creates the SNMP target used for SNMP4j
+	 * Creates the SNMP target used for SNMP4j.
 	 *
 	 * @param endPoint the end point
 	 * @return the abstract target
 	 */
 	public static AbstractTarget createTarget( ElementEndPoint endPoint ) {
 		
-		if ( endPoint.getAccess() instanceof CommunityAccess ) {
-			return createCommunityTarget((CommunityAccess) endPoint.getAccess(), endPoint.getIpAddress(), endPoint.getAccessPort());
+		if ( endPoint.getAuth() instanceof CommunityAuth ) {
+			return createCommunityTarget((CommunityAuth) endPoint.getAuth(), endPoint.getIpAddress(), endPoint.getAccessPort());
 		}
-		else if ( endPoint.getAccess() instanceof SnmpSecureAccess ) {
-			return createSecureTarget((SnmpSecureAccess) endPoint.getAccess(), endPoint.getIpAddress(), endPoint.getAccessPort());
+		else if ( endPoint.getAuth() instanceof SnmpSecureAuth ) {
+			return createSecureTarget((SnmpSecureAuth) endPoint.getAuth(), endPoint.getIpAddress(), endPoint.getAccessPort());
 		}
 		return null;
 	}
@@ -76,7 +88,7 @@ public class SnmpCollectionUtil {
 	 * @param port the port is the managment port of the element.
 	 * @return the SNMP4j community target
 	 */
-	public static CommunityTarget createCommunityTarget( CommunityAccess access, String ip, int port ) {
+	public static CommunityTarget createCommunityTarget( CommunityAuth access, String ip, int port ) {
 		
 		CommunityTarget target = new CommunityTarget();
 		target.setCommunity(new OctetString(access.getCommunity()));
@@ -102,7 +114,7 @@ public class SnmpCollectionUtil {
 	 * @param port the managerment port of the element.
 	 * @return the secure target
 	 */
-	public static SecureTarget createSecureTarget( SnmpSecureAccess access, String ip, int port ) 
+	public static SecureTarget createSecureTarget( SnmpSecureAuth access, String ip, int port ) 
 	{
 		UserTarget ut = new UserTarget();
 		Address targetAddress = GenericAddress.parse("udp:" + ip + "/" + port);
@@ -114,4 +126,73 @@ public class SnmpCollectionUtil {
 		ut.setSecurityName(new OctetString(access.getSecurityName()));
 		return ut;
 	}
+	
+	
+    /**
+ 	 * <p>Community ping which include SNMP ping and ICMP ping.</p>
+ 	 * <p>setSnmpVersion determines and sets the highest SNMP version supported by 
+     * the SNMP end point. The SysObjectID MIB entry is used to test the different 
+     * SNMP versions.</p>
+ 	 * 
+ 	 *
+ 	 * @param snmpEndPt ElementEndPoint for reaching the device
+ 	 * @return SysOid
+ 	 * @throws IntegerException the integer exception
+ 	 */
+ 	public static String communityPing( ElementEndPoint snmpEndPt ) 
+    	                                   throws IntegerException
+    {
+    	/*
+    	 * Try the passing in SNMP version first.  If it is not matched agent version
+    	 * try another one.
+    	 */
+    	CommunityAuth auth = (CommunityAuth) snmpEndPt.getAuth();    	
+    	/*
+    	 * Try a single SNMP read to check if SNMP access is available.
+    	 * If not, or if the endPoint's SNMP version is not set, then
+    	 * call set the snmpAccessAvailable flag to false, which will cause
+    	 * the setSnmpVersion method to determine and set the SNMP version.
+    	 */
+    	/*
+    	 * Try to verify SNMP access via a single PDU read.
+    	 */
+    	PDU sysPdu = null;
+    	PDU pdu = new PDU();
+		pdu.add(new VariableBinding(new OID(SnmpService.SYSOBJECTID)));
+    	try 
+    	{
+    		sysPdu = SnmpService.instance().getPdu(snmpEndPt, pdu);
+    	}
+    	catch (IntegerException e) 
+    	{
+    		NetworkErrorCodes ecode = (NetworkErrorCodes) e.getErrorCode();
+    		
+    		if ( ecode == NetworkErrorCodes.CannotReach ) {
+    			
+    			try {
+					if ( !InetAddress.getByName(snmpEndPt.getIpAddress()).isReachable(5000) )
+					{
+						throw new IntegerException( null, NetworkErrorCodes.CannotReach, 
+									new DisplayableInterface[] { new NonLocaleErrorMessage("Can not ping on " + snmpEndPt.getIpAddress()) });
+					}
+					else {
+						auth.setVersionV2c(!auth.isVersionV2c());
+					    sysPdu = SnmpService.instance().getPdu(snmpEndPt, pdu);
+					}
+				} 
+    			catch (UnknownHostException e1  ) {
+    				throw new IntegerException(e1, CommonErrorCodes.IOError);
+				} catch (IOException e1) {
+					throw new IntegerException(e1, CommonErrorCodes.IOError);
+				}
+    		}
+    		else {
+    			throw e;
+    		}
+    		
+    	};
+    	return sysPdu.get(0).getVariable().toString();
+    	
+    }
+    
 }

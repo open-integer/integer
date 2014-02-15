@@ -30,24 +30,43 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
-
-import edu.harvard.integer.common.topology.ServiceElement;
+package edu.harvard.integer.agent.serviceelement;
 
 /**
- * The Interface NetworkDiscoveryBase outlines the discover methods. 
+ * The Enum AccessTypeEnum defines access type in Integer.
  *
  * @author dchan
  */
-public interface NetworkDiscoveryBase {
+public enum AccessTypeEnum {
 
-	/**
-	 * Discover network. It is an asynchronous call method. The callers have to provide call back
-	 * for discovery notification
-	 *  
-	 *
-	 * @param discoverConfig the discover configuration.
-	 * @param cb the call back for discovery notification.
-	 */
-	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, ElementDiscoverCB<ServiceElement> cb );
+	/** The SNM pv2c. */
+	SNMPv2c, 
+	
+	/** The SNM pv1. */
+	SNMPv1, 
+	
+	/** The SNM pv3. */
+	SNMPv3, 
+	
+	/** The puppet client. */
+	PUPPET_CLIENT,
+	
+	/** The puppet master. */
+	PUPPET_MASTER,
+	
+	/** The telnet. */
+	TELNET,
+	
+	/** The ssh. */
+	SSH,
+	
+	/** The snmptrap. */
+	SNMPTRAP,
+	
+	/** The syslog.BSD sysload  */
+	SYSLOG,  
+	
+	/** The nfs. */
+    NFS
+	
 }

@@ -32,108 +32,36 @@
  */
 package edu.harvard.integer.agent.serviceelement.access;
 
-import edu.harvard.integer.agent.serviceelement.Access;
+import edu.harvard.integer.agent.serviceelement.AccessTypeEnum;
+import edu.harvard.integer.agent.serviceelement.Authentication;
 
 /**
- * The Class SnmpSecureAccess contains SNMPv3 access information.
+ * The Class NoAuthentication is used for accessing ip node without 
+ * any authentication needed.  For example ICMP would not need any authentication.
  *
  * @author dchan
  */
-public class SnmpSecureAccess implements Access {
+public class NoAuthentication implements Authentication {
 
-	/** The security level. */
-	private int securityLevel;
-	
-	/** The security model. */
-	private int securityModel;
-	
-	/** The security name. */
-	private String securityName;
-	
-	/** The engine id. */
-	private byte[]  engineID;
-	
+	/** The access type. */
+	final private AccessTypeEnum accessType;
 	
 	/**
-	 * Gets the security level.
+	 * Instantiates a new no authentication.
 	 *
-	 * @return the security level
+	 * @param accessType the access type
 	 */
-	public int getSecurityLevel() {
-		return securityLevel;
+	public NoAuthentication( AccessTypeEnum accessType ) {
+		this.accessType = accessType;
 	}
 	
-	/**
-	 * Sets the security level.
-	 *
-	 * @param securityLevel the new security level
-	 */
-	public void setSecurityLevel(int securityLevel) {
-		this.securityLevel = securityLevel;
-	}
-	
-	/**
-	 * Gets the security model.
-	 *
-	 * @return the security model
-	 */
-	public int getSecurityModel() {
-		return securityModel;
-	}
-	
-	/**
-	 * Sets the security model.
-	 *
-	 * @param securityModel the new security model
-	 */
-	public void setSecurityModel(int securityModel) {
-		this.securityModel = securityModel;
-	}
-	
-	/**
-	 * Gets the security name.
-	 *
-	 * @return the security name
-	 */
-	public String getSecurityName() {
-		return securityName;
-	}
-	
-	/**
-	 * Sets the security name.
-	 *
-	 * @param securityName the new security name
-	 */
-	public void setSecurityName(String securityName) {
-		this.securityName = securityName;
-	}
-	
-
-	/**
-	 * Gets the engine id.
-	 *
-	 * @return the engine id
-	 */
-	public byte[] getEngineID() {
-		return engineID;
-	}
-
-	/**
-	 * Sets the engine id.
-	 *
-	 * @param engineID the new engine id
-	 */
-	public void setEngineID(byte[] engineID) {
-		this.engineID = engineID;
-	}
-
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.Access#getAccessType()
+	 * @see edu.harvard.integer.agent.serviceelement.Authentication#getAccessType()
 	 */
 	@Override
-	public AccessTypeE getAccessType() {
-		return AccessTypeE.SNMPv3;
+	public AccessTypeEnum getAccessType() {
+		
+		return accessType;
 	}
 
-	
 }

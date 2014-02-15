@@ -80,7 +80,8 @@ final public class Ipv4Range {
 	 */
 	public synchronized boolean hasNext() {	
 		
-		if ( currIp.equals(endIp) ) {
+		if ( currIp == null ) 
+		{
 			return false;
 		}
 		return true;
@@ -93,12 +94,15 @@ final public class Ipv4Range {
 	 */
 	public synchronized  String next() 
 	{
-		if ( currIp.equals(endIp) ) {
-			return null;
+		String returnIp = currIp;
+		if ( endIp.equals(currIp) ) {
+			currIp = null;
 		}
 		
-		currIp = getNextIPV4Address(currIp);
-		return currIp;
+		if ( currIp != null ) {
+			currIp = getNextIPV4Address(currIp);
+		}
+		return returnIp;
 	}
 
 	

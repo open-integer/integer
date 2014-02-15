@@ -32,10 +32,20 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import org.apache.commons.net.util.SubnetUtils;
+
+import edu.harvard.integer.agent.serviceelement.Authentication;
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.agent.serviceelement.access.AccessPort;
+import edu.harvard.integer.agent.serviceelement.access.AccessUtil;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 
 /**
@@ -44,7 +54,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author dchan
  */
-public class DiscoverSubnetTask implements Callable<Void> {
+public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	
 	/**
 	 * Specify the network of the subnet 
@@ -57,41 +67,64 @@ public class DiscoverSubnetTask implements Callable<Void> {
 	/** If it is true, done with discovery. */
 	private boolean doneDiscovery;
 	
-	/** The topo element map. */
-	private final Map<String, DiscoveredNode> elmMap = new ConcurrentHashMap<String, DiscoveredNode>();
 	
+	/**
+	 * Used to make sure every nodes added are in the subnet range.
+	 */
+	private SubnetUtils subUtils;
+
+	/**
+	 * The management ports used for discovery.  If null, default port will be used.
+	 */
+	private List<AccessPort>  accessPorts;
+	
+
+
 	/**
 	 * Discover nodes to be discovered before auto-discovered on the subnet.  
 	 * In general, they are considering the seed nodes.
 	 */
 	private List<DiscoverNode> discoverNodes;
 	
+	final private ElementDiscoverCB<ServiceElement> cb;
 	
+	
+	/**
+	 * Authentication for accessing discover nodes.
+	 */
+	private final List<Authentication>  access;
+	
+	
+
 	/**
 	 * Instantiates a new discover subnet.
 	 *
 	 * @param network the network
 	 * @param netmask the netmask
 	 */
-	public DiscoverSubnetTask( String network, String netmask, List<DiscoverNode> discoverNodes ) {
+	public DiscoverSubnetTask( String network, String netmask, 
+			                   List<Authentication> access,
+			                   ElementDiscoverCB<ServiceElement> cb ) {
 		
+		this.access = access;
 		this.network = network;
 		this.netmask = netmask;
+		this.cb = cb;
 		
-		this.discoverNodes = discoverNodes;
+		subUtils = new SubnetUtils(network, netmask);		
 	}
 	
 	/**
-	 * Instantiates a new discover subnet.
-	 *
-	 * @param network the network
-	 * @param netmask the netmask
+	 * Return true if "ipAddr" is in the range of this subnet.
+	 * 
+	 * @param ipAddr
+	 * @return
 	 */
-	public DiscoverSubnetTask( String network, String netmask ) {
+	public boolean isInRange( String ipAddr ) {
 		
-		this.network = network;
-		this.netmask = netmask;
+		return subUtils.getInfo().isInRange(ipAddr);
 	}
+	
 	
 	/**
 	 * Gets the network of the subnet
@@ -110,49 +143,6 @@ public class DiscoverSubnetTask implements Callable<Void> {
 	public String getNetmask() {
 		return netmask;
 	}
-
-	/**
-	 * Gets the elm map.
-	 *
-	 * @return the elm map
-	 */
-	public Map<String, DiscoveredNode> getElmMap() {
-		return elmMap;
-	}
-
-	/**
-	 * Adds the discovered node.
-	 *
-	 * @param node the node
-	 */
-	public void addDiscoveredNode(DiscoveredNode node) {
-		
-		elmMap.put(node.getIpAddress(), node);
-	}
-	
-	/**
-	 * Gets the discovered node.
-	 *
-	 * @param ip the ip
-	 * @return the discovered node
-	 */
-	public DiscoveredNode getDiscoveredNode( String ip ) {
-		
-		return elmMap.get(ip);
-	}
-	
-
-	/**
-	 * Removes the discovered node.
-	 *
-	 * @param ip the ip
-	 * @return the discovered node
-	 */
-	public DiscoveredNode removeDiscoveredNode( String ip ) {
-		
-		return elmMap.remove(ip);
-	}
-	
 
 	
 	/**
@@ -176,10 +166,161 @@ public class DiscoverSubnetTask implements Callable<Void> {
 	/* (non-Javadoc)
 	 * @see java.util.concurrent.Callable#call()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Void call() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public DiscoveredNet call() throws Exception {
+		
+		List<Future<DiscoveredNode>> futures = new ArrayList<>(); 
+		/**
+		 * 
+		 */
+		if ( discoverNodes != null ) {
+			
+			for ( DiscoverNode node : discoverNodes ) {
+				
+				int extraAuthIndex = 0;
+				int defaultPort = -1;
+				ElementEndPoint elmEpt = node.getElmEndPoint();
+				if ( elmEpt == null ) {	
+					
+					if ( access == null || access.size() == 0) {
+						throw new IntegerException(null, NetworkErrorCodes.NoAuthentication);
+					}
+					defaultPort = AccessUtil.getDefaultPort(access.get(0).getAccessType());
+					elmEpt = new ElementEndPoint(node.getNodeIp(), defaultPort, access.get(0));
+					extraAuthIndex++;	
+				}
+				ElementDiscoverTask task = new ElementDiscoverTask(cb, elmEpt);
+				if ( accessPorts != null ) {
+					
+					for ( AccessPort p : accessPorts ) {
+						if ( p.getPort() == defaultPort ) {
+							continue;
+						}
+						task.addOtherPort(p);
+					}
+				}
+				for ( int i=extraAuthIndex;i<access.size(); i++ ) {
+					task.addOtherAuth(access.get(i));
+				}
+				futures.add(NetworkDiscovery.getInstance().sutmitElementTask(task));
+			}
+		}
+		Ipv4Range range = new Ipv4Range(subUtils.getInfo().getLowAddress(), subUtils.getInfo().getHighAddress());
+		
+		while ( range.hasNext() ) {
+			
+			String ip = range.next();
+			boolean skip = false;
+			
+			/**
+			 * Skip any node which provided already on the seed nodes.
+			 */
+			for ( DiscoverNode node : discoverNodes ) {
+				if ( ip.equals(node.getNodeIp()) ) {
+					skip = true;
+					break;
+				}
+			}
+			if ( skip ) {
+				continue;
+			}
+			if ( access == null || access.size() == 0) {
+				throw new IntegerException(null, NetworkErrorCodes.NoAuthentication);
+			}
+			int defaultPort = AccessUtil.getDefaultPort(access.get(0).getAccessType());
+			ElementEndPoint elmEpt = new ElementEndPoint(ip, defaultPort, access.get(0));
+			
+			ElementDiscoverTask task = new ElementDiscoverTask(cb, elmEpt);
+			if ( accessPorts != null ) {
+				
+				for ( AccessPort p : accessPorts ) {
+					if ( p.getPort() == defaultPort ) {
+						continue;
+					}
+					task.addOtherPort(p);
+				}
+			}
+			for ( int i=1;i<access.size(); i++ ) {
+				task.addOtherAuth(access.get(i));
+			}
+			futures.add(NetworkDiscovery.getInstance().sutmitElementTask(task));
+			
+		}
+		
+		DiscoveredNet dNet = new DiscoveredNet(network, netmask);
+		for ( Future<DiscoveredNode> f : futures ) {
+			
+			DiscoveredNode serviceElm = f.get();
+			dNet.getElmMap().put(serviceElm.getIpAddress(), serviceElm);
+		}		
+		return dNet;
 	}
 	
+
+	/**
+	 * Add a discover node for this subnet.
+	 * 
+	 * @param node
+	 * @throws IntegerException 
+	 */
+	public void addDiscoverNode( DiscoverNode node ) throws IntegerException {
+		
+		if ( !isInRange(node.getNodeIp()) ) {
+			throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
+		}
+		if ( discoverNodes == null ) {
+			discoverNodes = new ArrayList<>();
+		}		
+		discoverNodes.add(node);
+	}
+	
+	
+	/**
+	 * Return the discover node count.
+	 * 
+	 * @return
+	 */
+	public int getDiscoverNodeCount() {
+		
+		if ( discoverNodes == null ) {
+			return 0;
+		}
+			
+		return discoverNodes.size();
+	}
+	
+	
+	/**
+	 * Return the DiscoverNode on index i.
+	 * 
+	 * @param i
+	 * @return
+	 */
+	public DiscoverNode getDiscoverNode( int i ) {
+		
+		if ( discoverNodes == null || discoverNodes.size() <= 0 ) {
+			return null;
+		}
+		return discoverNodes.get(i);
+	}
+	
+	
+	/**
+	 * 
+	 * @return the access port used for discovery.
+	 */
+	public List<AccessPort> getAccessPorts() {
+		return accessPorts;
+	}
+
+	/**
+	 * Set the access ports used for discovery.
+	 * @param accessPorts
+	 */
+	public void setAccessPorts(List<AccessPort> accessPorts) {
+		this.accessPorts = accessPorts;
+	}
+
+		
 }

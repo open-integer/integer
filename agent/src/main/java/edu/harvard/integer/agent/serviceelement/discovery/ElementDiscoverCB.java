@@ -36,13 +36,16 @@ import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Interface DiscoverCB defines callback methods during discovery.
+ * The Interface ElementDiscoverCB defines callback methods during discovery.
+ * This interface can be applied to a subnet discover or discover a list network node.
+ * 
+ * Note the discover is also including a topology discover.
  * 
  *
  * @author dchan
  * @param <T> the generic type of ServiceElement
  */
-public interface DiscoverCB <T extends ServiceElement> {
+public interface ElementDiscoverCB <T extends ServiceElement> {
 
 	/**
 	 * Discovered topo network.  This method will be called after discover each topo network.
@@ -52,11 +55,17 @@ public interface DiscoverCB <T extends ServiceElement> {
 	public void discoveredTopoNet( TopoNetwork tb );
 	
 	/**
-	 * Discoverd element. -- Be called after discovered each service element.
+	 * Discovered element. -- Be called after discovered each service element.
 	 *
 	 * @param elm the discoverd element.
 	 */
-	public void discoverdElement( T elm );
+	public void discoveredElement( T elm );
+	
+	/**
+	 * Use to notify for progress.
+	 * @param msg
+	 */
+	public void progressNotification( String msg );
 	
 	/**
 	 * Error occur -- Call when errors occurs during discovering.

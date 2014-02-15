@@ -33,8 +33,9 @@
 package edu.harvard.integer.agent.serviceelement.discovery;
 
 /**
- * @author dchan
+ * The Class TopoNetwork is used for Network Topology Discovery. 
  *
+ * @author dchan
  */
 public class TopoNetwork {
 

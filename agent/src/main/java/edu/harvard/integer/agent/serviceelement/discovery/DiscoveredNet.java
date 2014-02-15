@@ -32,22 +32,50 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
-import edu.harvard.integer.common.topology.ServiceElement;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * The Interface NetworkDiscoveryBase outlines the discover methods. 
- *
  * @author dchan
+ *
  */
-public interface NetworkDiscoveryBase {
+public class DiscoveredNet {
 
 	/**
-	 * Discover network. It is an asynchronous call method. The callers have to provide call back
-	 * for discovery notification
-	 *  
-	 *
-	 * @param discoverConfig the discover configuration.
-	 * @param cb the call back for discovery notification.
+	 * Specify the network of the subnet 
 	 */
-	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, ElementDiscoverCB<ServiceElement> cb );
+	private String network;
+	
+	/** Network Mask of the Subnet. */
+	private String netmask;
+	
+	/** The topo element map. */
+	private Map<String, DiscoveredNode> elmMap; 
+
+	public DiscoveredNet( String network, String netmask ) {
+		
+		this.network = network;
+		this.netmask = netmask;
+	}
+	
+
+	public String getNetwork() {
+		return network;
+	}
+
+	public String getNetmask() {
+		return netmask;
+	}
+
+	public Map<String, DiscoveredNode> getElmMap() {
+		return elmMap;
+	}
+	
+	
+	public void setElmMap(Map<String, DiscoveredNode> elmMap) {
+		this.elmMap = elmMap;
+	}
+
+
+	
 }

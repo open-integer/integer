@@ -32,8 +32,6 @@
  */
 package edu.harvard.integer.agent.serviceelement;
 
-import java.util.List;
-
 /**
  * The Class ElementEndPoint contains information to access an element.
  * All elements are considering an IP based element.
@@ -42,16 +40,35 @@ import java.util.List;
  */
 public class ElementEndPoint {
 	
-	/** The ip address of the element */
-	private String ipAddress;
+	/**  The ip address of the element. */
+	final private String ipAddress;
 	
-	/** The access port to access the element */
-	private int  accessPort;
+	/**  The access port to access the element. */
+	final private int  accessPort;
 	
-	/** The access objects containing information such as key, community string to
+	/** The auth objects containing information such as key, community string to
 	 *  to communicate with the element. 
 	 */
-	private List<Access>  access;
+	final private Authentication  auth; 
+	
+	
+	/**
+	 * Instantiates a new element end point. The ip, port and authentication is required.
+	 * For some of access with no require for authentication, NoAuthentication will be used.
+	 *
+	 * @param ip the ip
+	 * @param port the port
+	 * @param auth the auth 
+	 */
+	public ElementEndPoint( String ip, int port, Authentication auth ) {
+		
+		this.ipAddress = ip;
+		this.accessPort = port;
+		this.auth = auth;
+	}
+	
+	
+	
 	
 	/**
 	 * Gets the ip address.
@@ -61,15 +78,7 @@ public class ElementEndPoint {
 	public String getIpAddress() {
 		return ipAddress;
 	}
-	
-	/**
-	 * Sets the ip address.
-	 *
-	 * @param ipAddress the new ip address
-	 */
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
+
 	
 	/**
 	 * Gets the access port.
@@ -80,31 +89,16 @@ public class ElementEndPoint {
 		return accessPort;
 	}
 	
-	/**
-	 * Sets the access port.
-	 *
-	 * @param accessPort the new access port
-	 */
-	public void setAccessPort(int accessPort) {
-		this.accessPort = accessPort;
-	}
+
 	
 	/**
 	 * Gets the access.
 	 *
 	 * @return the access
 	 */
-	public List<Access> getAccess() {
-		return access;
+	public Authentication getAuth() {
+		return auth;
 	}
 	
-	/**
-	 * Sets the access.
-	 *
-	 * @param access the new access
-	 */
-	public void setAccess(List<Access> access) {
-		this.access = access;
-	}
 	
 }

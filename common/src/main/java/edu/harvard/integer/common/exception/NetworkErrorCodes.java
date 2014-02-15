@@ -56,6 +56,14 @@ public enum NetworkErrorCodes implements ErrorCodeInterface {
 	
 	/** SNMP error */
 	SNMPError("SnmpError"),
+	
+	/** Out of Subnet range error */
+	OutOfSubnetRangeError("OutOfSubnetRangeError"),
+	
+	/** No Authentication */
+	NoAuthentication("NoAuthentication"),
+	
+	
 	;
 	
 

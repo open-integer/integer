@@ -30,24 +30,35 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.agent.serviceelement.discovery.snmp;
 
-import edu.harvard.integer.common.topology.ServiceElement;
+import org.snmp4j.PDU;
 
+import edu.harvard.integer.agent.serviceelement.access.SnmpAyncListener;
+import edu.harvard.integer.common.exception.ErrorCodeInterface;
+
+// TODO: Auto-generated Javadoc
 /**
- * The Interface NetworkDiscoveryBase outlines the discover methods. 
+ * The listener interface for receiving discoverAync events.
+ * The class that is interested in processing a discoverAync
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addDiscoverAyncListener<code> method. When
+ * the discoverAync event occurs, that object's appropriate
+ * method is invoked.
  *
  * @author dchan
  */
-public interface NetworkDiscoveryBase {
+public class DiscoverAyncListener extends SnmpAyncListener {
 
-	/**
-	 * Discover network. It is an asynchronous call method. The callers have to provide call back
-	 * for discovery notification
-	 *  
-	 *
-	 * @param discoverConfig the discover configuration.
-	 * @param cb the call back for discovery notification.
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.access.SnmpAyncListener#applicationResponse(org.snmp4j.PDU, edu.harvard.integer.common.exception.ErrorCodeInterface, java.lang.String)
 	 */
-	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, ElementDiscoverCB<ServiceElement> cb );
+	@Override
+	public void applicationResponse(PDU pdu, ErrorCodeInterface error,
+			String errMsg) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

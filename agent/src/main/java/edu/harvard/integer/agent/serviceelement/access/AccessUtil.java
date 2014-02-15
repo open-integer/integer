@@ -32,87 +32,51 @@
  */
 package edu.harvard.integer.agent.serviceelement.access;
 
-import edu.harvard.integer.agent.serviceelement.Access;
+import edu.harvard.integer.agent.serviceelement.AccessTypeEnum;
 
 /**
- * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
+ * The Class AccessUtil contains static methods used to access ip nodes.
  *
  * @author dchan
  */
-public class CommunityAccess implements Access {
+public class AccessUtil {
 
-	/** The community string. */
-	private String community;
-	
-	/** Check if it is a V2c version or not.  If not, it is v1. */
-	private boolean isVersionV2c;
-	
-	/** If it is true, it is a read community string.  Else it is write community string. */
-	private boolean isRead;
-	
 	/**
-	 * Gets the community string.
+	 * Gets the default port associated with each access type.
 	 *
-	 * @return the community
+	 * @param access the access
+	 * @return the default port
 	 */
-	public String getCommunity() {
-		return community;
-	}
-	
-	/**
-	 * Sets the community string.
-	 *
-	 * @param community the new community
-	 */
-	public void setCommunity(String community) {
-		this.community = community;
-	}
-	
-	/**
-	 *
-	 * @return true, if is read community string, else it is write community string.
-	 */
-	public boolean isRead() {
+	public static int getDefaultPort( AccessTypeEnum access ) {
 		
-		return isRead;
-	}
-	
-	/**
-	 * Sets if it is a read community string.
-	 *
-	 * @param isRead -- Indication if it is a read or write community string.
-	 */
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
-	}
-	
-	/**
-	 * Checks if is version v2c.
-	 *
-	 * @return true, if is version v2c
-	 */
-	public boolean isVersionV2c() {
-		return isVersionV2c;
-	}
-	
-	/**
-	 * Sets SNMP v1 or v2c version indication.
-	 *
-	 * @param isVersionV2c 
-	 */
-	public void setVersionV2c(boolean isVersionV2c) {
-		this.isVersionV2c = isVersionV2c;
-	}
+		switch (access) {
+		    case NFS:
+			    return 2049;
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.Access#getAccessType()
-	 */
-	@Override
-	public AccessTypeE getAccessType() {
-		
-		if ( isVersionV2c ) {
-			return AccessTypeE.SNMPv2c;
+		    case PUPPET_CLIENT:
+		    	return 8139;
+		    	
+		    case SNMPv1:
+		    case SNMPv2c:
+		    case SNMPv3:
+		    	return 161;
+		    	
+		    case SNMPTRAP:
+		    	return 162;
+		    	
+		    case PUPPET_MASTER:
+		    	return 8140;
+		    
+		    case SSH:
+		    	return 22;
+		    	
+		    case SYSLOG:
+		    	return 514;
+		    		
+		    default:
+			    break;
 		}
-		return AccessTypeE.SNMPv1;
+		
+		return -1;
 	}
 }

@@ -30,65 +30,91 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent;
+package edu.harvard.integer.agent.serviceelement.access;
 
-import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
-import edu.harvard.integer.agent.serviceelement.discovery.NetworkDiscovery;
-import edu.harvard.integer.agent.serviceelement.discovery.NetworkDiscoveryBase;
-import edu.harvard.integer.agent.serviceelement.discovery.snmp.SNMPElementDiscover;
+import edu.harvard.integer.agent.serviceelement.AccessTypeEnum;
+import edu.harvard.integer.agent.serviceelement.Authentication;
 
 /**
- * A factory for creating AgentProvider objects which provide discovery, configuration,
- * event manager providers.
+ * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
  *
  * @author dchan
  */
-public class AgentProviderFactory {
+public class CommunityAuth implements Authentication {
 
+	/** The community string. */
+	private String community;
 	
+	/** Check if it is a V2c version or not.  If not, it is v1. */
+	private boolean isVersionV2c;
+	
+	/** If it is true, it is a read community string.  Else it is write community string. */
+	private boolean isRead;
 	
 	/**
-	 * Define service element access type.  A service element can be accessed in different ways for
-	 * different purposes.  For example, using SNMP to get information from an IP node SNMP agent.
-	 * Using PUPPET to talk to PUPPET client or PUPPET master etc.
+	 * Gets the community string.
 	 *
+	 * @return the community
 	 */
-	public enum ElementAccessTypeE {
-      
-		SNMP, CISCOCLI, PUPPET, AWS
+	public String getCommunity() {
+		return community;
+	}
+	
+	/**
+	 * Sets the community string.
+	 *
+	 * @param community the new community
+	 */
+	public void setCommunity(String community) {
+		this.community = community;
+	}
+	
+	/**
+	 *
+	 * @return true, if is read community string, else it is write community string.
+	 */
+	public boolean isRead() {
+		
+		return isRead;
+	}
+	
+	/**
+	 * Sets if it is a read community string.
+	 *
+	 * @param isRead -- Indication if it is a read or write community string.
+	 */
+	public void setRead(boolean isRead) {
+		this.isRead = isRead;
+	}
+	
+	/**
+	 * Checks if is version v2c.
+	 *
+	 * @return true, if is version v2c
+	 */
+	public boolean isVersionV2c() {
+		return isVersionV2c;
 	}
 	
 	
 	/**
-	 * Get element discovery based on element access type.
-	 * 
-	 * @param accessType  -- Access type which associates a discover provider.  
-	 * @return  -- An object used for element discovery,
+	 * Sets SNMP v1 or v2c version indication.
+	 *
+	 * @param isVersionV2c 
 	 */
-	public static ElementDiscoveryBase  getElementDiscovery( ElementAccessTypeE accessType ) {
-		
-		switch (accessType) {
-		 
-		   case SNMP:			  
-			   return SNMPElementDiscover.getInstance();
+	public void setVersionV2c(boolean isVersionV2c) {
+		this.isVersionV2c = isVersionV2c;
+	}
 
-		    default:
-			  break;
-		}	
-		return null;		
-	}
-	
-	
-	
-	
-	/**
-	 * 
-	 * Get network discover provider.  It is considering IP based network discover.
-	 * 
-	 * @return -- An object used for topo discovery.
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.Access#getAccessType()
 	 */
-	public static NetworkDiscoveryBase getNetworkDiscover() {
+	@Override
+	public AccessTypeEnum getAccessType() {
 		
-		return NetworkDiscovery.getInstance();
+		if ( isVersionV2c ) {
+			return AccessTypeEnum.SNMPv2c;
+		}
+		return AccessTypeEnum.SNMPv1;
 	}
 }

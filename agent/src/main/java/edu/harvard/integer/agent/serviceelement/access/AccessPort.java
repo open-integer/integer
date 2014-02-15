@@ -30,24 +30,78 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.agent.serviceelement.access;
 
-import edu.harvard.integer.common.topology.ServiceElement;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.harvard.integer.agent.serviceelement.AccessTypeEnum;
 
 /**
- * The Interface NetworkDiscoveryBase outlines the discover methods. 
+ * The Class AccessPort contains port to access ip node and the associated access type.
+ * For example port 161 can apply to SNMPv1, SNMPv2s and SNMPv3.
  *
  * @author dchan
  */
-public interface NetworkDiscoveryBase {
+public class AccessPort {
 
+	/** The port. */
+	final private int port;
+	
+	/** The access types. */
+	final private List<AccessTypeEnum>  accessTypes = new ArrayList<>();
+	
 	/**
-	 * Discover network. It is an asynchronous call method. The callers have to provide call back
-	 * for discovery notification
-	 *  
+	 * Instantiates a new access port.
 	 *
-	 * @param discoverConfig the discover configuration.
-	 * @param cb the call back for discovery notification.
+	 * @param port the port
+	 * @param access the access
 	 */
-	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, ElementDiscoverCB<ServiceElement> cb );
+	public AccessPort( int port, AccessTypeEnum access ) {
+		this.port = port;
+		accessTypes.add(access);
+	}
+	
+	
+	/**
+	 * Adds the access type for that port.
+	 *
+	 * @param access the access
+	 */
+	public void addAccess( AccessTypeEnum access ) {
+		
+		for ( AccessTypeEnum a : accessTypes ) {
+			if ( access == a ) {
+				return;
+			}
+		}
+		accessTypes.add(access);
+	}
+	
+	
+	/**
+	 * Gets the port.
+	 *
+	 * @return the port
+	 */
+	public int getPort() {		
+		return port;
+	}
+	
+	/**
+	 * Checks if is access type support.
+	 *
+	 * @param access the access
+	 * @return true, if is access support
+	 */
+	public boolean isAccessSupport( AccessTypeEnum access ) {
+		
+		for ( AccessTypeEnum a : accessTypes ) {
+			if ( access == a ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

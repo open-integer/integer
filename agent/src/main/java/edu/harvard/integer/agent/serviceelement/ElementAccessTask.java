@@ -30,24 +30,42 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.agent.serviceelement;
+
+import java.util.concurrent.Callable;
 
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Interface NetworkDiscoveryBase outlines the discover methods. 
+ * The Class ElementAccessTask is an abstract class for element discovery, element full scan and
+ * element pool scan.
  *
  * @author dchan
+ * @param <T> the generic type of ServiceElement.
  */
-public interface NetworkDiscoveryBase {
+public abstract class ElementAccessTask <T extends ServiceElement>implements Callable<T> {
+
+	/** The network node of the service element endpoint. */
+	final private ElementEndPoint elmEpt;
+	
 
 	/**
-	 * Discover network. It is an asynchronous call method. The callers have to provide call back
-	 * for discovery notification
-	 *  
+	 * Instantiates a new element access task.
 	 *
-	 * @param discoverConfig the discover configuration.
-	 * @param cb the call back for discovery notification.
+	 * @param ept the ept
 	 */
-	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, ElementDiscoverCB<ServiceElement> cb );
+	public ElementAccessTask( ElementEndPoint ept ) {
+		
+		this.elmEpt = ept;
+	}
+	
+
+	/**
+	 * Gets the elm ept.
+	 *
+	 * @return the elm ept
+	 */
+	public ElementEndPoint getElmEpt() {
+		return elmEpt;
+	}
 }

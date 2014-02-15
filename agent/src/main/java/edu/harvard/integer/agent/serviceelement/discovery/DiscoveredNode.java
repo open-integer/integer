@@ -42,6 +42,13 @@ import edu.harvard.integer.common.topology.ServiceElement;
  */
 public class DiscoveredNode extends ServiceElement {
 
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/** The ip address of the node */
 	private String ipAddress;
 

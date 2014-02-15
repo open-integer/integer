@@ -32,6 +32,7 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery.snmp;
 
+
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
 import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -42,6 +43,8 @@ import edu.harvard.integer.common.topology.ServiceElement;
  */
 final public class SNMPElementDiscover implements ElementDiscoveryBase {
 
+	
+	
 	private static SNMPElementDiscover discover = new SNMPElementDiscover();
 	
 	public static SNMPElementDiscover getInstance() {		

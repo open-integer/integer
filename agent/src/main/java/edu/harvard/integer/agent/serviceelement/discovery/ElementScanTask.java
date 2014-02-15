@@ -32,22 +32,31 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery;
 
+import edu.harvard.integer.agent.serviceelement.ElementAccessTask;
+import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Interface NetworkDiscoveryBase outlines the discover methods. 
- *
  * @author dchan
+ *
  */
-public interface NetworkDiscoveryBase {
+public class ElementScanTask extends ElementAccessTask<ServiceElement> {
 
-	/**
-	 * Discover network. It is an asynchronous call method. The callers have to provide call back
-	 * for discovery notification
-	 *  
-	 *
-	 * @param discoverConfig the discover configuration.
-	 * @param cb the call back for discovery notification.
+	private ServiceElement element;
+	
+	public ElementScanTask( ElementEndPoint ept, ServiceElement element ) {
+		
+		super(ept);
+		this.element = element;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.util.concurrent.Callable#call()
 	 */
-	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, ElementDiscoverCB<ServiceElement> cb );
+	@Override
+	public ServiceElement call() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

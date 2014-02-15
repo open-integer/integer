@@ -42,10 +42,12 @@ import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
 import org.snmp4j.TransportMapping;
 import org.snmp4j.event.ResponseEvent;
+import org.snmp4j.event.ResponseListener;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.common.exception.CommonErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
@@ -57,6 +59,13 @@ import edu.harvard.integer.common.util.DisplayableInterface;
  */
 final public class SnmpService
 {
+	/**
+	 *  Some OIDs which are used very often and every SNMP Agent should have.
+	 */
+	public static final String SYSOBJECTID = "1.3.6.1.2.1.1.2.0";
+    public static final String SYSDESCRIPTION = "1.3.6.1.2.1.1.1.0";
+    public static final String SYSNAME = "1.3.6.1.2.1.1.5.0";
+    public static final String SYSDESCR = "1.3.6.1.2.1.1.1.0";
 	
 	/** The Constant logger. */
 	static final Logger logger = LoggerFactory.getLogger(SnmpService.class);
@@ -173,15 +182,51 @@ final public class SnmpService
         }
         else if ( rpdu == null )
         {
-        	IntegerException ie = new IntegerException(null, NetworkErrorCodes.SNMPNoSuchError);
+        	IntegerException ie = new IntegerException(null, NetworkErrorCodes.CannotReach);
         	throw ie;
         }   
     	
     	return rpdu;
     }
     
+    
+    /**
+     * Send asynchronous PDU. The response is on "listener"
+     * 
+     * @param pdu
+     * @param target
+     * @param listener
+     * @throws IntegerException
+     */
+    public void sendAsyncPdu( PDU pdu, 
+    		                  AbstractTarget target,
+    		                  ResponseListener listener ) throws IntegerException {
+    	
+    	sendAsyncPdu(pdu, target, listener, null);
+    }
   
     
+    /**
+     * Send asynchronous PDU. The response is on "listener"
+     * 
+     * @param pdu
+     * @param target
+     * @param listener
+     * @param userHandler
+     * @throws IntegerException
+     */
+    public void sendAsyncPdu( PDU pdu, 
+            AbstractTarget target,
+            ResponseListener listener,
+            Object userHandler) throws IntegerException {
+    	
+          try {
+              _snmp.send(pdu, target, userHandler, listener);
+          } 
+          catch (IOException e) {
+        	  throw new IntegerException(e, CommonErrorCodes.IOError);
+          }
+     }
     
     
     
@@ -293,6 +338,7 @@ final public class SnmpService
          PDU rpdu = sendPdu(pdu, target);
          return rpdu;
     }
+    
 
 }
 
