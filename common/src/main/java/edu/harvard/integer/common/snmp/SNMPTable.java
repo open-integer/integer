@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.common.snmp;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -47,7 +48,7 @@ import javax.persistence.OrderColumn;
  * 
  */
 @Entity
-public class SNMPTable extends SNMP {
+public class SNMPTable extends SNMP implements Serializable {
 	/**
 	 * Serialization version
 	 */

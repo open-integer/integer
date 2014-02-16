@@ -36,6 +36,8 @@ package edu.harvard.integer.service.persistance.dao;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
@@ -253,6 +255,8 @@ public class BaseDAO {
 		T cleanCopy = null;
 		try {
 			cleanCopy = (T) tInstance.getClass().newInstance();
+			logger.info("Created new instance " + cleanCopy.getClass());
+			
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 			throw new IntegerException(e, DatabaseErrorCodes.UnableToCreateCleanCopy);
@@ -290,11 +294,49 @@ public class BaseDAO {
 
 				getter.setAccessible(true);
 
-				f.invoke(toInstance, getter.invoke(toInstance));
+				Object value = getter.invoke(fromInstance);
+				if (value instanceof BaseEntity) {
+					value = createCleanCopy(value);
+				} if (value instanceof List) {
+					value = copyList((List) value);
+				}
+				
+				f.invoke(toInstance, value);
 			}
 
 		}
 
 		return toInstance;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private List copyList(List list) {
+		try {
+			List copy = new ArrayList();
+			
+			if (logger.isDebugEnabled())
+				logger.debug("Copy list " + copy.getClass() + " " + Arrays.toString(list.toArray()));
+			
+			for (Object object : list) {
+				copy.add(createCleanCopy(object));
+			}
+	
+			return copy;
+			
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

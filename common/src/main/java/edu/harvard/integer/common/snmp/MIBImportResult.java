@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.common.snmp;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ import java.util.List;
  * 
  *         Hold the result of a MIB import.
  */
-public class MIBImportResult extends MIBImportInfo {
+public class MIBImportResult extends MIBImportInfo implements Serializable {
 	/**
 	 * Serialization version
 	 */

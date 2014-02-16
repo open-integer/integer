@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.common.snmp;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.topology.Credential;
@@ -43,7 +45,7 @@ import edu.harvard.integer.common.topology.Credential;
  *         an SNMP device.
  */
 @Entity
-public class SnmpV2cCredentail extends Credential {
+public class SnmpV2cCredentail extends Credential implements Serializable {
 	/**
 	 * Serialization version
 	 */

@@ -35,6 +35,7 @@ package edu.harvard.integer.common.topology;
  * @author David Taylor
  *
  */
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -61,7 +62,7 @@ import edu.harvard.integer.common.ID;
  * postfix type system for mail routing. 
  */
 @Entity
-public class ServiceElement extends BaseEntity {
+public class ServiceElement extends BaseEntity implements Serializable {
 
 	/**
 	 * Serialization ID

@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.common;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 
@@ -43,7 +45,7 @@ import javax.validation.constraints.Size;
  *         the object correctly and allows for a common way to ask for an object.
  */
 @Embeddable
-public class ID implements IDInterface {
+public class ID implements IDInterface, Serializable {
 
 	protected Long identifier = null;
 
@@ -154,6 +156,6 @@ public class ID implements IDInterface {
 
 	@Override
 	public String toString() {
-		return name + "[" + identifier + ":" + idType + "]";
+		return "[" + name + ":" + identifier + ":" + idType + "]";
 	}
 }

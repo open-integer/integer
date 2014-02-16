@@ -35,6 +35,7 @@ package edu.harvard.integer.common.topology;
  * @author David Taylor
  *
  */
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -49,7 +50,7 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 @Entity
-public abstract class ServiceElementManagementObject extends BaseEntity {
+public abstract class ServiceElementManagementObject extends BaseEntity implements Serializable {
 
 	/**
 	 * Serialition ID
@@ -95,6 +96,10 @@ public abstract class ServiceElementManagementObject extends BaseEntity {
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "capabilityType")),
 			@AttributeOverride(name = "name", column = @Column(name = "capabilityName")) })
 	private ID capabilityId = null;
+	
+	public ServiceElementManagementObject() {
+		super();
+	}
 	
 	/**
 	 * @return the serviceElementTypes

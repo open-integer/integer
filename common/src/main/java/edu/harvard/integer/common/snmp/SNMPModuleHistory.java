@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.common.snmp;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -49,7 +50,7 @@ import edu.harvard.integer.common.IDType;
  * 
  */
 @Entity
-public class SNMPModuleHistory extends BaseEntity {
+public class SNMPModuleHistory extends BaseEntity implements Serializable {
 
 	/**
 	 * Serialization version

@@ -1,5 +1,6 @@
 package edu.harvard.integer.server;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import javax.ejb.EJB;
@@ -60,6 +61,18 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 				for (MIBInfo mibInfo : results)
 					mibInfoList.add(mibInfo);
 			}*/
+			for (int i = 0; i < results.length; i++) {
+				
+				String moduleName = ""+results[i].getName();
+				String lastUpdate = ""+results[i].getModule().getLastUpdated();
+				String oid = ""+results[i].getModule().getOid();
+				String description = ""+results[i].getModule().getDescription();
+				String vendor = ""+results[i].getVendor();
+				
+				System.out.println("Module: " + moduleName + " Last Update: " + lastUpdate 
+						+ " OID: " + oid + " Desc: " + description + " Vendor: " + vendor);
+			}
+			
 		}
 		catch (IntegerException e) {
 			throw new Exception(e.getMessage());

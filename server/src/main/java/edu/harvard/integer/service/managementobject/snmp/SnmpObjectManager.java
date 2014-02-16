@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -130,39 +131,36 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		MIBInfo[] mibInfos = mibInfoDAO.findAll();
 		MIBInfo[] mibs = new MIBInfo[mibInfos.length];
 		for (int i = 0; i < mibInfos.length; i++) {
-			mibs[i] = new MIBInfo();
-			mibs[i].setIdentifier(mibInfos[i].getIdentifier());
-			mibs[i].setName(mibInfos[i].getName());
+			try {
+				mibs[i] = mibInfoDAO.createCleanCopy(mibInfos[i]);
+				mibs[i].setScalors(null);
+				mibs[i].setTables(null);
+				
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
 			
-			mibs[i].setVendor(mibInfos[i].getVendor());
+			String moduleName = ""+mibs[i].getName();
+			String lastUpdate = ""+mibs[i].getModule().getLastUpdated();
+			String oid = ""+mibs[i].getModule().getOid();
+			String description = ""+mibs[i].getModule().getDescription();
+			String vendor = ""+mibs[i].getVendor();
 			
-			mibs[i].setModule(copySNMPModule(mibInfos[i].getModule()));
+			logger.info("Module: " + moduleName + " Last Update: " + lastUpdate 
+					+ " OID: " + oid + " Desc: " + description + " Vendor: " + vendor);
 		}
 		
 		return mibs;
 	}
 	
-	/**
-	 * @param module
-	 * @return
-	 */
-	private SNMPModule copySNMPModule(SNMPModule dbModule) {
-		SNMPModule module = new SNMPModule();
-		module.setIdentifier(dbModule.getIdentifier());
-		module.setName(dbModule.getName());
-		module.setDescription(dbModule.getDescription());
-		module.setOid(dbModule.getOid());
-		
-		List<ID> history = new ArrayList<ID>();
-		for (ID historyId : dbModule.getHistory()) {
-			ID id = new ID(historyId.getIdentifier(), historyId.getName(), historyId.getIdType());
-			history.add(id);
-		}
-		module.setHistory(history);
-		
-		return module;
-	}
-
 	@Override
 	public MIBInfo getMIBInfoByID(ID id) throws IntegerException {
 	

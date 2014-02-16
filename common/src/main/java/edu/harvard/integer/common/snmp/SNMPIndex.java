@@ -33,6 +33,8 @@
 
 package edu.harvard.integer.common.snmp;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 
 /**
@@ -43,7 +45,7 @@ import javax.persistence.Entity;
  * 
  */
 @Entity
-public class SNMPIndex extends SNMP {
+public class SNMPIndex extends SNMP implements Serializable {
 	/**
 	 * Serialization version
 	 */

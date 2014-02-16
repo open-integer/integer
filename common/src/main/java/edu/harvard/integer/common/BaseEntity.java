@@ -67,16 +67,11 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 	@Size(min = 1, max = 50)
 	private String name = null;
 
-	protected BaseEntity(IDType idType) {
-		this.idType = idType;
-	}
-	
-	protected BaseEntity() {
+	public BaseEntity() {
 		this.idType = new IDType(getClass());
 		
 	}
 
-	
 	/**
 	 * @return the identifier
 	 */
