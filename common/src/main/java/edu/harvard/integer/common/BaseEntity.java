@@ -68,8 +68,7 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 	private String name = null;
 
 	public BaseEntity() {
-		this.idType = new IDType(getClass());
-		
+		this.idType = new IDType( getClass().getName());	
 	}
 
 	/**

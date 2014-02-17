@@ -149,7 +149,7 @@ public class MainClient implements EntryPoint {
 						flexTable.clean();
 						
 						for (MIBInfo mibInfo : result) {
-							String moduleName = ""+mibInfo.getName() +"Name";
+							String moduleName = ""+mibInfo.getName();
 							String lastUpdate = ""+mibInfo.getModule().getLastUpdated();
 							String oid = ""+mibInfo.getModule().getOid();
 							String description = ""+mibInfo.getModule().getDescription();

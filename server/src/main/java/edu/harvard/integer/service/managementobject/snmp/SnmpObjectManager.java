@@ -133,6 +133,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		for (int i = 0; i < mibInfos.length; i++) {
 			try {
 				mibs[i] = mibInfoDAO.createCleanCopy(mibInfos[i]);
+				//TODO: fix serialziion of OID's
 				mibs[i].setScalors(null);
 				mibs[i].setTables(null);
 				
@@ -148,14 +149,14 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 			}
 	
 			
-			String moduleName = ""+mibs[i].getName();
-			String lastUpdate = ""+mibs[i].getModule().getLastUpdated();
-			String oid = ""+mibs[i].getModule().getOid();
-			String description = ""+mibs[i].getModule().getDescription();
-			String vendor = ""+mibs[i].getVendor();
-			
-			logger.info("Module: " + moduleName + " Last Update: " + lastUpdate 
-					+ " OID: " + oid + " Desc: " + description + " Vendor: " + vendor);
+//			String moduleName = ""+mibs[i].getName();
+//			String lastUpdate = ""+mibs[i].getModule().getLastUpdated();
+//			String oid = ""+mibs[i].getModule().getOid();
+//			String description = ""+mibs[i].getModule().getDescription();
+//			String vendor = ""+mibs[i].getVendor();
+//			
+//			logger.info("Module: " + moduleName + " Last Update: " + lastUpdate 
+//					+ " OID: " + oid + " Desc: " + description + " Vendor: " + vendor);
 		}
 		
 		return mibs;

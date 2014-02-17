@@ -200,8 +200,16 @@ public class BaseDAO {
 	 */
 	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
 
+		Class clazz = null;
+		try {
+			clazz = Class.forName(id.getIdType().getClassType());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		@SuppressWarnings("unchecked")
-		T entity = (T) entityManger.find(id.getIdType().getClassType(), id.getIdentifier());
+		T entity = (T) entityManger.find(clazz, id.getIdentifier());
 		
 		return entity;
 	}
@@ -255,7 +263,9 @@ public class BaseDAO {
 		T cleanCopy = null;
 		try {
 			cleanCopy = (T) tInstance.getClass().newInstance();
-			logger.info("Created new instance " + cleanCopy.getClass());
+			
+			if (logger.isDebugEnabled())
+				logger.debug("Created new instance " + cleanCopy.getClass());
 			
 		} catch (InstantiationException e) {
 			e.printStackTrace();

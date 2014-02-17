@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,40 +30,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+
 package edu.harvard.integer.common;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
 /**
  * @author David Taylor
  * 
- * This class encapsulates the type of object. 
+ *         Fake class used to force GWT to add classes to the whitelist. The
+ *         white list is used to say what classes can be serialized and sent to
+ *         the client. The inherited abstract classes do not get added to the
+ *         whitelist.
  */
-
-@Embeddable
-public class IDType implements Serializable {
+public class GWTWhitelist implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String classType = null;
+	private BaseEntity baseEntity = null;
 
-	public IDType() {
-		
-	}
-	
-	public IDType(String clazz) {
-		this.classType = clazz;
-	}
-	
-	public String getClassType() {
-		return classType;
+	/**
+	 * @return the baseEntity
+	 */
+	public BaseEntity getBaseEntity() {
+		return baseEntity;
 	}
 
-	public void setClassType(String classType) {
-		this.classType = classType;
+	/**
+	 * @param baseEntity
+	 *            the baseEntity to set
+	 */
+	public void setBaseEntity(BaseEntity baseEntity) {
+		this.baseEntity = baseEntity;
 	}
+
 }

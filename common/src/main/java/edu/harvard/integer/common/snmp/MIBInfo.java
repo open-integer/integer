@@ -59,7 +59,7 @@ public class MIBInfo extends BaseEntity implements Serializable {
 	 * Serialization version
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	@OneToOne
 	private SNMPModule module = null;
 

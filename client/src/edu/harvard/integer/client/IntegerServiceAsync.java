@@ -5,6 +5,8 @@ package edu.harvard.integer.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.snmp.MIBInfo;
 
 /**
@@ -30,4 +32,13 @@ public interface IntegerServiceAsync {
 	 */
 	void getImportedMibs(AsyncCallback<MIBInfo[]> callback);
 
+	/**
+	 * Fake class used to force GWT to add classes to the whitelist. The white list is used to 
+	 * say what classes can be serialized and sent to the client. The inherited abstract classes
+	 * do not get added to the whitelist. 
+	 * 
+	 * @param GWTWhitelist
+	 * @return GWTThitelist
+	 */
+	void getGWTWhitelist(GWTWhitelist be, AsyncCallback<GWTWhitelist> calllback);
 }

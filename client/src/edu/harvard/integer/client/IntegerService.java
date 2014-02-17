@@ -3,6 +3,8 @@ package edu.harvard.integer.client;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 
@@ -30,4 +32,16 @@ public interface IntegerService extends RemoteService {
 	 * @throws IntegerException 
 	 */
 	MIBInfo[] getImportedMibs() throws Exception;
+	
+	
+	/**
+	 * Fake class used to force GWT to add classes to the whitelist. The white list is used to 
+	 * say what classes can be serialized and sent to the client. The inherited abstract classes
+	 * do not get added to the whitelist. 
+	 * 
+	 * @param GWTWhitelist
+	 * @return GWTThitelist
+	 */
+	GWTWhitelist getGWTWhitelist(GWTWhitelist be);
 }
+

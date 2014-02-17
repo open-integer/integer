@@ -43,7 +43,6 @@ import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 
 /**
  * @author David Taylor
