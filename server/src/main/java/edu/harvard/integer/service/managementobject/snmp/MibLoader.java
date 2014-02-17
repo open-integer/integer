@@ -176,16 +176,9 @@ public class MibLoader implements MibLoaderLocalInterface {
 			if (dbTable != null) {
 				logger.info("Found table " + 
 							snmpOid.getName() + "::" + snmpOid.getOid() + " In the database. Will update it.");
+					
+				snmpDao.copyFields(dbTable, snmpOid);
 				
-				try {
-					snmpDao.copyFields(dbTable, snmpOid);
-				} catch (IllegalAccessException | NoSuchMethodException
-						| InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					logger.error("Unable to merge in change from table " + 
-							snmpOid.getName() + "::" + snmpOid.getOid() + " to db table");
-				}
 			} else
 				dbTable = snmpOid;
 			

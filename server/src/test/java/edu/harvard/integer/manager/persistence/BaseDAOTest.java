@@ -116,18 +116,6 @@ public class BaseDAOTest {
 					+ " OID: " + oid + " Desc: " + copy.getModule().getDescription() + " Vendor: " + copy.getVendor()
 					+ " OID's " + Arrays.toString(copy.getScalors().toArray()));
 			
-		} catch (IllegalAccessException e) {
-			
-			e.printStackTrace();
-			fail("Error in createCleanCopy! " + e.getMessage());
-		} catch (NoSuchMethodException e) {
-			
-			e.printStackTrace();
-			fail("Error in createCleanCopy! " + e.getMessage());
-		} catch (InvocationTargetException e) {
-			
-			e.printStackTrace();
-			fail("Error in createCleanCopy! " + e.getMessage());
 		} catch (IntegerException e) {
 			
 			e.printStackTrace();

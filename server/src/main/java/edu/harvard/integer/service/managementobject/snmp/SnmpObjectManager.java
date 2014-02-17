@@ -131,32 +131,9 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		MIBInfo[] mibInfos = mibInfoDAO.findAll();
 		MIBInfo[] mibs = new MIBInfo[mibInfos.length];
 		for (int i = 0; i < mibInfos.length; i++) {
-			try {
-				mibs[i] = mibInfoDAO.createCleanCopy(mibInfos[i]);
-				//TODO: fix serialziion of OID's
-				mibs[i].setScalors(null);
-				mibs[i].setTables(null);
-				
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	
 			
-//			String moduleName = ""+mibs[i].getName();
-//			String lastUpdate = ""+mibs[i].getModule().getLastUpdated();
-//			String oid = ""+mibs[i].getModule().getOid();
-//			String description = ""+mibs[i].getModule().getDescription();
-//			String vendor = ""+mibs[i].getVendor();
-//			
-//			logger.info("Module: " + moduleName + " Last Update: " + lastUpdate 
-//					+ " OID: " + oid + " Desc: " + description + " Vendor: " + vendor);
+			mibs[i] = mibInfoDAO.createCleanCopy(mibInfos[i]);
+				
 		}
 		
 		return mibs;

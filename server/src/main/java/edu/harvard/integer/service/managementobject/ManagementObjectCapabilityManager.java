@@ -152,8 +152,7 @@ public class ManagementObjectCapabilityManager implements
 		if (dbCapability != null) {
 			try {
 				dao.copyFields(dbCapability, capability);
-			} catch (IllegalAccessException | NoSuchMethodException
-					| InvocationTargetException e) {
+			} catch (IntegerException e) {
 				
 				e.printStackTrace();
 				logger.error("Error coping fields to db capability!! " + e.toString());
@@ -171,6 +170,17 @@ public class ManagementObjectCapabilityManager implements
 		
 		
 		return dbCapability;
+	}
+
+	/**
+	 * @param ID. The ID of capability that the management objects are for.
+	 */
+	public List<ServiceElementManagementObject> getManagemntObjectsForCapability(ID id) throws IntegerException {
+		
+		ServiceElementManagementObjectDAO dao = dbm.getServiceElementManagementObjectDAO();
+		List<ServiceElementManagementObject> managementObjects = dao.findByCapabilityId(id);
+		
+		return managementObjects;
 	}
 
 	/*
@@ -294,4 +304,6 @@ public class ManagementObjectCapabilityManager implements
 
 		return null;
 	}
+	
+	
 }

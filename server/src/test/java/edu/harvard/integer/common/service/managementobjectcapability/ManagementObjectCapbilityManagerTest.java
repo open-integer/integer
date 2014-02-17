@@ -110,26 +110,7 @@ public class ManagementObjectCapbilityManagerTest {
 	@Test
 	public void getAllCapabilites() {
 		
-		List<Capability> capabilities = null;
-		try {
-			capabilities = managementObjectManager.getCapabilities();
-		} catch (IntegerException e) {
-			
-			e.printStackTrace();
-			
-			fail("Error loading Capabilites! " + e.toString());
-		}
-		
-		if (capabilities == null)
-			logger.error("NO Capabilities found in the database");
-		else
-			logger.info("Found " + capabilities.size() + " Capabilities in the database");
-		
-		assert(capabilities != null);
-		
-		for (Capability capability : capabilities) {
-			logger.info("Found capablity " + capability.getIdentifier() + " " + capability.getName());
-		}
+		Capability[] capabilities = findAllCapabilities();
 	}
 	
 	@Test
@@ -170,5 +151,53 @@ public class ManagementObjectCapbilityManagerTest {
 			
 			fail("Failed to add oid to capability!" + e.toString());
 		}
+	}
+	
+	@Test
+	public void loadManagementObjectsForCapability() {
+		Capability[] capabilites = findAllCapabilities();
+		
+		for (Capability capability : capabilites) {
+			try {
+				List<ServiceElementManagementObject> managementObjects = managementObjectManager.getManagemntObjectsForCapability(capability.getID());
+				
+				logger.info("Found " + managementObjects.size() + " ManagementObjects for capabiliyt " + capability.getID());
+				for (ServiceElementManagementObject managementObject : managementObjects) {
+					logger.info("Found " + managementObject.getID());
+				}
+			} catch (IntegerException e) {
+				
+				e.printStackTrace();
+				fail("Error getging ManagementObjects for capablity: " + e.toString());
+			}
+			
+			logger.info("Capability " + capability.getID() + " has " );
+		}
+	}
+	
+	private Capability[] findAllCapabilities() {
+		
+		List<Capability> capabilities = null;
+		try {
+			capabilities = managementObjectManager.getCapabilities();
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			
+			fail("Error loading Capabilites! " + e.toString());
+		}
+		
+		if (capabilities == null)
+			logger.error("NO Capabilities found in the database");
+		else
+			logger.info("Found " + capabilities.size() + " Capabilities in the database");
+		
+		assert(capabilities != null);
+		
+		for (Capability capability : capabilities) {
+			logger.info("Found capablity " + capability.getIdentifier() + " " + capability.getName());
+		}
+		
+		return capabilities.toArray(new Capability[0]);
 	}
 }

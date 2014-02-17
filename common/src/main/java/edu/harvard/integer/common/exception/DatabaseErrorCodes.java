@@ -39,6 +39,11 @@ package edu.harvard.integer.common.exception;
  */
 public enum DatabaseErrorCodes implements ErrorCodeInterface {
 	EntityAlreadyExists("EntityAlreadyExists"),
+	UnableToCreateCleanCopyIllegalAccess("Unable to create clean copy! Illeagle Access"),
+	UnableToCreateCleanCopyNoSuchMethod("Unable to create clean copy! No such method"),
+	UnableToCreateCleanCopyInvocationTarge("Unable to create clean copy! Invocation Targe Exception"),
+	UnableToCreateCleanCopyIllegalArgument("Unable to create clean copy! Illegal Argument exception"),
+	UnableToCreateCleanCopySecurityException("Unable to create clean copy! Security Exception"),
 	UnableToCreateCleanCopy("Unable to create clean copy");
 
 	private String errorCode = null;

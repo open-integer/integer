@@ -151,4 +151,9 @@ public interface ManagementObjectCapabilityManagerLocalInterface {
 	 */
 	public abstract List<ServiceElementManagementObject> getUnassignedServiceElementManagementObjects();
 
+	/**
+	 * @param ID. The ID of capability that the management objects are for.
+	 */
+	public List<ServiceElementManagementObject> getManagemntObjectsForCapability(ID id) throws IntegerException;
+
 }

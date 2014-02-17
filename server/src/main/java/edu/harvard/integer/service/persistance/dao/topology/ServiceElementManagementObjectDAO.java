@@ -33,10 +33,18 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -54,6 +62,28 @@ public class ServiceElementManagementObjectDAO extends BaseDAO {
 	public ServiceElementManagementObjectDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, ServiceElementManagementObject.class);
 	
+	}
+
+	/**
+	 * @param id
+	 */
+	public List<ServiceElementManagementObject> findByCapabilityId(ID id) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		CriteriaQuery<ServiceElementManagementObject> query = criteriaBuilder.createQuery(ServiceElementManagementObject.class);
+
+		Root<ServiceElementManagementObject> from = query.from(ServiceElementManagementObject.class);
+		
+		ParameterExpression<ID> paramExpression = criteriaBuilder.parameter(ID.class);
+		query.select(from).where(criteriaBuilder.equal(from.get("capabilityId"), paramExpression));
+		
+		TypedQuery<ServiceElementManagementObject> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(paramExpression, id);
+		
+		List<ServiceElementManagementObject> resultList = typeQuery.getResultList();
+		
+		return resultList;
+				
 	}
 
 }
