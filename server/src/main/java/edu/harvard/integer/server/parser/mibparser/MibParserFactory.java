@@ -30,68 +30,44 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.managementobject.provider;
+package edu.harvard.integer.server.parser.mibparser;
 
-import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.server.parser.mibparser.moduleloader.MibbleParser;
 
+/**
+ * A Factory class provides MIB parser provider.
+ * Currently only provider based on Mibble is provided.
+ * 
+ * @author dchan
+ *
+ */
+public class MibParserFactory {
 
-public class ModuleLoadingLog {
-
-	public enum ErrorTypeE {
+	/**
+	 * The Enum ParserProvider specify avaiable MIB parser provider.
+	 */
+	public enum ParserProvider {
+    	MIBBLE   	
+	}
+	
+	/**
+	 * Gets the parser source.
+	 *
+	 * @param provider -- Specify which provider
+	 * @return the parser source
+	 * @throws IntegerException  An Integer exception during parsing.
+	 */
+	public static MibParser getParserSource( ParserProvider provider ) throws IntegerException {
 		
-		MissingModuleError, SyntaxError, IOError, OtherError
-	}
-	
-	private ErrorTypeE err;
-	private String errDescription;
-	private MIBImportInfo targetMib;
-	private String internalName;
-	
-	public ModuleLoadingLog( MIBImportInfo mibInfo ) {
-		
-		this.targetMib = mibInfo;
-	}
-	
-	
-	public ErrorTypeE getErr() {
-		return err;
-	}
+		switch (provider) {
+		   
+		   case MIBBLE:			
+			   return MibbleParser.getInstance();
 
-	public void setErr(ErrorTypeE err) {
-		this.err = err;
+		   default:
+			  break;
+		}
+		return null;
 	}
-
-	public String getErrDescription() {
-		return errDescription;
-	}
-
-	public void setError( ErrorTypeE err, String description ) {
-		
-		this.err = err;
-		this.errDescription = description;
-	}
-	
-	
-	
-	public void setErrDescription(String errDescription) {
-		this.errDescription = errDescription;
-	}
-
-	public MIBImportInfo getTargetMib() {
-		return targetMib;
-	}
-
-
-	public String getInternalName() {
-		return internalName;
-	}
-
-
-	public void setInternalName(String internalName) {
-		this.internalName = internalName;
-	}
-
-	
-	
-	
 }

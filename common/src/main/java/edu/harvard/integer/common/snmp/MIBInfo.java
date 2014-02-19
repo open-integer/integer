@@ -39,11 +39,12 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.IDType;
 
 /**
  * @author David Taylor
@@ -63,12 +64,12 @@ public class MIBInfo extends BaseEntity implements Serializable {
 	@OneToOne
 	private SNMPModule module = null;
 
-	@ElementCollection
+	@ManyToMany
 	@OrderColumn(name = "tableIndexIdx")
 	@CollectionTable(name = "MIBInfo_SNMPTable")
 	private List<SNMPTable> tables = null;
 
-	@ElementCollection
+	@ManyToMany
 	@OrderColumn(name = "scalorIndexIdx")
 	@CollectionTable(name = "MIBInfo_SNMP")
 	private List<SNMP> scalors = null;

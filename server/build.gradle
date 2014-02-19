@@ -24,8 +24,11 @@ repositories {
 
 dependencies {
 	compile project(':common')
-	compile project(':serviceprovider')
 
+	
+	compile files("libs/grammatica-1.5.jar")
+	compile files("libs/mibble-parser-2.9.3.jar")
+	
 	compile 'javax.validation:validation-api:1.1.0.Final'
 	compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
 	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.2.0.Final'
@@ -57,14 +60,6 @@ dependencies {
  	
 }
 
-test {
-	println "home dir " + System.getProperty("user.home")
-}
-
-task loadTestData {
-	println "Loading test data!"
-	
-}
 
 uploadArchives {
 	repositories {

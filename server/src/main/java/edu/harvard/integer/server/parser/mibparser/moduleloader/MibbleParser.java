@@ -29,24 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. *      
  */      
-package edu.harvard.integer.service.managementobject.provider.snmp.moduleLoader;
-
-import net.percederberg.mibble.Mib;
-import net.percederberg.mibble.MibLoader;
-import net.percederberg.mibble.MibLoaderException;
-import net.percederberg.mibble.MibLoaderLog;
-import net.percederberg.mibble.MibLoaderLog.LogEntry;
-import net.percederberg.mibble.MibSymbol;
-import net.percederberg.mibble.MibType;
-import net.percederberg.mibble.MibTypeSymbol;
-import net.percederberg.mibble.MibValue;
-import net.percederberg.mibble.MibValueSymbol;
-import net.percederberg.mibble.snmp.SnmpAccess;
-import net.percederberg.mibble.snmp.SnmpIndex;
-import net.percederberg.mibble.snmp.SnmpModuleIdentity;
-import net.percederberg.mibble.snmp.SnmpObjectType;
-import net.percederberg.mibble.snmp.SnmpTextualConvention;
-import net.percederberg.mibble.value.ObjectIdentifierValue;
+package edu.harvard.integer.server.parser.mibparser.moduleloader;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -65,6 +48,25 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.percederberg.mibble.Mib;
+import net.percederberg.mibble.MibLoader;
+import net.percederberg.mibble.MibLoaderException;
+import net.percederberg.mibble.MibLoaderLog;
+import net.percederberg.mibble.MibLoaderLog.LogEntry;
+import net.percederberg.mibble.MibSymbol;
+import net.percederberg.mibble.MibType;
+import net.percederberg.mibble.MibTypeSymbol;
+import net.percederberg.mibble.MibValue;
+import net.percederberg.mibble.MibValueSymbol;
+import net.percederberg.mibble.snmp.SnmpAccess;
+import net.percederberg.mibble.snmp.SnmpIndex;
+import net.percederberg.mibble.snmp.SnmpModuleIdentity;
+import net.percederberg.mibble.snmp.SnmpObjectType;
+import net.percederberg.mibble.snmp.SnmpTextualConvention;
+import net.percederberg.mibble.value.ObjectIdentifierValue;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -77,11 +79,8 @@ import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
 import edu.harvard.integer.common.util.DisplayableInterface;
-import edu.harvard.integer.service.managementobject.provider.ServiceProviderMain;
-import edu.harvard.integer.service.managementobject.provider.ModuleLoadingLog;
-import edu.harvard.integer.service.managementobject.provider.SNMPModuleCache;
-import edu.harvard.integer.service.managementobject.provider.ModuleLoadingLog.ErrorTypeE;
-import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
+import edu.harvard.integer.server.parser.mibparser.MibParser;
+import edu.harvard.integer.server.parser.mibparser.SNMPModuleCache;
 
 
 /**
@@ -91,6 +90,14 @@ import edu.harvard.integer.service.managementobject.provider.snmp.MibParser;
  * @author dchan
  */
 public class MibbleParser implements MibParser{
+	/** The repository local directory location. */
+	public static String MIBFILELOCATON = "mibFileLocation";
+
+	/**  Specify common MIB directory. */
+	public static String IETFMIB = "ietf";
+
+	/**  Specify vendors MIB directory. */
+	public static String VENDORMIB = "vendors";
 	
 	/** The Mib resource dir. */
 	public static String MibResourceDir = "mibs/ietf/";
@@ -107,6 +114,8 @@ public class MibbleParser implements MibParser{
 	
 	/** The mib loader. */
 	private MibLoader mibLoader = new MibLoader();
+	
+	private Logger logger = LoggerFactory.getLogger(MibbleParser.class);
 	
 	/**
 	 * Instantiates a new mibble parser.
@@ -159,19 +168,19 @@ public class MibbleParser implements MibParser{
 			
             for ( File f : files ) {
 		    	
-				if ( f.getName().equals(ServiceProviderMain.IETFMIB) ) {
+				if ( f.getName().equals(IETFMIB) ) {
 					mibLoader.addDir(f);
 				}	    	
 		    }
 			for ( File f : files ) {
 		    	
-				if ( f.getName().equals(ServiceProviderMain.IETFMIB)) {
+				if ( f.getName().equals(IETFMIB)) {
 					loadFile(f);
 				}	    	
 		    }
 	        for ( File f : files ) {
 		    	
-				if ( f.getName().equals(ServiceProviderMain.VENDORMIB)) {
+				if ( f.getName().equals(VENDORMIB)) {
 					
 					mibLoader.addDir(f);
 					loadFile(f);
@@ -796,10 +805,10 @@ public class MibbleParser implements MibParser{
         }
         for ( File f : files ) {
 	    	
-			if ( f.getName().equals(ServiceProviderMain.IETFMIB) && isCommon )  {
+			if ( f.getName().equals(IETFMIB) && isCommon )  {
 				mibLoader.addDir(f);
 			}	
-			else if ( f.getName().equals(ServiceProviderMain.VENDORMIB ) && !isCommon ) {
+			else if ( f.getName().equals(VENDORMIB ) && !isCommon ) {
 				mibLoader.addDir(f);
 			}		                
 	    }
@@ -850,8 +859,7 @@ public class MibbleParser implements MibParser{
     			}
     			catch (IOException e) {
     				
-    				ModuleLoadingLog log = new ModuleLoadingLog(importMib.importInfo);
-    				log.setError(ErrorTypeE.IOError, "IO error on module " + importMib.fileName);
+    				logger.error("IO error on module " + importMib.fileName);
     			} 
      	    	catch (MibLoaderException e) {
      	    		
@@ -910,10 +918,10 @@ public class MibbleParser implements MibParser{
 		
         for ( File f : files ) {
 	    	
-			if ( f.getName().equals(ServiceProviderMain.IETFMIB) && isCommon ) {
+			if ( f.getName().equals(IETFMIB) && isCommon ) {
 				mibs = f.listFiles();
 			}
-			else if ( f.getName().equals(ServiceProviderMain.VENDORMIB) && !isCommon ) {
+			else if ( f.getName().equals(VENDORMIB) && !isCommon ) {
 			
 				mibs = f.listFiles();
 			}			
@@ -967,11 +975,11 @@ public class MibbleParser implements MibParser{
 	public String getFullName(String fileName, boolean isCommon ) {
 		
 		if ( isCommon ) {
-			return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.IETFMIB + 
+			return mibLocation.getAbsolutePath() + File.separator + IETFMIB + 
                        File.separator + fileName;
 	    }
 	    else {
-		   return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.VENDORMIB + 
+		   return mibLocation.getAbsolutePath() + File.separator + VENDORMIB + 
                        File.separator + fileName;
 	    }
 	}
@@ -987,11 +995,11 @@ public class MibbleParser implements MibParser{
     public String getFullTmpName(String fileName, boolean isCommon ) {
 		
 		if ( isCommon ) {
-			return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.IETFMIB + 
+			return mibLocation.getAbsolutePath() + File.separator + IETFMIB + 
                        File.separator + TmpFilePrefix + File.separator +  fileName;
 	    }
 	    else {
-		   return mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.VENDORMIB + 
+		   return mibLocation.getAbsolutePath() + File.separator + VENDORMIB + 
                        File.separator + TmpFilePrefix + File.separator + fileName;
 	    }
 	}
@@ -1005,7 +1013,7 @@ public class MibbleParser implements MibParser{
 	 */
 	private void createTmpDirs() throws IntegerException {
 		
-		File dir = new File( mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.IETFMIB + 
+		File dir = new File( mibLocation.getAbsolutePath() + File.separator + IETFMIB + 
                                                        File.separator + TmpFilePrefix );
 		if ( dir.exists() ) {			
 			for ( File f : dir.listFiles() ) {
@@ -1018,7 +1026,7 @@ public class MibbleParser implements MibParser{
 			throw new IntegerException(null, CommonErrorCodes.IOError,
 					new DisplayableInterface[] { new NonLocaleErrorMessage("Can not create a tmp directory for processing")}); 
 		}
-		dir = new File( mibLocation.getAbsolutePath() + File.separator + ServiceProviderMain.VENDORMIB + 
+		dir = new File( mibLocation.getAbsolutePath() + File.separator + VENDORMIB + 
                 File.separator + TmpFilePrefix );
         if ( dir.exists() ) {			
              for ( File f : dir.listFiles() ) {

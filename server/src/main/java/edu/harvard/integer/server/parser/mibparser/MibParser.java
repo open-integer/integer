@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.managementobject.provider.snmp;
+package edu.harvard.integer.server.parser.mibparser;
 
 import java.io.File;
 import java.util.HashMap;

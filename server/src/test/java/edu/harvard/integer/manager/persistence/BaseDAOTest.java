@@ -35,7 +35,6 @@ package edu.harvard.integer.manager.persistence;
 
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -45,12 +44,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
-import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 
 /**
