@@ -3,13 +3,11 @@
  */
 package edu.harvard.integer.client;
 
-import java.util.List;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.topology.Capability;
 
 /**
  * The async counterpart of <code>IntegerService</code>.
@@ -43,8 +41,4 @@ public interface IntegerServiceAsync {
 	 * @return GWTThitelist
 	 */
 	void getGWTWhitelist(GWTWhitelist be, AsyncCallback<GWTWhitelist> calllback);
-
-	void addCapability(Capability capability, AsyncCallback<Void> callback);
-
-	void getAllCapabilities(AsyncCallback<List<Capability>> callback);
 }
