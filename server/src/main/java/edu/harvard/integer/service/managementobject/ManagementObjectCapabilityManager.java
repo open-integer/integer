@@ -33,7 +33,6 @@
 
 package edu.harvard.integer.service.managementobject;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,7 +43,6 @@ import javax.persistence.EntityExistsException;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;

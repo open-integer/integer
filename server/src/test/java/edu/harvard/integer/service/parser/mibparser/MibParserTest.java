@@ -154,7 +154,7 @@ public class MibParserTest {
 							+ Arrays.toString(mibImportResult.getErrors()));
 
 					if (mibImportResult.getHistory() == null || mibImportResult.getHistory().size() == 0)
-						System.err.println("No history!");
+						System.out.println("No history!");
 					else {
 						System.out.println("Number of history records: " + mibImportResult.getHistory().size());
 						
