@@ -124,3 +124,10 @@ h1 {
 	color: #454545;
 }
 
+.gwt-TextBox {
+	width: 100%;
+}
+
+.gwt-ListBox {
+	width: 100%;
+}
