@@ -65,6 +65,7 @@ import net.percederberg.mibble.snmp.SnmpAccess;
 import net.percederberg.mibble.snmp.SnmpIndex;
 import net.percederberg.mibble.snmp.SnmpModuleIdentity;
 import net.percederberg.mibble.snmp.SnmpObjectType;
+import net.percederberg.mibble.snmp.SnmpRevision;
 import net.percederberg.mibble.snmp.SnmpTextualConvention;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
@@ -324,50 +325,34 @@ public class MibbleParser implements MibParser{
     			else if ( vs.getType() instanceof SnmpModuleIdentity ) {
     				
     				SnmpModuleIdentity snmpModule = (SnmpModuleIdentity) vs.getType();
+    				moduleCache.getModule().setDescription(snmpModule.getDescription());
+    				
+    				String ds = snmpModule.getLastUpdated();
+    				if ( ds != null ) {
+    					Calendar c = decodeSnmpDate(ds);  
+    					moduleCache.getModule().setLastUpdated(c.getTime());
+    				}
     				List<SNMPModuleHistory> moduleHistories = moduleCache.getHistory();
     				if ( moduleHistories == null ) {
+    					
     					moduleHistories = new ArrayList<>();
     					moduleCache.setHistory(moduleHistories);
     				}
-    				SNMPModuleHistory moduleHistory = new SNMPModuleHistory();
-    				moduleHistories.add(moduleHistory);
-    				
-    				moduleHistory.setDescription(snmpModule.getDescription());
-    				String ds = snmpModule.getLastUpdated();
-    				if ( ds != null ) {
-    					
-    					String y = null;
-    					String m = null;
-    					String d = null;
-    					String h = null;
-    					String mm = null;
-    					
-    					int i = 2;
-    					if ( ds.length() == 11 ) {
-    						y = "19" + ds.substring(0, i);
-    					}
-    					else {
-    						i = 4;
-    						y = ds.substring(0, 4);
-    					}    					
-    					m = ds.substring(i, i+2);
-    					i = i + 2;
-    					d = ds.substring(i, i+2);
-    					i = i + 2;
-    					h = ds.substring(i, i+2);
-    					i = i + 2;
-    					mm = ds.substring(i, i+2);
-    					
-    					Calendar c = Calendar.getInstance();
-    					c.set(Integer.parseInt(y), Integer.parseInt(m), Integer.parseInt(d), 
-    							Integer.parseInt(h), Integer.parseInt(mm));
-    					
-    					moduleHistory.setDate(c.getTime());
-    					
-    					System.out.println(moduleHistory.getDate().toString());
-    				}
-    				moduleHistory.setName(snmpModule.getName());
-    				
+    				if ( snmpModule.getRevisions() != null ) {
+    					for ( int i=0; i<snmpModule.getRevisions().size(); i++ ) {
+        					SnmpRevision sr = (SnmpRevision) snmpModule.getRevisions().get(i);
+        					SNMPModuleHistory moduleHistory = new SNMPModuleHistory();
+            				moduleHistories.add(moduleHistory);
+
+            				moduleHistory.setDescription(sr.getDescription());
+            				try {
+                				ds = sr.getValue().toString();
+                				Calendar c = decodeSnmpDate(ds);
+                				moduleHistory.setDate(c.getTime());
+            				}
+            				catch ( Exception e ) {}
+        				}
+    				}    				
     			}
     		}
     	}
@@ -382,6 +367,44 @@ public class MibbleParser implements MibParser{
 	        return true;	
     	}
 		return false;
+	}
+	
+	
+	/**
+	 * This method is used to decode SNMP date into Calendar.
+	 * 
+	 * @param ds
+	 * @return
+	 */
+	private Calendar decodeSnmpDate( String ds ) {
+		
+		String y = null;
+		String m = null;
+		String d = null;
+		String h = null;
+		String mm = null;
+		
+		int i = 2;
+		if ( ds.length() == 11 ) {
+			y = "19" + ds.substring(0, i);
+		}
+		else {
+			i = 4;
+			y = ds.substring(0, 4);
+		}    					
+		m = ds.substring(i, i+2);
+		i = i + 2;
+		d = ds.substring(i, i+2);
+		i = i + 2;
+		h = ds.substring(i, i+2);
+		i = i + 2;
+		mm = ds.substring(i, i+2);
+		
+		Calendar c = Calendar.getInstance();
+		c.set(Integer.parseInt(y), Integer.parseInt(m), Integer.parseInt(d), 
+				Integer.parseInt(h), Integer.parseInt(mm));
+		
+		return c;
 	}
 	
 	
@@ -706,6 +729,10 @@ public class MibbleParser implements MibParser{
 		
 	    SNMP snmp = new SNMP();
 
+	    if ( snmpType.getSyntax().getReferenceSymbol() != null && snmpType.getSyntax().getReferenceSymbol().getType() instanceof SnmpTextualConvention )
+	    {
+	    	snmp.textualConvetion = snmpType.getSyntax().getReferenceSymbol().getName();
+	    }
 	    snmp.setName(obj.getName());
 	    
 	    snmp.oid = obj.toObject().toString();
@@ -849,6 +876,7 @@ public class MibbleParser implements MibParser{
 							mResult.setSnmpTable(snmpCache.getTbllist());
 							mResult.setSnmpScalars(snmpCache.getScalelist());
 							mResult.setModule(snmpCache.getModule());
+							mResult.setHistory(snmpCache.getHistory());
 						}
 					} 
      	    		catch (Exception e) {

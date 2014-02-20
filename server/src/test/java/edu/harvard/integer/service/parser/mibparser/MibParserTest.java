@@ -88,6 +88,16 @@ public class MibParserTest {
 	public void importRFC1213() {
 		importIETFMIB("RFC1213-MIB");
 	}
+	
+	/**
+	 * Test the importing of EntityMib.  This SNMP module shuld contain the
+	 * module information and the module history information.
+	 * @param mibName
+	 */
+	@Test
+	public void importEntityMIB() {
+		importIETFMIB("ENTITY-MIB");
+	}
 
 	private void importIETFMIB(String mibName) {
 		importMib("ietf/" + mibName);
