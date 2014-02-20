@@ -30,44 +30,86 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.managementobject.provider.snmp;
+package edu.harvard.integer.server.parser.mibparser;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.managementobject.provider.snmp.moduleLoader.MibbleParser;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.common.snmp.SNMPModuleHistory;
+import edu.harvard.integer.common.snmp.SNMPTable;
 
 /**
- * A Factory class provides MIB parser provider.
- * Currently only provider based on Mibble is provided.
+ * This class contains all application needed information. It is contains Module
+ * information and tables and scale if any on that module.
  * 
  * @author dchan
- *
+ * 
  */
-public class MibParserFactory {
+public class SNMPModuleCache {
 
 	/**
-	 * The Enum ParserProvider specify avaiable MIB parser provider.
+	 * Contain module information.
 	 */
-	public enum ParserProvider {
-    	MIBBLE   	
-	}
+	private SNMPModule module;
 	
-	/**
-	 * Gets the parser source.
-	 *
-	 * @param provider -- Specify which provider
-	 * @return the parser source
-	 * @throws IntegerException  An Integer exception during parsing.
-	 */
-	public static MibParser getParserSource( ParserProvider provider ) throws IntegerException {
-		
-		switch (provider) {
-		   
-		   case MIBBLE:			
-			   return MibbleParser.getInstance();
+	private List<SNMPModuleHistory> history = null;
 
-		   default:
-			  break;
-		}
-		return null;
+	/**
+	 * SNMP tables contained by the module.
+	 */
+	private List<SNMPTable> tbllist = new ArrayList<>();
+
+	/**
+	 * Any scale contained by the module.
+	 */
+	private List<SNMP> scalelist = new ArrayList<>();
+
+	/**
+	 * A map for fast searching based on OID.
+	 */
+	private Map<String, SNMP> attMap = new ConcurrentHashMap<String, SNMP>();
+
+	public SNMPModuleCache(SNMPModule module) {
+		this.module = module;
 	}
+
+	public SNMPModule getModule() {
+		return module;
+	}
+
+	public Map<String, SNMP> getAttMap() {
+		return attMap;
+	}
+
+	public List<SNMPTable> getTbllist() {
+		return tbllist;
+	}
+
+	public List<SNMP> getScalelist() {
+		return scalelist;
+	}
+
+	public String getName() {
+		return module.getName();
+	}
+
+	/**
+	 * @return the history
+	 */
+	public List<SNMPModuleHistory> getHistory() {
+		return history;
+	}
+
+	/**
+	 * @param history
+	 *            the history to set
+	 */
+	public void setHistory(List<SNMPModuleHistory> history) {
+		this.history = history;
+	}
+
 }

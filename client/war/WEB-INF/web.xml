@@ -7,6 +7,17 @@
 
   <!-- Servlets -->
   <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>edu.harvard.integer.server.GreetingServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/client/greet</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
     <servlet-name>integerServlet</servlet-name>
     <servlet-class>edu.harvard.integer.server.IntegerServiceImpl</servlet-class>
   </servlet>

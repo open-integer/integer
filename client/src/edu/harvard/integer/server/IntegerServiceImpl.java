@@ -54,10 +54,16 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws Exception {
+		//ArrayList<MIBInfo> mibInfoList = new ArrayList<MIBInfo>();
 		MIBInfo[] results;
 		
 		try {
 			results = snmpService.getImportedMibs();
+			/*if (results != null && results.length > 0) {
+				for (MIBInfo mibInfo : results)
+					mibInfoList.add(mibInfo);
+			}*/
+
 		}
 		catch (IntegerException e) {
 			throw new Exception(e.getMessage());

@@ -57,7 +57,7 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
-import edu.harvard.integer.service.managementobject.provider.ServiceProviderMain;
+import edu.harvard.integer.server.parser.mibparser.moduleloader.MibbleParser;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
 
@@ -121,10 +121,10 @@ public class ImportMIBTest {
 
 		logger.info("Start test import of " + mibName);
 
-		System.setProperty(ServiceProviderMain.MIBFILELOCATON,
-				"../serviceprovider/mibs");
+		System.setProperty(MibbleParser.MIBFILELOCATON,
+				"../server/mibs");
 
-		File mibFile = new File("../serviceprovider/mibs/" + mibName);
+		File mibFile = new File("../server/mibs/" + mibName);
 		if (mibFile.exists())
 			System.out.println("Found rfc");
 		else
