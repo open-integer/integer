@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import edu.harvard.integer.client.ui.MIBImportPanel;
+import edu.harvard.integer.client.ui.ServiceElementTypePanel;
 import edu.harvard.integer.client.widget.HuitDialogBox;
 import edu.harvard.integer.client.widget.HuitFlexTable;
 import edu.harvard.integer.common.snmp.MIBInfo;
@@ -124,9 +125,41 @@ public class MainClient implements EntryPoint {
 				MIBImportPanel importPanel = new MIBImportPanel();
 				HuitDialogBox importDialog = new HuitDialogBox("Import MIB",
 						importPanel);
-				importDialog.setSize("400px", "400px");
+				importDialog.setSize("400px", "200px");
 				importDialog.center();
 				importDialog.show();
+			}
+		});
+		
+		Element serviceElementTypeElement = (Element) Document.get().getElementById(
+				"Fault");
+		Anchor serviceAnchor = Anchor.wrap(serviceElementTypeElement);
+		serviceAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				ServiceElementTypePanel addPanel = new ServiceElementTypePanel();
+				HuitDialogBox addDialog = new HuitDialogBox("Add Service Element Type",
+						addPanel);
+				addDialog.setSize("400px", "500px");
+				addDialog.center();
+				addDialog.show();
+			}
+		});
+		
+		Element capabilityElement = (Element) Document.get().getElementById(
+				"Capability");
+		Anchor capabilityAnchor = Anchor.wrap(capabilityElement);
+		capabilityAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				ServiceElementTypePanel addPanel = new ServiceElementTypePanel();
+				HuitDialogBox addDialog = new HuitDialogBox("Add Capability",
+						addPanel);
+				addDialog.setSize("400px", "200px");
+				addDialog.center();
+				addDialog.show();
 			}
 		});
 
