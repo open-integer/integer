@@ -1,20 +1,22 @@
 package edu.harvard.integer.server;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.harvard.integer.client.IntegerService;
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 
+// TODO: Auto-generated Javadoc
 /**
  * The server side implementation of the RPC service.
  */
@@ -25,6 +27,10 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	/** The snmp service. */
 	@EJB
 	SnmpObjectManagerLocalInterface snmpService;
+	
+	/** The capability service. */
+	@EJB
+	ManagementObjectCapabilityManagerLocalInterface capabilityService;
 
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.client.IntegerService#mibImport(java.lang.String, java.lang.String, boolean)
@@ -54,16 +60,10 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws Exception {
-		//ArrayList<MIBInfo> mibInfoList = new ArrayList<MIBInfo>();
 		MIBInfo[] results;
 		
 		try {
 			results = snmpService.getImportedMibs();
-			/*if (results != null && results.length > 0) {
-				for (MIBInfo mibInfo : results)
-					mibInfoList.add(mibInfo);
-			}*/
-
 		}
 		catch (IntegerException e) {
 			throw new Exception(e.getMessage());
@@ -81,6 +81,17 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		return be;
 	}
 
-
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#addCapability(edu.harvard.integer.common.topology.Capability)
+	 */
+	@Override
+	public void addCapability(Capability capability) {
+		capabilityService.addCapability(capability);
+	}
+	
+	@Override
+	public List<Capability> getAllCapabilities() throws Exception {
+		return capabilityService.getCapabilities();
+	}
 	
 }
