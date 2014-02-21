@@ -72,7 +72,6 @@ public class ServiceElementTypePanel extends FormPanel {
 		
 		grid.setWidget(5, 0, new Label("Feature Set"));
 		final ListBox featureSetListBox = new ListBox(true);
-		//featureSetListBox.setWidth("100%");
 		featureSetListBox.setVisibleItemCount(5);
 		featureSetListBox.setName("featureSetListBoxFormElement");
 		featureSetListBox.addItem("Feature 1", "snmpValue");
@@ -81,9 +80,8 @@ public class ServiceElementTypePanel extends FormPanel {
 		featureSetListBox.addItem("Feature 4", "snmpValue");
 		grid.setWidget(5, 1, featureSetListBox);
 		
-		grid.setWidget(6, 0, new Label("Capabilities"));
+		grid.setWidget(6, 0, new Label("Capability List"));
 		final ListBox capabilitiesListBox = new ListBox(true);
-		//capabilitiesListBox.setWidth("100%");
 		capabilitiesListBox.setVisibleItemCount(5);
 		capabilitiesListBox.setName("capabilitiesListBoxFormElement");
 		capabilitiesListBox.addItem("Capability 1", "snmpValue");

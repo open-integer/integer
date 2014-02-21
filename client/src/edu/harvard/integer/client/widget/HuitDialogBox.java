@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -46,12 +47,11 @@ public class HuitDialogBox extends DialogBox {
 	public HuitDialogBox(String title, FormPanel formPanel) {
 		this.formPanel = formPanel;
 		setText(title);
-		setGlassEnabled(true);
+		setGlassEnabled(false);
 	    setAnimationEnabled(true);
 
 		VerticalPanel dialogContents = new VerticalPanel();
 		dialogContents.setStyleName("dialogVPanel");
-		dialogContents.setSize("400px", "400px");
 
 	    setWidget(dialogContents);
 

@@ -5,7 +5,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -13,7 +12,10 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.MIBImportPanel;
+import edu.harvard.integer.client.ui.MechanismPanel;
+import edu.harvard.integer.client.ui.ServiceElementPanel;
 import edu.harvard.integer.client.ui.ServiceElementTypePanel;
 import edu.harvard.integer.client.widget.HuitDialogBox;
 import edu.harvard.integer.client.widget.HuitFlexTable;
@@ -36,11 +38,9 @@ public class MainClient implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-
 		try {
-			DOM.getElementById("ServiceElementType");
 			Element element = (Element) Document.get().getElementById(
-					"ServiceElementType");
+					"serviceElementTypes");
 			Anchor testAnchor = Anchor.wrap(element);
 			testAnchor.addClickHandler(new ClickHandler() {
 
@@ -70,7 +70,7 @@ public class MainClient implements EntryPoint {
 			Window.alert("AssertionError");
 		}
 
-		Element element = (Element) Document.get().getElementById("Mib");
+		Element element = (Element) Document.get().getElementById("mibs");
 		Anchor testAnchor = Anchor.wrap(element);
 		testAnchor.addClickHandler(new ClickHandler() {
 
@@ -116,7 +116,7 @@ public class MainClient implements EntryPoint {
 		});
 
 		Element importElement = (Element) Document.get().getElementById(
-				"MibImport");
+				"importMib");
 		Anchor importAnchor = Anchor.wrap(importElement);
 		importAnchor.addClickHandler(new ClickHandler() {
 
@@ -125,16 +125,16 @@ public class MainClient implements EntryPoint {
 				MIBImportPanel importPanel = new MIBImportPanel();
 				HuitDialogBox importDialog = new HuitDialogBox("Import MIB",
 						importPanel);
-				importDialog.setSize("400px", "200px");
+				importDialog.setSize("500px", "200px");
 				importDialog.center();
 				importDialog.show();
 			}
 		});
 		
 		Element serviceElementTypeElement = (Element) Document.get().getElementById(
-				"Fault");
-		Anchor serviceAnchor = Anchor.wrap(serviceElementTypeElement);
-		serviceAnchor.addClickHandler(new ClickHandler() {
+				"addServiceElementType");
+		Anchor serviceElementAnchor = Anchor.wrap(serviceElementTypeElement);
+		serviceElementAnchor.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -147,14 +147,30 @@ public class MainClient implements EntryPoint {
 			}
 		});
 		
+		Element serviceElementElement = (Element) Document.get().getElementById(
+				"addServiceElement");
+		Anchor serviceAnchor = Anchor.wrap(serviceElementElement);
+		serviceAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				ServiceElementPanel addPanel = new ServiceElementPanel();
+				HuitDialogBox addDialog = new HuitDialogBox("Add Service Element",
+						addPanel);
+				addDialog.setSize("400px", "500px");
+				addDialog.center();
+				addDialog.show();
+			}
+		});
+		
 		Element capabilityElement = (Element) Document.get().getElementById(
-				"Capability");
+				"addCapability");
 		Anchor capabilityAnchor = Anchor.wrap(capabilityElement);
 		capabilityAnchor.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				ServiceElementTypePanel addPanel = new ServiceElementTypePanel();
+				CapabilityPanel addPanel = new CapabilityPanel();
 				HuitDialogBox addDialog = new HuitDialogBox("Add Capability",
 						addPanel);
 				addDialog.setSize("400px", "200px");
@@ -163,5 +179,21 @@ public class MainClient implements EntryPoint {
 			}
 		});
 
+		// Mechanism
+		Element mechanismElement = (Element) Document.get().getElementById(
+				"addMechanism");
+		Anchor mechanismAnchor = Anchor.wrap(mechanismElement);
+		mechanismAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				MechanismPanel addPanel = new MechanismPanel();
+				HuitDialogBox addDialog = new HuitDialogBox("Add Mechanism",
+						addPanel);
+				addDialog.setSize("400px", "200px");
+				addDialog.center();
+				addDialog.show();
+			}
+		});
 	}
 }

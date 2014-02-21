@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
@@ -41,7 +40,7 @@ public class CapabilityPanel extends FormPanel {
 		setMethod(FormPanel.METHOD_POST);
 
 		// Create a grid panel to hold all of the form widgets.
-		Grid grid = new Grid(7, 2);
+		Grid grid = new Grid(2, 2);
 		setWidget(grid);
 
 		// Create a CheckBox widget to indicate it is a standard MIB
