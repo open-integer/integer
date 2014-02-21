@@ -5,7 +5,6 @@ package edu.harvard.integer.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.snmp.MIBInfo;
 
