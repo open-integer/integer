@@ -15,7 +15,6 @@ import org.vectomatic.file.events.LoadEndHandler;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLTable;
@@ -50,26 +49,20 @@ public class MIBImportPanel extends FormPanel {
 		setMethod(FormPanel.METHOD_POST);
 
 		// Create a grid panel to hold all of the form widgets.
-		Grid grid = new Grid(2, 2);
+		Grid grid = new Grid(1, 2);
 		setWidget(grid);
 
-		// Create a CheckBox widget to indicate it is a standard MIB
-		grid.setWidget(0, 0, new Label("Standard MIB"));
-		final CheckBox checkbox = new CheckBox();
-		checkbox.setName("checkboxFormElement");
-		grid.setWidget(0, 1, checkbox);
-
 		// Create a FileUpload widget
-		grid.setWidget(1, 0, new Label("Select MIB File"));
+		grid.setWidget(0, 0, new Label("Select MIB File"));
 		final FileUploadExt upload = new FileUploadExt();
 
 		upload.setName("uploadFormElement");
-		grid.setWidget(1, 1, upload);
+		grid.setWidget(0, 1, upload);
 
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.
 		grid.getCellFormatter().setWidth(0, 0, "150px");
-		grid.getCellFormatter().setWidth(0, 1, "150px");
+		grid.getCellFormatter().setWidth(0, 1, "250px");
 
 		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
 		formatter.setHorizontalAlignment(0, 1,
@@ -117,7 +110,7 @@ public class MIBImportPanel extends FormPanel {
 					public void onLoadEnd(LoadEndEvent event) {
 						final String mibContents = reader.getStringResult();
 						integerService.mibImport(filename, mibContents,
-								checkbox.getValue(),
+								true,
 								new AsyncCallback<String>() {
 									public void onFailure(Throwable caught) {
 										// Show the RPC error message to the
