@@ -48,6 +48,7 @@ import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 
+
 /**
  * The Class DiscoverSubnet is used to do a subnet discover.
  * During discover, if "seed" nodes contains on discoverNodes will be discovered first.
@@ -56,9 +57,7 @@ import edu.harvard.integer.common.topology.ServiceElement;
  */
 public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	
-	/**
-	 * Specify the network of the subnet 
-	 */
+	/** Specify the network of the subnet. */
 	final private String network;
 	
 	/** Network Mask of the Subnet. */
@@ -86,6 +85,7 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	 */
 	private List<DiscoverNode> discoverNodes;
 	
+	/** The cb. */
 	final private ElementDiscoverCB<ServiceElement> cb;
 	
 	
@@ -94,6 +94,32 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	 */
 	private final List<Authentication>  access;
 	
+	/** If it is true, it will scan the network on async first. . */
+	private boolean usingAsynScan = false;
+	
+	
+	/**
+	 * Instantiates a new discover subnet.
+	 *
+	 * @param network the network
+	 * @param netmask the netmask
+	 * @param access the access
+	 * @param cb the cb
+	 * @param usingAsynScan the using asyn scan
+	 */
+	public DiscoverSubnetTask( String network, String netmask, 
+			                   List<Authentication> access,
+			                   ElementDiscoverCB<ServiceElement> cb,
+			                   boolean usingAsynScan) {
+		
+		this.access = access;
+		this.network = network;
+		this.netmask = netmask;
+		this.cb = cb;
+		this.usingAsynScan = usingAsynScan;
+		
+		subUtils = new SubnetUtils(network, netmask);		
+	}
 	
 
 	/**
@@ -101,6 +127,8 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	 *
 	 * @param network the network
 	 * @param netmask the netmask
+	 * @param access the access
+	 * @param cb the cb
 	 */
 	public DiscoverSubnetTask( String network, String netmask, 
 			                   List<Authentication> access,
@@ -116,9 +144,9 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	
 	/**
 	 * Return true if "ipAddr" is in the range of this subnet.
-	 * 
-	 * @param ipAddr
-	 * @return
+	 *
+	 * @param ipAddr the ip addr
+	 * @return true, if is in range
 	 */
 	public boolean isInRange( String ipAddr ) {
 		
@@ -127,7 +155,7 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	
 	
 	/**
-	 * Gets the network of the subnet
+	 * Gets the network of the subnet.
 	 *
 	 * @return the network
 	 */
@@ -170,7 +198,7 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	@Override
 	public DiscoveredNet call() throws Exception {
 		
-		List<Future<DiscoveredNode>> futures = new ArrayList<>(); 
+		List<Future<DiscoverNode>> futures = new ArrayList<>(); 
 		/**
 		 * 
 		 */
@@ -180,14 +208,14 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 				
 				int extraAuthIndex = 0;
 				int defaultPort = -1;
-				ElementEndPoint elmEpt = node.getElmEndPoint();
+				ElementEndPoint elmEpt = node.getElementEndPoint();
 				if ( elmEpt == null ) {	
 					
 					if ( access == null || access.size() == 0) {
 						throw new IntegerException(null, NetworkErrorCodes.NoAuthentication);
 					}
 					defaultPort = AccessUtil.getDefaultPort(access.get(0).getAccessType());
-					elmEpt = new ElementEndPoint(node.getNodeIp(), defaultPort, access.get(0));
+					elmEpt = new ElementEndPoint(node.getIpAddress(), defaultPort, access.get(0));
 					extraAuthIndex++;	
 				}
 				ElementDiscoverTask task = new ElementDiscoverTask(cb, elmEpt);
@@ -217,7 +245,7 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 			 * Skip any node which provided already on the seed nodes.
 			 */
 			for ( DiscoverNode node : discoverNodes ) {
-				if ( ip.equals(node.getNodeIp()) ) {
+				if ( ip.equals(node.getIpAddress()) ) {
 					skip = true;
 					break;
 				}
@@ -249,9 +277,9 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 		}
 		
 		DiscoveredNet dNet = new DiscoveredNet(network, netmask);
-		for ( Future<DiscoveredNode> f : futures ) {
+		for ( Future<DiscoverNode> f : futures ) {
 			
-			DiscoveredNode serviceElm = f.get();
+			DiscoverNode serviceElm = f.get();
 			dNet.getElmMap().put(serviceElm.getIpAddress(), serviceElm);
 		}		
 		return dNet;
@@ -260,13 +288,13 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 
 	/**
 	 * Add a discover node for this subnet.
-	 * 
-	 * @param node
-	 * @throws IntegerException 
+	 *
+	 * @param node the node
+	 * @throws IntegerException the integer exception
 	 */
 	public void addDiscoverNode( DiscoverNode node ) throws IntegerException {
 		
-		if ( !isInRange(node.getNodeIp()) ) {
+		if ( !isInRange(node.getIpAddress()) ) {
 			throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
 		}
 		if ( discoverNodes == null ) {
@@ -278,8 +306,8 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	
 	/**
 	 * Return the discover node count.
-	 * 
-	 * @return
+	 *
+	 * @return the discover node count
 	 */
 	public int getDiscoverNodeCount() {
 		
@@ -293,9 +321,9 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	
 	/**
 	 * Return the DiscoverNode on index i.
-	 * 
-	 * @param i
-	 * @return
+	 *
+	 * @param i the i
+	 * @return the discover node
 	 */
 	public DiscoverNode getDiscoverNode( int i ) {
 		
@@ -307,7 +335,8 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 	
 	
 	/**
-	 * 
+	 * Gets the access ports.
+	 *
 	 * @return the access port used for discovery.
 	 */
 	public List<AccessPort> getAccessPorts() {
@@ -316,7 +345,8 @@ public class DiscoverSubnetTask implements Callable<DiscoveredNet> {
 
 	/**
 	 * Set the access ports used for discovery.
-	 * @param accessPorts
+	 *
+	 * @param accessPorts the new access ports
 	 */
 	public void setAccessPorts(List<AccessPort> accessPorts) {
 		this.accessPorts = accessPorts;

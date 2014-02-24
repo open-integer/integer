@@ -43,12 +43,13 @@ import edu.harvard.integer.common.topology.ServiceElement;
 
 
 /**
- * The Class ElementDiscoverTask is used to discover network node ip element.
+ * The Class ElementDiscoverTask is used to discover IP network node.
  *
  * @author dchan
  */
-public class ElementDiscoverTask extends ElementAccessTask<DiscoveredNode> {
+public class ElementDiscoverTask extends ElementAccessTask<DiscoverNode> {
 
+	
 	/** The callback client during discovery. */
 	private ElementDiscoverCB<ServiceElement>  cb; 
 	
@@ -78,8 +79,8 @@ public class ElementDiscoverTask extends ElementAccessTask<DiscoveredNode> {
 	
 	/**
 	 * Add another port for discover.
-	 * 
-	 * @param port
+	 *
+	 * @param port the port
 	 */
 	public void addOtherPort( AccessPort port ) {
 		otherPorts.add(port);
@@ -88,7 +89,8 @@ public class ElementDiscoverTask extends ElementAccessTask<DiscoveredNode> {
 	
 	/**
 	 * Add another auth for discover.
-	 * @param auth
+	 *
+	 * @param auth the auth
 	 */
 	public void addOtherAuth( Authentication auth ) {
 		otherAuths.add(auth);
@@ -99,9 +101,9 @@ public class ElementDiscoverTask extends ElementAccessTask<DiscoveredNode> {
 	 * @see java.util.concurrent.Callable#call()
 	 */
 	@Override
-	public DiscoveredNode call() throws Exception {
+	public DiscoverNode call() throws Exception {
 		
-		
+	
 		// TODO Auto-generated method stub
 		return null;
 	}

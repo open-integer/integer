@@ -39,7 +39,7 @@ package edu.harvard.integer.agent.serviceelement.discovery.snmp;
  * @author dchan
  *
  */
-final public class EntityPatternVB {
+final public class EntityPatternVB implements DevicePhisicalPattern {
 
 	/** The element class used to specify what element class type. */
 	private String elementClass;
@@ -106,5 +106,13 @@ final public class EntityPatternVB {
 	 */
 	public String getElementContainedIn() {
 		return elementContainedIn;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern#getPattern()
+	 */
+	@Override
+	public PatternE getPattern() {
+		return PatternE.EntityPattern;
 	}
 }

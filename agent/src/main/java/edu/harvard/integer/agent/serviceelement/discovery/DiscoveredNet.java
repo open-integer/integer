@@ -33,7 +33,6 @@
 package edu.harvard.integer.agent.serviceelement.discovery;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author dchan
@@ -50,7 +49,7 @@ public class DiscoveredNet {
 	private String netmask;
 	
 	/** The topo element map. */
-	private Map<String, DiscoveredNode> elmMap; 
+	private Map<String, DiscoverNode> elmMap; 
 
 	public DiscoveredNet( String network, String netmask ) {
 		
@@ -67,15 +66,14 @@ public class DiscoveredNet {
 		return netmask;
 	}
 
-	public Map<String, DiscoveredNode> getElmMap() {
+	public Map<String, DiscoverNode> getElmMap() {
 		return elmMap;
 	}
 	
 	
-	public void setElmMap(Map<String, DiscoveredNode> elmMap) {
+	public void setElmMap(Map<String, DiscoverNode> elmMap) {
 		this.elmMap = elmMap;
 	}
-
 
 	
 }

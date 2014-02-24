@@ -139,14 +139,9 @@ public class SnmpCollectionUtil {
  	 * @return SysOid
  	 * @throws IntegerException the integer exception
  	 */
- 	public static String communityPing( ElementEndPoint snmpEndPt ) 
+ 	public static String snmpPing( ElementEndPoint snmpEndPt ) 
     	                                   throws IntegerException
     {
-    	/*
-    	 * Try the passing in SNMP version first.  If it is not matched agent version
-    	 * try another one.
-    	 */
-    	CommunityAuth auth = (CommunityAuth) snmpEndPt.getAuth();    	
     	/*
     	 * Try a single SNMP read to check if SNMP access is available.
     	 * If not, or if the endPoint's SNMP version is not set, then
@@ -176,8 +171,17 @@ public class SnmpCollectionUtil {
 									new DisplayableInterface[] { new NonLocaleErrorMessage("Can not ping on " + snmpEndPt.getIpAddress()) });
 					}
 					else {
-						auth.setVersionV2c(!auth.isVersionV2c());
-					    sysPdu = SnmpService.instance().getPdu(snmpEndPt, pdu);
+						
+						if ( snmpEndPt.getAuth() instanceof CommunityAuth ) {
+							/*
+					    	 * Try the passing in SNMP version first.  If it is not matched agent version
+					    	 * try another one.
+					    	 */
+					    	CommunityAuth auth = (CommunityAuth) snmpEndPt.getAuth();  
+					    	auth.setVersionV2c(!auth.isVersionV2c());
+						    sysPdu = SnmpService.instance().getPdu(snmpEndPt, pdu);
+						}						
+						throw e;
 					}
 				} 
     			catch (UnknownHostException e1  ) {
