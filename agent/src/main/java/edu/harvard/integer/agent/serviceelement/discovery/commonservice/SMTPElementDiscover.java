@@ -34,6 +34,8 @@ package edu.harvard.integer.agent.serviceelement.discovery.commonservice;
 
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
 import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -43,21 +45,45 @@ import edu.harvard.integer.common.topology.ServiceElement;
 public class SMTPElementDiscover implements ElementDiscoveryBase {
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#discoverElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#discoverElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern)
 	 */
 	@Override
-	public ServiceElement discoverElement(ElementEndPoint endEpt) {
+	public ServiceElement discoverElementNode(ElementEndPoint endEpt,
+			DevicePhisicalPattern topoPattern) throws IntegerException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#checkAlive(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#scanElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.common.topology.ServiceElement, edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern)
 	 */
 	@Override
-	public boolean checkAlive(ElementEndPoint endEpt) {
+	public void scanElementNode(ElementEndPoint endEpt,
+			ServiceElement elementNode, DevicePhisicalPattern topoPattern)
+			throws IntegerException {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#scanElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.common.topology.ServiceElement)
+	 */
+	@Override
+	public void scanElement(ElementEndPoint endEpt, ServiceElement element)
+			throws IntegerException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#checkReachable(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	 */
+	@Override
+	public String checkReachable(ElementEndPoint endEpt)
+			throws IntegerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

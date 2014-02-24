@@ -39,6 +39,7 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
 /**
@@ -58,7 +59,7 @@ public class SNMPTable extends SNMP implements Serializable {
 	 * List of index OID's for this table.
 	 * 
 	 */
-	@ElementCollection
+	@ManyToMany
 	@OrderColumn(name = "tableIndexIdx")
 	@CollectionTable(name = "SNMPTable_Index")
 	private List<SNMP> index = null;
@@ -66,7 +67,7 @@ public class SNMPTable extends SNMP implements Serializable {
 	/**
 	 * 
 	 */
-	@ElementCollection
+	@ManyToMany
 	@OrderColumn(name = "tableOidIdx")
 	@CollectionTable(name = "SNMPTable_OIDS")
 	private List<SNMP> tableOids = null;

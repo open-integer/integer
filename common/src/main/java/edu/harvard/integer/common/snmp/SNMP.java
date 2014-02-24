@@ -68,7 +68,7 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 * Description of the object as found in the MIB Module. In some cases, this
 	 * description can be quite long.
 	 */
-	@Size(min=1, max=2000)
+	@Size(min=1, max=5000)
 	public String description = null;
 
 	/*

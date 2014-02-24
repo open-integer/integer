@@ -33,29 +33,205 @@
 package edu.harvard.integer.agent.serviceelement.discovery;
 
 
+import edu.harvard.integer.agent.serviceelement.Authentication;
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.agent.serviceelement.access.AccessUtil;
+import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
+import edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern;
 
 /**
- * @author dchan
+ * The Class DiscoverNode is a data object used for IP node discovery.
+ * It contains the basic IP, port, authentication, stage information on the IP node.
+ * It also contains physical 
  *
+ * @author dchan
  */
-public class DiscoverNode {
+public class DiscoverNode extends ElementAccess {
 
-	final private ElementEndPoint elmEndPoint;
-	
-	public DiscoverNode( ElementEndPoint ept ) {
+	/**
+	 * Define the stage during discover.  
+	 *
+	 */
+	public enum DiscoverStageE {
 		
-		this.elmEndPoint = ept;
+		/**
+		 * This stage is indicating the node is in reachable scan stage.
+		 * This is considering the first stage during discovery.
+		 */
+		ReachableScan, 
+		
+		/**
+		 * This stage is used to indicate the device is being in detail discover.
+		 * It is processed after the ReachableScan.
+		 */
+		DetailScan, 
+		
+		/**
+		 * This stage is used to indicate that the device is in topology scan stage.
+		 * Not all IP nodes need to be go through this stage.
+		 */
+		TopoScan, 
+		
+		/**
+		 * This stage is used to indicate the node is done with discover.
+		 * Any other stages can jump to this stage
+		 */
+		DoneScan
 	}
 	
+	
 
-	public ElementEndPoint getElmEndPoint() {
-		return elmEndPoint;
+	/**
+	 * Used to indicate what discover stage on this node.
+	 */
+	private DiscoverStageE stage = DiscoverStageE.ReachableScan;
+	
+
+	/**  The ip address of the node. */
+	final private String ipAddress;
+	
+	
+	/**  The access port of the node. */
+	private int port = -1;
+	
+	/** The authentication to access the node. */
+	private Authentication auth;
+	
+	
+	/** The device physical pattern is used to discover the physical layout of the device. 
+	 *  One example is the physical entity mib pattern.  
+	 */
+	private DevicePhisicalPattern phyPattern;
+	
+	
+	/**
+	 * Sets the port.
+	 *
+	 * @param port the new port
+	 */
+	public void setPort(int port) {
+		this.port = port;
 	}
 
-	public String getNodeIp() {
+
+
+	/**
+	 * Sets the auth.
+	 *
+	 * @param auth the new auth
+	 */
+	public void setAuth(Authentication auth) {
+		this.auth = auth;
+	}
+
+
+
+	/**
+	 * Instantiates a new discover node.
+	 *
+	 * @param ipAddress the ip address
+	 */
+	public DiscoverNode( String ipAddress ) {
+		this.ipAddress = ipAddress;
+	}
+	
+	
+	/**
+	 * Gets the element end point of the discover node if available.
+	 * It may not be available during the starting subnet discovery.  In that case 
+	 * the subnet discover task should assign the port and auth to this node during discovery.
+	 *
+	 * @return the element end point
+	 */
+	public ElementEndPoint getElementEndPoint() {
 		
-		return elmEndPoint.getIpAddress();
+		if ( auth != null ) {
+			
+			if ( port == -1 ) {
+				port = AccessUtil.getDefaultPort(auth.getAccessType());
+				if ( port == -1 ) {
+					return null;
+				}				
+			}
+			ElementEndPoint ept = new ElementEndPoint(ipAddress, port, auth);
+			return ept;
+		}
+		return null;
 	}
+
+	/**
+	 * Gets the ip address.
+	 *
+	 * @return the ip address
+	 */
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	
+
+	/**
+	 * Gets the stage.
+	 *
+	 * @return the stage
+	 */
+	public DiscoverStageE getStage() {
+		return stage;
+	}
+
+	
+	/**
+	 * Sets the stage.
+	 *
+	 * @param stage the new stage
+	 */
+	public void setStage(DiscoverStageE stage) {
+		this.stage = stage;
+	}
+
+
+
+	/**
+	 * Gets the port.
+	 *
+	 * @return the port
+	 */
+	public int getPort() {
+		return port;
+	}
+
+	/**
+	 * Gets the auth.
+	 *
+	 * @return the auth
+	 */
+	public Authentication getAuth() {
+		return auth;
+	}
+	
+	
+
+	
+	
+	/**
+	 * Gets the device physical pattern.
+	 *
+	 * @return the phy pattern
+	 */
+	public DevicePhisicalPattern getPhyPattern() {
+		return phyPattern;
+	}
+
+
+
+	/**
+	 * Sets the device physical pattern.
+	 *
+	 * @param phyPattern the new phy pattern
+	 */
+	public void setPhyPattern(DevicePhisicalPattern phyPattern) {
+		this.phyPattern = phyPattern;
+	}
+
 	
 }

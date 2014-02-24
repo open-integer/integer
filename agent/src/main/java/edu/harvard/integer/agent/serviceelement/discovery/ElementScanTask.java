@@ -34,29 +34,32 @@ package edu.harvard.integer.agent.serviceelement.discovery;
 
 import edu.harvard.integer.agent.serviceelement.ElementAccessTask;
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
 
 /**
  * @author dchan
  *
  */
-public class ElementScanTask extends ElementAccessTask<ServiceElement> {
+public class ElementScanTask extends ElementAccessTask<ElementAccess> {
 
-	private ServiceElement element;
+	private DiscoverNode discoverNode;
 	
-	public ElementScanTask( ElementEndPoint ept, ServiceElement element ) {
+	public ElementScanTask( ElementEndPoint ept, DiscoverNode discoverNode ) {
 		
 		super(ept);
-		this.element = element;
+		this.discoverNode = discoverNode;
 	}
 	
 	/* (non-Javadoc)
 	 * @see java.util.concurrent.Callable#call()
 	 */
 	@Override
-	public ServiceElement call() throws Exception {
+	public ElementAccess call() throws Exception {
+		
+		
+		
 		// TODO Auto-generated method stub
-		return null;
+		return discoverNode;
 	}
 
 }

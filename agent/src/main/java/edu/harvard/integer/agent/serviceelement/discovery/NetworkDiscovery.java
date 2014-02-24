@@ -49,6 +49,7 @@ import edu.harvard.integer.agent.serviceelement.ElementAccessTask;
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
 import edu.harvard.integer.agent.serviceelement.access.AccessPort;
 import edu.harvard.integer.agent.serviceelement.access.AccessUtil;
+import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -67,7 +68,7 @@ import edu.harvard.integer.common.topology.ServiceElement;
  * 
  * @author dchan
  */
-public class NetworkDiscovery <T extends ServiceElement>implements NetworkDiscoveryBase {
+public class NetworkDiscovery <T extends ElementAccess>implements NetworkDiscoveryBase {
 
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
     /**
@@ -143,7 +144,7 @@ public class NetworkDiscovery <T extends ServiceElement>implements NetworkDiscov
 						
 						boolean outOfSubnet = true;
 						for ( DiscoverSubnetTask subTask : subnetTasks ) {
-							if ( subTask.isInRange(dn.getNodeIp()) ) {
+							if ( subTask.isInRange(dn.getIpAddress()) ) {
 								
 								subTask.addDiscoverNode(dn);
 								outOfSubnet = false;
@@ -176,7 +177,7 @@ public class NetworkDiscovery <T extends ServiceElement>implements NetworkDiscov
 							
 							int extraAuthIndex = 0;
 							boolean missingEpt = false;
-							ElementEndPoint ept = dn.getElmEndPoint();
+							ElementEndPoint ept = dn.getElementEndPoint();
 							int defaultPort = -1;
 							if ( ept == null ) {
 							
@@ -187,7 +188,7 @@ public class NetworkDiscovery <T extends ServiceElement>implements NetworkDiscov
 									throw new IntegerException(null, NetworkErrorCodes.NoAuthentication);
 								}
 								defaultPort = AccessUtil.getDefaultPort(access.get(0).getAccessType());
-								ept = new ElementEndPoint(dn.getNodeIp(), defaultPort, access.get(0));
+								ept = new ElementEndPoint(dn.getIpAddress(), defaultPort, access.get(0));
 								extraAuthIndex++;
 							}	
 							ElementDiscoverTask elmTask = new ElementDiscoverTask(cb, ept);

@@ -30,44 +30,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
-
-import edu.harvard.integer.common.topology.ServiceElement;
+package edu.harvard.integer.agent.serviceelement.discovery.snmp;
 
 /**
- * The Class DiscoveredNode is one kind of service element which is considering
- * a topo node in topology map.,
- *
  * @author dchan
+ *
  */
-public class DiscoveredNode extends ServiceElement {
+public interface DevicePhisicalPattern {
 
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	/** The ip address of the node */
-	private String ipAddress;
-
-	/**
-	 * Gets the ip address.
-	 *
-	 * @return the ip address
-	 */
-	public String getIpAddress() {
-		return ipAddress;
-	}
-
-	/**
-	 * Sets the ip address.
-	 *
-	 * @param ipAddress the new ip address
-	 */
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
+	public enum PatternE {
+		EntityPattern,
 	}
 	
+	public PatternE getPattern();
 }

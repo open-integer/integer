@@ -70,7 +70,7 @@ public class AgentProviderFactory {
 		switch (accessType) {
 		 
 		   case SNMP:			  
-			   return SNMPElementDiscover.getInstance();
+			   return new SNMPElementDiscover();
 
 		    default:
 			  break;

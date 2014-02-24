@@ -34,6 +34,7 @@ package edu.harvard.integer.agent.serviceelement;
 
 import java.util.concurrent.Callable;
 
+import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -43,7 +44,7 @@ import edu.harvard.integer.common.topology.ServiceElement;
  * @author dchan
  * @param <T> the generic type of ServiceElement.
  */
-public abstract class ElementAccessTask <T extends ServiceElement>implements Callable<T> {
+public abstract class ElementAccessTask <T extends ElementAccess>implements Callable<T> {
 
 	/** The network node of the service element endpoint. */
 	final private ElementEndPoint elmEpt;

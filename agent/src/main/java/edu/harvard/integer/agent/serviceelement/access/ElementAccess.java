@@ -30,34 +30,38 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+package edu.harvard.integer.agent.serviceelement.access;
 
-import org.snmp4j.PDU;
-
-import edu.harvard.integer.agent.serviceelement.access.SnmpAyncListener;
-import edu.harvard.integer.common.exception.ErrorCodeInterface;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The listener interface for receiving discoverAync events.
- * The class that is interested in processing a discoverAync
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addDiscoverAyncListener<code> method. When
- * the discoverAync event occurs, that object's appropriate
- * method is invoked.
+ * The Class ElementAccess is ElementAccessTask "call" return object
+ * using for discover or configuration a service element.
+ * 
+ * It contains an associated service element to be processed in the task.
  *
  * @author dchan
  */
-public class DiscoverAyncListener extends SnmpAyncListener {
+public abstract class ElementAccess {
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.access.SnmpAyncListener#applicationResponse(org.snmp4j.PDU, edu.harvard.integer.common.exception.ErrorCodeInterface, java.lang.String)
+	/** The access element. */
+	private ServiceElement accessElement;
+
+	/**
+	 * Gets the access element.
+	 *
+	 * @return the access element
 	 */
-	@Override
-	public void applicationResponse(PDU pdu, ErrorCodeInterface error,
-			String errMsg) {
-		// TODO Auto-generated method stub
-
+	public ServiceElement getAccessElement() {
+		return accessElement;
 	}
 
+	/**
+	 * Sets the access element.
+	 *
+	 * @param accessElement the new access element
+	 */
+	public void setAccessElement(ServiceElement accessElement) {
+		this.accessElement = accessElement;
+	}
 }

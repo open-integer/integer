@@ -62,6 +62,13 @@ public class DiscoveryConfiguration {
 	/** The icmp retries. */
 	private int icmpRetries;
 	
+	
+	private int hopCount;
+	
+	
+	/** 
+	 */
+	
 	/**
 	 * Discovered node which contains node ip.  Those nodes need to be discovered first.
 	 */

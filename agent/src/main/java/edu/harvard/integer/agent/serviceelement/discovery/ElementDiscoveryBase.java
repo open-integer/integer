@@ -33,6 +33,8 @@
 package edu.harvard.integer.agent.serviceelement.discovery;
 
 import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
+import edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -46,18 +48,45 @@ import edu.harvard.integer.common.topology.ServiceElement;
 public interface ElementDiscoveryBase {
 
 	/**
-	 * Discover element based on elementEndPoint.
+	 * Discover element based on elementEndPoint and DevicePhisicalPattern.   
+	 * The outcome of this method should return the full physical layout of the node.
 	 *
 	 * @param endEpt the element endpoint which including IPAddress, port and access information.
+	 * @param topoPattern the topoPattern for discovery physical layout of the node.
 	 * @return the service element
+	 * @throws IntegerException the integer exception
 	 */
-	public ServiceElement discoverElement( ElementEndPoint endEpt );
+	public ServiceElement discoverElementNode( ElementEndPoint endEpt, DevicePhisicalPattern topoPattern  ) throws IntegerException;
 	
 	/**
-	 * Check alive for that element.
+	 * Scan node element with a given node service element. It is considering a full scan which means during 
+	 * the scan, some sub-component of given "element" may be added and some of them may missing.
+	 *  
+	 * @param endEpt
+	 * @param elementNode
+	 * @param topoPattern
+	 * @throws IntegerException
+	 */
+	public void scanElementNode( ElementEndPoint endEpt, ServiceElement elementNode, DevicePhisicalPattern topoPattern ) throws IntegerException;
+	
+	
+	/**
+	 * Scan element with a given service element. It is considering a full scan. However it should
+	 * not have any new sub-component being added or deleted any sub-component during scan.  
+	 *
+	 * @param endEpt the end ept
+	 * @param element the element
+	 * @throws IntegerException the integer exception
+	 */
+	public void scanElement( ElementEndPoint endEpt, ServiceElement element ) throws IntegerException;
+	
+	
+	/**
+	 * Check alive for that element.  If no exception occurs, the element is reachable.
 	 *
 	 * @param endEpt the element endPoint.
-	 * @return true, if reachable.  
+	 * @throws IntegerException the integer exception
+	 * @return -- The identify of the element node such as sysObjectID
 	 */
-	public boolean checkAlive( ElementEndPoint endEpt );
+	public String checkReachable( ElementEndPoint endEpt ) throws IntegerException;
 }
