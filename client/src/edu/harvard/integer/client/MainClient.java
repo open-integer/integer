@@ -17,8 +17,8 @@ import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.ui.MechanismPanel;
 import edu.harvard.integer.client.ui.ServiceElementPanel;
 import edu.harvard.integer.client.ui.ServiceElementTypePanel;
-import edu.harvard.integer.client.widget.HuitDialogBox;
-import edu.harvard.integer.client.widget.HuitFlexTable;
+import edu.harvard.integer.client.widget.HvDialogBox;
+import edu.harvard.integer.client.widget.HvFlexTable;
 import edu.harvard.integer.common.snmp.MIBInfo;
 
 /**
@@ -26,7 +26,7 @@ import edu.harvard.integer.common.snmp.MIBInfo;
  */
 public class MainClient implements EntryPoint {
 	private Widget currentWidget;
-	private HuitFlexTable flexTable;
+	private HvFlexTable flexTable;
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -47,7 +47,7 @@ public class MainClient implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					String[] headers = {"Name", "IP Address", "Mac Address", "Type", "State", "SW/Version", "H/W Version"};
-					flexTable = new HuitFlexTable(headers);
+					flexTable = new HvFlexTable(headers);
 					
 					int numRows = 50;
 
@@ -106,7 +106,7 @@ public class MainClient implements EntryPoint {
 				});
 
 				String[] hearders = {"Module", "Last Updated", "OID", "Description", "Vendor"};
-				flexTable = new HuitFlexTable(hearders);
+				flexTable = new HvFlexTable(hearders);
 
 				if (currentWidget != null)
 					RootPanel.get("root").remove(currentWidget);
@@ -123,7 +123,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				MIBImportPanel importPanel = new MIBImportPanel();
-				HuitDialogBox importDialog = new HuitDialogBox("Import MIB",
+				HvDialogBox importDialog = new HvDialogBox("Import MIB",
 						importPanel);
 				importDialog.setSize("500px", "200px");
 				importDialog.center();
@@ -139,7 +139,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				ServiceElementTypePanel addPanel = new ServiceElementTypePanel();
-				HuitDialogBox addDialog = new HuitDialogBox("Add Service Element Type",
+				HvDialogBox addDialog = new HvDialogBox("Add Service Element Type",
 						addPanel);
 				addDialog.setSize("400px", "500px");
 				addDialog.center();
@@ -155,7 +155,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				ServiceElementPanel addPanel = new ServiceElementPanel();
-				HuitDialogBox addDialog = new HuitDialogBox("Add Service Element",
+				HvDialogBox addDialog = new HvDialogBox("Add Service Element",
 						addPanel);
 				addDialog.setSize("400px", "500px");
 				addDialog.center();
@@ -171,7 +171,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				CapabilityPanel addPanel = new CapabilityPanel();
-				HuitDialogBox addDialog = new HuitDialogBox("Add Capability",
+				HvDialogBox addDialog = new HvDialogBox("Add Capability",
 						addPanel);
 				addDialog.setSize("400px", "200px");
 				addDialog.center();
@@ -188,7 +188,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				MechanismPanel addPanel = new MechanismPanel();
-				HuitDialogBox addDialog = new HuitDialogBox("Add Mechanism",
+				HvDialogBox addDialog = new HvDialogBox("Add Mechanism",
 						addPanel);
 				addDialog.setSize("400px", "200px");
 				addDialog.center();

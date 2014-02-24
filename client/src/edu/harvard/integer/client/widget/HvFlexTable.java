@@ -6,13 +6,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HuitFlexTable extends FlexTable {
+public class HvFlexTable extends FlexTable {
 	private static final int HeaderRowIndex = 0;
 	
 	private String[] headers;
 	private ScrollPanel scrollPanel;
 
-	public HuitFlexTable(String[] headers) {
+	public HvFlexTable(String[] headers) {
 		setWidth("100%");
 		setCellSpacing(0);
 		addStyleName("flexTable");
