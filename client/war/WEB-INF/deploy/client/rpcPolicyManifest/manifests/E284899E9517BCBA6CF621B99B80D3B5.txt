@@ -1,2 +1,0 @@
-serviceClass: edu.harvard.integer.client.GreetingService
-path: BD1D6B14386669B615F078CCB25208FF.gwt.rpc

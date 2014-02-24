@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.service.discovery;
 
 /**
  * The Class TopoNetwork is used for Network Topology Discovery. 

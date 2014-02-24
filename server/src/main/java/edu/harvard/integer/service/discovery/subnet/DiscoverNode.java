@@ -30,14 +30,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.service.discovery.subnet;
 
 
-import edu.harvard.integer.agent.serviceelement.Authentication;
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.access.AccessUtil;
-import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
-import edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern;
+import edu.harvard.integer.access.AccessUtil;
+import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.access.ElementAccess;
+import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.service.discovery.snmp.DevicePhisicalPattern;
 
 /**
  * The Class DiscoverNode is a data object used for IP node discovery.

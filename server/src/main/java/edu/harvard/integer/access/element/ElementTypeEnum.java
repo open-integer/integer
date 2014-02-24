@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement;
+package edu.harvard.integer.access.element;
 
 /**
  * The ElementTypeEnum used by the discovery engine to specify

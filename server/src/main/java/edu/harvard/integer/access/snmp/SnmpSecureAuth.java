@@ -30,10 +30,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
+package edu.harvard.integer.access.snmp;
 
-import edu.harvard.integer.agent.serviceelement.AccessTypeEnum;
-import edu.harvard.integer.agent.serviceelement.Authentication;
+import edu.harvard.integer.access.AccessTypeEnum;
+import edu.harvard.integer.access.Authentication;
 
 /**
  * The Class SnmpSecureAccess contains SNMPv3 access information.

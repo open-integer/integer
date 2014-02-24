@@ -30,13 +30,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+package edu.harvard.integer.service.discovery.snmp;
 
 
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
 
 /**
  * @author dchan
@@ -49,7 +49,7 @@ public class SNMPElementDiscover implements ElementDiscoveryBase {
 	
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#discoverElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#discoverElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.access.snmp.DevicePhisicalPattern)
 	 */
 	@Override
 	public ServiceElement discoverElementNode(ElementEndPoint endEpt,
@@ -63,7 +63,7 @@ public class SNMPElementDiscover implements ElementDiscoveryBase {
 
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#scanElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.common.topology.ServiceElement, edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#scanElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.common.topology.ServiceElement, edu.harvard.integer.access.snmp.DevicePhisicalPattern)
 	 */
 	@Override
 	public void scanElementNode(ElementEndPoint endEpt,

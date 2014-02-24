@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
+package edu.harvard.integer.access.snmp;
 
 import org.snmp4j.PDU;
 import org.snmp4j.event.ResponseEvent;

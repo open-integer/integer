@@ -1,4 +1,5 @@
 /*
+
  *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
@@ -30,9 +31,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.service.discovery;
 
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 
 /**
  * The Interface NetworkDiscoveryBase outlines the discover methods. 

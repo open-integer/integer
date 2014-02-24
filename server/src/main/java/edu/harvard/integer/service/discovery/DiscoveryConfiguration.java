@@ -30,13 +30,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.service.discovery;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.harvard.integer.agent.serviceelement.Authentication;
-import edu.harvard.integer.agent.serviceelement.access.AccessPort;
+import edu.harvard.integer.access.AccessPort;
+import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
  * 

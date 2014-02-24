@@ -30,11 +30,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.service.discovery.element;
 
-import edu.harvard.integer.agent.serviceelement.ElementAccessTask;
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
+import edu.harvard.integer.access.ElementAccess;
+import edu.harvard.integer.access.element.ElementAccessTask;
+import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
  * @author dchan

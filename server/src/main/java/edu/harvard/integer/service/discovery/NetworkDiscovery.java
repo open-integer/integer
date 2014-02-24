@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.service.discovery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +44,21 @@ import java.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.harvard.integer.agent.serviceelement.Authentication;
-import edu.harvard.integer.agent.serviceelement.ElementAccessTask;
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.access.AccessPort;
-import edu.harvard.integer.agent.serviceelement.access.AccessUtil;
-import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
+import edu.harvard.integer.access.AccessPort;
+import edu.harvard.integer.access.AccessUtil;
+import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.access.ElementAccess;
+import edu.harvard.integer.access.element.ElementAccessTask;
+import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
+import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetTask;
+import edu.harvard.integer.service.discovery.subnet.DiscoveredNet;
 
 /**
  *

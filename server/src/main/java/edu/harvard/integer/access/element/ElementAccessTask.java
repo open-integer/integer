@@ -30,12 +30,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement;
+package edu.harvard.integer.access.element;
 
 import java.util.concurrent.Callable;
 
-import edu.harvard.integer.agent.serviceelement.access.ElementAccess;
-import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.access.ElementAccess;
 
 /**
  * The Class ElementAccessTask is an abstract class for element discovery, element full scan and

@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+package edu.harvard.integer.service.discovery.snmp;
 
 /**
  * This is an immutable class using for discover element along with element components
@@ -109,7 +109,7 @@ final public class EntityPatternVB implements DevicePhisicalPattern {
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern#getPattern()
+	 * @see edu.harvard.integer.access.snmp.DevicePhisicalPattern#getPattern()
 	 */
 	@Override
 	public PatternE getPattern() {

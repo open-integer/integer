@@ -30,12 +30,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.access;
+package edu.harvard.integer.access;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.harvard.integer.agent.serviceelement.AccessTypeEnum;
 
 /**
  * The Class AccessPort contains port to access ip node and the associated access type.

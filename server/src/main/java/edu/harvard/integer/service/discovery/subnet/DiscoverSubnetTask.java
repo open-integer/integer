@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery;
+package edu.harvard.integer.service.discovery.subnet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +39,16 @@ import java.util.concurrent.Future;
 
 import org.apache.commons.net.util.SubnetUtils;
 
-import edu.harvard.integer.agent.serviceelement.Authentication;
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.access.AccessPort;
-import edu.harvard.integer.agent.serviceelement.access.AccessUtil;
+import edu.harvard.integer.access.AccessPort;
+import edu.harvard.integer.access.AccessUtil;
+import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.NetworkDiscovery;
+import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
+import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 
 
 

@@ -30,12 +30,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent;
+package edu.harvard.integer.service.discovery;
 
-import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
-import edu.harvard.integer.agent.serviceelement.discovery.NetworkDiscovery;
-import edu.harvard.integer.agent.serviceelement.discovery.NetworkDiscoveryBase;
-import edu.harvard.integer.agent.serviceelement.discovery.snmp.SNMPElementDiscover;
+import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
+import edu.harvard.integer.service.discovery.snmp.SNMPElementDiscover;
 
 /**
  * A factory for creating AgentProvider objects which provide discovery, configuration,

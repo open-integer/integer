@@ -32,11 +32,11 @@
  */
 package edu.harvard.integer.agent.serviceelement.discovery.commonservice;
 
-import edu.harvard.integer.agent.serviceelement.ElementEndPoint;
-import edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase;
+import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.agent.serviceelement.discovery.snmp.DevicePhisicalPattern;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.ElementDiscoveryBase;
 
 /**
  * @author dchan

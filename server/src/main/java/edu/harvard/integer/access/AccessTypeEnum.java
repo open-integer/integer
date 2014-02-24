@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement;
+package edu.harvard.integer.access;
 
 /**
  * The Enum AccessTypeEnum defines access type in Integer.

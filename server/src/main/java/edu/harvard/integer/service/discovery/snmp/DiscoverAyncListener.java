@@ -30,11 +30,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.agent.serviceelement.discovery.snmp;
+package edu.harvard.integer.service.discovery.snmp;
 
 import org.snmp4j.PDU;
 
-import edu.harvard.integer.agent.serviceelement.access.SnmpAyncListener;
+import edu.harvard.integer.access.snmp.SnmpAyncListener;
 import edu.harvard.integer.common.exception.ErrorCodeInterface;
 
 /**
