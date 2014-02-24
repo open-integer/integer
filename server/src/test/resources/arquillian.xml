@@ -36,7 +36,8 @@
         <!-- By default, arquillian will use the JBOSS_HOME environment variable.  Alternatively, the configuration below can be uncommented. -->
          
         <configuration>
-<!--         <property name="jbossHome">Integer/wildfly</property> -->
+			 <property name="outputToConsole">true</property>
+			 <property name="javaVmArguments">-Djboss.http.port=8585  -Xmx512m -XX:MaxPermSize=128m</property>
         </configuration>
        
    </container>
