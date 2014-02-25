@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
+import edu.harvard.integer.client.widget.HvListBoxPanel;
 
 /**
  * This class represents a form panel for importing MIB file.
@@ -71,29 +72,29 @@ public class ServiceElementTypePanel extends FormPanel {
 		grid.setWidget(4, 1, elementTypeListBox);
 		
 		grid.setWidget(5, 0, new Label("Feature Set"));
-		final ListBox featureSetListBox = new ListBox(true);
+		final HvListBoxPanel featureSetListBox = new HvListBoxPanel(true);
 		featureSetListBox.setVisibleItemCount(5);
 		featureSetListBox.setName("featureSetListBoxFormElement");
 		featureSetListBox.addItem("Feature 1", "snmpValue");
 		featureSetListBox.addItem("Feature 2", "snmpValue");
 		featureSetListBox.addItem("Feature 3", "snmpValue");
 		featureSetListBox.addItem("Feature 4", "snmpValue");
-		grid.setWidget(5, 1, featureSetListBox);
+		grid.setWidget(5, 1, featureSetListBox.getVisualPanel());
 		
 		grid.setWidget(6, 0, new Label("Capability List"));
-		final ListBox capabilitiesListBox = new ListBox(true);
+		final HvListBoxPanel capabilitiesListBox = new HvListBoxPanel(true);
 		capabilitiesListBox.setVisibleItemCount(5);
 		capabilitiesListBox.setName("capabilitiesListBoxFormElement");
 		capabilitiesListBox.addItem("Capability 1", "snmpValue");
 		capabilitiesListBox.addItem("Capability 2", "snmpValue");
 		capabilitiesListBox.addItem("Capability 3", "snmpValue");
 		capabilitiesListBox.addItem("Capability 4", "snmpValue");
-		grid.setWidget(6, 1, capabilitiesListBox);
+		grid.setWidget(6, 1, capabilitiesListBox.getVisualPanel());
 
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.
-		grid.getCellFormatter().setWidth(0, 0, "150px");
-		grid.getCellFormatter().setWidth(0, 1, "180px");
+		grid.getCellFormatter().setWidth(0, 0, "180px");
+		grid.getCellFormatter().setWidth(0, 1, "250px");
 
 		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
 		formatter.setHorizontalAlignment(0, 1,

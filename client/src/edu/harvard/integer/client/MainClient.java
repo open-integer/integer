@@ -141,7 +141,7 @@ public class MainClient implements EntryPoint {
 				ServiceElementTypePanel addPanel = new ServiceElementTypePanel();
 				HvDialogBox addDialog = new HvDialogBox("Add Service Element Type",
 						addPanel);
-				addDialog.setSize("400px", "500px");
+				addDialog.setSize("450px", "480px");
 				addDialog.center();
 				addDialog.show();
 			}
@@ -157,7 +157,7 @@ public class MainClient implements EntryPoint {
 				ServiceElementPanel addPanel = new ServiceElementPanel();
 				HvDialogBox addDialog = new HvDialogBox("Add Service Element",
 						addPanel);
-				addDialog.setSize("400px", "500px");
+				addDialog.setSize("450px", "520px");
 				addDialog.center();
 				addDialog.show();
 			}

@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
+import edu.harvard.integer.client.widget.HvListBoxPanel;
 
 /**
  * This class represents a form panel for importing MIB file.
@@ -70,7 +71,7 @@ public class ServiceElementPanel extends FormPanel {
 		grid.setWidget(5, 1, parentBox);
 		
 		grid.setWidget(6, 0, new Label("Network Layer"));
-		final ListBox networkLayerListBox = new ListBox();
+		final HvListBoxPanel networkLayerListBox = new HvListBoxPanel();
 		networkLayerListBox.setName("networkLayerBoxFormElement");
 		networkLayerListBox.addItem("Layer 1", "layer1Value");
 		networkLayerListBox.addItem("layer 2", "layer2Value");
@@ -78,46 +79,47 @@ public class ServiceElementPanel extends FormPanel {
 		grid.setWidget(6, 1, networkLayerListBox);
 		
 		grid.setWidget(7, 0, new Label("Capability Ordered List"));
-		final ListBox capabilitiesListBox = new ListBox(true);
-		capabilitiesListBox.setVisibleItemCount(3);
+		final HvListBoxPanel capabilitiesListBox = new HvListBoxPanel(true);
+		capabilitiesListBox.setUpDownButtonVisible(true);
+		capabilitiesListBox.setVisibleItemCount(5);
 		capabilitiesListBox.setName("capabilitiesListBoxFormElement");
 		capabilitiesListBox.addItem("Capability 1", "capability1Value");
 		capabilitiesListBox.addItem("Capability 2", "capability2Value");
 		capabilitiesListBox.addItem("Capability 3", "capability3Value");
 		capabilitiesListBox.addItem("Capability 4", "capability4Value");
-		grid.setWidget(7, 1, capabilitiesListBox);
+		grid.setWidget(7, 1, capabilitiesListBox.getVisualPanel());
 		
 		grid.setWidget(8, 0, new Label("Credentials"));
-		final ListBox credentialsListBox = new ListBox();
-		credentialsListBox.setVisibleItemCount(2);
+		final HvListBoxPanel credentialsListBox = new HvListBoxPanel();
+		credentialsListBox.setVisibleItemCount(5);
 		credentialsListBox.setName("credentialsListBoxFormElement");
 		credentialsListBox.addItem("Credential 1", "cred1Value");
 		credentialsListBox.addItem("Credential 2", "cred2Value");
 		credentialsListBox.addItem("Credential 3", "cred3Value");
-		grid.setWidget(8, 1, credentialsListBox);
+		grid.setWidget(8, 1, credentialsListBox.getVisualPanel());
 		
 		grid.setWidget(9, 0, new Label("Domain ID List"));
-		final ListBox domainListBox = new ListBox();
+		final HvListBoxPanel domainListBox = new HvListBoxPanel();
 		domainListBox.setName("domainListBoxFormElement");
-		domainListBox.setVisibleItemCount(2);
+		domainListBox.setVisibleItemCount(5);
 		domainListBox.addItem("Domain 1", "domain1Value");
 		domainListBox.addItem("Domain 2", "domain2Value");
 		domainListBox.addItem("Domain 3", "domain3Value");
-		grid.setWidget(9, 1, domainListBox);
+		grid.setWidget(9, 1, domainListBox.getVisualPanel());
 		
 		grid.setWidget(10, 0, new Label("Mechanism List"));
-		final ListBox mechanismListBox = new ListBox();
+		final HvListBoxPanel mechanismListBox = new HvListBoxPanel();
 		mechanismListBox.setName("mechanismListBoxFormElement");
-		mechanismListBox.setVisibleItemCount(2);
+		mechanismListBox.setVisibleItemCount(5);
 		mechanismListBox.addItem("Mechanism 1", "Mechanism1Value");
 		mechanismListBox.addItem("Mechanism 2", "Mechanism2Value");
 		mechanismListBox.addItem("Mechanism 3", "Mechanism3Value");
-		grid.setWidget(10, 1, mechanismListBox);
+		grid.setWidget(10, 1, mechanismListBox.getVisualPanel());
 
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.
-		grid.getCellFormatter().setWidth(0, 0, "150px");
-		grid.getCellFormatter().setWidth(0, 1, "200px");
+		grid.getCellFormatter().setWidth(0, 0, "180px");
+		grid.getCellFormatter().setWidth(0, 1, "250px");
 
 		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
 		formatter.setHorizontalAlignment(0, 1,

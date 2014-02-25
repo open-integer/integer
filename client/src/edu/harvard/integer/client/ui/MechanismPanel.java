@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
+import edu.harvard.integer.client.widget.HvListBoxPanel;
 
 /**
  * This class represents a form panel for importing MIB file.
@@ -50,14 +51,14 @@ public class MechanismPanel extends FormPanel {
 		grid.setWidget(0, 1, nameTextBox);
 
 		grid.setWidget(1, 0, new Label("Capability List"));
-		final ListBox capabilitiesListBox = new ListBox(true);
-		capabilitiesListBox.setVisibleItemCount(5);
-		capabilitiesListBox.setName("capabilityListBoxFormElement");
-		capabilitiesListBox.addItem("Capability 1", "snmpValue");
-		capabilitiesListBox.addItem("Capability 2", "snmpValue");
-		capabilitiesListBox.addItem("Capability 3", "snmpValue");
-		capabilitiesListBox.addItem("Capability 4", "snmpValue");
-		grid.setWidget(1, 1, capabilitiesListBox);
+		final HvListBoxPanel capabilityListBoxPanel = new HvListBoxPanel(true);
+		capabilityListBoxPanel.setVisibleItemCount(5);
+		capabilityListBoxPanel.setName("capabilityListBoxFormElement");
+		capabilityListBoxPanel.addItem("Capability 1", "snmpValue");
+		capabilityListBoxPanel.addItem("Capability 2", "snmpValue");
+		capabilityListBoxPanel.addItem("Capability 3", "snmpValue");
+		capabilityListBoxPanel.addItem("Capability 4", "snmpValue");
+		grid.setWidget(1, 1, capabilityListBoxPanel.getVisualPanel());
 
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.

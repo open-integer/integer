@@ -39,12 +39,44 @@ h1 {
 }
 
 .gwt-Button {
-  background-color: #4e84c4;
   display: block;
   font-size: 16pt;
   width: 80px;
 }
 
+.littleSquareButton {
+	width: 25px;
+	height: 20px;
+	margin: 0;
+	text-align: center;
+	border: 1px #a0a0a0 solid;
+	border-radius: 0;
+	-moz-border-radius: 0;
+}
+
+.littleSquareButton:active {
+  border: 1px inset #ccc;
+}
+
+.littleSquareButton:hover {
+  border-color: #939393;
+}
+
+.littleButtonPanel {
+	width:	100%;
+	border: 0 solid #a0a0a0;
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+
+.flexListBoxPanel {
+	width:	100%;
+	padding: 0px;
+	margin: 0px;
+}
 
 .dialogVPanel {
   margin: 15px;
@@ -52,7 +84,7 @@ h1 {
 }
 
 .dialogVPanel.padding {
-  padding: 2px, 20px;
+  padding: 2px 20px;
 }
 
 .serverResponseLabelError {
@@ -81,9 +113,9 @@ h1 {
 .flexTable {
 	border-collapse: collapse;
   	background-color:  #efefef;
-  	margin: 0px;
-  	padding: 0px;
-  	border:0px;
+  	margin: 0;
+  	padding: 0;
+  	border:0;
 }
 
 .flexTableHeader {
@@ -125,4 +157,8 @@ h1 {
 
 .gwt-ListBox {
 	width: 100%;
+	margin: 0;
+	border: 1px solid #a0a0a0;
+	border-radius: 0;
+	-moz-border-radius: 0;
 }
