@@ -69,25 +69,25 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 * description can be quite long.
 	 */
 	@Size(min=1, max=5000)
-	public String description = null;
+	private String description = null;
 
 	/*
 	 * This defines the read, read/write, or some objects (bad objects) are
 	 * write only. This is a function of the object definition, not the access
 	 * policy.
 	 */
-	public MaxAccess maxAccess = null;
+	private MaxAccess maxAccess = null;
 
 	/*
 	 * The fully specified OID of the object (minus the instance data). For
 	 * tables this would include the table glue.
 	 */
-	public String oid = null;
+	private String oid = null;
 
 	/*
 	 * From the object definition.
 	 */
-	public String textualConvetion = null;
+	private String textualConvetion = null;
 
 	/*
 	 * In some cases this information is not appropriate (orther than say
@@ -95,8 +95,9 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 * cases this may come from or be equal to the Textual convention
 	 * information.
 	 */
-	public String units = null;
+	private String units = null;
 
+	
 	public SNMP() {
 		super();
 	}

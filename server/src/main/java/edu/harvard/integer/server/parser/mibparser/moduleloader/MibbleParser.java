@@ -278,10 +278,10 @@ public class MibbleParser implements MibParser{
     				}    		
     				
     				snmpTbl.setName(vs.getName());
-    				snmpTbl.oid = vs.getValue().toString();
+    				snmpTbl.setOid(vs.getValue().toString());
     				SnmpObjectType snmpType = (SnmpObjectType) vs.getType();
-    				snmpTbl.description = snmpType.getDescription();
-    				snmpTbl.maxAccess = MaxAccess.NotAccessible;
+    				snmpTbl.setDescription(snmpType.getDescription());
+    				snmpTbl.setMaxAccess(MaxAccess.NotAccessible);
     				
 
     				MibValueSymbol[] avss = vs.getChildren();
@@ -731,12 +731,12 @@ public class MibbleParser implements MibParser{
 
 	    if ( snmpType.getSyntax().getReferenceSymbol() != null && snmpType.getSyntax().getReferenceSymbol().getType() instanceof SnmpTextualConvention )
 	    {
-	    	snmp.textualConvetion = snmpType.getSyntax().getReferenceSymbol().getName();
+	    	snmp.setTextualConvetion(snmpType.getSyntax().getReferenceSymbol().getName());
 	    }
 	    snmp.setName(obj.getName());
 	    
-	    snmp.oid = obj.toObject().toString();
-	    snmp.description = snmpType.getDescription();
+	    snmp.setOid(obj.toObject().toString());
+	    snmp.setDescription(snmpType.getDescription());
 	     					    
 	    MaxAccess access = null;
 	    if ( snmpType.getAccess() == SnmpAccess.READ_ONLY ) {
@@ -751,13 +751,14 @@ public class MibbleParser implements MibParser{
 	    else if ( snmpType.getAccess() == SnmpAccess.WRITE_ONLY ) {
 	    	access = MaxAccess.WriteOnly;
 	    }
-	    snmp.maxAccess = access;
+	    snmp.setMaxAccess( access);
 	    
 	    if ( oType instanceof SnmpObjectType ) {
-	    	snmp.units = ((SnmpObjectType) oType).getSyntax().getName();
+	    	snmp.setUnits( ((SnmpObjectType) oType).getSyntax().getName() );
+	    	
 	    	MibTypeSymbol ms =  ((SnmpObjectType) oType).getSyntax().getReferenceSymbol();
 	    	if ( ms != null && ms.getType() instanceof SnmpTextualConvention ) {
-	    		snmp.textualConvetion = ms.getName(); 
+	    		snmp.setTextualConvetion(ms.getName()); 
 	    	}
 	    }
 	    else {
@@ -779,11 +780,11 @@ public class MibbleParser implements MibParser{
 		SNMPIndex snmp = new SNMPIndex();	  
 		ObjectIdentifierValue mv = (ObjectIdentifierValue) si.getValue();
 		snmp.setName(mv.getName());
-		snmp.oid = mv.toObject().toString();
+		snmp.setOid( mv.toObject().toString());
 		MibValueSymbol ms =  mv.getSymbol();
 		MibType mt = ms.getType();
 		if ( mt instanceof SnmpObjectType ) {
-			snmp.units = ((SnmpObjectType) mt).getSyntax().getName();
+			snmp.setUnits( ((SnmpObjectType) mt).getSyntax().getName());
 		}
 		snmp.setImplied(si.isImplied());
 	    return snmp;

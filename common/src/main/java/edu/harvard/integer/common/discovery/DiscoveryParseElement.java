@@ -31,108 +31,59 @@
  *      
  */
 
-package edu.harvard.integer.common.snmp;
+package edu.harvard.integer.common.discovery;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CollectionTable;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
- * 
- * This class holds the definition of a MIB. The process of importing a MIB
- * into the system will create an instance of this class.
- * 
+ *
  */
 @Entity
-public class MIBInfo extends BaseEntity implements Serializable {
+public class DiscoveryParseElement extends BaseEntity {
 
 	/**
-	 * Serialization version
+	 * Serial Version UID 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne
-	private SNMPModule module = null;
-
-	@ManyToMany
-	@OrderColumn(name = "tableIndexIdx")
-	@CollectionTable(name = "MIBInfo_SNMPTable")
-	private List<SNMPTable> tables = null;
-
-	@ManyToMany
-	@OrderColumn(name = "scalorIndexIdx")
-	@CollectionTable(name = "MIBInfo_SNMP")
-	private List<SNMP> scalors = null;
-
-	private String vendor = null;
-
+	private String parseElement = null;
+	
 	
 	/**
-	 * @return the module
+	 * @return the parseElement
 	 */
-	public SNMPModule getModule() {
-		return module;
+	public String getParseElement() {
+		return parseElement;
 	}
+
 
 	/**
-	 * @param module
-	 *            the module to set
+	 * @param parseElement the parseElement to set
 	 */
-	public void setModule(SNMPModule module) {
-		this.module = module;
+	public void setParseElement(String parseElement) {
+		this.parseElement = parseElement;
 	}
+
 
 	/**
-	 * @return the tables
+	 * @return the parseElementType
 	 */
-	public List<SNMPTable> getTables() {
-		return tables;
+	public DiscoveryParseElementTypeEnum getParseElementType() {
+		return parseElementType;
 	}
+
 
 	/**
-	 * @param tables
-	 *            the tables to set
+	 * @param parseElementType the parseElementType to set
 	 */
-	public void setTables(List<SNMPTable> tables) {
-		this.tables = tables;
+	public void setParseElementType(DiscoveryParseElementTypeEnum parseElementType) {
+		this.parseElementType = parseElementType;
 	}
 
-	/**
-	 * @return the scalors
-	 */
-	public List<SNMP> getScalors() {
-		return scalors;
-	}
 
-	/**
-	 * @param scalors
-	 *            the scalors to set
-	 */
-	public void setScalors(List<SNMP> scalors) {
-		this.scalors = scalors;
-	}
-
-	/**
-	 * @return the vendor
-	 */
-	public String getVendor() {
-		return vendor;
-	}
-
-	/**
-	 * @param vendor
-	 *            the vendor to set
-	 */
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
-
+	private DiscoveryParseElementTypeEnum parseElementType = null;
+	
 }

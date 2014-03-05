@@ -67,7 +67,7 @@ public class ManagementObjectCapabilityManager implements
 	private Logger logger;
 
 	@Inject
-	PersistenceManagerLocalInterface dbm;
+	private PersistenceManagerLocalInterface dbm;
 
 	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	

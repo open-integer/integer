@@ -31,74 +31,14 @@
  *      
  */
 
-package edu.harvard.integer.common.snmp;
-
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OrderColumn;
+package edu.harvard.integer.common.discovery;
 
 /**
  * @author David Taylor
- * 
- *         This class holds the definition of a MIB Table.
- * 
+ *
  */
-@Entity
-public class SNMPTable extends SNMP implements Serializable {
-	/**
-	 * Serialization version
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * List of index OID's for this table.
-	 * 
-	 */
-	@ManyToMany
-	@OrderColumn(name = "tableIndexIdx")
-	@CollectionTable(name = "SNMPTable_Index")
-	private List<SNMP> index = null;
-
-	/**
-	 * 
-	 */
-	@ManyToMany
-	@OrderColumn(name = "tableOidIdx")
-	@CollectionTable(name = "SNMPTable_OIDS")
-	private List<SNMP> tableOids = null;
-
-	/**
-	 * @return the index
-	 */
-	public List<SNMP> getIndex() {
-		return index;
-	}
-
-	/**
-	 * @param index
-	 *            the index to set
-	 */
-	public void setIndex(List<SNMP> index) {
-		this.index = index;
-	}
-
-	/**
-	 * @return the tableOids
-	 */
-	public List<SNMP> getTableOids() {
-		return tableOids;
-	}
-
-	/**
-	 * @param tableOids
-	 *            the tableOids to set
-	 */
-	public void setTableOids(List<SNMP> tableOids) {
-		this.tableOids = tableOids;
-	}
-
+public enum DiscoveryParseElementTypeEnum {
+	Model,
+	FirmwareVersion,
+	SoftwareVersion;
 }

@@ -31,15 +31,12 @@
  *      
  */
 
-package edu.harvard.integer.common.snmp;
+package edu.harvard.integer.common.discovery;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -47,92 +44,32 @@ import edu.harvard.integer.common.BaseEntity;
 /**
  * @author David Taylor
  * 
- * This class holds the definition of a MIB. The process of importing a MIB
- * into the system will create an instance of this class.
- * 
  */
 @Entity
-public class MIBInfo extends BaseEntity implements Serializable {
+public class DiscoveryParseString extends BaseEntity {
 
 	/**
-	 * Serialization version
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@OneToOne
-	private SNMPModule module = null;
 
-	@ManyToMany
-	@OrderColumn(name = "tableIndexIdx")
-	@CollectionTable(name = "MIBInfo_SNMPTable")
-	private List<SNMPTable> tables = null;
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<DiscoveryParseElement> parseStrings = null;
 
-	@ManyToMany
-	@OrderColumn(name = "scalorIndexIdx")
-	@CollectionTable(name = "MIBInfo_SNMP")
-	private List<SNMP> scalors = null;
-
-	private String vendor = null;
-
-	
 	/**
-	 * @return the module
-	 */
-	public SNMPModule getModule() {
-		return module;
+	 * @return the parseStrings
+	 */	
+	public List<DiscoveryParseElement> getParseStrings() {
+		return parseStrings;
 	}
 
 	/**
-	 * @param module
-	 *            the module to set
+	 * @param parseStrings
+	 *            the parseStrings to set
 	 */
-	public void setModule(SNMPModule module) {
-		this.module = module;
-	}
-
-	/**
-	 * @return the tables
-	 */
-	public List<SNMPTable> getTables() {
-		return tables;
-	}
-
-	/**
-	 * @param tables
-	 *            the tables to set
-	 */
-	public void setTables(List<SNMPTable> tables) {
-		this.tables = tables;
-	}
-
-	/**
-	 * @return the scalors
-	 */
-	public List<SNMP> getScalors() {
-		return scalors;
-	}
-
-	/**
-	 * @param scalors
-	 *            the scalors to set
-	 */
-	public void setScalors(List<SNMP> scalors) {
-		this.scalors = scalors;
-	}
-
-	/**
-	 * @return the vendor
-	 */
-	public String getVendor() {
-		return vendor;
-	}
-
-	/**
-	 * @param vendor
-	 *            the vendor to set
-	 */
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
+	public void setParseStrings(List<DiscoveryParseElement> parseStrings) {
+		this.parseStrings = parseStrings;
 	}
 
 }

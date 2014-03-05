@@ -2,6 +2,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+test.systemProperty('JBOSS_HOME', System.getProperty("user.home") + "/" + wildflyHome)
+
 sourceCompatibility = 1.7
 version = '1.0'
 jar {
@@ -17,6 +19,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url "https://oosnmp.net/dist/release" }
 	maven { url "http://repo.spring.io/libs-milestone" }
 	maven { url "https://repository.jboss.org" }
 	maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
@@ -25,7 +28,6 @@ repositories {
 dependencies {
 	compile project(':common')
 
-	
 	compile files("libs/grammatica-1.5.jar")
 	compile files("libs/mibble-parser-2.9.3.jar")
 	
@@ -37,9 +39,8 @@ dependencies {
 	compile "javax.inject:javax.inject-tck:1"
 	compile "javax.enterprise:cdi-api:1.1.EDR1"
 	compile "org.slf4j:slf4j-log4j12:1.7.5"
-	compile 'org.snmp4j:snmp4j:1.10.1'
+    compile "org.snmp4j:snmp4j:2.2.5"
 	compile "commons-net:commons-net:3.3"
-	
 
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:1.1.2.Final"
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:1.1.2.Final"

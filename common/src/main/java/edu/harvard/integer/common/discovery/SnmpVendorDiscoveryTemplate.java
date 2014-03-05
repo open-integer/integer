@@ -31,108 +31,47 @@
  *      
  */
 
-package edu.harvard.integer.common.snmp;
+package edu.harvard.integer.common.discovery;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.CollectionTable;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 
-import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.snmp.SNMP;
 
 /**
  * @author David Taylor
  * 
- * This class holds the definition of a MIB. The process of importing a MIB
- * into the system will create an instance of this class.
+ *         This template is used for a specific vendor in order to determine
+ *         what the model, firmware and software revision are of an instance of
+ *         something from that vendor.
  * 
+ *         There are two ways to collect this information. If model, firmware
+ *         and software revision OIDs have been populated in an instance of this
+ *         class, then the discovery system retrieves that information.
+ * 
+ *         If the firmware, software and model information are not populated in
+ *         an instance of this class, then the parseStringOid must be present.
+ *         The discovery system will use that information to retrieve an SNMP
+ *         Object with structured information. It will use the parseSting
+ *         attribute that has been configured to parse out the available model,
+ *         firmware and software information. Then it can query the database for
+ *         the correct SnmpVendorContainmentSelector object instance.
+ * 
+ *         In the rare case where one of the three pieces of information is in
+ *         an OID, then that OID (e..g, firmware) would be populated, the other
+ *         two would be blank and if there was an object with a parseString that
+ *         could get the other two, then the parseStringOID would be populated
+ *         with the OID of the object to get and the parseString used to get the
+ *         other two attributes.
+ * 
+ *         What is in the parseString is the information needed to figure out
+ *         how to parse the string.
  */
 @Entity
-public class MIBInfo extends BaseEntity implements Serializable {
+public class SnmpVendorDiscoveryTemplate extends VendorDiscoveryTemplate<SNMP> {
 
 	/**
-	 * Serialization version
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@OneToOne
-	private SNMPModule module = null;
-
-	@ManyToMany
-	@OrderColumn(name = "tableIndexIdx")
-	@CollectionTable(name = "MIBInfo_SNMPTable")
-	private List<SNMPTable> tables = null;
-
-	@ManyToMany
-	@OrderColumn(name = "scalorIndexIdx")
-	@CollectionTable(name = "MIBInfo_SNMP")
-	private List<SNMP> scalors = null;
-
-	private String vendor = null;
-
-	
-	/**
-	 * @return the module
-	 */
-	public SNMPModule getModule() {
-		return module;
-	}
-
-	/**
-	 * @param module
-	 *            the module to set
-	 */
-	public void setModule(SNMPModule module) {
-		this.module = module;
-	}
-
-	/**
-	 * @return the tables
-	 */
-	public List<SNMPTable> getTables() {
-		return tables;
-	}
-
-	/**
-	 * @param tables
-	 *            the tables to set
-	 */
-	public void setTables(List<SNMPTable> tables) {
-		this.tables = tables;
-	}
-
-	/**
-	 * @return the scalors
-	 */
-	public List<SNMP> getScalors() {
-		return scalors;
-	}
-
-	/**
-	 * @param scalors
-	 *            the scalors to set
-	 */
-	public void setScalors(List<SNMP> scalors) {
-		this.scalors = scalors;
-	}
-
-	/**
-	 * @return the vendor
-	 */
-	public String getVendor() {
-		return vendor;
-	}
-
-	/**
-	 * @param vendor
-	 *            the vendor to set
-	 */
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
 
 }
