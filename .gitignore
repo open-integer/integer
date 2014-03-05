@@ -1,9 +1,10 @@
 *.class
 
 # Package Files #
-*.jar
-*.war
-*.ear
+#*.jar
+#*.war
+#*.ear
+client/war/WEB-INF/lib/gwt-servlet.jar
 .gradle
 .classpath
 .project

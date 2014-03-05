@@ -63,6 +63,14 @@ dependencies {
  	
 }
 
+task deployWildfly() << {
+	println "Deploy Wildfly modules to " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
+	copy {
+		from "src/wildfly"
+		into System.getProperty("user.home") + "/" + wildflyHome
+	}
+}
+
 uploadArchives {
 	repositories {
 		flatDir {
