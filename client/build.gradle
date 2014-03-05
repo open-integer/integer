@@ -22,10 +22,6 @@ def libGwtFileVersion = '0.3.3'			// lib-gwt-file version
 def gwtServerHost = 'localhost'
 def gwtServerPort = 8888
 
-//targetCompatibility = 1.6
-//sourceCompatibility = 1.6
-
-group = 'example'
 version = '1.0'
 
 sourceSets.main.java.srcDirs = ['src']
@@ -44,6 +40,7 @@ war {
 
 repositories {
 	mavenCentral()
+	maven { url "https://oosnmp.net/dist/release" }
 }
 
 dependencies {
