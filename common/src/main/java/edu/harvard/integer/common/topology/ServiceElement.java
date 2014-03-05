@@ -31,6 +31,7 @@
  *      
  */
 package edu.harvard.integer.common.topology;
+
 /**
  * @author David Taylor
  *
@@ -44,6 +45,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -75,13 +78,20 @@ public class ServiceElement extends BaseEntity implements Serializable {
 
 	@Embedded
 	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "iconId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "iconType")),
+			@AttributeOverride(name = "name", column = @Column(name = "iconName")) })
+	private ID iconID = null;
+
+	@Embedded
+	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "parentId")),
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "parentType")),
 			@AttributeOverride(name = "name", column = @Column(name = "parentName")) })
 	private ID parentId = null;
 
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> children = null;
 
 	// Since some ServiceElements will have many capabilities this attribute
@@ -97,8 +107,8 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	// It is found here instead of the ServiceElementType because order may be
 	// inpacted by local considerations such as hardware and software
 	// configuration.
-    @ElementCollection
-    @OrderColumn(name="idx")
+	@ElementCollection
+	@OrderColumn(name = "idx")
 	private List<ID> capabilites = null;
 
 	// The id of the id object instance that identifies the Location instance to
@@ -150,26 +160,33 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 * information.
 	 */
 	@ElementCollection
-    @OrderColumn(name="idx")
-	 private List<ID> credentials = null;
+	@OrderColumn(name = "idx")
+	private List<ID> credentials = null;
 
 	/*
 	 * Listing of the id object instances that reference domains supported by
 	 * this service element. This list helps with scoping of configuration
 	 * sequencing and control.
 	 */
-    @ElementCollection
-    @OrderColumn(name="idx")
-    private List<ID> domainIds = null;
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> domainIds = null;
 
 	/*
 	 * Listing of the id object instances that reference mechanisms supported by
 	 * this service element. This list helps with scoping of configuration
 	 * sequencing and control.
 	 */
-    @ElementCollection
-    @OrderColumn(name="idx")
-    private List<ID> mechanismIds = null;
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> mechanismIds = null;
+
+	/**
+	 * A listing of all the ServiceElementProtocolInstanceIdentifier instances
+	 * for this service element.
+	 */
+	@OneToMany(mappedBy="serviceElement")
+	private List<ServiceElementProtocolInstanceIdentifier> values = null;
 
 	/*
 	 * Configured state includes whether the service element is in compliance

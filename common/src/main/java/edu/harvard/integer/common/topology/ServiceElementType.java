@@ -39,7 +39,11 @@ package edu.harvard.integer.common.topology;
  */
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OrderColumn;
 
@@ -69,6 +73,17 @@ public class ServiceElementType extends BaseEntity {
 	@ElementCollection
 	@OrderColumn(name="idx")
 	private List<ID> capabilityIds = null;
+	
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> childServiceElementTypes;
+	
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "iconId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "iconType")),
+			@AttributeOverride(name = "name", column = @Column(name = "iconName")) })
+	private ID iconId;
 	
 	/**
 	 * @return the firmware
