@@ -1,18 +1,20 @@
 package edu.harvard.integer.server;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.harvard.integer.client.IntegerService;
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 
 /**
@@ -25,6 +27,10 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	/** The snmp service. */
 	@EJB
 	SnmpObjectManagerLocalInterface snmpService;
+	
+	/** The managed object service. */
+	@EJB
+	ManagementObjectCapabilityManagerLocalInterface managedObjectService;
 
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.client.IntegerService#mibImport(java.lang.String, java.lang.String, boolean)
@@ -79,6 +85,39 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	public GWTWhitelist getGWTWhitelist(GWTWhitelist be) {
 		
 		return be;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getCapabilities()
+	 */
+	@Override
+	public List<Capability> getCapabilities() throws Exception {
+		List<Capability> capabilityList;
+		try {
+			capabilityList = managedObjectService.getCapabilities();
+		}
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		return capabilityList;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getAllServiceElementManagementObjects()
+	 */
+	@Override
+	public List<ServiceElementManagementObject> getAllServiceElementManagementObjects()
+			throws Exception {
+		List<ServiceElementManagementObject> list;
+
+		try {
+			list = managedObjectService.getAllServiceElementManagementObjects();
+		} 
+		catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+		return list;
 	}
 
 

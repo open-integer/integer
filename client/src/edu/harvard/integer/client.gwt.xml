@@ -21,6 +21,8 @@
   <inherits name='edu.harvard.integer.common'/>
   
   <inherits name='org.vectomatic.libgwtfile'/>
+  
+  <inherits name='com.emitrom.lienzo.Lienzo' />
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='edu.harvard.integer.client.MainClient'/>

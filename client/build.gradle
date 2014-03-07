@@ -18,6 +18,7 @@ def gwtWarPath = 'war'                  // WebContent directory
 
 // lib-gwt-file
 def libGwtFileVersion = '0.3.3'			// lib-gwt-file version
+def lienzoCoreVersion = '1.2-RELEASE' 	// lienzo-core version
 
 def gwtServerHost = 'localhost'
 def gwtServerPort = 8888
@@ -68,6 +69,9 @@ dependencies {
 	
 	// Compile lib-gwt-file, needed for FileUpload
 	compile "org.vectomatic:lib-gwt-file:${libGwtFileVersion}"
+	
+	// Compile lienzo-core, for graphics
+	compile "com.emitrom:lienzo-core:${lienzoCoreVersion}"
 	
 }
 
