@@ -6,13 +6,25 @@ import com.google.gwt.core.client.GWT;
 
 import edu.harvard.integer.client.utils.Util;
 
+/**
+ * The Class DraggableShapesWidget.
+ */
 public class DraggableShapesWidget extends WidgetLayer {  
   
+    /**
+     * Instantiates a new draggable shapes widget.
+     *
+     * @param width the width
+     * @param height the height
+     */
     public DraggableShapesWidget(int width, int height) {  
         super(width, height);  
         init();  
     }  
   
+    /**
+     * Inits the.
+     */
     private void init() {  
   
         final int total = GWT.isProdMode() ? 1000 : 40;  

@@ -6,12 +6,25 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * The Class HvFlexTable.
+ */
 public class HvFlexTable extends FlexTable {
+	
+	/** The Constant HeaderRowIndex. */
 	private static final int HeaderRowIndex = 0;
 	
+	/** The headers. */
 	private String[] headers;
+	
+	/** The scroll panel. */
 	private ScrollPanel scrollPanel;
 
+	/**
+	 * Instantiates a new hv flex table.
+	 *
+	 * @param headers the headers
+	 */
 	public HvFlexTable(String[] headers) {
 		setWidth("100%");
 		setCellSpacing(0);
@@ -24,10 +37,18 @@ public class HvFlexTable extends FlexTable {
 		scrollPanel.setSize("1000px", "500px");
 	}
 
+	/**
+	 * Gets the visual panel.
+	 *
+	 * @return the visual panel
+	 */
 	public Widget getVisualPanel() {
 		return scrollPanel;
 	}
 
+	/**
+	 * Apply data row styles.
+	 */
 	public void applyDataRowStyles() {
 		HTMLTable.RowFormatter rf = getRowFormatter();
 
@@ -40,6 +61,9 @@ public class HvFlexTable extends FlexTable {
 		}
 	}
 	
+	/**
+	 * Adds the header.
+	 */
 	public void addHeader() {
 		insertRow(0);
 		getRowFormatter().addStyleName(HeaderRowIndex, "FlexTable-Header");
@@ -50,17 +74,31 @@ public class HvFlexTable extends FlexTable {
 		getRowFormatter().addStyleName(0, "flexTableHeader");
 	}
 	
+	/**
+	 * Clean.
+	 */
 	public void clean() {
 		removeAllRows();
 		addHeader();
 	}
 	
+	/**
+	 * Adds the column.
+	 *
+	 * @param columnHeading the column heading
+	 */
 	public void addColumn(Object columnHeading) {
 	    Widget widget = createCellWidget(columnHeading);
 	    int cell = getCellCount(HeaderRowIndex);
 	    setWidget(HeaderRowIndex, cell, widget);
 	}
 	
+	/**
+	 * Creates the cell widget.
+	 *
+	 * @param cellObject the cell object
+	 * @return the widget
+	 */
 	private Widget createCellWidget(Object cellObject) {
 	    Widget widget = null;
 
@@ -72,8 +110,14 @@ public class HvFlexTable extends FlexTable {
 	    return widget;
 	}
 	
+	/** The row index. */
 	int rowIndex = 1;
 
+	/**
+	 * Adds the row.
+	 *
+	 * @param cellObjects the cell objects
+	 */
 	public void addRow(Object[] cellObjects) {
 
 		for (int cell = 0; cell < cellObjects.length; cell++) {

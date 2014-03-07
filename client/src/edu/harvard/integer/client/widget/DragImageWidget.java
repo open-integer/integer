@@ -5,22 +5,46 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 
 import edu.harvard.integer.client.resources.Resources;
 
+/**
+ * The Class DragImageWidget.
+ */
 public class DragImageWidget extends WidgetLayer {  
   
+    /** The image width. */
     private final int IMAGE_WIDTH = 100;  
+    
+    /** The image height. */
     private final int IMAGE_HEIGHT = 100;  
       
+    /** The alain avatar. */
     private Picture alainAvatar;  
+    
+    /** The alfredo avatar. */
     private Picture alfredoAvatar;  
+    
+    /** The david avatar. */
     private Picture davidAvatar;  
+    
+    /** The dean avatar. */
     private Picture deanAvatar;  
+    
+    /** The enno avatar. */
     private Picture ennoAvatar;  
       
+    /**
+     * Instantiates a new drag image widget.
+     *
+     * @param width the width
+     * @param height the height
+     */
     public DragImageWidget(int width, int height) {  
         super(width, height);  
         init();  
     }  
   
+    /**
+     * Inits the.
+     */
     private void init() {  
           
         final int x = width/2;  
