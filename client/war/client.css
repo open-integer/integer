@@ -44,6 +44,24 @@ h1 {
   width: 80px;
 }
 
+.iconButton {
+	background: white;
+	color: #293352;
+	font-size: 1.2em;
+    font-weight: bold;
+	margin: 0;
+	text-align: center;
+	border: none;
+}
+
+.iconButton:active {
+   background: #ccc;
+}
+
+.iconButton:hover {
+   background: #939393;
+}
+
 .littleSquareButton {
 	width: 25px;
 	height: 20px;
@@ -76,6 +94,14 @@ h1 {
 	width:	100%;
 	padding: 0px;
 	margin: 0px;
+}
+
+.barPanel {
+	font-size: 2em;
+    font-weight: bold;
+    color: #293352;
+    margin: 10px 10px;
+    width: 1000px;
 }
 
 .dialogVPanel {

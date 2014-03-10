@@ -1,5 +1,8 @@
 package edu.harvard.integer.client;
 
+import java.util.List;
+
+import com.emitrom.lienzo.client.widget.LienzoPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -13,13 +16,16 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import edu.harvard.integer.client.ui.CapabilityPanel;
+import edu.harvard.integer.client.ui.CapabilityView;
 import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.ui.MechanismPanel;
 import edu.harvard.integer.client.ui.ServiceElementPanel;
 import edu.harvard.integer.client.ui.ServiceElementTypePanel;
+import edu.harvard.integer.client.widget.DragImageWidget;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvFlexTable;
 import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.topology.Capability;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -38,38 +44,39 @@ public class MainClient implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		try {
-			Element element = (Element) Document.get().getElementById(
-					"serviceElementTypes");
-			Anchor testAnchor = Anchor.wrap(element);
-			testAnchor.addClickHandler(new ClickHandler() {
+		// view imported mib files
+		createViewImportedMibsLink();
 
-				@Override
-				public void onClick(ClickEvent event) {
-					String[] headers = {"Name", "IP Address", "Mac Address", "Type", "State", "SW/Version", "H/W Version"};
-					flexTable = new HvFlexTable(headers);
-					
-					int numRows = 50;
+		// import mib
+		createImportMibLink();
+		
+		// ServiceElementTypes
+		createViewServiceElementTypesLink();
 
-					for (int row = 1; row < numRows; row++) {
-						Object[] rowData = { "Huit " + row,
-								"192.168.55." + row,
-								"255.255.255.255.100." + row, "Fiber " + row,
-								"Normal" + row, "sw" + row, "hw" + row };
-						flexTable.addRow(rowData);
-					}
-					flexTable.applyDataRowStyles();
+		// Add Service Element Type
+		createAddServiceElementTypeLink();
+		
+		// Add Service Element
+		createAddddServiceElementLink();
+		
+		// Add Capability
+		createAddCapabilityLink();
 
-					if (currentWidget != null)
-						RootPanel.get("root").remove(currentWidget);
-					currentWidget = flexTable.getVisualPanel();
-					RootPanel.get("root").add(currentWidget);
-				}
-			});
-		} catch (AssertionError e) {
-			Window.alert("AssertionError");
-		}
+		// Capabilities
+		createViewCapabilitiesLink();
 
+		// Mechanism
+		createAddMechanismLink();
+		
+        LienzoPanel panel4 = new LienzoPanel(1000, 600);
+        RootPanel.get("root").add(panel4);
+        DragImageWidget dragImageWidget = new DragImageWidget(1000, 400);
+        panel4.add(dragImageWidget);
+        
+        currentWidget= panel4;
+	}
+	
+	private void createViewImportedMibsLink() {
 		Element element = (Element) Document.get().getElementById("mibs");
 		Anchor testAnchor = Anchor.wrap(element);
 		testAnchor.addClickHandler(new ClickHandler() {
@@ -114,23 +121,71 @@ public class MainClient implements EntryPoint {
 				RootPanel.get("root").add(currentWidget);
 			}
 		});
-
-		Element importElement = (Element) Document.get().getElementById(
-				"importMib");
-		Anchor importAnchor = Anchor.wrap(importElement);
-		importAnchor.addClickHandler(new ClickHandler() {
+	}
+	
+	private void createViewServiceElementTypesLink() {
+		Element element = (Element) Document.get().getElementById(
+				"serviceElementTypes");
+		Anchor testAnchor = Anchor.wrap(element);
+		testAnchor.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				MIBImportPanel importPanel = new MIBImportPanel();
-				HvDialogBox importDialog = new HvDialogBox("Import MIB",
-						importPanel);
-				importDialog.setSize("500px", "200px");
-				importDialog.center();
-				importDialog.show();
+				String[] headers = {"Name", "IP Address", "Mac Address", "Type", "State", "SW/Version", "H/W Version"};
+				flexTable = new HvFlexTable(headers);
+				
+				int numRows = 50;
+
+				for (int row = 1; row < numRows; row++) {
+					Object[] rowData = { "Huit " + row,
+							"192.168.55." + row,
+							"255.255.255.255.100." + row, "Fiber " + row,
+							"Normal" + row, "sw" + row, "hw" + row };
+					flexTable.addRow(rowData);
+				}
+				flexTable.applyDataRowStyles();
+
+				if (currentWidget != null)
+					RootPanel.get("root").remove(currentWidget);
+				currentWidget = flexTable.getVisualPanel();
+				RootPanel.get("root").add(currentWidget);
 			}
 		});
-		
+	}
+	
+	private void createViewCapabilitiesLink() {
+		Element capElement = (Element) Document.get().getElementById("capabilities");
+		Anchor capAnchor = Anchor.wrap(capElement);
+		capAnchor.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				String title = "Capabilities";
+				final String[] headers = {"Name", "Description", "FCAPS", "Service Elements"};
+				final CapabilityView capacityView = new CapabilityView(title, headers);
+				integerService.getCapabilities(new AsyncCallback<List<Capability>>() {
+
+					@Override
+					public void onSuccess(List<Capability> result) {
+						capacityView.update(result);
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+					
+				});
+
+				if (currentWidget != null)
+					RootPanel.get("root").remove(currentWidget);
+
+				currentWidget = capacityView;
+				RootPanel.get("root").add(currentWidget);
+			}
+		});
+	}
+	
+	private void createAddServiceElementTypeLink() {
 		Element serviceElementTypeElement = (Element) Document.get().getElementById(
 				"addServiceElementType");
 		Anchor serviceElementAnchor = Anchor.wrap(serviceElementTypeElement);
@@ -146,7 +201,27 @@ public class MainClient implements EntryPoint {
 				addDialog.show();
 			}
 		});
-		
+	}
+	
+	private void createImportMibLink() {
+		Element importElement = (Element) Document.get().getElementById(
+				"importMib");
+		Anchor importAnchor = Anchor.wrap(importElement);
+		importAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				MIBImportPanel importPanel = new MIBImportPanel();
+				HvDialogBox importDialog = new HvDialogBox("Import MIB",
+						importPanel);
+				importDialog.setSize("500px", "200px");
+				importDialog.center();
+				importDialog.show();
+			}
+		});
+	}
+	
+	private void createAddddServiceElementLink() {
 		Element serviceElementElement = (Element) Document.get().getElementById(
 				"addServiceElement");
 		Anchor serviceAnchor = Anchor.wrap(serviceElementElement);
@@ -162,7 +237,9 @@ public class MainClient implements EntryPoint {
 				addDialog.show();
 			}
 		});
-		
+	}
+	
+	private void createAddCapabilityLink() {
 		Element capabilityElement = (Element) Document.get().getElementById(
 				"addCapability");
 		Anchor capabilityAnchor = Anchor.wrap(capabilityElement);
@@ -178,8 +255,9 @@ public class MainClient implements EntryPoint {
 				addDialog.show();
 			}
 		});
-
-		// Mechanism
+	}
+	
+	private void createAddMechanismLink() {
 		Element mechanismElement = (Element) Document.get().getElementById(
 				"addMechanism");
 		Anchor mechanismAnchor = Anchor.wrap(mechanismElement);
