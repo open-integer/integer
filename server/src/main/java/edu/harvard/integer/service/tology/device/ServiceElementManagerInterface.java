@@ -31,85 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance;
+package edu.harvard.integer.service.tology.device;
 
-import javax.ejb.Local;
-
-import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
-import edu.harvard.integer.service.persistance.dao.user.UserDAO;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * @author David Taylor
  *
  */
-
-@Local
-public interface PersistenceManagerLocalInterface {
-	
-	/**
-	 * @return
-	 */
-	SNMPModuleDAO getSNMPModuleDAO();
+public interface ServiceElementManagerInterface {
 
 	/**
+	 * @param serviceElement
 	 * @return
+	 * @throws IntegerException
 	 */
-	SNMPDAO getSNMPDAO();
+	ServiceElement updateServiceElement(ServiceElement serviceElement)
+			throws IntegerException;
 
 	/**
 	 * @return
+	 * @throws IntegerException
 	 */
-	SNMPIndexDAO getSNMPIndexDAO();
+	ServiceElement[] getAllServiceElements() throws IntegerException;
 
-	/**
-	 * @return
-	 */
-	MIBInfoDAO getMIBInfoDAO();
-
-	/**
-	 * @return
-	 */
-	UserDAO getUserDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementTypeDAO getServiceElementTypeDAO();
-
-	/**
-	 * @return
-	 */
-	CapabilityDAO getCapabilityDAO();
-
-	/**
-	 * @return
-	 */
-	SNMPModuleHistoryDAO getSNMPModuleHistoryDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementManagementObjectDAO getServiceElementManagementObjectDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementDAO getServiceElementDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementProtocolInstanceIdentifierDAO getServiceElementProtocolInstanceIdentifierDAO();
-	
-	
 }
-	

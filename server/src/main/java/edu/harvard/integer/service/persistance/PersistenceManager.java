@@ -39,7 +39,9 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
@@ -59,7 +61,7 @@ public class PersistenceManager implements PersistenceManagerLocalInterface {
 	private EntityManager em;
 	
 	@Inject
-	Logger logger;
+	private Logger logger;
 		
 	
 	/**
@@ -151,5 +153,25 @@ public class PersistenceManager implements PersistenceManagerLocalInterface {
 	@Override
 	public ServiceElementManagementObjectDAO getServiceElementManagementObjectDAO() {
 		return new ServiceElementManagementObjectDAO(em, logger);
+	}
+	
+	/**
+	 * get the ServiceElementDAO
+	 * 
+	 * @return ServiceElementDAO. The DAO is initialized with the persistence manager and logger.
+	 */
+	@Override
+	public ServiceElementDAO getServiceElementDAO() {
+		return new ServiceElementDAO(em, logger);
+	}
+	
+	/**
+	 * Get the ServiceElementProtocolInstanceIdentifierDAO
+	 * 
+	 * @return ServiceElementProtocolInstanceIdentifierDAO. The DAO is initialized with the persistence manager and logger.
+	 */
+	@Override
+	public ServiceElementProtocolInstanceIdentifierDAO getServiceElementProtocolInstanceIdentifierDAO() {
+		return new ServiceElementProtocolInstanceIdentifierDAO(em, logger);
 	}
 }

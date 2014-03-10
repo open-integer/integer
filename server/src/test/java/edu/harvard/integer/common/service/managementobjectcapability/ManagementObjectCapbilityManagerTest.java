@@ -58,8 +58,6 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
-import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
  * @author David Taylor
@@ -86,6 +84,8 @@ public class ManagementObjectCapbilityManagerTest {
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, "edu.harvard.integer")
 				.addPackages(true, "net.percederberg")
+				.addPackages(true, "org.apache.commons")
+				.addPackages(true, "org.snmp4j")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")

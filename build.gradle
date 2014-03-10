@@ -2,20 +2,25 @@
 apply plugin: 'ear'
 apply plugin: 'java'
 
+repositories {
+	mavenCentral()
+}
+
 dependencies {
 	deploy project(':common')
 	deploy project(':server')
 	deploy project(path: ':client', configuration: 'archives')
+	
 }
 
 ear {
-	
 	deploymentDescriptor {
 		applicationName = "integer"
 		initializeInOrder = true
 		displayName = "Integer EAR"
 	
 	}
+	
 }
 
 version = '1.0'

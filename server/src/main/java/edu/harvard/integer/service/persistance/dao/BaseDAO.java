@@ -112,6 +112,9 @@ public class BaseDAO {
 	public <T extends BaseEntity> T update(T entity) throws IntegerException {
 
 		try {
+			
+			preSave(entity);
+			
 			if (entity.getIdentifier() == null)
 				getEntityManager().persist(entity);
 			else if (!getEntityManager().contains(entity))
@@ -128,6 +131,10 @@ public class BaseDAO {
 		return entity;
 	}
 
+	public  <T extends BaseEntity> void preSave(T entity) throws IntegerException {
+		
+	}
+	
 	/**
 	 * Find the entity in the database by the specified field.
 	 * 

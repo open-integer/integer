@@ -33,12 +33,9 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.util.List;
+import java.io.Serializable;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 
@@ -55,21 +52,22 @@ import edu.harvard.integer.common.BaseEntity;
  *         accessed.
  */
 @Entity
-public class ServiceElementProtocolInstanceIdentifier extends BaseEntity {
+public class ServiceElementProtocolInstanceIdentifier extends BaseEntity implements Serializable {
 
 	/**
 	 * Serial Version UID.
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ElementCollection
-	@OrderColumn(name = "idx")
-	private List<FCAPSEnum> fcaps = null;
+//	@ElementCollection
+//	@OrderColumn(name = "idx")
+//	private List<FCAPSEnum> fcaps = null;
 
 	private String value = null;
 
-	@ManyToOne
-	private ServiceElement serviceElement = null;
+	public ServiceElementProtocolInstanceIdentifier() {
+		
+	}
 	
 	/**
 	 * @return the value
@@ -86,19 +84,19 @@ public class ServiceElementProtocolInstanceIdentifier extends BaseEntity {
 		this.value = value;
 	}
 
-	/**
-	 * @return the fcaps
-	 */
-	public List<FCAPSEnum> getFcaps() {
-		return fcaps;
-	}
-
-	/**
-	 * @param fcaps
-	 *            the fcaps to set
-	 */
-	public void setFcaps(List<FCAPSEnum> fcaps) {
-		this.fcaps = fcaps;
-	}
+//	/**
+//	 * @return the fcaps
+//	 */
+//	public List<FCAPSEnum> getFcaps() {
+//		return fcaps;
+//	}
+//
+//	/**
+//	 * @param fcaps
+//	 *            the fcaps to set
+//	 */
+//	public void setFcaps(List<FCAPSEnum> fcaps) {
+//		this.fcaps = fcaps;
+//	}
 
 }

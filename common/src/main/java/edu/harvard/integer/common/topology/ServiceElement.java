@@ -41,12 +41,13 @@ import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -185,7 +186,9 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 * A listing of all the ServiceElementProtocolInstanceIdentifier instances
 	 * for this service element.
 	 */
-	@OneToMany(mappedBy="serviceElement")
+	@ManyToMany(fetch=FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	@CollectionTable(name = "ServiceElement_Values")
 	private List<ServiceElementProtocolInstanceIdentifier> values = null;
 
 	/*
@@ -315,6 +318,20 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 */
 	public void setServiceElementCriticality(int serviceElementCriticality) {
 		this.serviceElementCriticality = serviceElementCriticality;
+	}
+
+	/**
+	 * @return the values
+	 */
+	public List<ServiceElementProtocolInstanceIdentifier> getValues() {
+		return values;
+	}
+
+	/**
+	 * @param values the values to set
+	 */
+	public void setValues(List<ServiceElementProtocolInstanceIdentifier> values) {
+		this.values = values;
 	}
 
 }

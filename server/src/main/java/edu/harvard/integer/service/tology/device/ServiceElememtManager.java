@@ -31,85 +31,71 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance;
+package edu.harvard.integer.service.tology.device;
 
-import javax.ejb.Local;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 
-import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
-import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 
 /**
  * @author David Taylor
  *
  */
+@Stateless
+public class ServiceElememtManager implements ServiceElementManagerInterface {
+	@Inject
+	private Logger logger;
+		
+	@Inject
+	private PersistenceManagerLocalInterface dbm;
 
-@Local
-public interface PersistenceManagerLocalInterface {
+	/**
+	 * Add or update a service element. If the service element does not exist in the database. Then 
+	 * a new service element will be created. If the service element exists in then the service element
+	 * will be updated.
+	 * 
+	 */
+	@Override
+	public ServiceElement updateServiceElement(ServiceElement serviceElement) throws IntegerException {
+		
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+		
+		serviceElement = serviceElementDAO.update(serviceElement);
+		
+		if (logger.isDebugEnabled())
+			logger.debug("Save ServiceElement " + serviceElement);
+		
+		return serviceElement;
+	}
 	
 	/**
-	 * @return
+	 * Get the list of all service elements.
 	 */
-	SNMPModuleDAO getSNMPModuleDAO();
-
-	/**
-	 * @return
-	 */
-	SNMPDAO getSNMPDAO();
-
-	/**
-	 * @return
-	 */
-	SNMPIndexDAO getSNMPIndexDAO();
-
-	/**
-	 * @return
-	 */
-	MIBInfoDAO getMIBInfoDAO();
-
-	/**
-	 * @return
-	 */
-	UserDAO getUserDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementTypeDAO getServiceElementTypeDAO();
-
-	/**
-	 * @return
-	 */
-	CapabilityDAO getCapabilityDAO();
-
-	/**
-	 * @return
-	 */
-	SNMPModuleHistoryDAO getSNMPModuleHistoryDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementManagementObjectDAO getServiceElementManagementObjectDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementDAO getServiceElementDAO();
-
-	/**
-	 * @return
-	 */
-	ServiceElementProtocolInstanceIdentifierDAO getServiceElementProtocolInstanceIdentifierDAO();
+	@Override
+	public ServiceElement[] getAllServiceElements() throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+		
+		ServiceElement[] serviceElements = serviceElementDAO.findAll();
+		
+		return serviceElements;
+	}
 	
+	public ServiceElement[] getServiceElementByFilter() throws IntegerException {
+		return null;
+	}
 	
+	public void deleteServiceElement(ServiceElement[] serviceElement) throws IntegerException {
+		
+	}
+	
+	public void deleteServiceElememts(ID[] ids) throws IntegerException {
+		
+	}
 }
-	
