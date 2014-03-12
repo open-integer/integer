@@ -12,7 +12,13 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import edu.harvard.integer.client.ui.CapabilityPanel;
@@ -68,12 +74,88 @@ public class MainClient implements EntryPoint {
 		// Mechanism
 		createAddMechanismLink();
 		
-        LienzoPanel panel4 = new LienzoPanel(1000, 600);
-        RootPanel.get("root").add(panel4);
-        DragImageWidget dragImageWidget = new DragImageWidget(1000, 400);
-        panel4.add(dragImageWidget);
+		// System
+		createSystemPageLink();
+		
+		currentWidget = createHomePage();
+		RootPanel.get("root").add(currentWidget);
+		
+	}
+	
+	private void createSystemPageLink() {
+		Element element = (Element) Document.get().getElementById("system");
+		Anchor testAnchor = Anchor.wrap(element);
+		testAnchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (currentWidget != null)
+					RootPanel.get("root").remove(currentWidget);
+				
+				currentWidget = createHomePage();
+				RootPanel.get("root").add(currentWidget);
+			}
+		});
+	}
+	
+	private SplitLayoutPanel createHomePage() {
+		LienzoPanel networkPanel = new LienzoPanel(800, 400);
+
+        DragImageWidget dragImageWidget = new DragImageWidget(800, 400);
+        networkPanel.add(dragImageWidget);
         
-        currentWidget= panel4;
+		SplitLayoutPanel systemPanel = new SplitLayoutPanel(5);
+		systemPanel.setSize("1200px", "600px");
+		SplitLayoutPanel westPanel = new SplitLayoutPanel(3);
+		SplitLayoutPanel eastPanel = new SplitLayoutPanel(3);
+		
+		westPanel.addSouth(new HTML("Filters"), 200);
+		westPanel.add(createNetworkTreePanel());
+
+		//eastPanel.addSouth(new HTML("Alarms"), 100);
+		eastPanel.add(networkPanel);
+		
+		systemPanel.addWest(westPanel, 250);
+		systemPanel.add(eastPanel);
+		
+		return systemPanel;
+	}
+	
+	private VerticalPanel createNetworkTreePanel() {
+		VerticalPanel treePanel = new VerticalPanel();
+		Tree staticTree = createStaticTree();
+	    staticTree.setAnimationEnabled(true);
+	    staticTree.ensureDebugId("cwTree-staticTree");
+	    ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
+	    staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
+	    staticTreeWrapper.setSize("300px", "500px");
+	    
+	    treePanel.add(staticTree);
+	    
+	    return treePanel;
+	}
+	
+	private Tree createStaticTree() {
+	    // Create the tree
+	    String[] networks = {"Cambridge Campus", "Allston Campus", "Longwood Medical", };
+	    String[] subnetworks = {"192.168.1.", "192.168.2.", "192.168.3.", };
+	    
+	    Tree tree = new Tree();
+	    tree.setAnimationEnabled(true);
+	    TreeItem root = new TreeItem();
+	    root.setText("Physical Network");
+
+	    int i = 1;
+	    for (String network : networks) {
+		    TreeItem cambridgeNet = root.addTextItem(network);
+		    for (String subnet : subnetworks) {
+		    	cambridgeNet.addTextItem(subnet+i++);
+			}
+	    }
+
+	    root.setState(true);
+	    tree.addItem(root);
+	    return tree;
 	}
 	
 	private void createViewImportedMibsLink() {

@@ -188,3 +188,12 @@ h1 {
 	border-radius: 0;
 	-moz-border-radius: 0;
 }
+
+.gwt-SplitLayoutPanel-HDragger {
+    border:2px solid #e7e7e7;
+}
+
+.gwt-SplitLayoutPanel-VDragger {
+    background: #e7e7e7 url(images/horizontal.png) center center no-repeat;
+  	border:2px solid #e7e7e7;
+}
