@@ -15,7 +15,7 @@ public class HvTableViewPanel extends VerticalPanel {
 	protected DockPanel dockPanel = new DockPanel();
 	
 	/** The title panel. */
-	protected HTMLPanel titlePanel;
+	protected VerticalPanel titlePanel = new VerticalPanel();
 	
 	/** The action panel. */
 	protected HorizontalPanel actionPanel = new HorizontalPanel();
@@ -26,14 +26,21 @@ public class HvTableViewPanel extends VerticalPanel {
 	/** The add button. */
 	protected HvIconButton addButton = new HvIconButton("Add");
 	
+	public HvTableViewPanel(String title, String[] headers) {
+		this(title, null, headers);
+	}
+	
 	/**
 	 * Instantiates a new hv table view panel.
 	 *
 	 * @param title the title
 	 * @param headers the headers
 	 */
-	public HvTableViewPanel(String title, String[] headers) {
-		titlePanel = new HTMLPanel(title);
+	public HvTableViewPanel(String title, String subTitle, String[] headers) {
+		titlePanel.add(new HTMLPanel(title));
+		if (subTitle != null)
+			titlePanel.add(new HTMLPanel(subTitle));
+		
 		flexTable = new HvFlexTable(headers);
 		actionPanel.setCellHorizontalAlignment(addButton, HasHorizontalAlignment.ALIGN_RIGHT);
 		actionPanel.add(addButton);

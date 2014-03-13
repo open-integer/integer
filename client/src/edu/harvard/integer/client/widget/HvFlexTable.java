@@ -45,6 +45,10 @@ public class HvFlexTable extends FlexTable {
 	public Widget getVisualPanel() {
 		return scrollPanel;
 	}
+	
+	public void setSize(String width, String height) {
+		scrollPanel.setSize(width, height);
+	}
 
 	/**
 	 * Apply data row styles.

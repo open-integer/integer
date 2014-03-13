@@ -17,6 +17,7 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 
+// TODO: Auto-generated Javadoc
 /**
  * The server side implementation of the RPC service.
  */
@@ -118,6 +119,15 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		}
 
 		return list;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getEvents()
+	 */
+	@Override
+	public List<Object> getEvents() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
