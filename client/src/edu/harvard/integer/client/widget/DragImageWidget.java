@@ -1,7 +1,13 @@
 package edu.harvard.integer.client.widget;
 
+import java.awt.Color;
+
 import com.emitrom.lienzo.client.core.image.PictureLoadedHandler;
 import com.emitrom.lienzo.client.core.shape.Picture;
+import com.emitrom.lienzo.client.core.shape.Text;
+import com.emitrom.lienzo.shared.core.types.ColorName;
+import com.emitrom.lienzo.shared.core.types.TextAlign;
+import com.google.gwt.resources.client.ImageResource;
 
 import edu.harvard.integer.client.resources.Resources;
 
@@ -11,25 +17,10 @@ import edu.harvard.integer.client.resources.Resources;
 public class DragImageWidget extends WidgetLayer {  
   
     /** The image width. */
-    private final int IMAGE_WIDTH = 100;  
+    private final int IMAGE_WIDTH = 80;  
     
     /** The image height. */
-    private final int IMAGE_HEIGHT = 100;  
-      
-    /** The alain avatar. */
-    private Picture alainAvatar;  
-    
-    /** The alfredo avatar. */
-    private Picture alfredoAvatar;  
-    
-    /** The david avatar. */
-    private Picture davidAvatar;  
-    
-    /** The dean avatar. */
-    private Picture deanAvatar;  
-    
-    /** The enno avatar. */
-    private Picture ennoAvatar;  
+    private final int IMAGE_HEIGHT = 80;  
       
     /**
      * Instantiates a new drag image widget.
@@ -47,9 +38,32 @@ public class DragImageWidget extends WidgetLayer {
      */
     private void init() {  
           
-        final int x = width/2;  
-        final int y = height/2;  
-          
+        ImageResource[] images = 
+        		{Resources.IMAGES.wirelessRoute128(),
+        		 Resources.IMAGES.graySwitch(),
+        		 Resources.IMAGES.wirelessRouter80(),
+        		 Resources.IMAGES.greenRouter(),
+        		 Resources.IMAGES.pcom(),
+        		 Resources.IMAGES.wirelessRoute128(),
+        		 Resources.IMAGES.graySwitch(),
+        		 Resources.IMAGES.wirelessRouter80(),
+        		 Resources.IMAGES.greenRouter(),
+        		 Resources.IMAGES.pcom(),
+        		 Resources.IMAGES.wirelessRoute128(),
+        		 Resources.IMAGES.graySwitch(),
+        		 Resources.IMAGES.wirelessRouter80(),
+        		 Resources.IMAGES.greenRouter(),
+        		 Resources.IMAGES.pcom(),
+        		 Resources.IMAGES.wirelessRouter80(),
+        		 Resources.IMAGES.greenRouter(),
+        		 Resources.IMAGES.pcom(),
+        		 Resources.IMAGES.wirelessRoute128(),
+        		 Resources.IMAGES.graySwitch(),
+        		 Resources.IMAGES.wirelessRouter80(),
+        		 Resources.IMAGES.greenRouter(),
+        		 Resources.IMAGES.pcom(),
+        		};
+
         PictureLoadedHandler onLoad = new PictureLoadedHandler()  
         {  
             public void onPictureLoaded(Picture picture)  
@@ -59,19 +73,20 @@ public class DragImageWidget extends WidgetLayer {
             }  
         };  
           
-        alainAvatar = new Picture(Resources.IMAGES.wirelessRoute128(), IMAGE_WIDTH, IMAGE_HEIGHT, true, null);  
-        alainAvatar.setDraggable(true).setX(x - IMAGE_WIDTH*2).setY(y - IMAGE_HEIGHT).onLoad(onLoad);  
-          
-        alfredoAvatar = new Picture(Resources.IMAGES.graySwitch(), IMAGE_WIDTH, IMAGE_HEIGHT, true, null);  
-        alfredoAvatar.setDraggable(true).setX(x - IMAGE_WIDTH*2).setY(y).onLoad(onLoad);  
-          
-        davidAvatar = new Picture(Resources.IMAGES.wirelessRouter80(), IMAGE_WIDTH, IMAGE_HEIGHT, true, null);  
-        davidAvatar.setDraggable(true).setX(x + IMAGE_WIDTH).setY(y - IMAGE_HEIGHT).onLoad(onLoad);  
-          
-        deanAvatar = new Picture(Resources.IMAGES.greenRouter(), IMAGE_WIDTH, IMAGE_HEIGHT, true, null);  
-        deanAvatar.setDraggable(true).setX(x - IMAGE_WIDTH/2).setY(y - IMAGE_HEIGHT/2).onLoad(onLoad);  
-          
-        ennoAvatar = new Picture(Resources.IMAGES.pcom(), IMAGE_WIDTH, IMAGE_HEIGHT, true, null);  
-        ennoAvatar.setDraggable(true).setX(x + IMAGE_WIDTH).setY(y).onLoad(onLoad);  
+        int i = 0;
+        for (int row = 0; row < 3; row++) {
+        	for (int col = 0; col < 6; col++) {
+	        	Picture picture = new Picture(images[i], IMAGE_WIDTH, IMAGE_HEIGHT, true, null);
+	        	int x = col * IMAGE_WIDTH*2 + 50;
+	        	int y = row * IMAGE_HEIGHT*2 + 50;
+	        	picture.setDraggable(true).setX(x).setY(y).onLoad(onLoad);
+	        	
+	        	i++;
+	        	Text text = new Text("192.168.100." + i, "oblique normal bold", 24);
+				text.setX(x).setY(y+IMAGE_HEIGHT+30).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
+				add(text);
+        	}
+        }
+        
     }  
 }
