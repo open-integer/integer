@@ -12,7 +12,6 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
@@ -23,6 +22,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.CapabilityView;
+import edu.harvard.integer.client.ui.EventView;
+import edu.harvard.integer.client.ui.FilterView;
 import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.ui.MechanismPanel;
 import edu.harvard.integer.client.ui.ServiceElementPanel;
@@ -105,15 +106,19 @@ public class MainClient implements EntryPoint {
         networkPanel.add(dragImageWidget);
         
 		SplitLayoutPanel systemPanel = new SplitLayoutPanel(5);
-		systemPanel.setSize("1200px", "600px");
+		systemPanel.setSize("1200px", "700px");
 		SplitLayoutPanel westPanel = new SplitLayoutPanel(3);
 		SplitLayoutPanel eastPanel = new SplitLayoutPanel(3);
 		
-		westPanel.addSouth(new HTML("Filters"), 200);
+		FilterView filterView = createFilterView();
+		westPanel.addSouth(filterView, 200);
 		westPanel.add(createNetworkTreePanel());
+		westPanel.setWidgetToggleDisplayAllowed(filterView, true);
 
-		//eastPanel.addSouth(new HTML("Alarms"), 100);
+		EventView eventView = createEventView();
+		eastPanel.addSouth(eventView, 150);
 		eastPanel.add(networkPanel);
+		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
 		
 		systemPanel.addWest(westPanel, 250);
 		systemPanel.add(eastPanel);
@@ -156,6 +161,43 @@ public class MainClient implements EntryPoint {
 	    root.setState(true);
 	    tree.addItem(root);
 	    return tree;
+	}
+	
+	private FilterView createFilterView() {
+		String title = "Layer 3 Topology";
+		String subTitle = "State - Campus Wide";
+		final String[] headers = {"Views", "Filters", "Manager"};
+		final FilterView filterView = new FilterView(title, subTitle, headers);
+		integerService.getEvents(new AsyncCallback<List<Object>>() {
+
+			@Override
+			public void onSuccess(List<Object> result) {
+				filterView.update(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+		return filterView;
+	}
+	
+	private EventView createEventView() {
+		String title = "Events";
+		final String[] headers = {"Type", "Severity", "Start Time", "Status", "Description"};
+		final EventView eventView = new EventView(title, headers);
+		integerService.getEvents(new AsyncCallback<List<Object>>() {
+
+			@Override
+			public void onSuccess(List<Object> result) {
+				eventView.update(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+		return eventView;
 	}
 	
 	private void createViewImportedMibsLink() {

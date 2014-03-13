@@ -64,6 +64,14 @@ public interface IntegerService extends RemoteService {
 	 * @throws Exception the exception
 	 */
 	List<ServiceElementManagementObject> getAllServiceElementManagementObjects() throws Exception;
+
+	
+	/**
+	 * Gets the events.
+	 *
+	 * @return the events
+	 */
+	List<Object> getEvents() throws Exception;
 	
 	
 }
