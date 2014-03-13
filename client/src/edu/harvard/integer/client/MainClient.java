@@ -100,9 +100,9 @@ public class MainClient implements EntryPoint {
 	}
 	
 	private SplitLayoutPanel createHomePage() {
-		LienzoPanel networkPanel = new LienzoPanel(800, 400);
+		LienzoPanel networkPanel = new LienzoPanel(950, 550);
 
-        DragImageWidget dragImageWidget = new DragImageWidget(800, 400);
+        DragImageWidget dragImageWidget = new DragImageWidget(950, 550);
         networkPanel.add(dragImageWidget);
         
 		SplitLayoutPanel systemPanel = new SplitLayoutPanel(5);
@@ -133,7 +133,7 @@ public class MainClient implements EntryPoint {
 	    staticTree.ensureDebugId("cwTree-staticTree");
 	    ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
 	    staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
-	    staticTreeWrapper.setSize("300px", "500px");
+	    staticTreeWrapper.setSize("250px", "500px");
 	    
 	    treePanel.add(staticTree);
 	    
@@ -186,7 +186,7 @@ public class MainClient implements EntryPoint {
 		String title = "Events";
 		final String[] headers = {"Type", "Severity", "Start Time", "Status", "Description"};
 		final EventView eventView = new EventView(title, headers);
-		integerService.getEvents(new AsyncCallback<List<Object>>() {
+		/*integerService.getEvents(new AsyncCallback<List<Object>>() {
 
 			@Override
 			public void onSuccess(List<Object> result) {
@@ -196,7 +196,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
-		});
+		});*/
 		return eventView;
 	}
 	

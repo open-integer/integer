@@ -45,7 +45,16 @@ h3 {
 	font-size: 1.0em;
 	font-family: arial;
     font-weight: plain;
-    color: black;
+    color: #1c5a80;
+    margin: 1px 1px 1px 1px;
+    text-align: left;
+}
+
+h4 {
+	font-size: 1.0em;
+	font-family: arial;
+    font-weight: plain;
+    color: #000080;
     margin: 1px 1px 1px 1px;
     text-align: left;
 }

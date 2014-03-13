@@ -20,8 +20,9 @@ public class EventView extends HvTableViewPanel {
 		addButton.setVisible(false);
 		flexTable.insertRow(1);
 		flexTable.insertRow(2);
-		flexTable.insertRow(3);
+		
 		flexTable.applyDataRowStyles();
+		flexTable.getVisualPanel().setSize("1150px", "200px");
 	}
 
 	/**
