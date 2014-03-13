@@ -33,6 +33,7 @@
 package edu.harvard.integer.common.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -40,16 +41,17 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
-import javax.validation.constraints.NotNull;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.Orginization;
+
 /**
  * @author David Taylor
- *
+ * 
+ *         Every system user will have a User instance. Additionally, locations
+ *         and many other objects in the system may also have users associated
+ *         with them.
  */
 @Entity
 public class User extends BaseEntity {
@@ -58,27 +60,62 @@ public class User extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * The contact ID
+	 */
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "contactId")),
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "contactType")),
 			@AttributeOverride(name = "name", column = @Column(name = "contactName")) })
 	private ID contactId = null;
-	
+
+	/**
+	 * Users can be members of multiple organizations. This is a listing of the
+	 * ids of the id objects for each organization they belong to.
+	 */
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> orginizations = null;
 
-	@NotNull(message="User.UUID must not be null!")
-	private String uuid = null;
-	
+	/**
+	 * This should not be confused wtih the internal id or idId attribes. This
+	 * is a uuid.
+	 */
+	private UUID uuid = null;
+
+	/**
+	 * Organizations may differ in the format of unique identifiers used for
+	 * individuals. This attribute may be used in those cases where UUID is not
+	 * avialable.
+	 */
+	private String otherId = null;
+
 	private String firstName = null;
-	
+
 	private String lastName = null;
-	
+
 	private String middleName = null;
-	
+
+	/**
+	 * The alias is the 'screen' name like, Bob S. or Barbara H.
+	 */
 	private String alias = null;
+
+	/**
+	 * List of roles associated with this user.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> roles = null;
+
+	/**
+	 * Users can be members of multiple organizations. This is a listing of the
+	 * IDs of the id objects for each organization they belong to.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> organizations = null;
 
 	/**
 	 * @return the identifier
@@ -128,7 +165,7 @@ public class User extends BaseEntity {
 	/**
 	 * @return the uuid
 	 */
-	public String getUuid() {
+	public UUID getUuid() {
 		return uuid;
 	}
 
@@ -136,7 +173,7 @@ public class User extends BaseEntity {
 	 * @param uuid
 	 *            the uuid to set
 	 */
-	public void setUuid(String uuid) {
+	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
 	}
 
@@ -198,5 +235,35 @@ public class User extends BaseEntity {
 	 */
 	public void setAlias(String alias) {
 		this.alias = alias;
+	}
+
+	/**
+	 * @return the otherId
+	 */
+	public String getOtherId() {
+		return otherId;
+	}
+
+	/**
+	 * @param otherId
+	 *            the otherId to set
+	 */
+	public void setOtherId(String otherId) {
+		this.otherId = otherId;
+	}
+
+	/**
+	 * @return the roles
+	 */
+	public List<ID> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @param roles
+	 *            the roles to set
+	 */
+	public void setRoles(List<ID> roles) {
+		this.roles = roles;
 	}
 }

@@ -45,6 +45,12 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
+import edu.harvard.integer.service.persistance.dao.user.AuthInfoDAO;
+import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
+import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
+import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
+import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 
 /**
@@ -109,6 +115,36 @@ public interface PersistenceManagerLocalInterface {
 	 * @return
 	 */
 	ServiceElementProtocolInstanceIdentifierDAO getServiceElementProtocolInstanceIdentifierDAO();
+
+	/**
+	 * @return
+	 */
+	AccessPolicyDAO getAccessPolicyDAO();
+
+	/**
+	 * @return
+	 */
+	AuthInfoDAO getAuthInfoDAO();
+
+	/**
+	 * @return
+	 */
+	LocationDAO getLocationDAO();
+
+	/**
+	 * @return
+	 */
+	RoleDAO getRoleDAO();
+
+	/**
+	 * @return
+	 */
+	OrganizationDAO getOrganizationDAO();
+
+	/**
+	 * @return
+	 */
+	ContactDAO getContactDAO();
 	
 	
 }

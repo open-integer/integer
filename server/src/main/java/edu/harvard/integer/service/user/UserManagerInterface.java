@@ -35,8 +35,15 @@ package edu.harvard.integer.service.user;
 
 import javax.ejb.Local;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.user.AccessPolicy;
+import edu.harvard.integer.common.user.Contact;
+import edu.harvard.integer.common.user.Location;
+import edu.harvard.integer.common.user.Organization;
+import edu.harvard.integer.common.user.Role;
 import edu.harvard.integer.common.user.User;
+import edu.harvard.integer.common.user.authentication.AuthInfo;
 
 /**
  * @author David Taylor
@@ -50,5 +57,75 @@ public interface UserManagerInterface {
 	public User[] getAllUsers() throws IntegerException;
 	
 	public String showUsers() throws IntegerException;
+
+	
+	/**
+	 * @param contact
+	 * @return
+	 * @throws IntegerException
+	 */
+	Contact updateContact(Contact contact) throws IntegerException;
+	/**
+	 * @param contact
+	 * @throws IntegerException
+	 */
+	void deleteContact(Contact contact) throws IntegerException;
+	/**
+	 * @param organization
+	 * @return
+	 * @throws IntegerException
+	 */
+	Organization updateOrganization(Organization organization)
+			throws IntegerException;
+	/**
+	 * @param id
+	 * @throws IntegerException
+	 */
+	void deleteOrganization(ID id) throws IntegerException;
+	/**
+	 * @param organization
+	 * @throws IntegerException
+	 */
+	void deleteOrganization(Organization organization) throws IntegerException;
+	/**
+	 * @param policy
+	 * @return
+	 * @throws IntegerException
+	 */
+	AccessPolicy updateAccessPolicy(AccessPolicy policy)
+			throws IntegerException;
+	/**
+	 * @param id
+	 * @throws IntegerException
+	 */
+	void deleteAccessPolicy(ID id) throws IntegerException;
+	/**
+	 * @param policy
+	 * @throws IntegerException
+	 */
+	void deleteAccessPolicy(AccessPolicy policy) throws IntegerException;
+	/**
+	 * @param authInfo
+	 * @return
+	 * @throws IntegerException
+	 */
+	AuthInfo updateAuthInfo(AuthInfo authInfo) throws IntegerException;
+	/**
+	 * @param location
+	 * @return
+	 * @throws IntegerException
+	 */
+	Location updateLocation(Location location) throws IntegerException;
+	/**
+	 * @param id
+	 * @throws IntegerException
+	 */
+	void deleteLocation(ID id) throws IntegerException;
+	/**
+	 * @param role
+	 * @return
+	 * @throws IntegerException
+	 */
+	Role updateRole(Role role) throws IntegerException;
 	
 }

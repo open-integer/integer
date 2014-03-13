@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,80 +30,45 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.util.List;
+package edu.harvard.integer.common.user.authentication;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
  * 
- *         Identifies an organization. Organizations have
- *         hierarchies/containment. That is why this element can contain more
- *         Organizations.
+ *         Authentication for each organization (and possibly - but hopefully
+ *         not each sub organization).
+ * 
+ *         It is possible that more than one Authentication method (e.g., CAS)
+ *         could be used with different access policies. This may be useful in
+ *         test environments.
+ * 
+ *         Local Authentication will be supported meaning users could log into
+ *         the system with a password but it is not recommended.
  */
-@Entity
-public class Orginization extends BaseEntity {
+public class AuthInfo extends BaseEntity {
 
 	/**
-	 * Serialization ID
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String orginizationType = null;
+	private AuthenticationType authType = null;
 
 	/**
-	 * This is a list of the id of the Id class instances associated with
-	 * location objects for this organization. Generally an organization will
-	 * have several locations each with a different 'type'. For example, support
-	 * center, development center, business office, etc.
+	 * @return the authType
 	 */
-	@ElementCollection
-	@OrderColumn(name="idx")
-	private List<ID> locations = null;
-	
-	/**
-	 * list of orinizations that this orginization belongs to.
-	 */
-	@ElementCollection
-	@OrderColumn(name="idx")
-	private List<ID> orinizations = null;
-
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return orginizationType;
+	public AuthenticationType getAuthType() {
+		return authType;
 	}
 
 	/**
-	 * @param type
-	 *            the type to set
+	 * @param authType
+	 *            the authType to set
 	 */
-	public void setType(String type) {
-		this.orginizationType = type;
+	public void setAuthType(AuthenticationType authType) {
+		this.authType = authType;
 	}
-
-	/**
-	 * @return the orinizations
-	 */
-	public List<ID> getOrinizations() {
-		return orinizations;
-	}
-
-	/**
-	 * @param orinizations
-	 *            the orinizations to set
-	 */
-	public void setOrinizations(List<ID> orinizations) {
-		this.orinizations = orinizations;
-	}
-
 }

@@ -35,6 +35,8 @@ package edu.harvard.integer.common.user;
 
 import static org.junit.Assert.fail;
 
+import java.util.UUID;
+
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -47,7 +49,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.user.UserManagerInterface;
 
@@ -84,10 +85,9 @@ public class UserTest {
 		User u = new User();
 		u.setName("dtaylor");
 		
-		IDType userType = new IDType(User.class.getCanonicalName());
 		u.setFirstName("Dave");
 		u.setLastName("Taylor");
-		u.setUuid("123456789");
+		u.setUuid(UUID.randomUUID());
 		
 		try {
 			userManager.addUser(u);
@@ -122,5 +122,51 @@ public class UserTest {
 		}
 	}
 	
+	@Test
+	public void addOrginization() {
+		Organization organization = new Organization();
+		organization.setName("Organization name");
+		organization.setOrginizationType("Harvard");
+		
+		try {
+			userManager.updateOrganization(organization);
+		} catch (IntegerException e) {
+		
+			e.printStackTrace();
+			
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void addAccessPolicy() {
+		AccessPolicy policy = new AccessPolicy();
+		policy.setName("Policy");
+		policy.setPermitDeny(PermitDenyEnum.Pemit);
+		
+		try {
+			userManager.updateAccessPolicy(policy);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+	}
+	
+	@Test
+	public void addRole() {
+		Role role = new Role();
+		role.setName("MyRole");
+		role.setRoleType(RoleType.Primary);
+		
+		try {
+			userManager.updateRole(role);
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			
+			fail(e.toString());
+		}
+	}
 	
 }

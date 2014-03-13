@@ -39,6 +39,10 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
@@ -49,6 +53,12 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
+import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
+import edu.harvard.integer.service.persistance.dao.user.AuthInfoDAO;
+import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
+import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
+import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
+import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 /**
  * @author David Taylor
@@ -174,4 +184,60 @@ public class PersistenceManager implements PersistenceManagerLocalInterface {
 	public ServiceElementProtocolInstanceIdentifierDAO getServiceElementProtocolInstanceIdentifierDAO() {
 		return new ServiceElementProtocolInstanceIdentifierDAO(em, logger);
 	}
+	
+	/**
+	 * Get the AccessPolicyDAO()
+	 * @return AccessPolicyDAO();
+	 */
+	@Override
+	public AccessPolicyDAO getAccessPolicyDAO() {
+		return new AccessPolicyDAO(em, logger);
+	}
+	
+	/**
+	 * Get the AuthInfoDAO
+	 * @return AuthInfoDAO
+	 */
+	@Override
+	public AuthInfoDAO getAuthInfoDAO() {
+		return new AuthInfoDAO(em, logger);
+	}
+	
+	/**
+	 * Get the LocationDAO
+	 * @return LocationDAO
+	 */
+	@Override
+	public LocationDAO getLocationDAO() {
+		return new LocationDAO(em, logger);
+	}
+	
+	/**
+	 * Get the RoleDAO
+	 * @return RoleDAO
+	 */
+	@Override
+	public RoleDAO getRoleDAO() {
+		return new RoleDAO(em, logger);
+	}
+	
+	/**
+	 * Get the OrganizationDAO
+	 * @return OrganizationDAO
+	 */
+	@Override
+	public OrganizationDAO getOrganizationDAO() {
+		return new OrganizationDAO(em, logger);
+	}
+	
+	/**
+	 * Get the ConcactDAO
+	 * @return ContactDAO
+	 */
+	@Override
+	public ContactDAO getContactDAO() {
+		return new ContactDAO(em, logger);
+	}
+	
+	
 }

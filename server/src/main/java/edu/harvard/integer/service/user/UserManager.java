@@ -40,14 +40,24 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.hibernate.cfg.beanvalidation.IntegrationException;
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.user.AccessPolicy;
 import edu.harvard.integer.common.user.Contact;
+import edu.harvard.integer.common.user.Location;
+import edu.harvard.integer.common.user.Organization;
+import edu.harvard.integer.common.user.Role;
 import edu.harvard.integer.common.user.User;
-import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.common.user.authentication.AuthInfo;
 import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
+import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
+import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
+import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
+import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 
 /**
@@ -81,10 +91,9 @@ public class UserManager implements UserManagerInterface {
 	private PersistenceManagerLocalInterface dbm;
 
 	public UserManager() {
-		
-		
+
 	}
-	
+
 	/**
 	 * Add one user to the system. The user will be saved into the database. All
 	 * setup for the user will be done after the call completes.
@@ -96,6 +105,7 @@ public class UserManager implements UserManagerInterface {
 	 * @return User. The newly created user.
 	 * @throws IntegerException
 	 */
+	@Override
 	public User addUser(User user) throws IntegerException {
 		logger.info("Add User (" + user.getAlias() + ") " + user.getFirstName()
 				+ " " + user.getLastName());
@@ -112,6 +122,7 @@ public class UserManager implements UserManagerInterface {
 	 * @return User. The modified user.
 	 * @throws IntegerException
 	 */
+	@Override
 	public User modifyUser(User user) throws IntegerException {
 		logger.info("Modify User (" + user.getAlias() + ") "
 				+ user.getFirstName() + " " + user.getLastName());
@@ -129,6 +140,7 @@ public class UserManager implements UserManagerInterface {
 	 * @param user
 	 * @throws IntegerException
 	 */
+	@Override
 	public void deleteUser(User user) throws IntegerException {
 		logger.info("Delete User (" + user.getAlias() + ") "
 				+ user.getFirstName() + " " + user.getLastName());
@@ -142,10 +154,11 @@ public class UserManager implements UserManagerInterface {
 	 * @return User[]. All users.
 	 * @throws IntegerException
 	 */
+	@Override
 	public User[] getAllUsers() throws IntegerException {
 
 		UserDAO userDAO = dbm.getUserDAO();
-		
+
 		return userDAO.findAll();
 	}
 
@@ -156,18 +169,11 @@ public class UserManager implements UserManagerInterface {
 	 * @return Contact. The newly created user.
 	 * @throws IntegerException
 	 */
-	public Contact addContact(Contact contact) throws IntegerException {
-		return contact;
-	}
-
-	/**
-	 * Modify the Contact.
-	 * 
-	 * @param contact
-	 * @return Contact. The modified Contact.
-	 * @throws IntegerException
-	 */
-	public Contact modifyContact(Contact contact) throws IntegerException {
+	@Override
+	public Contact updateContact(Contact contact) throws IntegerException {
+		ContactDAO dao = dbm.getContactDAO();
+		dao.update(contact);
+		
 		return contact;
 	}
 
@@ -183,19 +189,23 @@ public class UserManager implements UserManagerInterface {
 	 *             the Contact is in Use with an error code of
 	 *             ContactInUseCanNotDelete.
 	 */
+	@Override
 	public void deleteContact(Contact contact) throws IntegerException {
-
+		ContactDAO dao = dbm.getContactDAO();
+		
+		dao.delete(contact);
 	}
 
 	/**
-	 * Show the users VIA rest interface. This will list all users
-	 * in the system.
+	 * Show the users VIA rest interface. This will list all users in the
+	 * system.
 	 */
 	@GET
 	@Path("/Users")
 	@Produces(value = MediaType.TEXT_HTML)
+	@Override
 	public String showUsers() throws IntegerException {
-		
+
 		UserDAO userDAO = dbm.getUserDAO();
 		User[] resultList = userDAO.findAll();
 
@@ -213,4 +223,167 @@ public class UserManager implements UserManagerInterface {
 		b.append("</ul>");
 		return b.toString();
 	}
+
+	/**
+	 * Create or update an instance of organization or create a new instance in
+	 * the DB.
+	 * 
+	 * @param organization
+	 * @return
+	 * @throws IntegerException
+	 */
+	@Override
+	public Organization updateOrganization(Organization organization)
+			throws IntegerException {
+		OrganizationDAO dao = dbm.getOrganizationDAO();
+
+		try {
+			organization = dao.update(organization);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+		}
+
+		return organization;
+	}
+	
+	/**
+	 * Delete the Organization the ID identifies
+	 * @param id
+	 * @throws IntegerException
+	 */
+	@Override
+	public void deleteOrganization(ID id) throws IntegerException {
+		OrganizationDAO dao = dbm.getOrganizationDAO();
+		
+		dao.delete(id);
+	}
+	
+	/**
+	 * Delete the Organization
+	 * @param organization
+	 * @throws IntegerException
+	 */
+	@Override
+	public void deleteOrganization(Organization organization) throws IntegerException {
+		OrganizationDAO dao = dbm.getOrganizationDAO();
+		
+		dao.delete(organization);
+	}
+	
+	/**
+	 * Update the AccessPolicy. 
+	 * 
+	 * @param policy
+	 * @return
+	 * @throws IntegerException
+	 */
+	@Override
+	public AccessPolicy updateAccessPolicy(AccessPolicy policy) throws IntegerException {
+		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
+		
+		policy = dao.update(policy);
+		
+		return policy;	
+	}
+	
+	/**
+	 * Delete the AccessPolicy the ID specifies.
+	 * 
+	 * @param id
+	 * @throws IntegerException
+	 */
+	@Override
+	public void deleteAccessPolicy(ID id) throws IntegerException {
+		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
+		dao.delete(id);
+	}
+	
+	/**
+	 * Delete the AccessPolicy.
+	 * 
+	 * @param policy
+	 * @throws IntegerException
+	 */
+	@Override
+	public void deleteAccessPolicy(AccessPolicy policy) throws IntegerException {
+		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
+		dao.delete(policy);
+	}
+	
+	/**
+	 * Update the AuthInfo.
+	 * @param authInfo
+	 * @return
+	 * @throws IntegerException
+	 */
+	@Override
+	public AuthInfo updateAuthInfo(AuthInfo authInfo) throws IntegerException {
+		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
+		
+		return dao.update(authInfo);
+	}
+	
+	/**
+	 * Delete the AuthInfo
+	 * @param id
+	 * @throws IntegerException
+	 */
+	public void deleteAuthInfo(ID id) throws IntegerException {
+		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
+		dao.delete(id);
+	}
+	
+	/**
+	 * Update the location.
+	 * @param location
+	 * @return
+	 * @throws IntegerException
+	 */
+	@Override
+	public Location updateLocation(Location location) throws IntegerException {
+		LocationDAO dao = dbm.getLocationDAO();
+		location = dao.update(location);
+		
+		return location;
+	}
+	
+	/**
+	 * Delete the Location.
+	 * 
+	 * @param id
+	 * @throws IntegerException
+	 */
+	@Override
+	public void deleteLocation(ID id) throws IntegerException {
+		LocationDAO dao = dbm.getLocationDAO();
+		dao.delete(id);
+	}
+	
+	/**
+	 * Update the Role.
+	 * 
+	 * @param role
+	 * @return
+	 * @throws IntegerException
+	 */
+	@Override
+	public Role updateRole(Role role) throws IntegerException {
+		
+		RoleDAO dao = dbm.getRoleDAO();
+		role = dao.update(role);
+		
+		return role;
+	}
+	
+	/**
+	 * Delete the Role specified by the ID.
+	 * 
+	 * @param id
+	 * @throws IntegerException
+	 */
+	public void deleteRole(ID id) throws IntegerException {
+		RoleDAO dao = dbm.getRoleDAO();
+		dao.delete(id);
+	}
+	
 }
