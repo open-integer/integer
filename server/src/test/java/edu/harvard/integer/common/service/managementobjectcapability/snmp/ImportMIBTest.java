@@ -85,6 +85,7 @@ public class ImportMIBTest {
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, "edu.harvard.integer")
 				.addPackages(true, "net.percederberg")
+				.addPackages(true, "uk.co.westhawk")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")

@@ -31,49 +31,13 @@
  *      
  */
 
-package edu.harvard.integer.common.snmp;
-
-import java.io.Serializable;
-
-import javax.persistence.Entity;
+package edu.harvard.integer.service;
 
 /**
  * @author David Taylor
  *
- * Definition of an SNMP index oid.  The implied flag is to indicate that the index
- * is an implied index or not.
- * 
+ * Base class for all services.
  */
-@Entity
-public class SNMPIndex extends SNMP implements Serializable {
-	/**
-	 * Serialization version
-	 */
-	private static final long serialVersionUID = 1L;
+public class BaseService {
 
-	private Boolean implied = false;
-
-	/**
-	 * @return the implied
-	 */
-	public Boolean isImplied() {
-		return implied;
-	}
-
-	/**
-	 * To make GWT happy we need to have a getImplied().
-	 * 
-	 * @return
-	 */
-	public Boolean getImplied() {
-		return isImplied();
-	}
-	
-	/**
-	 * @param implied the implied to set
-	 */
-	public void setImplied(Boolean implied) {
-		this.implied = implied;
-	}
-	
 }
