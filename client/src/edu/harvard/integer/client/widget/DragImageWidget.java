@@ -1,7 +1,5 @@
 package edu.harvard.integer.client.widget;
 
-import java.awt.Color;
-
 import com.emitrom.lienzo.client.core.image.PictureLoadedHandler;
 import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.client.core.shape.Text;
@@ -64,27 +62,18 @@ public class DragImageWidget extends WidgetLayer {
         		 Resources.IMAGES.pcom(),
         		};
 
-        PictureLoadedHandler onLoad = new PictureLoadedHandler()  
-        {  
-            public void onPictureLoaded(Picture picture)  
-            {  
-                add(picture);  
-                DragImageWidget.this.draw();  
-            }  
-        };  
-          
         int i = 0;
         for (int row = 0; row < 3; row++) {
         	for (int col = 0; col < 6; col++) {
 	        	Picture picture = new Picture(images[i], IMAGE_WIDTH, IMAGE_HEIGHT, true, null);
 	        	int x = col * IMAGE_WIDTH*2 + 50;
 	        	int y = row * IMAGE_HEIGHT*2 + 50;
-	        	picture.setDraggable(true).setX(x).setY(y).onLoad(onLoad);
 	        	
-	        	i++;
-	        	Text text = new Text("192.168.100." + i, "oblique normal bold", 24);
-				text.setX(x).setY(y+IMAGE_HEIGHT+30).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
-				add(text);
+	        	HvMapIconWidget icon = new HvMapIconWidget(picture, "192.168.100."+i++);
+	        	icon.draw(x, y);
+	        	
+	        	add(icon);
+
         	}
         }
         
