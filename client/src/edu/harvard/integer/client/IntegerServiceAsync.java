@@ -64,5 +64,12 @@ public interface IntegerServiceAsync {
 	void getAllServiceElementManagementObjects(
 			AsyncCallback<List<ServiceElementManagementObject>> callback);
 
-	void getEvents(AsyncCallback<List<Object>> asyncCallback);
+	/**
+	 * Gets the events.
+	 *
+	 * @param callback the callback
+	 * @return the events
+	 */
+	void getEvents(AsyncCallback<List<Object>> callback);
+
 }

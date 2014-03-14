@@ -126,11 +126,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 */
 	@Override
 	public List<Object> getEvents() throws Exception {
-		List<Object> list = new ArrayList<Object>();
 		// TODO Auto-generated method stub
-		return list;
+		return null;
 	}
-
-
 	
 }

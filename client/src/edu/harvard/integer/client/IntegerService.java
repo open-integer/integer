@@ -70,6 +70,7 @@ public interface IntegerService extends RemoteService {
 	 * Gets the events.
 	 *
 	 * @return the events
+	 * @throws Exception the exception
 	 */
 	List<Object> getEvents() throws Exception;
 	

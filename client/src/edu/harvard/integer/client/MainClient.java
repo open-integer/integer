@@ -102,7 +102,7 @@ public class MainClient implements EntryPoint {
 	private SplitLayoutPanel createHomePage() {
 		LienzoPanel networkPanel = new LienzoPanel(950, 550);
 
-        DragImageWidget dragImageWidget = new DragImageWidget(950, 550);
+        DragImageWidget dragImageWidget = new DragImageWidget(90, 50);
         networkPanel.add(dragImageWidget);
         
 		SplitLayoutPanel systemPanel = new SplitLayoutPanel(5);
@@ -168,7 +168,7 @@ public class MainClient implements EntryPoint {
 		String subTitle = "State - Campus Wide";
 		final String[] headers = {"Views", "Filters", "Manager"};
 		final FilterView filterView = new FilterView(title, subTitle, headers);
-		integerService.getEvents(new AsyncCallback<List<Object>>() {
+		/*integerService.getEvents(new AsyncCallback<List<Object>>() {
 
 			@Override
 			public void onSuccess(List<Object> result) {
@@ -178,7 +178,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
-		});
+		});*/
 		return filterView;
 	}
 	
