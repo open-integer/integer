@@ -41,6 +41,7 @@ import javax.ws.rs.Path;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.server.IntegerApplication;
+import edu.harvard.integer.service.BaseService;
 /**
  * @author David Taylor
  *
@@ -48,7 +49,7 @@ import edu.harvard.integer.server.IntegerApplication;
 @Singleton
 @Startup
 @Path("/Database")
-public class PersistenceService implements PersistenceServiceEJB {
+public class PersistenceService extends BaseService implements PersistenceServiceEJB {
 
 	@Inject
 	private Logger logger;

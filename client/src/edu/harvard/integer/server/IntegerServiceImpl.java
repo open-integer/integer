@@ -66,10 +66,6 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		
 		try {
 			results = snmpService.getImportedMibs();
-			/*if (results != null && results.length > 0) {
-				for (MIBInfo mibInfo : results)
-					mibInfoList.add(mibInfo);
-			}*/
 
 		}
 		catch (IntegerException e) {

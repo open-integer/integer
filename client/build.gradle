@@ -81,10 +81,11 @@ task gwtc (dependsOn: classes, type: JavaExec) {
 
 	main = 'com.google.gwt.dev.Compiler'
 
-	println "src path: " + sourceSets.main.java.srcDirs 
+	println "src path: " + sourceSets.main.java.srcDirs
 	classpath {[
 			sourceSets.main.java.srcDirs,
-			configurations.compile
+			configurations.compile,
+			project(":common").sourceSets.main.java.srcDirs
 		]}
 
 	args = [
