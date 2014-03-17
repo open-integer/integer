@@ -1,5 +1,9 @@
 package edu.harvard.integer.client.widget;
 
+import com.emitrom.lienzo.client.core.event.NodeMouseEnterEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseEnterHandler;
+import com.emitrom.lienzo.client.core.event.NodeMouseExitEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseExitHandler;
 import com.emitrom.lienzo.client.core.image.PictureLoadedHandler;
 import com.emitrom.lienzo.client.core.shape.Group;
 import com.emitrom.lienzo.client.core.shape.Picture;
@@ -15,7 +19,32 @@ public class HvMapIconWidget extends Group {
 	public HvMapIconWidget(Picture picture, String title) {
 		this.picture = picture;
 		this.title = title;
-		this.setDraggable(true);
+		
+		setDraggable(true);
+		setListening(true);
+
+		final HvMapIconPopup popup = new HvMapIconPopup(title, "Ok", "Cambridge");
+		final int dw = (int)picture.getClippedImageDestinationWidth()*3/2;
+		final int dh = (int)picture.getClippedImageDestinationHeight()/2;
+		
+		
+		picture.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
+            
+			@Override
+			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
+				popup.setPopupPosition(event.getX()+dw, event.getY()+dh);
+				popup.show();
+			}  
+        });  
+  
+		picture.addNodeMouseExitHandler(new NodeMouseExitHandler() {
+
+			@Override
+			public void onNodeMouseExit(NodeMouseExitEvent event) {
+				popup.hide();
+			}  
+            
+        });  
 	}
 	
 	public void draw(int x, int y) {

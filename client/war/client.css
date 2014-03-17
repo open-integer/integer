@@ -223,3 +223,8 @@ h4 {
     background: #e7e7e7 url(images/horizontal.png) center center no-repeat;
   	border:2px solid #e7e7e7;
 }
+
+.MapIconPopup {
+	background-color: #f3f3f1;
+	border: 1px solid #a0a0a0;
+}
