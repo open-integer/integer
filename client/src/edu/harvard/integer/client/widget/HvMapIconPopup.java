@@ -16,10 +16,10 @@ public class HvMapIconPopup extends PopupPanel {
 		g.setText(0, 1, name);
 		
 		g.setText(1, 0, "Status");
-		g.setText(1, 1, name);
+		g.setText(1, 1, status);
 		
 		g.setText(2, 0, "Location");
-		g.setText(2, 1, name);
+		g.setText(2, 1, location);
 		
 		setWidget(g);
 
