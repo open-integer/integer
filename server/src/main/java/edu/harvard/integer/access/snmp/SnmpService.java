@@ -59,13 +59,6 @@ import edu.harvard.integer.common.util.DisplayableInterface;
  */
 final public class SnmpService
 {
-	/**
-	 *  Some OIDs which are used very often and every SNMP Agent should have.
-	 */
-	public static final String SYSOBJECTID = "1.3.6.1.2.1.1.2.0";
-    public static final String SYSDESCRIPTION = "1.3.6.1.2.1.1.1.0";
-    public static final String SYSNAME = "1.3.6.1.2.1.1.5.0";
-    public static final String SYSDESCR = "1.3.6.1.2.1.1.1.0";
 	
 	/** The Constant logger. */
 	static final Logger logger = LoggerFactory.getLogger(SnmpService.class);
@@ -124,12 +117,47 @@ final public class SnmpService
      */
     public PDU getPdu( ElementEndPoint endPoint, PDU pdu) throws IntegerException
     {
-        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint);
+        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint, true);
         pdu.setType(PDU.GET);        
         return sendPdu(pdu, target);
         
     }
     
+    
+    /**
+     * Gets pdu asynchrously.
+     *
+     * @param endPoint the end point
+     * @param pdu the pdu
+     * @return the pdu
+     * @throws IntegerException the integer exception
+     */
+    public void getAsyncPdu( ElementEndPoint endPoint, PDU pdu,
+    		                ResponseListener listener ) throws IntegerException
+    {
+        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint, true);
+        pdu.setType(PDU.GET);        
+        sendAsyncPdu(pdu, target, listener);
+        
+    }
+    
+    
+    /**
+     * Gets pdu asynchrously.
+     *
+     * @param endPoint the end point
+     * @param pdu the pdu
+     * @return the pdu
+     * @throws IntegerException the integer exception
+     */
+    public void getAsyncPdu( ElementEndPoint endPoint, PDU pdu,
+    		                ResponseListener listener, Object userData ) throws IntegerException
+    {
+        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint, true);
+        pdu.setType(PDU.GET);        
+        sendAsyncPdu(pdu, target, listener, userData );
+        
+    }
     
     
     /**
@@ -150,8 +178,21 @@ final public class SnmpService
 			throw new IntegerException(null, NetworkErrorCodes.CannotReach, 
 	           		   new DisplayableInterface[] { new NonLocaleErrorMessage(e.getLocalizedMessage()) });
 		}
+    	assertPDU(response);
         PDU rpdu = response.getResponse();
+    	return rpdu;
+    }
+    
+    
+    
+    /**
+     * 
+     * @param response
+     * @throws IntegerException
+     */
+    public static void assertPDU( ResponseEvent response ) throws IntegerException {
     	
+        PDU rpdu = response.getResponse();   	
     	if ( rpdu != null && rpdu.getErrorStatus() == 2 )
         {                 	                     
            StringBuffer sb = new StringBuffer();
@@ -185,9 +226,16 @@ final public class SnmpService
         	IntegerException ie = new IntegerException(null, NetworkErrorCodes.CannotReach);
         	throw ie;
         }   
-    	
-    	return rpdu;
+
+    	/**
+    	 * Nothing to be determined, check if the peer address occurs or not.
+    	 */
+    	if ( response.getPeerAddress() == null ) {
+    		IntegerException ie = new IntegerException(null, NetworkErrorCodes.CannotReach);
+        	throw ie;    		
+    	}    	
     }
+    
     
     
     /**
@@ -241,7 +289,7 @@ final public class SnmpService
     public PDU getNextPdu( ElementEndPoint endPoint, 
                             PDU pdu ) throws IntegerException
     {
-        AbstractTarget target =  SnmpCollectionUtil.createTarget(endPoint);
+        AbstractTarget target =  SnmpCollectionUtil.createTarget(endPoint, true);
         pdu.setType(PDU.GETNEXT);
         return sendPdu(pdu, target);
         
@@ -266,7 +314,7 @@ final public class SnmpService
         ArrayList<PDU> retList = new ArrayList<PDU>();
         PDU rpdu = pdu;
         
-        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint);
+        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint, true);
         while ( rpdu != null && rpdu.get(0).getOid().toString().indexOf(checkOid) >= 0 )
         {        
             rpdu.setType(PDU.GETNEXT);
@@ -290,7 +338,7 @@ final public class SnmpService
      */
     public PDU setPdu( ElementEndPoint endPoint, PDU pdu ) throws IntegerException
     {       
-        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint);
+        AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint, false);
         pdu.setType(PDU.SET);
         PDU rpdu = sendPdu(pdu, target);
         
@@ -330,7 +378,7 @@ final public class SnmpService
                            int nonRepeaters,
                            int maxReperters ) throws IntegerException
     {        
-    	AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint);
+    	AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint, true);
     	pdu.setType(PDU.GETBULK);
     	pdu.setNonRepeaters(nonRepeaters);
         pdu.setMaxRepetitions(maxReperters);

@@ -30,63 +30,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.discovery;
-
-import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
-import edu.harvard.integer.service.discovery.snmp.SNMPElementDiscover;
+package edu.harvard.integer.access;
 
 /**
- * A factory for creating AgentProvider objects which provide discovery, configuration,
- * event manager providers.
- *
  * @author dchan
+ *
  */
-public class AgentProviderFactory {
+public class Access {
 
+	private int port;
+	private Authentication auth;
 	
-	
-	/**
-	 * Define service element access type.  A service element can be accessed in different ways for
-	 * different purposes.  For example, using SNMP to get information from an IP node SNMP agent.
-	 * Using PUPPET to talk to PUPPET client or PUPPET master etc.
-	 *
-	 */
-	public enum ElementAccessTypeE {
-      
-		SNMP, CISCOCLI, PUPPET, AWS
+
+	public Access( int p, Authentication a ) {
+		 port = p;
+		 auth = a;
 	}
 	
-	
-	/**
-	 * Get element discovery based on element access type.
-	 * 
-	 * @param accessType  -- Access type which associates a discover provider.  
-	 * @return  -- An object used for element discovery,
-	 */
-	public static ElementDiscoveryBase  getElementDiscovery( ElementAccessTypeE accessType ) {
-		
-		switch (accessType) {
-		 
-		   case SNMP:			  
-			   return new SNMPElementDiscover();
-
-		    default:
-			  break;
-		}	
-		return null;		
+	public int getPort() {
+		return port;
 	}
-	
-	
-	
-	
-	/**
-	 * 
-	 * Get network discover provider.  It is considering IP based network discover.
-	 * 
-	 * @return -- An object used for topo discovery.
-	 */
-	public static NetworkDiscoveryBase getNetworkDiscover() {
+
+	public Authentication getAuth() {
+		return auth;
+	}
+
+	public boolean equal( Access a ) {
 		
-		return NetworkDiscovery.getInstance();
+		if ( a.getAuth().isSame(getAuth()) && a.getPort() == getPort() ) {
+			return true;
+		}
+		return false;
 	}
 }

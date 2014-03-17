@@ -32,225 +32,203 @@
  */
 package edu.harvard.integer.service.discovery;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.harvard.integer.access.AccessPort;
-import edu.harvard.integer.access.AccessUtil;
-import edu.harvard.integer.access.Authentication;
 import edu.harvard.integer.access.ElementAccess;
-import edu.harvard.integer.access.element.ElementAccessTask;
-import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNetInclusive;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
-import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetTask;
-import edu.harvard.integer.service.discovery.subnet.DiscoveredNet;
+import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
+
 
 /**
- *
- * The Class NetworkDiscovery provides method for topology discovery. It is defined as 
- * singleton class.
+ * The Class NetworkDiscovery provides method for topology discovery. 
+ * The first stage of the discovery is the service element discovery.
+ * The second stage of the discovery is the topology discovery.
+ * 
+ *  The topology discovery is based L2, L3 and end host found in the first stage.
+ *  When the topology discovery is done, it should have connection information between IP nodes.
  * 
  * It manages 3 different pools for discovery.
  * 
  * Discovery request pool which controls how many concurrent request we should have.
  * Subnet discovery pool which controls how many concurrent subnet discovery we can have.
  * Element discovery pool which controls how many concurrent element discovery.we can have.
- * 
- * 
+ *
  * @author dchan
+ * @param <T> the generic type
  */
 public class NetworkDiscovery <T extends ElementAccess>implements NetworkDiscoveryBase {
 
+	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
-    /**
-     * Use to limit the number of discovery tasks.  The number should be small since
-     * we are not suggest too many tasks for discovery.
-     */
-	private static int discoveryTaskLimit = 5;
+ 	
 	
-	private static int subTaskLimit = 10;
+	/** The l3 nodes. */
+	private ConcurrentHashMap<String, DiscoverNode>  l3Nodes = new ConcurrentHashMap<>();
 	
-	/**
-	 * Use to limit the number of element discovery task.
-	 */
-	private static int elementTaskLimit = 20;
+	/** The l2 nodes. */
+	private ConcurrentHashMap<String, DiscoverNode> l2Nodes = new ConcurrentHashMap<>();
+	
+	/** The end nodes. */
+	private ConcurrentHashMap<String, DiscoverNode> endNodes = new ConcurrentHashMap<>();
+	
+	/** The callback for notify the progress of discovery. */
+	
+	private ElementDiscoverCB<ServiceElement> cb;
+	
+	/** The discover seed. */
+	private final IpDiscoverySeed discoverSeed;
+	
+	/** The stop discovery. */
+	private volatile boolean stopDiscovery;
+	
+	
+	/** The integer Inteface used by discovery to retrieve object model information.. */
+	private IntegerInterface integerIf;
 	
 
-	private ExecutorService pool = Executors.newFixedThreadPool(discoveryTaskLimit);
-	
-	private ExecutorService subPool = Executors.newFixedThreadPool(subTaskLimit);
-	
 	/**
-	 * Used to manager the task pool for element discovery.  
+	 * Instantiates a new network discovery.
+	 *
+	 * @param discoverSeed the discover seed
+	 * @param callback the callback
+	 * @param integerIf the integer if
 	 */
-	private static ExecutorService elementPool = Executors.newFixedThreadPool(NetworkDiscovery.getElementTaskLimit());
-	
-	private static NetworkDiscovery instance = new NetworkDiscovery();
-	
-	public static NetworkDiscovery  getInstance() {
-	
-		return instance;
+	public NetworkDiscovery( final IpDiscoverySeed discoverSeed, 
+			                 ElementDiscoverCB<ServiceElement> callback,
+			                 IntegerInterface integerIf ) 
+	{
+		this.cb = callback;
+		this.discoverSeed = discoverSeed;
+		this.integerIf = integerIf;
+		
+		discoverNetwork();
 	}
 	
 	
 	
+	
+	/**
+	 * Discover network. Each subnet has its own thread for discovery.
+	 */
+	@SuppressWarnings("rawtypes")
+	private void discoverNetwork() {
+		
+		logger.debug("In discoverNetwork ");
+		
+		/**
+		 * Create subnet tasks based on discover configuration subnet.
+		 */
+		List<DiscoverNetInclusive> nets =  discoverSeed.getDiscoverNets();
+		if ( nets != null ) {
+			
+			ExecutorService exService =  DiscoveryManager.getInstance().getSubPool();
+			for ( DiscoverNet net : nets) {
+			
+				try {
+					@SuppressWarnings("unchecked")
+					DiscoverSubnetAsyncTask<T> subTask = new DiscoverSubnetAsyncTask(this, net.getNetwork(), 
+							                                        net.getNetmask(), discoverSeed.getAuths());
+					exService.submit(subTask);
+					
+				} catch (IntegerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+
+	}
+
+
+	
+	/**
+	 * Gets the l3 nodes.
+	 *
+	 * @return the l3 nodes
+	 */
+	public ConcurrentHashMap<String, DiscoverNode> getL3Nodes() {
+		return l3Nodes;
+	}
+
+
+
+	/**
+	 * Gets the l2 nodes.
+	 *
+	 * @return the l2 nodes
+	 */
+	public ConcurrentHashMap<String, DiscoverNode> getL2Nodes() {
+		return l2Nodes;
+	}
+
+
+
+	/**
+	 * Gets the end nodes.
+	 *
+	 * @return the end nodes
+	 */
+	public ConcurrentHashMap<String, DiscoverNode> getEndNodes() {
+		return endNodes;
+	}
+
+
+
+	/**
+	 * Gets the cb.
+	 *
+	 * @return the cb
+	 */
+	public ElementDiscoverCB<ServiceElement> getCb() {
+		return cb;
+	}
+
+
+
+	/**
+	 * Checks if is stop discovery.
+	 *
+	 * @return true, if is stop discovery
+	 */
+	public boolean isStopDiscovery() {
+		return stopDiscovery;
+	}
+
+
+
+
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.NetworkDiscoveryBase#discoverNetwork(edu.harvard.integer.agent.serviceelement.discovery.DiscoveryConfiguration, edu.harvard.integer.agent.serviceelement.discovery.DiscoverCB)
+	 * @see edu.harvard.integer.service.discovery.NetworkDiscoveryBase#stopDiscovery()
 	 */
 	@Override
-	public void discoverNetwork(final DiscoveryConfiguration discoverConfig,
-			                         final ElementDiscoverCB<ServiceElement> cb) {
+	public void stopDiscovery() {		
+		stopDiscovery = true;
 		
-		pool.submit(new Callable<Void>() {
-			
-			@Override
-			public Void call() throws Exception {
-				
-				List<DiscoverSubnetTask>  subnetTasks = new ArrayList<>();
-				
-				/**
-				 * Create subnet tasks based on discover config.
-				 */
-				List<DiscoverNet> nets =  discoverConfig.getDiscoverNets();
-				if ( nets != null ) {
-					for ( DiscoverNet net : nets) {
-					
-						DiscoverSubnetTask subTask = new DiscoverSubnetTask(net.getNetwork(), net.getNetmask(), 
-								                                            discoverConfig.getAccess(), cb );
-						subTask.setAccessPorts(discoverConfig.getPorts());
-						subnetTasks.add(subTask);
-					}
-				}
-				
-				/**
-				 * Assign seed nodes to each subnet.  If cannot found subnet it belongs, discover it independently.  
-				 */
-				List<DiscoverNode> seedNodes =  discoverConfig.getDiscoverNodes();
-				List<DiscoverNode> outOfSubnetNodes = null;
-							
-				if ( seedNodes != null ) {
-					
-					outOfSubnetNodes = new ArrayList<>();										
-					for ( DiscoverNode dn : seedNodes ) {
-						
-						boolean outOfSubnet = true;
-						for ( DiscoverSubnetTask subTask : subnetTasks ) {
-							if ( subTask.isInRange(dn.getIpAddress()) ) {
-								
-								subTask.addDiscoverNode(dn);
-								outOfSubnet = false;
-								break;
-							}
-						}				        	
-						if ( outOfSubnet ) {
-							outOfSubnetNodes.add(dn);
-						}
-					}										
-				}
-				
-				try {
-					
-					ExecutorCompletionService<DiscoveredNet>  subService = null;
-					if ( subnetTasks.size() > 0 ) {
-						
-						subService = new ExecutorCompletionService<>(subPool);
-						for ( DiscoverSubnetTask task : subnetTasks ) {
-							subService.submit(task);
-						}						
-					}
-
-					/**
-					 * Discover IP nodes which are out of any given subnet.
-					 */
-					if ( outOfSubnetNodes != null ) {
-					
-						for ( DiscoverNode dn : outOfSubnetNodes ) {
-							
-							int extraAuthIndex = 0;
-							boolean missingEpt = false;
-							ElementEndPoint ept = dn.getElementEndPoint();
-							int defaultPort = -1;
-							if ( ept == null ) {
-							
-								missingEpt = true;
-								
-								List<Authentication> access = discoverConfig.getAccess();
-								if ( access == null || access.size() == 0) {
-									throw new IntegerException(null, NetworkErrorCodes.NoAuthentication);
-								}
-								defaultPort = AccessUtil.getDefaultPort(access.get(0).getAccessType());
-								ept = new ElementEndPoint(dn.getIpAddress(), defaultPort, access.get(0));
-								extraAuthIndex++;
-							}	
-							ElementDiscoverTask elmTask = new ElementDiscoverTask(cb, ept);
-							if ( missingEpt ) {
-								if ( discoverConfig.getAccess() != null ) {
-									
-									for ( AccessPort p : discoverConfig.getPorts() ) {
-										if ( p.getPort() == defaultPort ) {
-											continue;
-										}
-										elmTask.addOtherPort(p);
-									}
-								}
-								for ( int i=extraAuthIndex;i<discoverConfig.getAccess().size(); i++ ) {
-									elmTask.addOtherAuth(discoverConfig.getAccess().get(i));
-								}
-							}
-							elementPool.submit(elmTask);
-						}													
-					}
-					for ( int i=0; i<subnetTasks.size(); i++ ) {
-						
-						final Future<DiscoveredNet> subFuture = subService.take();
-						try {
-							
-							final DiscoveredNet subnet = subFuture.get();
-							
-							String progressMsg = "Complete subnet discovery: " + subnet.getNetwork() + " mask:" + subnet.getNetmask();
-							cb.progressNotification(progressMsg);
-							
-							logger.trace(progressMsg);
-						}
-						catch ( ExecutionException e ) {
-							logger.warn("Subnet discovery exception. " + e.getMessage());
-						}
-					}
-					
-				}
-				finally {
-					cb.doneDiscover();
-				}				
-				return null;
-			}
-		});
-	}
-
-	
-	
-	
-	public static int getElementTaskLimit() {
-		return elementTaskLimit;
 	}
 
 
-	public synchronized Future<T> sutmitElementTask( ElementAccessTask<T> task ) {
-		return elementPool.submit(task);
+
+	/**
+	 * Gets the integer Integer Interface.
+	 *
+	 * @return the integer if
+	 */
+	public IntegerInterface getIntegerIf() {
+		return integerIf;
 	}
+
+
 	
 }

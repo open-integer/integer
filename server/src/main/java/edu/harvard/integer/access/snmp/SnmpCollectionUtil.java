@@ -44,9 +44,7 @@ import org.snmp4j.UserTarget;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
-import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
-import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
@@ -54,6 +52,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
 import edu.harvard.integer.common.util.DisplayableInterface;
+
 
 
 /**
@@ -69,10 +68,12 @@ public class SnmpCollectionUtil {
 	 * @param endPoint the end point
 	 * @return the abstract target
 	 */
-	public static AbstractTarget createTarget( ElementEndPoint endPoint ) {
+	public static AbstractTarget createTarget( ElementEndPoint endPoint, boolean isRead ) {
 		
 		if ( endPoint.getAuth() instanceof CommunityAuth ) {
-			return createCommunityTarget((CommunityAuth) endPoint.getAuth(), endPoint.getIpAddress(), endPoint.getAccessPort());
+			return createCommunityTarget((CommunityAuth) endPoint.getAuth(), 
+					                     endPoint.getIpAddress(), endPoint.getAccessPort(),
+					                     isRead );
 		}
 		else if ( endPoint.getAuth() instanceof SnmpSecureAuth ) {
 			return createSecureTarget((SnmpSecureAuth) endPoint.getAuth(), endPoint.getIpAddress(), endPoint.getAccessPort());
@@ -88,10 +89,13 @@ public class SnmpCollectionUtil {
 	 * @param port the port is the managment port of the element.
 	 * @return the SNMP4j community target
 	 */
-	public static CommunityTarget createCommunityTarget( CommunityAuth access, String ip, int port ) {
+	public static CommunityTarget createCommunityTarget( CommunityAuth access, 
+			                                             String ip, 
+			                                             int port,
+			                                             boolean isRead ) {
 		
 		CommunityTarget target = new CommunityTarget();
-		target.setCommunity(new OctetString(access.getCommunity()));
+		target.setCommunity(new OctetString(access.getCommunity(isRead)));
 	
 		Address targetAddress = GenericAddress.parse("udp:" + ip + "/" + port);
         
@@ -139,7 +143,7 @@ public class SnmpCollectionUtil {
  	 * @return SysOid
  	 * @throws IntegerException the integer exception
  	 */
- 	public static String snmpPing( ElementEndPoint snmpEndPt ) 
+ 	public static PDU snmpPing( ElementEndPoint snmpEndPt ) 
     	                                   throws IntegerException
     {
     	/*
@@ -153,7 +157,8 @@ public class SnmpCollectionUtil {
     	 */
     	PDU sysPdu = null;
     	PDU pdu = new PDU();
-		pdu.add(new VariableBinding(new OID(SnmpService.SYSOBJECTID)));
+    	pdu.addAll(CommonSnmpOids.sysVB);
+    	
     	try 
     	{
     		sysPdu = SnmpService.instance().getPdu(snmpEndPt, pdu);
@@ -195,7 +200,7 @@ public class SnmpCollectionUtil {
     		}
     		
     	};
-    	return sysPdu.get(0).getVariable().toString();
+    	return sysPdu;
     	
     }
     

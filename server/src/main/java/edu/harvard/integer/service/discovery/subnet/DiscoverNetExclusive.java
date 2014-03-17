@@ -32,83 +32,20 @@
  */
 package edu.harvard.integer.service.discovery.subnet;
 
-import java.util.List;
-
-import edu.harvard.integer.access.Authentication;
-
-// TODO: Auto-generated Javadoc
 /**
- * The Class DiscoverNetInclude.
+ * The Class DiscoverNetExclusive. For exclusive discover net.
  *
  * @author dchan
  */
-public class DiscoverNetInclude extends DiscoverNet {
+public class DiscoverNetExclusive extends DiscoverNet {
 
-	/**
-	 * Optional. If specify it will start to 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.subnet.DiscoverNet#isInclude()
 	 */
-	private String startIp;
-	
-	/** The end ip. */
-	private String endIp;
-	
-	/**
-	 * Access list used on discover.
-	 */
-	private List<Authentication>  accessList;
-	
+	@Override
+	public boolean isInclude() {
+		
+		return false;
+	}
 
-	/**
-	 * Gets the start ip.
-	 *
-	 * @return the start ip
-	 */
-	public String getStartIp() {
-		return startIp;
-	}
-	
-	/**
-	 * Sets the start ip.
-	 *
-	 * @param startIp the new start ip
-	 */
-	public void setStartIp(String startIp) {
-		this.startIp = startIp;
-	}
-	
-	/**
-	 * Gets the end ip.
-	 *
-	 * @return the end ip
-	 */
-	public String getEndIp() {
-		return endIp;
-	}
-	
-	/**
-	 * Sets the end ip.
-	 *
-	 * @param endIp the new end ip
-	 */
-	public void setEndIp(String endIp) {
-		this.endIp = endIp;
-	}
-	
-	/**
-	 * Gets the access list.
-	 *
-	 * @return the access list
-	 */
-	public List<Authentication> getAccessList() {
-		return accessList;
-	}
-	
-	/**
-	 * Sets the access list.
-	 *
-	 * @param accessList the new access list
-	 */
-	public void setAccessList(List<Authentication> accessList) {
-		this.accessList = accessList;
-	}
 }

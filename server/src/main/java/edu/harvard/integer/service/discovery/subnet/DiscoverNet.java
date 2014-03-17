@@ -40,7 +40,7 @@ package edu.harvard.integer.service.discovery.subnet;
  *
  * @author dchan
  */
-public class DiscoverNet {
+public abstract class DiscoverNet {
 
 	/**
 	 * Specify the network to discovery.  
@@ -50,9 +50,7 @@ public class DiscoverNet {
 	/** Network Mask. */
 	private String netmask;
 	
-	/** The include. */
-	private boolean include = true;
-	
+
 	/**
 	 * Gets the network.
 	 *
@@ -94,17 +92,8 @@ public class DiscoverNet {
 	 *
 	 * @return true or false
 	 */
-	public boolean isInclude() {
-		return include;
-	}
+	public abstract boolean isInclude(); 
 	
-	/**
-	 * Sets the include to determine included on discover or not.
-	 *
-	 * @param include true or false
-	 */
-	public void setInclude(boolean include) {
-		this.include = include;
-	}
+	
 	
 }

@@ -32,15 +32,19 @@
  */
 package edu.harvard.integer.service.discovery.element;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import edu.harvard.integer.access.AccessPort;
-import edu.harvard.integer.access.Authentication;
+import net.percederberg.mibble.snmp.SnmpCompliance;
+
+import org.snmp4j.PDU;
+
+import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementAccessTask;
-import edu.harvard.integer.access.element.ElementEndPoint;
-import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.access.snmp.SnmpService;
+import edu.harvard.integer.access.snmp.SnmpSysInfo;
+import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 
 
 /**
@@ -51,51 +55,31 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 public class ElementDiscoverTask extends ElementAccessTask<DiscoverNode> {
 
 	
-	/** The callback client during discovery. */
-	private ElementDiscoverCB<ServiceElement>  cb; 
-	
-	/**
-	 * Extra authentication used for discover.
-	 */
-	final private List<Authentication> otherAuths = new ArrayList<>();
-	
-	/**
-	 * Extra ports used for discover.
-	 */
-	final private List<AccessPort> otherPorts = new ArrayList<>();
+	private NetworkDiscovery<ElementAccess>  netDiscover;
+	private DiscoverNode discoverNode;
+	private SnmpSysInfo sysInfo;
 	
 	
-	/**
-	 * Instantiates a new element discover task.
-	 *
-	 * @param cb the callback client
-	 * @param elmEpt the network node service element.
-	 */
-	public ElementDiscoverTask( ElementDiscoverCB<ServiceElement> cb, ElementEndPoint elmEpt ) {
+	public ElementDiscoverTask( NetworkDiscovery<ElementAccess> netDisc, DiscoverNode node ) {
 		
-		super(elmEpt);
-		this.cb = cb;
+		super(node.getElementEndPoint());
+		
+		this.netDiscover = netDisc;
+		this.discoverNode = node;
 	}
 	
 	
-	/**
-	 * Add another port for discover.
-	 *
-	 * @param port the port
-	 */
-	public void addOtherPort( AccessPort port ) {
-		otherPorts.add(port);
+    public ElementDiscoverTask( NetworkDiscovery<ElementAccess> netDisc, 
+    		                    DiscoverNode node, SnmpSysInfo sysInfo ) {
+		
+		super(node.getElementEndPoint());
+		
+		this.netDiscover = netDisc;
+		this.discoverNode = node;
+		this.sysInfo = sysInfo;
+		
 	}
 	
-	
-	/**
-	 * Add another auth for discover.
-	 *
-	 * @param auth the auth
-	 */
-	public void addOtherAuth( Authentication auth ) {
-		otherAuths.add(auth);
-	}
 	
 	
 	/* (non-Javadoc)
@@ -104,9 +88,19 @@ public class ElementDiscoverTask extends ElementAccessTask<DiscoverNode> {
 	@Override
 	public DiscoverNode call() throws Exception {
 		
-	
-		// TODO Auto-generated method stub
-		return null;
+	    if ( sysInfo == null ) {
+	    
+	    	PDU pdu = new PDU();
+			pdu.addAll(CommonSnmpOids.sysVB);
+			
+			PDU rpdu = SnmpService.instance().getPdu(discoverNode.getElementEndPoint(), pdu);
+			sysInfo = new SnmpSysInfo(rpdu);
+					
+	    }
+
+	    
+	    netDiscover.getCb().discoveredElement(discoverNode.getAccessElement());
+		return discoverNode;
 	}
 
 	

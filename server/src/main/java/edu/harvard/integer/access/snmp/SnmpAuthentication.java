@@ -30,16 +30,45 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access;
+package edu.harvard.integer.access.snmp;
+
+import org.snmp4j.mp.SnmpConstants;
+
+import edu.harvard.integer.access.Authentication;
 
 /**
- * The Authentication an interface used for authentication to access topology node.
- *
  * @author dchan
+ *
  */
-public interface Authentication  {
+public abstract class SnmpAuthentication implements Authentication, Comparable<SnmpAuthentication>{
+
+	abstract public int getSnmpVersion();
 	
-	public AccessTypeEnum getAccessType();
-	public boolean isSame( Authentication auth );
+	@Override 
+    public int compareTo(SnmpAuthentication o) {
+		
+		int p1 = getProrityBySnmpVersion(getSnmpVersion());
+		int p2 = getProrityBySnmpVersion(o.getSnmpVersion());
+		
+		return p1 - p2;
+    }
 	
+	private int getProrityBySnmpVersion( int snmpVersion ) {
+		
+		switch (snmpVersion ) {
+		
+		   case SnmpConstants.version2c:
+			  return 3;
+			  
+		   case SnmpConstants.version1:
+			   return 2;
+			   
+		   case SnmpConstants.version3:
+			   return 1;
+
+		   default:
+			   return 1;
+		}
+	}
+
 }

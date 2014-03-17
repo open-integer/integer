@@ -30,16 +30,70 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access;
+package edu.harvard.integer.service.discovery.subnet;
 
+import java.util.List;
+
+import edu.harvard.integer.access.Authentication;
 /**
- * The Authentication an interface used for authentication to access topology node.
+ * The Class DiscoverNetInclude.
  *
  * @author dchan
  */
-public interface Authentication  {
+public class DiscoverNetInclusive extends DiscoverNet {
+
+	/**
+	 * Optional. If specify it will start to 
+	 */
+	private String startIp;
 	
-	public AccessTypeEnum getAccessType();
-	public boolean isSame( Authentication auth );
+	/** The end ip. */
+	private String endIp;
 	
+
+	/**
+	 * Gets the start ip.
+	 *
+	 * @return the start ip
+	 */
+	public String getStartIp() {
+		return startIp;
+	}
+	
+	/**
+	 * Sets the start ip.
+	 *
+	 * @param startIp the new start ip
+	 */
+	public void setStartIp(String startIp) {
+		this.startIp = startIp;
+	}
+	
+	/**
+	 * Gets the end ip.
+	 *
+	 * @return the end ip
+	 */
+	public String getEndIp() {
+		return endIp;
+	}
+	
+	/**
+	 * Sets the end ip.
+	 *
+	 * @param endIp the new end ip
+	 */
+	public void setEndIp(String endIp) {
+		this.endIp = endIp;
+	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.subnet.DiscoverNet#isInclude()
+	 */
+	@Override
+	public boolean isInclude() {
+		return true;
+	}
 }

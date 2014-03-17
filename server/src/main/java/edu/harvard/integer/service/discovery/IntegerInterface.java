@@ -30,16 +30,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access;
+package edu.harvard.integer.service.discovery;
+
+import java.util.List;
+
+import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
- * The Authentication an interface used for authentication to access topology node.
+ * The IntegerInterface is used by Integer API to look for objects used for
+ * discovery and configuration.
  *
  * @author dchan
  */
-public interface Authentication  {
+public interface IntegerInterface {
+
+	/**
+	 * Gets the top level polls.  On IP network topology discovery, the list should
+	 * be a list of SNMP objects in the system group.
+	 *
+	 * @return the top level polls for discovery. 
+	 * 
+	 */
+	public List<ServiceElementManagementObject>  getTopLevelPolls();
 	
-	public AccessTypeEnum getAccessType();
-	public boolean isSame( Authentication auth );
+	/**
+	 * Gets the discovery template based on the list of top level poll results.
+	 *
+	 * @param pollResult the poll result
+	 * @return the discovery template
+	 */
+	public VendorDiscoveryTemplate<ServiceElementManagementObject>  getDiscoveryTemplate( List<PollResult> pollResult );
 	
 }

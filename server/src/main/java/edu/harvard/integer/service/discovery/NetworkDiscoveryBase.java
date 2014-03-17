@@ -33,8 +33,6 @@
  */
 package edu.harvard.integer.service.discovery;
 
-import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 
 /**
  * The Interface NetworkDiscoveryBase outlines the discover methods. 
@@ -42,14 +40,6 @@ import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
  * @author dchan
  */
 public interface NetworkDiscoveryBase {
-
-	/**
-	 * Discover network. It is an asynchronous call method. The callers have to provide call back
-	 * for discovery notification
-	 *  
-	 *
-	 * @param discoverConfig the discover configuration.
-	 * @param cb the call back for discovery notification.
-	 */
-	public void  discoverNetwork(DiscoveryConfiguration discoverConfig, ElementDiscoverCB<ServiceElement> cb );
+	
+	public void stopDiscovery();
 }

@@ -37,8 +37,11 @@ import java.util.List;
 
 import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.Authentication;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.access.snmp.CommunityAuth;
+import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
+import edu.harvard.integer.common.topology.Credential;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNetExclusive;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNetInclusive;
 
 /**
  * 
@@ -47,7 +50,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
  *
  * @author dchan
  */
-public class DiscoveryConfiguration {
+public class IpDiscoverySeed {
 
 	/** The snmp timeout. */
 	private int snmpTimeout;
@@ -68,37 +71,55 @@ public class DiscoveryConfiguration {
 	private int hopCount;
 	
 	
-	/** 
-	 */
-	
-	/**
-	 * Discovered node which contains node ip.  Those nodes need to be discovered first.
-	 */
-	private List<DiscoverNode> discoverNodes;
 	
 	/**
 	 * Discovered subnet for auto discovered.  
 	 */
-	private List<DiscoverNet>  discoverNets;
+	private List<DiscoverNetInclusive>  discoverNets;
 	
+	/**
+	 * 
+	 */
+	private List<DiscoverNetExclusive> notDiscoverNet;
+	
+
+
 	/**
 	 * The access used for discovery.  Right now we assume access is shared on all the subnet.
 	 * However it may not be the case.
 	 */
-	private List<Authentication> access;
+	private List<Authentication> auths;
 	
 	/** The ports contain ip node access ports for discover.  It can be null.  In that case
 	 * the default ports will be used based on access type.
 	 */
 	private List<AccessPort>  ports;
 	
+	
+	/**
+	 * 
+	 * @param net
+	 * @param credentials
+	 */
+	public IpDiscoverySeed( final List<DiscoverNetInclusive> net, final List<Credential> credentials ) {
+		
+		this.discoverNets = net;
+		setCredential(credentials);
+	}
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Gets the access.
 	 *
 	 * @return the access
 	 */
-	public List<Authentication> getAccess() {
-		return access;
+	public List<Authentication> getAuths() {
+		return auths;
 	}
 
 	/**
@@ -106,8 +127,16 @@ public class DiscoveryConfiguration {
 	 *
 	 * @param access the new access
 	 */
-	public void setAccess(List<Authentication> access) {
-		this.access = access;
+	public void setCredential(List<Credential> credentials ) {
+		
+		auths = new ArrayList<>();
+		for ( Credential c : credentials ) {
+			
+			if ( c instanceof SnmpV2cCredentail ) {
+				CommunityAuth auth = new CommunityAuth((SnmpV2cCredentail) c);
+				auths.add(auth);
+			}
+		}
 	}
 
 	/**
@@ -199,42 +228,17 @@ public class DiscoveryConfiguration {
 	public void setIcmpRetries(int icmpRetries) {
 		this.icmpRetries = icmpRetries;
 	}
+
 	
-	/**
-	 * Gets the discover nodes.
-	 *
-	 * @return the discover nodes
-	 */
-	public List<DiscoverNode> getDiscoverNodes() {
-		return discoverNodes;
+	public List<DiscoverNetExclusive> getNotDiscoverNet() {
+		return notDiscoverNet;
 	}
+
+	public void setNotDiscoverNet(List<DiscoverNetExclusive> notDiscoverNet) {
+		this.notDiscoverNet = notDiscoverNet;
+	}
+
 	
-	/**
-	 * Sets the discover nodes.
-	 *
-	 * @param discoverNodes the new discover nodes
-	 */
-	public void setDiscoverNodes(List<DiscoverNode> discoverNodes) {
-		this.discoverNodes = discoverNodes;
-	}
-	
-	/**
-	 * Gets the discover nets.
-	 *
-	 * @return the discover nets
-	 */
-	public List<DiscoverNet> getDiscoverNets() {
-		return discoverNets;
-	}
-	
-	/**
-	 * Sets the discover nets.
-	 *
-	 * @param discoverNets the new discover nets
-	 */
-	public void setDiscoverNets(List<DiscoverNet> discoverNets) {
-		this.discoverNets = discoverNets;
-	}
 	
 	/**
 	 * Adds the access port for discover.
@@ -260,4 +264,14 @@ public class DiscoveryConfiguration {
 		return ports;
 	}
     
+
+	public List<DiscoverNetInclusive> getDiscoverNets() {
+		return discoverNets;
+	}
+
+	public void setDiscoverNets(List<DiscoverNetInclusive> discoverNets) {
+		this.discoverNets = discoverNets;
+	}
+
+
 }

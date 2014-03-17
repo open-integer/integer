@@ -30,16 +30,59 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access;
+package edu.harvard.integer.access.snmp;
+
+import org.snmp4j.PDU;
+import org.snmp4j.smi.VariableBinding;
 
 /**
- * The Authentication an interface used for authentication to access topology node.
- *
  * @author dchan
+ *
  */
-public interface Authentication  {
+public class SnmpSysInfo {
+
+	private String sysDescr;
+	private String sysObjectID;
+	private String sysContact;
+	private String sysName;
+	private String sysLocation;
 	
-	public AccessTypeEnum getAccessType();
-	public boolean isSame( Authentication auth );
+	public SnmpSysInfo( PDU sysPdu ) {
+		
+		for ( int i=0; i<sysPdu.size(); i++ ) {
+			VariableBinding vb = sysPdu.get(i);
+			if ( vb.getOid().toString().equals(CommonSnmpOids.sysContact) ) {
+				sysContact = vb.getVariable().toString();
+			}
+			else if ( vb.getOid().toString().equals(CommonSnmpOids.sysObjectID) ) {
+				sysObjectID = vb.getVariable().toString();
+			}
+			else if ( vb.getOid().toString().equals(CommonSnmpOids.sysLocation) ) {
+				sysLocation = vb.getVariable().toString();
+			}
+			else if ( vb.getOid().toString().equals(CommonSnmpOids.sysName) ) {
+				sysName = vb.getVariable().toString();
+			}
+			else if ( vb.getOid().toString().equals(CommonSnmpOids.sysDescr) ) {
+				sysDescr = vb.getVariable().toString();
+			}
+		}
+	}
+	
+	public String getSysDescr() {
+		return sysDescr;
+	}
+	public String getSysObjectID() {
+		return sysObjectID;
+	}
+	public String getSysContact() {
+		return sysContact;
+	}
+	public String getSysName() {
+		return sysName;
+	}
+	public String getSysLocation() {
+		return sysLocation;
+	}
 	
 }

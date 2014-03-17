@@ -34,58 +34,33 @@ package edu.harvard.integer.access.snmp;
 
 import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
+
+import org.snmp4j.mp.SnmpConstants;
 
 /**
  * The Class CommunityAccess contains access information for SNMPv2 and SNMPv1 access.
  *
  * @author dchan
  */
-public class CommunityAuth implements Authentication {
+public class CommunityAuth extends SnmpAuthentication {
 
-	/** The community string. */
-	private String community;
 	
+	private SnmpV2cCredentail credentail;
+	
+	public CommunityAuth( SnmpV2cCredentail credentail ) {
+		this.credentail = credentail;
+	}
+	
+	
+	public SnmpV2cCredentail getCredentail() {
+		return credentail;
+	}
+
+
 	/** Check if it is a V2c version or not.  If not, it is v1. */
 	private boolean isVersionV2c;
-	
-	/** If it is true, it is a read community string.  Else it is write community string. */
-	private boolean isRead;
-	
-	/**
-	 * Gets the community string.
-	 *
-	 * @return the community
-	 */
-	public String getCommunity() {
-		return community;
-	}
-	
-	/**
-	 * Sets the community string.
-	 *
-	 * @param community the new community
-	 */
-	public void setCommunity(String community) {
-		this.community = community;
-	}
-	
-	/**
-	 *
-	 * @return true, if is read community string, else it is write community string.
-	 */
-	public boolean isRead() {
-		
-		return isRead;
-	}
-	
-	/**
-	 * Sets if it is a read community string.
-	 *
-	 * @param isRead -- Indication if it is a read or write community string.
-	 */
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
-	}
+
 	
 	/**
 	 * Checks if is version v2c.
@@ -117,4 +92,52 @@ public class CommunityAuth implements Authentication {
 		}
 		return AccessTypeEnum.SNMPv1;
 	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.access.snmp.SnmpAuthentication#getSnmpVersion()
+	 */
+	@Override
+	public int getSnmpVersion() {
+		
+		if ( isVersionV2c ) {
+			return SnmpConstants.version2c;
+		}
+		return SnmpConstants.version1;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.access.Authentication#isSame(edu.harvard.integer.access.Authentication)
+	 */
+	@Override
+	public boolean isSame(Authentication auth) {
+		
+		if ( auth instanceof CommunityAuth ) {
+		
+			CommunityAuth cauth = (CommunityAuth) auth;
+			
+			if ( getCommunity(true).equals(cauth.getCommunity(true)) &&
+					getCommunity(false).equals(cauth.getCommunity(false)) )
+			{
+				return true;
+			}					
+			
+		}
+		return false;
+	}
+	
+
+	public String getCommunity( boolean isRead ) {
+		
+		String community = null;
+		if ( isRead ) {			
+			community = credentail.getReadCommunity();
+		}
+		else {
+			community = credentail.getWriteCommunity();
+		}
+		
+		return community != null ? community : "public";
+	}
+	
 }
+

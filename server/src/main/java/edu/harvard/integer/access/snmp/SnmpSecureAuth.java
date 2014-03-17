@@ -32,6 +32,10 @@
  */
 package edu.harvard.integer.access.snmp;
 
+import java.util.Arrays;
+
+import org.snmp4j.mp.SnmpConstants;
+
 import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.access.Authentication;
 
@@ -40,7 +44,7 @@ import edu.harvard.integer.access.Authentication;
  *
  * @author dchan
  */
-public class SnmpSecureAuth implements Authentication {
+public class SnmpSecureAuth extends SnmpAuthentication {
 
 	/** The security level. */
 	private int securityLevel;
@@ -135,6 +139,34 @@ public class SnmpSecureAuth implements Authentication {
 	@Override
 	public AccessTypeEnum getAccessType() {
 		return AccessTypeEnum.SNMPv3;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.access.snmp.SnmpAuthentication#getSnmpVersion()
+	 */
+	@Override
+	public int getSnmpVersion() {
+		
+		return SnmpConstants.version3;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.access.Authentication#isSame(edu.harvard.integer.access.Authentication)
+	 */
+	@Override
+	public boolean isSame(Authentication auth) {
+		
+		if ( auth instanceof SnmpSecureAuth ) {
+			
+			SnmpSecureAuth sauth = (SnmpSecureAuth) auth;
+			if ( Arrays.equals(getEngineID(), sauth.engineID ) && sauth.securityLevel == getSecurityLevel() 
+					&& sauth.securityModel == getSecurityModel() && sauth.securityName.equals(getSecurityName()) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	

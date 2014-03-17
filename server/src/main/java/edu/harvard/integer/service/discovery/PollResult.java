@@ -30,16 +30,55 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access;
+package edu.harvard.integer.service.discovery;
+
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 
 /**
- * The Authentication an interface used for authentication to access topology node.
+ * The Class PollResult is used for storing the poll result.
+ * The "mgrObj" is the poll service element management object and
+ * "mrgValue" is the value of the poll result.
  *
  * @author dchan
  */
-public interface Authentication  {
+public class PollResult {
+
+	/** The mgr obj. */
+	final private ServiceElementManagementObject mgrObj;
 	
-	public AccessTypeEnum getAccessType();
-	public boolean isSame( Authentication auth );
+	/** The mrg value. */
+	final private ServiceElementProtocolInstanceIdentifier mrgValue;
+	
+	/**
+	 * Instantiates a new poll result.
+	 *
+	 * @param mgrObj the mgr obj
+	 * @param mrgValue the mrg value
+	 */
+	public PollResult( ServiceElementManagementObject mgrObj,
+			           ServiceElementProtocolInstanceIdentifier mrgValue )
+	{
+		this.mgrObj = mgrObj;
+		this.mrgValue = mrgValue;
+	} 
+	
+	/**
+	 * Gets the Service ElementManagement Object
+	 *
+	 * @return the mgr obj
+	 */
+	public ServiceElementManagementObject getMgrObj() {
+		return mgrObj;
+	}
+	
+	/**
+	 * Gets the mrg value.
+	 *
+	 * @return the Service ElementManagement Value
+	 */
+	public ServiceElementProtocolInstanceIdentifier getMrgValue() {
+		return mrgValue;
+	}
 	
 }

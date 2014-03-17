@@ -33,8 +33,7 @@
 package edu.harvard.integer.service.discovery.subnet;
 
 
-import edu.harvard.integer.access.AccessUtil;
-import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.service.discovery.snmp.DevicePhisicalPattern;
@@ -87,43 +86,24 @@ public class DiscoverNode extends ElementAccess {
 	private DiscoverStageE stage = DiscoverStageE.ReachableScan;
 	
 
+	private boolean reachable = false;
+
+
+
 	/**  The ip address of the node. */
 	final private String ipAddress;
 	
+	private Access access;
 	
-	/**  The access port of the node. */
-	private int port = -1;
-	
-	/** The authentication to access the node. */
-	private Authentication auth;
-	
-	
+
+
 	/** The device physical pattern is used to discover the physical layout of the device. 
 	 *  One example is the physical entity mib pattern.  
 	 */
 	private DevicePhisicalPattern phyPattern;
 	
 	
-	/**
-	 * Sets the port.
-	 *
-	 * @param port the new port
-	 */
-	public void setPort(int port) {
-		this.port = port;
-	}
-
-
-
-	/**
-	 * Sets the auth.
-	 *
-	 * @param auth the new auth
-	 */
-	public void setAuth(Authentication auth) {
-		this.auth = auth;
-	}
-
+	
 
 
 	/**
@@ -145,15 +125,8 @@ public class DiscoverNode extends ElementAccess {
 	 */
 	public ElementEndPoint getElementEndPoint() {
 		
-		if ( auth != null ) {
-			
-			if ( port == -1 ) {
-				port = AccessUtil.getDefaultPort(auth.getAccessType());
-				if ( port == -1 ) {
-					return null;
-				}				
-			}
-			ElementEndPoint ept = new ElementEndPoint(ipAddress, port, auth);
+		if ( access != null ) {
+			ElementEndPoint ept = new ElementEndPoint(ipAddress, access.getPort(), access.getAuth());
 			return ept;
 		}
 		return null;
@@ -189,28 +162,6 @@ public class DiscoverNode extends ElementAccess {
 		this.stage = stage;
 	}
 
-
-
-	/**
-	 * Gets the port.
-	 *
-	 * @return the port
-	 */
-	public int getPort() {
-		return port;
-	}
-
-	/**
-	 * Gets the auth.
-	 *
-	 * @return the auth
-	 */
-	public Authentication getAuth() {
-		return auth;
-	}
-	
-	
-
 	
 	
 	/**
@@ -234,4 +185,27 @@ public class DiscoverNode extends ElementAccess {
 	}
 
 	
+	
+	public boolean isReachable() {
+		return reachable;
+	}
+
+
+
+	public void setReachable(boolean reachable) {
+		this.reachable = reachable;
+	}
+
+	
+	
+	public Access getAccess() {
+		return access;
+	}
+
+
+	public void setAccess(Access access) {
+		this.access = access;
+	}
+
+
 }

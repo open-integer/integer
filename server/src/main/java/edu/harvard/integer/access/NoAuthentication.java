@@ -62,4 +62,17 @@ public class NoAuthentication implements Authentication {
 		return accessType;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.access.Authentication#isSame(edu.harvard.integer.access.Authentication)
+	 */
+	@Override
+	public boolean isSame(Authentication auth) {
+		
+		if ( accessType == auth.getAccessType()) 
+		{
+			return true;
+		}
+		return false;
+	}
+
 }
