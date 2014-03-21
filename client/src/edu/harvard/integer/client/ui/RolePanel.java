@@ -11,18 +11,19 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
-import edu.harvard.integer.client.widget.HvCheckBoxListPanel;
+import edu.harvard.integer.client.widget.HvListBoxPanel;
 
 /**
  * This class represents a form panel for importing MIB file.
  *
  * @author jhuang
  */
-public class CapabilityPanel extends FormPanel {
+public class RolePanel extends FormPanel {
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -32,40 +33,50 @@ public class CapabilityPanel extends FormPanel {
 			.create(IntegerService.class);
 
 	/**
-	 * Create a new MibImportPanel.
+	 * Create a new CalendarPolicyPanel.
 	 */
-	public CapabilityPanel() {
+	public RolePanel() {
 		// Because we're going to add a FileUpload widget, we'll need to set the
 		// form to use the POST method, and multipart MIME encoding.
 		setEncoding(FormPanel.ENCODING_MULTIPART);
 		setMethod(FormPanel.METHOD_POST);
 
 		// Create a grid panel to hold all of the form widgets.
-		Grid grid = new Grid(3, 2);
+		Grid grid = new Grid(4, 2);
 		setWidget(grid);
 
 		// Create a CheckBox widget to indicate it is a standard MIB
 		grid.setWidget(0, 0, new Label("Name"));
 		final TextBox nameTextBox = new TextBox();
 		grid.setWidget(0, 1, nameTextBox);
-
-		grid.setWidget(1, 0, new Label("Description"));
-		final TextBox descTextBox = new TextBox();
-		grid.setWidget(1, 1, descTextBox);
 		
-		grid.setWidget(2, 0, new Label("Description"));
-		final HvCheckBoxListPanel checkboxListPanel = new HvCheckBoxListPanel(2, 3);
-		checkboxListPanel.addItem("F");
-		checkboxListPanel.addItem("C");
-		checkboxListPanel.addItem("A");
-		checkboxListPanel.addItem("P");
-		checkboxListPanel.addItem("S");
-		grid.setWidget(2, 1, checkboxListPanel);
+		grid.setWidget(1, 0, new Label("Type"));
+		final ListBox typeListBox = new ListBox();
+		typeListBox.setName("typeListBox");
+		typeListBox.addItem("Primary", "primaryValue");
+		typeListBox.addItem("Secondary", "secondaryValue");
+		grid.setWidget(1, 1, typeListBox);
+		
+		grid.setWidget(2, 0, new Label("Organization"));
+		final ListBox orgListBox = new ListBox();
+		orgListBox.setName("orgListBox");
+		orgListBox.addItem("Harvard Law School", "lawSchoolValue");
+		orgListBox.addItem("Harvard Business School", "businessSchoolValue");
+		grid.setWidget(2, 1, orgListBox);
+
+		grid.setWidget(3, 0, new Label("Calendar Policy List"));
+		final HvListBoxPanel calendarListBoxPanel = new HvListBoxPanel(true);
+		calendarListBoxPanel.setVisibleItemCount(5);
+		calendarListBoxPanel.setName("calendarListBoxPanel");
+		calendarListBoxPanel.addItem("Morning", "morningValue");
+		calendarListBoxPanel.addItem("Afternoon", "afternoonValue");
+		calendarListBoxPanel.addItem("Evening", "eveningValue");
+		grid.setWidget(3, 1, calendarListBoxPanel.getVisualPanel());
 
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.
 		grid.getCellFormatter().setWidth(0, 0, "150px");
-		grid.getCellFormatter().setWidth(0, 1, "180px");
+		grid.getCellFormatter().setWidth(0, 1, "250px");
 
 		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
 		formatter.setHorizontalAlignment(0, 1,
