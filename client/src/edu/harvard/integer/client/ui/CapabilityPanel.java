@@ -53,13 +53,13 @@ public class CapabilityPanel extends FormPanel {
 		final TextBox descTextBox = new TextBox();
 		grid.setWidget(1, 1, descTextBox);
 		
-		grid.setWidget(2, 0, new Label("Description"));
-		final HvCheckBoxListPanel checkboxListPanel = new HvCheckBoxListPanel(2, 3);
-		checkboxListPanel.addItem("F");
-		checkboxListPanel.addItem("C");
-		checkboxListPanel.addItem("A");
-		checkboxListPanel.addItem("P");
-		checkboxListPanel.addItem("S");
+		grid.setWidget(2, 0, new Label("FCAPS"));
+		final HvCheckBoxListPanel checkboxListPanel = new HvCheckBoxListPanel(5, 1);
+		checkboxListPanel.addItem("Fault");
+		checkboxListPanel.addItem("Configuration");
+		checkboxListPanel.addItem("Accounting");
+		checkboxListPanel.addItem("Performance");
+		checkboxListPanel.addItem("Security");
 		grid.setWidget(2, 1, checkboxListPanel);
 
 		// You can use the CellFormatter to affect the layout of the grid's
