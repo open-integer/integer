@@ -31,20 +31,20 @@ dependencies {
 	compile files("libs/grammatica-1.5.jar")
 	compile files("libs/mibble-parser-2.9.3.jar")
 	
-	compile 'javax.validation:validation-api:1.1.0.Final'
-	compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
-	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.2.0.Final'
-	compile "org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:1.0.0.Final"
-	compile "javax.ws.rs:javax.ws.rs-api:2.0-rc3"
-	compile "javax.inject:javax.inject-tck:1"
-	compile "javax.enterprise:cdi-api:1.1.EDR1"
-	compile "org.slf4j:slf4j-log4j12:1.7.5"
-    compile "org.snmp4j:snmp4j:2.2.5"
-	compile "commons-net:commons-net:3.3"
-
-	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:1.1.2.Final"
-	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:1.1.2.Final"
-	testCompile group: 'junit', name: 'junit', version: '4.+'
+	compile 'javax.validation:validation-api:${javaxValidationVersion}'
+	compile group: 'commons-collections', name: 'commons-collections', version: '${commonsCollectionVersion}'
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '${hibernateCoreVersion}'
+	compile "org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:${jbossEJBApiSpecVersion}"
+	compile "javax.ws.rs:javax.ws.rs-api:${javaxWsRsApiVersion}"
+	compile "javax.inject:javax.inject-tck:${javaxInjectVersion}"
+	compile "javax.enterprise:cdi-api:${javaxEnterpriseCdiApiVersion}"
+	compile "org.slf4j:slf4j-log4j12:${slf4jLog4jVersion}"
+    compile "org.snmp4j:snmp4j:${snmp4jVersion}"
+	compile "commons-net:commons-net:${commonsNetVersion}"
+	
+	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${junitArquillianVersion}"
+	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${junitArquillianVersion}"
+	testCompile group: 'junit', name: 'junit', version: '${junitVersion}'
 
 	testRuntime ('org.wildfly:wildfly-arquillian-container-managed:8.0.0.CR1') {
 		exclude module: 'wildfly-ee'
@@ -57,7 +57,7 @@ dependencies {
 		exclude group: 'org.jboss.shrinkwrap.resolver'
 	}
 	
-	testRuntime ("org.jboss:jboss-common-core:2.2.22.GA") {
+	testRuntime ("org.jboss:jboss-common-core:${jbossCommonCoreVersion}") {
 		exclude group: 'org.jboss.logging'
 	}
  	

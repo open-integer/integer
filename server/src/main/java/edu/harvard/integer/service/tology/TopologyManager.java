@@ -31,14 +31,12 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.service.tology;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
+public class TopologyManager {
 
-	
 }

@@ -31,14 +31,46 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.service.security;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.security.UserLogin;
+import edu.harvard.integer.service.BaseService;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
-
+@Singleton
+@Startup
+public class SecurityService extends BaseService implements SecurityServiceInterface {
 	
+	@Inject
+	private Logger logger;
+	
+	private long nextUserId = 0;
+	
+	@PostConstruct
+	public void init() {
+		logger.info("Create SecurityService");;
+		
+		nextUserId = 1;
+	}
+	
+	@Override
+	public ID getNextLoginId(UserLogin login) throws IntegerException {
+		
+		ID id = new ID(nextUserId++, login.getName(), new IDType(UserLogin.class.getSimpleName()));
+		
+		return id;
+	}
 }

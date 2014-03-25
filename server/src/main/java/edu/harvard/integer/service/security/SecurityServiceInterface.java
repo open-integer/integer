@@ -31,14 +31,19 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.service.security;
+
+import javax.ejb.Local;
+
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.security.UserLogin;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
-
-	
+@Local
+public interface SecurityServiceInterface {
+	public ID getNextLoginId(UserLogin login) throws IntegerException;
 }

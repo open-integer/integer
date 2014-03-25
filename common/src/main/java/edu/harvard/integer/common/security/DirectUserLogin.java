@@ -31,14 +31,50 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.common.security;
+
+import javax.persistence.Entity;
+
+import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
+@Entity
+public class DirectUserLogin extends UserLogin {
 
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;	
+
+	private String password = null;
 	
+	public void setPlainTextPassword(String password) {
+		StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+		this.password = encryptor.encryptPassword(password);
+	}
+	
+	public boolean validatePassword(String password) {
+		StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+		
+		return encryptor.checkPassword(password, this.password);
+	}
+	
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 }

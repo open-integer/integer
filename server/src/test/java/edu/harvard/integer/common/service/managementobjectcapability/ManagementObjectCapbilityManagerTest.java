@@ -40,12 +40,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.ConsoleAppender;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -93,6 +96,10 @@ public class ManagementObjectCapbilityManagerTest {
 				.addAsWebInfResource("test-ds.xml");
 	}
 
+	@Before
+	public void initializeLogger() {
+		//BasicConfigurator.configure();
+	}
 	
 	@Test
 	public void addCapability() {

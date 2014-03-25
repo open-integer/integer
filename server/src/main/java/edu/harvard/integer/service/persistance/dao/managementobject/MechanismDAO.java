@@ -31,14 +31,64 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.service.persistance.dao.managementobject;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.Mechanism;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
+public class MechanismDAO extends BaseDAO {
 
-	
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public MechanismDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, Mechanism.class);
+		
+	}
+
+	/**
+	 * @param capabilites
+	 */
+	public List<Mechanism> findByCapabilites(List<Capability> capabilites) {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<Mechanism> query = criteriaBuilder.createQuery(Mechanism.class);
+
+		Root<Mechanism> from = query.from(Mechanism.class);
+		query.select(from);
+
+		ParameterExpression<String> oid = criteriaBuilder
+				.parameter(String.class);
+		query.select(from).where(
+				criteriaBuilder.equal(from.get("identifier"), oid));
+
+		TypedQuery<Mechanism> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, "identifier");
+
+		List<Mechanism> resultList = typeQuery.getResultList();
+
+		
+		return resultList;
+	}
+
 }

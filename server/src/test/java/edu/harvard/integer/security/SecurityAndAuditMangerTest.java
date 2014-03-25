@@ -31,43 +31,43 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.security;
 
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.tology.device.ServiceElementManagerInterface;
+import edu.harvard.integer.common.security.DirectUserLogin;
+import edu.harvard.integer.common.security.IntegerSession;
+import edu.harvard.integer.service.security.SecurityAndAuditManagerInterface;
 
 /**
  * @author David Taylor
- * 
+ *
  */
 @RunWith(Arquillian.class)
-public class ServiceElementTest {
-	@Inject
-	ServiceElementManagerInterface serviceElementManager;
+public class SecurityAndAuditMangerTest {
 
 	@Inject
-	Logger logger;
-
+	private Logger logger;
+	
+	@Inject
+	private SecurityAndAuditManagerInterface securityManager;
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
@@ -76,6 +76,7 @@ public class ServiceElementTest {
 				.addPackages(true, "net.percederberg")
 				.addPackages(true, "org.apache.commons")
 				.addPackages(true, "org.snmp4j")
+				.addPackages(true, "org.jasypt")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -83,69 +84,69 @@ public class ServiceElementTest {
 				.addAsWebInfResource("test-ds.xml");
 	}
 
-	@Before
-	public void initializeLogger() {
-		//BasicConfigurator.configure();
-	}
-
+	
 	@Test
-	public void addServiceElement() {
-
-		ServiceElement serviceElement = new ServiceElement();
-		serviceElement.setName("My ServiceElement");
-		serviceElement.setDescription("A description");
-
-		ServiceElementProtocolInstanceIdentifier identifier = new ServiceElementProtocolInstanceIdentifier();
-		List<FCAPSEnum> fcaps = new ArrayList<FCAPSEnum>();
-		fcaps.add(FCAPSEnum.Configuration);
-		fcaps.add(FCAPSEnum.Fault);
-
-		// identifier.setFcaps(fcaps);
-		identifier.setValue("1");
-
-		List<ServiceElementProtocolInstanceIdentifier> ids = new ArrayList<ServiceElementProtocolInstanceIdentifier>();
-		ids.add(identifier);
-		serviceElement.setValues(ids);
-
+	public void loginUser() {
+		
+		DirectUserLogin login = new DirectUserLogin();
+		login.setName("UserBob");
+		login.setPlainTextPassword("BobsPassword");
+		
+		boolean validatePassword = login.validatePassword("BadPassword");
+		assert(validatePassword == false);
+		
+		validatePassword = login.validatePassword("BobsPassword");
+		assert(validatePassword == true);
+		
 		try {
-			serviceElementManager.updateServiceElement(serviceElement);
-
-		} catch (IntegerException e) {
+			login.setAddress(InetAddress.getByAddress(new byte[] { 127, 0, 0, 1}));
+		} catch (UnknownHostException e) {
+			
 			e.printStackTrace();
-
 			fail(e.toString());
 		}
-
+		
+		try {
+			IntegerSession integerSession = securityManager.loginUser(login);
+			logger.info("User " + login.getName() + " logged in! ID " + integerSession.getSessionId());
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	
 	}
 
 	@Test
-	public void getAllServiceElements() {
-
+	public void addDirectUser() {
+		DirectUserLogin login = new DirectUserLogin();
+		login.setName("admin");
+		login.setPlainTextPassword("public");
+		
 		try {
-			ServiceElement[] serviceElements = serviceElementManager
-					.getAllServiceElements();
-			logger.info("Found " + serviceElements.length + " ServiceElements");
-
-			for (ServiceElement serviceElement : serviceElements) {
-				logger.info("ServiceElement " + serviceElement.getID() + " "
-						+ serviceElement.getDescription());
-
-				assert (serviceElement.getValues() != null);
-
-				logger.info("ServiceElement has "
-						+ serviceElement.getValues().size() + " Values");
-
-				for (ServiceElementProtocolInstanceIdentifier value : serviceElement
-						.getValues()) {
-					logger.info("Value " + value.getValue());
-				}
+			securityManager.addDirectUser(login);
+		} catch (IntegerException e) {
+		
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getAllDirectUsers() {
+		try {
+			DirectUserLogin[] directUsers = securityManager.getAllDirectUsers();
+			logger.info("Found " + directUsers.length + " Direct user logins");
+			
+			assert(directUsers.length > 0);
+			
+			for (DirectUserLogin directUserLogin : directUsers) {
+				logger.info("Found direct login " + directUserLogin.getID().toString());
 			}
+			
 		} catch (IntegerException e) {
-
 			e.printStackTrace();
-
 			fail(e.toString());
 		}
 	}
-
 }

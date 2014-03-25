@@ -36,6 +36,8 @@ package edu.harvard.integer.service.managementobject.snmp;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -70,12 +72,18 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	@Inject
 	private Logger logger;
 
+	@Resource
+	private EJBContext context;
+	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
 	 */
 	@Override
 	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException {
 
+	
+		logger.info("Caller: " + context.getCallerPrincipal());
+		
 		try {
 			logger.info("Importing " + mibFile.length + " MIB's");
 			for (MIBImportInfo mibImportInfo : mibFile) {
@@ -121,6 +129,9 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws IntegerException {
+		
+		logger.info("Caller: " + context.getCallerPrincipal().getName() 
+				+ " " + context.getCallerPrincipal().getClass());
 		
 		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
 		

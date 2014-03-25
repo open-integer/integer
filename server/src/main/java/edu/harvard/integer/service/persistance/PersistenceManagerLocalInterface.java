@@ -35,7 +35,10 @@ package edu.harvard.integer.service.persistance;
 
 import javax.ejb.Local;
 
+import edu.harvard.integer.common.security.DirectUserLogin;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
+import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
@@ -145,6 +148,16 @@ public interface PersistenceManagerLocalInterface {
 	 * @return
 	 */
 	ContactDAO getContactDAO();
+
+	/**
+	 * @return
+	 */
+	MechanismDAO getMechanismDAO();
+
+	/**
+	 * @return
+	 */
+	DirectUserLoginDAO getDirectUserLoginDAO();
 	
 	
 }

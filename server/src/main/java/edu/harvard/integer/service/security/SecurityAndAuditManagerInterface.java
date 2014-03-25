@@ -31,14 +31,66 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.service.security;
+
+import javax.ejb.Local;
+
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.filter.IntegerFilter;
+import edu.harvard.integer.common.security.DirectUserLogin;
+import edu.harvard.integer.common.security.IntegerSession;
+import edu.harvard.integer.common.security.UserLogin;
+import edu.harvard.integer.common.user.AccessPolicy;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
+@Local
+public interface SecurityAndAuditManagerInterface {
+
+	public IntegerSession loginUser(UserLogin login) throws IntegerException;
+
+	/**
+	 * @param accessPolicy
+	 * @return
+	 * @throws IntegerException
+	 */
+	AccessPolicy updateAccessPolicy(AccessPolicy accessPolicy)
+			throws IntegerException;
+
+	/**
+	 * @param accessPolicy
+	 * @throws IntegerException
+	 */
+	void deleteAccessPolicy(AccessPolicy accessPolicy) throws IntegerException;
+
+	/**
+	 * @param filter
+	 * @return
+	 * @throws IntegerException
+	 */
+	AccessPolicy[] findAccessPolicies(IntegerFilter filter)
+			throws IntegerException;
+
+	/**
+	 * @param user
+	 * @return
+	 * @throws IntegerException
+	 */
+	DirectUserLogin addDirectUser(DirectUserLogin user) throws IntegerException;
+
+	/**
+	 * @param user
+	 * @throws IntegerException
+	 */
+	void deleteDirectUser(DirectUserLogin user) throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	DirectUserLogin[] getAllDirectUsers() throws IntegerException;
 
 	
 }

@@ -31,14 +31,57 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.common.security;
+
+import java.net.InetAddress;
+
+import javax.persistence.Entity;
+
+import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
- *
- * Base class for all services.
+ * 
  */
-public class BaseService {
+@Entity
+public class UserLogin extends BaseEntity {
 
-	
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private InetAddress address = null;
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return getName();
+	}
+
+	/**
+	 * @param userName
+	 *            the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.setName(userName);
+	}
+
+
+	/**
+	 * @return the address
+	 */
+	public InetAddress getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address
+	 *            the address to set
+	 */
+	public void setAddress(InetAddress address) {
+		this.address = address;
+	}
+
 }

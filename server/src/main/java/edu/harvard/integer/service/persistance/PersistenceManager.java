@@ -42,12 +42,15 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.security.DirectUserLogin;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
+import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
@@ -239,5 +242,17 @@ public class PersistenceManager implements PersistenceManagerLocalInterface {
 		return new ContactDAO(em, logger);
 	}
 	
+	/**
+	 * Get the MechanismDAO
+	 * @return
+	 */
+	@Override
+	public MechanismDAO getMechanismDAO() {
+		return new MechanismDAO(em, logger);
+	}
 	
+	@Override
+	public DirectUserLoginDAO getDirectUserLoginDAO() {
+		return new DirectUserLoginDAO(em, logger);
+	}
 }

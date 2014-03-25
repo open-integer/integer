@@ -31,14 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.service.persistance.dao.security;
+
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.security.DirectUserLogin;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
+public class DirectUserLoginDAO extends BaseDAO {
 
-	
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public DirectUserLoginDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, DirectUserLogin.class);
+		
+	}
+
 }

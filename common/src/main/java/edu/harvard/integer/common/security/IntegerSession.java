@@ -31,14 +31,36 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.common.security;
+
+import java.io.Serializable;
+
+import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
+public class IntegerSession implements Serializable {
 
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
 	
+	private ID sessionId = null;
+
+	/**
+	 * @return the sessionId
+	 */
+	public ID getSessionId() {
+		return sessionId;
+	}
+
+	/**
+	 * @param sessionId the sessionId to set
+	 */
+	public void setSessionId(ID sessionId) {
+		this.sessionId = sessionId;
+	}
 }

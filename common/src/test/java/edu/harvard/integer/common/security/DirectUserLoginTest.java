@@ -31,14 +31,52 @@
  *      
  */
 
-package edu.harvard.integer.service;
+package edu.harvard.integer.common.security;
+
+import org.apache.log4j.BasicConfigurator;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author David Taylor
  *
- * Base class for all services.
  */
-public class BaseService {
+public class DirectUserLoginTest {
 
 	
+	private Logger logger = LoggerFactory.getLogger(DirectUserLoginTest.class);
+	
+	@Before
+	public void initializeLogger() {
+		BasicConfigurator.configure();
+	
+	}
+	
+	@Test
+	public void testValidPassword() {
+
+		DirectUserLogin login = new DirectUserLogin();
+		login.setUserName("UserBob");
+		login.setPlainTextPassword("BobsPassword");
+		
+		boolean validatePassword = login.validatePassword("BobsPassword");
+		logger.info("Password should match " + validatePassword);
+		
+		assert(validatePassword == true);
+	
+	}
+
+	public void testBadPassword() {
+		DirectUserLogin login = new DirectUserLogin();
+		login.setUserName("UserBob");
+		login.setPlainTextPassword("BobsPassword");
+		
+		boolean validatePassword = login.validatePassword("BadPassword");
+		logger.info("Password should NOT match " + validatePassword);
+		assert(validatePassword == false);
+		
+	
+	}
 }

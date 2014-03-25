@@ -51,6 +51,7 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 
 /**
@@ -237,6 +238,14 @@ public class ManagementObjectCapabilityManager implements
 		return Arrays.asList(findAll);
 	}
 
+	public Mechanism updateMechanism(Mechanism mechanism) throws IntegerException {
+		MechanismDAO dao = dbm.getMechanismDAO();
+		
+		mechanism = dao.update(mechanism);
+		
+		return mechanism;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -247,6 +256,10 @@ public class ManagementObjectCapabilityManager implements
 	@Override
 	public List<Mechanism> getMechanisms(List<Capability> capabilites) {
 
+		MechanismDAO dao = dbm.getMechanismDAO();
+		
+		dao.findByCapabilites(capabilites);
+		
 		return null;
 	}
 
