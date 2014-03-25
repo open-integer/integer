@@ -15,14 +15,14 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
-import edu.harvard.integer.client.widget.HvCheckBoxListPanel;
+import edu.harvard.integer.client.widget.HvListBoxPanel;
 
 /**
  * This class represents a form panel for importing MIB file.
  *
  * @author jhuang
  */
-public class CapabilityPanel extends FormPanel {
+public class CalendarPolicyPanel extends FormPanel {
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -32,9 +32,9 @@ public class CapabilityPanel extends FormPanel {
 			.create(IntegerService.class);
 
 	/**
-	 * Create a new MibImportPanel.
+	 * Create a new CalendarPolicyPanel.
 	 */
-	public CapabilityPanel() {
+	public CalendarPolicyPanel() {
 		// Because we're going to add a FileUpload widget, we'll need to set the
 		// form to use the POST method, and multipart MIME encoding.
 		setEncoding(FormPanel.ENCODING_MULTIPART);
@@ -48,24 +48,24 @@ public class CapabilityPanel extends FormPanel {
 		grid.setWidget(0, 0, new Label("Name"));
 		final TextBox nameTextBox = new TextBox();
 		grid.setWidget(0, 1, nameTextBox);
-
+		
 		grid.setWidget(1, 0, new Label("Description"));
 		final TextBox descTextBox = new TextBox();
 		grid.setWidget(1, 1, descTextBox);
-		
-		grid.setWidget(2, 0, new Label("FCAPS"));
-		final HvCheckBoxListPanel checkboxListPanel = new HvCheckBoxListPanel(5, 1);
-		checkboxListPanel.addItem("Fault");
-		checkboxListPanel.addItem("Configuration");
-		checkboxListPanel.addItem("Accounting");
-		checkboxListPanel.addItem("Performance");
-		checkboxListPanel.addItem("Security");
-		grid.setWidget(2, 1, checkboxListPanel);
+
+		grid.setWidget(2, 0, new Label("Calendar List"));
+		final HvListBoxPanel calendarListBoxPanel = new HvListBoxPanel(true);
+		calendarListBoxPanel.setVisibleItemCount(5);
+		calendarListBoxPanel.setName("calendarListBoxPanel");
+		calendarListBoxPanel.addItem("06:00 AM Jan 20, 2014", "calendar1Value");
+		calendarListBoxPanel.addItem("07:00 AM Feb 21, 2014", "calendar2Value");
+		calendarListBoxPanel.addItem("09:00 AM March 22, 2014", "calendar3Value");
+		grid.setWidget(2, 1, calendarListBoxPanel.getVisualPanel());
 
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.
 		grid.getCellFormatter().setWidth(0, 0, "150px");
-		grid.getCellFormatter().setWidth(0, 1, "180px");
+		grid.getCellFormatter().setWidth(0, 1, "250px");
 
 		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
 		formatter.setHorizontalAlignment(0, 1,

@@ -11,18 +11,18 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
-import edu.harvard.integer.client.widget.HvCheckBoxListPanel;
 
 /**
  * This class represents a form panel for importing MIB file.
  *
  * @author jhuang
  */
-public class CapabilityPanel extends FormPanel {
+public class ContactPanel extends FormPanel {
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -32,16 +32,16 @@ public class CapabilityPanel extends FormPanel {
 			.create(IntegerService.class);
 
 	/**
-	 * Create a new MibImportPanel.
+	 * Create a new ContactPanel.
 	 */
-	public CapabilityPanel() {
+	public ContactPanel() {
 		// Because we're going to add a FileUpload widget, we'll need to set the
 		// form to use the POST method, and multipart MIME encoding.
 		setEncoding(FormPanel.ENCODING_MULTIPART);
 		setMethod(FormPanel.METHOD_POST);
 
 		// Create a grid panel to hold all of the form widgets.
-		Grid grid = new Grid(3, 2);
+		Grid grid = new Grid(12, 2);
 		setWidget(grid);
 
 		// Create a CheckBox widget to indicate it is a standard MIB
@@ -49,23 +49,60 @@ public class CapabilityPanel extends FormPanel {
 		final TextBox nameTextBox = new TextBox();
 		grid.setWidget(0, 1, nameTextBox);
 
-		grid.setWidget(1, 0, new Label("Description"));
-		final TextBox descTextBox = new TextBox();
-		grid.setWidget(1, 1, descTextBox);
+		grid.setWidget(1, 0, new Label("Address 1"));
+		final TextBox address1Box = new TextBox();
+		grid.setWidget(1, 1, address1Box);
 		
-		grid.setWidget(2, 0, new Label("FCAPS"));
-		final HvCheckBoxListPanel checkboxListPanel = new HvCheckBoxListPanel(5, 1);
-		checkboxListPanel.addItem("Fault");
-		checkboxListPanel.addItem("Configuration");
-		checkboxListPanel.addItem("Accounting");
-		checkboxListPanel.addItem("Performance");
-		checkboxListPanel.addItem("Security");
-		grid.setWidget(2, 1, checkboxListPanel);
+		grid.setWidget(2, 0, new Label("Address 2"));
+		final TextBox address2Box = new TextBox();
+		grid.setWidget(2, 1, address2Box);
+		
+		grid.setWidget(3, 0, new Label("City"));
+		final TextBox cityBox = new TextBox();
+		grid.setWidget(3, 1, cityBox);
+		
+		grid.setWidget(4, 0, new Label("State"));
+		final ListBox stateListBox = new ListBox();
+		stateListBox.setName("stateListBoxFormElement");
+		stateListBox.addItem("MA", "maValue");
+		stateListBox.addItem("ME", "meValue");
+		stateListBox.addItem("NH", "nhValue");
+		grid.setWidget(4, 1, stateListBox);
+		
+		grid.setWidget(5, 0, new Label("Zip"));
+		final TextBox zipBox = new TextBox();
+		grid.setWidget(5, 1, zipBox);
+		
+		grid.setWidget(6, 0, new Label("Type"));
+		final ListBox typeListBox = new ListBox();
+		typeListBox.addItem("Primary Provider", "primaryValue");
+		typeListBox.addItem("Service Delivery", "deliveryValue");
+		grid.setWidget(6, 1, typeListBox);
 
+		grid.setWidget(7, 0, new Label("Primary Email"));
+		final TextBox priEmailBox = new TextBox();
+		grid.setWidget(7, 1, priEmailBox);
+		
+		grid.setWidget(8, 0, new Label("Secondary Email"));
+		final TextBox secEmailBox = new TextBox();
+		grid.setWidget(8, 1, secEmailBox);
+		
+		grid.setWidget(9, 0, new Label("Primary Phone"));
+		final TextBox priPhoneBox = new TextBox();
+		grid.setWidget(9, 1, priPhoneBox);
+		
+		grid.setWidget(10, 0, new Label("Secondary Phone"));
+		final TextBox secPhoneBox = new TextBox();
+		grid.setWidget(10, 1, secPhoneBox);
+		
+		grid.setWidget(11, 0, new Label("SMS Number"));
+		final TextBox smsNumberBox = new TextBox();
+		grid.setWidget(11, 1, smsNumberBox);
+		
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.
 		grid.getCellFormatter().setWidth(0, 0, "150px");
-		grid.getCellFormatter().setWidth(0, 1, "180px");
+		grid.getCellFormatter().setWidth(0, 1, "220px");
 
 		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
 		formatter.setHorizontalAlignment(0, 1,

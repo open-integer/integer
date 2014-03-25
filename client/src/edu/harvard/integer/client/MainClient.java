@@ -20,14 +20,20 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.harvard.integer.client.ui.CalendarPolicyPanel;
 import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.CapabilityView;
+import edu.harvard.integer.client.ui.ContactPanel;
 import edu.harvard.integer.client.ui.EventView;
 import edu.harvard.integer.client.ui.FilterView;
+import edu.harvard.integer.client.ui.LocationPanel;
 import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.ui.MechanismPanel;
+import edu.harvard.integer.client.ui.OragnizationPanel;
+import edu.harvard.integer.client.ui.RolePanel;
 import edu.harvard.integer.client.ui.ServiceElementPanel;
 import edu.harvard.integer.client.ui.ServiceElementTypePanel;
+import edu.harvard.integer.client.ui.UserPanel;
 import edu.harvard.integer.client.widget.DragImageWidget;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvFlexTable;
@@ -78,13 +84,31 @@ public class MainClient implements EntryPoint {
 		// System
 		createSystemPageLink();
 		
+		// Location
+		createAddLocationLink();
+		
+		// Organization
+		createAddOrganizationLink();
+		
+		// Calendar Policy
+		createAddCalendarPolicyLink();
+		
+		// Role
+		createAddRoleLink();
+		
+		// Contact
+		createAddContactLink();
+		
+		// User
+		createAddUserLink();
+		
 		currentWidget = createHomePage();
 		RootPanel.get("root").add(currentWidget);
 		
 	}
 	
 	private void createSystemPageLink() {
-		Element element = (Element) Document.get().getElementById("system");
+		Element element = (Element) Document.get().getElementById("home");
 		Anchor testAnchor = Anchor.wrap(element);
 		testAnchor.addClickHandler(new ClickHandler() {
 
@@ -395,6 +419,114 @@ public class MainClient implements EntryPoint {
 				addDialog.setSize("400px", "200px");
 				addDialog.center();
 				addDialog.show();
+			}
+		});
+	}
+	
+	private void createAddLocationLink() {
+		Element element = (Element) Document.get().getElementById(
+				"addLocation");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				LocationPanel panel = new LocationPanel();
+				HvDialogBox dialog = new HvDialogBox("Add Location",
+						panel);
+				dialog.setSize("400px", "200px");
+				dialog.center();
+				dialog.show();
+			}
+		});
+	}
+	
+	private void createAddOrganizationLink() {
+		Element element = (Element) Document.get().getElementById(
+				"addOrganization");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				OragnizationPanel panel = new OragnizationPanel();
+				HvDialogBox dialog = new HvDialogBox("Add Oragnization",
+						panel);
+				dialog.setSize("400px", "200px");
+				dialog.center();
+				dialog.show();
+			}
+		});
+	}
+	
+	private void createAddCalendarPolicyLink() {
+		Element element = (Element) Document.get().getElementById(
+				"addCalendar");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				CalendarPolicyPanel panel = new CalendarPolicyPanel();
+				HvDialogBox dialog = new HvDialogBox("Add Calendar Policy",
+						panel);
+				dialog.setSize("400px", "200px");
+				dialog.center();
+				dialog.show();
+			}
+		});
+	}
+
+	private void createAddRoleLink() {
+		Element element = (Element) Document.get().getElementById(
+				"addRole");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RolePanel panel = new RolePanel();
+				HvDialogBox dialog = new HvDialogBox("Add Role",
+						panel);
+				dialog.setSize("400px", "200px");
+				dialog.center();
+				dialog.show();
+			}
+		});
+	}
+	
+	private void createAddContactLink() {
+		Element element = (Element) Document.get().getElementById(
+				"addContact");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				ContactPanel panel = new ContactPanel();
+				HvDialogBox dialog = new HvDialogBox("Add Contact",
+						panel);
+				dialog.setSize("400px", "300px");
+				dialog.center();
+				dialog.show();
+			}
+		});
+	}
+
+	private void createAddUserLink() {
+		Element element = (Element) Document.get().getElementById(
+				"addUser");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				UserPanel panel = new UserPanel();
+				HvDialogBox dialog = new HvDialogBox("Add User",
+						panel);
+				dialog.setSize("400px", "300px");
+				dialog.center();
+				dialog.show();
 			}
 		});
 	}
