@@ -47,13 +47,13 @@
                     <properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
                 </authorization>
             </security-realm>
-               <security-realm name="UndertowRealm">
-                <server-identities>
-                    <ssl>
-                        <keystore path="localhost.keystore" relative-to="jboss.server.config.dir" keystore-password="changeit" />
-                    </ssl>
-                </server-identities>
-            </security-realm>
+<!--                <security-realm name="UndertowRealm"> -->
+<!--                 <server-identities> -->
+<!--                     <ssl> -->
+<!--                         <keystore path="localhost.keystore" relative-to="jboss.server.config.dir" keystore-password="changeit" /> -->
+<!--                     </ssl> -->
+<!--                 </server-identities> -->
+<!--             </security-realm> -->
         </security-realms>
         <audit-log>
             <formatters>
@@ -354,7 +354,7 @@
             </buffer-caches>
             <server name="default-server">
                 <http-listener name="default" socket-binding="http"/>
-                 <https-listener name="https" socket-binding="https" security-realm="UndertowRealm"/>
+<!--                  <https-listener name="https" socket-binding="https" security-realm="UndertowRealm"/> -->
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="server-header"/>
