@@ -3,7 +3,7 @@ dependencies { runtime 'org.jumpmind.symmetric.jdbc:mariadb-java-client:1.1.1' }
 
 task installMariaDB(type: Copy) {
  def mariadbJar = configurations.runtime.find { it.name.contains('mariadb') }
-   def moduleDir = "$wildflyHome/modules/system/layers/base/org/mariadb/main"
+   def moduleDir = "$System.env.JBOSS_HOME/modules/system/layers/base/org/mariadb/main"
 
    from mariadbJar
    into moduleDir

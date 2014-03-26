@@ -2,7 +2,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-test.systemProperty('JBOSS_HOME', System.getProperty("user.home") + "/" + wildflyHome)
+test.systemProperty('JBOSS_HOME', "$System.env.JBOSS_HOME")
 
 sourceCompatibility = 1.7
 version = '1.0'
@@ -64,10 +64,10 @@ dependencies {
 }
 
 task deployWildfly() << {
-	println "Deploy Wildfly modules to " + System.getProperty("user.home") + "/" + wildflyHome + '/standalone/deployments'
+	println "Deploy Wildfly modules to " +  "$System.env.JBOSS_HOME/" + '/standalone/deployments'
 	copy {
 		from "src/wildfly"
-		into System.getProperty("user.home") + "/" + wildflyHome
+		into "$System.env.JBOSS_HOME" + '/standalone/deployments'
 	}
 }
 
