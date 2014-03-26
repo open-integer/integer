@@ -70,6 +70,9 @@ public class UserTest {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, "edu.harvard.integer")
+				.addPackages(true, "net.percederberg")
+				.addPackages(true, "org.apache.commons")
+				.addPackages(true, "org.snmp4j")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
