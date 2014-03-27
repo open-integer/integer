@@ -123,7 +123,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>MyResourceName</web-resource-name>
-			<url-pattern>/client-1.0</url-pattern>
+			<url-pattern>/client-1.0/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>DirectUser</role-name>
