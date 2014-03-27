@@ -42,7 +42,8 @@ package edu.harvard.integer.common.exception;
  */
 public enum UserErrorCodes implements ErrorCodeInterface {
 	ContactInUseCanNotDelete("Contact in use. Can not delete."),
-	UserInUseCanNotDelete("User in use. Can not delete.");
+	UserInUseCanNotDelete("User in use. Can not delete."),
+	UserNamePasswordNotValid("Username or password is not valid");
 
 	private String errorCode = null;
 	

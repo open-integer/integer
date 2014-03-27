@@ -31,38 +31,42 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.security;
+package edu.harvard.integer.cas.filter;
 
-import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+import org.jasig.cas.client.validation.Assertion;
+import org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter;
 import org.slf4j.Logger;
-
-import edu.harvard.integer.common.security.DirectUserLogin;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author David Taylor
  *
  */
-public class DirectUserLoginDAO extends BaseDAO {
+public class IntegerWildflyCasAuthFilter extends Cas20ProxyReceivingTicketValidationFilter {
 
-	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
+	private Logger logger = LoggerFactory.getLogger(IntegerWildflyCasAuthFilter.class);
+	
+	/* (non-Javadoc)
+	 * @see org.jasig.cas.client.validation.AbstractTicketValidationFilter#onSuccessfulValidation(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.jasig.cas.client.validation.Assertion)
 	 */
-	public DirectUserLoginDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, DirectUserLogin.class);
+	@Override
+	protected void onSuccessfulValidation(HttpServletRequest request,
+			HttpServletResponse response, Assertion assertion) {
 		
+		AttributePrincipal principal = assertion.getPrincipal();
+		logger.info("========== User " + principal.getName() + "        ==================");
+		logger.info("== Request User " + request.getUserPrincipal() + " ==================");
+		logger.info("=== Remote User " + request.getRemoteUser() + "    ==================");
+		logger.info("=== Remote Host " + request.getRemoteHost() + "    ==================");
+
+		
+		super.onSuccessfulValidation(request, response, assertion);
 	}
 
-	/**
-	 * @param name
-	 */
-	public DirectUserLogin findByName(String name) {
-		
-		return findByStringField(name, "name", DirectUserLogin.class);
-		
-	}
-
+	
+	
 }

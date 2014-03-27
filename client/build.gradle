@@ -48,6 +48,10 @@ dependencies {
 	providedCompile project(':common')
 	providedCompile project(':server')
 	
+	compile ('org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final')
+//	runtime('org.jasig.cas.client:cas-client-core:3.1.12')
+//	compile ('org.jasig.cas.client:cas-client-core:3.1.12')
+	
 	// Compile GWT libs, needed for gwtCompile and the javaCompile
 	// Also includes the servlet-api
 	compile "com.google.gwt:gwt-user:${gwtVersion}"

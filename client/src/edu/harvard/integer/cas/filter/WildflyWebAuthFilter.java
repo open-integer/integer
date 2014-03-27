@@ -33,99 +33,103 @@
 //
 package edu.harvard.integer.cas.filter;
 
-public class WildflyWebAuthFilter {}
 
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.jasig.cas.client.util.AbstractCasFilter;
+import org.jasig.cas.client.util.CommonUtils;
+
+/**
+ * @author David Taylor
+ * 
+ */
+public class WildflyWebAuthFilter extends AbstractCasFilter {
+	
+	public void doFilter(final ServletRequest servletRequest,
+			final ServletResponse servletResponse, final FilterChain chain)
+			throws IOException, ServletException {
+		
+		final HttpServletRequest request = (HttpServletRequest) servletRequest;
+		final HttpServletResponse response = (HttpServletResponse) servletResponse;
+		final HttpSession session = request.getSession();
+		final String ticket = CommonUtils.safeGetParameter(request,
+				getArtifactParameterName());
+
+		log.info("=================== Wildfly Web Auth Filter ===================== Ticket " + ticket);
+				
+		
+		TicketValidator tv = new TicketValidator();
+		String name = tv.validateTicket(ticket);
+		log.info("User " + name + " Ticket " + ticket);
+		//session.setAttribute("Name", name);
+		
+//		if (session != null
+//				&& session.getAttribute(CONST_CAS_ASSERTION) == null
+//				&& ticket != null) {
+	//		try {
+				final String service = constructServiceUrl(request, response);
+				log.info("Attempting CAS ticket validation with service="
+						+ service + " and ticket=" + ticket);
+
+				log.info("user " + request.getParameter("username"));
+				
 //
-//import java.io.IOException;
-//
-//import javax.servlet.FilterChain;
-//import javax.servlet.ServletException;
-//import javax.servlet.ServletRequest;
-//import javax.servlet.ServletResponse;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
-//import org.jasig.cas.client.util.AbstractCasFilter;
-//import org.jasig.cas.client.util.CommonUtils;
-//
-///**
-// * @author David Taylor
-// * 
-// */
-//public class WildflyWebAuthFilter extends AbstractCasFilter {
-//	public void doFilter(final ServletRequest servletRequest,
-//			final ServletResponse servletResponse, final FilterChain chain)
-//			throws IOException, ServletException {
-//		final HttpServletRequest request = (HttpServletRequest) servletRequest;
-//		final HttpServletResponse response = (HttpServletResponse) servletResponse;
-//	//	final HttpSession session = request.getSession();
-//		final String ticket = CommonUtils.safeGetParameter(request,
-//				getArtifactParameterName());
-//
-//		log.info("=================== Wildfly Web Auth Filter ===================== Ticket " + ticket);
+//				Enumeration attributeNames = session.getAttributeNames();
+//				while(attributeNames.hasMoreElements()) {
+//					Object nextElement = attributeNames.nextElement();
+//					log.info("1 Attribute " + nextElement + session.getAttribute((String) nextElement));
+//				}
 //				
-//		TicketValidator tv = new TicketValidator();
-//		log.info("User" + tv.validateTicket(ticket));
-//		
-////		if (session != null
-////				&& session.getAttribute(CONST_CAS_ASSERTION) == null
-////				&& ticket != null) {
-//	//		try {
-//				final String service = constructServiceUrl(request, response);
-//				log.info("Attempting CAS ticket validation with service="
-//						+ service + " and ticket=" + ticket);
-//
-//				log.info("user " + request.getParameter("username"));
+//				 try {
 //				
-////
-////				Enumeration attributeNames = session.getAttributeNames();
-////				while(attributeNames.hasMoreElements()) {
-////					Object nextElement = attributeNames.nextElement();
-////					log.info("1 Attribute " + nextElement + session.getAttribute((String) nextElement));
-////				}
-////				
-////				 try {
-////				
-////				 request.login(service, ticket);
-////				 } catch (ServletException e) {
-////				 log.debug("JBoss Web authentication failed.");
-////				 throw new
-////				 GeneralSecurityException("JBoss Web authentication failed.");
-////				 }
-////				
-////				
-////				if (request.getUserPrincipal() instanceof AssertionPrincipal) {
-////					final AssertionPrincipal principal = (AssertionPrincipal) request
-////							.getUserPrincipal();
-////					log.debug("Installing CAS assertion into session.");
-////					session.setAttribute(CONST_CAS_ASSERTION,
-////							principal.getAssertion());
-////				} else {
-////					log.debug("Aborting -- principal is not of type AssertionPrincipal");
-//////					throw new GeneralSecurityException(
-//////							"JBoss Web authentication did not produce CAS AssertionPrincipal.");
-////				}
-//////			} catch (final GeneralSecurityException e) {
-//////				response.sendError(HttpServletResponse.SC_FORBIDDEN,
-//////						e.getMessage());
-//////			}
-////		} else if (session != null && request.getUserPrincipal() == null) {
-////			// There is evidence that in some cases the principal can disappear
-////			// in JBoss despite a valid session.
-////			// This block forces consistency between principal and assertion.
-////			log.info("User principal not found.  Removing CAS assertion from session to force reauthentication.");
-////			session.removeAttribute(CONST_CAS_ASSERTION);
-////		}
-//
+//				 request.login(service, ticket);
+//				 } catch (ServletException e) {
+//				 log.debug("JBoss Web authentication failed.");
+//				 throw new
+//				 GeneralSecurityException("JBoss Web authentication failed.");
+//				 }
+//				
+//				
+//				if (request.getUserPrincipal() instanceof AssertionPrincipal) {
+//					final AssertionPrincipal principal = (AssertionPrincipal) request
+//							.getUserPrincipal();
+//					log.debug("Installing CAS assertion into session.");
+//					session.setAttribute(CONST_CAS_ASSERTION,
+//							principal.getAssertion());
+//				} else {
+//					log.debug("Aborting -- principal is not of type AssertionPrincipal");
+////					throw new GeneralSecurityException(
+////							"JBoss Web authentication did not produce CAS AssertionPrincipal.");
+//				}
+////			} catch (final GeneralSecurityException e) {
+////				response.sendError(HttpServletResponse.SC_FORBIDDEN,
+////						e.getMessage());
+////			}
+//		} else if (session != null && request.getUserPrincipal() == null) {
+//			// There is evidence that in some cases the principal can disappear
+//			// in JBoss despite a valid session.
+//			// This block forces consistency between principal and assertion.
+//			log.info("User principal not found.  Removing CAS assertion from session to force reauthentication.");
+//			session.removeAttribute(CONST_CAS_ASSERTION);
+//		}
+
 //		chain.doFilter(request, response);
-//				
-////		log.info("Request User " + request.getUserPrincipal());
-////		Enumeration attributeNames = session.getAttributeNames();
-////		while(attributeNames.hasMoreElements()) {
-////			Object nextElement = attributeNames.nextElement();
-////			log.info("2 Attribute " + nextElement + session.getAttribute((String) nextElement));
-////		}
-//
-//	}
-//
-//}
+				
+//		log.info("Request User " + request.getUserPrincipal());
+//		Enumeration attributeNames = session.getAttributeNames();
+//		while(attributeNames.hasMoreElements()) {
+//			Object nextElement = attributeNames.nextElement();
+//			log.info("2 Attribute " + nextElement + session.getAttribute((String) nextElement));
+//		}
+
+	}
+
+}

@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.UserErrorCodes;
 import edu.harvard.integer.common.filter.IntegerFilter;
 import edu.harvard.integer.common.security.DirectUserLogin;
 import edu.harvard.integer.common.security.IntegerSession;
@@ -111,6 +112,13 @@ public class SecurityAndAuditManager implements
 	
 	@Override
 	public IntegerSession loginUser(UserLogin login) throws IntegerException {
+		
+		if (login instanceof DirectUserLogin) {
+			DirectUserLoginDAO dao = persistenceManager.getDirectUserLoginDAO();
+			DirectUserLogin directLogin = dao.findByName(login.getName());
+			if (directLogin == null)
+				throw new IntegerException(null, UserErrorCodes.UserNamePasswordNotValid);
+		}
 		
 		if (logger.isDebugEnabled())
 			logger.debug("Login User " + login.getName() + " from " + login.getAddress());

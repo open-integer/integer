@@ -33,32 +33,32 @@
 
 package edu.harvard.integer.cas.filter;
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+import org.jasig.cas.client.validation.Assertion;
+import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
+import org.jasig.cas.client.validation.TicketValidationException;
+
 /**
  * @author David Taylor
  *
- */
-//import org.jasig.cas.client.authentication.AttributePrincipal;
-//import org.jasig.cas.client.validation.Assertion;
-//import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
-//import org.jasig.cas.client.validation.TicketValidationException;
- 
+ */ 
 public class TicketValidator {
-//    public final boolean validateTicket(String ticket) {
-//        AttributePrincipal principal = null;
-//        String casServerUrl = "https://localhost/cas-server-webapp-3.5.2";
-//        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(casServerUrl);
-//        sv.setAcceptAnyProxy(true);
-//        try {
-//            // there is no need, that the legacy application is accessible
-//            // through this URL. But for validation purpose, even a non-web-app
-//            // needs a valid looking URL as identifier.
-//            String legacyServerServiceUrl = "https://localhost:8443/client-1.0/client.html";
-//            Assertion a = sv.validate(ticket, legacyServerServiceUrl);
-//            principal = a.getPrincipal();
-//            System.out.println("user name:" + principal.getName());
-//        } catch (TicketValidationException e) {
-//            e.printStackTrace(); // bad style, but only for demonstration purpose.
-//        }
-//        return principal != null;
-//    }
+    public final String validateTicket(String ticket) {
+        AttributePrincipal principal = null;
+        String casServerUrl = "https://localhost/cas-server-webapp-3.5.2";
+        Cas20ProxyTicketValidator sv = new Cas20ProxyTicketValidator(casServerUrl);
+        sv.setAcceptAnyProxy(true);
+        try {
+            // there is no need, that the legacy application is accessible
+            // through this URL. But for validation purpose, even a non-web-app
+            // needs a valid looking URL as identifier.
+            String legacyServerServiceUrl = "https://localhost:8443/client-1.0/client.html";
+            Assertion a = sv.validate(ticket, legacyServerServiceUrl);
+            principal = a.getPrincipal();
+            System.out.println("user name:" + principal.getName());
+        } catch (TicketValidationException e) {
+            e.printStackTrace(); // bad style, but only for demonstration purpose.
+        }
+        return principal.getName() ;
+    }
 }

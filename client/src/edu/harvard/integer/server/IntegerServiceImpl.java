@@ -23,7 +23,7 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalI
 /**
  * The server side implementation of the RPC service.
  */
-@ServletSecurity(@HttpConstraint(rolesAllowed = { "DirectUser" }))
+@ServletSecurity(@HttpConstraint(rolesAllowed = { "DirectUser", "CASUser" }))
 public class IntegerServiceImpl extends RemoteServiceServlet implements
 		IntegerService {
 	
