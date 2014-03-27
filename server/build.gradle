@@ -2,8 +2,6 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-test.systemProperty('JBOSS_HOME', "$System.env.JBOSS_HOME")
-
 sourceCompatibility = 1.7
 version = '1.0'
 jar {
@@ -64,10 +62,10 @@ dependencies {
 }
 
 task deployWildfly() << {
-	println "Deploy Wildfly modules to " +  "$System.env.JBOSS_HOME/" + '/standalone/deployments'
+	println "Deploy Wildfly modules to " +  "$System.env.JBOSS_HOME/" 
 	copy {
 		from "src/wildfly"
-		into "$System.env.JBOSS_HOME" + '/standalone/deployments'
+		into "$System.env.JBOSS_HOME" 
 	}
 }
 
