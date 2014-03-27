@@ -47,6 +47,7 @@ repositories {
 dependencies {
 	providedCompile project(':common')
 	providedCompile project(':server')
+	compile ('org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final')
 	
 	// Compile GWT libs, needed for gwtCompile and the javaCompile
 	// Also includes the servlet-api
