@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -21,10 +23,15 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalI
 /**
  * The server side implementation of the RPC service.
  */
-@SuppressWarnings("serial")
+@ServletSecurity(@HttpConstraint(rolesAllowed = { "DirectUser" }))
 public class IntegerServiceImpl extends RemoteServiceServlet implements
 		IntegerService {
 	
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** The snmp service. */
 	@EJB
 	SnmpObjectManagerLocalInterface snmpService;
