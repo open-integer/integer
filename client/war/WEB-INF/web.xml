@@ -5,8 +5,147 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
+   <!--  Filters -->
+
+<!-- 	<filter> -->
+<!-- 		<filter-name>CAS Authentication Filter</filter-name> -->
+<!-- 		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>casServerLoginUrl</param-name> -->
+<!-- 			<param-value>https://localhost/cas-server-webapp-3.5.2/login</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>serverName</param-name> -->
+<!-- 			<param-value>https://localhost:8443</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>renew</param-name> -->
+<!-- 			<param-value>false</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>gateway</param-name> -->
+<!-- 			<param-value>false</param-value> -->
+<!-- 		</init-param> -->
+<!-- 	</filter> -->
+	
+<!-- 	<filter> -->
+<!-- 		<filter-name>CAS Validation Filter</filter-name> -->
+<!-- 		<filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>casServerUrlPrefix</param-name> -->
+<!-- 			<param-value>https://localhost/cas-server-webapp-3.5.2</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>serverName</param-name> -->
+<!-- 			<param-value>https://localhost:8443</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>proxyCallbackUrl</param-name> -->
+<!-- 			<param-value>https://localhost:8443/client-1.0/proxyCallback</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>proxyReceptorUrl</param-name> -->
+<!-- 			<param-value>/client-1.0/proxyCallback</param-value> -->
+<!-- 		</init-param> -->
+<!-- 	</filter> -->
+	
+<!-- 	<filter> -->
+<!-- 		<filter-name>CAS Integer Validation Filter</filter-name> -->
+<!-- 		<filter-class>edu.harvard.integer.cas.filter.IntegerWildflyCasAuthFilter</filter-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>casServerUrlPrefix</param-name> -->
+<!-- 			<param-value>https://localhost/cas-server-webapp-3.5.2</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>serverName</param-name> -->
+<!-- 			<param-value>https://localhost:8443</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>proxyCallbackUrl</param-name> -->
+<!-- 			<param-value>https://localhost:8443/client-1.0/proxyCallback</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>proxyReceptorUrl</param-name> -->
+<!-- 			<param-value>/client-1.0/proxyCallback</param-value> -->
+<!-- 		</init-param> -->
+<!-- 	</filter> -->
+	
+<!-- 	<filter> -->
+<!-- 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name> -->
+<!-- 		<filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class> -->
+<!-- 	</filter>         -->
+	
+<!-- 	<filter> -->
+<!-- 		<filter-name>CAS Assertion Thread Local Filter</filter-name> -->
+<!-- 		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class> -->
+<!-- 	</filter> -->
+
+	<!-- ************************* -->
+
+<!-- Sign out not yet implemented -->
+<!-- 
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+-->
+
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>CAS Authentication Filter</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>CAS Integer Validation Filter</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	 
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>CAS Validation Filter</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>CAS Assertion Thread Local Filter</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>CAS Validation Filter</filter-name> -->
+<!-- 		<url-pattern>/proxyCallback</url-pattern> -->
+			
+<!-- 	</filter-mapping> -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>MyResourceName</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>DirectUser</role-name>
+		</auth-constraint>
+	</security-constraint>
+		 
+<!--     Configuration for custom form based authenticator -->
+<!--     <login-config> -->
+<!--     	<auth-method>FORM</auth-method> -->
+<!--         <form-login-config> -->
+<!--             <form-login-page>login.html</form-login-page> -->
+<!--         </form-login-config> -->
+<!--         <realm-name>RealmUsersRoles</realm-name> -->
+<!--     </login-config> -->
+
+<!--  Configuration for basic authenticator -->
+    <login-config>
+    	<auth-method>BASIC</auth-method>
+        <realm-name>RealmUsersRoles</realm-name>
+    </login-config>
+
   <!-- Servlets -->
-  
   <servlet>
     <servlet-name>integerServlet</servlet-name>
     <servlet-class>edu.harvard.integer.server.IntegerServiceImpl</servlet-class>
