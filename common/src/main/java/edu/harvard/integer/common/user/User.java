@@ -60,6 +60,8 @@ public class User extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String password = null;
+	
 	/**
 	 * The contact ID
 	 */
@@ -265,5 +267,19 @@ public class User extends BaseEntity {
 	 */
 	public void setRoles(List<ID> roles) {
 		this.roles = roles;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
