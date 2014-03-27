@@ -151,6 +151,9 @@ h4 {
 .gwt-CheckBox {
   margin-left:  0;
   margin-right: auto;
+  font-size: 10pt;
+  font-family: verdana, trebuchet, arial, sans-serif;
+  font-weight: 200;
 }
 
 .gwt-FileUpload {
