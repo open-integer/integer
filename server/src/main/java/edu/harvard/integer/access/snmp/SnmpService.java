@@ -266,10 +266,11 @@ final public class SnmpService
     public void sendAsyncPdu( PDU pdu, 
             AbstractTarget target,
             ResponseListener listener,
-            Object userHandler) throws IntegerException {
-    	
+            Object userHandler) throws IntegerException 
+    {	
           try {
               _snmp.send(pdu, target, userHandler, listener);
+              System.out.println("snmp send done .... " + userHandler);
           } 
           catch (IOException e) {
         	  throw new IntegerException(e, CommonErrorCodes.IOError);

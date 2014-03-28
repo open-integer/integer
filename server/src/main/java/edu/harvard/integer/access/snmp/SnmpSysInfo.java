@@ -47,6 +47,9 @@ public class SnmpSysInfo {
 	private String sysName;
 	private String sysLocation;
 	
+	private PDU pdu;
+	
+
 	public SnmpSysInfo( PDU sysPdu ) {
 		
 		for ( int i=0; i<sysPdu.size(); i++ ) {
@@ -66,7 +69,8 @@ public class SnmpSysInfo {
 			else if ( vb.getOid().toString().equals(CommonSnmpOids.sysDescr) ) {
 				sysDescr = vb.getVariable().toString();
 			}
-		}
+		}		
+		this.pdu = sysPdu;
 	}
 	
 	public String getSysDescr() {
@@ -85,4 +89,8 @@ public class SnmpSysInfo {
 		return sysLocation;
 	}
 	
+	
+	public PDU getPdu() {
+		return pdu;
+	}
 }

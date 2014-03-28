@@ -34,9 +34,14 @@ package edu.harvard.integer.service.discovery.snmp;
 
 
 import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.service.discovery.IntegerInterface;
 import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+
 
 /**
  * @author dchan
@@ -44,8 +49,12 @@ import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
  */
 public class SNMPElementDiscover implements ElementDiscoveryBase {
 
+	private IntegerInterface integerIf;
 	
-	public SNMPElementDiscover() {}
+	public SNMPElementDiscover( IntegerInterface integerIf ) 
+	{
+		this.integerIf = integerIf;
+	}
 	
 
 	/* (non-Javadoc)
@@ -62,16 +71,6 @@ public class SNMPElementDiscover implements ElementDiscoveryBase {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#scanElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.common.topology.ServiceElement, edu.harvard.integer.access.snmp.DevicePhisicalPattern)
-	 */
-	@Override
-	public void scanElementNode(ElementEndPoint endEpt,
-			ServiceElement elementNode, DevicePhisicalPattern topoPattern)
-			throws IntegerException {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	/* (non-Javadoc)
@@ -95,6 +94,28 @@ public class SNMPElementDiscover implements ElementDiscoveryBase {
 			throws IntegerException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoveryBase#stopDiscovery()
+	 */
+	@Override
+	public void stopDiscovery() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoveryBase#discoverElement(edu.harvard.integer.common.discovery.VendorDiscoveryTemplate, edu.harvard.integer.service.discovery.subnet.DiscoverNode)
+	 */
+	@Override
+	public void discoverElement(
+			VendorDiscoveryTemplate<ServiceElementManagementObject> template,
+			DiscoverNode disNode) throws IntegerException {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

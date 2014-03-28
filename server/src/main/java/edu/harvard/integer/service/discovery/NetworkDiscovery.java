@@ -32,19 +32,22 @@
  */
 package edu.harvard.integer.service.discovery;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.snmp4j.smi.OID;
+import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNetInclusive;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 
@@ -66,7 +69,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
  * @author dchan
  * @param <T> the generic type
  */
-public class NetworkDiscovery <T extends ElementAccess>implements NetworkDiscoveryBase {
+public class NetworkDiscovery implements NetworkDiscoveryBase {
 
 	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
@@ -86,14 +89,20 @@ public class NetworkDiscovery <T extends ElementAccess>implements NetworkDiscove
 	private ElementDiscoverCB<ServiceElement> cb;
 	
 	/** The discover seed. */
-	private final IpDiscoverySeed discoverSeed;
+	private final List<IpDiscoverySeed> discoverSeeds;
 	
 	/** The stop discovery. */
 	private volatile boolean stopDiscovery;
+		
+	/** Top level polling variable bindings.  It is getting from IntegerInterface and instantiate in the beginning
+	 *  for performance reason.
+	 * 
+	 */
+	private List<VariableBinding> topLevelVBs;
 	
 	
 	/** The integer Inteface used by discovery to retrieve object model information.. */
-	private IntegerInterface integerIf;
+	private DiscoveryServiceInterface integerIf;
 	
 
 	/**
@@ -103,48 +112,66 @@ public class NetworkDiscovery <T extends ElementAccess>implements NetworkDiscove
 	 * @param callback the callback
 	 * @param integerIf the integer if
 	 */
-	public NetworkDiscovery( final IpDiscoverySeed discoverSeed, 
+	public NetworkDiscovery( final List<IpDiscoverySeed> discoverSeed, 
 			                 ElementDiscoverCB<ServiceElement> callback,
-			                 IntegerInterface integerIf ) 
+			                 DiscoveryServiceInterface integerIf ) 
 	{
 		this.cb = callback;
-		this.discoverSeed = discoverSeed;
+		this.discoverSeeds = discoverSeed;
 		this.integerIf = integerIf;
 		
-		discoverNetwork();
+		List<VariableBinding> vbs = new ArrayList<>();
+		List<ServiceElementManagementObject> mgrObjects = integerIf.getTopLevelPolls();
+		for ( ServiceElementManagementObject se : mgrObjects ) {
+			
+			if ( se instanceof SNMP ) {
+		
+				SNMP sn = (SNMP) se;
+				VariableBinding vb = new VariableBinding(new OID(sn.getOid()));
+				vbs.add(vb);
+			}
+		}
+		if ( vbs.size() > 0 ) {
+			topLevelVBs = vbs;
+		}
 	}
+	
+	
 	
 	
 	
 	
 	/**
 	 * Discover network. Each subnet has its own thread for discovery.
+	 * @throws  
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
-	private void discoverNetwork() {
+	public void discoverNetwork()  {
 		
 		logger.debug("In discoverNetwork ");
 		
 		/**
 		 * Create subnet tasks based on discover configuration subnet.
 		 */
-		List<DiscoverNetInclusive> nets =  discoverSeed.getDiscoverNets();
-		if ( nets != null ) {
+		if ( discoverSeeds != null ) {
 			
 			ExecutorService exService =  DiscoveryManager.getInstance().getSubPool();
-			for ( DiscoverNet net : nets) {
+			for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
 			
+				
 				try {
 					@SuppressWarnings("unchecked")
-					DiscoverSubnetAsyncTask<T> subTask = new DiscoverSubnetAsyncTask(this, net.getNetwork(), 
-							                                        net.getNetmask(), discoverSeed.getAuths());
+					DiscoverSubnetAsyncTask<ElementAccess> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+					
 					exService.submit(subTask);
+					
+					System.out.println("After submit .................. ");
 					
 				} catch (IntegerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
+				} 
 			}
 		}
 		
@@ -225,9 +252,16 @@ public class NetworkDiscovery <T extends ElementAccess>implements NetworkDiscove
 	 *
 	 * @return the integer if
 	 */
-	public IntegerInterface getIntegerIf() {
+	public DiscoveryServiceInterface getIntegerIf() {
 		return integerIf;
 	}
+
+
+
+	public List<VariableBinding> getTopLevelVBs() {
+		return topLevelVBs;
+	}
+
 
 
 	

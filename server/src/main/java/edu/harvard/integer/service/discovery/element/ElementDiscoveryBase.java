@@ -33,9 +33,12 @@
 package edu.harvard.integer.service.discovery.element;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.discovery.snmp.DevicePhisicalPattern;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
  * This interface layout the methods for discover IP based service element
@@ -59,15 +62,15 @@ public interface ElementDiscoveryBase {
 	public ServiceElement discoverElementNode( ElementEndPoint endEpt, DevicePhisicalPattern topoPattern  ) throws IntegerException;
 	
 	/**
-	 * Scan node element with a given node service element. It is considering a full scan which means during 
-	 * the scan, some sub-component of given "element" may be added and some of them may missing.
+	 * Discover element with a given node service element templete. It is considering a full discovery,
 	 *  
 	 * @param endEpt
 	 * @param elementNode
 	 * @param topoPattern
 	 * @throws IntegerException
 	 */
-	public void scanElementNode( ElementEndPoint endEpt, ServiceElement elementNode, DevicePhisicalPattern topoPattern ) throws IntegerException;
+	public void discoverElement( VendorDiscoveryTemplate<ServiceElementManagementObject> template, 
+			                     DiscoverNode disNode ) throws IntegerException;
 	
 	
 	/**
@@ -89,4 +92,10 @@ public interface ElementDiscoveryBase {
 	 * @return -- The identify of the element node such as sysObjectID
 	 */
 	public String checkReachable( ElementEndPoint endEpt ) throws IntegerException;
+	
+	
+	/**
+	 * Used to stop discovery.
+	 */
+	public void stopDiscovery();
 }

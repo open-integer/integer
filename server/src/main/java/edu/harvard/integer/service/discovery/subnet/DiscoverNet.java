@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.service.discovery.subnet;
 
+import org.apache.commons.net.util.SubnetUtils;
+
 /**
  * The Class DiscoverNet is used to specify which net or node for discovery
  * or need to be excluded.  There are two lists for discovery.  One contains the nodes and
@@ -40,15 +42,26 @@ package edu.harvard.integer.service.discovery.subnet;
  *
  * @author dchan
  */
-public abstract class DiscoverNet {
+public class DiscoverNet {
 
-	/**
-	 * Specify the network to discovery.  
-	 */
-	private String network;
+	private SubnetUtils utils;
 	
-	/** Network Mask. */
-	private String netmask;
+	private int startIpi;
+	private int endIpi;
+	
+
+
+	public DiscoverNet( String ipnet, String mask ) {
+		
+		utils = new SubnetUtils(ipnet, mask);
+		startIpi = utils.getInfo().asInteger( utils.getInfo().getLowAddress() );
+		endIpi = utils.getInfo().asInteger( utils.getInfo().getHighAddress() );
+	}
+	
+	public DiscoverNet( String cidr ) 
+	{
+		utils = new SubnetUtils(cidr);
+	}
 	
 
 	/**
@@ -57,17 +70,10 @@ public abstract class DiscoverNet {
 	 * @return the network
 	 */
 	public String getNetwork() {
-		return network;
+		return utils.getInfo().getAddress();
 	}
 	
-	/**
-	 * Sets the network.
-	 *
-	 * @param network Specify which network to be discover.
-	 */
-	public void setNetwork(String network) {
-		this.network = network;
-	}
+	
 	
 	/**
 	 * Gets the netmask.
@@ -75,25 +81,50 @@ public abstract class DiscoverNet {
 	 * @return the netmask Specify the netmask on the network. 
 	 */
 	public String getNetmask() {
-		return netmask;
+		return utils.getInfo().getNetmask();
 	}
 	
+	
 	/**
-	 * Sets the netmask.
-	 *
-	 * @param netmask The netmask
+	 * 
+	 * @param remoteAddr
+	 * @return
 	 */
-	public void setNetmask(String netmask) {
-		this.netmask = netmask;
+	public boolean isInRange( String remoteAddr )  {
+		
+	    int address = utils.getInfo().asInteger( remoteAddr );
+	    return startIpi <= address && address <= endIpi;
 	}
 	
+	
+	public int getIpInteger( String addr )
+	{
+		return utils.getInfo().asInteger( addr );
+	}
+	
+	
 	/**
-	 * Checks if include is true or false.  True the current net will be discover.
-	 *
-	 * @return true or false
+	 * 
+	 * @return
 	 */
-	public abstract boolean isInclude(); 
+	public int getStartIpi() {
+		return startIpi;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getEndIpi() {
+		return endIpi;
+	}
 	
 	
+	public String getStartIp() {
+		return utils.getInfo().getLowAddress();
+	}
 	
+	public String getEndIp() {
+		return utils.getInfo().getHighAddress();
+	}
 }
