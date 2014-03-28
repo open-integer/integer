@@ -120,10 +120,16 @@
 <!-- 		<url-pattern>/proxyCallback</url-pattern> -->
 			
 <!-- 	</filter-mapping> -->
+
+    <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
+
+
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>MyResourceName</web-resource-name>
-			<url-pattern>/client-1.0/*</url-pattern>
+			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>DirectUser</role-name>
@@ -134,7 +140,8 @@
 <!--     <login-config> -->
 <!--     	<auth-method>FORM</auth-method> -->
 <!--         <form-login-config> -->
-<!--             <form-login-page>login.html</form-login-page> -->
+<!--             <form-login-page>/loginForm.html</form-login-page> -->
+<!--             <form-error-page>/loginError.html</form-error-page> -->
 <!--         </form-login-config> -->
 <!--         <realm-name>RealmUsersRoles</realm-name> -->
 <!--     </login-config> -->
@@ -142,7 +149,7 @@
 <!--  Configuration for basic authenticator -->
     <login-config>
     	<auth-method>BASIC</auth-method>
-        <realm-name>RealmUsersRoles</realm-name>
+        <realm-name>Integer requires user authentication</realm-name>
     </login-config>
 
   <!-- Servlets -->
