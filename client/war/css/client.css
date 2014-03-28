@@ -1,0 +1,233 @@
+/** Add css rules here for your application. */
+#topBanner {
+	width: 90%;
+	height: 50px;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#topBanner img {
+	float: left;
+	clear: left;
+}
+
+span {
+	font-size: 1.6em;
+	font-family: fantasy, cursive;
+	font-weight: bold;
+	color: #293352;
+	margin-top: 15px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: 30px;
+	float: left;
+}
+
+/** Example rules used by the template application (remove for your app) */
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #777777;
+  margin: 40px 0px 70px;
+  text-align: center;
+}
+
+h2 {
+	font-size: 1.5em;
+    font-weight: bold;
+    color: #777777;
+    margin: 40px 0px 70px;
+    text-align: center;
+}
+
+h3 {
+	font-size: 1.0em;
+	font-family: arial;
+    font-weight: plain;
+    color: #1c5a80;
+    margin: 1px 1px 1px 1px;
+    text-align: left;
+}
+
+h4 {
+	font-size: 1.0em;
+	font-family: arial;
+    font-weight: plain;
+    color: #000080;
+    margin: 1px 1px 1px 1px;
+    text-align: left;
+}
+
+.sendButton {
+  display: block;
+  font-size: 16pt;
+}
+
+.gwt-Button {
+  display: block;
+  font-size: 16pt;
+  width: 80px;
+}
+
+.iconButton {
+	background: white;
+	color: #293352;
+	font-size: 1.2em;
+    font-weight: bold;
+	margin: 0;
+	text-align: center;
+	border: none;
+}
+
+.iconButton:active {
+   background: #ccc;
+}
+
+.iconButton:hover {
+   background: #939393;
+}
+
+.littleSquareButton {
+	width: 25px;
+	height: 20px;
+	margin: 0;
+	text-align: center;
+	border: 1px #a0a0a0 solid;
+	border-radius: 0;
+	-moz-border-radius: 0;
+}
+
+.littleSquareButton:active {
+  border: 1px inset #ccc;
+}
+
+.littleSquareButton:hover {
+  border-color: #939393;
+}
+
+.littleButtonPanel {
+	width:	100%;
+	border: 0 solid #a0a0a0;
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+
+.flexListBoxPanel {
+	width:	100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.barPanel {
+	font-size: 2em;
+    font-weight: bold;
+    color: #293352;
+    margin: 10px 10px;
+    width: 1000px;
+}
+
+.dialogVPanel {
+  margin: 15px;
+  padding: 2px, 20px;
+}
+
+.dialogVPanel.padding {
+  padding: 2px 20px;
+}
+
+.serverResponseLabelError {
+  color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+  margin: 15px 6px 6px;
+}
+
+.gwt-CheckBox {
+  margin-left:  0;
+  margin-right: auto;
+  font-size: 10pt;
+  font-family: verdana, trebuchet, arial, sans-serif;
+  font-weight: 200;
+}
+
+.gwt-FileUpload {
+	height: 25px;
+}
+
+.cw-FlexTable td {
+  border: 1px solid #BBBBBB;
+  padding: 3px;
+}
+
+.flexTable {
+	border-collapse: collapse;
+  	background-color:  #efefef;
+  	margin: 0;
+  	padding: 0;
+  	border:0;
+}
+
+.flexTableHeader {
+	padding: 0px;
+	color: #545454;
+	text-align: center;
+	font-size: 13px;
+	background-image: none;
+	background-color: #cfcfcf;
+	height: 26px;
+	vertical-align: middle;
+	font-weight: bold;
+	text-shadow: 0 1px 1px rgba(255,255,255,.7);
+}
+
+.FlexTable-OddRow {
+    background-color: #f3f3f1;
+    height: 26px;
+}
+
+.FlexTable-EvenRow {
+    background-color: white;
+    height: 26px;
+}
+
+.FlexTable-Cell {
+    border-width: 0px 0px 0px 1px;
+    border-style: solid;
+    border-color: white;
+    padding: 5px;
+	overflow: hidden;
+	font-size: 12px;
+	color: #454545;
+}
+
+.gwt-TextBox {
+	width: 100%;
+}
+
+.gwt-ListBox {
+	width: 100%;
+	margin: 0;
+	border: 1px solid #a0a0a0;
+	border-radius: 0;
+	-moz-border-radius: 0;
+}
+
+.gwt-SplitLayoutPanel-HDragger {
+    border:2px solid #e7e7e7;
+}
+
+.gwt-SplitLayoutPanel-VDragger {
+    background: #e7e7e7 url(images/horizontal.png) center center no-repeat;
+  	border:2px solid #e7e7e7;
+}
+
+.MapIconPopup {
+	background-color: #f3f3f1;
+	border: 1px solid #a0a0a0;
+}

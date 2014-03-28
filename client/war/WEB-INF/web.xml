@@ -128,6 +128,17 @@
 
 	<security-constraint>
 		<web-resource-collection>
+	        <web-resource-name>Images</web-resource-name>
+	        <url-pattern>/images/*</url-pattern>
+	    </web-resource-collection>
+	    <web-resource-collection>
+	        <web-resource-name>CSS</web-resource-name>
+	    	<url-pattern>/css/*</url-pattern>
+	    </web-resource-collection>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
 			<web-resource-name>MyResourceName</web-resource-name>
 			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
@@ -140,7 +151,7 @@
     <login-config>
     	<auth-method>FORM</auth-method>
         <form-login-config>
-            <form-login-page>/loginForm.html</form-login-page>
+            <form-login-page>/login.html</form-login-page>
             <form-error-page>/loginError.html</form-error-page>
         </form-login-config>
         <realm-name>RealmUsersRoles</realm-name>
