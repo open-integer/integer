@@ -137,20 +137,20 @@
 	</security-constraint>
 		 
 <!--     Configuration for custom form based authenticator -->
-<!--     <login-config> -->
-<!--     	<auth-method>FORM</auth-method> -->
-<!--         <form-login-config> -->
-<!--             <form-login-page>/loginForm.html</form-login-page> -->
-<!--             <form-error-page>/loginError.html</form-error-page> -->
-<!--         </form-login-config> -->
-<!--         <realm-name>RealmUsersRoles</realm-name> -->
-<!--     </login-config> -->
+    <login-config>
+    	<auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/loginForm.html</form-login-page>
+            <form-error-page>/loginError.html</form-error-page>
+        </form-login-config>
+        <realm-name>RealmUsersRoles</realm-name>
+    </login-config>
 
 <!--  Configuration for basic authenticator -->
-    <login-config>
-    	<auth-method>BASIC</auth-method>
-        <realm-name>Integer requires user authentication</realm-name>
-    </login-config>
+<!--     <login-config> -->
+<!--     	<auth-method>BASIC</auth-method> -->
+<!--         <realm-name>Integer requires user authentication</realm-name> -->
+<!--     </login-config> -->
 
   <!-- Servlets -->
   <servlet>

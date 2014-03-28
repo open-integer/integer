@@ -352,7 +352,7 @@
                         <login-module code="Database" flag="required">
                             <module-option name="dsJndiName" value="java:jboss/datasources/IntegerDS"/>
                             <module-option name="principalsQuery" value="SELECT password FROM User WHERE name = ?"/>
-                            <module-option name="rolesQuery" value="SELECT R.NAME, 'Roles' FROM Role r INNER JOIN User_roles ur ON r.identifier = ur.identifier INNER JOIN User u ON u.identifier = ur.User_identifier WHERE u.name =  ?"/>
+                            <module-option name="rolesQuery" value="SELECT r.name, 'Roles' FROM Role r INNER JOIN User_roles ur ON r.identifier = ur.identifier INNER JOIN User u ON u.identifier = ur.User_identifier WHERE u.name =  ?"/>
                         </login-module>
                     </authentication>
                 </security-domain>
