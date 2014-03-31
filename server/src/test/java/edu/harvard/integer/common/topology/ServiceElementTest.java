@@ -40,8 +40,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -54,7 +52,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.tology.device.ServiceElementManagerInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementManagerInterface;
 
 /**
  * @author David Taylor
@@ -63,10 +61,10 @@ import edu.harvard.integer.service.tology.device.ServiceElementManagerInterface;
 @RunWith(Arquillian.class)
 public class ServiceElementTest {
 	@Inject
-	ServiceElementManagerInterface serviceElementManager;
+	private ServiceElementManagerInterface serviceElementManager;
 
 	@Inject
-	Logger logger;
+	private Logger logger;
 
 	@Deployment
 	public static Archive<?> createTestArchive() {
