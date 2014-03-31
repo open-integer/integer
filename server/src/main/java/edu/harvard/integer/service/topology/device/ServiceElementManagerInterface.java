@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.service.tology.device;
+package edu.harvard.integer.service.topology.device;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;

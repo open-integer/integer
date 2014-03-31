@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.service.tology.device;
+package edu.harvard.integer.service.topology.device;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
