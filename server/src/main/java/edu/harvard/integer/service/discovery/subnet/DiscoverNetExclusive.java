@@ -39,13 +39,14 @@ package edu.harvard.integer.service.discovery.subnet;
  */
 public class DiscoverNetExclusive extends DiscoverNet {
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.subnet.DiscoverNet#isInclude()
+	/**
+	 * @param cidr
 	 */
-	@Override
-	public boolean isInclude() {
-		
-		return false;
+	public DiscoverNetExclusive(String cidr) {
+		super(cidr);
+		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }

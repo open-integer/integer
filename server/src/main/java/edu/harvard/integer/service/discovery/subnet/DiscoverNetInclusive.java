@@ -32,15 +32,20 @@
  */
 package edu.harvard.integer.service.discovery.subnet;
 
-import java.util.List;
-
-import edu.harvard.integer.access.Authentication;
 /**
  * The Class DiscoverNetInclude.
  *
  * @author dchan
  */
 public class DiscoverNetInclusive extends DiscoverNet {
+
+	/**
+	 * @param cidr
+	 */
+	public DiscoverNetInclusive(String cidr) {
+		super(cidr);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * Optional. If specify it will start to 
@@ -88,12 +93,4 @@ public class DiscoverNetInclusive extends DiscoverNet {
 	}
 	
 	
-
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.subnet.DiscoverNet#isInclude()
-	 */
-	@Override
-	public boolean isInclude() {
-		return true;
-	}
 }

@@ -41,5 +41,6 @@ package edu.harvard.integer.service.discovery;
  */
 public interface NetworkDiscoveryBase {
 	
+	public void discoverNetwork();
 	public void stopDiscovery();
 }

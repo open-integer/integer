@@ -33,7 +33,6 @@
 package edu.harvard.integer.service.discovery.element;
 
 
-import net.percederberg.mibble.snmp.SnmpCompliance;
 
 import org.snmp4j.PDU;
 
@@ -44,7 +43,6 @@ import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
-import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 
 
 /**
@@ -52,15 +50,15 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
  *
  * @author dchan
  */
-public class ElementDiscoverTask extends ElementAccessTask<DiscoverNode> {
+public class ElementDiscoverTask <T extends ElementAccess> extends ElementAccessTask<DiscoverNode> {
 
 	
-	private NetworkDiscovery<ElementAccess>  netDiscover;
+	private NetworkDiscovery  netDiscover;
 	private DiscoverNode discoverNode;
 	private SnmpSysInfo sysInfo;
 	
 	
-	public ElementDiscoverTask( NetworkDiscovery<ElementAccess> netDisc, DiscoverNode node ) {
+	public ElementDiscoverTask( NetworkDiscovery netDisc, DiscoverNode node ) {
 		
 		super(node.getElementEndPoint());
 		
@@ -69,7 +67,7 @@ public class ElementDiscoverTask extends ElementAccessTask<DiscoverNode> {
 	}
 	
 	
-    public ElementDiscoverTask( NetworkDiscovery<ElementAccess> netDisc, 
+    public ElementDiscoverTask( NetworkDiscovery netDisc, 
     		                    DiscoverNode node, SnmpSysInfo sysInfo ) {
 		
 		super(node.getElementEndPoint());
@@ -97,8 +95,6 @@ public class ElementDiscoverTask extends ElementAccessTask<DiscoverNode> {
 			sysInfo = new SnmpSysInfo(rpdu);
 					
 	    }
-
-	    
 	    netDiscover.getCb().discoveredElement(discoverNode.getAccessElement());
 		return discoverNode;
 	}

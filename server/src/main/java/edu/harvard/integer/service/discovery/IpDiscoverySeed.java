@@ -40,8 +40,7 @@ import edu.harvard.integer.access.Authentication;
 import edu.harvard.integer.access.snmp.CommunityAuth;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNetExclusive;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNetInclusive;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 
 /**
  * 
@@ -52,11 +51,11 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNetInclusive;
  */
 public class IpDiscoverySeed {
 
-	/** The snmp timeout. */
-	private int snmpTimeout;
+	/** The snmp timeout in million second. */
+	private int snmpTimeout = 5000;
 	
 	/** The snmp retries. */
-	private int snmpRetries;
+	private int snmpRetries = 1;
 	
 	/** The use icmp. */
 	private boolean useIcmp = true;
@@ -67,23 +66,21 @@ public class IpDiscoverySeed {
 	/** The icmp retries. */
 	private int icmpRetries;
 	
+	private int radius;
 	
-	private int hopCount;
+	private DiscoverNet discoverNet;
 	
-	
-	
-	/**
-	 * Discovered subnet for auto discovered.  
-	 */
-	private List<DiscoverNetInclusive>  discoverNets;
+	private List<DiscoverNet>  exclusiveNet = new ArrayList<>();
 	
 	/**
-	 * 
+	 * Optional. If specify it will start to discovery from this IP address 
 	 */
-	private List<DiscoverNetExclusive> notDiscoverNet;
+	private String startIp;
 	
-
-
+	/** The end IP address for discovery */
+	private String endIp;
+	
+	
 	/**
 	 * The access used for discovery.  Right now we assume access is shared on all the subnet.
 	 * However it may not be the case.
@@ -101,9 +98,9 @@ public class IpDiscoverySeed {
 	 * @param net
 	 * @param credentials
 	 */
-	public IpDiscoverySeed( final List<DiscoverNetInclusive> net, final List<Credential> credentials ) {
+	public IpDiscoverySeed( final DiscoverNet net, final List<Credential> credentials ) {
 		
-		this.discoverNets = net;
+		this.discoverNet = net;
 		setCredential(credentials);
 	}
 	
@@ -230,15 +227,6 @@ public class IpDiscoverySeed {
 	}
 
 	
-	public List<DiscoverNetExclusive> getNotDiscoverNet() {
-		return notDiscoverNet;
-	}
-
-	public void setNotDiscoverNet(List<DiscoverNetExclusive> notDiscoverNet) {
-		this.notDiscoverNet = notDiscoverNet;
-	}
-
-	
 	
 	/**
 	 * Adds the access port for discover.
@@ -263,15 +251,83 @@ public class IpDiscoverySeed {
 	public List<AccessPort> getPorts() {
 		return ports;
 	}
-    
+	
 
-	public List<DiscoverNetInclusive> getDiscoverNets() {
-		return discoverNets;
+	public DiscoverNet getDiscoverNet() {
+		return discoverNet;
 	}
 
-	public void setDiscoverNets(List<DiscoverNetInclusive> discoverNets) {
-		this.discoverNets = discoverNets;
+  
+	
+	public int getRadius() {
+		return radius;
 	}
 
+	/**
+	 * 
+	 */
+	private List<DiscoverNet> notDiscoverNet;
+	
+
+
+	public String getStartIp() {
+		return startIp;
+	}
+
+
+
+
+
+
+
+	public void setStartIp(String startIp) {
+		this.startIp = startIp;
+	}
+
+
+
+
+	public String getEndIp() {
+		return endIp;
+	}
+
+
+
+	public void setEndIp(String endIp) {
+		this.endIp = endIp;
+	}
+
+
+
+	public List<DiscoverNet> getNotDiscoverNet() {
+		return notDiscoverNet;
+	}
+
+
+
+	public void setNotDiscoverNet(List<DiscoverNet> notDiscoverNet) {
+		this.notDiscoverNet = notDiscoverNet;
+	}
+
+
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+
+
+
+
+	public void setPorts(List<AccessPort> ports) {
+		this.ports = ports;
+	}
+
+
+
+
+	
+	public List<DiscoverNet> getExclusiveNet() {
+		return exclusiveNet;
+	}
 
 }

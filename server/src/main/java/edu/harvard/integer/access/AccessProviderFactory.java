@@ -32,7 +32,10 @@
  */
 package edu.harvard.integer.access;
 
+import java.util.List;
+
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IntegerInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
@@ -69,12 +72,12 @@ public class AccessProviderFactory {
 	 * @param accessType  -- Access type which associates a discover provider.  
 	 * @return  -- An object used for element discovery,
 	 */
-	public static ElementDiscoveryBase  getElementDiscovery( ElementAccessTypeE accessType ) {
+	public static ElementDiscoveryBase  getElementDiscovery( ElementAccessTypeE accessType, IntegerInterface integerIf ) {
 		
 		switch (accessType) {
 		 
 		   case SNMP:			  
-			   return new SNMPElementDiscover();
+			   return new SNMPElementDiscover(integerIf);
 
 		    default:
 			  break;
@@ -90,10 +93,12 @@ public class AccessProviderFactory {
 	 * 
 	 * @return -- An object used for topo discovery.
 	 */
-	public static NetworkDiscoveryBase discoverNetwork( final IpDiscoverySeed discoverSeed, 
+	public static NetworkDiscoveryBase discoverNetwork( final List<IpDiscoverySeed> discoverSeed, 
 			                                            ElementDiscoverCB<ServiceElement> callback,
-			                                            IntegerInterface integer ) {
+			                                            DiscoveryServiceInterface integer ) {
 				
-		return new NetworkDiscovery<>( discoverSeed, callback, integer );
+		NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, callback, integer );
+		netDisc.discoverNetwork();;
+		return netDisc;
 	}
 }

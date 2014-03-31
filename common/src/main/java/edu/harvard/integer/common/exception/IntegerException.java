@@ -56,6 +56,8 @@ public class IntegerException extends Exception implements DisplayableInterface 
 
 	public IntegerException(Throwable cause, ErrorCodeInterface errorCode) {
 		super(cause);
+		
+		this.errorCode = errorCode;
 	}
 
 	/**
@@ -68,8 +70,10 @@ public class IntegerException extends Exception implements DisplayableInterface 
 	 */
 	public IntegerException(Throwable cause, ErrorCodeInterface errorCode,
 			DisplayableInterface[] arguments) {
+		
 		super(errorCode.getErrorCode(), cause);
 		this.arguments = arguments;
+		this.errorCode = errorCode;
 	}
 
 	/**
