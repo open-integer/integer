@@ -157,12 +157,6 @@
         <realm-name>RealmUsersRoles</realm-name>
     </login-config>
 
-<!--  Configuration for basic authenticator -->
-<!--     <login-config> -->
-<!--     	<auth-method>BASIC</auth-method> -->
-<!--         <realm-name>Integer requires user authentication</realm-name> -->
-<!--     </login-config> -->
-
   <!-- Servlets -->
   <servlet>
     <servlet-name>integerServlet</servlet-name>
