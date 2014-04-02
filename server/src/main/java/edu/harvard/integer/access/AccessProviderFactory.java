@@ -85,20 +85,4 @@ public class AccessProviderFactory {
 		return null;		
 	}
 	
-	
-	
-	/**
-	 * 
-	 * Get network discover provider.  It is considering IP based network discover.
-	 * 
-	 * @return -- An object used for topo discovery.
-	 */
-	public static NetworkDiscoveryBase discoverNetwork( final List<IpDiscoverySeed> discoverSeed, 
-			                                            ElementDiscoverCB<ServiceElement> callback,
-			                                            DiscoveryServiceInterface integer ) {
-				
-		NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, callback, integer );
-		netDisc.discoverNetwork();;
-		return netDisc;
-	}
 }

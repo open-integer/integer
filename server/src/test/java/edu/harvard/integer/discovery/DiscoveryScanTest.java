@@ -51,7 +51,6 @@ import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
-import edu.harvard.integer.service.discovery.DiscoveryService;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IntegerInterface;
 import edu.harvard.integer.service.discovery.PollResult;
@@ -159,6 +158,15 @@ public class DiscoveryScanTest implements IntegerInterface, ElementDiscoverCB<Se
 	 */
 	@Override
 	public void discoveredSubnet(String subnet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoverCB#discoveredNetwork(java.lang.String)
+	 */
+	@Override
+	public void discoveredNetwork(String discoverId) {
 		// TODO Auto-generated method stub
 		
 	}
