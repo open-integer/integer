@@ -33,6 +33,11 @@
  */
 package edu.harvard.integer.service.discovery;
 
+import java.util.List;
+import java.util.concurrent.Future;
+
+import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
+
 
 /**
  * The Interface NetworkDiscoveryBase outlines the discover methods. 
@@ -41,6 +46,6 @@ package edu.harvard.integer.service.discovery;
  */
 public interface NetworkDiscoveryBase {
 	
-	public void discoverNetwork();
+	public List<Future<Ipv4Range>> discoverNetwork();
 	public void stopDiscovery();
 }

@@ -77,8 +77,14 @@ public interface ElementDiscoverCB <T extends ServiceElement> {
 	public void errorOccur( NetworkErrorCodes errorCode, String msg );
 	
 	/**
-	 * Done. To be called after done with discovered.
+	 * Done with subnet discovery. To be called after done with discovered. The format of subnetId is 
+	 * netAddress/mask
 	 */
-	public void doneDiscover();
+	public void discoveredSubnet( String subnetId );
+	
+	/**
+	 * Done with network discovery. 
+	 */
+	public void discoveredNetwork( String discoverId );
 	
 }

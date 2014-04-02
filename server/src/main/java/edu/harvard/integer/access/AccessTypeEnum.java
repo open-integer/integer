@@ -39,13 +39,13 @@ package edu.harvard.integer.access;
  */
 public enum AccessTypeEnum {
 
-	/** The SNM pv2c. */
+	/** The SNMP v2c. */
 	SNMPv2c, 
 	
-	/** The SNM pv1. */
+	/** The SNMP v1. */
 	SNMPv1, 
 	
-	/** The SNM pv3. */
+	/** The SNMP v3. */
 	SNMPv3, 
 	
 	/** The puppet client. */

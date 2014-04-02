@@ -84,10 +84,11 @@ public class DiscoverNode extends ElementAccess {
 	 * Used to indicate what discover stage on this node.
 	 */
 	private DiscoverStageE stage = DiscoverStageE.ReachableScan;
-	
 
 	private boolean reachable = false;
 
+	
+	private String subnetId;
 
 
 	/**  The ip address of the node. */
@@ -101,7 +102,6 @@ public class DiscoverNode extends ElementAccess {
 	 *  One example is the physical entity mib pattern.  
 	 */
 	private DevicePhisicalPattern phyPattern;
-	
 	
 	
 
@@ -205,6 +205,17 @@ public class DiscoverNode extends ElementAccess {
 
 	public void setAccess(Access access) {
 		this.access = access;
+	}
+
+
+
+	public String getSubnetId() {
+		return subnetId;
+	}
+
+
+	public void setSubnetId(String subnetId) {
+		this.subnetId = subnetId;
 	}
 
 

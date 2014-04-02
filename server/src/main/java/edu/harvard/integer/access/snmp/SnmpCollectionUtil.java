@@ -71,12 +71,21 @@ public class SnmpCollectionUtil {
 	public static AbstractTarget createTarget( ElementEndPoint endPoint, boolean isRead ) {
 		
 		if ( endPoint.getAuth() instanceof CommunityAuth ) {
-			return createCommunityTarget((CommunityAuth) endPoint.getAuth(), 
-					                     endPoint.getIpAddress(), endPoint.getAccessPort(),
-					                     isRead );
+			
+			CommunityTarget ct = createCommunityTarget((CommunityAuth) endPoint.getAuth(), 
+                                         endPoint.getIpAddress(), endPoint.getAccessPort(), isRead );
+			ct.setTimeout(((SnmpAuthentication)endPoint.getAuth()).getTimeOut());
+			ct.setRetries(((SnmpAuthentication)endPoint.getAuth()).getTryCount());
+			
+			return ct;
 		}
 		else if ( endPoint.getAuth() instanceof SnmpSecureAuth ) {
-			return createSecureTarget((SnmpSecureAuth) endPoint.getAuth(), endPoint.getIpAddress(), endPoint.getAccessPort());
+			
+			SecureTarget st = createSecureTarget((SnmpSecureAuth) endPoint.getAuth(), endPoint.getIpAddress(), endPoint.getAccessPort());
+			st.setTimeout(((SnmpAuthentication)endPoint.getAuth()).getTimeOut());
+			st.setRetries(((SnmpAuthentication)endPoint.getAuth()).getTryCount());
+			
+			return st;
 		}
 		return null;
 	}

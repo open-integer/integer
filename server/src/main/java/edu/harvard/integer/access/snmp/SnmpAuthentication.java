@@ -44,6 +44,33 @@ public abstract class SnmpAuthentication implements Authentication, Comparable<S
 
 	abstract public int getSnmpVersion();
 	
+	/**
+	 * SNMP timeout for million second. 
+	 */
+	private int timeOut = 5000;
+	
+	/**
+	 * SNMP try out.
+	 */
+	private int tryCount = 1;
+	
+	
+	public int getTimeOut() {
+		return timeOut;
+	}
+
+	public void setTimeOut(int timeOut) {
+		this.timeOut = timeOut;
+	}
+
+	public int getTryCount() {
+		return tryCount;
+	}
+
+	public void setTryCount(int tryCount) {
+		this.tryCount = tryCount;
+	}
+
 	@Override 
     public int compareTo(SnmpAuthentication o) {
 		
@@ -61,10 +88,10 @@ public abstract class SnmpAuthentication implements Authentication, Comparable<S
 			  return 3;
 			  
 		   case SnmpConstants.version1:
-			   return 2;
+			   return 1;
 			   
 		   case SnmpConstants.version3:
-			   return 1;
+			   return 2;
 
 		   default:
 			   return 1;

@@ -33,6 +33,7 @@
 package edu.harvard.integer.access.element;
 
 import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.access.snmp.CommunityAuth;
 
 /**
  * The Class ElementEndPoint contains information to access an element.
@@ -102,5 +103,16 @@ public class ElementEndPoint {
 		return auth;
 	}
 	
+	public String toString() {
+		
+		StringBuffer sb = new StringBuffer();
+		if ( auth instanceof CommunityAuth ) {
+			sb.append("ipAddress " + ipAddress + " port " + accessPort + " " + ((CommunityAuth)auth).getCommunity(true) );
+		}
+		else {
+			sb.append("ipAddress " + ipAddress + " port " + accessPort );
+		}
+		return sb.toString();		
+	}
 	
 }

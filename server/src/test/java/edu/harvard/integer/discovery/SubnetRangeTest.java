@@ -49,6 +49,7 @@ import edu.harvard.integer.access.snmp.CommunityAuth;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
@@ -83,7 +84,7 @@ public class SubnetRangeTest {
 		
 		try {
 			NetworkDiscovery netDisc = null;
-			DiscoverSubnetAsyncTask<ElementAccess> task = new DiscoverSubnetAsyncTask<>(netDisc, seed);
+			DiscoverSubnetAsyncTask<ElementAccess, ServiceElement> task = new DiscoverSubnetAsyncTask<>(netDisc, seed);
 		    if ( task.isInRange(outTestip) ) {
 		    	fail("It should be out of range " + outTestip + " with given ip " + netIp + " mask " + mask );
 		    }

@@ -34,12 +34,16 @@ package edu.harvard.integer.discovery;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
 
+import edu.harvard.integer.access.AccessPort;
+import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
@@ -55,6 +59,7 @@ import edu.harvard.integer.service.discovery.PollResult;
 import edu.harvard.integer.service.discovery.TopoNetwork;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
+import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 
 /**
  * @author dchan
@@ -63,7 +68,10 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverCB<ServiceElement> {
 
 	
-	private NetworkDiscovery netDisc;
+	private NetworkDiscovery<?> netDisc;
+	
+	@Inject
+	Logger logger;
 	
 	@Inject
 	private DiscoveryServiceInterface discoverIf;
@@ -83,21 +91,51 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 		List<Credential> creds = new ArrayList<>();
 		creds.add(snmpV2c);
 		
+		snmpV2c = new SnmpV2cCredentail();
+		snmpV2c.setReadCommunity("private");
+		creds.add(snmpV2c);
+		
 		IpDiscoverySeed seed = new IpDiscoverySeed(dNet, creds);
+		AccessPort ap = new AccessPort(161, AccessTypeEnum.SNMPv1);
+		ap.addAccess(AccessTypeEnum.SNMPv2c);
+		ap.addAccess(AccessTypeEnum.SNMPv3);
+		
+		seed.addAccessPort(ap);
+		
+		ap = new AccessPort(163, AccessTypeEnum.SNMPv1);
+		ap.addAccess(AccessTypeEnum.SNMPv2c);
+		ap.addAccess(AccessTypeEnum.SNMPv3);
+		
+		seed.addAccessPort(ap);
+		
 		discoverSeed.add(seed);
 		
 		if ( discoverIf == null )  {
 			
 			discoverIf = new DiscoveryService();
 		}
-		netDisc = new NetworkDiscovery(discoverSeed, this, discoverIf);		
+		netDisc = new NetworkDiscovery(discoverSeed, this, discoverIf, "junittest");		
 	}
 	
 	
 	@Test
 	public void testAuthOrder() {
 		
-		netDisc.discoverNetwork();
+		List<Future<Ipv4Range>> fs =  netDisc.discoverNetwork();
+		for ( Future<Ipv4Range> f : fs ) {
+			
+			try {
+				Ipv4Range ipRange =  f.get();
+				
+				Thread.sleep(19000);
+				System.out.println("Start ip " + ipRange.startIp + " " + ipRange.endIp);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}		
+		
 	}
 	
 	
@@ -146,8 +184,9 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoverCB#doneDiscover()
 	 */
 	@Override
-	public void doneDiscover() {
-		// TODO Auto-generated method stub
+	public void discoveredSubnet( String subnet ) {
+		
+		System.out.println("Done subnet discovery " + subnet);
 		
 	}
 
@@ -168,5 +207,15 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 			List<PollResult> pollResult) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoverCB#discoveredNetwork(java.lang.String)
+	 */
+	@Override
+	public void discoveredNetwork(String discoverId) {
+		// TODO Auto-generated method stub
+		
 	}
 }

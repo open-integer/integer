@@ -69,7 +69,7 @@ public class DiscoverNet {
 	 *
 	 * @return the network
 	 */
-	public String getNetwork() {
+	public String getIpAddress() {
 		return utils.getInfo().getAddress();
 	}
 	
@@ -125,6 +125,11 @@ public class DiscoverNet {
 	}
 	
 	public String getEndIp() {
+		
 		return utils.getInfo().getHighAddress();
+	}
+	
+	public String getNetworkAddress() {
+		return utils.getInfo().getNetworkAddress();
 	}
 }

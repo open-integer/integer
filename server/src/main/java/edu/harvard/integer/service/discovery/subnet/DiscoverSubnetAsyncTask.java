@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
 import org.snmp4j.event.ResponseEvent;
@@ -53,19 +55,36 @@ import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.DiscoveryManager;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
 
+
 /**
- * @author dchan
+ * The Class DiscoverSubnetAsyncTask is the subnet discover task.
+ * It will scan each IP on a subnet to determine a IP is associated with a device in the network or not.
+ * 
+ * If a given discovered seed contains more than one authentications or management port,
+ * for an IP which is unreachable, it will scan it again by using different authentication or port.
+ * 
+ * If an IP address is reachable, it will create a task for detail discovery.  If an IP address
+ * is un-reachable after trying all given authentications or port, it will skip it.
+ * 
  *
+ * @author dchan
+ * @param <E> the element type
+ * @param <T> the generic type
  */
-public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callable<Void>, ResponseListener {
+public class DiscoverSubnetAsyncTask <E extends ElementAccess,  T extends ServiceElement>  implements Callable<Ipv4Range>, ResponseListener {
 
 
+	/** The logger. */
+	private static Logger logger = LoggerFactory.getLogger(DiscoverSubnetAsyncTask.class);
+	
+	/** The seed. */
 	private IpDiscoverySeed seed;
 
 	/** If it is true, done with discovery. */
@@ -73,9 +92,7 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 	
 
 	
-	/**
-	 * 
-	 */
+	/** The accesses. */
 	private List<Access> accesses = new ArrayList<>();  
 
 	/**
@@ -83,30 +100,39 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 	 */
 	private List<AccessPort>  accessPorts;
 	
+	/** The discover map. */
 	private ConcurrentHashMap<String, DiscoverNode> discoverMap = new ConcurrentHashMap<>();
 	
-	private NetworkDiscovery  netDisc;
+	/** The net disc. */
+	private NetworkDiscovery<T>  netDisc;
 	
 	
 	
 	/**
-	 * 
-	 * @param dis
-	 * @param network
-	 * @param netmask
-	 * @param auths
-	 * @throws IntegerException
+	 * Instantiates a new DiscoverSubnetAsyncTask object.
+	 *
+	 * @param dis the dis
+	 * @param seed the seed
+	 * @throws IntegerException the integer exception
 	 */
-	public DiscoverSubnetAsyncTask( NetworkDiscovery dis,
+	public DiscoverSubnetAsyncTask( NetworkDiscovery<T> dis,
 			                        IpDiscoverySeed seed) throws IntegerException {
 		
 		this.seed = seed;
 		netDisc = dis;
 		
+		/**
+		 * First create an access list and sort them.
+		 */
 		List<SnmpAuthentication>  auth = new ArrayList<>();
 		for ( Authentication a : seed.getAuths() ) {
 			if ( a instanceof SnmpAuthentication ) {
-				auth.add((SnmpAuthentication) a);
+				
+				SnmpAuthentication snmpauth = (SnmpAuthentication) a;
+				snmpauth.setTimeOut(seed.getSnmpTimeout());
+				snmpauth.setTryCount(seed.getSnmpRetries());
+				
+				auth.add(snmpauth);
 			}
 		}
 		if ( auth.size() == 0 ) {
@@ -132,6 +158,9 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 			}
 		}
 		
+		/**
+		 * Verify the start ip and end ip address.
+		 */
 		if ( seed.getStartIp() != null && ! seed.getDiscoverNet().isInRange(seed.getStartIp()) ) {
 			throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
 		}
@@ -173,11 +202,15 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 	}
 	
 	
-	/* (non-Javadoc)
+	/* 
+	 * Walk through each IP address and generated SNMP async get request to verify
+	 * if it is reachable or not.
+	 * 
+	 * (non-Javadoc)
 	 * @see java.util.concurrent.Callable#call()
 	 */
 	@Override
-	public Void call() throws Exception {
+	public Ipv4Range call() throws Exception {
 				
 		String startIp = seed.getStartIp();
 		if ( startIp == null ) {
@@ -188,9 +221,7 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 		if ( endIp == null ) {
 			endIp = seed.getDiscoverNet().getEndIp();
 		}
-		
-		System.out.println("DiscoverSubnetAsyncTask call ************************************************** " + startIp + " " + endIp );
-		
+		logger.debug("Discover subnet startip " + startIp + " endip " + endIp );
         Ipv4Range range = new Ipv4Range(startIp, endIp);
         
         try {
@@ -203,29 +234,28 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
     			String ip = range.next();
     			
     			DiscoverNode dn = new DiscoverNode(ip);
+    			dn.setSubnetId(seed.getSeedId());
+    			
     			dn.setAccess(accesses.get(0));
     			
     			discoverMap.put(dn.getIpAddress(), dn);
     					
     			PDU pdu = new PDU();
     			pdu.addAll(netDisc.getTopLevelVBs());
-    			
-    			System.out.println("Call this IP " + ip);
     			SnmpService.instance().getAsyncPdu(dn.getElementEndPoint(), pdu, this, ip);
     		}
-    		System.out.println("DiscoverSubnetAsyncTask done ************************************************** " );
         }
         catch ( Exception e ) {
         	e.printStackTrace();
         }
-		
-		
-		return null;
+		return range;
 	}
 
 
 	
 	/* 
+	 * SNMP asynch request response handler.  If an IP address is un-reachable, try other scan based 
+	 * on the access list.
 	 * 
 	 * (non-Javadoc)
 	 * @see org.snmp4j.event.ResponseListener#onResponse(org.snmp4j.event.ResponseEvent)
@@ -233,27 +263,22 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 	@Override
 	public void onResponse(ResponseEvent event) {
 		
-		
 		/**
 		 * Alawys cancel async request when response has been received otherwise a memory leak is created.
 		 */
 		((Snmp)event.getSource()).cancel(event.getRequest(), this);
 	
-		DiscoverNode dn = discoverMap.get((String) event.getUserObject());
-		System.out.println("DiscoverSubnetAsyncTask onResponse ***************************************************** " + (String) event.getUserObject());
-		
+		DiscoverNode dn = discoverMap.get((String) event.getUserObject());		
 		try {
 			SnmpService.assertPDU(event);
 		} 
 		catch (IntegerException e) {
 
-			System.out.println("Inter .... " + e.getErrorCode());
-			
 			/**
 			 * If unreachable 
 			 */
-			if ( e.getErrorCode().getErrorCode().equals(NetworkErrorCodes.AuthError.name()) ||
-					e.getErrorCode().getErrorCode().equals(NetworkErrorCodes.CannotReach) &&
+			if ( (e.getErrorCode().getErrorCode().equals(NetworkErrorCodes.AuthError.name()) ||
+					e.getErrorCode().getErrorCode().equals(NetworkErrorCodes.CannotReach.name())) &&
 					!netDisc.isStopDiscovery() ) {
 		
 				for ( int i=0; i< accesses.size(); i++ ) {
@@ -267,6 +292,7 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 						PDU pdu = event.getRequest();
 						try {
 							
+							logger.debug("Try another " + dn.getElementEndPoint().toString());
 							SnmpService.instance().getAsyncPdu(dn.getElementEndPoint(), pdu, this, dn.getIpAddress());
 							return;							
 						} 
@@ -274,18 +300,28 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 					}
 				}
 			}
-			
-			netDisc.getCb().errorOccur((NetworkErrorCodes) e.getErrorCode(), "Error when reaching address " + dn.getIpAddress());
+			/**
+			 * Notify the network discovery that an ip address has no response.
+			 */
+			netDisc.ipAddressNoResponse((String) event.getUserObject(), seed.getSeedId());
 			return;
 		}
 		
+		/**
+		 * At this point the scan ip is reachable.  Create a element discover task for detail discovery.
+		 */
 		dn.setStage(DiscoverStageE.DetailScan);
 		PDU response = event.getResponse();
-		ElementDiscoverTask<T> elmTask = new ElementDiscoverTask<T>(netDisc, dn, new SnmpSysInfo(response));		
+		ElementDiscoverTask<E> elmTask = new ElementDiscoverTask<E>((NetworkDiscovery<ServiceElement>) netDisc, dn, new SnmpSysInfo(response));		
 		DiscoveryManager.getInstance().sutmitElementTask(elmTask);		
 	}
 	
 	
+	/**
+	 * Adds the access port.
+	 *
+	 * @param accessPort the access port
+	 */
 	public void addAccessPort( AccessPort accessPort ) {
 		
 		if ( accessPorts == null ) {
@@ -295,6 +331,12 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 	}
 	
 	
+	/**
+	 * Gets the next access.
+	 *
+	 * @param currAccess the curr access
+	 * @return the next access
+	 */
 	public Access getNextAccess( Access currAccess ) {
 		
 		if ( accesses == null ) {
@@ -304,19 +346,52 @@ public class DiscoverSubnetAsyncTask <T extends ElementAccess> implements Callab
 	}
 
 	
+	/**
+	 * Checks if is done discovery.
+	 *
+	 * @return true, if is done discovery
+	 */
 	public boolean isDoneDiscovery() {
 		return doneDiscovery;
 	}
 
 
+	/**
+	 * Sets the done discovery.
+	 *
+	 * @param doneDiscovery the new done discovery
+	 */
 	public void setDoneDiscovery(boolean doneDiscovery) {
 		this.doneDiscovery = doneDiscovery;
 	}
 
 	
+	/**
+	 * Gets the seed.
+	 *
+	 * @return the seed
+	 */
 	public IpDiscoverySeed getSeed() {
 		return seed;
 	}
 
+	
+	/**
+	 * Discovery node count.
+	 *
+	 * @return the int
+	 */
+	public int discoveryNodeCount() {
+		return discoverMap.size();
+	}
 
+	/**
+	 * Removes the discover node.
+	 *
+	 * @param ip the ip
+	 * @return the discover node
+	 */
+	public DiscoverNode removeDiscoverNode( String ip ) {
+		return discoverMap.remove(ip);
+	}
 }

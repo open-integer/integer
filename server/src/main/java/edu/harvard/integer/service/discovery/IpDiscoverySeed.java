@@ -52,7 +52,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 public class IpDiscoverySeed {
 
 	/** The snmp timeout in million second. */
-	private int snmpTimeout = 5000;
+	private int snmpTimeout = 3000;
 	
 	/** The snmp retries. */
 	private int snmpRetries = 1;
@@ -80,7 +80,8 @@ public class IpDiscoverySeed {
 	/** The end IP address for discovery */
 	private String endIp;
 	
-	
+
+
 	/**
 	 * The access used for discovery.  Right now we assume access is shared on all the subnet.
 	 * However it may not be the case.
@@ -316,13 +317,9 @@ public class IpDiscoverySeed {
 	}
 
 
-
-
 	public void setPorts(List<AccessPort> ports) {
 		this.ports = ports;
 	}
-
-
 
 
 	
@@ -330,4 +327,8 @@ public class IpDiscoverySeed {
 		return exclusiveNet;
 	}
 
+	
+	public String getSeedId() {
+		return discoverNet.getNetworkAddress() + "/" + discoverNet.getNetmask();
+	}
 }

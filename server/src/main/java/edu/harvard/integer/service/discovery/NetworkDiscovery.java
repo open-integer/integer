@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,12 +45,14 @@ import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
+import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 
 
 /**
@@ -69,7 +72,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
  * @author dchan
  * @param <T> the generic type
  */
-public class NetworkDiscovery implements NetworkDiscoveryBase {
+public class NetworkDiscovery <T extends ServiceElement> implements NetworkDiscoveryBase {
 
 	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
@@ -83,6 +86,9 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 	
 	/** The end nodes. */
 	private ConcurrentHashMap<String, DiscoverNode> endNodes = new ConcurrentHashMap<>();
+	
+	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask<ElementAccess, T>>  subnetTasks = new ConcurrentHashMap<>();
+	
 	
 	/** The callback for notify the progress of discovery. */
 	
@@ -104,6 +110,13 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 	/** The integer Inteface used by discovery to retrieve object model information.. */
 	private DiscoveryServiceInterface integerIf;
 	
+	/**
+	 * Discovery id to keep track of discovery.
+	 */
+	private final String discoverId;
+	
+
+
 
 	/**
 	 * Instantiates a new network discovery.
@@ -114,8 +127,10 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 	 */
 	public NetworkDiscovery( final List<IpDiscoverySeed> discoverSeed, 
 			                 ElementDiscoverCB<ServiceElement> callback,
-			                 DiscoveryServiceInterface integerIf ) 
+			                 DiscoveryServiceInterface integerIf,
+			                 String discoveryId ) 
 	{
+		this.discoverId = discoveryId;
 		this.cb = callback;
 		this.discoverSeeds = discoverSeed;
 		this.integerIf = integerIf;
@@ -147,10 +162,11 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public void discoverNetwork()  {
+	public List<Future<Ipv4Range>> discoverNetwork()  {
 		
 		logger.debug("In discoverNetwork ");
 		
+		List<Future<Ipv4Range>> discFuture = new ArrayList<>();
 		/**
 		 * Create subnet tasks based on discover configuration subnet.
 		 */
@@ -162,11 +178,11 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 				
 				try {
 					@SuppressWarnings("unchecked")
-					DiscoverSubnetAsyncTask<ElementAccess> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+					DiscoverSubnetAsyncTask<ElementAccess, T> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
 					
-					exService.submit(subTask);
-					
-					System.out.println("After submit .................. ");
+					Future<Ipv4Range> v = exService.submit(subTask);
+					discFuture.add(v);
 					
 				} catch (IntegerException e) {
 					// TODO Auto-generated catch block
@@ -174,7 +190,7 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 				} 
 			}
 		}
-		
+		return discFuture;
 
 	}
 
@@ -214,15 +230,42 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 
 
 	/**
-	 * Gets the cb.
+	 * Discovered element. -- Be called after discovered each service element.
 	 *
-	 * @return the cb
+	 * @param elm the discoverd element.
 	 */
-	public ElementDiscoverCB<ServiceElement> getCb() {
-		return cb;
+	public void discoveredElement(DiscoverNode discoverNode, String subnetId ) {
+		
+		cb.discoveredElement(discoverNode.getAccessElement());
+		removeIpaddressFromSubnet(discoverNode.getIpAddress(), subnetId);
 	}
-
-
+	
+	/**
+	 * Use to notify for progress.
+	 * @param msg
+	 */
+	public void progressNotification( String msg ) {
+		cb.progressNotification(msg);
+	}
+	
+	/**
+	 * Error occur -- Call when errors occurs during discovering.
+	 *
+	 * @param errorCode the error code.
+	 * @param msg the associated message.
+	 */
+	public void errorOccur( NetworkErrorCodes errorCode, String msg ) {
+		cb.errorOccur(errorCode, msg);
+	}
+	
+	
+	public void ipAddressNoResponse( String ipAddress, String subnetId ) {
+		
+		removeIpaddressFromSubnet(ipAddress, subnetId);
+	}
+	
+	
+	
 
 	/**
 	 * Checks if is stop discovery.
@@ -235,6 +278,33 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 
 
 
+	/**
+	 * 
+	 * @param ip
+	 * @param subnetid
+	 */
+	private void removeIpaddressFromSubnet( String ip, String subnetid ) {
+		
+		if ( subnetid != null ) {
+			DiscoverSubnetAsyncTask<ElementAccess, T> subTask = subnetTasks.get(subnetid);
+			if ( subTask != null ) {
+				
+				subTask.removeDiscoverNode(ip);
+				if ( subTask.discoveryNodeCount() == 0 ) {
+					
+					subnetTasks.remove(subnetid);
+					cb.discoveredSubnet(subnetid);
+					
+					logger.debug("Discovered subnet " + subnetid);
+				}
+			}
+			if ( subnetTasks.size() == 0 ) {
+				cb.discoveredNetwork(discoverId);
+			}
+		}
+	}
+	
+	
 
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.NetworkDiscoveryBase#stopDiscovery()
@@ -261,6 +331,14 @@ public class NetworkDiscovery implements NetworkDiscoveryBase {
 	public List<VariableBinding> getTopLevelVBs() {
 		return topLevelVBs;
 	}
+
+
+
+	public String getDiscoverId() {
+		return discoverId;
+	}
+
+
 
 
 

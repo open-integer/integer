@@ -153,14 +153,14 @@ public class DiscoveryScanTest implements IntegerInterface, ElementDiscoverCB<Se
 		
 	}
 
+
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoverCB#doneDiscover()
+	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoverCB#discoveredSubnet(java.lang.String)
 	 */
 	@Override
-	public void doneDiscover() {
+	public void discoveredSubnet(String subnet) {
 		// TODO Auto-generated method stub
 		
 	}
-	
 	
 }

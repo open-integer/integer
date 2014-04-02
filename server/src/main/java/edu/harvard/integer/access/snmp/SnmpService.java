@@ -270,7 +270,6 @@ final public class SnmpService
     {	
           try {
               _snmp.send(pdu, target, userHandler, listener);
-              System.out.println("snmp send done .... " + userHandler);
           } 
           catch (IOException e) {
         	  throw new IntegerException(e, CommonErrorCodes.IOError);

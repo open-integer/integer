@@ -159,7 +159,7 @@ public class DiscoveryService extends BaseService implements
 			                                            IntegerInterface integer ) {
 			
 		 String id = getNextDiscoveryId();
-		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, callback, this );
+		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, callback, this, id );
 		 discoverMap.put(id, netDisc);
 		 netDisc.discoverNetwork();
 		 
