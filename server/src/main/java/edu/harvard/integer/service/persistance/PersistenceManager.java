@@ -39,15 +39,7 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.IDType;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.security.DirectUserLogin;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
@@ -56,6 +48,13 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
 import edu.harvard.integer.service.persistance.dao.user.AuthInfoDAO;
 import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
@@ -68,7 +67,7 @@ import edu.harvard.integer.service.persistance.dao.user.UserDAO;
  * 
  */
 @Stateless
-public class PersistenceManager implements PersistenceManagerLocalInterface {
+public class PersistenceManager extends BaseManager implements PersistenceManagerLocalInterface {
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -254,5 +253,20 @@ public class PersistenceManager implements PersistenceManagerLocalInterface {
 	@Override
 	public DirectUserLoginDAO getDirectUserLoginDAO() {
 		return new DirectUserLoginDAO(em, logger);
+	}
+	
+	@Override
+	public SnmpVendorDiscoveryTemplateDAO getSnmpVendorDiscoveryTemplateDAO() {
+		return new SnmpVendorDiscoveryTemplateDAO(em, logger);
+	}
+	
+	@Override
+	public VendorContainmentSelectorDAO getVendorContainmentSelectorDAO() {
+		return new VendorContainmentSelectorDAO(em, logger);
+	}
+	
+	@Override
+	public SnmpContainmentDAO getSnmpContainmentDAO() {
+		return new SnmpContainmentDAO(em, logger);
 	}
 }

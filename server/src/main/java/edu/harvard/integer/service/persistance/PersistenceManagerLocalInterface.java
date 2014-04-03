@@ -36,6 +36,7 @@ package edu.harvard.integer.service.persistance;
 import javax.ejb.Local;
 
 import edu.harvard.integer.common.security.DirectUserLogin;
+import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
@@ -48,6 +49,9 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
 import edu.harvard.integer.service.persistance.dao.user.AuthInfoDAO;
 import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
@@ -62,7 +66,7 @@ import edu.harvard.integer.service.persistance.dao.user.UserDAO;
  */
 
 @Local
-public interface PersistenceManagerLocalInterface {
+public interface PersistenceManagerLocalInterface extends BaseManagerInterface {
 	
 	/**
 	 * @return
@@ -158,6 +162,21 @@ public interface PersistenceManagerLocalInterface {
 	 * @return
 	 */
 	DirectUserLoginDAO getDirectUserLoginDAO();
+
+	/**
+	 * @return
+	 */
+	SnmpVendorDiscoveryTemplateDAO getSnmpVendorDiscoveryTemplateDAO();
+
+	/**
+	 * @return
+	 */
+	VendorContainmentSelectorDAO getVendorContainmentSelectorDAO();
+
+	/**
+	 * @return
+	 */
+	SnmpContainmentDAO getSnmpContainmentDAO();
 	
 	
 }
