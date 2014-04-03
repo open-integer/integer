@@ -145,7 +145,7 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 		
 		discoverSeed.add(seed);
 	
-		netDisc = new NetworkDiscovery(discoverSeed, this, discoverIf, "junittest");		
+		netDisc = new NetworkDiscovery(discoverSeed, this, "junittest");		
 	
 	}
 	

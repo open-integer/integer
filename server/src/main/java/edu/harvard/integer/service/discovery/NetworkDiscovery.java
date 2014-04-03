@@ -93,7 +93,6 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	
 	
 	/** The callback for notify the progress of discovery. */
-	
 	private ElementDiscoverCB<ServiceElement> cb;
 	
 	/** The discover seed. */
@@ -108,17 +107,11 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	 */
 	private List<VariableBinding> topLevelVBs;
 	
-	
-	/** The integer Inteface used by discovery to retrieve object model information.. */
-	private DiscoveryServiceInterface integerIf;
-	
 	/**
 	 * Discovery id to keep track of discovery.
 	 */
 	private final String discoverId;
 	
-
-
 
 	/**
 	 * Instantiates a new network discovery.
@@ -129,13 +122,11 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	 */
 	public NetworkDiscovery( final List<IpDiscoverySeed> discoverSeed, 
 			                 ElementDiscoverCB<ServiceElement> callback,
-			                 DiscoveryServiceInterface integerIf,
 			                 String discoveryId ) 
 	{
 		this.discoverId = discoveryId;
 		this.cb = callback;
 		this.discoverSeeds = discoverSeed;
-		this.integerIf = integerIf;
 		
 		List<VariableBinding> vbs = new ArrayList<>();
 		ServiceElementDiscoveryManagerInterface manager = null;
@@ -161,8 +152,6 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 			topLevelVBs = vbs;
 		}
 	}
-	
-	
 	
 	
 	
@@ -324,17 +313,6 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	public void stopDiscovery() {		
 		stopDiscovery = true;
 		
-	}
-
-
-
-	/**
-	 * Gets the integer Integer Interface.
-	 *
-	 * @return the integer if
-	 */
-	public DiscoveryServiceInterface getIntegerIf() {
-		return integerIf;
 	}
 
 

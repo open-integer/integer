@@ -94,7 +94,7 @@ public class DiscoveryService extends BaseService implements
 	/**
 	 * Discovery sequence id used for network discovery.  This id only valid within an integer server.
 	 */
-	private long discoverySeqId;
+	private long discoverySeqId = 0;
 		
 	private Map<String, NetworkDiscovery> discoverMap = new ConcurrentHashMap<>();
 	
@@ -152,7 +152,7 @@ public class DiscoveryService extends BaseService implements
 			                                            IntegerInterface integer ) {
 			
 		 String id = getNextDiscoveryId();
-		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, callback, this, id );
+		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, callback, id );
 		 discoverMap.put(id, netDisc);
 		 netDisc.discoverNetwork();
 		 
