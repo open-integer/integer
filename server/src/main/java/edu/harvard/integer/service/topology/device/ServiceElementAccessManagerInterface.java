@@ -31,14 +31,30 @@
  *      
  */
 
-package edu.harvard.integer.service.locator;
+package edu.harvard.integer.service.topology.device;
+
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * @author David Taylor
  *
  */
-public enum ServiceType {
-	DiscoveryService,
-	TopologyService,
-	PersistenceService;
+public interface ServiceElementAccessManagerInterface {
+
+	/**
+	 * @param serviceElement
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElement updateServiceElement(ServiceElement serviceElement)
+			throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElement[] getAllServiceElements() throws IntegerException;
+
+
 }

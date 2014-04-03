@@ -40,12 +40,14 @@ import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -71,11 +73,12 @@ public class SecurityAndAuditMangerTest {
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
-				.create(WebArchive.class, "test.war")
+				.create(WebArchive.class, "SecurityAndAuditMangerTest.war")
 				.addPackages(true, "edu.harvard.integer")
 				.addPackages(true, "net.percederberg")
 				.addPackages(true, "org.apache.commons")
 				.addPackages(true, "org.snmp4j")
+				.addPackages(true, "uk.co.westhawk.snmp")
 				.addPackages(true, "org.jasypt")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -84,7 +87,12 @@ public class SecurityAndAuditMangerTest {
 				.addAsWebInfResource("test-ds.xml");
 	}
 
-	
+	@Before
+	public void initializeLogger() {
+		//BasicConfigurator.configure();
+		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
+	}
+
 	@Test
 	public void loginUser() {
 		

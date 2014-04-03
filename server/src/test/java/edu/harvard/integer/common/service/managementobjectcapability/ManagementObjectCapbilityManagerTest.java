@@ -41,7 +41,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -83,8 +82,8 @@ public class ManagementObjectCapbilityManagerTest {
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "test.war")
+		WebArchive archive = ShrinkWrap
+				.create(WebArchive.class, "ManagementObjectCapbilityManagerTest.war")
 				.addPackages(true, "edu.harvard.integer")
 				.addPackages(true, "net.percederberg")
 				.addPackages(true, "org.apache.commons")
@@ -94,6 +93,9 @@ public class ManagementObjectCapbilityManagerTest {
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
 				// Deploy our test data source
 				.addAsWebInfResource("test-ds.xml");
+		
+		
+		return archive;
 	}
 
 	@Before

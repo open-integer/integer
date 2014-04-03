@@ -50,22 +50,22 @@ public class CommonSnmpOids {
 	 */
 	
 	/** The Constant sysDescr. */
-	public static final String sysDescr = "1.3.6.1.2.1.1.1.0";
+	public static final String sysDescr = "1.3.6.1.2.1.1.1";
     
     /** The Constant sysObjectID. */
-    public static final String sysObjectID = "1.3.6.1.2.1.1.2.0";
+    public static final String sysObjectID = "1.3.6.1.2.1.1.2";
     
     /** The Constant sysUpTime. */
-    public static final String sysUpTime = "1.3.6.1.2.1.1.3.0";
+    public static final String sysUpTime = "1.3.6.1.2.1.1.3";
     
     /** The Constant sysContact. */
-    public static final String sysContact = "1.3.6.1.2.1.1.4.0";
+    public static final String sysContact = "1.3.6.1.2.1.1.4";
     
     /** The Constant sysName. */
-    public static final String sysName = "1.3.6.1.2.1.1.5.0";
+    public static final String sysName = "1.3.6.1.2.1.1.5";
     
     /** The Constant sysLocation. */
-    public static final String sysLocation = "1.3.6.1.2.1.1.6.0";
+    public static final String sysLocation = "1.3.6.1.2.1.1.6";
     
     
     /**

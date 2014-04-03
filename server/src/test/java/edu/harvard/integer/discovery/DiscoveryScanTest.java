@@ -36,6 +36,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -56,12 +58,13 @@ import edu.harvard.integer.service.discovery.IntegerInterface;
 import edu.harvard.integer.service.discovery.PollResult;
 import edu.harvard.integer.service.discovery.TopoNetwork;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
+import edu.harvard.integer.service.distribution.DistributionManager;
 
 /**
  * @author dchan
  *
  */
-@RunWith(Arquillian.class)
+//@RunWith(Arquillian.class)
 public class DiscoveryScanTest implements IntegerInterface, ElementDiscoverCB<ServiceElement> {
 
 	@Inject
@@ -69,25 +72,27 @@ public class DiscoveryScanTest implements IntegerInterface, ElementDiscoverCB<Se
 	
 	@Inject
 	DiscoveryServiceInterface discoveryService;
-
-	@Deployment
-	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "test.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
-	}
+	
+//	@Deployment
+//	public static Archive<?> createTestArchive() {
+//		return ShrinkWrap
+//				.create(WebArchive.class, "DiscoveryScanTest.war")
+//				.addPackages(true, "edu.harvard.integer")
+//				.addPackages(true, "net.percederberg")
+//				.addPackages(true, "org.apache.commons")
+//				.addPackages(true, "org.snmp4j")
+//				.addAsResource("META-INF/test-persistence.xml",
+//						"META-INF/persistence.xml")
+//				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+//				// Deploy our test data source
+//				.addAsWebInfResource("test-ds.xml");
+//	}
 
 	@Before
 	public void initializeLogger() {
 		//BasicConfigurator.configure();
+		//distributionManager.setup();
+		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
 	}
 	
 	@Test

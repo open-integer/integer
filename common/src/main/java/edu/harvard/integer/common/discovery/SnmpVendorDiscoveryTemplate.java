@@ -42,7 +42,9 @@ import edu.harvard.integer.common.snmp.SNMP;
  * 
  *         This template is used for a specific vendor in order to determine
  *         what the model, firmware and software revision are of an instance of
- *         something from that vendor.
+ *         something from that vendor. This is used to create the association of
+ *         serviceElementType to an instance of a serviceElement once it has
+ *         been discovered.
  * 
  *         There are two ways to collect this information. If model, firmware
  *         and software revision OIDs have been populated in an instance of this
@@ -65,6 +67,7 @@ import edu.harvard.integer.common.snmp.SNMP;
  * 
  *         What is in the parseString is the information needed to figure out
  *         how to parse the string.
+ *         
  */
 @Entity
 public class SnmpVendorDiscoveryTemplate extends VendorDiscoveryTemplate<SNMP> {

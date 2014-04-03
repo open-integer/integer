@@ -49,7 +49,7 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
  *
  */
 @Stateless
-public class ServiceElememtManager implements ServiceElementManagerInterface {
+public class ServiceElememtAccessManager implements ServiceElementAccessManagerInterface {
 	@Inject
 	private Logger logger;
 		
@@ -91,11 +91,15 @@ public class ServiceElememtManager implements ServiceElementManagerInterface {
 		return null;
 	}
 	
-	public void deleteServiceElement(ServiceElement[] serviceElement) throws IntegerException {
+	public void deleteServiceElement(ServiceElement[] serviceElements) throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
+		serviceElementDAO.delete(serviceElements);
 	}
 	
 	public void deleteServiceElememts(ID[] ids) throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
+		serviceElementDAO.delete(ids);
 	}
 }

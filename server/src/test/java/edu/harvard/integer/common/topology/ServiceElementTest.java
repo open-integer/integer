@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.topology.device.ServiceElementManagerInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
  * @author David Taylor
@@ -61,7 +61,7 @@ import edu.harvard.integer.service.topology.device.ServiceElementManagerInterfac
 @RunWith(Arquillian.class)
 public class ServiceElementTest {
 	@Inject
-	private ServiceElementManagerInterface serviceElementManager;
+	private ServiceElementAccessManagerInterface serviceElementManager;
 
 	@Inject
 	private Logger logger;
@@ -69,7 +69,7 @@ public class ServiceElementTest {
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
-				.create(WebArchive.class, "test.war")
+				.create(WebArchive.class, "ServiceElementTest.war")
 				.addPackages(true, "edu.harvard.integer")
 				.addPackages(true, "net.percederberg")
 				.addPackages(true, "org.apache.commons")

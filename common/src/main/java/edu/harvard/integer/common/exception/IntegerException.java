@@ -125,4 +125,13 @@ public class IntegerException extends Exception implements DisplayableInterface 
 		this.errorCode = errorCode;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Throwable#toString()
+	 */
+	@Override
+	public String toString() {
+		
+		return "Integer Error: " + errorCode + " -- " + super.toString();
+	}
+
 }

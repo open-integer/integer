@@ -33,16 +33,12 @@
 package edu.harvard.integer.discovery;
 
 
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
 
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.snmp.CommunityAuth;
@@ -54,7 +50,6 @@ import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
-import static org.junit.Assert.fail;
 
 /**
  * @author dchan

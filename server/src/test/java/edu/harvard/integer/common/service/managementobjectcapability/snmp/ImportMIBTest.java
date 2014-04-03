@@ -43,7 +43,6 @@ import java.util.Arrays;
 import javax.inject.Inject;
 
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -55,6 +54,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
@@ -63,6 +63,7 @@ import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.server.parser.mibparser.moduleloader.MibbleParser;
 import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
  * @author David Taylor
@@ -85,7 +86,7 @@ public class ImportMIBTest {
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
-				.create(WebArchive.class, "test.war")
+				.create(WebArchive.class, "ImportMIBTest.war")
 				.addPackages(true, "edu.harvard.integer")
 				.addPackages(true, "net.percederberg")
 				.addPackages(true, "org.snmp4j")
@@ -256,5 +257,15 @@ public class ImportMIBTest {
 	@Test
 	public void importIANAifType_MIB() {
 		importIETFMIB("IANAifType-MIB");
+	}
+	
+	public void findSysName() {
+		SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
+		
+		SNMP snmp = snmpdao.findByOid(CommonSnmpOids.sysName);
+		
+		assert(snmp != null);
+		
+		
 	}
 }

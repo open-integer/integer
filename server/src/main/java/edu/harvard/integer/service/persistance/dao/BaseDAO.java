@@ -261,6 +261,24 @@ public class BaseDAO {
 	}
 
 	/**
+	 * Delete the list of entities.
+	 * 
+	 * @param entity
+	 * @throws IntegerException
+	 */
+	public <T extends BaseEntity> void delete(T[] entity) throws IntegerException {
+		
+		for (T t : entity) {
+
+			if (!entityManger.contains(t))
+				entityManger.merge(t);
+
+			entityManger.remove(t);
+		}
+		
+	}
+	 
+	/**
 	 * Delete the entity specified by the ID.
 	 * 
 	 * @param entityId
@@ -270,6 +288,21 @@ public class BaseDAO {
 		BaseEntity entity = findById(entityId);
 
 		delete(entity);
+	}
+
+	/**
+	 * Delete the entity specified by the ID.
+	 * 
+	 * @param entityId
+	 * @throws IntegerException
+	 */
+	public void delete(ID[] entityIds) throws IntegerException {
+		for (ID id : entityIds) {
+			
+			BaseEntity entity = findById(id);
+
+			delete(entity);
+		}
 	}
 
 	@SuppressWarnings("unchecked")

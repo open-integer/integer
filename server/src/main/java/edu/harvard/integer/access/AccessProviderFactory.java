@@ -32,15 +32,7 @@
  */
 package edu.harvard.integer.access;
 
-import java.util.List;
-
-import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IntegerInterface;
-import edu.harvard.integer.service.discovery.IpDiscoverySeed;
-import edu.harvard.integer.service.discovery.NetworkDiscovery;
-import edu.harvard.integer.service.discovery.NetworkDiscoveryBase;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
 import edu.harvard.integer.service.discovery.snmp.SNMPElementDiscover;
 

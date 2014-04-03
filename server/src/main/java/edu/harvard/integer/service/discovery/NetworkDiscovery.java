@@ -53,6 +53,8 @@ import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 
 
 /**
@@ -136,7 +138,16 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 		this.integerIf = integerIf;
 		
 		List<VariableBinding> vbs = new ArrayList<>();
-		List<ServiceElementManagementObject> mgrObjects = integerIf.getTopLevelPolls();
+		ServiceElementDiscoveryManagerInterface manager = null;
+		try {
+			manager = (ServiceElementDiscoveryManagerInterface) DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+		} catch (IntegerException e) {
+			// throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+			logger.error("Unable to get ServiceElementDiscoveryManager " + e.toString());
+			return;
+		}
+		
+		List<ServiceElementManagementObject> mgrObjects = manager.getTopLevelPolls();
 		for ( ServiceElementManagementObject se : mgrObjects ) {
 			
 			if ( se instanceof SNMP ) {

@@ -38,8 +38,16 @@ import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.Level;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.access.AccessPort;
@@ -50,7 +58,6 @@ import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
-import edu.harvard.integer.service.discovery.DiscoveryService;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IntegerInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
@@ -65,20 +72,48 @@ import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
  * @author dchan
  *
  */
+@RunWith(Arquillian.class)
 public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverCB<ServiceElement> {
 
 	
-	private NetworkDiscovery<?> netDisc;
-	
 	@Inject
-	Logger logger;
+	private Logger logger;
+
+	private static NetworkDiscovery netDisc;
+
 	
 	@Inject
 	private DiscoveryServiceInterface discoverIf;
 	
+	@Deployment
+	public static Archive<?> createTestArchive() {
+		return ShrinkWrap
+				.create(WebArchive.class, "DiscoverAuthOrderTest.war")
+				.addPackages(true, "edu.harvard.integer")
+				.addPackages(true, "net.percederberg")
+				.addPackages(true, "org.apache.commons")
+				.addPackages(true, "org.snmp4j")
+				.addPackages(true, "org.jboss")
+				.addPackages(true, "org.wildfly")
+				.addPackages(true, "org.xnio")
+				.addAsResource("jboss-ejb-client.properties")
+				.addAsResource("META-INF/test-persistence.xml",
+						"META-INF/persistence.xml")
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+				// Deploy our test data source
+				.addAsWebInfResource("test-ds.xml");
+	}
 	
 	@Before
-	public void setUp() {
+	public void initializeLogger() {
+		//BasicConfigurator.configure();
+		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
+	}
+
+
+	
+	@Test
+	public void createNetworkDiscovery() {
 		
 		List<IpDiscoverySeed> discoverSeed = new ArrayList<>();
 		SnmpV2cCredentail snmpV2c = new SnmpV2cCredentail();
@@ -99,7 +134,7 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 		AccessPort ap = new AccessPort(161, AccessTypeEnum.SNMPv1);
 		ap.addAccess(AccessTypeEnum.SNMPv2c);
 		ap.addAccess(AccessTypeEnum.SNMPv3);
-		
+	
 		seed.addAccessPort(ap);
 		
 		ap = new AccessPort(163, AccessTypeEnum.SNMPv1);
@@ -109,17 +144,17 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 		seed.addAccessPort(ap);
 		
 		discoverSeed.add(seed);
-		
-		if ( discoverIf == null )  {
-			
-			discoverIf = new DiscoveryService();
-		}
-		netDisc = new NetworkDiscovery(discoverSeed, this, discoverIf, "junittest");		
-	}
 	
+		netDisc = new NetworkDiscovery(discoverSeed, this, discoverIf, "junittest");		
+	
+	}
 	
 	@Test
 	public void testAuthOrder() {
+		
+		createNetworkDiscovery();
+		
+		assert(netDisc != null);
 		
 		List<Future<Ipv4Range>> fs =  netDisc.discoverNetwork();
 		for ( Future<Ipv4Range> f : fs ) {

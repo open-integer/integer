@@ -68,7 +68,7 @@ public class UserTest {
 	 @Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
-				.create(WebArchive.class, "test.war")
+				.create(WebArchive.class, "UserTest.war")
 				.addPackages(true, "edu.harvard.integer")
 				.addPackages(true, "net.percederberg")
 				.addPackages(true, "org.apache.commons")

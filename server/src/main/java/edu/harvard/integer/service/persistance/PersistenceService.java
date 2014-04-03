@@ -60,6 +60,8 @@ public class PersistenceService extends BaseService implements PersistenceServic
 	@PostConstruct
 	public void init() {
 
+		logger.warn("PersistenceServices is startint");
+		
 		logger.debug("PersistenceService starting");
 
 		// Register the application for RESTfull interface

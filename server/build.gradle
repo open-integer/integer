@@ -55,10 +55,16 @@ dependencies {
 		exclude group: 'org.jboss.shrinkwrap.resolver'
 	}
 	
+	testRuntime('org.jboss:jboss-remote-naming:2.0.0.Final')
 	testRuntime ("org.jboss:jboss-common-core:${jbossCommonCoreVersion}") {
 		exclude group: 'org.jboss.logging'
 	}
  	
+}
+
+test {
+	maxHeapSize = '2048m'
+	jvmArgs "-XX:MaxPermSize=512m"
 }
 
 task deployWildfly() << {

@@ -43,6 +43,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
@@ -54,6 +55,8 @@ import edu.harvard.integer.service.persistance.dao.BaseDAO;
  */
 public class SNMPDAO extends BaseDAO {
 
+	private Logger logger = LoggerFactory.getLogger(SNMPDAO.class);
+	
 	/**
 	 * @param entityManger
 	 * @param logger
@@ -68,28 +71,8 @@ public class SNMPDAO extends BaseDAO {
 	 * @return
 	 */
 	public SNMP findByOid(String oidString) {
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		
-		CriteriaQuery<SNMP> query = criteriaBuilder.createQuery(SNMP.class);
+		return findByStringField(oidString, "oid", SNMP.class);
 
-		Root<SNMP> from = query.from(SNMP.class);
-		query.select(from);
-		
-		ParameterExpression<String> oid = criteriaBuilder.parameter(String.class);
-		query.select(from).where(criteriaBuilder.equal(from.get("oid"), oid));
-		
-		TypedQuery<SNMP> typeQuery = getEntityManager().createQuery(query);
-		typeQuery.setParameter(oid, oidString);
-		
-		List<SNMP> resultList = typeQuery.getResultList();
-		
-		if (resultList.size() > 0) {
-			if (getLogger().isDebugEnabled())
-				getLogger().debug("Found OID " + resultList.get(0).getIdentifier() + " " + resultList.get(0).getOid() + " " + resultList.get(0).getName());
-			
-			return resultList.get(0);
-		} else
-			return null;
 	}
 
 	/**
