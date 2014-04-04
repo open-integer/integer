@@ -31,15 +31,31 @@
  *      
  */
 
-package edu.harvard.integer.common.discovery;
+package edu.harvard.integer.common.exception;
 
 /**
  * @author David Taylor
  *
  */
-public enum DiscoveryParseElementTypeEnum {
-	Model,
-	FirmwareVersion,
-	SoftwareVersion,
-	Skip;
+public enum DiscoveryErrorCodes implements ErrorCodeInterface {
+	NoParseStrings("No Parse String."),
+	NoStringToParseable("String not parseable."), 
+	NoStringToParse("No string given to parse."),
+	ParseElementNoFound("Parse element not found in description string.");
+
+	private String message = null;
+	
+	private DiscoveryErrorCodes(String message) {
+		this.message = message;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
+	 */
+	@Override
+	public String getErrorCode() {
+	
+		return message;
+	}
+
 }

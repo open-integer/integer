@@ -39,7 +39,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.exception.DiscoveryErrorCodes;
+import edu.harvard.integer.common.exception.IntegerException;
 
 /**
  * @author David Taylor
@@ -48,18 +53,21 @@ import edu.harvard.integer.common.BaseEntity;
 @Entity
 public class DiscoveryParseString extends BaseEntity {
 
+	private static transient Logger logger = LoggerFactory
+			.getLogger(DiscoveryParseString.class);
+
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@ManyToMany
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<DiscoveryParseElement> parseStrings = null;
 
 	/**
 	 * @return the parseStrings
-	 */	
+	 */
 	public List<DiscoveryParseElement> getParseStrings() {
 		return parseStrings;
 	}
@@ -72,4 +80,77 @@ public class DiscoveryParseString extends BaseEntity {
 		this.parseStrings = parseStrings;
 	}
 
+	/**
+	 * Parse the element out of the given string. The ordered list of elements
+	 * in getParseString() are used to parse the string. ex. For the sysDescr:
+	 * 				Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M),
+	 * 				Version 12.2(33)SXI4a, RELEASE SOFTWARE (fc2)Technical Support:
+	 * 				http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems,
+	 * 				Inc.Compiled Fri 16-Jul-10 19:51 by p
+	 * 
+	 *  and the DiscoveryParseElements
+	 *  		DiscoveryParseElementTypeEnum.Firmware, "Software,"
+	 *  		DiscoveryParseElementTypeEnum.Software, "Version"
+	 *  
+	 *  Then
+	 *  	parseElement(DiscoveryParseTypeEnum.Firmware, sysDescr) ==> "s72033_rp"
+	 *  	parseElement(DiscoveryParseTypeEnum.Software, sysDescr) ==> "12.2(33)SIX4a" 
+	 * 
+	 * @param element
+	 * @param sysDescr
+	 * @return
+	 * @throws IntegerException
+	 */
+	public String parseElement(DiscoveryParseElementTypeEnum element,
+			String sysDescr) throws IntegerException {
+		if (getParseStrings() == null || getParseStrings().size() == 0)
+			throw new IntegerException(null, DiscoveryErrorCodes.NoParseStrings);
+
+		if (sysDescr == null)
+			throw new IntegerException(null,
+					DiscoveryErrorCodes.NoStringToParse);
+
+		String[] parts = sysDescr.split(" ");
+
+		if (parts == null || parts.length == 0)
+			throw new IntegerException(null,
+					DiscoveryErrorCodes.NoStringToParseable);
+
+		if (logger.isDebugEnabled())
+			logger.debug("Have " + parts.length + " Parts to SysDescr");
+
+		int index = 0;
+		for (int elementIndex = 0; elementIndex < getParseStrings().size(); elementIndex++) {
+			DiscoveryParseElement parseElement = getParseStrings().get(
+					elementIndex);
+
+			boolean foundPart = false;
+			while (index < parts.length) {
+				if (parseElement.getParseElement().equals(parts[index])) {
+
+					if (logger.isDebugEnabled())
+						logger.debug("Found part for " + parseElement.getName()
+								+ " = " + parts[index + 1]);
+					foundPart = true;
+
+					if (parseElement.getParseElementType().equals(element))
+						return parts[index + 1];
+
+					break;
+				} else if (logger.isDebugEnabled())
+					logger.debug("Skip " + parts[index]);
+
+				index++;
+			}
+
+			if (!foundPart) {
+				logger.error("Part " + parseElement.getName() + " NOT FOUND!!");
+				throw new IntegerException(null,
+						DiscoveryErrorCodes.ParseElementNoFound);
+			}
+		}
+
+		throw new IntegerException(null,
+				DiscoveryErrorCodes.ParseElementNoFound);
+	}
 }
