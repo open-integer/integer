@@ -34,6 +34,11 @@
 package edu.harvard.integer.common.discovery;
 
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Type;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -65,8 +70,8 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
  *         What is in the parseString is the information needed to figure out
  *         how to parse the string.
  */
-public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagementObject>
-		extends BaseEntity {
+@MappedSuperclass
+public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagementObject> extends BaseEntity {
 
 	/**
 	 * Serialization UID
@@ -78,21 +83,7 @@ public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagement
 	 */
 	private String description = null;
 
-	/**
-	 * The ServiceElementManagementObject used to determine the model of the ServiceElement being discovered. 
-	 */
-	private T model = null;
-
-	/**
-	 * The ServiceElementManagementObject used to determine the firmware of the ServiceElement being discovered.
-	 */
-	private T firmware = null;
-
-	/**
-	 * The ServiceElementManagementObject used to determine the softwareRevision of the ServiceElement being discovered.
-	 */
-	private T softwareRevision = null;
-
+	@OneToOne
 	private DiscoveryParseString parseString = null;
 
 	/**
@@ -115,51 +106,8 @@ public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagement
 		this.description = description;
 	}
 
-	/**
-	 * @return the model
-	 */
-	public T getModel() {
-		return model;
-	}
-
-	/**
-	 * @param model
-	 *            the model to set
-	 */
-	public void setModel(T model) {
-		this.model = model;
-	}
-
-	/**
-	 * @return the firmware
-	 */
-	public T getFirmware() {
-		return firmware;
-	}
-
-	/**
-	 * @param firmware
-	 *            the firmware to set
-	 */
-	public void setFirmware(T firmware) {
-		this.firmware = firmware;
-	}
-
-	/**
-	 * @return the softwareRevision
-	 */
-	public T getSoftwareRevision() {
-		return softwareRevision;
-	}
-
-	/**
-	 * @param softwareRevision
-	 *            the softwareRevision to set
-	 */
-	public void setSoftwareRevision(T softwareRevision) {
-		this.softwareRevision = softwareRevision;
-	}
-
+	
+	
 	/**
 	 * @return the parseString
 	 */

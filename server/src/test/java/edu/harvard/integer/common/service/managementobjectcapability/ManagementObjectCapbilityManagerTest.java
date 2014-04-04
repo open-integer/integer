@@ -40,7 +40,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.BasicConfigurator;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -58,8 +57,8 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.FCAPSEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
-import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 
 /**
  * @author David Taylor
@@ -72,10 +71,10 @@ public class ManagementObjectCapbilityManagerTest {
 	ManagementObjectCapabilityManagerLocalInterface managementObjectManager;
 	
 	@Inject
-	SnmpObjectManagerLocalInterface snmpManager;
+	SnmpManagerInterface snmpManager;
 	
 	@Inject
-	PersistenceManagerLocalInterface persistencManager;
+	PersistenceManagerInterface persistencManager;
 	
 	@Inject
 	Logger logger;

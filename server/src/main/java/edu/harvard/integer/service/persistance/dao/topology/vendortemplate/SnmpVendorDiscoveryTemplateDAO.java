@@ -33,11 +33,23 @@
 
 package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.discovery.DiscoveryParseElement;
+import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.persistance.PersistenceManager;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -65,4 +77,23 @@ public class SnmpVendorDiscoveryTemplateDAO extends BaseDAO {
 		return snmpVendorDiscoveryTemplate;
 	}
 
+	
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	 */
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+		
+		SnmpVendorDiscoveryTemplate template = (SnmpVendorDiscoveryTemplate) entity;
+		
+		PersistenceManagerInterface persistenceManager = DistributionManager.getManager(ManagerTypeEnum.PersistenceManager);
+		DiscoveryParseStringDAO discoveryParseStringDAO = persistenceManager.getDiscoveryParseStringDAO();
+		template.setParseString(discoveryParseStringDAO.update(template.getParseString()));
+		
+		super.preSave(entity);
+	}
+
+	
 }

@@ -33,16 +33,7 @@
 
 package edu.harvard.integer.service.discovery;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-
-import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
-import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.BaseServiceInterface;
 
 
 /**
@@ -50,85 +41,6 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
  *
  * @author David Taylor
  */
-public interface DiscoveryServiceInterface {
+public interface DiscoveryServiceInterface extends BaseServiceInterface {
 
-//	/**
-//	 * Gets the subnet discovery pool.
-//	 *
-//	 * @return the sub pool
-//	 */
-//	public ExecutorService getSubPool(); 
-//
-//	/**
-//	 * Gets the element discovery pool.
-//	 *
-//	 * @return the element pool
-//	 */
-//	public ExecutorService getElementPool(); 
-//
-//		
-//	/**
-//	 * Sutmit element discovery task.
-//	 *
-//	 * @param elmTask the elm task
-//	 * @return the future
-//	 */
-//	public Future<DiscoverNode> sutmitElementTask( @SuppressWarnings("rawtypes") ElementDiscoverTask elmTask ); 
-//	
-//
-//
-//	/**
-//	 * Get network discover provider.  It is considering IP based network discover.
-//	 *
-//	 * @param discoverSeed the discover seed
-//	 * @param callback the callback
-//	 * @param integer the integer
-//	 * @return -- A discovery id.
-//	 */
-//	public String discoverNetwork( final List<IpDiscoverySeed> discoverSeed, 
-//			                             ElementDiscoverCB<ServiceElement> callback,
-//			                             IntegerInterface integer ); 
-//	
-//	
-//	/**
-//	 * Remove a discovery based on a given discovery id.
-//	 *
-//	 * @param id the id
-//	 * @return the network discovery base
-//	 */
-//	public NetworkDiscoveryBase removeDiscovery( String id ); 
-//	
-//	/**
-//	 * Stop discovery based on id.
-//	 *
-//	 * @param id the id
-//	 */
-//	public void stopDiscovery( String id );
-//	
-//	
-//	/**
-//	 * Get Network Discovery based on id.
-//	 *
-//	 * @param id the id
-//	 * @return the discovery
-//	 */
-//	public NetworkDiscoveryBase getDiscovery( String id ); 
-//	
-//	
-//	/**
-//	 * Gets the top level polls.  On IP network topology discovery, the list should
-//	 * be a list of SNMP objects in the system group.
-//	 *
-//	 * @return the top level polls for discovery. 
-//	 * 
-//	 */
-//	public List<ServiceElementManagementObject>  getTopLevelPolls();
-//	
-//	/**
-//	 * Gets the discovery template based on the list of top level poll results.
-//	 *
-//	 * @param pollResult the poll result
-//	 * @return the discovery template
-//	 */
-//	public VendorDiscoveryTemplate<ServiceElementManagementObject>  getDiscoveryTemplate( List<PollResult> pollResult );
 }

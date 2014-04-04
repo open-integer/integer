@@ -49,7 +49,7 @@ import edu.harvard.integer.service.BaseService;
 @Singleton
 @Startup
 @Path("/Database")
-public class PersistenceService extends BaseService implements PersistenceServiceEJB {
+public class PersistenceService extends BaseService implements PersistenceServiceInterface {
 
 	@Inject
 	private Logger logger;

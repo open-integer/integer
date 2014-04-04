@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014 Harvard University and the persons
+ *  Copyright (c) 2013 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,52 +30,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.service.persistance;
 
-package edu.harvard.integer.service.distribution;
+import edu.harvard.integer.service.BaseServiceInterface;
 
-import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.BaseManagerInterface;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManager;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManager;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 
 /**
  * @author David Taylor
  *
  */
-public enum ManagerTypeEnum {
-	PersistenceManager(PersistenceManager.class,
-			PersistenceManagerInterface.class),
-	ServiceElementDiscoveryManager(ServiceElementDiscoveryManager.class,
-			ServiceElementDiscoveryManagerInterface.class),
-			SnmpManager(SnmpManager.class, SnmpManagerInterface.class);
-	
-	Class<? extends BaseManager> mgrClazz;
-	Class<? extends BaseManagerInterface> intfClazz;
-	
-	private ManagerTypeEnum(Class<? extends BaseManager> mgrClazz,
-			Class<? extends BaseManagerInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
 
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseManager> getBeanClass() {
-		
-		return mgrClazz;
-	}
-
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseManagerInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
-	}
+public interface PersistenceServiceInterface extends BaseServiceInterface {
+	public void init();
+	
 }

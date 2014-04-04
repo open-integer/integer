@@ -52,6 +52,8 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
@@ -67,7 +69,7 @@ import edu.harvard.integer.service.persistance.dao.user.UserDAO;
  * 
  */
 @Stateless
-public class PersistenceManager extends BaseManager implements PersistenceManagerLocalInterface {
+public class PersistenceManager extends BaseManager implements PersistenceManagerInterface {
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -268,5 +270,15 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public SnmpContainmentDAO getSnmpContainmentDAO() {
 		return new SnmpContainmentDAO(em, logger);
+	}
+	
+	@Override
+	public DiscoveryParseStringDAO getDiscoveryParseStringDAO() {
+		return new DiscoveryParseStringDAO(em, logger);
+	}
+	
+	@Override
+	public DiscoveryParseElementDAO getDiscoveryParseElementDAO() {
+		return new DiscoveryParseElementDAO(em, logger);
 	}
 }

@@ -51,7 +51,7 @@ import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.common.user.Role;
 import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.common.user.authentication.AuthInfo;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
 import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
 import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
@@ -87,7 +87,7 @@ public class UserManager implements UserManagerInterface {
 	private Logger logger;
 
 	@Inject
-	private PersistenceManagerLocalInterface dbm;
+	private PersistenceManagerInterface dbm;
 
 	public UserManager() {
 

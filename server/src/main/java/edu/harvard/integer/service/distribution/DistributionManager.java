@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
 import edu.harvard.integer.service.BaseManagerInterface;
-import edu.harvard.integer.service.BaseService;
+import edu.harvard.integer.service.BaseServiceInterface;
 
 
 /**
@@ -58,21 +58,33 @@ public class DistributionManager {
 	private static final Logger logger = LoggerFactory.getLogger(DistributionManager.class);
 	 
 	 
-	public static <T extends BaseService> T getService(ServiceType type) {
+	public static <T extends BaseServiceInterface> T getService(ServiceTypeEnum type) throws IntegerException {
 	
-		return null;
+		return lookupLocalBean(getLocalServiceName(type));
 	}
+	
+
+	private static String getLocalServiceName(ServiceTypeEnum serviceType) {
+		StringBuffer b = new StringBuffer();
+		
+		b.append("java:module/");
+		b.append(serviceType.getServiceClass().getSimpleName());
+		
+		return b.toString();
+	}
+
 	
 	public static <T extends BaseManagerInterface> T getManager(ManagerTypeEnum managerType) throws IntegerException {
 			
 		return lookupLocalBean(getLocalManagerName(managerType));	
 	}
 
+	
 	private static String getLocalManagerName(ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 		
 		b.append("java:module/");
-		b.append(managerType.getBeanName().getSimpleName());
+		b.append(managerType.getBeanClass().getSimpleName());
 		
 		return b.toString();
 	}
@@ -105,12 +117,13 @@ public class DistributionManager {
 		} catch (Exception e) {
 			logger.error("Error getting service " + managerName + e.toString(),
 					e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
 		} catch (Throwable e) {
 			logger.error("Error getting service " + managerName + e.toString(),
 					e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
 		} 
 
-		return null;
 	}
 	
 	@SuppressWarnings("unchecked")

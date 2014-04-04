@@ -34,6 +34,8 @@
 package edu.harvard.integer.common.discovery;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import edu.harvard.integer.common.BaseEntity;
 
@@ -51,6 +53,8 @@ public class DiscoveryParseElement extends BaseEntity {
 	
 	private String parseElement = null;
 	
+	@Enumerated(EnumType.STRING)
+	private DiscoveryParseElementTypeEnum parseElementType = null;
 	
 	/**
 	 * @return the parseElement
@@ -82,8 +86,5 @@ public class DiscoveryParseElement extends BaseEntity {
 	public void setParseElementType(DiscoveryParseElementTypeEnum parseElementType) {
 		this.parseElementType = parseElementType;
 	}
-
-
-	private DiscoveryParseElementTypeEnum parseElementType = null;
 	
 }

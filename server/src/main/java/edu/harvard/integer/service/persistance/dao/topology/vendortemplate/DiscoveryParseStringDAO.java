@@ -31,51 +31,62 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
-import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.BaseManagerInterface;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManager;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManager;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.discovery.DiscoveryParseElement;
+import edu.harvard.integer.common.discovery.DiscoveryParseString;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public enum ManagerTypeEnum {
-	PersistenceManager(PersistenceManager.class,
-			PersistenceManagerInterface.class),
-	ServiceElementDiscoveryManager(ServiceElementDiscoveryManager.class,
-			ServiceElementDiscoveryManagerInterface.class),
-			SnmpManager(SnmpManager.class, SnmpManagerInterface.class);
-	
-	Class<? extends BaseManager> mgrClazz;
-	Class<? extends BaseManagerInterface> intfClazz;
-	
-	private ManagerTypeEnum(Class<? extends BaseManager> mgrClazz,
-			Class<? extends BaseManagerInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
+public class DiscoveryParseStringDAO extends BaseDAO {
 
 	/**
-	 * @return
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	public Class<? extends BaseManager> getBeanClass() {
-		
-		return mgrClazz;
+	public DiscoveryParseStringDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, DiscoveryParseString.class);
 	}
 
-	/**
-	 * @return
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
 	 */
-	public Class<? extends BaseManagerInterface> getBeanLocalInterfaceClass() {
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
 		
-		return intfClazz;
+		DiscoveryParseString parseString = (DiscoveryParseString) entity;
+		
+		PersistenceManagerInterface persistenceManager = DistributionManager.getManager(ManagerTypeEnum.PersistenceManager);
+		DiscoveryParseElementDAO parseElementDao = persistenceManager.getDiscoveryParseElementDAO();
+		
+		List<DiscoveryParseElement> parseStrings = parseString.getParseStrings();
+		List<DiscoveryParseElement> dbParseStrings = new ArrayList<DiscoveryParseElement>();
+		
+		for (DiscoveryParseElement parseElement : parseStrings) {
+			dbParseStrings.add(parseElementDao.update(parseElement));
+		}
+
+		parseString.setParseStrings(dbParseStrings);
+		
+		super.preSave(entity);
 	}
+
+	
 }

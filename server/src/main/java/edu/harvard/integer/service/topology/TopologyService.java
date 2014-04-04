@@ -33,12 +33,17 @@
 
 package edu.harvard.integer.service.topology;
 
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+
 import edu.harvard.integer.service.BaseService;
 
 /**
  * @author David Taylor
  *
  */
-public class TopologyService extends BaseService {
+@Singleton
+@Startup
+public class TopologyService extends BaseService implements TopologyServiceInterface {
 
 }

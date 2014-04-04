@@ -45,7 +45,7 @@ import edu.harvard.integer.common.security.DirectUserLogin;
 import edu.harvard.integer.common.security.IntegerSession;
 import edu.harvard.integer.common.security.UserLogin;
 import edu.harvard.integer.common.user.AccessPolicy;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
 
@@ -76,7 +76,7 @@ public class SecurityAndAuditManager implements
 	private Logger logger;
 	
 	@Inject 
-	private PersistenceManagerLocalInterface persistenceManager;
+	private PersistenceManagerInterface persistenceManager;
 	
 	@Inject
 	private SecurityServiceInterface securityService;

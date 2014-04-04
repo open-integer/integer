@@ -50,7 +50,7 @@ import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.service.persistance.PersistenceManager;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
@@ -67,7 +67,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
 public class MibLoader implements MibLoaderLocalInterface {
 
 	@Inject
-	private PersistenceManagerLocalInterface persistenceManager;
+	private PersistenceManagerInterface persistenceManager;
 
 	@Inject
 	private Logger logger;

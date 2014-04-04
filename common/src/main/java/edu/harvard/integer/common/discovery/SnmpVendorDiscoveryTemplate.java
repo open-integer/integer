@@ -34,6 +34,7 @@
 package edu.harvard.integer.common.discovery;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import edu.harvard.integer.common.snmp.SNMP;
 
@@ -70,11 +71,64 @@ import edu.harvard.integer.common.snmp.SNMP;
  *         
  */
 @Entity
-public class SnmpVendorDiscoveryTemplate extends VendorDiscoveryTemplate<SNMP> {
+public class SnmpVendorDiscoveryTemplate extends VendorDiscoveryTemplate<SNMP> implements VendorDiscoveryTemplateInterface<SNMP> {
 
+	@ManyToOne
+	SNMP model = null;
+	
+	@ManyToOne
+	SNMP firmware = null;
+	
+	@ManyToOne
+	SNMP softwareRevision = null;
+	
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * @return the model
+	 */
+	public SNMP getModel() {
+		return model;
+	}
+
+	/**
+	 * @param model
+	 *            the model to set
+	 */
+	public void setModel(SNMP model) {
+		this.model = model;
+	}
+
+	/**
+	 * @return the firmware
+	 */
+	public SNMP getFirmware() {
+		return firmware;
+	}
+
+	/**
+	 * @param firmware
+	 *            the firmware to set
+	 */
+	public void setFirmware(SNMP firmware) {
+		this.firmware = firmware;
+	}
+
+	/**
+	 * @return the softwareRevision
+	 */
+	public SNMP getSoftwareRevision() {
+		return softwareRevision;
+	}
+	
+	/**
+	 * @param softwareRevision
+	 *            the softwareRevision to set
+	 */
+	public void setSoftwareRevision(SNMP softwareRevision) {
+		this.softwareRevision = softwareRevision;
+	}
 
 }

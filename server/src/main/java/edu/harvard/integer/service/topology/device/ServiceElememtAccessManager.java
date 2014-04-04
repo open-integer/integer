@@ -41,7 +41,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 
 /**
@@ -54,7 +54,7 @@ public class ServiceElememtAccessManager implements ServiceElementAccessManagerI
 	private Logger logger;
 		
 	@Inject
-	private PersistenceManagerLocalInterface dbm;
+	private PersistenceManagerInterface dbm;
 
 	/**
 	 * Add or update a service element. If the service element does not exist in the database. Then 

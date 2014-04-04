@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,15 +30,61 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.persistance;
 
+package edu.harvard.integer.service.managementobject.snmp;
+
+import java.util.List;
+
+import javax.ejb.Local;
+
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
  *
  */
+@Local
+public interface SnmpManagerInterface extends BaseManagerInterface {
 
-public interface PersistenceServiceEJB {
-	public void init();
+	/**
+	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
+	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
+	 * processed.
+	 *  
+	 * @param mibFile - Contents of MIB to import
+	 * @return TODO
+	 */
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException;
+
+	/**
+	 * Get the list of MIB's that have been imported into the system.
+	 * @return List<File>. The list of imported mibs.
+	 * @throws IntegerException 
+	 */
+	public MIBInfo[] getImportedMibs() throws IntegerException;
+
+	public MIBInfo getMIBInfoByID(ID id) throws IntegerException;
+
+	/**
+	 * @param name
+	 * @return
+	 * @throws IntegerException
+	 */
+	List<SNMP> findByNameStartsWith(String name) throws IntegerException;
 	
+	/**
+	 * Get the SNMP object specified by the string OID.
+	 * 
+	 * @param oid. OID to get the SNMP object for.
+	 * 
+	 * @return SNMP object for the givne OID
+	 * @throws IntegerException
+	 */
+	SNMP getSNMPByOid(String oid) throws IntegerException;
 }

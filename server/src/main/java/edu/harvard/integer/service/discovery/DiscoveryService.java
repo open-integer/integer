@@ -80,17 +80,10 @@ public class DiscoveryService extends BaseService implements
 	 */
 	private int elementTaskLimit = 20;
 	
-
 	private ExecutorService pool = Executors.newFixedThreadPool(discoveryTaskLimit);
 	
 	private ExecutorService subPool = Executors.newFixedThreadPool(subTaskLimit);
-	
-	/**
-	 * Used to manager the task pool for element discovery.  
-	 */
-	private ExecutorService elementPool = Executors.newFixedThreadPool(elementTaskLimit);
-	
-	
+		
 	/**
 	 * Discovery sequence id used for network discovery.  This id only valid within an integer server.
 	 */
@@ -116,16 +109,6 @@ public class DiscoveryService extends BaseService implements
 	public ExecutorService getSubPool() {
 		return subPool;
 	}
-
-	public ExecutorService getElementPool() {
-		return elementPool;
-	}
-
-		
-	public Future<DiscoverNode> sutmitElementTask( ElementDiscoverTask elmTask ) {
-		return elementPool.submit(elmTask);
-	}
-	
 	
 	/**
 	 * Discovery id.  The format of the id is Integer Server IP + sequence id.  It is considering valid cross different 

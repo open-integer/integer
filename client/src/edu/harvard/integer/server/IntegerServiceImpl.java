@@ -17,7 +17,7 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
-import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,11 +34,11 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 
 	/** The snmp service. */
 	@EJB
-	SnmpObjectManagerLocalInterface snmpService;
+	private SnmpManagerInterface snmpService;
 	
 	/** The managed object service. */
 	@EJB
-	ManagementObjectCapabilityManagerLocalInterface managedObjectService;
+	private ManagementObjectCapabilityManagerLocalInterface managedObjectService;
 
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.client.IntegerService#mibImport(java.lang.String, java.lang.String, boolean)

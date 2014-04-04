@@ -51,7 +51,8 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
@@ -61,13 +62,13 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
  *
  */
 @Stateless
-public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
+public class SnmpManager extends BaseManager implements SnmpManagerInterface {
 	
 	@Inject
 	private MibLoaderLocalInterface mibLoader;
 
 	@Inject
-	private PersistenceManagerLocalInterface persistenceManager;
+	private PersistenceManagerInterface persistenceManager;
 	
 	@Inject
 	private Logger logger;
@@ -76,7 +77,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	private EJBContext context;
 	
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#importMib(java.lang.String)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#importMib(java.lang.String)
 	 */
 	@Override
 	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException {
@@ -125,7 +126,7 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 	}
 	
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface#getImportedMibs()
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#getImportedMibs()
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws IntegerException {
@@ -161,4 +162,16 @@ public class SnmpObjectManager implements SnmpObjectManagerLocalInterface {
 		List<SNMP> oids = dao.findByOidSubtree(name);
 		return oids;
 	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#getSNMPByOid(java.lang.String)
+	 */
+	@Override
+	public SNMP getSNMPByOid(String oid) throws IntegerException {
+		SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
+
+		return snmpdao.findByOid(oid);
+	}
+	
+	
 }

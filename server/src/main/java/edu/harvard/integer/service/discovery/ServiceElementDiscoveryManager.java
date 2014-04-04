@@ -41,7 +41,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
@@ -50,9 +49,10 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
@@ -82,7 +82,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	private Logger logger;
 
 	@Inject
-	private PersistenceManagerLocalInterface dbm;
+	private PersistenceManagerInterface dbm;
 
 	
 	
@@ -96,6 +96,30 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return dao.findByVendor(vendor);
 	}
 
+	@Override
+	public SnmpVendorDiscoveryTemplate updateSnmpVendorDiscoveryTemplate(SnmpVendorDiscoveryTemplate template) throws IntegerException {
+	
+		SnmpVendorDiscoveryTemplateDAO dao = dbm
+				.getSnmpVendorDiscoveryTemplateDAO();
+
+		
+		return dao.update(template);
+	}
+	
+	/**
+	 * Return all the SnmpVendorTemplates in the system.
+	 * 
+	 * @return
+	 * @throws IntegerException
+	 */
+	@Override
+	public SnmpVendorDiscoveryTemplate[] getAllSnmpVendorDiscoveryTemplates() throws IntegerException {
+		SnmpVendorDiscoveryTemplateDAO dao = dbm
+				.getSnmpVendorDiscoveryTemplateDAO();
+
+		return dao.findAll();
+	}
+	
 	@Override
 	public SnmpContainment getSnmpContainment(VendorContainmentSelector selector)
 			throws IntegerException {

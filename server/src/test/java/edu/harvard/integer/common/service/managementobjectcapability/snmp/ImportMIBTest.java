@@ -61,8 +61,8 @@ import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.server.parser.mibparser.moduleloader.MibbleParser;
-import edu.harvard.integer.service.managementobject.snmp.SnmpObjectManagerLocalInterface;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
@@ -75,10 +75,10 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 public class ImportMIBTest {
 
 	@Inject
-	private SnmpObjectManagerLocalInterface snmpObjectManager;
+	private SnmpManagerInterface snmpObjectManager;
 
 	@Inject
-	private PersistenceManagerLocalInterface persistenceManager;
+	private PersistenceManagerInterface persistenceManager;
 
 	@Inject
 	private Logger logger;

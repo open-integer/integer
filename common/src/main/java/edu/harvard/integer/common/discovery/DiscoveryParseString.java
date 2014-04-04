@@ -35,8 +35,8 @@ package edu.harvard.integer.common.discovery;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -53,7 +53,7 @@ public class DiscoveryParseString extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ElementCollection
+	@ManyToMany
 	@OrderColumn(name="idx")
 	private List<DiscoveryParseElement> parseStrings = null;
 

@@ -31,51 +31,30 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
-import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.BaseManagerInterface;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManager;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManager;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.discovery.DiscoveryParseElement;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public enum ManagerTypeEnum {
-	PersistenceManager(PersistenceManager.class,
-			PersistenceManagerInterface.class),
-	ServiceElementDiscoveryManager(ServiceElementDiscoveryManager.class,
-			ServiceElementDiscoveryManagerInterface.class),
-			SnmpManager(SnmpManager.class, SnmpManagerInterface.class);
-	
-	Class<? extends BaseManager> mgrClazz;
-	Class<? extends BaseManagerInterface> intfClazz;
-	
-	private ManagerTypeEnum(Class<? extends BaseManager> mgrClazz,
-			Class<? extends BaseManagerInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
+public class DiscoveryParseElementDAO extends BaseDAO {
 
 	/**
-	 * @return
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	public Class<? extends BaseManager> getBeanClass() {
+	public DiscoveryParseElementDAO(EntityManager entityManger,
+			Logger logger) {
+		super(entityManger, logger, DiscoveryParseElement.class);
 		
-		return mgrClazz;
 	}
 
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseManagerInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
-	}
 }

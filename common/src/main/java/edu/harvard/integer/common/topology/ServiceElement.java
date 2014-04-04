@@ -46,6 +46,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
@@ -73,6 +75,7 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Enumerated(EnumType.STRING)
 	private NetworkLayer networkLayer = null;
 
 	private String description = null;

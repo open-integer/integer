@@ -49,7 +49,7 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
-import edu.harvard.integer.service.persistance.PersistenceManagerLocalInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
@@ -68,7 +68,7 @@ public class ManagementObjectCapabilityManager implements
 	private Logger logger;
 
 	@Inject
-	private PersistenceManagerLocalInterface dbm;
+	private PersistenceManagerInterface dbm;
 
 	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	

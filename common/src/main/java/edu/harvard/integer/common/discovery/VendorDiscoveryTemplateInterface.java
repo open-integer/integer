@@ -31,50 +31,47 @@
  *      
  */
 
-package edu.harvard.integer.service.managementobject.snmp;
+package edu.harvard.integer.common.discovery;
 
-import java.util.List;
-
-import javax.ejb.Local;
-
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.snmp.MIBInfo;
-import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
  * @author David Taylor
  *
  */
-@Local
-public interface SnmpObjectManagerLocalInterface {
+public interface VendorDiscoveryTemplateInterface<T extends ServiceElementManagementObject> {
 
 	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
-	 * @return TODO
+	 * @return the model
 	 */
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException;
+	public T getModel();
 
 	/**
-	 * Get the list of MIB's that have been imported into the system.
-	 * @return List<File>. The list of imported mibs.
-	 * @throws IntegerException 
+	 * @param model
+	 *            the model to set
 	 */
-	public MIBInfo[] getImportedMibs() throws IntegerException;
-
-	public MIBInfo getMIBInfoByID(ID id) throws IntegerException;
+	public void setModel(T model);
 
 	/**
-	 * @param name
-	 * @return
-	 * @throws IntegerException
+	 * @return the firmware
 	 */
-	List<SNMP> findByNameStartsWith(String name) throws IntegerException;
+	public T getFirmware();
+
+	/**
+	 * @param firmware
+	 *            the firmware to set
+	 */
+	public void setFirmware(T firmware);
+
+	/**
+	 * @return the softwareRevision
+	 */
+	public T getSoftwareRevision() ;
 	
+	/**
+	 * @param softwareRevision
+	 *            the softwareRevision to set
+	 */
+	public void setSoftwareRevision(T softwareRevision);
+
 }

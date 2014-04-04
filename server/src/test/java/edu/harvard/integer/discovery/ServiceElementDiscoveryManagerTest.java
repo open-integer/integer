@@ -33,6 +33,9 @@
 
 package edu.harvard.integer.discovery;
 
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -49,11 +52,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.common.discovery.DiscoveryParseElement;
+import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
+import edu.harvard.integer.common.discovery.DiscoveryParseString;
+import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 
 /**
  * @author David Taylor
@@ -100,9 +111,14 @@ public class ServiceElementDiscoveryManagerTest {
 	
 	@Test
 	public void getTopLevelPolls() {
+		
 		System.out.println("GetToplLevelPolls");
 		
 		List<ServiceElementManagementObject> topLevelPolls = serviceElementDiscoveryManger.getTopLevelPolls();
+
+		assert(topLevelPolls != null);
+		assert(topLevelPolls.size() > 0);
+		
 		for (ServiceElementManagementObject serviceElementManagementObject : topLevelPolls) {
 			
 			logger.info("Got " + serviceElementManagementObject.getName() + " " 
@@ -111,5 +127,72 @@ public class ServiceElementDiscoveryManagerTest {
 		
 	}
 	
+	@Test
+	public void createSnmpVendorDiscoveryTemplate() {
+		
+		SnmpManagerInterface snmpManager = null;
+		try {
+			snmpManager = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+		
+		SnmpVendorDiscoveryTemplate template = new SnmpVendorDiscoveryTemplate();
+		template.setVendor("Cisco");
+		try {
+			template.setModel(snmpManager.getSNMPByOid(CommonSnmpOids.sysObjectID));
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+		
+		template.setDescription("Cisco Snmp Vendor template");
+		DiscoveryParseString parseString = new DiscoveryParseString();
+		parseString.setName("Cisco SysDescr parse string");
+		
+		List<DiscoveryParseElement> elements = new ArrayList<DiscoveryParseElement>();
+		
+		DiscoveryParseElement element = new DiscoveryParseElement();
+		element.setParseElementType(DiscoveryParseElementTypeEnum.FirmwareVersion);
+		element.setParseElement("Cisco IOS Software,");
+		element.setName("Firmware");
+		elements.add(element);
+		
+		element = new DiscoveryParseElement();
+		element.setParseElementType(DiscoveryParseElementTypeEnum.SoftwareVersion);
+		element.setParseElement(", Version");
+		element.setName("Software");
+		elements.add(element);
+		
+		parseString.setParseStrings(elements);
+		template.setParseString(parseString);
+		
+		try {
+			template = serviceElementDiscoveryManger.updateSnmpVendorDiscoveryTemplate(template);
+			
+			logger.info("Created SnmpVendorDiscoveryTemplate " + template);
+		} catch (IntegerException e) {
+		
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
 	
+	public void loadAllSnmpVendorTemplates() {
+		try {
+			SnmpVendorDiscoveryTemplate[] templates = serviceElementDiscoveryManger.getAllSnmpVendorDiscoveryTemplates();
+			assert (templates != null);
+			assert (templates.length > 0);
+			
+			logger.info("Found " + templates.length + " SnmpVendorTempaltes");
+			
+		} catch (IntegerException e) {
+
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
 }

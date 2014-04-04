@@ -37,14 +37,12 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.BaseManagerInterface;
-import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 
 /**
  * @author David Taylor
@@ -77,4 +75,22 @@ public interface ServiceElementDiscoveryManagerInterface extends BaseManagerInte
 	 * 
 	 */
 	public List<ServiceElementManagementObject>  getTopLevelPolls();
+
+	/**
+	 * Insert or update the SnmpVendorTemplate.
+	 * @param template. Template to be updated. 
+	 * @return The updated SnmpVendorTemplate. This has the identifier filled in if this object was just created.
+	 * 
+	 * @throws IntegerException
+	 */
+	public SnmpVendorDiscoveryTemplate updateSnmpVendorDiscoveryTemplate(
+			SnmpVendorDiscoveryTemplate template) throws IntegerException;
+
+	/**
+	 * Get all the SnmpVendorTemlates in the system.
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpVendorDiscoveryTemplate[] getAllSnmpVendorDiscoveryTemplates()
+			throws IntegerException;
 }
