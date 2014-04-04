@@ -40,7 +40,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -59,12 +58,14 @@ import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
  * @author David Taylor
@@ -77,11 +78,11 @@ public class ServiceElementDiscoveryManagerTest {
 	@Inject
 	private Logger logger;
 	
-	@Inject
-	private DiscoveryServiceInterface discoveryService;
-
 	@Inject 
 	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManger;
+	
+	@Inject
+	private PersistenceManagerInterface persistenceManager;
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
@@ -92,8 +93,8 @@ public class ServiceElementDiscoveryManagerTest {
 				.addPackages(true, "org.apache.commons")
 				.addPackages(true, "org.snmp4j")
 				.addPackages(true, "uk.co.westhawk.snmp")
-				.addPackages(true, "org.jboss")
-				.addPackages(true, "org.wildfly")
+				//.addPackages(true, "org.jboss")
+				//.addPackages(true, "org.wildfly")
 				.addPackages(true, "org.xnio")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -108,6 +109,14 @@ public class ServiceElementDiscoveryManagerTest {
 		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
 	}
 
+	private SNMP createOid(String name, String oidString) {
+		SNMP oid = new SNMP();
+		oid.setName(name);
+		oid.setDisplayName(name);
+		oid.setOid(oidString);
+		
+		return oid;
+	}
 	
 	@Test
 	public void getTopLevelPolls() {
@@ -115,8 +124,25 @@ public class ServiceElementDiscoveryManagerTest {
 		System.out.println("GetToplLevelPolls");
 		
 		List<ServiceElementManagementObject> topLevelPolls = serviceElementDiscoveryManger.getTopLevelPolls();
-
+		
 		assert(topLevelPolls != null);
+		
+		if (topLevelPolls.size() == 0) {
+			// Running with H2 db. so need to create the data.
+			SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
+			try {
+				snmpdao.update(createOid("sysName", CommonSnmpOids.sysName));
+				snmpdao.update(createOid("sysDescr", CommonSnmpOids.sysDescr));
+				snmpdao.update(createOid("sysLocation", CommonSnmpOids.sysLocation));
+				snmpdao.update(createOid("sysObjectID", CommonSnmpOids.sysObjectID));
+			} catch (IntegerException e) {
+				
+				e.printStackTrace();
+				fail(e.toString());
+			}
+			
+		}
+		
 		assert(topLevelPolls.size() > 0);
 		
 		for (ServiceElementManagementObject serviceElementManagementObject : topLevelPolls) {
