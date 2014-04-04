@@ -33,7 +33,6 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,7 +48,6 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
-import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;

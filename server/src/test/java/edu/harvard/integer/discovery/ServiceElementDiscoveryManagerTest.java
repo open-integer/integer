@@ -82,7 +82,7 @@ public class ServiceElementDiscoveryManagerTest {
 	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManger;
 	
 	@Inject
-	private PersistenceManagerInterface persistenceManager;
+	private SnmpManagerInterface snmpMaager;
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
@@ -129,12 +129,15 @@ public class ServiceElementDiscoveryManagerTest {
 		
 		if (topLevelPolls.size() == 0) {
 			// Running with H2 db. so need to create the data.
-			SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
+
 			try {
-				snmpdao.update(createOid("sysName", CommonSnmpOids.sysName));
-				snmpdao.update(createOid("sysDescr", CommonSnmpOids.sysDescr));
-				snmpdao.update(createOid("sysLocation", CommonSnmpOids.sysLocation));
-				snmpdao.update(createOid("sysObjectID", CommonSnmpOids.sysObjectID));
+				snmpMaager.updateSNMP(createOid("sysName", CommonSnmpOids.sysName));
+				snmpMaager.updateSNMP(createOid("sysDescr", CommonSnmpOids.sysDescr));
+				snmpMaager.updateSNMP(createOid("sysLocation", CommonSnmpOids.sysLocation));
+				snmpMaager.updateSNMP(createOid("sysObjectID", CommonSnmpOids.sysObjectID));
+				
+				topLevelPolls = serviceElementDiscoveryManger.getTopLevelPolls();
+				
 			} catch (IntegerException e) {
 				
 				e.printStackTrace();

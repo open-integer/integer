@@ -58,7 +58,6 @@ import edu.harvard.integer.common.topology.FCAPSEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 
 /**
  * @author David Taylor
@@ -72,9 +71,6 @@ public class ManagementObjectCapbilityManagerTest {
 	
 	@Inject
 	SnmpManagerInterface snmpManager;
-	
-	@Inject
-	PersistenceManagerInterface persistencManager;
 	
 	@Inject
 	Logger logger;
@@ -119,6 +115,8 @@ public class ManagementObjectCapbilityManagerTest {
 	public void getAllCapabilites() {
 		
 		Capability[] capabilities = findAllCapabilities();
+		logger.info("Found " + capabilities.length + " Capabilites in the database.");
+		
 	}
 	
 	@Test

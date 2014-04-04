@@ -47,25 +47,28 @@ import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 @Local
 public interface SnmpManagerInterface extends BaseManagerInterface {
 
 	/**
-	 * This method will be called to import a MIB into the system. The MIB is passed in since the 
-	 * user will point to a MIB in the UI. The file will then be read in and sent to the server to be 
-	 * processed.
-	 *  
-	 * @param mibFile - Contents of MIB to import
+	 * This method will be called to import a MIB into the system. The MIB is
+	 * passed in since the user will point to a MIB in the UI. The file will
+	 * then be read in and sent to the server to be processed.
+	 * 
+	 * @param mibFile
+	 *            - Contents of MIB to import
 	 * @return TODO
 	 */
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException;
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile)
+			throws IntegerException;
 
 	/**
 	 * Get the list of MIB's that have been imported into the system.
+	 * 
 	 * @return List<File>. The list of imported mibs.
-	 * @throws IntegerException 
+	 * @throws IntegerException
 	 */
 	public MIBInfo[] getImportedMibs() throws IntegerException;
 
@@ -77,14 +80,25 @@ public interface SnmpManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	List<SNMP> findByNameStartsWith(String name) throws IntegerException;
-	
+
 	/**
 	 * Get the SNMP object specified by the string OID.
 	 * 
-	 * @param oid. OID to get the SNMP object for.
+	 * @param oid
+	 *            . OID to get the SNMP object for.
 	 * 
 	 * @return SNMP object for the givne OID
 	 * @throws IntegerException
 	 */
 	SNMP getSNMPByOid(String oid) throws IntegerException;
+
+	/**
+	 * Update the SNMP OID.
+	 * 
+	 * @param oid
+	 * @return SNMP the updated OID. If this oid is new then the identifier will
+	 *         be filled in after this call.
+	 * @throws IntegerException
+	 */
+	SNMP updateSNMP(SNMP oid) throws IntegerException;
 }

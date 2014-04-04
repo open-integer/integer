@@ -173,5 +173,18 @@ public class SnmpManager extends BaseManager implements SnmpManagerInterface {
 		return snmpdao.findByOid(oid);
 	}
 	
+	/**
+	 * Update a single SNMP OID.
+	 * 
+	 * @param oid
+	 * @return the updated OID. 
+	 * @throws IntegerException
+	 */
+	@Override
+	public SNMP updateSNMP(SNMP oid) throws IntegerException {
+		SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
+		oid = snmpdao.update(oid);
+		return oid;
+	}
 	
 }
