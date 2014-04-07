@@ -112,9 +112,9 @@ public class BaseDAO {
 	public <T extends BaseEntity> T update(T entity) throws IntegerException {
 
 		try {
-			
+
 			preSave(entity);
-			
+
 			if (entity.getIdentifier() == null)
 				getEntityManager().persist(entity);
 			else if (!getEntityManager().contains(entity))
@@ -131,10 +131,11 @@ public class BaseDAO {
 		return entity;
 	}
 
-	public  <T extends BaseEntity> void preSave(T entity) throws IntegerException {
-		
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+
 	}
-	
+
 	/**
 	 * Find the entity in the database by the specified field.
 	 * 
@@ -266,8 +267,9 @@ public class BaseDAO {
 	 * @param entity
 	 * @throws IntegerException
 	 */
-	public <T extends BaseEntity> void delete(T[] entity) throws IntegerException {
-		
+	public <T extends BaseEntity> void delete(T[] entity)
+			throws IntegerException {
+
 		for (T t : entity) {
 
 			if (!entityManger.contains(t))
@@ -275,9 +277,9 @@ public class BaseDAO {
 
 			entityManger.remove(t);
 		}
-		
+
 	}
-	 
+
 	/**
 	 * Delete the entity specified by the ID.
 	 * 
@@ -298,19 +300,31 @@ public class BaseDAO {
 	 */
 	public void delete(ID[] entityIds) throws IntegerException {
 		for (ID id : entityIds) {
-			
+
 			BaseEntity entity = findById(id);
 
 			delete(entity);
 		}
 	}
 
+	/**
+	 * Create a "clean" copy of this persistent object. All references to
+	 * hibernate will be removed.
+	 * 
+	 * @param originialInstance
+	 * @return A new copy of the persistent object. All references to hibernate
+	 *         will have been removed. This object is detached from the
+	 *         persistent entity manager.
+	 * @throws IntegerException
+	 */
 	@SuppressWarnings("unchecked")
-	public <T> T createCleanCopy(T tInstance) throws IntegerException {
+	public <T extends BaseEntity> T createCleanCopy(T originialInstance)
+			throws IntegerException {
 
 		T cleanCopy = null;
 		try {
-			cleanCopy = (T) tInstance.getClass().newInstance();
+
+			cleanCopy = (T) originialInstance.getClass().newInstance();
 
 			if (logger.isDebugEnabled())
 				logger.debug("Created new instance " + cleanCopy.getClass());
@@ -320,14 +334,23 @@ public class BaseDAO {
 			throw new IntegerException(e,
 					DatabaseErrorCodes.UnableToCreateCleanCopy);
 		} catch (IllegalAccessException e) {
-			throw new IntegerException(e, DatabaseErrorCodes.UnableToCreateCleanCopyIllegalAccess);
+			throw new IntegerException(e,
+					DatabaseErrorCodes.UnableToCreateCleanCopyIllegalAccess);
 		}
 
-		return copyFields(cleanCopy, tInstance);
+		Long identifier = originialInstance.getIdentifier();
+
+		T copy = copyFields(cleanCopy, originialInstance);
+
+		cleanCopy.setIdentifier(identifier);
+
+		return copy;
 	}
 
 	/**
-	 * Copy the fields from the "fromInstance" to the "toInstance"
+	 * Copy the fields from the "fromInstance" to the "toInstance". The
+	 * identifier for the toInstnace will remain. Only data fields will be
+	 * copied from the "fromInstnace".
 	 * 
 	 * @param cleanCopy
 	 * @param tInstance
@@ -338,8 +361,11 @@ public class BaseDAO {
 	 * @throws IntegerException
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <T> T copyFields(T toInstance, T fromInstance)
+	public <T extends BaseEntity> T copyFields(T toInstance, T fromInstance)
 			throws IntegerException {
+
+		// Don't want to overwrite the identifier.
+		Long identifier = toInstance.getIdentifier();
 
 		for (Method f : fromInstance.getClass().getMethods()) {
 
@@ -357,7 +383,7 @@ public class BaseDAO {
 
 					Object value = getter.invoke(fromInstance);
 					if (value instanceof BaseEntity) {
-						value = createCleanCopy(value);
+						value = createCleanCopy((BaseEntity) value);
 					}
 					if (value instanceof List) {
 						value = copyList((List) value);
@@ -366,27 +392,44 @@ public class BaseDAO {
 						value = copyArray((T[]) value);
 
 					f.invoke(toInstance, value);
-					
+
+					logger.info(toInstance.getClass().getSimpleName() + " "
+							+ ((BaseEntity) toInstance).getID() + " "
+							+ f.getName() + "(" + value + ")");
+
 				} catch (NoSuchMethodException e) {
-					throw new IntegerException (e, DatabaseErrorCodes.UnableToCreateCleanCopyNoSuchMethod);
+					throw new IntegerException(
+							e,
+							DatabaseErrorCodes.UnableToCreateCleanCopyNoSuchMethod);
 				} catch (SecurityException e) {
-					throw new IntegerException (e, DatabaseErrorCodes.UnableToCreateCleanCopySecurityException);
+					throw new IntegerException(
+							e,
+							DatabaseErrorCodes.UnableToCreateCleanCopySecurityException);
 				} catch (IllegalAccessException e) {
-					throw new IntegerException (e, DatabaseErrorCodes.UnableToCreateCleanCopyIllegalArgument);
+					throw new IntegerException(
+							e,
+							DatabaseErrorCodes.UnableToCreateCleanCopyIllegalArgument);
 				} catch (IllegalArgumentException e) {
-					throw new IntegerException (e, DatabaseErrorCodes.UnableToCreateCleanCopyIllegalAccess);
+					throw new IntegerException(
+							e,
+							DatabaseErrorCodes.UnableToCreateCleanCopyIllegalAccess);
 				} catch (InvocationTargetException e) {
-					throw new IntegerException (e, DatabaseErrorCodes.UnableToCreateCleanCopyNoSuchMethod);
+					throw new IntegerException(
+							e,
+							DatabaseErrorCodes.UnableToCreateCleanCopyNoSuchMethod);
 				}
 
 			}
 
 		}
 
+		toInstance.setIdentifier(identifier);
+
 		return toInstance;
 	}
 
-	private <T> T[] copyArray(T[] values) throws IntegerException {
+	private <T extends BaseEntity> T[] copyArray(T[] values)
+			throws IntegerException {
 
 		if (values == null)
 			return values;
@@ -399,15 +442,15 @@ public class BaseDAO {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private List copyList(List list) throws IntegerException {
-		
+	private List copyList(List<BaseEntity> list) throws IntegerException {
+
 		List copy = new ArrayList();
 
 		if (logger.isDebugEnabled())
 			logger.debug("Copy list " + copy.getClass() + " "
 					+ Arrays.toString(list.toArray()));
 
-		for (Object object : list) {
+		for (BaseEntity object : list) {
 			copy.add(createCleanCopy(object));
 		}
 

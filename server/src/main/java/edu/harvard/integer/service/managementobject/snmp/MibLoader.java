@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -143,7 +144,6 @@ public class MibLoader implements MibLoaderLocalInterface {
 		mibInfo.setScalors(result.getSnmpScalars());
 		mibInfo.setTables(result.getSnmpTable());
 		
-		
 		mibInfo = infoDAO.update(mibInfo);
 		
 		return mibInfo;
@@ -156,43 +156,45 @@ public class MibLoader implements MibLoaderLocalInterface {
 			return null;
 		}
 		
-		for (int i = 0; i < oids.size(); i++) {
-			SNMP snmpOid = oids.get(i);
-			oids.set(i, saveSNMPOid(snmpOid));
+		List<SNMP> savedOids = new ArrayList<SNMP>();
+		for (SNMP snmpOid : oids) {
+			
+			savedOids.add(saveSNMPOid(snmpOid));
+		
 		}
 
-		return oids;
+		return savedOids;
 	}
 
 	private List<SNMPTable> saveTableOids(List<SNMPTable> oids)
 			throws IntegerException {
 
-		for (int i = 0; i < oids.size(); i++) {
-			SNMP snmpOid = oids.get(i);
+		List<SNMPTable> savedOids = new ArrayList<SNMPTable>();
+		
+		for (SNMPTable snmpOid : oids) {
 			
-			SNMP dbTable = snmpDao.findByOid(snmpOid.getOid());
+
+			snmpOid.setTableOids( saveOids(snmpOid.getTableOids()) );
+			snmpOid.setIndex( saveOids(snmpOid.getIndex()) );
+		
+			SNMPTable dbTable = (SNMPTable) snmpDao.findByOid(snmpOid.getOid());
 			if (dbTable != null) {
-				logger.info("Found table " + 
+				logger.info("Found table " + dbTable.getID() + "::" +
 							snmpOid.getName() + "::" + snmpOid.getOid() + " In the database. Will update it.");
-					
-				snmpDao.copyFields(dbTable, snmpOid);
+				
+				
+				snmpDao.copyFields(dbTable, snmpOid);	
 				
 			} else
 				dbTable = snmpOid;
 			
-			((SNMPTable) dbTable).setTableOids( saveOids(((SNMPTable) dbTable).getTableOids()));
-			((SNMPTable) dbTable).setIndex( saveOids(((SNMPTable) dbTable).getIndex()));
-			dbTable = saveSNMPOid(dbTable);
+			dbTable = snmpDao.update(dbTable);
 			
-			if (dbTable instanceof SNMPTable)
-				oids.set(i, (SNMPTable) dbTable);
-			else
-				logger.error("OID: " + dbTable.getName() + " " + dbTable.getOid() + " Is NOT an SNMPTable!! "
-						+ " Passed in " + oids.get(i).getClass().getSimpleName());
-			
+			savedOids.add(dbTable);
+
 		}
 
-		return oids;
+		return savedOids;
 	}
 
 	private SNMPModule saveSNMPModule(MIBImportResult result)
@@ -291,30 +293,12 @@ public class MibLoader implements MibLoaderLocalInterface {
 				dbOid.setServiceElementTypes(snmpOid.getServiceElementTypes());
 				dbOid.setSnmpModuleId(snmpOid.getSnmpModuleId());
 				
-				if (dbOid instanceof SNMPTable) {
-					SNMPTable dbTable = (SNMPTable) dbOid;
-					SNMPTable table = (SNMPTable) snmpOid;
-					
-					dbTable.setIndex(table.getIndex());
-					dbTable.setTableOids(table.getTableOids());
-					
-					if (((SNMPTable) snmpOid).getIndex() != null) {
-						logger.info("Save Index "
-								+ Arrays.toString(((SNMPTable) snmpOid).getIndex()
-										.toArray(new SNMP[0])) + " for OID "
-										+ snmpOid.getOid());
-
-						((SNMPTable) snmpOid).setIndex(saveOids(((SNMPTable) snmpOid)
-								.getIndex()));
-					}
-				}
-				
 				snmpOid = snmpDao.update(dbOid);
 			} else
 				snmpOid = snmpDao.update(snmpOid);
 			
 		} catch (IntegerException e) {
-			logger.error("Error saveing SNMPModule " + snmpOid);
+			logger.error("Error saveing SNMPModule " + snmpOid + " Error " + e.toString());
 
 			throw e;
 		}

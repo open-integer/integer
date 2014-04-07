@@ -26,6 +26,7 @@
    <datasource jndi-name="java:jboss/datasources/IntegerTestDS"
       pool-name="integer-test" enabled="true"
       use-java-context="true">
+      
 <!--        <connection-url>jdbc:mysql://localhost:3306/Config</connection-url> -->
 <!--        <driver>com.mysql</driver> -->
 <!--        <security> -->
@@ -39,6 +40,7 @@
          <user-name>sa</user-name>
          <password>sa</password>
       </security>
+
    </datasource>
 </datasources>
  

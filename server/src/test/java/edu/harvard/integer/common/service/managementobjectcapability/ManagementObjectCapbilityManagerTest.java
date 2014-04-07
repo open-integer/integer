@@ -51,6 +51,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
@@ -131,14 +132,37 @@ public class ManagementObjectCapbilityManagerTest {
 		capability = managementObjectManager.addCapability(capability);
 		
 		List<ServiceElementManagementObject> systemOids = new ArrayList<ServiceElementManagementObject>();
-		SNMP oid = new SNMP();
-		oid.setName("ifName");
-		oid.setOid("1.3.6.1.2.1.1");
+		SNMP oid = null;
+		try {
+			oid = snmpManager.getSNMPByOid("1.3.6.1.2.1.2.2.1.3");  // ifType
+		} catch (IntegerException e1) {
+
+			e1.printStackTrace();
+			
+			fail("Error gettting ifType OID" + e1.toString());
+		}
+		
+		if (oid == null) {
+			oid = new SNMP();
+		 
+			oid.setName("ifType");
+			oid.setOid("1.3.6.1.2.1.2.2.1.3");
+		}
+		
 		systemOids.add(oid);
 		
-		 oid = new SNMP();
-		 oid.setName("ifDescr");
-		 oid.setOid("1.3.6.1.2.1.2");
+		try {
+			oid = snmpManager.getSNMPByOid("1.3.6.1.2.1.2.2.1.2");  // ifDescr
+		} catch (IntegerException e1) {
+			e1.printStackTrace();
+			fail("Error loading ifDescr OID! " + e1.toString());
+		}
+		
+		if (oid == null) {
+			oid = new SNMP();
+			oid.setName("ifDescr");
+			oid.setOid("1.3.6.1.2.1.2.2.1.2");
+		}
 		 systemOids.add(oid);
 			
 		assert(systemOids != null);
@@ -147,8 +171,7 @@ public class ManagementObjectCapbilityManagerTest {
 			logger.info("Found OID:  " + snmp.getName());
 		}
 		
-	//	List<ServiceElementManagementObject> managementObjects = new ArrayList<ServiceElementManagementObject>();
-		
+	
 		try {
 			managementObjectManager.addManagementObjectsToCapability(capability, systemOids);
 		} catch (IntegerException e) {
