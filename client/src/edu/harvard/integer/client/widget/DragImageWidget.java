@@ -1,12 +1,8 @@
 package edu.harvard.integer.client.widget;
 
-import com.emitrom.lienzo.client.core.image.PictureLoadedHandler;
 import com.emitrom.lienzo.client.core.shape.Line;
 import com.emitrom.lienzo.client.core.shape.Picture;
-import com.emitrom.lienzo.client.core.shape.Text;
 import com.emitrom.lienzo.shared.core.types.Color;
-import com.emitrom.lienzo.shared.core.types.ColorName;
-import com.emitrom.lienzo.shared.core.types.TextAlign;
 import com.google.gwt.resources.client.ImageResource;
 
 import edu.harvard.integer.client.resources.Resources;
