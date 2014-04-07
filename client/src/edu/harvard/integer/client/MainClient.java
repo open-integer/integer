@@ -2,6 +2,8 @@ package edu.harvard.integer.client;
 
 import java.util.List;
 
+import com.emitrom.lienzo.client.core.mediator.EventFilter;
+import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -128,6 +130,9 @@ public class MainClient implements EntryPoint {
 
         DragImageWidget dragImageWidget = new DragImageWidget(90, 50);
         networkPanel.add(dragImageWidget);
+        
+        networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
+        LienzoPanel.enableWindowMouseWheelScroll(true);
         
 		SplitLayoutPanel systemPanel = new SplitLayoutPanel(5);
 		systemPanel.setSize("1200px", "700px");
