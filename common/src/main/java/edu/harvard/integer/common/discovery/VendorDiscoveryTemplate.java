@@ -33,14 +33,15 @@
 
 package edu.harvard.integer.common.discovery;
 
-import javax.persistence.Entity;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.Type;
-
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
@@ -89,7 +90,12 @@ public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagement
 	/**
 	 * The name of the vendor associated with this SnmpVendorDiscoveryTemplate.
 	 */
-	private String vendor = null;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "vendorId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "vendorType")),
+			@AttributeOverride(name = "name", column = @Column(name = "vendorName")) })
+	private ID vendorId = null;
 
 	/**
 	 * @return the description
@@ -126,15 +132,15 @@ public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagement
 	/**
 	 * @return the vendor
 	 */
-	public String getVendor() {
-		return vendor;
+	public ID getVendorId() {
+		return vendorId;
 	}
 
 	/**
 	 * @param vendor
 	 *            the vendor to set
 	 */
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
+	public void setVendorId(ID vendor) {
+		this.vendorId = vendor;
 	}
 }

@@ -41,6 +41,7 @@ import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryParseElement;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
@@ -71,8 +72,18 @@ public class SnmpVendorDiscoveryTemplateDAO extends BaseDAO {
 	/**
 	 * @param vendor
 	 */
-	public SnmpVendorDiscoveryTemplate findByVendor(String vendor) {
-		SnmpVendorDiscoveryTemplate snmpVendorDiscoveryTemplate = findByStringField(vendor, "vendor", SnmpVendorDiscoveryTemplate.class);
+	public SnmpVendorDiscoveryTemplate findByVendor(Long vendor) throws IntegerException{
+		SnmpVendorDiscoveryTemplate snmpVendorDiscoveryTemplate = findByLongField(vendor, "vendor", SnmpVendorDiscoveryTemplate.class);
+		
+		return snmpVendorDiscoveryTemplate;
+	}
+
+	/**
+	 * @param vendor
+	 * @throws IntegerException 
+	 */
+	public SnmpVendorDiscoveryTemplate findByVendor(ID vendor) throws IntegerException {
+		SnmpVendorDiscoveryTemplate snmpVendorDiscoveryTemplate = findById(vendor);
 		
 		return snmpVendorDiscoveryTemplate;
 	}

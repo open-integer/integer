@@ -251,13 +251,7 @@ public class BaseDAO {
 	 */
 	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
 
-		Class clazz = null;
-		try {
-			clazz = Class.forName(id.getIdType().getClassType());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Class<? extends BaseEntity> clazz = id.getIdType().getClassType();
 
 		@SuppressWarnings("unchecked")
 		T entity = (T) entityManger.find(clazz, id.getIdentifier());

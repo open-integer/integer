@@ -35,6 +35,8 @@ package edu.harvard.integer.common;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+
+import edu.harvard.integer.common.discovery.VendorIdentifier;
 /**
  * @author David Taylor
  * 
@@ -49,21 +51,21 @@ public class IDType implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String classType = null;
+	private Class<? extends BaseEntity> classType = null;
 
 	public IDType() {
 		
 	}
 	
-	public IDType(String clazz) {
-		this.classType = clazz;
+	public IDType(Class<? extends BaseEntity> class1) {
+		this.classType = class1;
 	}
 	
-	public String getClassType() {
+	public Class<? extends BaseEntity> getClassType() {
 		return classType;
 	}
 
-	public void setClassType(String classType) {
+	public void setClassType(Class<? extends BaseEntity> classType) {
 		this.classType = classType;
 	}
 
@@ -73,7 +75,7 @@ public class IDType implements Serializable {
 	@Override
 	public String toString() {
 		
-		return classType;
+		return classType.getSimpleName();
 	}
 	
 	

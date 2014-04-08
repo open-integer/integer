@@ -42,6 +42,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
@@ -88,14 +89,24 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	
 	@Override
 	public SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
-			String vendor) throws IntegerException {
+			ID vendorId) throws IntegerException {
+
+		SnmpVendorDiscoveryTemplateDAO dao = dbm
+				.getSnmpVendorDiscoveryTemplateDAO();
+
+		return dao.findByVendor(vendorId);
+	}
+	
+	@Override
+	public SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
+			Long vendor) throws IntegerException {
 
 		SnmpVendorDiscoveryTemplateDAO dao = dbm
 				.getSnmpVendorDiscoveryTemplateDAO();
 
 		return dao.findByVendor(vendor);
 	}
-
+	
 	@Override
 	public SnmpVendorDiscoveryTemplate updateSnmpVendorDiscoveryTemplate(SnmpVendorDiscoveryTemplate template) throws IntegerException {
 	

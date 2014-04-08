@@ -37,6 +37,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
@@ -54,10 +55,18 @@ public interface ServiceElementDiscoveryManagerInterface extends
 		BaseManagerInterface {
 
 	/**
-	 * Get the SnmpVendorDiscoveryTemplate for the given vendor
+	 * Get the SnmpVendorDiscoveryTemplate for the given vendorId. To get the
+	 * vendorId use the getVendorIdentifier()
 	 */
 	SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
-			String vendor) throws IntegerException;
+			ID vendorId) throws IntegerException;
+
+	/**
+	 * Get the SnmpVendorDiscoveryTemplate for the given vendorId. To get the
+	 * vendorId use the getVendorIdentifier()
+	 */
+	SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
+			Long vendorId) throws IntegerException;
 
 	/**
 	 * Get the SnmpContainment hierarchy for the VendorContainmentSelector
@@ -105,9 +114,11 @@ public interface ServiceElementDiscoveryManagerInterface extends
 
 	/**
 	 * Find the vendor based on the vendor ID. The vendor ID is the sysObjectID
-	 * for the device. Note: The value of the first octet only is used for the 
-	 * vendor ID. ex. A snmpwalk with the following value SNMPv2-MIB::sysObjectID.0 = OID: SNMPv2-SMI::enterprises.9.1.658
-	 * would use the "9" as the vendor ID. The return from this would be a "Cisco" VendorIdentifier.
+	 * for the device. Note: The value of the first octet only is used for the
+	 * vendor ID. ex. A snmpwalk with the following value
+	 * SNMPv2-MIB::sysObjectID.0 = OID: SNMPv2-SMI::enterprises.9.1.658 would
+	 * use the "9" as the vendor ID. The return from this would be a "Cisco"
+	 * VendorIdentifier.
 	 * 
 	 * @param vendorId
 	 * @return

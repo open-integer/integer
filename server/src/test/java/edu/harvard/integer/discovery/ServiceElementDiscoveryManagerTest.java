@@ -41,6 +41,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.log4j.Level;
+import org.hibernate.metamodel.source.annotations.entity.IdType;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -53,6 +54,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.discovery.DiscoveryParseElement;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
@@ -170,7 +173,9 @@ public class ServiceElementDiscoveryManagerTest {
 		}
 		
 		SnmpVendorDiscoveryTemplate template = new SnmpVendorDiscoveryTemplate();
-		template.setVendor("Cisco");
+		IDType type = new IDType(VendorIdentifier.class);
+		ID vendorId = new ID(Long.valueOf(9), "Cisco", type);
+		template.setVendorId(vendorId);
 		try {
 			template.setModel(snmpManager.getSNMPByOid(CommonSnmpOids.sysObjectID));
 		} catch (IntegerException e) {
