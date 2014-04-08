@@ -1,10 +1,8 @@
 package edu.harvard.integer.client.widget;
 
-import com.emitrom.lienzo.client.core.image.PictureLoadedHandler;
+import com.emitrom.lienzo.client.core.shape.Line;
 import com.emitrom.lienzo.client.core.shape.Picture;
-import com.emitrom.lienzo.client.core.shape.Text;
-import com.emitrom.lienzo.shared.core.types.ColorName;
-import com.emitrom.lienzo.shared.core.types.TextAlign;
+import com.emitrom.lienzo.shared.core.types.Color;
 import com.google.gwt.resources.client.ImageResource;
 
 import edu.harvard.integer.client.resources.Resources;
@@ -63,7 +61,10 @@ public class DragImageWidget extends WidgetLayer {
         		};
 
         int i = 0;
+        
         for (int row = 0; row < 3; row++) {
+        	int x1 = 0;
+            int y1 = 0;
         	for (int col = 0; col < 6; col++) {
 	        	Picture picture = new Picture(images[i], IMAGE_WIDTH, IMAGE_HEIGHT, true, null);
 	        	int x = col * IMAGE_WIDTH*2 + 50;
@@ -73,6 +74,17 @@ public class DragImageWidget extends WidgetLayer {
 	        	icon.draw(x, y);
 	        	
 	        	add(icon);
+	        	
+	        	int x2 = x;
+	        	int y2 = y + IMAGE_HEIGHT/2;
+	        	if (x1 != 0 && y1 != 0) {
+	        		Line line = new Line(x1,y1, x2, y2);  
+	                line.setStrokeColor(Color.getRandomHexColor()).setStrokeWidth(2).setFillColor(Color.getRandomHexColor());  
+	                add(line);
+	        	}
+	        	
+	        	x1 = x + IMAGE_WIDTH;
+	        	y1 = y2;
 
         	}
         }
