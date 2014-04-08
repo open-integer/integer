@@ -113,6 +113,20 @@ public class ManagementObjectCapbilityManagerTest {
 	}
 
 	@Test
+	public void addCapabilitysysName() {
+		Capability capability = new Capability();
+		capability.setName("SysName");
+		capability.setDescription("System name");
+		List<FCAPSEnum> fcaps = new ArrayList<FCAPSEnum>();
+		fcaps.add(FCAPSEnum.Configuration);
+		
+		capability.setFcaps(fcaps);
+		
+		
+		managementObjectManager.addCapability(capability);
+	}
+	
+	@Test
 	public void getAllCapabilites() {
 		
 		Capability[] capabilities = findAllCapabilities();

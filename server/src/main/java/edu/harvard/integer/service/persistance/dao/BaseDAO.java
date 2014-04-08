@@ -169,6 +169,40 @@ public class BaseDAO {
 		else
 			return null;
 	}
+	
+	/**
+	 * Find the entity in the database by the specified field.
+	 * 
+	 * @param fieldValue
+	 * @param fieldName
+	 * @param clazz
+	 * @return
+	 */
+	protected <T extends BaseEntity> T findByLongField(Long fieldValue,
+			String fieldName, Class<T> clazz) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+
+		Root<T> from = query.from(clazz);
+		query.select(from);
+
+		ParameterExpression<Long> oid = criteriaBuilder
+				.parameter(Long.class);
+		query.select(from).where(
+				criteriaBuilder.equal(from.get(fieldName), oid));
+
+		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, fieldValue);
+
+		List<T> resultList = typeQuery.getResultList();
+
+		if (resultList.size() > 0)
+			return resultList.get(0);
+		else
+			return null;
+	}
 
 	/**
 	 * Find all the entities in the database of the type of this DAO. ex. User

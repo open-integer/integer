@@ -45,17 +45,17 @@ import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
+import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
-import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseElementDAO;
-import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
+import edu.harvard.integer.service.persistence.dao.discovery.VendorIdentifierDAO;
 
 /**
  * @author David Taylor
@@ -141,6 +141,34 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 				.getContainmentId());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager#getSnmpVendorDiscoveryTemplateByVendor(String)
+	 * 
+	 */
+	@Override
+	public VendorIdentifier getVendorIdentifier(Long vendorId) throws IntegerException {
+		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
+		
+		return dao.findByVendorId(vendorId);
+	}
+	
+	/*
+	 *  (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager#updateVendorIdentifier(VendorIdentifier)
+	 * 
+	 */
+	@Override
+	public VendorIdentifier updateVendorIdentifier(VendorIdentifier vendorIdentifier) throws IntegerException {
+		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
+		
+		
+		return dao.update(vendorIdentifier);
+	}
+	
+	@Override
 	public List<ServiceElementManagementObject> getTopLevelPolls() {
 		
 		SNMPDAO snmpdao = dbm.getSNMPDAO();

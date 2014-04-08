@@ -64,6 +64,7 @@ import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
 import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
 import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
+import edu.harvard.integer.service.persistence.dao.discovery.VendorIdentifierDAO;
 /**
  * @author David Taylor
  * 
@@ -280,5 +281,10 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public DiscoveryParseElementDAO getDiscoveryParseElementDAO() {
 		return new DiscoveryParseElementDAO(em, logger);
+	}
+	
+	@Override
+	public VendorIdentifierDAO getVendorIdentifierDAO() {
+		return new VendorIdentifierDAO(em, logger);
 	}
 }

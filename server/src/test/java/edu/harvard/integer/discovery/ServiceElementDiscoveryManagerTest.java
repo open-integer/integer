@@ -57,6 +57,7 @@ import edu.harvard.integer.common.discovery.DiscoveryParseElement;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
+import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -221,7 +222,40 @@ public class ServiceElementDiscoveryManagerTest {
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
+			
 			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getVendorByID() {
+		
+		Long vendorId = Long.valueOf(9);
+		
+		try {
+			VendorIdentifier vendorIdentifier = serviceElementDiscoveryManger.getVendorIdentifier(vendorId);
+			if (vendorIdentifier == null) {
+
+				vendorIdentifier = new VendorIdentifier();
+				vendorIdentifier.setVendorId(vendorId);
+				vendorIdentifier.setName("Cisco");
+				
+				serviceElementDiscoveryManger.updateVendorIdentifier(vendorIdentifier);
+				
+				vendorIdentifier = serviceElementDiscoveryManger.getVendorIdentifier(vendorId);
+			
+				
+			}
+			
+			assert (vendorIdentifier != null);
+			
+			logger.info("Found vendor " + vendorIdentifier.getName() + " for vendorId " + vendorId);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			
+			fail("Error loading Vendor by ID! " + e.toString());
 		}
 	}
 }

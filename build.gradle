@@ -1,6 +1,7 @@
 
 apply plugin: 'ear'
 apply plugin: 'java'
+apply plugin: 'eclipse'
 
 repositories {
 	mavenCentral()
@@ -33,3 +34,4 @@ task deployServer(dependsOn: 'build') << {
 
 	}
 }
+

@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -52,8 +51,6 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
  * @author David Taylor

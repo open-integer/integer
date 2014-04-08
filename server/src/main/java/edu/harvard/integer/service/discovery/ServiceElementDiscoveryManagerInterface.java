@@ -40,46 +40,54 @@ import javax.ejb.Local;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
+import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 @Local
-public interface ServiceElementDiscoveryManagerInterface extends BaseManagerInterface {
+public interface ServiceElementDiscoveryManagerInterface extends
+		BaseManagerInterface {
 
 	/**
 	 * Get the SnmpVendorDiscoveryTemplate for the given vendor
 	 */
-	SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(String vendor) throws IntegerException;
+	SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
+			String vendor) throws IntegerException;
 
 	/**
 	 * Get the SnmpContainment hierarchy for the VendorContainmentSelector
 	 * 
-	 * @param selector. The VendorContainmanetSelector to the the SnmpContainment for
-	 * @return SnmpContianment object that describes the hierarchy for this device type.
+	 * @param selector
+	 *            . The VendorContainmanetSelector to the the SnmpContainment
+	 *            for
+	 * @return SnmpContianment object that describes the hierarchy for this
+	 *         device type.
 	 * @throws IntegerException
 	 */
 	SnmpContainment getSnmpContainment(VendorContainmentSelector selector)
 			throws IntegerException;
 
-	
 	/**
-	 * Gets the top level polls.  On IP network topology discovery, the list should
-	 * be a list of SNMP objects in the system group.
-	 *
-	 * @return the top level polls for discovery. 
+	 * Gets the top level polls. On IP network topology discovery, the list
+	 * should be a list of SNMP objects in the system group.
+	 * 
+	 * @return the top level polls for discovery.
 	 * 
 	 */
-	public List<ServiceElementManagementObject>  getTopLevelPolls();
+	public List<ServiceElementManagementObject> getTopLevelPolls();
 
 	/**
 	 * Insert or update the SnmpVendorTemplate.
-	 * @param template. Template to be updated. 
-	 * @return The updated SnmpVendorTemplate. This has the identifier filled in if this object was just created.
+	 * 
+	 * @param template
+	 *            . Template to be updated.
+	 * @return The updated SnmpVendorTemplate. This has the identifier filled in
+	 *         if this object was just created.
 	 * 
 	 * @throws IntegerException
 	 */
@@ -88,9 +96,32 @@ public interface ServiceElementDiscoveryManagerInterface extends BaseManagerInte
 
 	/**
 	 * Get all the SnmpVendorTemlates in the system.
+	 * 
 	 * @return
 	 * @throws IntegerException
 	 */
 	SnmpVendorDiscoveryTemplate[] getAllSnmpVendorDiscoveryTemplates()
+			throws IntegerException;
+
+	/**
+	 * Find the vendor based on the vendor ID. The vendor ID is the sysObjectID
+	 * for the device. Note: The value of the first octet only is used for the 
+	 * vendor ID. ex. A snmpwalk with the following value SNMPv2-MIB::sysObjectID.0 = OID: SNMPv2-SMI::enterprises.9.1.658
+	 * would use the "9" as the vendor ID. The return from this would be a "Cisco" VendorIdentifier.
+	 * 
+	 * @param vendorId
+	 * @return
+	 * @throws IntegerException
+	 */
+	VendorIdentifier getVendorIdentifier(Long vendorId) throws IntegerException;
+
+	/**
+	 * 
+	 * @param vendorId
+	 * @param name
+	 * @return
+	 * @throws IntegerException
+	 */
+	VendorIdentifier updateVendorIdentifier(VendorIdentifier vendorIdentifier)
 			throws IntegerException;
 }
