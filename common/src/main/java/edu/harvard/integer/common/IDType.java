@@ -74,8 +74,10 @@ public class IDType implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		
-		return classType.getSimpleName();
+		if (classType != null)
+			return classType.getName();
+		else
+			return "";
 	}
 	
 	
