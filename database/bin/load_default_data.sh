@@ -3,7 +3,13 @@
 BASEDIR=$(dirname $0)
 
 
-mysqlCmd='mysql -u root Config'
+if [ =z "${1}" ]; then
+   mysqlCmd='mysql -u root Config'
+else
+   mysqlCmd="mysql -u root Config -p$1"
+fi
+
+
 
 $mysqlCmd < $BASEDIR/../preload/enterpriseNumbersaa.sql
 $mysqlCmd < $BASEDIR/../preload/enterpriseNumbersab.sql
