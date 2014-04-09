@@ -125,10 +125,14 @@ public class ImportMIBTest {
 	}
 
 	private void importIETFMIB(String mibName) {
-		importMib("ietf/" + mibName);
+		importMib("ietf/" + mibName, true);
 	}
 
-	private void importMib(String mibName) {
+	private void importVendorMIB(String mibName) {
+		importMib("vendors/" + mibName, false);
+	}
+
+	private void importMib(String mibName, boolean isStandardMib) {
 
 		logger.info("Start test import of " + mibName);
 
@@ -138,9 +142,13 @@ public class ImportMIBTest {
 		File mibFile = new File("../server/mibs/" + mibName);
 		if (mibFile.exists())
 			System.out.println("Found rfc");
-		else
+		else {
 			System.out.println("rfc not found! PATH: "
 					+ mibFile.getAbsolutePath());
+			
+			fail("rfc not found! PATH: "
+					+ mibFile.getAbsolutePath());
+		}
 
 		String content = null;
 		try {
@@ -155,7 +163,7 @@ public class ImportMIBTest {
 		MIBImportInfo importInfo = new MIBImportInfo();
 		importInfo.setFileName(mibFile.getName());
 		importInfo.setMib(content);
-		importInfo.setStandardMib(true);
+		importInfo.setStandardMib(isStandardMib);
 
 		MIBImportResult[] importMIBs = null;
 		try {
@@ -257,6 +265,16 @@ public class ImportMIBTest {
 	@Test
 	public void importIANAifType_MIB() {
 		importIETFMIB("IANAifType-MIB");
+	}
+	
+	@Test
+	public void importCiscoSMI() {
+		importVendorMIB("CISCO-SMI.my");
+	}
+	
+	@Test
+	public void importCiscoVendorEntity() {
+		importVendorMIB("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
 	}
 	
 	public void findSysName() {

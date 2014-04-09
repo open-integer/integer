@@ -815,8 +815,9 @@ public class MibbleParser implements MibParser{
         for ( MibProcessingInfo importMib : importList ) {
         	
         	Writer writer = null;
+        	String mibFilefull = null;
 			try {
-				String mibFilefull = getFullName(importMib.fileName, importMib.isCommon);
+				mibFilefull = getFullName(importMib.fileName, importMib.isCommon);
 				FileOutputStream outputStream = new FileOutputStream(mibFilefull);	
 			    writer = new BufferedWriter(new OutputStreamWriter(outputStream, "utf-8"));
 			    writer.write(importMib.importInfo.getMib());
@@ -826,6 +827,7 @@ public class MibbleParser implements MibParser{
 			 
 				// Do nothing and continue;
 				importMib.importSuccess = false;
+				logger.error("Error loading " + mibFilefull + " Error " + ex);
 			} 
 			finally {
 			   try {writer.close();} catch (Exception ex) {}
@@ -888,8 +890,10 @@ public class MibbleParser implements MibParser{
     			}
     			catch (IOException e) {
     				
-    				logger.error("IO error on module " + importMib.fileName);
+    				logger.error("IO error on module " + importMib.fileName + " Error " + e.toString());
+    				
     			} 
+        		
      	    	catch (MibLoaderException e) {
      	    		
      	    		MIBImportResult mResult = new MIBImportResult();
