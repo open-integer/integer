@@ -50,9 +50,11 @@ import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
@@ -178,6 +180,10 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return dao.update(vendorIdentifier);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getTopLevelPolls()
+	 */
 	@Override
 	public List<ServiceElementManagementObject> getTopLevelPolls() {
 		
@@ -203,5 +209,16 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		}
 		
 		return snmps;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypeById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ServiceElementType getServiceElementTypeById(ID serviceElementTypeId) throws IntegerException {
+		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
+		
+		return dao.findById(serviceElementTypeId);
 	}
 }

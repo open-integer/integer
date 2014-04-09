@@ -44,6 +44,7 @@ import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
@@ -134,5 +135,15 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @throws IntegerException
 	 */
 	VendorIdentifier updateVendorIdentifier(VendorIdentifier vendorIdentifier)
+			throws IntegerException;
+
+	/**
+	 * Find the service element type by the givne ID.
+	 * 
+	 * @param serviceElementTypeId
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElementType getServiceElementTypeById(ID serviceElementTypeId)
 			throws IntegerException;
 }
