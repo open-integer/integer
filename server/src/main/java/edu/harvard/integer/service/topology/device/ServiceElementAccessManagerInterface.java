@@ -35,12 +35,13 @@ package edu.harvard.integer.service.topology.device;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
  *
  */
-public interface ServiceElementAccessManagerInterface {
+public interface ServiceElementAccessManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * @param serviceElement

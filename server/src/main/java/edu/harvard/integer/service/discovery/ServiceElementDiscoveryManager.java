@@ -86,7 +86,6 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	private PersistenceManagerInterface dbm;
 
 	
-	
 	@Override
 	public SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
 			ID vendorId) throws IntegerException {

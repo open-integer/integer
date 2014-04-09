@@ -41,6 +41,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 
@@ -49,7 +50,7 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
  *
  */
 @Stateless
-public class ServiceElememtAccessManager implements ServiceElementAccessManagerInterface {
+public class ServiceElememtAccessManager extends BaseManager implements ServiceElementAccessManagerInterface {
 	@Inject
 	private Logger logger;
 		

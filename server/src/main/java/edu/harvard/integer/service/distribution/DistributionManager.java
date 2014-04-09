@@ -48,70 +48,69 @@ import edu.harvard.integer.common.exception.SystemErrorCodes;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 
-
 /**
  * @author David Taylor
- *
+ * 
  */
 public class DistributionManager {
 
-	private static final Logger logger = LoggerFactory.getLogger(DistributionManager.class);
-	 
-	 
-	public static <T extends BaseServiceInterface> T getService(ServiceTypeEnum type) throws IntegerException {
-	
+	private static final Logger logger = LoggerFactory
+			.getLogger(DistributionManager.class);
+
+	public static <T extends BaseServiceInterface> T getService(
+			ServiceTypeEnum type) throws IntegerException {
+
 		return lookupLocalBean(getLocalServiceName(type));
 	}
-	
 
 	private static String getLocalServiceName(ServiceTypeEnum serviceType) {
 		StringBuffer b = new StringBuffer();
-		
+
 		b.append("java:module/");
 		b.append(serviceType.getServiceClass().getSimpleName());
-		
+
 		return b.toString();
 	}
 
-	
-	public static <T extends BaseManagerInterface> T getManager(ManagerTypeEnum managerType) throws IntegerException {
-			
-		return lookupLocalBean(getLocalManagerName(managerType));	
+	public static <T extends BaseManagerInterface> T getManager(
+			ManagerTypeEnum managerType) throws IntegerException {
+
+		return lookupLocalBean(getLocalManagerName(managerType));
 	}
 
-	
 	private static String getLocalManagerName(ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
-		
+
 		b.append("java:module/");
 		b.append(managerType.getBeanClass().getSimpleName());
-		
+
 		return b.toString();
 	}
 
-
 	@SuppressWarnings("unchecked")
-	private static <T> T lookupLocalBean(String managerName) throws IntegerException {
-		
+	private static <T> T lookupLocalBean(String managerName)
+			throws IntegerException {
+
 		InitialContext ctx = null;
 		try {
-			
+
 			final Properties env = new Properties();
 			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-			
+
 			ctx = new InitialContext(env);
-			
+
 			T manager = null;
 
-			manager = (T) lookupBean( managerName, ctx);
+			manager = (T) lookupBean(managerName, ctx);
 			if (manager == null) {
 
-				throw new IntegerException(null, SystemErrorCodes.ManagerNotFound);
+				throw new IntegerException(null,
+						SystemErrorCodes.ManagerNotFound);
 			}
 
 			if (logger.isDebugEnabled())
 				logger.info("Got localBean " + managerName);
-			
+
 			return manager;
 
 		} catch (Exception e) {
@@ -122,10 +121,10 @@ public class DistributionManager {
 			logger.error("Error getting service " + managerName + e.toString(),
 					e);
 			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
-		} 
+		}
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private static <T> T lookupBean(String managerName, InitialContext ctx) {
 		T manager = null;
@@ -136,19 +135,32 @@ public class DistributionManager {
 				logger.debug("Looking for manager " + managerName);
 
 			manager = (T) ctx.lookup(managerName);
-	
+
 			if (logger.isDebugEnabled())
 				logger.debug("Found manager " + managerName);
-	
+
 		} catch (NameNotFoundException ne) {
-			logger.info("Manager "+  managerName + " not found!! " + ne);
+			logger.info("Manager " + managerName + " not found!! " + ne);
 		} catch (NamingException e) {
 			logger.info("Name " + managerName + " Not found! " + e);
 		} catch (Throwable t) {
-			logger.info("Throwable error Name " + managerName + " Not found! " + t);
+			logger.info("Throwable error Name " + managerName + " Not found! "
+					+ t);
 		}
 
 		return manager;
 	}
 
+	/**
+	 * Get the identifier for this server instance. This value is retrieved
+	 * from the "ServerID" property. 
+	 * 
+	 * @return
+	 * @throws IntegerException
+	 */
+	public Long getServerId() throws IntegerException {
+
+		// TODO: This needs to be read from a property file. 
+		return Long.valueOf(1);
+	}
 }
