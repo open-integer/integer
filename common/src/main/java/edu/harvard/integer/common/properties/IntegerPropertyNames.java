@@ -31,30 +31,74 @@
  *      
  */
 
-package edu.harvard.integer.common.exception;
+package edu.harvard.integer.common.properties;
+
 
 /**
  * @author David Taylor
- *
+ * 
+ *         This holds the keys for the Integer properties used. The values must
+ *         have a default, min and max value. The units are also specified. 
  */
-public enum SystemErrorCodes implements ErrorCodeInterface {
-	ServiceNotFound("Service not found"),
-	ManagerNotFound("Mangager not found"),
-	PropertyFileNotFound("Property file not found");
+public enum IntegerPropertyNames {
+	ServerId("ServerId", 1, 1, 1000, UnitsEnum.NA),
+	SystemPropertyCheckInterval("SystemPropertyCheckInterval", 30, 1, 10000, UnitsEnum.Minute);
 
-	/** The error code. */
-	private String errorCode = null;
-	
-	private SystemErrorCodes(String description) {
-		
-	}
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
+	private String fieldName = null;
+	private Long defaultValue = null;
+	private Long minValue = null;
+	private Long maxValue = null;
+	private UnitsEnum units = null;
+
+	/**
+	 * @param fieldName
+	 * @param defaultValue
+	 * @param minValue
+	 * @param maxValue
+	 * @param units
 	 */
-	@Override
-	public String getErrorCode() {
-		
-		return errorCode;
+	private IntegerPropertyNames(String fieldName, long defaultValue,
+			long minValue, long maxValue, UnitsEnum units) {
+		this.fieldName = fieldName;
+		this.defaultValue = defaultValue;
+		this.minValue = minValue;
+		this.maxValue = maxValue;
+		this.units = units;
+	}
+
+	/**
+	 * @return the fieldName
+	 */
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	/**
+	 * @return the defaultValue
+	 */
+	public Long getDefaultValue() {
+		return defaultValue;
+	}
+
+	/**
+	 * @return the minValue
+	 */
+	public Long getMinValue() {
+		return minValue;
+	}
+
+	/**
+	 * @return the maxValue
+	 */
+	public Long getMaxValue() {
+		return maxValue;
+	}
+
+	/**
+	 * @return the units
+	 */
+	public UnitsEnum getUnits() {
+		return units;
 	}
 
 }

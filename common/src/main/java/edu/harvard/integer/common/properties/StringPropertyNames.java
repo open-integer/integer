@@ -31,30 +31,30 @@
  *      
  */
 
-package edu.harvard.integer.common.exception;
+package edu.harvard.integer.common.properties;
 
 /**
  * @author David Taylor
- *
+ * 
+ *         Keys for the String properties in the system. The default value must
+ *         be specified for each key.
  */
-public enum SystemErrorCodes implements ErrorCodeInterface {
-	ServiceNotFound("Service not found"),
-	ManagerNotFound("Mangager not found"),
-	PropertyFileNotFound("Property file not found");
-
-	/** The error code. */
-	private String errorCode = null;
+public enum StringPropertyNames {
+	StringPropName("SomeProp", "Value");
 	
-	private SystemErrorCodes(String description) {
-		
+	private String fieldName = null;
+	private String defaultValue = null;
+	
+	private StringPropertyNames(String fieldName, String defaultValue) {
+		this.fieldName = fieldName;
+		this.defaultValue = defaultValue;
 	}
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
-	 */
-	@Override
-	public String getErrorCode() {
-		
-		return errorCode;
+	
+	public String getFieldName() {
+		return fieldName;
 	}
-
+	
+	public String getDefaultValue() {
+		return defaultValue;
+	}
 }

@@ -11,7 +11,7 @@
 			<module name="org.mibble" slot="main" export="true" />
 			<module name="org.snmp4j" slot="main" export="true" />
 			<module name="org.apache.commons.net" slot="main" export="true" />
-
+			<module name="edu.harvard.integer.settings" slot="main" export="true" />
 		</dependencies>
 	</deployment>
 
