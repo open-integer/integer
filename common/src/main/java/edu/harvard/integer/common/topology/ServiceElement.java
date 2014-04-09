@@ -79,7 +79,14 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	private NetworkLayer networkLayer = null;
 
 	private String description = null;
-
+	
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
+			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
+	private ID serviceElementTypeId = null;
+	
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "iconId")),
@@ -335,6 +342,20 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 */
 	public void setValues(List<ServiceElementProtocolInstanceIdentifier> values) {
 		this.values = values;
+	}
+
+	/**
+	 * @return the serviceElementTypeId
+	 */
+	public ID getServiceElementTypeId() {
+		return serviceElementTypeId;
+	}
+
+	/**
+	 * @param serviceElementTypeId the serviceElementTypeId to set
+	 */
+	public void setServiceElementTypeId(ID serviceElementTypeId) {
+		this.serviceElementTypeId = serviceElementTypeId;
 	}
 
 }
