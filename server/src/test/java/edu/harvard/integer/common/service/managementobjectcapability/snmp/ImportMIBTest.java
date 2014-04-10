@@ -38,7 +38,10 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,6 +63,9 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.server.parser.mibparser.MibParser;
+import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
+import edu.harvard.integer.server.parser.mibparser.MibParserFactory.ParserProvider;
 import edu.harvard.integer.server.parser.mibparser.moduleloader.MibbleParser;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -100,7 +106,9 @@ public class ImportMIBTest {
 
 	@Before
 	public void initializeLogger() {
-		//BasicConfigurator.configure();
+		
+//		System.setProperty(MibbleParser.MIBFILELOCATON, "../server/build/mibs");
+//		importDir();
 	}
 	
 	@Test
@@ -112,6 +120,29 @@ public class ImportMIBTest {
 	public void importRFC1155_SMI() {
 		importIETFMIB("RFC1155-SMI");
 	}
+	
+	public void importDir() {
+		
+		List<MIBImportInfo> importMibs = new ArrayList<>();
+		String commonDir = "../server/mibs";
+		File dirf = new File(commonDir);
+		File[] fs = dirf.listFiles();
+		
+		importFiles(importMibs, fs, false);
+		
+		
+		try {
+			MibParser mibParser = MibParserFactory.getParserSource(ParserProvider.MIBBLE);
+			mibParser.importMIB(importMibs.toArray(new MIBImportInfo[importMibs.size()]), true);
+		} 
+		catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 	/**
 	 * Test the importing of RFC1213. This will read in the MIB and create the
@@ -121,25 +152,26 @@ public class ImportMIBTest {
 	 */
 	@Test
 	public void importRFC1213() {
+		
 		importIETFMIB("RFC1213-MIB");
+		
 	}
 
 	private void importIETFMIB(String mibName) {
-		importMib("ietf/" + mibName, true);
+		importMib(mibName);
 	}
 
 	private void importVendorMIB(String mibName) {
-		importMib("vendors/" + mibName, false);
+		importMib(mibName);
 	}
 
-	private void importMib(String mibName, boolean isStandardMib) {
+	private void importMib(String mibName) {
 
-		logger.info("Start test import of " + mibName);
+		logger.warn("Start test import of ***************************************************************************** " + mibName);
 
-		System.setProperty(MibbleParser.MIBFILELOCATON,
-				"../server/mibs");
-
-		File mibFile = new File("../server/mibs/" + mibName);
+		File mibFile = null;
+		mibFile = new File("../server/mibs/" + mibName); 
+		
 		if (mibFile.exists())
 			System.out.println("Found rfc");
 		else {
@@ -163,7 +195,6 @@ public class ImportMIBTest {
 		MIBImportInfo importInfo = new MIBImportInfo();
 		importInfo.setFileName(mibFile.getName());
 		importInfo.setMib(content);
-		importInfo.setStandardMib(isStandardMib);
 
 		MIBImportResult[] importMIBs = null;
 		try {
@@ -267,15 +298,60 @@ public class ImportMIBTest {
 		importIETFMIB("IANAifType-MIB");
 	}
 	
-	@Test
-	public void importCiscoSMI() {
-		importVendorMIB("CISCO-SMI.my");
-	}
 	
 	@Test
 	public void importCiscoVendorEntity() {
-		importVendorMIB("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+		
+		importVendorMIB("CISCO-SMI.my");
+	    importVendorMIB("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
 	}
+	
+	/**
+	 * Import files into importMibs for fs.
+	 *
+	 * @param importMibs the import mibs
+	 * @param fs the fs
+	 * @param isCommon if 
+	 */
+	private void importFiles(List<MIBImportInfo> importMibs, File[] fs, boolean isCommon) {
+
+		for (File f : fs) {
+
+			if (f.isFile()) {
+				try {
+
+					String content = getFileContents(f);
+					MIBImportInfo minfo = new MIBImportInfo();
+					minfo.setMib(content);
+
+					minfo.setStandardMib(isCommon);
+					minfo.setFileName(f.getName());
+					importMibs.add(minfo);
+				} 
+				catch (Exception e) {}
+			}
+		}
+	}
+	
+	
+	/**
+	 * Gets the file contents.
+	 * 
+	 * @param file
+	 *            the file
+	 * @return the file contents
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	static String getFileContents(File file) throws IOException {
+
+		String p = file.getAbsolutePath();
+		String content = new String(Files.readAllBytes(Paths.get(p)));
+		return content;
+	}
+
+
+	
 	
 	public void findSysName() {
 		SNMPDAO snmpdao = persistenceManager.getSNMPDAO();

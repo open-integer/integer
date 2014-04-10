@@ -97,7 +97,13 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 */
 	private String units = null;
 
+	/**
+	 * This boolean is used to indicate the SNMP object is a scalar VB or not.
+	 */
+	private Boolean scalarVB;
 	
+
+
 	public SNMP() {
 		super();
 	}
@@ -199,6 +205,16 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	public String toString() {
 		return "SNMP [oid=" + oid + ", displayName=" + getName() + "]";
 	}
+	
+	
+	public Boolean getScalarVB() {
+		return scalarVB;
+	}
+
+	public void setScalarVB(Boolean scalarVB) {
+		this.scalarVB = scalarVB;
+	}
+	
 
 	// TODO: Add constraints. Could be min/max or max or enum list or ..
 

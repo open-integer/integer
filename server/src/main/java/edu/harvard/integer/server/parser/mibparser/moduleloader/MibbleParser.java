@@ -93,12 +93,6 @@ import edu.harvard.integer.server.parser.mibparser.SNMPModuleCache;
 public class MibbleParser implements MibParser{
 	/** The repository local directory location. */
 	public static String MIBFILELOCATON = "mibFileLocation";
-
-	/**  Specify common MIB directory. */
-	public static String IETFMIB = "ietf";
-
-	/**  Specify vendors MIB directory. */
-	public static String VENDORMIB = "vendors";
 	
 	/** The Mib resource dir. */
 	public static String MibResourceDir = "mibs/ietf/";
@@ -125,12 +119,8 @@ public class MibbleParser implements MibParser{
 	 */
 	private MibbleParser() throws IntegerException {
 				
-		//mibLocation =  new File(System.getProperty(ServiceProviderMain.MIBFILELOCATON));
-		mibLocation =  new File("mibs");
-		if ( !makeDirIfNotExist("mibs") ||
-				!makeDirIfNotExist("mibs/ietf") ||
-				!makeDirIfNotExist("mibs/vendors")) {
-			
+		mibLocation =  new File("installMibs");
+		if ( !makeDirIfNotExist("installMibs") ) {
 			throw new IntegerException(null, CommonErrorCodes.DirectoryNotValid);
 		
 		} 	
@@ -164,29 +154,9 @@ public class MibbleParser implements MibParser{
 		 * MIBS are containing on under two directories.  One is called ietf which contain common MIBS
 		 * another one is called vendor which holds vendor MIBs.
 		 */
-		File[] files = mibLocation.listFiles();
+		mibLoader.addDir(mibLocation);
 		try {
-			
-            for ( File f : files ) {
-		    	
-				if ( f.getName().equals(IETFMIB) ) {
-					mibLoader.addDir(f);
-				}	    	
-		    }
-			for ( File f : files ) {
-		    	
-				if ( f.getName().equals(IETFMIB)) {
-					loadFile(f);
-				}	    	
-		    }
-	        for ( File f : files ) {
-		    	
-				if ( f.getName().equals(VENDORMIB)) {
-					
-					mibLoader.addDir(f);
-					loadFile(f);
-				}	   	
-		    }
+			loadFile(mibLocation);
 		}
 		catch ( Exception e ) {
 			
@@ -220,14 +190,6 @@ public class MibbleParser implements MibParser{
 	    		snmpCache.put(mib.getName(), moduleCache);
 	    	}
 	    }
-	    
-	    Collection<SNMPModuleCache> modules =  snmpCache.values();
-	    for ( SNMPModuleCache c : modules ) 
-	    {
-	    	System.out.println("Add module " + c.getName() + " scale size " + c.getScalelist().size() + " table size " + c.getTbllist().size() );
-	    }
-	    System.out.println("Module count " + mibs.length );	  
-	    
 	    return snmpCache;
 	}
 	
@@ -295,7 +257,7 @@ public class MibbleParser implements MibParser{
     					if (snmpType.getAccess().canRead() || snmpType.getAccess().canWrite() )
     					{
     						ObjectIdentifierValue obj = (ObjectIdentifierValue) avs.getValue();
-    						SNMP snmp = createSNMP( obj, snmpType );
+    						SNMP snmp = createSNMP( obj, snmpType, false );
     					    oids.add(snmp);
     					}
     				}
@@ -317,7 +279,7 @@ public class MibbleParser implements MibParser{
     				if ( snmpType.getAccess().canRead() || snmpType.getAccess().canWrite() ) 
     				{
     					ObjectIdentifierValue obj = (ObjectIdentifierValue) vs.getValue();
-    					SNMP snmp = createSNMP( obj, snmpType );
+    					SNMP snmp = createSNMP( obj, snmpType, true );
     					
     					scaleList.add(snmp);				    	
     				}
@@ -433,13 +395,7 @@ public class MibbleParser implements MibParser{
 		snmpModule.setOid(oid);
 		
 		SNMPModuleCache moduleCache = new SNMPModuleCache(snmpModule);
-		boolean containInfo = fillUpMibInfo(moduleCache, mib);
-		if ( !containInfo ) {
-				
-			System.out.println("Module without table or scalar. " + moduleCache.getName());
-
-		} 
-		
+		fillUpMibInfo(moduleCache, mib);		
 		return moduleCache;
 	}
 	
@@ -650,9 +606,7 @@ public class MibbleParser implements MibParser{
 		try {			
 			List<MIBImportResult> importReturn = new ArrayList<>();	
 			
-			loadMib(files, true, useExisting, mibinfos, importReturn, processingList);
-			loadMib(files, false, useExisting, mibinfos, importReturn, processingList);
-			
+			loadMib(files, useExisting, mibinfos, importReturn, processingList);			
     		return importReturn.toArray(new MIBImportResult[importReturn.size()]);
     		
 		}
@@ -681,9 +635,9 @@ public class MibbleParser implements MibParser{
 			 List<SNMPModuleCache> uploadModules = new ArrayList<>();
 			 for ( MibProcessingInfo mibInfo : processingList ) {
 				 
-				 String mibFilefulltmp = getFullTmpName(TmpFilePrefix + mibInfo.fileName, mibInfo.isCommon);
+				 String mibFilefulltmp = getFullTmpName(TmpFilePrefix + mibInfo.fileName);
 				 if ( !mibInfo.importSuccess ) {
-					 String mibFilefull = getFullName(mibInfo.fileName, mibInfo.isCommon);
+					 String mibFilefull = getFullName(mibInfo.fileName);
 	    		     File f = new File(mibFilefull);
 	    		     f.delete();	    			 
 	    		     
@@ -723,11 +677,12 @@ public class MibbleParser implements MibParser{
 	 * @param snmpType the snmp type
 	 * @return the snmp
 	 */
-	private SNMP createSNMP( ObjectIdentifierValue obj, SnmpObjectType snmpType ) {
+	private SNMP createSNMP( ObjectIdentifierValue obj, SnmpObjectType snmpType, boolean isScalar ) {
 		
 		MibType oType = (MibType) obj.getSymbol().getType();
 		
 	    SNMP snmp = new SNMP();
+	    snmp.setScalarVB(isScalar);
 
 	    if ( snmpType.getSyntax().getReferenceSymbol() != null && snmpType.getSyntax().getReferenceSymbol().getType() instanceof SnmpTextualConvention )
 	    {
@@ -762,7 +717,7 @@ public class MibbleParser implements MibParser{
 	    	}
 	    }
 	    else {
-	    	System.out.println("Not an snmpObjectType .... ");
+	    	System.out.println("Not an snmpObjectType .... " + oType.getClass().getName() );
 	    }
 	    return snmp;
 	}
@@ -779,13 +734,20 @@ public class MibbleParser implements MibParser{
 		
 		SNMPIndex snmp = new SNMPIndex();	  
 		ObjectIdentifierValue mv = (ObjectIdentifierValue) si.getValue();
-		snmp.setName(mv.getName());
-		snmp.setOid( mv.toObject().toString());
-		MibValueSymbol ms =  mv.getSymbol();
-		MibType mt = ms.getType();
-		if ( mt instanceof SnmpObjectType ) {
-			snmp.setUnits( ((SnmpObjectType) mt).getSyntax().getName());
+		if ( mv != null ) {
+			snmp.setName(mv.getName());
+			snmp.setOid( mv.toObject().toString());
+			MibValueSymbol ms =  mv.getSymbol();
+			MibType mt = ms.getType();
+			if ( mt instanceof SnmpObjectType ) {
+				snmp.setUnits( ((SnmpObjectType) mt).getSyntax().getName());
+			}
 		}
+		else {
+			snmp.setUnits(si.getType().getName());
+			snmp.setName(si.getType().getName());
+		}
+		
 		snmp.setImplied(si.isImplied());
 	    return snmp;
 	}
@@ -795,19 +757,18 @@ public class MibbleParser implements MibParser{
 	 * Load mib.
 	 *
 	 * @param files the files
-	 * @param isCommon the is common
 	 * @param useExisting the use existing
 	 * @param mibinfos the mibinfos
 	 * @param importReturn the import return
 	 * @param processingList the processing list
 	 */
-	public void loadMib( File[] files, boolean isCommon, 
+	public void loadMib( File[] files, 
 			                                boolean useExisting, MIBImportInfo[] mibinfos,
 			                                List<MIBImportResult> importReturn,
 			                                List<MibProcessingInfo> processingList ) {
 		
 		
-		List<MibProcessingInfo> importList =  skipExistingFile(mibinfos, useExisting, isCommon);
+		List<MibProcessingInfo> importList =  skipExistingFile(mibinfos, useExisting );
 		for ( MibProcessingInfo processInfo : importList ) {
 			processingList.add(processInfo);
 		}
@@ -815,13 +776,23 @@ public class MibbleParser implements MibParser{
         for ( MibProcessingInfo importMib : importList ) {
         	
         	Writer writer = null;
-        	String mibFilefull = null;
+        	File mibFilefull = null;
 			try {
-				mibFilefull = getFullName(importMib.fileName, importMib.isCommon);
-				FileOutputStream outputStream = new FileOutputStream(mibFilefull);	
-			    writer = new BufferedWriter(new OutputStreamWriter(outputStream, "utf-8"));
-			    writer.write(importMib.importInfo.getMib());
-			    importMib.importSuccess = true;
+				
+				String fileName = getFullMIBName(importMib.fileName,  importMib.importInfo.getMib());	
+				if ( fileName != null ) {
+					mibFilefull = new File(fileName);
+					FileOutputStream outputStream = new FileOutputStream(mibFilefull);	
+				    writer = new BufferedWriter(new OutputStreamWriter(outputStream, "utf-8"));
+				    writer.write(importMib.importInfo.getMib());
+				    importMib.fileName = mibFilefull.getName();
+				    importMib.importSuccess = true;
+				}
+				else {
+					
+					importMib.importSuccess = false;
+					System.out.println("Skip this file " + importMib.fileName + " It seems to be not a mib file");
+				}
 			} 
 			catch (IOException ex) {
 			 
@@ -833,16 +804,7 @@ public class MibbleParser implements MibParser{
 			   try {writer.close();} catch (Exception ex) {}
 			}        	
         }
-        for ( File f : files ) {
-	    	
-			if ( f.getName().equals(IETFMIB) && isCommon )  {
-				mibLoader.addDir(f);
-			}	
-			else if ( f.getName().equals(VENDORMIB ) && !isCommon ) {
-				mibLoader.addDir(f);
-			}		                
-	    }
-
+        mibLoader.addDir(mibLocation);
         for ( MibProcessingInfo importMib : importList ) {
         	
         	if ( importMib.importSuccess ) {
@@ -850,12 +812,13 @@ public class MibbleParser implements MibParser{
         		importMib.importSuccess = false;
         		try {
         				
-        			Mib mib = mibLoader.load(importMib.fileName);
+        			String fileName = getFullName(importMib.fileName);
+        			Mib mib = mibLoader.load(new File(fileName));
         			if ( !mib.getName().equalsIgnoreCase(importMib.fileName)) {
         					
         				mibLoader.unload(importMib.fileName);
-        				File junkNameFile = new File(getFullName(importMib.fileName, importMib.isCommon));
-        				File goodNameFile = new File(getFullName(mib.getName(), importMib.isCommon));
+        				File junkNameFile = new File(getFullName(importMib.fileName));
+        				File goodNameFile = new File(getFullName(mib.getName()));
         					
         				junkNameFile.renameTo(goodNameFile);
         				mibLoader.load(goodNameFile.getName());
@@ -889,8 +852,7 @@ public class MibbleParser implements MibParser{
     				
     			}
     			catch (IOException e) {
-    				
-    				logger.error("IO error on module " + importMib.fileName + " Error " + e.toString());
+    				logger.error("IO error on module " + " " + importMib.fileName + " Error " + e.toString());
     				
     			} 
         		
@@ -943,28 +905,14 @@ public class MibbleParser implements MibParser{
 	 * @param isCommon the is common
 	 * @return  -- A list of file ready for import.
 	 */
-	private List<MibProcessingInfo>  skipExistingFile( MIBImportInfo[] mibFiles, boolean replaceExisting, boolean isCommon ) {
+	private List<MibProcessingInfo>  skipExistingFile( MIBImportInfo[] mibFiles, boolean replaceExisting ) {
 		
 		List<MibProcessingInfo> finalList = new ArrayList<>();
-		File[] files = mibLocation.listFiles();
-		File[] mibs = null;
+		File[] mibs = mibLocation.listFiles();
 		
-        for ( File f : files ) {
-	    	
-			if ( f.getName().equals(IETFMIB) && isCommon ) {
-				mibs = f.listFiles();
-			}
-			else if ( f.getName().equals(VENDORMIB) && !isCommon ) {
-			
-				mibs = f.listFiles();
-			}			
-        }
 		
 		for ( MIBImportInfo mInfo : mibFiles ) {
 			
-			if ( mInfo.isStandardMib() != isCommon ) {
-				continue;
-			}
 			String mibName = mInfo.getFileName();			
 			boolean exist = false;
 			for ( File f : mibs ) {
@@ -982,8 +930,8 @@ public class MibbleParser implements MibParser{
 				 * Rename the existing file.  The existing file later on will  be cleanup
 				 * if the import file is good or reinstall if the import file is not good.
 				 */
-				File file = new File(getFullName(mibName, mInfo.isStandardMib()));
-				File file2 = new File(getFullTmpName(TmpFilePrefix + mibName, mInfo.isStandardMib()));
+				File file = new File(getFullName(mibName));
+				File file2 = new File(getFullTmpName(TmpFilePrefix + mibName));
 				
 				file.renameTo(file2);
 			}
@@ -1005,16 +953,8 @@ public class MibbleParser implements MibParser{
 	 * @param isCommon the is common
 	 * @return the full name
 	 */
-	public String getFullName(String fileName, boolean isCommon ) {
-		
-		if ( isCommon ) {
-			return mibLocation.getAbsolutePath() + File.separator + IETFMIB + 
-                       File.separator + fileName;
-	    }
-	    else {
-		   return mibLocation.getAbsolutePath() + File.separator + VENDORMIB + 
-                       File.separator + fileName;
-	    }
+	public String getFullName(String fileName) {
+		return mibLocation.getAbsolutePath() + File.separator + fileName;
 	}
 	
 	
@@ -1025,16 +965,9 @@ public class MibbleParser implements MibParser{
      * @param isCommon the is common
      * @return the full tmp name
      */
-    public String getFullTmpName(String fileName, boolean isCommon ) {
+    public String getFullTmpName(String fileName ) {
 		
-		if ( isCommon ) {
-			return mibLocation.getAbsolutePath() + File.separator + IETFMIB + 
-                       File.separator + TmpFilePrefix + File.separator +  fileName;
-	    }
-	    else {
-		   return mibLocation.getAbsolutePath() + File.separator + VENDORMIB + 
-                       File.separator + TmpFilePrefix + File.separator + fileName;
-	    }
+    	return mibLocation.getAbsolutePath() + File.separator + TmpFilePrefix + File.separator +  fileName;
 	}
 	
 	
@@ -1046,31 +979,18 @@ public class MibbleParser implements MibParser{
 	 */
 	private void createTmpDirs() throws IntegerException {
 		
-		File dir = new File( mibLocation.getAbsolutePath() + File.separator + IETFMIB + 
-                                                       File.separator + TmpFilePrefix );
+		File dir = new File( mibLocation.getAbsolutePath() + File.separator  + TmpFilePrefix );
 		if ( dir.exists() ) {			
 			for ( File f : dir.listFiles() ) {
 				f.delete();
 			}
 		}
-		else if ( !dir.mkdir() )  {
+		else if ( !dir.mkdirs() )  {
 			
 			// TODO: this message needs to be moved to the locale bundle.
 			throw new IntegerException(null, CommonErrorCodes.IOError,
 					new DisplayableInterface[] { new NonLocaleErrorMessage("Can not create a tmp directory for processing")}); 
 		}
-		dir = new File( mibLocation.getAbsolutePath() + File.separator + VENDORMIB + 
-                File.separator + TmpFilePrefix );
-        if ( dir.exists() ) {			
-             for ( File f : dir.listFiles() ) {
-                  f.delete();
-             }
-        }
-        else if ( !dir.mkdir() )  {
-        	// TODO: this message needs to be moved to the locale bundle.
-             throw new IntegerException(null, CommonErrorCodes.IOError, 
-            		 new DisplayableInterface[] { new NonLocaleErrorMessage("Can not create a tmp directory for processing")} ); 
-        }
 	}
 	
 	
@@ -1102,6 +1022,48 @@ public class MibbleParser implements MibParser{
 		
 			this.importInfo = mInfo;
 		}
+	}
+	
+	
+	/**
+	 * Get full MIB name.  The MIB full name should be same as the MIB definitions name.
+	 * 
+	 * @param fileName
+	 * @param isCommon
+	 * @param content
+	 * @return
+	 */
+	public String getFullMIBName( String fileName,  String content )
+	{
+		String[] stringArray = content.split("\\s+");
+		
+		String mib = null;
+		for ( int i=0; i<stringArray.length; i++ ) {
+			
+			if ( stringArray[i].equalsIgnoreCase("DEFINITIONS") ) {
+				
+				if ( i > 0 && (i+3) < stringArray.length   ) 
+				{
+					if ( stringArray[i+1].equalsIgnoreCase("::=" ) && stringArray[i+2].equalsIgnoreCase("BEGIN")) {
+						mib = stringArray[i-1];
+					}
+					else if ( stringArray[i+1].equalsIgnoreCase("::=BEGIN" )) {
+						mib = stringArray[i-1];
+					}
+					
+				}
+			}
+			else if ( stringArray[i].equalsIgnoreCase("DEFINITIONS::=")) {
+				if ( stringArray[i+1].equalsIgnoreCase("BEGIN" )) {
+					mib = stringArray[i-1];
+				}
+			}
+		}
+		if ( mib != null ) {
+			
+			return mibLocation.getAbsolutePath() + File.separator + mib;			
+		}
+		return null;
 	}
 
 }
