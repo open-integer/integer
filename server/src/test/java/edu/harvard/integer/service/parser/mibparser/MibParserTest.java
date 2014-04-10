@@ -100,7 +100,7 @@ public class MibParserTest {
 	}
 
 	private void importIETFMIB(String mibName) {
-		importMib("ietf/" + mibName);
+		importMib(mibName);
 	}
 	
 	private void importMib(String mibName) {
