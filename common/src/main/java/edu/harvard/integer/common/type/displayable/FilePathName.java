@@ -31,30 +31,31 @@
  *      
  */
 
-package edu.harvard.integer.common.exception;
+package edu.harvard.integer.common.type.displayable;
+
+import java.util.Locale;
+
+import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
  * @author David Taylor
  *
  */
-public enum SystemErrorCodes implements ErrorCodeInterface {
-	ServiceNotFound("Service not found"),
-	ManagerNotFound("Mangager not found"),
-	PropertyFileNotFound("Property file {0} not found");
+public class FilePathName implements DisplayableInterface {
 
-	/** The error code. */
-	private String errorCode = null;
+	private String filePath = null;
 	
-	private SystemErrorCodes(String description) {
-		
+	public FilePathName(String path) {
+		filePath = path;
 	}
+	
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
+	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
 	 */
 	@Override
-	public String getErrorCode() {
+	public String toDisplayString(Locale local) {
 		
-		return errorCode;
+		return filePath;
 	}
 
 }

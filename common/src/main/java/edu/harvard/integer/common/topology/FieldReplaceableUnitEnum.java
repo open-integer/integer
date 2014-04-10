@@ -31,30 +31,14 @@
  *      
  */
 
-package edu.harvard.integer.common.exception;
+package edu.harvard.integer.common.topology;
 
 /**
  * @author David Taylor
- *
+ * 
+ *         Is this a field replaceable unit? Values are yes, no, unknown
+ * 
  */
-public enum SystemErrorCodes implements ErrorCodeInterface {
-	ServiceNotFound("Service not found"),
-	ManagerNotFound("Mangager not found"),
-	PropertyFileNotFound("Property file {0} not found");
-
-	/** The error code. */
-	private String errorCode = null;
-	
-	private SystemErrorCodes(String description) {
-		
-	}
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
-	 */
-	@Override
-	public String getErrorCode() {
-		
-		return errorCode;
-	}
-
+public enum FieldReplaceableUnitEnum {
+	Yes, No, Unknown;
 }

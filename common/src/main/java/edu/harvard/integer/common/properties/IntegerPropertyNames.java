@@ -45,9 +45,9 @@ public enum IntegerPropertyNames {
 	SystemPropertyCheckInterval("SystemPropertyCheckInterval", 30, 1, 10000, UnitsEnum.Minute);
 
 	private String fieldName = null;
-	private Long defaultValue = null;
-	private Long minValue = null;
-	private Long maxValue = null;
+	private Integer defaultValue = null;
+	private Integer minValue = null;
+	private Integer maxValue = null;
 	private UnitsEnum units = null;
 
 	/**
@@ -57,8 +57,8 @@ public enum IntegerPropertyNames {
 	 * @param maxValue
 	 * @param units
 	 */
-	private IntegerPropertyNames(String fieldName, long defaultValue,
-			long minValue, long maxValue, UnitsEnum units) {
+	private IntegerPropertyNames(String fieldName, Integer defaultValue,
+			Integer minValue, Integer maxValue, UnitsEnum units) {
 		this.fieldName = fieldName;
 		this.defaultValue = defaultValue;
 		this.minValue = minValue;
@@ -76,21 +76,21 @@ public enum IntegerPropertyNames {
 	/**
 	 * @return the defaultValue
 	 */
-	public Long getDefaultValue() {
+	public Integer getDefaultValue() {
 		return defaultValue;
 	}
 
 	/**
 	 * @return the minValue
 	 */
-	public Long getMinValue() {
+	public Integer getMinValue() {
 		return minValue;
 	}
 
 	/**
 	 * @return the maxValue
 	 */
-	public Long getMaxValue() {
+	public Integer getMaxValue() {
 		return maxValue;
 	}
 

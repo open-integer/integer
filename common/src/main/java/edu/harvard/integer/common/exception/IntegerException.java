@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.common.exception;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 
 import edu.harvard.integer.common.util.DisplayableInterface;
@@ -83,7 +84,11 @@ public class IntegerException extends Exception implements DisplayableInterface 
 		// TODO: the message must be converted to a localized message. Once the
 		// bundles are added this must be implemented.
 
-		return errorCode.getErrorCode();
+		if (errorCode != null && errorCode.getErrorCode() != null && errorCode.getErrorCode().indexOf("{0}") > 0 ) {
+			MessageFormat mf = new MessageFormat(errorCode.getErrorCode());
+			return mf.format(arguments);
+		} else
+			return errorCode.toString();
 	}
 
 	/**
@@ -131,7 +136,7 @@ public class IntegerException extends Exception implements DisplayableInterface 
 	@Override
 	public String toString() {
 		
-		return "Integer Error: " + errorCode + " -- " + super.toString();
+		return toDisplayString(Locale.US);
 	}
 
 }

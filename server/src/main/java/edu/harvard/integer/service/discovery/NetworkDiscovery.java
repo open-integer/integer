@@ -44,6 +44,7 @@ import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.ElementAccess;
+import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -55,6 +56,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.distribution.ServiceTypeEnum;
 
 
 /**
@@ -92,9 +94,6 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask<ElementAccess, T>>  subnetTasks = new ConcurrentHashMap<>();
 	
 	
-	/** The callback for notify the progress of discovery. */
-	private ElementDiscoverCB<ServiceElement> cb;
-	
 	/** The discover seed. */
 	private final List<IpDiscoverySeed> discoverSeeds;
 	
@@ -110,7 +109,7 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	/**
 	 * Discovery id to keep track of discovery.
 	 */
-	private final String discoverId;
+	private final DiscoveryId discoverId;
 	
 
 	/**
@@ -121,11 +120,9 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	 * @param integerIf the integer if
 	 */
 	public NetworkDiscovery( final List<IpDiscoverySeed> discoverSeed, 
-			                 ElementDiscoverCB<ServiceElement> callback,
-			                 String discoveryId ) 
+			                 DiscoveryId discoveryId ) 
 	{
 		this.discoverId = discoveryId;
-		this.cb = callback;
 		this.discoverSeeds = discoverSeed;
 		
 		List<VariableBinding> vbs = new ArrayList<>();
@@ -236,17 +233,16 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	 */
 	public void discoveredElement(DiscoverNode discoverNode, String subnetId ) {
 		
-		cb.discoveredElement(discoverNode.getAccessElement());
+		try {
+			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveredServiceElement(discoverNode.getAccessElement());
+		} catch (IntegerException e) {
+			
+			logger.error("Error saveing ServiceElement " + discoverNode.getAccessElement());
+		}
+		
 		removeIpaddressFromSubnet(discoverNode.getIpAddress(), subnetId);
 	}
 	
-	/**
-	 * Use to notify for progress.
-	 * @param msg
-	 */
-	public void progressNotification( String msg ) {
-		cb.progressNotification(msg);
-	}
 	
 	/**
 	 * Error occur -- Call when errors occurs during discovering.
@@ -255,7 +251,13 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	 * @param msg the associated message.
 	 */
 	public void errorOccur( NetworkErrorCodes errorCode, String msg ) {
-		cb.errorOccur(errorCode, msg);
+		try {
+			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryError(discoverId, errorCode, null);
+		} catch (IntegerException e) {
+			
+			logger.error("Error sending error " + errorCode + " args " + msg);
+		}
+		
 	}
 	
 	
@@ -293,13 +295,27 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 				if ( subTask.discoveryNodeCount() == 0 ) {
 					
 					subnetTasks.remove(subnetid);
-					cb.discoveredSubnet(subnetid);
+					try {
+						((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryComplete(discoverId);
+					} catch (IntegerException e) {
+					
+						e.printStackTrace();
+						logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
+					}
+
 					
 					logger.debug("Discovered subnet " + subnetid);
 				}
 			}
 			if ( subnetTasks.size() == 0 ) {
-				cb.discoveredNetwork(discoverId);
+				try {
+					((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryComplete(discoverId);
+				} catch (IntegerException e) {
+				
+					e.printStackTrace();
+					logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
+				}
+				
 			}
 		}
 	}
@@ -323,7 +339,7 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 
 
 
-	public String getDiscoverId() {
+	public DiscoveryId getDiscoverId() {
 		return discoverId;
 	}
 

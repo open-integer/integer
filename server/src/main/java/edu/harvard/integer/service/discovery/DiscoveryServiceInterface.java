@@ -33,6 +33,11 @@
 
 package edu.harvard.integer.service.discovery;
 
+import edu.harvard.integer.common.discovery.DiscoveryId;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 
@@ -42,5 +47,25 @@ import edu.harvard.integer.service.BaseServiceInterface;
  * @author David Taylor
  */
 public interface DiscoveryServiceInterface extends BaseServiceInterface {
+
+	/**
+	 * @param dicoveryId
+	 * @throws IntegerException
+	 */
+	void discoveryComplete(DiscoveryId dicoveryId) throws IntegerException;
+
+	/**
+	 * @param id
+	 * @param errorCode
+	 * @param args
+	 */
+	void discoveryError(DiscoveryId id, NetworkErrorCodes errorCode,
+			DisplayableInterface[] args);
+
+	/**
+	 * Save ServiceElement
+	 * @param accessElement
+	 */
+	void discoveredServiceElement(ServiceElement accessElement);
 
 }

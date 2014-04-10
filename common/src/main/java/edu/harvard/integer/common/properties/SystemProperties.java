@@ -43,6 +43,8 @@ import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.type.displayable.FilePathName;
+import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
  * @author David Taylor
@@ -106,7 +108,9 @@ public class SystemProperties {
 				logger.error("Unable to load properties from "
 						+ PROPERTIES_FILENAME);
 				throw new IntegerException(null,
-						SystemErrorCodes.PropertyFileNotFound);
+						SystemErrorCodes.PropertyFileNotFound, new DisplayableInterface[] {
+						new FilePathName(PROPERTIES_FILENAME)
+				});
 			}
 			settings.load(resourceAsStream);
 
@@ -156,7 +160,7 @@ public class SystemProperties {
 		try {
 
 			if (strValue == null)
-				value = key.getDefaultValue().intValue();
+				value = key.getDefaultValue();
 			else {
 				strValue = strValue.trim();
 				value = Integer.parseInt(strValue);
@@ -172,6 +176,50 @@ public class SystemProperties {
 					+ strValue + " is not an integer!!");
 
 			value = key.getDefaultValue().intValue();
+		}
+
+		return value;
+
+	}
+
+	/**
+	 * Load the Long type property specified. If the property is not in the
+	 * property file then the default value will be returned.
+	 * 
+	 * @param key
+	 *            IntegerPropertyName to get the value for.
+	 * @return value of the property.
+	 */
+	public Long getLongProperty(LongPropertyNames key) {
+		String strValue = null;
+
+		if (settings == null) {
+			return null;
+		} else {
+			strValue = settings.getProperty(key.getFieldName());
+		}
+
+		Long value = null;
+
+		try {
+
+			if (strValue == null)
+				value = key.getDefaultValue();
+			else {
+				strValue = strValue.trim();
+				value = Long.parseLong(strValue);
+			}
+
+			if (key.getMinValue() != null && value < key.getMinValue())
+				value = key.getMinValue();
+			if (key.getMaxValue() != null && value > key.getMaxValue())
+				value = key.getMaxValue();
+
+		} catch (NumberFormatException e) {
+			logger.error("Error getting property for " + key + " Value "
+					+ strValue + " is not an integer!!");
+
+			value = key.getDefaultValue();
 		}
 
 		return value;

@@ -45,6 +45,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -71,20 +73,55 @@ public class ServiceElementType extends BaseEntity {
 	private String featureSet = null;
 
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> capabilityIds = null;
-	
+
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> childServiceElementTypes;
-	
+
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "iconId")),
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "iconType")),
 			@AttributeOverride(name = "name", column = @Column(name = "iconName")) })
-	private ID iconId;
-	
+	private ID iconId = null;
+
+	private String description = null;
+
+	/**
+	 * Is this a field replaceable unit? Values are yes, no, unknown
+	 */
+	@Enumerated(EnumType.STRING)
+	private FieldReplaceableUnitEnum fieldReplaceableUnit = null;
+
+	/**
+	 * This points to the capability that is used as the default for the human
+	 * readable display name for service elements of this type.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "defaultNameCababilityId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "defaultNameCababilityType")),
+			@AttributeOverride(name = "name", column = @Column(name = "defaultNameCababilityName")) })
+	private ID defaultNameCababilityId = null;
+
+	/**
+	 * A list of the Capabilities used to uniquely identify the service element
+	 * type.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> uniqueIdentifierCapabilities = null;
+
+	/**
+	 * A listing of default attributes that the discovery system will collect.
+	 * This list can be modified by the system administrator.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> attributeIds = null;
+
 	/**
 	 * @return the firmware
 	 */
@@ -168,10 +205,112 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param capabilityIds the capabilityIds to set
+	 * @param capabilityIds
+	 *            the capabilityIds to set
 	 */
 	public void setCapabilityIds(List<ID> capabilityIds) {
 		this.capabilityIds = capabilityIds;
 	}
 
+	/**
+	 * @return the childServiceElementTypes
+	 */
+	public List<ID> getChildServiceElementTypes() {
+		return childServiceElementTypes;
+	}
+
+	/**
+	 * @param childServiceElementTypes the childServiceElementTypes to set
+	 */
+	public void setChildServiceElementTypes(List<ID> childServiceElementTypes) {
+		this.childServiceElementTypes = childServiceElementTypes;
+	}
+
+	/**
+	 * @return the iconId
+	 */
+	public ID getIconId() {
+		return iconId;
+	}
+
+	/**
+	 * @param iconId the iconId to set
+	 */
+	public void setIconId(ID iconId) {
+		this.iconId = iconId;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the fieldReplaceableUnit
+	 */
+	public FieldReplaceableUnitEnum getFieldReplaceableUnit() {
+		return fieldReplaceableUnit;
+	}
+
+	/**
+	 * @param fieldReplaceableUnit the fieldReplaceableUnit to set
+	 */
+	public void setFieldReplaceableUnit(
+			FieldReplaceableUnitEnum fieldReplaceableUnit) {
+		this.fieldReplaceableUnit = fieldReplaceableUnit;
+	}
+
+	/**
+	 * @return the defaultNameCababilityId
+	 */
+	public ID getDefaultNameCababilityId() {
+		return defaultNameCababilityId;
+	}
+
+	/**
+	 * @param defaultNameCababilityId the defaultNameCababilityId to set
+	 */
+	public void setDefaultNameCababilityId(ID defaultNameCababilityId) {
+		this.defaultNameCababilityId = defaultNameCababilityId;
+	}
+
+	/**
+	 * @return the uniqueIdentifierCapabilities
+	 */
+	public List<ID> getUniqueIdentifierCapabilities() {
+		return uniqueIdentifierCapabilities;
+	}
+
+	/**
+	 * @param uniqueIdentifierCapabilities the uniqueIdentifierCapabilities to set
+	 */
+	public void setUniqueIdentifierCapabilities(
+			List<ID> uniqueIdentifierCapabilities) {
+		this.uniqueIdentifierCapabilities = uniqueIdentifierCapabilities;
+	}
+
+	/**
+	 * @return the attributeIds
+	 */
+	public List<ID> getAttributeIds() {
+		return attributeIds;
+	}
+
+	/**
+	 * @param attributeIds the attributeIds to set
+	 */
+	public void setAttributeIds(List<ID> attributeIds) {
+		this.attributeIds = attributeIds;
+	}
+
+	
 }

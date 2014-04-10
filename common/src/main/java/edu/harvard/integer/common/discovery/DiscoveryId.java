@@ -31,30 +31,66 @@
  *      
  */
 
-package edu.harvard.integer.common.exception;
+package edu.harvard.integer.common.discovery;
+
+import java.io.Serializable;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public enum SystemErrorCodes implements ErrorCodeInterface {
-	ServiceNotFound("Service not found"),
-	ManagerNotFound("Mangager not found"),
-	PropertyFileNotFound("Property file {0} not found");
+public class DiscoveryId implements Serializable {
 
-	/** The error code. */
-	private String errorCode = null;
-	
-	private SystemErrorCodes(String description) {
-		
-	}
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
+	/**
+	 * Serial Version UID
 	 */
-	@Override
-	public String getErrorCode() {
-		
-		return errorCode;
+	private static final long serialVersionUID = 1L;
+
+	private Long serverId = null;
+
+	private Long discoveryId = null;
+
+	public DiscoveryId() {
+	}
+	
+	/**
+	 * @param serverId
+	 * @param discoveryId
+	 */
+	public DiscoveryId(Long serverId, Long discoveryId) {
+		super();
+		this.serverId = serverId;
+		this.discoveryId = discoveryId;
+	}
+
+	/**
+	 * @return the serverId
+	 */
+	public Long getServerId() {
+		return serverId;
+	}
+
+	/**
+	 * @param serverId
+	 *            the serverId to set
+	 */
+	public void setServerId(Long serverId) {
+		this.serverId = serverId;
+	}
+
+	/**
+	 * @return the discoveryId
+	 */
+	public Long getDiscoveryId() {
+		return discoveryId;
+	}
+
+	/**
+	 * @param discoveryId
+	 *            the discoveryId to set
+	 */
+	public void setDiscoveryId(Long discoveryId) {
+		this.discoveryId = discoveryId;
 	}
 
 }

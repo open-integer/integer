@@ -48,7 +48,15 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.DiscoveryId;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.properties.IntegerPropertyNames;
+import edu.harvard.integer.common.properties.LongPropertyNames;
+import edu.harvard.integer.common.properties.SystemProperties;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 
@@ -86,7 +94,7 @@ public class DiscoveryService extends BaseService implements
 	 */
 	private long discoverySeqId = 0;
 		
-	private Map<String, NetworkDiscovery> discoverMap = new ConcurrentHashMap<>();
+	private Map<DiscoveryId, NetworkDiscovery> discoverMap = new ConcurrentHashMap<DiscoveryId, NetworkDiscovery>();
 	
 
 	/**
@@ -122,23 +130,56 @@ public class DiscoveryService extends BaseService implements
 	
 
 	/**
+	 * Start a discovery. This will return a DiscoveryId that can be used to
+	 * uniquely identify this instance of discovery.
 	 * 
-	 * Get network discover provider.  It is considering IP based network discover.
-	 * 
-	 * @return -- A discovery id.
+	 * @param discoverSeed
+	 * @return
+	 * @throws IntegerException
 	 */
-	public String discoverNetwork( final List<IpDiscoverySeed> discoverSeed, 
-			                                            ElementDiscoverCB<ServiceElement> callback,
-			                                            IntegerInterface integer ) {
-			
-		 String id = getNextDiscoveryId();
-		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, callback, id );
+	public DiscoveryId startServiceElmentDiscovery(List<IpDiscoverySeed> discoverSeed) throws IntegerException {
+		DiscoveryId id = new DiscoveryId();
+		id.setServerId(SystemProperties.getInstance().getLongProperty(LongPropertyNames.ServerId));
+		id.setDiscoveryId(discoverySeqId++);
+
+		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, id );
 		 discoverMap.put(id, netDisc);
 		 netDisc.discoverNetwork();
 		 
-		 return id;
+		return null;
 	}
 	
+	/**
+	 * Called when discovery is complete.
+	 * @param discoveryId
+	 * @throws IntegerException
+	 */
+	@Override
+	public void discoveryComplete(DiscoveryId discoveryId) throws IntegerException {
+		NetworkDiscovery completeDiscovery = discoverMap.remove(discoveryId);
+		logger.info("Discovery complete for " + discoveryId);
+	}
+	
+	/**
+	 * Called when an error occurs during discovery. 
+	 * @param id
+	 * @param errorCode
+	 * @param args
+	 */
+	@Override
+	public void discoveryError(DiscoveryId id,  NetworkErrorCodes errorCode, DisplayableInterface[] args) {
+		logger.error("Error during discovery " + id + " Error "  + errorCode);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#discoveredServiceElement(edu.harvard.integer.common.topology.ServiceElement)
+	 */
+	@Override
+	public void discoveredServiceElement(ServiceElement accessElement) {
+		logger.info("Found ServiceElemet " + accessElement);
+	}
+		
 	
 	
 	/**
@@ -158,7 +199,7 @@ public class DiscoveryService extends BaseService implements
 	 * 
 	 * @param id
 	 */
-	public void stopDiscovery( String id ) {
+	public void stopDiscovery( DiscoveryId id ) {
 		
 		NetworkDiscovery netDisc = discoverMap.get(id);
 		if ( netDisc != null ) {

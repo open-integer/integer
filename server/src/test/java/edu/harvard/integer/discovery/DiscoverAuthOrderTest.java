@@ -52,6 +52,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.AccessTypeEnum;
+import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
@@ -145,7 +146,9 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 		
 		discoverSeed.add(seed);
 	
-		netDisc = new NetworkDiscovery(discoverSeed, this, "junittest");		
+		DiscoveryId id = new DiscoveryId(Long.valueOf(1), Long.valueOf(1));
+		
+		netDisc = new NetworkDiscovery(discoverSeed, id);		
 	
 	}
 	
