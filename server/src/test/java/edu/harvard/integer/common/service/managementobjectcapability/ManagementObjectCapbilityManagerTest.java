@@ -57,7 +57,7 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.FCAPSEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
-import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 
 /**
@@ -68,7 +68,7 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 public class ManagementObjectCapbilityManagerTest {
 
 	@Inject
-	ManagementObjectCapabilityManagerLocalInterface managementObjectManager;
+	ManagementObjectCapabilityManagerInterface managementObjectManager;
 	
 	@Inject
 	SnmpManagerInterface snmpManager;

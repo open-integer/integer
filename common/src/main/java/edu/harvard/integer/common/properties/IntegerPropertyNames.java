@@ -41,7 +41,7 @@ package edu.harvard.integer.common.properties;
  *         have a default, min and max value. The units are also specified. 
  */
 public enum IntegerPropertyNames {
-	ServerId("ServerId", 1, 1, 1000, UnitsEnum.NA),
+	ServerId("ServerID", 1, 1, 1000, UnitsEnum.NA),
 	SystemPropertyCheckInterval("SystemPropertyCheckInterval", 30, 1, 10000, UnitsEnum.Minute);
 
 	private String fieldName = null;

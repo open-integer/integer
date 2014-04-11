@@ -33,7 +33,7 @@
 
 package edu.harvard.integer.system;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import javax.inject.Inject;
 
@@ -50,8 +50,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.IntegerPropertyNames;
-import edu.harvard.integer.common.properties.SystemProperties;
 
 /**
  * @author David Taylor
@@ -95,7 +95,7 @@ public class SystemPropertyTest {
 	public void test() {
 		Integer intProperty = null;
 		try {
-			intProperty = SystemProperties.getInstance().getIntProperty(IntegerPropertyNames.ServerId);
+			intProperty = IntegerProperties.getInstance().getIntProperty(IntegerPropertyNames.ServerId);
 		} catch (IntegerException e) {
 			
 			e.printStackTrace();

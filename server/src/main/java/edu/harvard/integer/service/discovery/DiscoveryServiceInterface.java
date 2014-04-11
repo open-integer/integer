@@ -68,4 +68,11 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 */
 	void discoveredServiceElement(ServiceElement accessElement);
 
+	/**
+	 * Stop the running discovery specified by the DiscoveryId
+	 * 
+	 * @param id
+	 */
+	void stopDiscovery(DiscoveryId id);
+
 }

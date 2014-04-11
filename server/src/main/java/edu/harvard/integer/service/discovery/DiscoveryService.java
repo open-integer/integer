@@ -48,17 +48,15 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.IntegerPropertyNames;
 import edu.harvard.integer.common.properties.LongPropertyNames;
-import edu.harvard.integer.common.properties.SystemProperties;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 
 /**
  * @author David Taylor
@@ -103,7 +101,14 @@ public class DiscoveryService extends BaseService implements
 	 */
 	@PostConstruct
 	private void init() {
-		logger.info("Discovery service starting....");
+		try {
+			logger.info("Discovery service starting.... on server " 
+					+ IntegerProperties.getInstance().getIntProperty(IntegerPropertyNames.ServerId));
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			logger.error("Error getting serverID " + e.toString());
+		}
 
 	}
 	
@@ -139,7 +144,7 @@ public class DiscoveryService extends BaseService implements
 	 */
 	public DiscoveryId startServiceElmentDiscovery(List<IpDiscoverySeed> discoverSeed) throws IntegerException {
 		DiscoveryId id = new DiscoveryId();
-		id.setServerId(SystemProperties.getInstance().getLongProperty(LongPropertyNames.ServerId));
+		id.setServerId(IntegerProperties.getInstance().getLongProperty(LongPropertyNames.ServerId));
 		id.setDiscoveryId(discoverySeqId++);
 
 		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, id );
@@ -180,25 +185,14 @@ public class DiscoveryService extends BaseService implements
 		logger.info("Found ServiceElemet " + accessElement);
 	}
 		
-	
-	
-	/**
-	 * Remove a discovery based on a given discovery id.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public NetworkDiscoveryBase removeDiscovery( String id ) {
-		
-		return discoverMap.remove(id);
-	}
-	
+
 	
 	/**
 	 * Stop discovery based on id.
 	 * 
 	 * @param id
 	 */
+	@Override
 	public void stopDiscovery( DiscoveryId id ) {
 		
 		NetworkDiscovery netDisc = discoverMap.get(id);
@@ -206,7 +200,6 @@ public class DiscoveryService extends BaseService implements
 		    netDisc.stopDiscovery();	
 		}
 	}
-	
 	
 	/**
 	 * Get Network Discovery based on id.

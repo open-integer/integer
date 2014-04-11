@@ -37,6 +37,8 @@ import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManager;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManager;
@@ -54,7 +56,9 @@ public enum ManagerTypeEnum {
 	ServiceElementDiscoveryManager(ServiceElementDiscoveryManager.class,
 			ServiceElementDiscoveryManagerInterface.class),
 	SnmpManager(SnmpManager.class, SnmpManagerInterface.class),
-    ServiceElementAccessManager(ServiceElememtAccessManager.class, ServiceElementAccessManagerInterface.class);
+    ServiceElementAccessManager(ServiceElememtAccessManager.class, ServiceElementAccessManagerInterface.class),
+    ManagementObjectCapabilityManager(ManagementObjectCapabilityManager.class,
+    		ManagementObjectCapabilityManagerInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
 	Class<? extends BaseManagerInterface> intfClazz;

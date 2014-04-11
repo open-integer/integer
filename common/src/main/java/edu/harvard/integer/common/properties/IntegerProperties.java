@@ -53,29 +53,29 @@ import edu.harvard.integer.common.util.DisplayableInterface;
  *         the XXXXPropertyNames enum. Ex IntegerPropertyNames.
  * 
  */
-public class SystemProperties {
+public class IntegerProperties {
 
 	private static final String PROPERTIES_FILENAME = "integer.properties";
 	private Properties settings = null;
-	private static SystemProperties me = null;
+	private static IntegerProperties me = null;
 	private static long lastLoaded = 0;
 	private static long checkInterval = 0;
 
 	private static Logger logger = LoggerFactory
-			.getLogger(SystemProperties.class);
+			.getLogger(IntegerProperties.class);
 
-	private SystemProperties() {
+	private IntegerProperties() {
 
 	}
 
 	/**
-	 * Get the instance of the SystemProperties. The properties will be re-read
+	 * Get the instance of the IntegerProperties. The properties will be re-read
 	 * from disk if the last load was more than the CheckInterval seconds ago.
 	 * 
 	 * @return
 	 * @throws IntegerException
 	 */
-	public static SystemProperties getInstance() throws IntegerException {
+	public static IntegerProperties getInstance() throws IntegerException {
 
 		if (me != null
 				&& (System.currentTimeMillis() - lastLoaded) > checkInterval) {
@@ -84,11 +84,11 @@ public class SystemProperties {
 			if (me != null)
 				return me;
 
-			synchronized (SystemProperties.class) {
+			synchronized (IntegerProperties.class) {
 				if (me != null)
 					return me;
 
-				me = new SystemProperties();
+				me = new IntegerProperties();
 				me.loadSettings();
 			}
 		}
@@ -114,6 +114,8 @@ public class SystemProperties {
 			}
 			settings.load(resourceAsStream);
 
+			logger.info("Loaded properties " + settings.toString());
+			
 			lastLoaded = System.currentTimeMillis();
 
 			checkInterval = getIntProperty(IntegerPropertyNames.SystemPropertyCheckInterval);

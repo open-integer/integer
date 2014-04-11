@@ -43,13 +43,14 @@ import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
  *
  */
 @Local
-public interface ManagementObjectCapabilityManagerLocalInterface {
+public interface ManagementObjectCapabilityManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * Add/define a new capability for the system.
