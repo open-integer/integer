@@ -2,6 +2,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+
+
 sourceCompatibility = 1.7
 version = '1.0'
 jar {
@@ -43,7 +45,8 @@ dependencies {
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${junitArquillianVersion}"
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${junitArquillianVersion}"
 	testCompile group: 'junit', name: 'junit', version: '${junitVersion}'
-
+	testCompile group: 'org.hibernate', name: 'hibernate-core', version: '${hibernateCoreVersion}'
+	
 	testRuntime ('org.wildfly:wildfly-arquillian-container-managed:8.0.0.CR1') {
 		exclude module: 'wildfly-ee'
 		exclude module: 'wildfly-server'
@@ -59,7 +62,7 @@ dependencies {
 	testRuntime ("org.jboss:jboss-common-core:${jbossCommonCoreVersion}") {
 		exclude group: 'org.jboss.logging'
 	}
- 	
+	
 }
 
 test {

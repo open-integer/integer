@@ -118,8 +118,20 @@ public class BaseDAOTest {
 			e.printStackTrace();
 			fail("Error in createCleanCopy! " + e.getMessage());
 		} 
-		
-		
+			
+	}
+
+	@Test
+	public void exportSchema() {
+		try {
+			SchemaGenerator generator = new SchemaGenerator("edu.harvard.integer");
+			generator.generate(SchemaGenerator.Dialect.MYSQL);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
 		
 	}
 

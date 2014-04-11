@@ -23,3 +23,4 @@ client/war/WEB-INF/deploy/client/symbolMaps
 client/war/WEB-INF/deploy/client/rpcPolicyManifest
 client/war/client
 client/.gwt
+server/installMibs

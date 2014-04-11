@@ -45,7 +45,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.BasicConfigurator;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -66,7 +65,6 @@ import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory.ParserProvider;
-import edu.harvard.integer.server.parser.mibparser.moduleloader.MibbleParser;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
