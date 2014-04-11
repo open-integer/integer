@@ -20,6 +20,7 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.client.core.shape.Text;
 import com.emitrom.lienzo.client.core.types.Point2D;
 import com.emitrom.lienzo.client.core.types.Point2DArray;
+import com.emitrom.lienzo.shared.core.types.Color;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
 
@@ -33,6 +34,7 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 	private int center_y;
 	private String title;
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
+	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
 	
 	public HvMapIconWidget(Picture picture, String title) {
 		this.picture = picture;
@@ -95,18 +97,21 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 	@Override
 	public void onNodeDragEnd(NodeDragEndEvent event) {
 		updateLines(event.getX(), event.getY(), true);
+		// removeTempLines();
 	}
 
 	@Override
 	public void onNodeDragMove(NodeDragMoveEvent event) {
-		updateLines(event.getX(), event.getY(),true);
+		updateLines(event.getX(), event.getY(),false);
+		// moveTempLines();
 	}
 
 	@Override
 	public void onNodeDragStart(NodeDragStartEvent event) {
-		updateLines(event.getX(), event.getY(), true);
+		updateLines(event.getX(), event.getY(), false);
+		addDragLines(event.getX(), event.getY());
 	}
-	
+
 	private void updateLines(int cur_x, int cur_y, boolean draw) {
 		Point2D cur_point = new Point2D(cur_x, cur_y);
 		
@@ -114,10 +119,39 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 			Coordinate otherPoint = lineConnector.getEndPoint();
 			Point2D endPoint = new Point2D(otherPoint.getX(), otherPoint.getY());
 			Line line = lineConnector.getLine();
+			line.setVisible(false);
+			
 			line.setPoints(new Point2DArray(cur_point, endPoint));
 			
-			if (draw)
+			if (draw) {
+				line.setVisible(true);
 				line.getScene().draw();
+			}
+		}
+	}
+	
+	private void addDragLines(int cur_x, int cur_y) {
+		Coordinate curPoint = new Coordinate(cur_x, cur_y);
+		//Point2D cur_point = new Point2D(cur_x, cur_y);
+		
+		for (LinePoints lineConnector : lineConnectorList) {
+			Coordinate otherPoint = lineConnector.getEndPoint();
+			// Point2D other_point = new Point2D(otherPoint.getX(), otherPoint.getY());
+			Line line = lineConnector.getLine();
+			line.setVisible(false);
+			
+			Line newLine = new Line(cur_x, cur_y, otherPoint.getX(), otherPoint.getY());
+			newLine.setStrokeColor(Color.getRandomHexColor()).setStrokeWidth(2).setFillColor(Color.getRandomHexColor());  	
+			
+			if (newLine.getParent() == null) {  
+                getViewport().getDraglayer().add(newLine);  
+                newLine.moveToBottom();  
+            } 
+			newLine.setVisible(true);
+			
+			// save lines being dragged
+			LinePoints newLineConnector = new LinePoints(newLine, curPoint, otherPoint);
+			dragLineConnectorList.add(newLineConnector);
 		}
 	}
 
