@@ -20,7 +20,6 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.client.core.shape.Text;
 import com.emitrom.lienzo.client.core.types.Point2D;
 import com.emitrom.lienzo.client.core.types.Point2DArray;
-import com.emitrom.lienzo.shared.core.types.Color;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
 
@@ -96,52 +95,29 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 
 	@Override
 	public void onNodeDragEnd(NodeDragEndEvent event) {
-		updateLines(event.getX(), event.getY(), true);
-		// removeTempLines();
+		removeDragLines(event.getX(), event.getY());
 	}
 
 	@Override
 	public void onNodeDragMove(NodeDragMoveEvent event) {
-		updateLines(event.getX(), event.getY(),false);
-		// moveTempLines();
+		moveDragLines(event.getX(), event.getY());
 	}
 
 	@Override
 	public void onNodeDragStart(NodeDragStartEvent event) {
-		updateLines(event.getX(), event.getY(), false);
 		addDragLines(event.getX(), event.getY());
-	}
-
-	private void updateLines(int cur_x, int cur_y, boolean draw) {
-		Point2D cur_point = new Point2D(cur_x, cur_y);
-		
-		for (LinePoints lineConnector : lineConnectorList) {
-			Coordinate otherPoint = lineConnector.getEndPoint();
-			Point2D endPoint = new Point2D(otherPoint.getX(), otherPoint.getY());
-			Line line = lineConnector.getLine();
-			line.setVisible(false);
-			
-			line.setPoints(new Point2DArray(cur_point, endPoint));
-			
-			if (draw) {
-				line.setVisible(true);
-				line.getScene().draw();
-			}
-		}
 	}
 	
 	private void addDragLines(int cur_x, int cur_y) {
 		Coordinate curPoint = new Coordinate(cur_x, cur_y);
-		//Point2D cur_point = new Point2D(cur_x, cur_y);
 		
 		for (LinePoints lineConnector : lineConnectorList) {
 			Coordinate otherPoint = lineConnector.getEndPoint();
-			// Point2D other_point = new Point2D(otherPoint.getX(), otherPoint.getY());
 			Line line = lineConnector.getLine();
 			line.setVisible(false);
 			
 			Line newLine = new Line(cur_x, cur_y, otherPoint.getX(), otherPoint.getY());
-			newLine.setStrokeColor(Color.getRandomHexColor()).setStrokeWidth(2).setFillColor(Color.getRandomHexColor());  	
+			newLine.setStrokeColor(ColorName.LIGHTGRAY).setStrokeWidth(2).setFillColor(ColorName.LIGHTPINK);  	
 			
 			if (newLine.getParent() == null) {  
                 getViewport().getDraglayer().add(newLine);  
@@ -154,5 +130,28 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 			dragLineConnectorList.add(newLineConnector);
 		}
 	}
+	
+	private void moveDragLines(int cur_x, int cur_y) {
+		Point2D cur_point = new Point2D(cur_x, cur_y);
+		updateDragLines(cur_point, dragLineConnectorList, true, false);
+	}
 
+	private void removeDragLines(int cur_x, int cur_y) {
+		Point2D cur_point = new Point2D(cur_x, cur_y);
+		updateDragLines(cur_point, dragLineConnectorList, false, false);
+		updateDragLines(cur_point, lineConnectorList, true, true);
+	}
+	
+	private void updateDragLines(Point2D cur_point, List<LinePoints> lines, boolean visible, boolean draw) {
+		for (LinePoints linePoints : lines) {
+			Coordinate otherPoint = linePoints.getEndPoint();
+			Point2D other_point = new Point2D(otherPoint.getX(), otherPoint.getY());
+			Line cur_line = linePoints.getLine();
+			cur_line.setPoints(new Point2DArray(cur_point, other_point));
+			cur_line.setVisible(visible);
+			
+			if (draw)
+				cur_line.getScene().draw();
+		}
+	}
 }
