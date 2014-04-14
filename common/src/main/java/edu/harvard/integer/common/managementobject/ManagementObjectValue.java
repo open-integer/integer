@@ -31,68 +31,71 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.common.managementobject;
 
-import java.io.Serializable;
-
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
  * 
- *         A variety of protocols may be used to access a devices for different
- *         management functions, for example, SNMP may be used for certain data
- *         collection or alarm information while the CLI or other protocols may
- *         be used for configuration. The system needs to know which protocol is
- *         to be used for each function for each service element in the system.
- *         There will be as many instances of these as are needed to cover all
- *         the functions for which an instance of a service object might be
- *         accessed.
+ *         Hold the value for a given management object.
  */
 @Entity
-public class ServiceElementProtocolInstanceIdentifier extends BaseEntity implements Serializable {
+public abstract class ManagementObjectValue<T> extends BaseEntity {
 
 	/**
-	 * Serial Version UID.
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String value = null;
+	/**
+	 * The management object this value is for.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "managementObjectId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "managementObjectType")),
+			@AttributeOverride(name = "name", column = @Column(name = "managementObjectName")) })
+	private ID managementObject = null;
 
-	public ServiceElementProtocolInstanceIdentifier() {
-		
+	/**
+	 * 
+	 */
+	public ManagementObjectValue() {
+
 	}
-	
+
+	/**
+	 * @return the managementObject
+	 */
+	public ID getManagementObject() {
+		return managementObject;
+	}
+
+	/**
+	 * @param managementObject
+	 *            the managementObject to set
+	 */
+	public void setManagementObject(ID managementObject) {
+		this.managementObject = managementObject;
+	}
+
 	/**
 	 * @return the value
 	 */
-	public String getValue() {
-		return value;
-	}
+	public abstract T getValue();
 
 	/**
 	 * @param value
 	 *            the value to set
 	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-//	/**
-//	 * @return the fcaps
-//	 */
-//	public List<FCAPSEnum> getFcaps() {
-//		return fcaps;
-//	}
-//
-//	/**
-//	 * @param fcaps
-//	 *            the fcaps to set
-//	 */
-//	public void setFcaps(List<FCAPSEnum> fcaps) {
-//		this.fcaps = fcaps;
-//	}
+	public abstract void setValue(T value);
 
 }

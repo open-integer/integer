@@ -33,66 +33,14 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-
-import edu.harvard.integer.common.BaseEntity;
-
 /**
  * @author David Taylor
  * 
- *         A variety of protocols may be used to access a devices for different
- *         management functions, for example, SNMP may be used for certain data
- *         collection or alarm information while the CLI or other protocols may
- *         be used for configuration. The system needs to know which protocol is
- *         to be used for each function for each service element in the system.
- *         There will be as many instances of these as are needed to cover all
- *         the functions for which an instance of a service object might be
- *         accessed.
+ *         The environmentLevel attribute indicates whether a system is in
+ *         production, test, etc. It is an enumerated integer where 1 is the
+ *         production level and there can be a number of configured levels such
+ *         as test as level 2, development as level 3 etc.
  */
-@Entity
-public class ServiceElementProtocolInstanceIdentifier extends BaseEntity implements Serializable {
-
-	/**
-	 * Serial Version UID.
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private String value = null;
-
-	public ServiceElementProtocolInstanceIdentifier() {
-		
-	}
-	
-	/**
-	 * @return the value
-	 */
-	public String getValue() {
-		return value;
-	}
-
-	/**
-	 * @param value
-	 *            the value to set
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-//	/**
-//	 * @return the fcaps
-//	 */
-//	public List<FCAPSEnum> getFcaps() {
-//		return fcaps;
-//	}
-//
-//	/**
-//	 * @param fcaps
-//	 *            the fcaps to set
-//	 */
-//	public void setFcaps(List<FCAPSEnum> fcaps) {
-//		this.fcaps = fcaps;
-//	}
-
+public enum EnvironmentLevelEnum {
+	Production, Test, Development;
 }

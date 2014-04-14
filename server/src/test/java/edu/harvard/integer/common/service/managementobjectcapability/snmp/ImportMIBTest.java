@@ -298,10 +298,24 @@ public class ImportMIBTest {
 	
 	
 	@Test
-	public void importCiscoVendorEntity() {
+	public void importCiscoSMI() {
 		
 		importVendorMIB("CISCO-SMI.my");
+	}
+	
+	@Test
+	public void importCiscoVendorEntity() {
 	    importVendorMIB("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+	}
+	
+	@Test
+	public void importCiscoTC() {
+		importVendorMIB("CISCO-TC.my");
+	}
+	
+	@Test
+	public void importCiscoProducts() {
+		importVendorMIB("CISCO-PRODUCTS-MIB.my");
 	}
 	
 	/**

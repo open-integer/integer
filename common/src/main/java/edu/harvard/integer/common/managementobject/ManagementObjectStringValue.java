@@ -31,68 +31,55 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
-
-import java.io.Serializable;
+package edu.harvard.integer.common.managementobject;
 
 import javax.persistence.Entity;
-
-import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
  * 
- *         A variety of protocols may be used to access a devices for different
- *         management functions, for example, SNMP may be used for certain data
- *         collection or alarm information while the CLI or other protocols may
- *         be used for configuration. The system needs to know which protocol is
- *         to be used for each function for each service element in the system.
- *         There will be as many instances of these as are needed to cover all
- *         the functions for which an instance of a service object might be
- *         accessed.
+ *         Hold a String value of a management object.
  */
 @Entity
-public class ServiceElementProtocolInstanceIdentifier extends BaseEntity implements Serializable {
-
-	/**
-	 * Serial Version UID.
-	 */
-	private static final long serialVersionUID = 1L;
+public class ManagementObjectStringValue extends ManagementObjectValue<String> {
 
 	private String value = null;
 
-	public ServiceElementProtocolInstanceIdentifier() {
-		
-	}
-	
 	/**
-	 * @return the value
+	 * Serial Version UID
 	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
+	public ManagementObjectStringValue() {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#getValue
+	 * ()
+	 */
+	@Override
 	public String getValue() {
+
 		return value;
 	}
 
-	/**
-	 * @param value
-	 *            the value to set
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#setValue
+	 * (java.lang.Object)
 	 */
+	@Override
 	public void setValue(String value) {
 		this.value = value;
 	}
-
-//	/**
-//	 * @return the fcaps
-//	 */
-//	public List<FCAPSEnum> getFcaps() {
-//		return fcaps;
-//	}
-//
-//	/**
-//	 * @param fcaps
-//	 *            the fcaps to set
-//	 */
-//	public void setFcaps(List<FCAPSEnum> fcaps) {
-//		this.fcaps = fcaps;
-//	}
 
 }

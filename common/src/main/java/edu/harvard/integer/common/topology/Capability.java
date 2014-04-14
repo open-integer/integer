@@ -44,6 +44,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 

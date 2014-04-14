@@ -236,6 +236,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		
 		Capability[] findAll = dao.findAll();
 		
+		findAll = dao.copyArray(findAll);
 		return Arrays.asList(findAll);
 	}
 
