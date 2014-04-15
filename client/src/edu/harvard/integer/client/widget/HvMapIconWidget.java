@@ -29,10 +29,9 @@ import edu.harvard.integer.client.utils.LinePoints;
 public class HvMapIconWidget extends Group implements NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler {
 
 	private Picture picture;
-	private int center_x;
-	private int center_y;
 	private String title;
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
+	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
 	
 	public HvMapIconWidget(Picture picture, String title) {
 		this.picture = picture;
@@ -70,8 +69,8 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 	}
 	
 	public void draw(int x, int y) {
-		center_x = x + DragImageWidget.IMAGE_WIDTH/2;
-		center_y = y + DragImageWidget.IMAGE_HEIGHT/2;
+		/*center_x = x + DragImageWidget.IMAGE_WIDTH/2;
+		center_y = y + DragImageWidget.IMAGE_HEIGHT/2;*/
 		
 		picture.setX(x).setY(y).onLoad(new PictureLoadedHandler() {
 
@@ -83,8 +82,8 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 			
 		});
 		
-		Text text = new Text(title, "oblique normal bold", 24);
-		text.setX(x).setY(y+110).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
+		Text text = new Text(title, "oblique normal bold", 20);
+		text.setX(x).setY(y+DragImageWidget.IMAGE_HEIGHT+16).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
 		add(text);
 	}
 	
@@ -94,31 +93,63 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 
 	@Override
 	public void onNodeDragEnd(NodeDragEndEvent event) {
-		updateLines(event.getX(), event.getY(), true);
+		removeDragLines(event.getX(), event.getY());
 	}
 
 	@Override
 	public void onNodeDragMove(NodeDragMoveEvent event) {
-		updateLines(event.getX(), event.getY(),true);
+		moveDragLines(event.getX(), event.getY());
 	}
 
 	@Override
 	public void onNodeDragStart(NodeDragStartEvent event) {
-		updateLines(event.getX(), event.getY(), true);
+		addDragLines(event.getX(), event.getY());
 	}
 	
-	private void updateLines(int cur_x, int cur_y, boolean draw) {
-		Point2D cur_point = new Point2D(cur_x, cur_y);
+	private void addDragLines(int cur_x, int cur_y) {
+		Coordinate curPoint = new Coordinate(cur_x, cur_y);
 		
 		for (LinePoints lineConnector : lineConnectorList) {
 			Coordinate otherPoint = lineConnector.getEndPoint();
-			Point2D endPoint = new Point2D(otherPoint.getX(), otherPoint.getY());
 			Line line = lineConnector.getLine();
-			line.setPoints(new Point2DArray(cur_point, endPoint));
+			line.setVisible(false);
 			
-			if (draw)
-				line.getScene().draw();
+			Line newLine = new Line(cur_x, cur_y, otherPoint.getX(), otherPoint.getY());
+			newLine.setStrokeColor(ColorName.LIGHTGRAY).setStrokeWidth(2).setFillColor(ColorName.LIGHTPINK);  	
+			
+			if (newLine.getParent() == null) {  
+                getViewport().getDraglayer().add(newLine);  
+                newLine.moveToBottom();  
+            } 
+			newLine.setVisible(true);
+			
+			// save lines being dragged
+			LinePoints newLineConnector = new LinePoints(newLine, curPoint, otherPoint);
+			dragLineConnectorList.add(newLineConnector);
 		}
 	}
+	
+	private void moveDragLines(int cur_x, int cur_y) {
+		Point2D cur_point = new Point2D(cur_x, cur_y);
+		updateDragLines(cur_point, dragLineConnectorList, true, false);
+	}
 
+	private void removeDragLines(int cur_x, int cur_y) {
+		Point2D cur_point = new Point2D(cur_x, cur_y);
+		updateDragLines(cur_point, dragLineConnectorList, false, false);
+		updateDragLines(cur_point, lineConnectorList, true, true);
+	}
+	
+	private void updateDragLines(Point2D cur_point, List<LinePoints> lines, boolean visible, boolean draw) {
+		for (LinePoints linePoints : lines) {
+			Coordinate otherPoint = linePoints.getEndPoint();
+			Point2D other_point = new Point2D(otherPoint.getX(), otherPoint.getY());
+			Line cur_line = linePoints.getLine();
+			cur_line.setPoints(new Point2DArray(cur_point, other_point));
+			cur_line.setVisible(visible);
+			
+			if (draw)
+				cur_line.getScene().draw();
+		}
+	}
 }

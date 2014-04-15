@@ -3,20 +3,11 @@ package edu.harvard.integer.client.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.emitrom.lienzo.client.core.event.NodeDragEndEvent;
-import com.emitrom.lienzo.client.core.event.NodeDragEndHandler;
-import com.emitrom.lienzo.client.core.event.NodeDragMoveEvent;
-import com.emitrom.lienzo.client.core.event.NodeDragMoveHandler;
-import com.emitrom.lienzo.client.core.event.NodeDragStartEvent;
-import com.emitrom.lienzo.client.core.event.NodeDragStartHandler;
-import com.emitrom.lienzo.client.core.shape.Arrow;
-import com.emitrom.lienzo.client.core.shape.Circle;
 import com.emitrom.lienzo.client.core.shape.Group;
 import com.emitrom.lienzo.client.core.shape.Line;
 import com.emitrom.lienzo.client.core.shape.Picture;
+import com.emitrom.lienzo.client.core.shape.Rectangle;
 import com.emitrom.lienzo.client.core.shape.Text;
-import com.emitrom.lienzo.client.core.types.Point2D;
-import com.emitrom.lienzo.shared.core.types.ArrowType;
 import com.emitrom.lienzo.shared.core.types.Color;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
@@ -31,10 +22,10 @@ import edu.harvard.integer.client.utils.LinePoints;
 public class DragImageWidget extends WidgetLayer {  
   
     /** The image width. */
-    public static final int IMAGE_WIDTH = 80;  
+    public static final int IMAGE_WIDTH = 60;  
     
     /** The image height. */
-    public static final int IMAGE_HEIGHT = 80;  
+    public static final int IMAGE_HEIGHT = 60;  
       
     /**
      * Instantiates a new drag image widget.
@@ -51,7 +42,24 @@ public class DragImageWidget extends WidgetLayer {
      * Inits the.
      */
     private void init() {  
-    	//setDraggable(true);
+    	addIndividualDevices(null, null);
+    	addDeviceGroup(50, 300, "60 Oxford Street (60X)");
+    	addDeviceGroup(500, 300, "One Summer Street (1SU)");
+    }
+    
+    private void addDeviceGroup(int x, int y, String title) {
+		Group group = new Group();
+		group.setDraggable(true);
+		group.setX(x).setY(y);
+		addIndividualDevices(group, title);
+		
+		Rectangle rectangle = new Rectangle(400, 300, 10).setStrokeColor(ColorName.GRAY.getValue());
+		group.add(rectangle);
+		
+		add(group);
+	}
+
+	private void addIndividualDevices(Group group, String title) {
     	
         ImageResource[] images = 
         		{Resources.IMAGES.wirelessRoute128(),
@@ -62,37 +70,21 @@ public class DragImageWidget extends WidgetLayer {
         		 Resources.IMAGES.wirelessRoute128(),
         		 Resources.IMAGES.graySwitch(),
         		 Resources.IMAGES.wirelessRouter80(),
-        		 Resources.IMAGES.greenRouter(),
-        		 Resources.IMAGES.pcom(),
-        		 Resources.IMAGES.wirelessRoute128(),
-        		 Resources.IMAGES.graySwitch(),
-        		 Resources.IMAGES.wirelessRouter80(),
-        		 Resources.IMAGES.greenRouter(),
-        		 Resources.IMAGES.pcom(),
-        		 Resources.IMAGES.wirelessRouter80(),
-        		 Resources.IMAGES.greenRouter(),
-        		 Resources.IMAGES.pcom(),
-        		 Resources.IMAGES.wirelessRoute128(),
-        		 Resources.IMAGES.graySwitch(),
-        		 Resources.IMAGES.wirelessRouter80(),
-        		 Resources.IMAGES.greenRouter(),
-        		 Resources.IMAGES.pcom(),
         		};
 
         int i = 0;
         
         List<HvMapIconWidget> iconList = new ArrayList<HvMapIconWidget>();
         
-        for (int row = 0; row < 3; row++) {
+        for (int row = 0; row < 2; row++) {
         	int x1 = 0;
-            int y1 = 0;
+            int y1 = 0;    
             
-            
-        	for (int col = 0; col < 6; col++) {
+        	for (int col = 0; col < 3; col++) {
         		
 	        	Picture picture = new Picture(images[i], IMAGE_WIDTH, IMAGE_HEIGHT, true, null);
-	        	int x = col * IMAGE_WIDTH*2 + 50;
-	        	int y = row * IMAGE_HEIGHT*2 + 50;
+	        	int x = col * IMAGE_WIDTH*2 + 30;
+	        	int y = row * IMAGE_HEIGHT*2 + 30;
 	        	
 	        	HvMapIconWidget icon = new HvMapIconWidget(picture, "192.168.100."+i++);
 	        	HvMapIconWidget last_icon = null;
@@ -110,8 +102,12 @@ public class DragImageWidget extends WidgetLayer {
 	        	int cur_y = y + IMAGE_HEIGHT/2;
 	        	if (x1 != 0 && y1 != 0) {
 	        		Line line = new Line(x1,y1, cur_x, cur_y);  
-	                line.setStrokeColor(Color.getRandomHexColor()).setStrokeWidth(2).setFillColor(Color.getRandomHexColor());  
-	                add(line);
+	                line.setStrokeColor(Color.getRandomHexColor()).setStrokeWidth(2).setFillColor(Color.getRandomHexColor());
+	                
+	                if (group != null)
+	                	group.add(line);
+	                else
+	                	add(line);
 	                
 	                // add line to iconWidget
 	                Coordinate prePoint = new Coordinate(x1, y1);
@@ -134,92 +130,15 @@ public class DragImageWidget extends WidgetLayer {
         
         // add icons on top
         for (HvMapIconWidget icon : iconList) {
-        	add(icon);
+        	if (group == null)
+            	add(icon);
+        	else {
+        		group.add(icon);
+        		Text text = new Text(title, "Arial, sans-serif", 16);
+        		text.setX(10).setY(30).setFillColor(ColorName.NAVY.getValue());
+        		group.add(text);
+        	}
         }
-        
     }  
-    
-    public static class DragHandle extends Group implements NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler  
-    {  
-        private Arrow arrow, dragArrow;  
-        private boolean start;  
-          
-        public DragHandle(String text, boolean start, Arrow arrow, Arrow dragArrow)  
-        {  
-            Circle c = new Circle(3);  
-            c.setFillColor(ColorName.BLACK.getColor().setA(0.5));  
-            add(c);  
-              
-            Text t = new Text(text, "Arial, sans-serif", 10);  
-            t.setX(-10).setY(15);  
-            t.setFillColor(ColorName.BLACK);  
-            add(t);  
-              
-            this.arrow = arrow;  
-            this.dragArrow = dragArrow;  
-            this.start = start;  
-              
-            setDraggable(true);  
-            addNodeDragStartHandler(this);  
-            addNodeDragMoveHandler(this);  
-            addNodeDragEndHandler(this);  
-        }  
-  
-        @Override
-		public void onNodeDragEnd(NodeDragEndEvent event) {
-			if (start)  
-                dragArrow.setStart(new Point2D(event.getX(), event.getY()));  
-            else  
-                dragArrow.setEnd(new Point2D(event.getX(), event.getY()));  
-  
-            dragArrow.setVisible(false);  
-              
-            arrow.setStart(dragArrow.getStart());  
-            arrow.setEnd(dragArrow.getEnd());  
-            arrow.setVisible(true);  
-              
-            arrow.getScene().draw(); 
-		}
-
-		@Override
-		public void onNodeDragMove(NodeDragMoveEvent event) {
-			if (start)  
-                dragArrow.setStart(new Point2D(event.getX(), event.getY()));  
-            else  
-                dragArrow.setEnd(new Point2D(event.getX(), event.getY())); 
-		}
-
-		@Override
-		public void onNodeDragStart(NodeDragStartEvent event) {
-			if (dragArrow.getParent() == null)  
-            {  
-                getViewport().getDraglayer().add(dragArrow);  
-                dragArrow.moveToBottom();  
-            }  
-              
-            arrow.setVisible(false);  
-            if (start)  
-                dragArrow.setStart(new Point2D(event.getX(), event.getY()));  
-            else  
-                dragArrow.setEnd(new Point2D(event.getX(), event.getY()));  
-              
-            dragArrow.setVisible(true);
-		}  
-    }  
-    
-    
-  
-    public void update(int baseWidth, int headWidth, int arrowAngle, int baseAngle, ArrowType arrowType) {  
-    	Arrow[] arrows = new Arrow[2];  
-        for (int i = 0; i < 2; i++)  
-        {  
-            Arrow a = arrows[i];  
-            a.setBaseWidth(baseWidth);  
-            a.setHeadWidth(headWidth);  
-            a.setArrowAngle(arrowAngle);  
-            a.setBaseAngle(baseAngle);  
-            a.setArrowType(arrowType);  
-        }  
-        getScene().draw();  
-    }
+	
 }
