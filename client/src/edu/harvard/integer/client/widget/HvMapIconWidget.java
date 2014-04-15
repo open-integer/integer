@@ -29,8 +29,6 @@ import edu.harvard.integer.client.utils.LinePoints;
 public class HvMapIconWidget extends Group implements NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler {
 
 	private Picture picture;
-	private int center_x;
-	private int center_y;
 	private String title;
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
 	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
@@ -71,8 +69,8 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 	}
 	
 	public void draw(int x, int y) {
-		center_x = x + DragImageWidget.IMAGE_WIDTH/2;
-		center_y = y + DragImageWidget.IMAGE_HEIGHT/2;
+		/*center_x = x + DragImageWidget.IMAGE_WIDTH/2;
+		center_y = y + DragImageWidget.IMAGE_HEIGHT/2;*/
 		
 		picture.setX(x).setY(y).onLoad(new PictureLoadedHandler() {
 
@@ -84,8 +82,8 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 			
 		});
 		
-		Text text = new Text(title, "oblique normal bold", 24);
-		text.setX(x).setY(y+110).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
+		Text text = new Text(title, "oblique normal bold", 20);
+		text.setX(x).setY(y+DragImageWidget.IMAGE_HEIGHT+16).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
 		add(text);
 	}
 	
