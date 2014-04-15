@@ -173,7 +173,7 @@ public class ServiceElementDiscoveryManagerTest {
 		}
 		
 		SnmpVendorDiscoveryTemplate template = new SnmpVendorDiscoveryTemplate();
-		IDType type = new IDType(VendorIdentifier.class);
+		IDType type = new IDType(VendorIdentifier.class.getName());
 		ID vendorId = new ID(Long.valueOf(9), "Cisco", type);
 		template.setVendorId(vendorId);
 		try {

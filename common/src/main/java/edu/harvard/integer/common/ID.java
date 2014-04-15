@@ -60,7 +60,7 @@ public class ID implements IDInterface, Serializable {
 	private IDType idType = null;
 
 	public ID() {
-		
+		super();
 	}
 	
 	/**

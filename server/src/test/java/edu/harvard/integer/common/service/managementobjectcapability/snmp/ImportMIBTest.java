@@ -311,15 +311,20 @@ public class ImportMIBTest {
 	}
 
 	@Test
-	public void importEntityMIB() {
-		importIETFMIB("ENTITY-MIB");
-	}
-
-	@Test
 	public void importIfMIB() {
 		importIETFMIB("IF-MIB");
 	}
 
+	@Test
+	public void importEntityMIB() {
+		importIETFMIB("ENTITY-MIB.my");
+	}
+
+	@Test
+	public void importHostResourcesMIB() {
+		importIETFMIB("HOST-RESOURCES-MIB.my");
+	}
+	
 	@Test
 	public void importCiscoSMI() {
 

@@ -44,6 +44,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -53,7 +55,7 @@ import edu.harvard.integer.common.ID;
 public abstract class ServiceElementManagementObject extends BaseEntity implements Serializable {
 
 	/**
-	 * Serialition ID
+	 * Serial version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -72,10 +74,11 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	 * other details (including security parameters for accessing the device)
 	 * will be different.
 	 */
+	@Enumerated(EnumType.STRING)
 	private AccessMethod accessMethod = null;
 
 	/*
-	 * The namespace of the scopeName implemented in the object that realizes
+	 * The name space of the scopeName implemented in the object that realizes
 	 * this interface. For example Cisco CLI, SNMP, SNMP-Private vendor, etc.
 	 */
 	private String namespace = null;

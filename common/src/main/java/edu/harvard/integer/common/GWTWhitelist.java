@@ -35,6 +35,8 @@ package edu.harvard.integer.common;
 
 import java.io.Serializable;
 
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+
 /**
  * @author David Taylor
  * 
@@ -52,6 +54,19 @@ public class GWTWhitelist implements Serializable {
 
 	private BaseEntity baseEntity = null;
 
+	@SuppressWarnings("unused")
+	private ServiceElementManagementObject snmp = null;
+	
+	@SuppressWarnings("unused")
+	private String classType = null;
+	
+	@SuppressWarnings("unused")
+	private IDType idType = null;
+	
+	public GWTWhitelist() {
+		super();
+	}
+	
 	/**
 	 * @return the baseEntity
 	 */
@@ -66,5 +81,19 @@ public class GWTWhitelist implements Serializable {
 	public void setBaseEntity(BaseEntity baseEntity) {
 		this.baseEntity = baseEntity;
 	}
+//
+//	/**
+//	 * @return the snmp
+//	 */
+//	public SNMP getSnmp() {
+//		return snmp;
+//	}
+//
+//	/**
+//	 * @param snmp the snmp to set
+//	 */
+//	public void setSnmp(SNMP snmp) {
+//		this.snmp = snmp;
+//	}
 
 }

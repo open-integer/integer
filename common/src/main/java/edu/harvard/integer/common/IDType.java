@@ -51,21 +51,21 @@ public class IDType implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Class<? extends BaseEntity> classType = null;
+	private String classType = null;
 
 	public IDType() {
-		
+		super();
 	}
 	
-	public IDType(Class<? extends BaseEntity> class1) {
+	public IDType(String class1) {
 		this.classType = class1;
 	}
 	
-	public Class<? extends BaseEntity> getClassType() {
+	public String getClassType() {
 		return classType;
 	}
 
-	public void setClassType(Class<? extends BaseEntity> classType) {
+	public void setClassType(String classType) {
 		this.classType = classType;
 	}
 
@@ -75,7 +75,7 @@ public class IDType implements Serializable {
 	@Override
 	public String toString() {
 		if (classType != null)
-			return classType.getName();
+			return classType;
 		else
 			return "";
 	}

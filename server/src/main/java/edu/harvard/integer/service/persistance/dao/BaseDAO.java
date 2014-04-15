@@ -54,6 +54,7 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.SystemErrorCodes;
 
 /**
  * @author David Taylor
@@ -251,7 +252,14 @@ public class BaseDAO {
 	 */
 	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
 
-		Class<? extends BaseEntity> clazz = id.getIdType().getClassType();
+		Class<? extends BaseEntity> clazz = null;
+		try {
+			clazz = (Class<? extends BaseEntity>) Class.forName(id.getIdType().getClassType());
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+			throw new IntegerException(e, SystemErrorCodes.InvalidIDNoType);
+		}
 
 		@SuppressWarnings("unchecked")
 		T entity = (T) entityManger.find(clazz, id.getIdentifier());

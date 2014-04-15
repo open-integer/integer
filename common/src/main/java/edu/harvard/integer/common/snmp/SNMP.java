@@ -39,6 +39,8 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.ID;
@@ -76,6 +78,8 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 * write only. This is a function of the object definition, not the access
 	 * policy.
 	 */
+	@Column(length = 20)
+	@Enumerated(EnumType.STRING)
 	private MaxAccess maxAccess = null;
 
 	/*
@@ -100,10 +104,8 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	/**
 	 * This boolean is used to indicate the SNMP object is a scalar VB or not.
 	 */
-	private Boolean scalarVB;
+	private Boolean scalarVB = null;
 	
-
-
 	public SNMP() {
 		super();
 	}

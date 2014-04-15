@@ -93,7 +93,7 @@ public class DiscoveryRule extends BaseEntity {
 	 * 
 	 */
 	public DiscoveryRule() {
-
+		super();
 	}
 
 	/**
