@@ -41,6 +41,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
@@ -102,5 +103,15 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
 		serviceElementDAO.delete(ids);
+	}
+	
+	public ServiceElementType updateServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
+		
+		return serviceElementType;
+	}
+	
+	public ServiceElementType[] getAllServiceElementTypes() throws IntegerException {
+		
+		return null;
 	}
 }

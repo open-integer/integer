@@ -36,6 +36,7 @@ package edu.harvard.integer.common.service.managementobjectcapability.snmp;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -56,12 +57,24 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory.ParserProvider;
@@ -95,6 +108,7 @@ public class ImportMIBTest {
 				.addPackages(true, "net.percederberg")
 				.addPackages(true, "org.snmp4j")
 				.addPackages(true, "uk.co.westhawk")
+				.addPackages(true, "com.fasterxml.jackson")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -104,11 +118,12 @@ public class ImportMIBTest {
 
 	@Before
 	public void initializeLogger() {
-		
-//		System.setProperty(MibbleParser.MIBFILELOCATON, "../server/build/mibs");
-//		importDir();
+
+		// System.setProperty(MibbleParser.MIBFILELOCATON,
+		// "../server/build/mibs");
+		// importDir();
 	}
-	
+
 	@Test
 	public void importRFC1065_SMI() {
 		importIETFMIB("RFC1065-SMI");
@@ -118,29 +133,28 @@ public class ImportMIBTest {
 	public void importRFC1155_SMI() {
 		importIETFMIB("RFC1155-SMI");
 	}
-	
+
 	public void importDir() {
-		
+
 		List<MIBImportInfo> importMibs = new ArrayList<>();
 		String commonDir = "../server/mibs";
 		File dirf = new File(commonDir);
 		File[] fs = dirf.listFiles();
-		
+
 		importFiles(importMibs, fs, false);
-		
-		
+
 		try {
-			MibParser mibParser = MibParserFactory.getParserSource(ParserProvider.MIBBLE);
-			mibParser.importMIB(importMibs.toArray(new MIBImportInfo[importMibs.size()]), true);
-		} 
-		catch (IntegerException e) {
+			MibParser mibParser = MibParserFactory
+					.getParserSource(ParserProvider.MIBBLE);
+			mibParser.importMIB(
+					importMibs.toArray(new MIBImportInfo[importMibs.size()]),
+					true);
+		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
 
 	/**
 	 * Test the importing of RFC1213. This will read in the MIB and create the
@@ -150,9 +164,9 @@ public class ImportMIBTest {
 	 */
 	@Test
 	public void importRFC1213() {
-		
+
 		importIETFMIB("RFC1213-MIB");
-		
+
 	}
 
 	private void importIETFMIB(String mibName) {
@@ -165,19 +179,19 @@ public class ImportMIBTest {
 
 	private void importMib(String mibName) {
 
-		logger.warn("Start test import of ***************************************************************************** " + mibName);
+		logger.warn("Start test import of ***************************************************************************** "
+				+ mibName);
 
 		File mibFile = null;
-		mibFile = new File("../server/mibs/" + mibName); 
-		
+		mibFile = new File("../server/mibs/" + mibName);
+
 		if (mibFile.exists())
 			System.out.println("Found rfc");
 		else {
 			System.out.println("rfc not found! PATH: "
 					+ mibFile.getAbsolutePath());
-			
-			fail("rfc not found! PATH: "
-					+ mibFile.getAbsolutePath());
+
+			fail("rfc not found! PATH: " + mibFile.getAbsolutePath());
 		}
 
 		String content = null;
@@ -295,37 +309,50 @@ public class ImportMIBTest {
 	public void importIANAifType_MIB() {
 		importIETFMIB("IANAifType-MIB");
 	}
-	
-	
+
+	@Test
+	public void importEntityMIB() {
+		importIETFMIB("ENTITY-MIB");
+	}
+
+	@Test
+	public void importIfMIB() {
+		importIETFMIB("IF-MIB");
+	}
+
 	@Test
 	public void importCiscoSMI() {
-		
+
 		importVendorMIB("CISCO-SMI.my");
 	}
-	
+
 	@Test
 	public void importCiscoVendorEntity() {
-	    importVendorMIB("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+		importVendorMIB("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
 	}
-	
+
 	@Test
 	public void importCiscoTC() {
 		importVendorMIB("CISCO-TC.my");
 	}
-	
+
 	@Test
 	public void importCiscoProducts() {
 		importVendorMIB("CISCO-PRODUCTS-MIB.my");
 	}
-	
+
 	/**
 	 * Import files into importMibs for fs.
-	 *
-	 * @param importMibs the import mibs
-	 * @param fs the fs
-	 * @param isCommon if 
+	 * 
+	 * @param importMibs
+	 *            the import mibs
+	 * @param fs
+	 *            the fs
+	 * @param isCommon
+	 *            if
 	 */
-	private void importFiles(List<MIBImportInfo> importMibs, File[] fs, boolean isCommon) {
+	private void importFiles(List<MIBImportInfo> importMibs, File[] fs,
+			boolean isCommon) {
 
 		for (File f : fs) {
 
@@ -339,13 +366,12 @@ public class ImportMIBTest {
 					minfo.setStandardMib(isCommon);
 					minfo.setFileName(f.getName());
 					importMibs.add(minfo);
-				} 
-				catch (Exception e) {}
+				} catch (Exception e) {
+				}
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Gets the file contents.
 	 * 
@@ -362,16 +388,64 @@ public class ImportMIBTest {
 		return content;
 	}
 
-
-	
-	
 	public void findSysName() {
 		SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
-		
+
 		SNMP snmp = snmpdao.findByOid(CommonSnmpOids.sysName);
-		
-		assert(snmp != null);
-		
-		
+
+		assert (snmp != null);
+
+	}
+
+	@Test
+	public void exportSNMPObjects() {
+		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
+														// org.codehaus.jackson.mapper.MappingJsonFactory
+		JsonGenerator jg = null;
+		try {
+
+			jg = jsonFactory.createGenerator(new FileOutputStream(
+					"managementObject.json"), JsonEncoding.UTF8);
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+		MIBInfo[] importedMibs = null;
+		try {
+			importedMibs = snmpObjectManager.getImportedMibs();
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		mapper.enable(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS);
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+		logger.info("Have " + importedMibs.length + " MIBs to export");
+		try {
+			mapper.writeValue(jg, importedMibs);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+		try {
+			jg.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
 	}
 }

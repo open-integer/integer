@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,28 +30,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.net.Inet4Address;
-
-import javax.persistence.Entity;
+package edu.harvard.integer.common.discovery;
 
 /**
  * @author David Taylor
- * 
- *         This class holds an IPV4 address and allows for validation of IPV4
- *         addresses.
- * 
+ *
  */
-@Entity
-public class IpV4Address extends Address {
-	private Inet4Address v4address = null;
-
-	public Inet4Address getAddress() {
-		return v4address;
-	}
-
-	public void setAddress(Inet4Address address) {
-		this.v4address = address;
-	}
+public enum DiscoveryOrderEnum {
+	SNMPv2c, SNMPv3, ICMP, SSH_CLI, Telnet_CLI;
 }

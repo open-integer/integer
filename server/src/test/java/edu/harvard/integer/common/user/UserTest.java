@@ -90,6 +90,7 @@ public class UserTest {
 		
 		u.setFirstName("Dave");
 		u.setLastName("Taylor");
+		u.setPassword("MyPassword");
 		u.setUuid(UUID.randomUUID());
 		
 		try {

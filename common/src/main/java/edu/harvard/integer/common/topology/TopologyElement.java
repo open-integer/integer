@@ -38,8 +38,9 @@ package edu.harvard.integer.common.topology;
  */
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
@@ -52,12 +53,18 @@ import edu.harvard.integer.common.BaseEntity;
 public class TopologyElement extends BaseEntity {
 
 	/**
+	 * Serial Version UID 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
 	 * Address is separate from layer since a layer like IP might have
 	 * different address types, e.g., IPv4 or IPv6. A topology element may exist
 	 * at only one layer. Multiple addresses are possible for an
 	 * element at a given layer.
 	 */
-	@OneToMany
+	@ElementCollection
+	@OrderColumn(name="idx")
 	private List<Address> address = null;
 
 	/**

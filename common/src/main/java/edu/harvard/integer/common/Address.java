@@ -32,7 +32,14 @@
  */
 package edu.harvard.integer.common;
 
-import javax.persistence.Entity;
+import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import javax.persistence.Embeddable;
+
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.SystemErrorCodes;
 /**
  * @author David Taylor
  *
@@ -40,7 +47,38 @@ import javax.persistence.Entity;
  * Base class for IPV4 and IPV6 address. 
  * 
  */
-@Entity
-public abstract class Address extends BaseEntity {
+@Embeddable
+public abstract class Address implements Serializable {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String address = null;
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public InetAddress getInetAddress() throws IntegerException {
+		try {
+			return InetAddress.getByName(address);
+		} catch (UnknownHostException e) {
+			
+			e.printStackTrace();
+			throw new IntegerException(e, SystemErrorCodes.InvalidIpAddress);
+		}
+	}
 	
 }

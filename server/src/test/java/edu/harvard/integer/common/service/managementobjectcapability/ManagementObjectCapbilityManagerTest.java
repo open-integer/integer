@@ -55,26 +55,19 @@ import org.slf4j.Logger;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.FCAPSEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManager;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
-import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 
 /**
  * @author David Taylor
@@ -266,7 +259,7 @@ public class ManagementObjectCapbilityManagerTest {
 
 		return capabilities.toArray(new Capability[0]);
 	}
-
+	
 	@Test
 	public void exportJasonCapabilityManagementObjects() {
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
@@ -275,15 +268,17 @@ public class ManagementObjectCapbilityManagerTest {
 		try {
 
 			jg = jsonFactory.createGenerator(new FileOutputStream(
-					"content.json"), JsonEncoding.UTF8);
+					"capabilites.json"), JsonEncoding.UTF8);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} // or Stream, Reader
 
 		List<Capability> capabilities = null;
 		try {
 			capabilities = managementObjectManager.getCapabilities();
+			
+			logger.info("Loaded " + capabilities.size() + " Capabilites to export to JSON");
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
@@ -295,20 +290,19 @@ public class ManagementObjectCapbilityManagerTest {
 		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-		for (Capability capability : capabilities) {
-			try {
+		try {
+			mapper.writeValue(jg, capabilities);
+		
+		
+		} catch (JsonProcessingException je) {
+			je.printStackTrace();
+			fail(je.toString());
+		} catch (IOException e) {
 
-				mapper.writeValue(jg, capability);
-				// jg.writeObject(capability);
-			} catch (JsonProcessingException je) {
-				je.printStackTrace();
-				fail(je.toString());
-			} catch (IOException e) {
-
-				e.printStackTrace();
-				fail(e.toString());
-			}
+			e.printStackTrace();
+			fail(e.toString());
 		}
+		
 		try {
 			jg.close();
 		} catch (IOException e) {
@@ -318,63 +312,5 @@ public class ManagementObjectCapbilityManagerTest {
 		}
 	}
 
-	//@Test
-	public void exportSNMPObjects() {
-		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
-														// org.codehaus.jackson.mapper.MappingJsonFactory
-		JsonGenerator jg = null;
-		try {
-
-			jg = jsonFactory.createGenerator(new FileOutputStream(
-					"managementObject.json"), JsonEncoding.UTF8);
-		} catch (IOException e) { 
-			e.printStackTrace();
-			fail(e.toString());
-		} 
-
-		MIBInfo[] importedMibs = null;
-		try {
-			importedMibs = snmpManager.getImportedMibs();
-		} catch (IntegerException e) {
-			e.printStackTrace();
-			fail(e.toString());
-		}
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-		logger.info("Have " + importedMibs.length + " MIBs to export");
-		for (MIBInfo mibInfo : importedMibs) {
-			
-			logger.info("MIB " + mibInfo.getName() + " Has " + mibInfo.getScalors().size() + " Scalors to export");
-			
-			if (mibInfo.getScalors().size() == 0)
-				continue;
-			
-			for (SNMP oid : mibInfo.getScalors()) {
-				try {
-					mapper.writeValue(jg, oid);
-				} catch (JsonGenerationException e) {
-					e.printStackTrace();
-					fail(e.toString());
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-					fail(e.toString());
-				} catch (IOException e) {
-					e.printStackTrace();
-					fail(e.toString());
-				}
-			}
-
-			try {
-				jg.close();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-				fail(e.toString());
-			}
-		}
-	}
+	
 }
