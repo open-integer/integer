@@ -38,6 +38,7 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
@@ -59,6 +60,7 @@ import edu.harvard.integer.common.discovery.DiscoveryOrderEnum;
  *         listed determine whether the discovery program will include those
  *         devices and the service elements they contain or not.
  */
+@Entity
 public class IpTopologySeed extends BaseEntity {
 
 	/**
