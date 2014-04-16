@@ -58,6 +58,9 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.discovery.DiscoveryParseElement;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
+import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -306,4 +309,12 @@ public class ServiceElementDiscoveryManagerTest {
 		}
 	}
 	
+	private void createSnmpContainment() {
+		SnmpContainment snmpContainment = new SnmpContainment();
+		snmpContainment.setContainmentType(SnmpContainmentType.EntityMib);
+		snmpContainment.setName("MyContainment");
+		
+		SnmpLevelOID snmpLevelOid = new SnmpLevelOID();
+		snmpLevelOid.setName("My level oid");
+	}
 }

@@ -71,6 +71,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface dbm;
 
+	@Override
 	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
 		logger.debug("Add ServiceElementType " + serviceElementType);
@@ -88,6 +89,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return serviceElementType;
 	}
 	
+	@Override
 	public void deleteServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
 		logger.info("Delete service element " + serviceElementType.getName());
@@ -95,6 +97,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		dbm.getServiceElementTypeDAO().delete(serviceElementType);
 	}
 
+	@Override
 	public void deleteServiceElementType(ID serviceElementTypeId) throws IntegerException {
 		
 		logger.info("Delete service element " + serviceElementTypeId.getName());
@@ -103,6 +106,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 	}
 
 	
+	@Override
 	public ServiceElementType[] getAllServiceElementTypes() throws IntegerException {
 		
 		return dbm.getServiceElementTypeDAO().findAll();

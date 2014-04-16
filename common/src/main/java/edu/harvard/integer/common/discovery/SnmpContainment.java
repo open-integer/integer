@@ -35,6 +35,15 @@ package edu.harvard.integer.common.discovery;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+
+import org.hibernate.annotations.Index;
+
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
@@ -52,6 +61,7 @@ import edu.harvard.integer.common.ID;
  *         tables that represent the containment hierarchy.
  * 
  */
+@Entity
 public class SnmpContainment extends BaseEntity {
 
 	/**
@@ -69,9 +79,11 @@ public class SnmpContainment extends BaseEntity {
 	 * If the containment type is hierarchal then there will be a list of top
 	 * level SnmpLevelOID instances in the snmpLevelOidList attribute.
 	 */
+	@Enumerated(EnumType.STRING)
 	private SnmpContainmentType containmentType = null;
 
-	private List<ID> snmpLevels = null;
+	@OneToMany
+	private List<SnmpLevelOID> snmpLevels = null;
 
 	/**
 	 * @return the containmentType
@@ -91,7 +103,7 @@ public class SnmpContainment extends BaseEntity {
 	/**
 	 * @return the snmpLevels
 	 */
-	public List<ID> getSnmpLevels() {
+	public List<SnmpLevelOID> getSnmpLevels() {
 		return snmpLevels;
 	}
 
@@ -99,7 +111,7 @@ public class SnmpContainment extends BaseEntity {
 	 * @param snmpLevels
 	 *            the snmpLevels to set
 	 */
-	public void setSnmpLevels(List<ID> snmpLevels) {
+	public void setSnmpLevels(List<SnmpLevelOID> snmpLevels) {
 		this.snmpLevels = snmpLevels;
 	}
 }
