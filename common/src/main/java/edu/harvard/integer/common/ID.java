@@ -47,6 +47,11 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class ID implements IDInterface, Serializable {
 
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected Long identifier = null;
 
 	@Size(min = 1, max = 50)
@@ -55,7 +60,7 @@ public class ID implements IDInterface, Serializable {
 	private IDType idType = null;
 
 	public ID() {
-		
+		super();
 	}
 	
 	/**

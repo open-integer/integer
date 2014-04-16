@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,57 +30,72 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+package edu.harvard.integer.common.managementobject;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
+
 /**
  * @author David Taylor
- *
- *
- * Base class for IPV4 and IPV6 address. 
  * 
+ *         Hold the value for a given management object.
  */
-@Embeddable
-public abstract class Address implements Serializable {
+@Entity
+public abstract class ManagementObjectValue<T> extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String address = null;
 
 	/**
-	 * @return the address
+	 * The management object this value is for.
 	 */
-	public String getAddress() {
-		return address;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "managementObjectId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "managementObjectType")),
+			@AttributeOverride(name = "name", column = @Column(name = "managementObjectName")) })
+	private ID managementObject = null;
+
+	/**
+	 * 
+	 */
+	public ManagementObjectValue() {
+
 	}
 
 	/**
-	 * @param address the address to set
+	 * @return the managementObject
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	public ID getManagementObject() {
+		return managementObject;
 	}
-	
-	@Transient
-	public InetAddress getInetAddress() throws IntegerException {
-		try {
-			return InetAddress.getByName(address);
-		} catch (UnknownHostException e) {
-			
-			e.printStackTrace();
-			throw new IntegerException(e, SystemErrorCodes.InvalidIpAddress);
-		}
+
+	/**
+	 * @param managementObject
+	 *            the managementObject to set
+	 */
+	public void setManagementObject(ID managementObject) {
+		this.managementObject = managementObject;
 	}
-	
+
+	/**
+	 * @return the value
+	 */
+	public abstract T getValue();
+
+	/**
+	 * @param value
+	 *            the value to set
+	 */
+	public abstract void setValue(T value);
+
 }

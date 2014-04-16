@@ -116,6 +116,8 @@ public class IntegerProperties {
 
 			logger.info("Loaded properties " + settings.toString());
 			
+			resourceAsStream.close();
+			
 			lastLoaded = System.currentTimeMillis();
 
 			checkInterval = getIntProperty(IntegerPropertyNames.SystemPropertyCheckInterval);

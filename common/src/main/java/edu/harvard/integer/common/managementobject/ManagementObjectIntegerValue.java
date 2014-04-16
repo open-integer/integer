@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,57 +30,57 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+package edu.harvard.integer.common.managementobject;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
+import javax.persistence.Entity;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.SystemErrorCodes;
 /**
  * @author David Taylor
- *
- *
- * Base class for IPV4 and IPV6 address. 
  * 
+ *         Hold an Integer value of a management object
  */
-@Embeddable
-public abstract class Address implements Serializable {
+@Entity
+public class ManagementObjectIntegerValue extends
+		ManagementObjectValue<Integer> {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String address = null;
+
+	private Integer value = null;
 
 	/**
-	 * @return the address
+	 * 
 	 */
-	public String getAddress() {
-		return address;
+	public ManagementObjectIntegerValue() {
+
 	}
 
-	/**
-	 * @param address the address to set
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#getValue
+	 * ()
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	@Override
+	public Integer getValue() {
+		return value;
 	}
-	
-	@Transient
-	public InetAddress getInetAddress() throws IntegerException {
-		try {
-			return InetAddress.getByName(address);
-		} catch (UnknownHostException e) {
-			
-			e.printStackTrace();
-			throw new IntegerException(e, SystemErrorCodes.InvalidIpAddress);
-		}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#setValue
+	 * (java.lang.Object)
+	 */
+	@Override
+	public void setValue(Integer value) {
+		this.value = value;
+
 	}
-	
+
 }

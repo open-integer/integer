@@ -37,6 +37,7 @@ package edu.harvard.integer.common.topology;
  *
  */
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -54,6 +55,7 @@ import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 
 /*
  * A service element can be any function from an os manager in a vm environment to a high-level 
@@ -79,14 +81,14 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	private NetworkLayer networkLayer = null;
 
 	private String description = null;
-	
+
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
 			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
 	private ID serviceElementTypeId = null;
-	
+
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "iconId")),
@@ -183,7 +185,7 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	@OrderColumn(name = "idx")
 	private List<ID> domainIds = null;
 
-	/*
+	/**
 	 * Listing of the id object instances that reference mechanisms supported by
 	 * this service element. This list helps with scoping of configuration
 	 * sequencing and control.
@@ -196,12 +198,90 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 * A listing of all the ServiceElementProtocolInstanceIdentifier instances
 	 * for this service element.
 	 */
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	@CollectionTable(name = "ServiceElement_Values")
 	private List<ServiceElementProtocolInstanceIdentifier> values = null;
 
-	/*
+	/**
+	 * The serviceElementCriticalityOverride has the same possible values as the
+	 * serviceElementCriticality attribute but is manually entered by the
+	 * operator. When not null, this value will take precedence over the
+	 * serviceElementCriticality attribute.
+	 */
+	private int serviceElementCriticalityOverride = 0;
+
+	/**
+	 * Unique identifier of the Service Element. ID of the management object
+	 * that is used to uniquely identify this object. ex. (IpAddress or serial
+	 * numnber)
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "uniqueIdentifierId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "uniqueIdentifierType")),
+			@AttributeOverride(name = "name", column = @Column(name = "uniqueIdentifierName")) })
+	private ID uniqueIdentifier = null;
+
+	/**
+	 * If this value is not null, then the value it contains will be used in the
+	 * name attribute.
+	 */
+	private String nameOverride = null;
+
+	/**
+	 * Date and time the service element was created, either by the discovery
+	 * system or by hand.
+	 */
+	private Date created = null;
+
+	/**
+	 * Date and time this object was last modified, either by the discovery
+	 * system or by hand.
+	 */
+	private Date updated = null;
+
+	/**
+	 * A listing of the values of the attributes collected by the discovery
+	 * program.
+	 */
+	@ManyToMany(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	@CollectionTable(name = "ServiceElement_AttributeValues")
+	private List<ManagementObjectValue> attributeValues = null;
+
+	/**
+	 * This attribute describes the level of information confidentiality
+	 * held/transfered by the service element. For example confidential
+	 * information. It is found in both the ServiceElement and Adjacency
+	 * Objects.
+	 */
+	// TODO: Get the correct type for this object
+	private int securityLevel = 0;
+
+	/**
+	 * The environmentLevel attribute indicates whether a system is in
+	 * production, test, etc. It is an enumerated integer where 1 is the
+	 * production level and there can be a number of configured levels such as
+	 * test as level 2, development as level 3 etc.
+	 */
+	@Enumerated(EnumType.STRING)
+	private EnvironmentLevelEnum environmentLevel = null;
+
+	/**
+	 * Any arbitrary comment the user would like.
+	 */
+	private String comment = null;
+
+	/**
+	 * A listing of all the ServiceElementProtocolInstanceIdentifier instances
+	 * for this service element.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> serviceElementProtocolInstanceIdentifiers = null;
+
+	/**
 	 * Configured state includes whether the service element is in compliance
 	 * with current policy or not. If it is not, then other methods would be
 	 * able to retrieve information about policy overrides, etc.
@@ -338,7 +418,8 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param values the values to set
+	 * @param values
+	 *            the values to set
 	 */
 	public void setValues(List<ServiceElementProtocolInstanceIdentifier> values) {
 		this.values = values;
@@ -352,10 +433,223 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param serviceElementTypeId the serviceElementTypeId to set
+	 * @param serviceElementTypeId
+	 *            the serviceElementTypeId to set
 	 */
 	public void setServiceElementTypeId(ID serviceElementTypeId) {
 		this.serviceElementTypeId = serviceElementTypeId;
+	}
+
+	/**
+	 * @return the iconID
+	 */
+	public ID getIconID() {
+		return iconID;
+	}
+
+	/**
+	 * @param iconID
+	 *            the iconID to set
+	 */
+	public void setIconID(ID iconID) {
+		this.iconID = iconID;
+	}
+
+	/**
+	 * @return the credentials
+	 */
+	public List<ID> getCredentials() {
+		return credentials;
+	}
+
+	/**
+	 * @param credentials
+	 *            the credentials to set
+	 */
+	public void setCredentials(List<ID> credentials) {
+		this.credentials = credentials;
+	}
+
+	/**
+	 * @return the domainIds
+	 */
+	public List<ID> getDomainIds() {
+		return domainIds;
+	}
+
+	/**
+	 * @param domainIds
+	 *            the domainIds to set
+	 */
+	public void setDomainIds(List<ID> domainIds) {
+		this.domainIds = domainIds;
+	}
+
+	/**
+	 * @return the mechanismIds
+	 */
+	public List<ID> getMechanismIds() {
+		return mechanismIds;
+	}
+
+	/**
+	 * @param mechanismIds
+	 *            the mechanismIds to set
+	 */
+	public void setMechanismIds(List<ID> mechanismIds) {
+		this.mechanismIds = mechanismIds;
+	}
+
+	/**
+	 * @return the serviceElementCriticalityOverride
+	 */
+	public int getServiceElementCriticalityOverride() {
+		return serviceElementCriticalityOverride;
+	}
+
+	/**
+	 * @param serviceElementCriticalityOverride
+	 *            the serviceElementCriticalityOverride to set
+	 */
+	public void setServiceElementCriticalityOverride(
+			int serviceElementCriticalityOverride) {
+		this.serviceElementCriticalityOverride = serviceElementCriticalityOverride;
+	}
+
+	/**
+	 * @return the uniqueIdentifier
+	 */
+	public ID getUniqueIdentifier() {
+		return uniqueIdentifier;
+	}
+
+	/**
+	 * @param uniqueIdentifier
+	 *            the uniqueIdentifier to set
+	 */
+	public void setUniqueIdentifier(ID uniqueIdentifier) {
+		this.uniqueIdentifier = uniqueIdentifier;
+	}
+
+	/**
+	 * @return the nameOverride
+	 */
+	public String getNameOverride() {
+		return nameOverride;
+	}
+
+	/**
+	 * @param nameOverride
+	 *            the nameOverride to set
+	 */
+	public void setNameOverride(String nameOverride) {
+		this.nameOverride = nameOverride;
+	}
+
+	/**
+	 * @return the created
+	 */
+	public Date getCreated() {
+		return created;
+	}
+
+	/**
+	 * @param created
+	 *            the created to set
+	 */
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	/**
+	 * @return the updated
+	 */
+	public Date getUpdated() {
+		return updated;
+	}
+
+	/**
+	 * @param updated
+	 *            the updated to set
+	 */
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
+	/**
+	 * @return the attributeValues
+	 */
+	public List<ManagementObjectValue> getAttributeValues() {
+		return attributeValues;
+	}
+
+	/**
+	 * @param attributeValues
+	 *            the attributeValues to set
+	 */
+	public void setAttributeValues(List<ManagementObjectValue> attributeValues) {
+		this.attributeValues = attributeValues;
+	}
+
+	/**
+	 * @return the securityLevel
+	 */
+	public int getSecurityLevel() {
+		return securityLevel;
+	}
+
+	/**
+	 * @param securityLevel
+	 *            the securityLevel to set
+	 */
+	public void setSecurityLevel(int securityLevel) {
+		this.securityLevel = securityLevel;
+	}
+
+	/**
+	 * @return the environmentLevel
+	 */
+	public EnvironmentLevelEnum getEnvironmentLevel() {
+		return environmentLevel;
+	}
+
+	/**
+	 * @param environmentLevel
+	 *            the environmentLevel to set
+	 */
+	public void setEnvironmentLevel(EnvironmentLevelEnum environmentLevel) {
+		this.environmentLevel = environmentLevel;
+	}
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment
+	 *            the comment to set
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	/**
+	 * @return the serviceElementProtocolInstanceIdentifiers
+	 */
+	public List<ID> getServiceElementProtocolInstanceIdentifiers() {
+		return serviceElementProtocolInstanceIdentifiers;
+	}
+
+	/**
+	 * @param serviceElementProtocolInstanceIdentifiers
+	 *            the serviceElementProtocolInstanceIdentifiers to set
+	 */
+	public void setServiceElementProtocolInstanceIdentifiers(
+			List<ID> serviceElementProtocolInstanceIdentifiers) {
+		this.serviceElementProtocolInstanceIdentifiers = serviceElementProtocolInstanceIdentifiers;
 	}
 
 }

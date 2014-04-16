@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,57 +30,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+package edu.harvard.integer.common.topology;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.SystemErrorCodes;
 /**
  * @author David Taylor
- *
- *
- * Base class for IPV4 and IPV6 address. 
  * 
+ *         The environmentLevel attribute indicates whether a system is in
+ *         production, test, etc. It is an enumerated integer where 1 is the
+ *         production level and there can be a number of configured levels such
+ *         as test as level 2, development as level 3 etc.
  */
-@Embeddable
-public abstract class Address implements Serializable {
-
-	/**
-	 * Serial Version UID
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private String address = null;
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	@Transient
-	public InetAddress getInetAddress() throws IntegerException {
-		try {
-			return InetAddress.getByName(address);
-		} catch (UnknownHostException e) {
-			
-			e.printStackTrace();
-			throw new IntegerException(e, SystemErrorCodes.InvalidIpAddress);
-		}
-	}
-	
+public enum EnvironmentLevelEnum {
+	Production, Test, Development;
 }

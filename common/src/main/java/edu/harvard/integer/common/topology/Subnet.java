@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,33 +30,74 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.net.Inet6Address;
+package edu.harvard.integer.common.topology;
 
-import javax.persistence.Entity;
+import java.io.Serializable;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+
+import edu.harvard.integer.common.Address;
+
 /**
  * @author David Taylor
- * 
- *         This class holds an IPV6 address and allows for validation of IPV6
- *         addresses.
+ *
  */
-@Entity
-public class IpV6Address extends Address {
-	private Inet6Address v6address = null;
+@Embeddable
+public class Subnet implements Serializable {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "subnetAddress")) })
+	private Address address = null;
+	
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "subnetMask")) })
+	private Address mask = null;
+	
+	/**
+	 * 
+	 */
+	public Subnet() {
+		
+	}
 
 	/**
 	 * @return the address
 	 */
-	public Inet6Address getAddress() {
-		return v6address;
+	public Address getAddress() {
+		return address;
 	}
 
 	/**
-	 * @param address
-	 *            the address to set
+	 * @param address the address to set
 	 */
-	public void setAddress(Inet6Address address) {
-		this.v6address = address;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
+
+	/**
+	 * @return the mask
+	 */
+	public Address getMask() {
+		return mask;
+	}
+
+	/**
+	 * @param mask the mask to set
+	 */
+	public void setMask(Address mask) {
+		this.mask = mask;
+	}
+
 }

@@ -38,12 +38,14 @@ import java.util.List;
 import javax.ejb.Local;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -89,7 +91,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return the top level polls for discovery.
 	 * 
 	 */
-	public List<ServiceElementManagementObject> getTopLevelPolls();
+	public List<SNMP> getToplLevelOIDs();
 
 	/**
 	 * Insert or update the SnmpVendorTemplate.
@@ -146,4 +148,13 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	ServiceElementType getServiceElementTypeById(ID serviceElementTypeId)
 			throws IntegerException;
+
+	/**
+	 * @param id
+	 * @param seed
+	 * @return
+	 * @throws IntegerException
+	 */
+	NetworkDiscovery<ServiceElement> startDiscovery(DiscoveryId id,
+			IpDiscoverySeed seed) throws IntegerException;
 }

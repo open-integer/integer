@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,57 +30,82 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+package edu.harvard.integer.service.discovery;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
+import java.util.List;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.discovery.DiscoveryId;
+import edu.harvard.integer.common.topology.ServiceElement;
+
 /**
  * @author David Taylor
- *
- *
- * Base class for IPV4 and IPV6 address. 
  * 
  */
-@Embeddable
-public abstract class Address implements Serializable {
+public class RunningDiscovery {
+
+	public DiscoveryId id = null;
+
+	public List<NetworkDiscovery<ServiceElement>> runningDiscoveries = null;
+
+	public List<NetworkDiscovery<ServiceElement>> completeDiscoveries = null;
 
 	/**
-	 * Serial Version UID
+	 * @return the id
 	 */
-	private static final long serialVersionUID = 1L;
-	
-	private String address = null;
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
+	public DiscoveryId getId() {
+		return id;
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	public void setId(DiscoveryId id) {
+		this.id = id;
 	}
-	
-	@Transient
-	public InetAddress getInetAddress() throws IntegerException {
-		try {
-			return InetAddress.getByName(address);
-		} catch (UnknownHostException e) {
-			
-			e.printStackTrace();
-			throw new IntegerException(e, SystemErrorCodes.InvalidIpAddress);
+
+	/**
+	 * @return the runningDiscoveries
+	 */
+	public List<NetworkDiscovery<ServiceElement>> getRunningDiscoveries() {
+		return runningDiscoveries;
+	}
+
+	/**
+	 * @param runningDiscoveries
+	 *            the runningDiscoveries to set
+	 */
+	public void setRunningDiscoveries(
+			List<NetworkDiscovery<ServiceElement>> runningDiscoveries) {
+		this.runningDiscoveries = runningDiscoveries;
+	}
+
+	/**
+	 * @return the completeDiscoveries
+	 */
+	public List<NetworkDiscovery<ServiceElement>> getCompleteDiscoveries() {
+		return completeDiscoveries;
+	}
+
+	/**
+	 * @param completeDiscoveries
+	 *            the completeDiscoveries to set
+	 */
+	public void setCompleteDiscoveries(
+			List<NetworkDiscovery<ServiceElement>> completeDiscoveries) {
+		this.completeDiscoveries = completeDiscoveries;
+	}
+
+	/**
+	 * 
+	 */
+	public void stopDiscovery() {
+		
+		for (NetworkDiscovery<ServiceElement> runningDiscovery : runningDiscoveries) {
+			runningDiscovery.stopDiscovery();
 		}
+		
 	}
-	
+
 }

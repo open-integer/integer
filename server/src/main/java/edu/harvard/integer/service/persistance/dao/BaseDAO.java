@@ -54,6 +54,7 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.SystemErrorCodes;
 
 /**
  * @author David Taylor
@@ -251,7 +252,14 @@ public class BaseDAO {
 	 */
 	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
 
-		Class<? extends BaseEntity> clazz = id.getIdType().getClassType();
+		Class<? extends BaseEntity> clazz = null;
+		try {
+			clazz = (Class<? extends BaseEntity>) Class.forName(id.getIdType().getClassType());
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+			throw new IntegerException(e, SystemErrorCodes.InvalidIDNoType);
+		}
 
 		@SuppressWarnings("unchecked")
 		T entity = (T) entityManger.find(clazz, id.getIdentifier());
@@ -346,13 +354,16 @@ public class BaseDAO {
 	 * @throws IntegerException
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends BaseEntity> T createCleanCopy(T originialInstance)
+	public <T extends Object> T createCleanCopy(T originialInstance)
 			throws IntegerException {
 
 		T cleanCopy = null;
 		try {
 
-			cleanCopy = (T) originialInstance.getClass().newInstance();
+			if (!originialInstance.getClass().isEnum())
+				cleanCopy = (T) originialInstance.getClass().newInstance();
+			else
+				cleanCopy = originialInstance;
 
 			if (logger.isDebugEnabled())
 				logger.debug("Created new instance " + cleanCopy.getClass());
@@ -366,11 +377,16 @@ public class BaseDAO {
 					DatabaseErrorCodes.UnableToCreateCleanCopyIllegalAccess);
 		}
 
-		Long identifier = originialInstance.getIdentifier();
+		
+		Long identifier = null;
+		
+		if (originialInstance instanceof BaseEntity)
+			identifier = ((BaseEntity) originialInstance).getIdentifier();
 
 		T copy = copyFields(cleanCopy, originialInstance);
 
-		cleanCopy.setIdentifier(identifier);
+		if (originialInstance instanceof BaseEntity)
+			((BaseEntity) cleanCopy).setIdentifier(identifier);
 
 		return copy;
 	}
@@ -389,11 +405,14 @@ public class BaseDAO {
 	 * @throws IntegerException
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <T extends BaseEntity> T copyFields(T toInstance, T fromInstance)
+	public <T extends Object> T copyFields(T toInstance, T fromInstance)
 			throws IntegerException {
 
 		// Don't want to overwrite the identifier.
-		Long identifier = toInstance.getIdentifier();
+		Long identifier = null;
+		
+		if (toInstance instanceof BaseEntity) 
+			identifier = ((BaseEntity) toInstance).getIdentifier();
 
 		for (Method f : fromInstance.getClass().getMethods()) {
 
@@ -451,12 +470,13 @@ public class BaseDAO {
 
 		}
 
-		toInstance.setIdentifier(identifier);
+		if (toInstance instanceof BaseEntity)
+			((BaseEntity) toInstance).setIdentifier(identifier);
 
 		return toInstance;
 	}
 
-	private <T extends BaseEntity> T[] copyArray(T[] values)
+	public <T extends Object> T[] copyArray(T[] values)
 			throws IntegerException {
 
 		if (values == null)
@@ -470,7 +490,7 @@ public class BaseDAO {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private List copyList(List<BaseEntity> list) throws IntegerException {
+	private List copyList(List<Object> list) throws IntegerException {
 
 		List copy = new ArrayList();
 
@@ -478,7 +498,7 @@ public class BaseDAO {
 			logger.debug("Copy list " + copy.getClass() + " "
 					+ Arrays.toString(list.toArray()));
 
-		for (BaseEntity object : list) {
+		for (Object object : list) {
 			copy.add(createCleanCopy(object));
 		}
 

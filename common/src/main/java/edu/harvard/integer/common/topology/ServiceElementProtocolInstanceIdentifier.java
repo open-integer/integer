@@ -59,10 +59,6 @@ public class ServiceElementProtocolInstanceIdentifier extends BaseEntity impleme
 	 */
 	private static final long serialVersionUID = 1L;
 
-//	@ElementCollection
-//	@OrderColumn(name = "idx")
-//	private List<FCAPSEnum> fcaps = null;
-
 	private String value = null;
 
 	public ServiceElementProtocolInstanceIdentifier() {

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,57 +30,28 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+package edu.harvard.integer.common.schedule;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
+import javax.persistence.Entity;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.BaseEntity;
+
 /**
  * @author David Taylor
- *
- *
- * Base class for IPV4 and IPV6 address. 
  * 
+ *         The contains a calendar policy that may be used by many different
+ *         elements in the system from roles to data collection.
+ * 
+ *         When associated with a Report Template it is the frequency that the
+ *         report is generated.
  */
-@Embeddable
-public abstract class Address implements Serializable {
+@Entity
+public class CalendarPolicy extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String address = null;
 
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	@Transient
-	public InetAddress getInetAddress() throws IntegerException {
-		try {
-			return InetAddress.getByName(address);
-		} catch (UnknownHostException e) {
-			
-			e.printStackTrace();
-			throw new IntegerException(e, SystemErrorCodes.InvalidIpAddress);
-		}
-	}
-	
 }

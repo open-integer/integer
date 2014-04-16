@@ -33,8 +33,6 @@
 
 package edu.harvard.integer.service.discovery;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,9 +52,12 @@ import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.IntegerPropertyNames;
 import edu.harvard.integer.common.properties.LongPropertyNames;
+import edu.harvard.integer.common.topology.DiscoveryRule;
+import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.service.BaseService;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 
 /**
  * @author David Taylor
@@ -70,6 +71,9 @@ public class DiscoveryService extends BaseService implements
 	@Inject
 	private Logger logger;
 
+	@Inject
+	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManager;
+	
     /**
      * Use to limit the number of discovery tasks.  The number should be small since
      * we are not suggest too many tasks for discovery.
@@ -92,8 +96,7 @@ public class DiscoveryService extends BaseService implements
 	 */
 	private long discoverySeqId = 0;
 		
-	private Map<DiscoveryId, NetworkDiscovery> discoverMap = new ConcurrentHashMap<DiscoveryId, NetworkDiscovery>();
-	
+	private Map<DiscoveryId, RunningDiscovery> runningDiscoveries = new ConcurrentHashMap<DiscoveryId, RunningDiscovery>();
 
 	/**
 	 * Called after service has been created. Initialize of the discovery
@@ -120,39 +123,82 @@ public class DiscoveryService extends BaseService implements
 		return subPool;
 	}
 	
-	/**
-	 * Discovery id.  The format of the id is Integer Server IP + sequence id.  It is considering valid cross different 
-	 * Integer server.
-	 */
-	private synchronized String getNextDiscoveryId()  {
-		
-		try {
-			return InetAddress.getLocalHost().getHostAddress() + ":" + (++discoverySeqId);
-		} catch (UnknownHostException e) {
-			return "unknownHost:" + (++discoverySeqId);
-		}
-	}
 	
-
 	/**
-	 * Start a discovery. This will return a DiscoveryId that can be used to
-	 * uniquely identify this instance of discovery.
+	 * Start a discovery with the given DiscoveryRule. The returned DiscoveryId can be used as a handle to 
+	 * get status of the discovery as well as stop the discovery.
 	 * 
-	 * @param discoverSeed
-	 * @return
+	 * @param rule
+	 * @return DiscoveryId of the discovery process started by this DiscoveryRule
 	 * @throws IntegerException
 	 */
-	public DiscoveryId startServiceElmentDiscovery(List<IpDiscoverySeed> discoverSeed) throws IntegerException {
+	@Override
+	public DiscoveryId startDiscovery(DiscoveryRule rule) throws IntegerException {
 		DiscoveryId id = new DiscoveryId();
 		id.setServerId(IntegerProperties.getInstance().getLongProperty(LongPropertyNames.ServerId));
 		id.setDiscoveryId(discoverySeqId++);
-
-		 NetworkDiscovery netDisc = new NetworkDiscovery( discoverSeed, id );
-		 discoverMap.put(id, netDisc);
-		 netDisc.discoverNetwork();
-		 
-		return null;
+		
+		runningDiscoveries.put(id, new RunningDiscovery());
+		
+		switch (rule.getDiscoveryType()) {
+		case Both:
+		case ServiceElement:
+			startServiceElementDiscovery(id, rule.getTopologySeeds());
+			break;
+			
+		case Topology:
+			startTopologyDiscovery(rule.getTopologySeeds());
+		}
+		
+		return id;
 	}
+	
+	/**
+	 * @param topologySeeds
+	 */
+	private void startTopologyDiscovery(List<IpTopologySeed> topologySeeds) {
+		
+	}
+
+	/**
+	 * @param topologySeeds
+	 * @throws IntegerException 
+	 */
+	private void startServiceElementDiscovery(DiscoveryId id, List<IpTopologySeed> topologySeeds) throws IntegerException {
+		
+		for (IpTopologySeed ipTopologySeed : topologySeeds) {
+			
+			IpDiscoverySeed seed = createIpDiscoverySeed(ipTopologySeed);
+		
+			try {
+				NetworkDiscovery<ServiceElement> discovery = serviceElementDiscoveryManager.startDiscovery(id, seed);
+				runningDiscoveries.get(id).getRunningDiscoveries().add(discovery);
+				
+			} catch (IntegerException e) {
+				logger.error("Error starting ServiceElementDiscovery " + e.toString());
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		
+	}
+
+	/**
+	 * Create a IpDescoverySeed from the IpToplogySeed.
+	 * 
+	 * @param ipTopologySeed
+	 * @return
+	 */
+	private IpDiscoverySeed createIpDiscoverySeed(IpTopologySeed ipTopologySeed) {
+		
+		DiscoverNet net = new DiscoverNet(ipTopologySeed.getSubnet().getAddress().getAddress(),
+				ipTopologySeed.getSubnet().getMask().getAddress());
+		
+		IpDiscoverySeed seed = new IpDiscoverySeed(net, ipTopologySeed.getCredentials());
+	
+		return seed;
+	}
+
 	
 	/**
 	 * Called when discovery is complete.
@@ -161,8 +207,13 @@ public class DiscoveryService extends BaseService implements
 	 */
 	@Override
 	public void discoveryComplete(DiscoveryId discoveryId) throws IntegerException {
-		NetworkDiscovery completeDiscovery = discoverMap.remove(discoveryId);
-		logger.info("Discovery complete for " + discoveryId);
+		RunningDiscovery runningDiscovery = runningDiscoveries.get(discoveryId);
+		 
+		
+		if (runningDiscovery != null)
+			logger.info("Discovery complete for " + discoveryId);
+		else
+			logger.warn("Discovery " + discoveryId + " not running. Unable to mark as complete!");
 	}
 	
 	/**
@@ -185,7 +236,6 @@ public class DiscoveryService extends BaseService implements
 		logger.info("Found ServiceElemet " + accessElement);
 	}
 		
-
 	
 	/**
 	 * Stop discovery based on id.
@@ -195,23 +245,10 @@ public class DiscoveryService extends BaseService implements
 	@Override
 	public void stopDiscovery( DiscoveryId id ) {
 		
-		NetworkDiscovery netDisc = discoverMap.get(id);
-		if ( netDisc != null ) {
-		    netDisc.stopDiscovery();	
+		RunningDiscovery runningDiscovery = runningDiscoveries.get(id);
+		if ( runningDiscovery != null ) {
+			runningDiscovery.stopDiscovery();	
 		}
 	}
-	
-	/**
-	 * Get Network Discovery based on id.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public NetworkDiscoveryBase getDiscovery( String id ) {
-		
-		return discoverMap.get(id);
-		
-	}
-
 	
 }

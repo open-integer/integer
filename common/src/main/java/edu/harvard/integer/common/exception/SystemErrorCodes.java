@@ -40,7 +40,9 @@ package edu.harvard.integer.common.exception;
 public enum SystemErrorCodes implements ErrorCodeInterface {
 	ServiceNotFound("Service not found"),
 	ManagerNotFound("Mangager not found"),
-	PropertyFileNotFound("Property file {0} not found");
+	PropertyFileNotFound("Property file {0} not found"),
+	InvalidIpAddress("Invalid IpAddress "),
+	InvalidIDNoType("No type specified for ID");
 
 	/** The error code. */
 	private String errorCode = null;

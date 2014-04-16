@@ -31,6 +31,7 @@
  *      
  */
 package edu.harvard.integer.common.topology;
+
 /**
  * @author David Taylor
  *
@@ -70,7 +71,7 @@ public class Capability extends BaseEntity {
 	 * Serialization ID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/*
 	 * Listing of all the FCAPS categories an instance of this capability
 	 * applies. Note that there is an extra 's' in this attribute to convey that
@@ -100,9 +101,9 @@ public class Capability extends BaseEntity {
 	 * protocol.
 	 */
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> parameters = null;
-	
+
 	/**
 	 * @return the fcaps
 	 */
@@ -133,19 +134,19 @@ public class Capability extends BaseEntity {
 		this.description = description;
 	}
 
-//	/**
-//	 * @return the parameters
-//	 */
-//	public List<ServiceElementManagementObject> getParameters() {
-//		return parameters;
-//	}
-//
-//	/**
-//	 * @param parameters
-//	 *            the parameters to set
-//	 */
-//	public void setParameters(List<ServiceElementManagementObject> parameters) {
-//		this.parameters = parameters;
-//	}
+	/**
+	 * @return the parameters
+	 */
+	public List<ID> getParameters() {
+		return parameters;
+	}
+
+	/**
+	 * @param parameters
+	 *            the parameters to set
+	 */
+	public void setParameters(List<ID> parameters) {
+		this.parameters = parameters;
+	}
 
 }
