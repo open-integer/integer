@@ -41,6 +41,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.Address;
@@ -156,6 +157,14 @@ public class IpTopologySeed extends BaseEntity {
 	 */
 	private Integer snmpRetriesTopologyDiscovery = null;
 
+	/**
+	 * Credentials to use for this discovery
+	 */
+	@ManyToMany
+	@OrderColumn(name = "idx")
+	@CollectionTable(name = "IpTopologySeed_Credentials")
+	private List<Credential> credentials = null;
+	
 	/**
 	 * @return the netExclustions
 	 */
@@ -323,6 +332,20 @@ public class IpTopologySeed extends BaseEntity {
 	public void setSnmpRetriesTopologyDiscovery(
 			Integer snmpRetriesTopologyDiscovery) {
 		this.snmpRetriesTopologyDiscovery = snmpRetriesTopologyDiscovery;
+	}
+
+	/**
+	 * @return the credentials
+	 */
+	public List<Credential> getCredentials() {
+		return credentials;
+	}
+
+	/**
+	 * @param credentials the credentials to set
+	 */
+	public void setCredentials(List<Credential> credentials) {
+		this.credentials = credentials;
 	}
 
 }

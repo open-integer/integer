@@ -36,6 +36,7 @@ package edu.harvard.integer.service.discovery;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
@@ -48,6 +49,15 @@ import edu.harvard.integer.service.BaseServiceInterface;
  */
 public interface DiscoveryServiceInterface extends BaseServiceInterface {
 
+	/**
+	 * Start a discovery with the given DiscoveryRule.
+	 * 
+	 * @param rule
+	 * @return
+	 * @throws IntegerException
+	 */
+	public DiscoveryId startDiscovery(DiscoveryRule rule) throws IntegerException;
+	
 	/**
 	 * @param dicoveryId
 	 * @throws IntegerException

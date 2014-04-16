@@ -55,6 +55,7 @@ import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -64,6 +65,7 @@ import edu.harvard.integer.service.discovery.IntegerInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.PollResult;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.TopoNetwork;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
@@ -80,6 +82,9 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 	@Inject
 	private Logger logger;
 
+	@Inject
+	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManager;
+	
 	private static NetworkDiscovery netDisc;
 
 	
@@ -116,7 +121,6 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 	@Test
 	public void createNetworkDiscovery() {
 		
-		List<IpDiscoverySeed> discoverSeed = new ArrayList<>();
 		SnmpV2cCredentail snmpV2c = new SnmpV2cCredentail();
 		snmpV2c.setReadCommunity("public");
 		
@@ -144,11 +148,12 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 		
 		seed.addAccessPort(ap);
 		
-		discoverSeed.add(seed);
 	
 		DiscoveryId id = new DiscoveryId(Long.valueOf(1), Long.valueOf(1));
 		
-		netDisc = new NetworkDiscovery(discoverSeed, id);		
+		List<SNMP> toplLevelOIDs = serviceElementDiscoveryManager.getToplLevelOIDs();
+		
+		netDisc = new NetworkDiscovery(seed, toplLevelOIDs, id);
 	
 	}
 	

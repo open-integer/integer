@@ -40,16 +40,19 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.snmp4j.smi.OID;
+import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -87,6 +90,32 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface dbm;
 
+	/**
+	 * Start a discovery of ServiceElements with the given Discovery seed. 
+	 * 
+	 * @param id
+	 * @param seed
+	 * @return
+	 * @throws IntegerException
+	 */
+	public NetworkDiscovery<ServiceElement> startDiscovery(DiscoveryId id, IpDiscoverySeed seed) throws IntegerException {
+		
+		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
+	
+		List<SNMP> mgrObjects = getToplLevelOIDs();
+		for ( SNMP snmp : mgrObjects ) {
+
+			VariableBinding vb = new VariableBinding(new OID(snmp.getOid()));
+			vbs.add(vb);
+
+		}
+		
+		NetworkDiscovery<ServiceElement> discovery = new NetworkDiscovery<ServiceElement>(seed, vbs, id);
+		
+		discovery.discoverNetwork();
+		
+		return discovery;
+	}
 	
 	@Override
 	public SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
@@ -185,11 +214,11 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getTopLevelPolls()
 	 */
 	@Override
-	public List<ServiceElementManagementObject> getTopLevelPolls() {
+	public List<SNMP> getToplLevelOIDs() {
 		
 		SNMPDAO snmpdao = dbm.getSNMPDAO();
 		
-		List<ServiceElementManagementObject> snmps = new ArrayList<>();
+		List<SNMP> snmps = new ArrayList<>();
 		
 		snmps = addOid(CommonSnmpOids.sysContact, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.sysDescr, snmps, snmpdao);
@@ -200,7 +229,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return snmps;
 	}
 	
-	private List<ServiceElementManagementObject> addOid(String oid, List<ServiceElementManagementObject> snmps, SNMPDAO dao) {
+	private List<SNMP> addOid(String oid, List<SNMP> snmps, SNMPDAO dao) {
 		SNMP snmp = dao.findByOid(oid);
 		if (snmp != null)
 			snmps.add(snmp);

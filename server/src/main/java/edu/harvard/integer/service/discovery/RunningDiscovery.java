@@ -1,5 +1,4 @@
 /*
-
  *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
@@ -31,30 +30,82 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+
 package edu.harvard.integer.service.discovery;
 
 import java.util.List;
-import java.util.concurrent.Future;
-
-import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.common.discovery.DiscoveryId;
-import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
-
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Interface NetworkDiscoveryBase outlines the discover methods. 
- *
- * @author dchan
+ * @author David Taylor
+ * 
  */
-public interface NetworkDiscoveryBase {
-	
+public class RunningDiscovery {
+
+	public DiscoveryId id = null;
+
+	public List<NetworkDiscovery<ServiceElement>> runningDiscoveries = null;
+
+	public List<NetworkDiscovery<ServiceElement>> completeDiscoveries = null;
+
 	/**
-	 * @param seed
-	 * @param toplevelVarBinds
-	 * @param id
+	 * @return the id
 	 */
-	public List<Future<Ipv4Range>> discoverNetwork();
-	public void stopDiscovery();
-	
+	public DiscoveryId getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(DiscoveryId id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the runningDiscoveries
+	 */
+	public List<NetworkDiscovery<ServiceElement>> getRunningDiscoveries() {
+		return runningDiscoveries;
+	}
+
+	/**
+	 * @param runningDiscoveries
+	 *            the runningDiscoveries to set
+	 */
+	public void setRunningDiscoveries(
+			List<NetworkDiscovery<ServiceElement>> runningDiscoveries) {
+		this.runningDiscoveries = runningDiscoveries;
+	}
+
+	/**
+	 * @return the completeDiscoveries
+	 */
+	public List<NetworkDiscovery<ServiceElement>> getCompleteDiscoveries() {
+		return completeDiscoveries;
+	}
+
+	/**
+	 * @param completeDiscoveries
+	 *            the completeDiscoveries to set
+	 */
+	public void setCompleteDiscoveries(
+			List<NetworkDiscovery<ServiceElement>> completeDiscoveries) {
+		this.completeDiscoveries = completeDiscoveries;
+	}
+
+	/**
+	 * 
+	 */
+	public void stopDiscovery() {
+		
+		for (NetworkDiscovery<ServiceElement> runningDiscovery : runningDiscoveries) {
+			runningDiscovery.stopDiscovery();
+		}
+		
+	}
+
 }

@@ -49,8 +49,6 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
-import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
@@ -111,46 +109,20 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	 */
 	private final DiscoveryId discoverId;
 	
-
 	/**
-	 * Instantiates a new network discovery.
-	 *
-	 * @param discoverSeed the discover seed
-	 * @param callback the callback
-	 * @param integerIf the integer if
+	 * Create a discovery  
+	 * 
+	 * @param seed
+	 * @param toplevelVarBinds
+	 * @param id
 	 */
-	public NetworkDiscovery( final List<IpDiscoverySeed> discoverSeed, 
-			                 DiscoveryId discoveryId ) 
-	{
-		this.discoverId = discoveryId;
-		this.discoverSeeds = discoverSeed;
-		
-		List<VariableBinding> vbs = new ArrayList<>();
-		ServiceElementDiscoveryManagerInterface manager = null;
-		try {
-			manager = (ServiceElementDiscoveryManagerInterface) DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-		} catch (IntegerException e) {
-			// throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
-			logger.error("Unable to get ServiceElementDiscoveryManager " + e.toString());
-			return;
-		}
-		
-		List<ServiceElementManagementObject> mgrObjects = manager.getTopLevelPolls();
-		for ( ServiceElementManagementObject se : mgrObjects ) {
-			
-			if ( se instanceof SNMP ) {
-		
-				SNMP sn = (SNMP) se;
-				VariableBinding vb = new VariableBinding(new OID(sn.getOid()));
-				vbs.add(vb);
-			}
-		}
-		if ( vbs.size() > 0 ) {
-			topLevelVBs = vbs;
-		}
+	public NetworkDiscovery(IpDiscoverySeed seed, List<VariableBinding> toplevelVarBinds, DiscoveryId id)  {
+		this.discoverId = id;
+		List<IpDiscoverySeed> seeds = new ArrayList<IpDiscoverySeed>();
+		seeds.add(seed);
+		this.discoverSeeds = seeds;
+		this.topLevelVBs = toplevelVarBinds;
 	}
-	
-	
 	
 	
 	/**
