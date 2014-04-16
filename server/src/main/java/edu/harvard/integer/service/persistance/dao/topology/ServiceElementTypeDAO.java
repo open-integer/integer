@@ -33,7 +33,14 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
@@ -55,6 +62,40 @@ public class ServiceElementTypeDAO extends BaseDAO {
 	 */
 	public ServiceElementTypeDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, ServiceElementType.class);
+		
+	}
+
+	/**
+	 * @return
+	 */
+	public ServiceElementType[] findByCategoryAndVendor(String category, String vendor) {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<ServiceElementType> query = criteriaBuilder.createQuery(ServiceElementType.class);
+
+		Root<ServiceElementType> from = query.from(ServiceElementType.class);
+		query.select(from);
+
+		ParameterExpression<String> categoryParam = criteriaBuilder
+				.parameter(String.class);
+		
+		ParameterExpression<String> vendorParam = criteriaBuilder
+				.parameter(String.class);
+		
+		query.select(from).where(criteriaBuilder.and(
+				criteriaBuilder.equal(from.get("category"), categoryParam),
+				criteriaBuilder.equal(from.get("vendor"), vendorParam)));
+
+		TypedQuery<ServiceElementType> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(categoryParam, category);
+		typeQuery.setParameter(vendorParam, vendor);
+
+		List<ServiceElementType> resultList = typeQuery.getResultList();
+
+		return (ServiceElementType[]) resultList
+				.toArray(new ServiceElementType[resultList.size()]);
 		
 	}
 
