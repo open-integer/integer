@@ -288,12 +288,16 @@ public class ServiceElementDiscoveryManagerTest {
 	public void getServiceElementByCategoryAndVendor() {
 		try {
 			
+			createServiceElementType();
+			
 			assert(serviceElementDiscoveryManger != null);
 			
 			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger.getServiceElementTypesByCategoryAndVendor("Port", "Cisco");
 			
 			assert(serviceElementTypes != null);
 			assert(serviceElementTypes.length > 0);
+			
+			logger.info("Found " + serviceElementTypes.length + " ServiceElementTypes for category 'Port' and Vendor 'Cisco'");
 			
 		} catch (IntegerException e) {
 	
