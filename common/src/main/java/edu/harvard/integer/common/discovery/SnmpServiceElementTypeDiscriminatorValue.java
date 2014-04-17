@@ -31,57 +31,43 @@
  *      
  */
 
-package edu.harvard.integer.common.managementobject;
+package edu.harvard.integer.common.discovery;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+
+import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
- * 
- *         Hold a String value of a management object.
+ *
  */
 @Entity
-public class ManagementObjectStringValue extends ManagementObjectValue<String> {
-
-	@Column(name="stringValue")
-	private String value = null;
+public abstract class SnmpServiceElementTypeDiscriminatorValue<T> extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
 	/**
 	 * 
 	 */
-	public ManagementObjectStringValue() {
-
+	public SnmpServiceElementTypeDiscriminatorValue() {
+		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#getValue
-	 * ()
+	
+
+	/**
+	 * @return the value
 	 */
-	@Override
-	public String getValue() {
+	public abstract T getValue();
 
-		return value;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#setValue
-	 * (java.lang.Object)
+	/**
+	 * @param value
+	 *            the value to set
 	 */
-	@Override
-	public void setValue(String value) {
-		this.value = value;
-	}
-
+	public abstract void setValue(T value);
+	
 }

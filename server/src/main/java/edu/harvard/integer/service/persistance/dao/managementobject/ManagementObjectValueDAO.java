@@ -31,57 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.common.managementobject;
+package edu.harvard.integer.service.persistance.dao.managementobject;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
- * 
- *         Hold a String value of a management object.
+ *
  */
-@Entity
-public class ManagementObjectStringValue extends ManagementObjectValue<String> {
-
-	@Column(name="stringValue")
-	private String value = null;
+public class ManagementObjectValueDAO extends BaseDAO {
 
 	/**
-	 * Serial Version UID
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
-	public ManagementObjectStringValue() {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#getValue
-	 * ()
-	 */
-	@Override
-	public String getValue() {
-
-		return value;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#setValue
-	 * (java.lang.Object)
-	 */
-	@Override
-	public void setValue(String value) {
-		this.value = value;
+	public ManagementObjectValueDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, ManagementObjectValue.class);
+		
 	}
 
 }

@@ -37,6 +37,7 @@ import javax.ejb.Local;
 
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
@@ -194,6 +195,11 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	VendorIdentifierDAO getVendorIdentifierDAO();
+
+	/**
+	 * @return
+	 */
+	ManagementObjectValueDAO getManagementObjectValueDAO();
 	
 	
 }

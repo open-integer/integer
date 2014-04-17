@@ -112,6 +112,9 @@ public class BaseDAO {
 	 */
 	public <T extends BaseEntity> T update(T entity) throws IntegerException {
 
+		if (entity == null)
+			return null;
+		
 		try {
 
 			preSave(entity);
@@ -277,6 +280,9 @@ public class BaseDAO {
 	public <T extends BaseEntity> List<T> update(List<T> entities)
 			throws IntegerException {
 
+		if (entities == null)
+			return null;
+		
 		for (T baseEntity : entities) {
 			update(baseEntity);
 		}
