@@ -158,4 +158,12 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	NetworkDiscovery<ServiceElement> startDiscovery(DiscoveryId id,
 			IpDiscoverySeed seed) throws IntegerException;
+
+	/**
+	 * Find the ServiceElements for the given category and vendor. 
+	 * @return a list of ServiceElements that match the given category and vendor.
+	 * @throws IntegerException
+	 */
+	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(String catetory, String vendorType)
+			throws IntegerException;
 }

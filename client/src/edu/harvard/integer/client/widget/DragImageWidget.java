@@ -26,6 +26,8 @@ public class DragImageWidget extends WidgetLayer {
     
     /** The image height. */
     public static final int IMAGE_HEIGHT = 60;  
+    
+    public static final Color BANNER_COLOR = new Color(28, 90, 128);
       
     /**
      * Instantiates a new drag image widget.
@@ -53,8 +55,11 @@ public class DragImageWidget extends WidgetLayer {
 		group.setX(x).setY(y);
 		addIndividualDevices(group, title);
 		
-		Rectangle rectangle = new Rectangle(400, 300, 10).setStrokeColor(ColorName.GRAY.getValue());
+		Rectangle rectangle = new Rectangle(400, 300, 7).setStrokeColor(ColorName.GRAY.getValue());
 		group.add(rectangle);
+		
+		Rectangle topRec = new Rectangle(400, 30, 7).setFillColor(ColorName.AQUA.getValue()).setAlpha(0.2);
+		group.add(topRec);
 		
 		add(group);
 	}
@@ -134,8 +139,8 @@ public class DragImageWidget extends WidgetLayer {
             	add(icon);
         	else {
         		group.add(icon);
-        		Text text = new Text(title, "Arial, sans-serif", 16);
-        		text.setX(10).setY(30).setFillColor(ColorName.NAVY.getValue());
+        		Text text = new Text(title, "Arial, sans-serif", 14);
+        		text.setX(10).setY(20).setStrokeColor(BANNER_COLOR).setFillColor(BANNER_COLOR);
         		group.add(text);
         	}
         }
