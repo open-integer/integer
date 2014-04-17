@@ -250,4 +250,28 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		
 		return dao.findById(serviceElementTypeId);
 	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getEntityMIBCollumn()
+	 */
+	@Override
+	public List<SNMP> getEntityMIBInfo() {
+		
+        SNMPDAO snmpdao = dbm.getSNMPDAO();
+		
+		List<SNMP> snmps = new ArrayList<>();
+		
+		snmps = addOid(CommonSnmpOids.entPhysicalClass, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalContainedIn, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalDescr, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalFirmwareRev, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalHardwareRev, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalModelName, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalName, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalParentRelPos, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalSoftwareRev, snmps, snmpdao);
+		
+		
+		return snmps;
+	}
 }
