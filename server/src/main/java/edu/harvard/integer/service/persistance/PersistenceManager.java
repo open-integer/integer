@@ -41,6 +41,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
@@ -55,6 +56,7 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDA
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValueDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
@@ -286,5 +288,14 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public VendorIdentifierDAO getVendorIdentifierDAO() {
 		return new VendorIdentifierDAO(em, logger);
+	}
+	
+	@Override
+	public ManagementObjectValueDAO getManagementObjectValueDAO() {
+		return new ManagementObjectValueDAO(em, logger);
+	}
+	
+	public SnmpServiceElementTypeDiscriminatorValueDAO getSnmpServiceElementTypeDiscriminatorValueDAO() {
+		return new SnmpServiceElementTypeDiscriminatorValueDAO(em, logger);
 	}
 }

@@ -98,6 +98,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 * @return
 	 * @throws IntegerException
 	 */
+	@Override
 	public NetworkDiscovery<ServiceElement> startDiscovery(DiscoveryId id, IpDiscoverySeed seed) throws IntegerException {
 		
 		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
@@ -250,4 +251,20 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		
 		return dao.findById(serviceElementTypeId);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypesByCategoryAndVendor()
+	 */
+	@Override
+	public ServiceElementType[] getServiceElementTypesByCategoryAndVendor(String catetory, String vendorType) throws IntegerException {
+		
+		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
+		
+		ServiceElementType[] types = dao.findByCategoryAndVendor(catetory, vendorType);
+		
+		return types;
+	}
+	
+	
 }

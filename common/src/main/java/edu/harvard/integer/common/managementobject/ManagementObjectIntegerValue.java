@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.common.managementobject;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -49,6 +50,7 @@ public class ManagementObjectIntegerValue extends
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Column(name="integerValue")
 	private Integer value = null;
 
 	/**

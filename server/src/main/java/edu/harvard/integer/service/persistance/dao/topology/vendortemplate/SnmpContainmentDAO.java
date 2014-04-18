@@ -37,7 +37,9 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -54,6 +56,21 @@ public class SnmpContainmentDAO extends BaseDAO {
 	public SnmpContainmentDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, SnmpContainment.class);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	 */
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+		
+		SnmpContainment snmpContainment = (SnmpContainment) entity;
+		
+		SnmpLevelOIDDAO levelDAO = new SnmpLevelOIDDAO(getEntityManager(), getLogger());
+		snmpContainment.setSnmpLevels(levelDAO.update(snmpContainment.getSnmpLevels()));
+		
+		super.preSave(entity);
 	}
 
 }

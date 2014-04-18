@@ -59,13 +59,22 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Category can be hardware as in the case of an interface card, a disk, or
+	 * something else that you can touch. It could also be a software element
+	 * such as an operating system, web server like Apache or something else. A
+	 * system that is said to be virtual is one where there is a software system
+	 * emulating a physcial thing as in the case of a Linux of Centos VM.
+	 * Currents types that are supported are: Virtual Hardware Software Element
+	 * Software Application See RFCS 2287 and 2564
+	 */
+	private String category = null;
+
 	private String firmware = null;
 
 	private String model = null;
 
 	private String vendor = null;
-
-	private String elementType = null;
 
 	/**
 	 * A specific set of options installed.
@@ -168,21 +177,6 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @return the elementType
-	 */
-	public String getElementType() {
-		return elementType;
-	}
-
-	/**
-	 * @param elementType
-	 *            the elementType to set
-	 */
-	public void setElementType(String elementType) {
-		this.elementType = elementType;
-	}
-
-	/**
 	 * @return the featureSet
 	 */
 	public String getFeatureSet() {
@@ -220,7 +214,8 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param childServiceElementTypes the childServiceElementTypes to set
+	 * @param childServiceElementTypes
+	 *            the childServiceElementTypes to set
 	 */
 	public void setChildServiceElementTypes(List<ID> childServiceElementTypes) {
 		this.childServiceElementTypes = childServiceElementTypes;
@@ -234,7 +229,8 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param iconId the iconId to set
+	 * @param iconId
+	 *            the iconId to set
 	 */
 	public void setIconId(ID iconId) {
 		this.iconId = iconId;
@@ -248,7 +244,8 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -262,7 +259,8 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param fieldReplaceableUnit the fieldReplaceableUnit to set
+	 * @param fieldReplaceableUnit
+	 *            the fieldReplaceableUnit to set
 	 */
 	public void setFieldReplaceableUnit(
 			FieldReplaceableUnitEnum fieldReplaceableUnit) {
@@ -277,7 +275,8 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param defaultNameCababilityId the defaultNameCababilityId to set
+	 * @param defaultNameCababilityId
+	 *            the defaultNameCababilityId to set
 	 */
 	public void setDefaultNameCababilityId(ID defaultNameCababilityId) {
 		this.defaultNameCababilityId = defaultNameCababilityId;
@@ -291,7 +290,8 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param uniqueIdentifierCapabilities the uniqueIdentifierCapabilities to set
+	 * @param uniqueIdentifierCapabilities
+	 *            the uniqueIdentifierCapabilities to set
 	 */
 	public void setUniqueIdentifierCapabilities(
 			List<ID> uniqueIdentifierCapabilities) {
@@ -306,11 +306,26 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @param attributeIds the attributeIds to set
+	 * @param attributeIds
+	 *            the attributeIds to set
 	 */
 	public void setAttributeIds(List<ID> attributeIds) {
 		this.attributeIds = attributeIds;
 	}
 
-	
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category
+	 *            the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 }

@@ -31,53 +31,47 @@
  *      
  */
 
-package edu.harvard.integer.common.managementobject;
+package edu.harvard.integer.common.discovery;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
  * @author David Taylor
- * 
- *         Hold a String value of a management object.
+ *
  */
 @Entity
-public class ManagementObjectStringValue extends ManagementObjectValue<String> {
-
-	@Column(name="stringValue")
-	private String value = null;
+@DiscriminatorValue("DiscriminatorStringValue")
+public class SnmpServiceElementTypeDiscriminatorStringValue extends
+		SnmpServiceElementTypeDiscriminatorValue<String> {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Column(name="stringValue")
+	private String value = null;
 
 	/**
 	 * 
 	 */
-	public ManagementObjectStringValue() {
-
+	public SnmpServiceElementTypeDiscriminatorStringValue() {
+		// TODO Auto-generated constructor stub
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#getValue
-	 * ()
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValue#getValue()
 	 */
 	@Override
 	public String getValue() {
-
+		
 		return value;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#setValue
-	 * (java.lang.Object)
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValue#setValue(java.lang.Object)
 	 */
 	@Override
 	public void setValue(String value) {

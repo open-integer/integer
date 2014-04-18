@@ -31,57 +31,49 @@
  *      
  */
 
-package edu.harvard.integer.common.managementobject;
+package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 
 /**
  * @author David Taylor
- * 
- *         Hold a String value of a management object.
+ *
  */
-@Entity
-public class ManagementObjectStringValue extends ManagementObjectValue<String> {
-
-	@Column(name="stringValue")
-	private String value = null;
+public class SnmpServiceElementTypeDescriminatorDAO extends BaseDAO {
 
 	/**
-	 * Serial Version UID
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
-	public ManagementObjectStringValue() {
+	public SnmpServiceElementTypeDescriminatorDAO(EntityManager entityManger,
+			Logger logger) {
+		super(entityManger, logger, SnmpServiceElementTypeDiscriminator.class);
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#getValue
-	 * ()
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
 	 */
 	@Override
-	public String getValue() {
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+		
+		SnmpServiceElementTypeDiscriminator discriminator = (SnmpServiceElementTypeDiscriminator) entity;
+		
+		SnmpServiceElementTypeDiscriminatorValueDAO dao = new SnmpServiceElementTypeDiscriminatorValueDAO(getEntityManager(), getLogger());
+		discriminator.setDiscriminatorValue(dao.update(discriminator.getDiscriminatorValue()));
 
-		return value;
+		super.preSave(entity);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.common.managementobject.ManagementObjectValue#setValue
-	 * (java.lang.Object)
-	 */
-	@Override
-	public void setValue(String value) {
-		this.value = value;
-	}
-
+	
 }

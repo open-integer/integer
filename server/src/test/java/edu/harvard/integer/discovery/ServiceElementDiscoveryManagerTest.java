@@ -41,7 +41,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.log4j.Level;
-import org.hibernate.metamodel.source.annotations.entity.IdType;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -59,17 +58,22 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.discovery.DiscoveryParseElement;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
+import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.common.discovery.SnmpLevelOID;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDescriminatorIntegerValue;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
  * @author David Taylor
@@ -84,6 +88,9 @@ public class ServiceElementDiscoveryManagerTest {
 	
 	@Inject 
 	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManger;
+	
+	@Inject
+	private ManagementObjectCapabilityManagerInterface managementObjectCapabilityManager;
 	
 	@Inject
 	private SnmpManagerInterface snmpMaager;
@@ -261,6 +268,140 @@ public class ServiceElementDiscoveryManagerTest {
 			e.printStackTrace();
 			
 			fail("Error loading Vendor by ID! " + e.toString());
+		}
+	}
+	
+	@Test
+	public void createServiceElementType() {
+		
+		ServiceElementType type = new ServiceElementType();
+		type.setCategory("Port");
+		type.setVendor("Cisco");
+	
+		try {
+			managementObjectCapabilityManager.addServiceElementType(type);
+		
+		} catch (IntegerException e) {
+	
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+	}
+	
+	@Test
+	public void getServiceElementByCategoryAndVendor() {
+		try {
+			
+			createServiceElementType();
+			
+			assert(serviceElementDiscoveryManger != null);
+			
+			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger.getServiceElementTypesByCategoryAndVendor("Port", "Cisco");
+			
+			assert(serviceElementTypes != null);
+			assert(serviceElementTypes.length > 0);
+			
+			logger.info("Found " + serviceElementTypes.length + " ServiceElementTypes for category 'Port' and Vendor 'Cisco'");
+			
+		} catch (IntegerException e) {
+	
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void createSnmpContainment() {
+		SnmpContainment snmpContainment = new SnmpContainment();
+		snmpContainment.setContainmentType(SnmpContainmentType.EntityMib);
+		snmpContainment.setName("MyContainment");
+		
+		SnmpLevelOID snmpLevelOid = new SnmpLevelOID();
+		snmpLevelOid.setName("My level oid");
+		
+		SNMP contextOID = new SNMP();
+		contextOID.setOid(CommonSnmpOids.sysName);
+		contextOID.setName("sysName");
+		snmpLevelOid.setContextOID(contextOID);
+		
+		SNMP descriminatorOID = new SNMP();
+		descriminatorOID.setOid(CommonSnmpOids.sysObjectID);
+		descriminatorOID.setName("SysObjectID");
+		snmpLevelOid.setDescriminatorOID(descriminatorOID);
+		
+		
+		List<SnmpServiceElementTypeDiscriminator> descriminators = new ArrayList<SnmpServiceElementTypeDiscriminator>();
+		for (int i = 0; i < 10; i++)
+			descriminators.add(createSETDiscriminator(i));
+		
+		snmpLevelOid.setDisriminators(descriminators);
+		
+		List<SnmpLevelOID> list = new ArrayList<SnmpLevelOID>();
+		list.add(snmpLevelOid);
+		snmpContainment.setSnmpLevels(list);
+		
+		try {
+			SnmpContainment updateSnmpContainment = managementObjectCapabilityManager.updateSnmpContainment(snmpContainment);
+			logger.info("Created SnmpContainment " + updateSnmpContainment.getID());
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	private SnmpServiceElementTypeDiscriminator createSETDiscriminator(int value) {
+		SnmpServiceElementTypeDiscriminator serviceElementTypeDescriminator = new SnmpServiceElementTypeDiscriminator();
+		
+		ID serviceElementTypeId = new ID(Long.valueOf(value), "SET", new IDType("ClassName"));
+		serviceElementTypeDescriminator.setServiceElementTypeId(serviceElementTypeId);
+		SnmpServiceElementTypeDescriminatorIntegerValue descriminatorValue = new SnmpServiceElementTypeDescriminatorIntegerValue();
+		descriminatorValue.setValue(Integer.valueOf(value));
+		serviceElementTypeDescriminator.setDiscriminatorValue(descriminatorValue);
+		
+		return serviceElementTypeDescriminator;
+	}
+	
+	@Test
+	public void getSnmpContainment() {
+		createSnmpContainment();
+		
+		try {
+			 SnmpContainment[] containments = managementObjectCapabilityManager.getAllSnmpContainments();
+
+			 assert(containments != null);
+			 assert(containments.length > 0);
+				
+			logger.info("Found " + containments.length + " SnmpContainments"); 
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getSnmpContainmentById() {
+		createSnmpContainment();
+		
+		try {
+			 SnmpContainment[] containments = managementObjectCapabilityManager.getAllSnmpContainments();
+			logger.info("Found " + containments.length + " SnmpContainments"); 
+			
+			assert(containments != null);
+			assert(containments.length > 0);
+			
+			for (SnmpContainment snmpContainment : containments) {
+				SnmpContainment snmpContainmentById = managementObjectCapabilityManager.getSnmpContainmentById(snmpContainment.getID());
+				assert(snmpContainmentById != null);
+				
+				logger.info("found SnmpContainment " + snmpContainmentById.getID());
+			}
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
 		}
 	}
 }

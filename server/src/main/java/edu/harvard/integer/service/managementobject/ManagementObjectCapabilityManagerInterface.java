@@ -38,11 +38,13 @@ import java.util.List;
 import javax.ejb.Local;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
@@ -156,5 +158,61 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * @param ID. The ID of capability that the management objects are for.
 	 */
 	public List<ServiceElementManagementObject> getManagemntObjectsForCapability(ID id) throws IntegerException;
+
+	/**
+	 * @param serviceElementType
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElementType addServiceElementType(
+			ServiceElementType serviceElementType) throws IntegerException;
+
+	/**
+	 * @param serviceElementType
+	 * @throws IntegerException
+	 */
+	void deleteServiceElementType(ServiceElementType serviceElementType)
+			throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElementType[] getAllServiceElementTypes() throws IntegerException;
+
+	/**
+	 * @param serviceElementTypeId
+	 * @throws IntegerException
+	 */
+	void deleteServiceElementType(ID serviceElementTypeId)
+			throws IntegerException;
+
+	/**
+	 * Update or save the SnmpContainment. The returned SnmpContainment
+	 * will have the identifier filled in.
+	 * 
+	 * @param snmpContainment
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment)
+			throws IntegerException;
+
+	/**
+	 * Get all the SnmpContainment objects in the database.
+	 * 
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpContainment[] getAllSnmpContainments() throws IntegerException;
+
+	/**
+	 * find the SnmpContainment with the given ID
+	 * 
+	 * @param id
+	 * @return SnmpContainment 
+	 * @throws IntegerException
+	 */
+	SnmpContainment getSnmpContainmentById(ID id) throws IntegerException;
 
 }

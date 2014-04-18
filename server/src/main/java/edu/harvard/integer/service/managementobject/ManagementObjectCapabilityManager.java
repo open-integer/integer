@@ -43,6 +43,7 @@ import javax.persistence.EntityExistsException;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
@@ -54,6 +55,7 @@ import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 
 /**
  * @author David Taylor
@@ -71,6 +73,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface dbm;
 
+	@Override
 	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
 		logger.debug("Add ServiceElementType " + serviceElementType);
@@ -88,6 +91,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return serviceElementType;
 	}
 	
+	@Override
 	public void deleteServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
 		logger.info("Delete service element " + serviceElementType.getName());
@@ -95,6 +99,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		dbm.getServiceElementTypeDAO().delete(serviceElementType);
 	}
 
+	@Override
 	public void deleteServiceElementType(ID serviceElementTypeId) throws IntegerException {
 		
 		logger.info("Delete service element " + serviceElementTypeId.getName());
@@ -103,6 +108,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 	}
 
 	
+	@Override
 	public ServiceElementType[] getAllServiceElementTypes() throws IntegerException {
 		
 		return dbm.getServiceElementTypeDAO().findAll();
@@ -318,5 +324,39 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return null;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#updateSnmpContainment(edu.harvard.integer.common.discovery.SnmpContainment)
+	 */
+	@Override
+	public SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment) throws IntegerException {
+		
+		SnmpContainmentDAO dao = dbm.getSnmpContainmentDAO();
+		snmpContainment = dao.update(snmpContainment);
+		
+		return snmpContainment;
+	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getAllSnmpContainments()
+	 */
+	@Override
+	public SnmpContainment[] getAllSnmpContainments() throws IntegerException {
+		
+		SnmpContainmentDAO dao = dbm.getSnmpContainmentDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getSnmpContainmentById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public SnmpContainment getSnmpContainmentById(ID id) throws IntegerException {
+		SnmpContainmentDAO dao = dbm.getSnmpContainmentDAO();
+		
+		return dao.findById(id);
+	}
 }

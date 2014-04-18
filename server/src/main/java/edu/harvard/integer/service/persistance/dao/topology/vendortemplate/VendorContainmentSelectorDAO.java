@@ -44,7 +44,9 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -61,6 +63,16 @@ public class VendorContainmentSelectorDAO extends BaseDAO {
 	public VendorContainmentSelectorDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, VendorContainmentSelector.class);
 	
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	 */
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+				
+		super.preSave(entity);
 	}
 
 	/**
