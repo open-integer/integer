@@ -7,7 +7,6 @@
 client/war/WEB-INF/lib/gwt-servlet.jar
 .gradle
 .classpath
-.project
 build
 bin
 client.gwt.xml
