@@ -107,7 +107,7 @@ public class DragImageWidget extends WidgetLayer {
 	        	int cur_y = y + IMAGE_HEIGHT/2;
 	        	if (x1 != 0 && y1 != 0) {
 	        		Line line = new Line(x1,y1, cur_x, cur_y);  
-	                line.setStrokeColor(Color.getRandomHexColor()).setStrokeWidth(2).setFillColor(Color.getRandomHexColor());
+	                line.setStrokeColor(ColorName.GREEN).setStrokeWidth(2).setFillColor(ColorName.GREEN);
 	                
 	                if (group != null)
 	                	group.add(line);
