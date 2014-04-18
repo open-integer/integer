@@ -78,7 +78,7 @@ public class SnmpServiceElementTypeDiscriminator extends BaseEntity {
 	 * serviceElementTypeId in an instance of this object
 	 */
 	@OneToOne
-	private ManagementObjectValue discriminatorValue = null;
+	private SnmpServiceElementTypeDiscriminatorValue discriminatorValue = null;
 
 	/**
 	 * @return the serviceElementTypeId
@@ -98,7 +98,7 @@ public class SnmpServiceElementTypeDiscriminator extends BaseEntity {
 	/**
 	 * @return the discriminatorValue
 	 */
-	public ManagementObjectValue getDiscriminatorValue() {
+	public SnmpServiceElementTypeDiscriminatorValue getDiscriminatorValue() {
 		return discriminatorValue;
 	}
 
@@ -106,7 +106,7 @@ public class SnmpServiceElementTypeDiscriminator extends BaseEntity {
 	 * @param discriminatorValue
 	 *            the discriminatorValue to set
 	 */
-	public void setDiscriminatorValue(ManagementObjectValue discriminatorValue) {
+	public void setDiscriminatorValue(SnmpServiceElementTypeDiscriminatorValue discriminatorValue) {
 		this.discriminatorValue = discriminatorValue;
 	}
 

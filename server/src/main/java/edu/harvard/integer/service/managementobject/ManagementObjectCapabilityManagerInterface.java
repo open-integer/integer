@@ -38,6 +38,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Capability;
@@ -185,5 +186,33 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 */
 	void deleteServiceElementType(ID serviceElementTypeId)
 			throws IntegerException;
+
+	/**
+	 * Update or save the SnmpContainment. The returned SnmpContainment
+	 * will have the identifier filled in.
+	 * 
+	 * @param snmpContainment
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment)
+			throws IntegerException;
+
+	/**
+	 * Get all the SnmpContainment objects in the database.
+	 * 
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpContainment[] getAllSnmpContainments() throws IntegerException;
+
+	/**
+	 * find the SnmpContainment with the given ID
+	 * 
+	 * @param id
+	 * @return SnmpContainment 
+	 * @throws IntegerException
+	 */
+	SnmpContainment getSnmpContainmentById(ID id) throws IntegerException;
 
 }
