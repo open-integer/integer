@@ -44,8 +44,6 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -66,16 +64,6 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	@OrderColumn(name="idx")
 	private List<ID> serviceElementTypes = null;
 
-	/*
-	 * While it is possible for a ServiceElementManagementObject to be useful
-	 * for configuration and security or for potentially several different FCAPS
-	 * and service level management functions, there must be a separate instance
-	 * of this object for different access methods since the syntax and all the
-	 * other details (including security parameters for accessing the device)
-	 * will be different.
-	 */
-	@Enumerated(EnumType.STRING)
-	private AccessMethod accessMethod = null;
 
 	/*
 	 * The name space of the scopeName implemented in the object that realizes
@@ -118,21 +106,6 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	public void setServiceElementTypes(
 			List<ID> serviceElementTypes) {
 		this.serviceElementTypes = serviceElementTypes;
-	}
-
-	/**
-	 * @return the accessMethod
-	 */
-	public AccessMethod getAccessMethod() {
-		return accessMethod;
-	}
-
-	/**
-	 * @param accessMethod
-	 *            the accessMethod to set
-	 */
-	public void setAccessMethod(AccessMethod accessMethod) {
-		this.accessMethod = accessMethod;
 	}
 
 	/**

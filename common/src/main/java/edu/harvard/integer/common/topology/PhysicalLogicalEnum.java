@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,13 +30,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
 
+package edu.harvard.integer.common.topology;
 
 /**
  * @author David Taylor
  *
  */
-public enum AccessMethod {
-	SNMP, CLI, AWS;
+public enum PhysicalLogicalEnum {
+	Physical, Logical, Unknown;
 }

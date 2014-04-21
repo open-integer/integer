@@ -61,11 +61,19 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.AccessMethod;
+import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.FCAPSEnum;
+import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 
@@ -259,7 +267,7 @@ public class ManagementObjectCapbilityManagerTest {
 
 		return capabilities.toArray(new Capability[0]);
 	}
-	
+
 	@Test
 	public void exportJasonCapabilityManagementObjects() {
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
@@ -270,15 +278,16 @@ public class ManagementObjectCapbilityManagerTest {
 			jg = jsonFactory.createGenerator(new FileOutputStream(
 					"capabilites.json"), JsonEncoding.UTF8);
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		} // or Stream, Reader
 
 		List<Capability> capabilities = null;
 		try {
 			capabilities = managementObjectManager.getCapabilities();
-			
-			logger.info("Loaded " + capabilities.size() + " Capabilites to export to JSON");
+
+			logger.info("Loaded " + capabilities.size()
+					+ " Capabilites to export to JSON");
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
@@ -292,8 +301,7 @@ public class ManagementObjectCapbilityManagerTest {
 
 		try {
 			mapper.writeValue(jg, capabilities);
-		
-		
+
 		} catch (JsonProcessingException je) {
 			je.printStackTrace();
 			fail(je.toString());
@@ -302,7 +310,7 @@ public class ManagementObjectCapbilityManagerTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
-		
+
 		try {
 			jg.close();
 		} catch (IOException e) {
@@ -312,5 +320,106 @@ public class ManagementObjectCapbilityManagerTest {
 		}
 	}
 
+	@Test
+	public void createServiceElementType() {
+		ServiceElementType type = new ServiceElementType();
+		type.setFeatureSet("CoolFeature");
+		type.setVendor("Cisco");
+		type.setModel("7604");
+		type.setFirmware("Firmware");
+		type.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
+
+		type.setApplicabilities(TestUtil.createIdList(10, Applicability.class,
+				"Applicablity"));
+		type.setAttributeIds(TestUtil.createIdList(5, SNMP.class, "Attribute"));
+
+		try {
+			managementObjectManager.updateServiceElementType(type);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+	}
+
+	@Test
+	public void addApplicability() {
+		Applicability app = createApplicability();
+
+		try {
+			managementObjectManager.updateApplicability(app);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
 	
+	
+	@Test
+	public void findAllApplicablities() {
+		addApplicability();
+		
+		try {
+			Applicability[] overrides = managementObjectManager.getAllApplicabilities();
+			
+			assert(overrides != null);
+			
+			logger.info("Found " + overrides.length + " Appliciablities");
+			
+			assert(overrides.length != 0);
+			
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+
+	public Applicability createApplicability() {
+		Applicability applicability = new Applicability();
+		applicability.setAccessMethod(AccessMethod.SNMP);
+
+		List<ID> ids = TestUtil.createIdList(10, SNMP.class, "Oid");
+
+		applicability.setManagementObjects(ids);
+
+		return applicability;
+	}
+
+	@Test
+	public void addSnmpServiceElementTypeOverride() {
+		SnmpServiceElementTypeOverride override = new SnmpServiceElementTypeOverride();
+		
+		override.setMaxOutstanding(Integer.valueOf(4));
+		override.setMaxRate(Integer.valueOf(5));
+		override.setRetries(Integer.valueOf(6));
+		override.setTimeout(Integer.valueOf(88));
+		override.setName("SnmpOverride");
+		
+		try {
+			managementObjectManager.updateSnmpServiceElementTypeOverride(override);
+		} catch (IntegerException e) {			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void findAllServiceElementTypeOverrides() {
+		addSnmpServiceElementTypeOverride();
+		
+		try {
+			SnmpServiceElementTypeOverride[] overrides = managementObjectManager.getAllSnmpServiceElementTypeOverride();
+			
+			assert(overrides != null);
+			assert(overrides.length != 0);
+			
+			logger.info("Found "+ overrides + " SnmpOveres ");
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+	}
 }

@@ -158,7 +158,6 @@ public class ImportMIBTest {
 
 	@Test
 	public void c1_importRFC1212() {
-
 		importIETFMIB("RFC-1212");
 
 	}
@@ -186,7 +185,7 @@ public class ImportMIBTest {
 
 	private void importMib(String mibName) {
 
-		logger.warn("Start test import of ***************************************************************************** "
+		logger.warn("Start test import of ******************************** "
 				+ mibName);
 
 		File mibFile = null;
@@ -215,7 +214,6 @@ public class ImportMIBTest {
 		importInfo.setFileName(mibFile.getName());
 		importInfo.setMib(content);
 
-		MIBImportResult[] importMIBs = null;
 		try {
 
 			MIBImportResult[] importMib = snmpObjectManager

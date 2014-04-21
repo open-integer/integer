@@ -279,7 +279,7 @@ public class ServiceElementDiscoveryManagerTest {
 		type.setVendor("Cisco");
 	
 		try {
-			managementObjectCapabilityManager.addServiceElementType(type);
+			managementObjectCapabilityManager.updateServiceElementType(type);
 		
 		} catch (IntegerException e) {
 	

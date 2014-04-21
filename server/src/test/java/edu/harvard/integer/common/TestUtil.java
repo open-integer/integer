@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,13 +30,30 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
 
+package edu.harvard.integer.common;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author David Taylor
  *
  */
-public enum AccessMethod {
-	SNMP, CLI, AWS;
+public class TestUtil {
+
+	/**
+	 * 
+	 */
+	public TestUtil() {
+
+	}
+
+	public static List<ID> createIdList(int numToCreate, Class<?> clazz, String name) {
+		List<ID> ids = new ArrayList<ID>();
+		for (int i = 0; i < 10; i++) 
+			ids.add(new ID(Long.valueOf(i), name + i, new IDType(clazz.getName())));
+
+		return ids;
+	}
 }

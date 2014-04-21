@@ -41,10 +41,12 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
+import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
@@ -145,7 +147,7 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * 
 	 * @return
 	 */
-	public abstract List<ServiceElementManagementObject> getAllServiceElementManagementObjects();
+	public abstract List<ServiceElementManagementObject> getAllServiceElementManagementObjects() throws IntegerException;
 
 	/**
 	 * 
@@ -164,7 +166,7 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * @return
 	 * @throws IntegerException
 	 */
-	ServiceElementType addServiceElementType(
+	ServiceElementType updateServiceElementType(
 			ServiceElementType serviceElementType) throws IntegerException;
 
 	/**
@@ -214,5 +216,61 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * @throws IntegerException
 	 */
 	SnmpContainment getSnmpContainmentById(ID id) throws IntegerException;
+
+	/**
+	 * @param applicabilty
+	 * @return
+	 * @throws IntegerException
+	 */
+	Applicability updateApplicability(Applicability applicabilty)
+			throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	Applicability[] getAllApplicabilities() throws IntegerException;
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws IntegerException
+	 */
+	Applicability getApplicabilityById(ID id) throws IntegerException;
+
+	/**
+	 * @param id
+	 * @throws IntegerException
+	 */
+	void deleteApplicability(ID id) throws IntegerException;
+
+	/**
+	 * @param override
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpServiceElementTypeOverride updateSnmpServiceElementTypeOverride(
+			SnmpServiceElementTypeOverride override) throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpServiceElementTypeOverride[] getAllSnmpServiceElementTypeOverride()
+			throws IntegerException;
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws IntegerException
+	 */
+	SnmpServiceElementTypeOverride getSnmpServiceElementTypeOverrideById(ID id)
+			throws IntegerException;
+
+	/**
+	 * @param id
+	 * @throws IntegerException
+	 */
+	void deleteSnmpServiceElementTypeOverride(ID id) throws IntegerException;
 
 }

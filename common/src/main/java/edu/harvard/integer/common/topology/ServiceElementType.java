@@ -132,6 +132,66 @@ public class ServiceElementType extends BaseEntity {
 	private List<ID> attributeIds = null;
 
 	/**
+	 * This attribute may not be present for many ServiceElements. When present,
+	 * it will usually be associated with ServiceElementTypes that are at the
+	 * top of their hierarchy like a router, server, etc. This attribute points
+	 * to the capability that is able to retrieve the current boot image name
+	 * used by the ServiceElement.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "bootImageCapabilityId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "bootImageCapabilityType")),
+			@AttributeOverride(name = "name", column = @Column(name = "bootImageCapabilityName")) })
+	private ID bootImageCapability = null;
+
+	/**
+	 * Indicates whether the service element is a physical or logical type. If
+	 * empty it is unknown.
+	 */
+	@Enumerated(EnumType.STRING)
+	private PhysicalLogicalEnum physicalLocal = null;
+
+	/**
+	 * For some systems, the discovery service will be able to retrieve the
+	 * hardware revision for some service elements. This indicates the
+	 * capability that holds this information for a ServiceElementType.
+	 */
+	private String hardwareRev = null;
+
+	/**
+	 * Some vendors assign specific sub types to the broad categories of things
+	 * found in the category attribute. The vendorSpecificSubType points to the
+	 * capability for an instance of a ServiceElementType that can retrieve this
+	 * information. When this is available, the Discovery Process will attempt
+	 * to retrieve this information.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "vendorSpecificSubTypeId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "vendorSpecificSubTypeType")),
+			@AttributeOverride(name = "name", column = @Column(name = "vendorSpecificSubTypeName")) })
+	private ID vendorSpecificSubType = null;
+
+	/**
+	 * List of Applicability objects associated with this service element type.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> applicabilities = null;
+
+	/**
+	 * SNMP override used to limit the requests or rate at which messages are
+	 * sent to a device.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "snmpOverrideId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "snmpOverrideType")),
+			@AttributeOverride(name = "name", column = @Column(name = "snmpOverrideName")) })
+	private ID snmpOverride = null;
+
+	/**
 	 * @return the firmware
 	 */
 	public String getFirmware() {
@@ -326,6 +386,96 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	/**
+	 * @return the applicabilities
+	 */
+	public List<ID> getApplicabilities() {
+		return applicabilities;
+	}
+
+	/**
+	 * @param applicabilities
+	 *            the applicabilities to set
+	 */
+	public void setApplicabilities(List<ID> applicabilities) {
+		this.applicabilities = applicabilities;
+	}
+
+	/**
+	 * @return the bootImageCapability
+	 */
+	public ID getBootImageCapability() {
+		return bootImageCapability;
+	}
+
+	/**
+	 * @param bootImageCapability
+	 *            the bootImageCapability to set
+	 */
+	public void setBootImageCapability(ID bootImageCapability) {
+		this.bootImageCapability = bootImageCapability;
+	}
+
+	/**
+	 * @return the physicalLocal
+	 */
+	public PhysicalLogicalEnum getPhysicalLocal() {
+		return physicalLocal;
+	}
+
+	/**
+	 * @param physicalLocal
+	 *            the physicalLocal to set
+	 */
+	public void setPhysicalLocal(PhysicalLogicalEnum physicalLocal) {
+		this.physicalLocal = physicalLocal;
+	}
+
+	/**
+	 * @return the hardwareRev
+	 */
+	public String getHardwareRev() {
+		return hardwareRev;
+	}
+
+	/**
+	 * @param hardwareRev
+	 *            the hardwareRev to set
+	 */
+	public void setHardwareRev(String hardwareRev) {
+		this.hardwareRev = hardwareRev;
+	}
+
+	/**
+	 * @return the vendorSpecificSubType
+	 */
+	public ID getVendorSpecificSubType() {
+		return vendorSpecificSubType;
+	}
+
+	/**
+	 * @param vendorSpecificSubType
+	 *            the vendorSpecificSubType to set
+	 */
+	public void setVendorSpecificSubType(ID vendorSpecificSubType) {
+		this.vendorSpecificSubType = vendorSpecificSubType;
+	}
+
+	/**
+	 * @return the snmpOverride
+	 */
+	public ID getSnmpOverride() {
+		return snmpOverride;
+	}
+
+	/**
+	 * @param snmpOverride
+	 *            the snmpOverride to set
+	 */
+	public void setSnmpOverride(ID snmpOverride) {
+		this.snmpOverride = snmpOverride;
 	}
 
 }
