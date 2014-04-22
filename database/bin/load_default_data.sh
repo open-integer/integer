@@ -3,7 +3,7 @@
 BASEDIR=$(dirname $0)
 
 
-if [ =z "${1}" ]; then
+if [ -z "${1}" ]; then
    mysqlCmd='mysql -u root Config'
 else
    mysqlCmd="mysql -u root Config -p$1"
