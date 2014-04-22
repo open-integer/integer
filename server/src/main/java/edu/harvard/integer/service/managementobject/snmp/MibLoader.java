@@ -285,7 +285,6 @@ public class MibLoader implements MibLoaderLocalInterface {
 			if (dbOid != null) {
 				logger.info("Update OID " + dbOid.getID());
 				
-				dbOid.setAccessMethod(snmpOid.getAccessMethod());
 				dbOid.setDescription(snmpOid.getDescription());
 				dbOid.setMaxAccess(snmpOid.getMaxAccess());
 				dbOid.setName(snmpOid.getName());

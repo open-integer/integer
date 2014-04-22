@@ -42,7 +42,6 @@ import javax.persistence.OneToOne;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 
 /**
  * @author David Taylor

@@ -52,6 +52,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,7 +62,6 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,7 +74,6 @@ import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
-import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory.ParserProvider;
@@ -111,6 +110,7 @@ public class ImportMIBTest {
 				.addPackages(true, "com.fasterxml.jackson")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
+				.addAsResource("integer.properties")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
 				// Deploy our test data source
 				.addAsWebInfResource("test-ds.xml");
@@ -125,13 +125,25 @@ public class ImportMIBTest {
 	}
 
 	@Test
-	public void importRFC1065_SMI() {
-		importIETFMIB("RFC1065-SMI");
-	}
+	public void importMIBs() {
+		importMib("RFC1065-SMI");
+		importMib("RFC1155-SMI");
+		importMib("RFC-1212");
+		importMib("RFC1213-MIB");
+		importMib("SNMPv2-SMI");
+		importMib("SNMPv2-TC");
+		importMib("SNMPv2-CONF");
+		importMib("SNMPv2-MIB");
+		importMib("IANAifType-MIB");
+		importMib("IF-MIB");
+		importMib("SNMP-FRAMEWORK-MIB");
+		importMib("ENTITY-MIB.my");
+		importMib("HOST-RESOURCES-MIB.my");
+		importMib("CISCO-SMI.my");
+		importMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+		importMib("CISCO-TC.my");
+		importMib("CISCO-PRODUCTS-MIB.my");
 
-	@Test
-	public void importRFC1155_SMI() {
-		importIETFMIB("RFC1155-SMI");
 	}
 
 	public void importDir() {
@@ -150,36 +162,16 @@ public class ImportMIBTest {
 					importMibs.toArray(new MIBImportInfo[importMibs.size()]),
 					true);
 		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			fail(e.toString());
 		}
 
 	}
 
-	/**
-	 * Test the importing of RFC1213. This will read in the MIB and create the
-	 * entries in the database for SNMPModule, SNMP (for scalors) and SNMPTable
-	 * (for table oids)
-	 * 
-	 */
-	@Test
-	public void importRFC1213() {
-
-		importIETFMIB("RFC1213-MIB");
-
-	}
-
-	private void importIETFMIB(String mibName) {
-		importMib(mibName);
-	}
-
-	private void importVendorMIB(String mibName) {
-		importMib(mibName);
-	}
-
 	private void importMib(String mibName) {
 
-		logger.warn("Start test import of ***************************************************************************** "
+		logger.warn("Start test import of ******************************** "
 				+ mibName);
 
 		File mibFile = null;
@@ -208,7 +200,6 @@ public class ImportMIBTest {
 		importInfo.setFileName(mibFile.getName());
 		importInfo.setMib(content);
 
-		MIBImportResult[] importMIBs = null;
 		try {
 
 			MIBImportResult[] importMib = snmpObjectManager
@@ -232,6 +223,9 @@ public class ImportMIBTest {
 
 				logger.info("Errors      :   "
 						+ Arrays.toString(mibImportResult.getErrors()));
+
+				assert (mibImportResult.getErrors() == null || mibImportResult
+						.getErrors().length == 0);
 
 				if (mibImportResult.getSnmpTable() != null) {
 					logger.info("Num of Tables:  "
@@ -283,67 +277,6 @@ public class ImportMIBTest {
 			fail("Error getting mib parser");
 		}
 
-	}
-
-	@Test
-	public void importSNMPv2_SMI() {
-		importIETFMIB("SNMPv2-SMI");
-	}
-
-	@Test
-	public void importSNMPv2_TC() {
-		importIETFMIB("SNMPv2-TC");
-	}
-
-	@Test
-	public void importSNMPv2_CONF() {
-		importIETFMIB("SNMPv2-CONF");
-	}
-
-	@Test
-	public void importSNMPv2_MIB() {
-		importIETFMIB("SNMPv2-MIB");
-	}
-
-	@Test
-	public void importIANAifType_MIB() {
-		importIETFMIB("IANAifType-MIB");
-	}
-
-	@Test
-	public void importIfMIB() {
-		importIETFMIB("IF-MIB");
-	}
-
-	@Test
-	public void importEntityMIB() {
-		importIETFMIB("ENTITY-MIB.my");
-	}
-
-	@Test
-	public void importHostResourcesMIB() {
-		importIETFMIB("HOST-RESOURCES-MIB.my");
-	}
-	
-	@Test
-	public void importCiscoSMI() {
-
-		importVendorMIB("CISCO-SMI.my");
-	}
-
-	@Test
-	public void importCiscoVendorEntity() {
-		importVendorMIB("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
-	}
-
-	@Test
-	public void importCiscoTC() {
-		importVendorMIB("CISCO-TC.my");
-	}
-
-	@Test
-	public void importCiscoProducts() {
-		importVendorMIB("CISCO-PRODUCTS-MIB.my");
 	}
 
 	/**
@@ -402,7 +335,7 @@ public class ImportMIBTest {
 
 	}
 
-	@Test
+	@After
 	public void exportSNMPObjects() {
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
 														// org.codehaus.jackson.mapper.MappingJsonFactory

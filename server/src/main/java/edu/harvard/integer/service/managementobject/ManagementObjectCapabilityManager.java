@@ -46,15 +46,19 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.AccessMethod;
+import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
+import edu.harvard.integer.service.persistance.dao.topology.SnmpServiceElementTypeOverrideDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 
 /**
@@ -74,7 +78,7 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 	private PersistenceManagerInterface dbm;
 
 	@Override
-	public ServiceElementType addServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
+	public ServiceElementType updateServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
 		logger.debug("Add ServiceElementType " + serviceElementType);
 		
@@ -358,5 +362,93 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		SnmpContainmentDAO dao = dbm.getSnmpContainmentDAO();
 		
 		return dao.findById(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#updateApplicability(edu.harvard.integer.common.topology.Applicability)
+	 */
+	@Override
+	public Applicability updateApplicability(Applicability applicabilty) throws IntegerException {
+		ApplicabilityDAO dao = dbm.getApplicabilityDAO();
+		
+		return dao.update(applicabilty);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getAllApplicabilities()
+	 */
+	@Override
+	public Applicability[] getAllApplicabilities() throws IntegerException {
+		ApplicabilityDAO dao = dbm.getApplicabilityDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getApplicabilityById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public Applicability getApplicabilityById(ID id) throws IntegerException { 
+		ApplicabilityDAO dao = dbm.getApplicabilityDAO();
+		
+		return dao.findById(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#deleteApplicability(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public void deleteApplicability(ID id) throws IntegerException {
+		ApplicabilityDAO dao = dbm.getApplicabilityDAO();
+		
+		dao.delete(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#updateSnmpServiceElementTypeOverride(edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride)
+	 */
+	@Override
+	public SnmpServiceElementTypeOverride updateSnmpServiceElementTypeOverride(SnmpServiceElementTypeOverride override) throws IntegerException {
+		SnmpServiceElementTypeOverrideDAO dao = dbm.getSnmpServiceElementTypeOverrideDAO();
+		
+		return dao.update(override);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getAllSnmpServiceElementTypeOverride()
+	 */
+	@Override
+	public SnmpServiceElementTypeOverride[] getAllSnmpServiceElementTypeOverride() throws IntegerException {
+		SnmpServiceElementTypeOverrideDAO dao = dbm.getSnmpServiceElementTypeOverrideDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getSnmpServiceElementTypeOverrideById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public SnmpServiceElementTypeOverride getSnmpServiceElementTypeOverrideById(ID id) throws IntegerException {
+		SnmpServiceElementTypeOverrideDAO dao = dbm.getSnmpServiceElementTypeOverrideDAO();
+		
+		return dao.findById(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#deleteSnmpServiceElementTypeOverride(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public void deleteSnmpServiceElementTypeOverride(ID id) throws IntegerException {
+		SnmpServiceElementTypeOverrideDAO dao = dbm.getSnmpServiceElementTypeOverrideDAO();
+		
+		dao.delete(id);
 	}
 }
