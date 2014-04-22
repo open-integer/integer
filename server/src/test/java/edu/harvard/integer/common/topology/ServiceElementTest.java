@@ -146,5 +146,46 @@ public class ServiceElementTest {
 		}
 	}
 
+	@Test
+	public void getAllTopLevelServiceElements() {
+		try {
+			ServiceElement[] serviceElements = serviceElementManager.getTopLevelServiceElements();
+			if (serviceElements == null || serviceElements.length == 0) {
+				addServiceElement();
+				serviceElements = serviceElementManager.getTopLevelServiceElements();
+			}
+			
+			assert (serviceElements != null);
+
+			logger.info("found " + serviceElements.length + " top level service elements");
+			
+			assert (serviceElements.length > 0);
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+
+			fail(e.toString());
+		}
+	}
 	
+	public void getServiceElementByID() {
+		try {
+			ServiceElement[] serviceElements = serviceElementManager.getAllServiceElements();
+			if (serviceElements == null || serviceElements.length == 0) {
+				addServiceElement();
+				serviceElements = serviceElementManager.getAllServiceElements();
+			}
+			
+			assert (serviceElements != null);
+
+			logger.info("found " + serviceElements.length + " top level service elements");
+			
+			assert (serviceElements.length > 0);
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+
+			fail(e.toString());
+		}
+	}
 }

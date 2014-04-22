@@ -55,6 +55,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * @author David Taylor
@@ -246,6 +247,59 @@ public class BaseDAO {
 		return null;
 	}
 
+	/**
+	 * Find the entity in the database by the specified field.
+	 * 
+	 * @param fieldValue
+	 * @param fieldName
+	 * @param clazz
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	protected <T extends BaseEntity> T[] findByIDField(ID fieldValue,
+			String fieldName, Class<T> clazz) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+
+		Root<T> from = query.from(clazz);
+		query.select(from);
+
+		ParameterExpression<ID> idParam = criteriaBuilder
+				.parameter(ID.class);
+		query.select(from).where(
+				criteriaBuilder.equal(from.get(fieldName), idParam));
+
+		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(idParam, fieldValue);
+
+		
+		List<T> resultList = typeQuery.getResultList();
+
+		return resultList.toArray((T[]) Array.newInstance(clazz, 0));
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected <T extends BaseEntity> T[] findByNullField(String fieldName, Class<T> clazz) throws IntegerException {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+
+		Root<T> from = query.from(clazz);
+		query.select(from);
+
+		query.select(from).where(criteriaBuilder.isNull(from.get(fieldName)));
+				
+		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
+		
+		List<T> resultList = typeQuery.getResultList();
+		
+		return (T[]) resultList.toArray((T[]) Array.newInstance(clazz, 0));
+	}
+	
 	/**
 	 * Find the given entity by the specified ID.
 	 * 

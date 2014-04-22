@@ -77,8 +77,9 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		return serviceElement;
 	}
 	
-	/**
-	 * Get the list of all service elements.
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getAllServiceElements()
 	 */
 	@Override
 	public ServiceElement[] getAllServiceElements() throws IntegerException {
@@ -89,29 +90,41 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		return serviceElements;
 	}
 	
-	public ServiceElement[] getServiceElementByFilter() throws IntegerException {
-		return null;
-	}
-	
-	public void deleteServiceElement(ServiceElement[] serviceElements) throws IntegerException {
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getTopLevelServiceElements()
+	 */
+	@Override
+	public ServiceElement[] getTopLevelServiceElements() throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
-		serviceElementDAO.delete(serviceElements);
+		ServiceElement[] topLevel = serviceElementDAO.findTopLevelServiceElements();
+		
+		return topLevel;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementByParentId(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ServiceElement[] getServiceElementByParentId(ID parentId) throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+		
+		ServiceElement[] topLevel = serviceElementDAO.findByParentId(parentId);
+		
+		return topLevel;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#deleteServiceElememts(edu.harvard.integer.common.ID[])
+	 */
+	@Override
 	public void deleteServiceElememts(ID[] ids) throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
 		serviceElementDAO.delete(ids);
 	}
 	
-	public ServiceElementType updateServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
-		
-		return serviceElementType;
-	}
-	
-	public ServiceElementType[] getAllServiceElementTypes() throws IntegerException {
-		
-		return null;
-	}
 }
