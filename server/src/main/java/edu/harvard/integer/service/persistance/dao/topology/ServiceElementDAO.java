@@ -33,14 +33,21 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
@@ -82,6 +89,39 @@ public class ServiceElementDAO extends BaseDAO {
 			
 		super.preSave(entity);
 	}
+
+	/**
+	 * @param object
+	 * @return
+	 */
+	public ServiceElement[] findTopLevelServiceElements() {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<ServiceElement> query = criteriaBuilder.createQuery(ServiceElement.class);
+
+		Root<ServiceElement> from = query.from(ServiceElement.class);
+		query.select(from);
+
+		query.select(from).where(criteriaBuilder.isNull(from.get("parentId")));
+				
+		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(query);
+		
+		List<ServiceElement> resultList = typeQuery.getResultList();
+		
+		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList
+				.size()]);
+	}
 	
+
+	/**
+	 * @param object
+	 * @return
+	 */
+	public ServiceElement[] findByParentId(ID parent) {
+		
+		return findByIDField(parent, "parentId", ServiceElement.class);
+		
+	}
 	
 }

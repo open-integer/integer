@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.topology.device;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManagerInterface;
@@ -44,18 +45,50 @@ import edu.harvard.integer.service.BaseManagerInterface;
 public interface ServiceElementAccessManagerInterface extends BaseManagerInterface {
 
 	/**
+	 * Add or update a service element. If the service element does not exist in the database. Then 
+	 * a new service element will be created. If the service element exists in then the service element
+	 * will be updated.
+	 * 
 	 * @param serviceElement
-	 * @return
+	 * @return Updated ServiceElement
 	 * @throws IntegerException
 	 */
 	ServiceElement updateServiceElement(ServiceElement serviceElement)
 			throws IntegerException;
 
 	/**
-	 * @return
+	 * Get the list of all service elements.
+	 * @return ServiceElement[] of all ServiceElements 
 	 * @throws IntegerException
 	 */
 	ServiceElement[] getAllServiceElements() throws IntegerException;
+
+	/**
+	 * Get a list of the top level (Device) ServiceElements.
+	 * 
+	 * @return ServiceElement[] of the top level service elements that have been
+	 * discovered. 
+	 * @throws IntegerException
+	 */
+	ServiceElement[] getTopLevelServiceElements() throws IntegerException;
+
+	/**
+	 * Find the ServiceElements that have the given parent ID.
+	 * 
+	 * @param parentId
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElement[] getServiceElementByParentId(ID parentId)
+			throws IntegerException;
+
+	/**
+	 * Delete the ServiceElements with the given ID's
+	 * 
+	 * @param ids
+	 * @throws IntegerException
+	 */
+	void deleteServiceElememts(ID[] ids) throws IntegerException;
 
 
 }

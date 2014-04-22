@@ -422,4 +422,6 @@ public class ManagementObjectCapbilityManagerTest {
 		}
 		
 	}
+	
+	
 }

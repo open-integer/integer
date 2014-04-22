@@ -273,4 +273,14 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 */
 	void deleteSnmpServiceElementTypeOverride(ID id) throws IntegerException;
 
+	/**
+	 * Get the ServiceElementManagementObject for the given ID.
+	 * 
+	 * @param id
+	 * @return ServiceElementManagementObject identified by the ID.
+	 * @throws IntegerException
+	 */
+	ServiceElementManagementObject getManagementObjectById(ID id)
+			throws IntegerException;
+
 }
