@@ -61,8 +61,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -164,37 +164,12 @@ public class ManagementObjectCapbilityManagerTest {
 		capability = managementObjectManager.addCapability(capability);
 
 		List<ServiceElementManagementObject> systemOids = new ArrayList<ServiceElementManagementObject>();
-		SNMP oid = null;
-		try {
-			oid = snmpManager.getSNMPByOid("1.3.6.1.2.1.2.2.1.3"); // ifType
-		} catch (IntegerException e1) {
-
-			e1.printStackTrace();
-
-			fail("Error gettting ifType OID" + e1.toString());
-		}
-
-		if (oid == null) {
-			oid = new SNMP();
-
-			oid.setName("ifType");
-			oid.setOid("1.3.6.1.2.1.2.2.1.3");
-		}
-
+		SNMP oid = getSNMP("1.3.6.1.2.1.2.2.1.3", "ifType");
+		
 		systemOids.add(oid);
-
-		try {
-			oid = snmpManager.getSNMPByOid("1.3.6.1.2.1.2.2.1.2"); // ifDescr
-		} catch (IntegerException e1) {
-			e1.printStackTrace();
-			fail("Error loading ifDescr OID! " + e1.toString());
-		}
-
-		if (oid == null) {
-			oid = new SNMP();
-			oid.setName("ifDescr");
-			oid.setOid("1.3.6.1.2.1.2.2.1.2");
-		}
+	
+		oid = getSNMP("1.3.6.1.2.1.2.2.1.2", "ifDescr");
+		
 		systemOids.add(oid);
 
 		assert (systemOids != null);
@@ -212,6 +187,34 @@ public class ManagementObjectCapbilityManagerTest {
 
 			fail("Failed to add oid to capability!" + e.toString());
 		}
+	}
+
+	private SNMP getSNMP(String oidString, String name) {
+		SNMP oid = null;
+		try {
+			oid = snmpManager.getSNMPByOid(oidString);
+		} catch (IntegerException e1) {
+
+			e1.printStackTrace();
+
+			fail("Error gettting " + name + " OID! " + e1.toString());
+		}
+
+		if (oid == null) {
+			oid = new SNMP();
+
+			oid.setName(name);
+			oid.setOid(oidString);
+
+			try {
+				oid = snmpManager.updateSNMP(oid);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+		}
+
+		return oid;
 	}
 
 	@Test
@@ -353,22 +356,21 @@ public class ManagementObjectCapbilityManagerTest {
 			fail(e.toString());
 		}
 	}
-	
-	
+
 	@Test
 	public void findAllApplicablities() {
 		addApplicability();
-		
+
 		try {
-			Applicability[] overrides = managementObjectManager.getAllApplicabilities();
-			
-			assert(overrides != null);
-			
+			Applicability[] overrides = managementObjectManager
+					.getAllApplicabilities();
+
+			assert (overrides != null);
+
 			logger.info("Found " + overrides.length + " Appliciablities");
-			
-			assert(overrides.length != 0);
-			
-			
+
+			assert (overrides.length != 0);
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
@@ -389,39 +391,69 @@ public class ManagementObjectCapbilityManagerTest {
 	@Test
 	public void addSnmpServiceElementTypeOverride() {
 		SnmpServiceElementTypeOverride override = new SnmpServiceElementTypeOverride();
-		
+
 		override.setMaxOutstanding(Integer.valueOf(4));
 		override.setMaxRate(Integer.valueOf(5));
 		override.setRetries(Integer.valueOf(6));
 		override.setTimeout(Integer.valueOf(88));
 		override.setName("SnmpOverride");
-		
+
 		try {
-			managementObjectManager.updateSnmpServiceElementTypeOverride(override);
-		} catch (IntegerException e) {			
-			e.printStackTrace();
-			fail(e.toString());
-		}
-	}
-	
-	@Test
-	public void findAllServiceElementTypeOverrides() {
-		addSnmpServiceElementTypeOverride();
-		
-		try {
-			SnmpServiceElementTypeOverride[] overrides = managementObjectManager.getAllSnmpServiceElementTypeOverride();
-			
-			assert(overrides != null);
-			assert(overrides.length != 0);
-			
-			logger.info("Found "+ overrides + " SnmpOveres ");
-			
+			managementObjectManager
+					.updateSnmpServiceElementTypeOverride(override);
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
-		
 	}
-	
-	
+
+	@Test
+	public void findAllServiceElementTypeOverrides() {
+		addSnmpServiceElementTypeOverride();
+
+		try {
+			SnmpServiceElementTypeOverride[] overrides = managementObjectManager
+					.getAllSnmpServiceElementTypeOverride();
+
+			assert (overrides != null);
+			assert (overrides.length != 0);
+
+			logger.info("Found " + overrides + " SnmpOverides ");
+
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+	}
+
+	@Test
+	public void getManagementObjectsByIDs() {
+		
+		ID[] ids = {
+			getSNMP(CommonSnmpOids.sysName, "sysName").getID(),
+			getSNMP(CommonSnmpOids.sysDescr, "sysDescr").getID(),
+			getSNMP(CommonSnmpOids.sysObjectID, "sysObjectID").getID()
+		};
+		
+		
+		ServiceElementManagementObject[] managementObjects = null;
+		try {
+			managementObjects = managementObjectManager
+					.getManagementObjectsByIds(ids);
+		} catch (IntegerException e) {
+
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+		assert(managementObjects != null);
+		
+		for (ServiceElementManagementObject serviceElementManagementObject : managementObjects) {
+			logger.info("Found by ID: " + serviceElementManagementObject.getID());
+		}
+
+		assert(managementObjects.length == 3);
+	}
+
 }

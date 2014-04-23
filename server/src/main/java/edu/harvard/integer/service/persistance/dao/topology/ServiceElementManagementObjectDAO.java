@@ -45,6 +45,7 @@ import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -86,4 +87,14 @@ public class ServiceElementManagementObjectDAO extends BaseDAO {
 				
 	}
 
+	/**
+	 * Return a list of ServiceElementManagementObjects specified by the list of ID's 
+	 * 
+	 * @param ids
+	 * @return ServiceElementManagementObject[] for the give list of ID's.
+	 * @throws IntegerException
+	 */
+	public ServiceElementManagementObject[] findByIds(ID[] ids) throws IntegerException {
+		return findByIds(ids, ServiceElementManagementObject.class);
+	}
 }

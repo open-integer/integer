@@ -103,9 +103,6 @@ public class ServiceElement extends BaseEntity implements Serializable {
 			@AttributeOverride(name = "name", column = @Column(name = "parentName")) })
 	private ID parentId = null;
 
-	@ElementCollection
-	@OrderColumn(name = "idx")
-	private List<ID> children = null;
 
 	// Since some ServiceElements will have many capabilities this attribute
 	// will list all the capabilities the serviceElement has. This does not mean
@@ -333,21 +330,6 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 */
 	public void setParentId(ID parentId) {
 		this.parentId = parentId;
-	}
-
-	/**
-	 * @return the children
-	 */
-	public List<ID> getChildren() {
-		return children;
-	}
-
-	/**
-	 * @param children
-	 *            the children to set
-	 */
-	public void setChildren(List<ID> children) {
-		this.children = children;
 	}
 
 	/**
