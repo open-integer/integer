@@ -2,9 +2,6 @@ package edu.harvard.integer.client;
 
 import java.util.List;
 
-import com.emitrom.lienzo.client.core.mediator.EventFilter;
-import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
-import com.emitrom.lienzo.client.widget.LienzoPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -15,19 +12,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.Tree;
-import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import edu.harvard.integer.client.ui.CalendarPolicyPanel;
 import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.CapabilityView;
 import edu.harvard.integer.client.ui.ContactPanel;
-import edu.harvard.integer.client.ui.EventView;
-import edu.harvard.integer.client.ui.FilterView;
 import edu.harvard.integer.client.ui.LocationPanel;
 import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.ui.MechanismPanel;
@@ -35,8 +25,8 @@ import edu.harvard.integer.client.ui.OragnizationPanel;
 import edu.harvard.integer.client.ui.RolePanel;
 import edu.harvard.integer.client.ui.ServiceElementPanel;
 import edu.harvard.integer.client.ui.ServiceElementTypePanel;
+import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.ui.UserPanel;
-import edu.harvard.integer.client.widget.DragImageWidget;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvFlexTable;
 import edu.harvard.integer.common.snmp.MIBInfo;
@@ -46,14 +36,17 @@ import edu.harvard.integer.common.topology.Capability;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class MainClient implements EntryPoint {
-	private Widget currentWidget;
+	public static final int WINDOW_WIDTH = 1200;
+	public static final int WINDOW_HEIGHT = 800;
+	
+	public static Widget currentWidget = null;
 	private HvFlexTable flexTable;
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final IntegerServiceAsync integerService = GWT
+	public static final IntegerServiceAsync integerService = GWT
 			.create(IntegerService.class);
 	/**
 	 * This is the entry point method.
@@ -104,7 +97,7 @@ public class MainClient implements EntryPoint {
 		// User
 		createAddUserLink();
 		
-		currentWidget = createHomePage();
+		currentWidget = new SystemSplitViewPanel();
 		RootPanel.get("root").add(currentWidget);
 		
 	}
@@ -119,114 +112,10 @@ public class MainClient implements EntryPoint {
 				if (currentWidget != null)
 					RootPanel.get("root").remove(currentWidget);
 				
-				currentWidget = createHomePage();
+				currentWidget = new SystemSplitViewPanel(); // createHomePage();
 				RootPanel.get("root").add(currentWidget);
 			}
 		});
-	}
-	
-	private SplitLayoutPanel createHomePage() {
-		LienzoPanel networkPanel = new LienzoPanel(950, 550);
-
-        DragImageWidget dragImageWidget = new DragImageWidget(90, 50);
-        networkPanel.add(dragImageWidget);
-        
-        networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-        LienzoPanel.enableWindowMouseWheelScroll(true);
-        
-		SplitLayoutPanel systemPanel = new SplitLayoutPanel(5);
-		systemPanel.setSize("1200px", "700px");
-		SplitLayoutPanel westPanel = new SplitLayoutPanel(3);
-		SplitLayoutPanel eastPanel = new SplitLayoutPanel(3);
-		
-		FilterView filterView = createFilterView();
-		westPanel.addSouth(filterView, 200);
-		westPanel.add(createNetworkTreePanel());
-		westPanel.setWidgetToggleDisplayAllowed(filterView, true);
-
-		EventView eventView = createEventView();
-		eastPanel.addSouth(eventView, 150);
-		eastPanel.add(networkPanel);
-		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
-		
-		systemPanel.addWest(westPanel, 250);
-		systemPanel.add(eastPanel);
-		
-		return systemPanel;
-	}
-	
-	private VerticalPanel createNetworkTreePanel() {
-		VerticalPanel treePanel = new VerticalPanel();
-		Tree staticTree = createStaticTree();
-	    staticTree.setAnimationEnabled(true);
-	    staticTree.ensureDebugId("cwTree-staticTree");
-	    ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
-	    staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
-	    staticTreeWrapper.setSize("250px", "500px");
-	    
-	    treePanel.add(staticTree);
-	    
-	    return treePanel;
-	}
-	
-	private Tree createStaticTree() {
-	    // Create the tree
-	    String[] networks = {"Cambridge Campus", "Allston Campus", "Longwood Medical", };
-	    String[] subnetworks = {"192.168.1.", "192.168.2.", "192.168.3.", };
-	    
-	    Tree tree = new Tree();
-	    tree.setAnimationEnabled(true);
-	    TreeItem root = new TreeItem();
-	    root.setText("Physical Network");
-
-	    int i = 1;
-	    for (String network : networks) {
-		    TreeItem cambridgeNet = root.addTextItem(network);
-		    for (String subnet : subnetworks) {
-		    	cambridgeNet.addTextItem(subnet+i++);
-			}
-	    }
-
-	    root.setState(true);
-	    tree.addItem(root);
-	    return tree;
-	}
-	
-	private FilterView createFilterView() {
-		String title = "Layer 3 Topology";
-		String subTitle = "State - Campus Wide";
-		final String[] headers = {"Views", "Filters", "Manager"};
-		final FilterView filterView = new FilterView(title, subTitle, headers);
-		/*integerService.getEvents(new AsyncCallback<List<Object>>() {
-
-			@Override
-			public void onSuccess(List<Object> result) {
-				filterView.update(result);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});*/
-		return filterView;
-	}
-	
-	private EventView createEventView() {
-		String title = "Events";
-		final String[] headers = {"Type", "Severity", "Start Time", "Status", "Description"};
-		final EventView eventView = new EventView(title, headers);
-		/*integerService.getEvents(new AsyncCallback<List<Object>>() {
-
-			@Override
-			public void onSuccess(List<Object> result) {
-				eventView.update(result);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});*/
-		return eventView;
 	}
 	
 	private void createViewImportedMibsLink() {
