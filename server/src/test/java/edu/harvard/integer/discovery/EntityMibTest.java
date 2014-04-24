@@ -35,7 +35,14 @@ package edu.harvard.integer.discovery;
 
 import javax.inject.Inject;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.snmp4j.smi.OID;
 
 import edu.harvard.integer.access.Access;
@@ -65,7 +72,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
  *
  */
 public class EntityMibTest {
-	
+		
 	@Test
 	public void retrieveTable() {
 		
@@ -93,30 +100,5 @@ public class EntityMibTest {
 		System.out.println("Done with snmp table get ........ ");
 	}
 	
-	
-	@Test
-	public void contaimentTest() {
-		
-		EntityMibServiceElementDiscovery entityDisc = new EntityMibServiceElementDiscovery();
-		SnmpV2cCredentail snmpV2c = new SnmpV2cCredentail();
-		snmpV2c.setReadCommunity("integerrw");
-		snmpV2c.setWriteCommunity("integerrw");
-		CommunityAuth ca = new CommunityAuth(snmpV2c);
-		
-		DiscoverNode discNode = new DiscoverNode("10.240.127.121");
-		Access ac = new Access(161, ca);
-		
-		discNode.setAccessElement(new ServiceElement());
-		
-		discNode.setAccess(ac);;
-		
-		try {
-			entityDisc.discover(null, discNode);
-		} 
-		catch (IntegerException e) {
-			
-			e.printStackTrace();
-		}
-	}
 	
 }
