@@ -51,7 +51,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
+import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
@@ -86,6 +91,7 @@ public class ServiceElementTest {
 		//BasicConfigurator.configure();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void addServiceElement() {
 
@@ -105,6 +111,14 @@ public class ServiceElementTest {
 		ids.add(identifier);
 		serviceElement.setValues(ids);
 
+		ManagementObjectIntegerValue intValue = new ManagementObjectIntegerValue();
+		intValue.setManagementObject(new ID(Long.valueOf(1), "MO name", new IDType(SNMP.class.getName())));
+		intValue.setValue(Integer.valueOf(2));
+		intValue.setName("MO name value");
+		List<ManagementObjectValue> values = new ArrayList<ManagementObjectValue>();
+		values.add(intValue);
+		serviceElement.setAttributeValues(values);
+		
 		try {
 			serviceElementManager.updateServiceElement(serviceElement);
 
