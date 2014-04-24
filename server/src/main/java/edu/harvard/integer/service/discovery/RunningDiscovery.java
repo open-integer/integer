@@ -46,9 +46,9 @@ public class RunningDiscovery {
 
 	public DiscoveryId id = null;
 
-	public List<NetworkDiscovery<ServiceElement>> runningDiscoveries = null;
+	public List<NetworkDiscovery> runningDiscoveries = null;
 
-	public List<NetworkDiscovery<ServiceElement>> completeDiscoveries = null;
+	public List<NetworkDiscovery> completeDiscoveries = null;
 
 	/**
 	 * @return the id
@@ -68,7 +68,7 @@ public class RunningDiscovery {
 	/**
 	 * @return the runningDiscoveries
 	 */
-	public List<NetworkDiscovery<ServiceElement>> getRunningDiscoveries() {
+	public List<NetworkDiscovery> getRunningDiscoveries() {
 		return runningDiscoveries;
 	}
 
@@ -77,14 +77,14 @@ public class RunningDiscovery {
 	 *            the runningDiscoveries to set
 	 */
 	public void setRunningDiscoveries(
-			List<NetworkDiscovery<ServiceElement>> runningDiscoveries) {
+			List<NetworkDiscovery> runningDiscoveries) {
 		this.runningDiscoveries = runningDiscoveries;
 	}
 
 	/**
 	 * @return the completeDiscoveries
 	 */
-	public List<NetworkDiscovery<ServiceElement>> getCompleteDiscoveries() {
+	public List<NetworkDiscovery> getCompleteDiscoveries() {
 		return completeDiscoveries;
 	}
 
@@ -93,7 +93,7 @@ public class RunningDiscovery {
 	 *            the completeDiscoveries to set
 	 */
 	public void setCompleteDiscoveries(
-			List<NetworkDiscovery<ServiceElement>> completeDiscoveries) {
+			List<NetworkDiscovery> completeDiscoveries) {
 		this.completeDiscoveries = completeDiscoveries;
 	}
 
@@ -102,7 +102,7 @@ public class RunningDiscovery {
 	 */
 	public void stopDiscovery() {
 		
-		for (NetworkDiscovery<ServiceElement> runningDiscovery : runningDiscoveries) {
+		for (NetworkDiscovery runningDiscovery : runningDiscoveries) {
 			runningDiscovery.stopDiscovery();
 		}
 		

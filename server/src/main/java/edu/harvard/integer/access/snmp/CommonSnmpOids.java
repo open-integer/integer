@@ -67,6 +67,9 @@ public class CommonSnmpOids {
     /** The Constant sysLocation. */
     public static final String sysLocation = "1.3.6.1.2.1.1.6";
     
+    public static final int vendorSysIdIndex = 6;
+    
+   
     
     /**
      * Entity Group OIDs.  They are most likely used in physical topology on a device.
@@ -92,7 +95,30 @@ public class CommonSnmpOids {
     
     public static final String entPhysicalModelName = "1.3.6.1.2.1.47.1.1.1.1.13";
     
+    public static final String entPhysicalSerialNum = "1.3.6.1.2.1.47.1.1.1.1.11";
+     
+    public static final String entAliasMappingIdentifier = "1.3.6.1.2.1.47.1.3.2.1.2";
+    
+    
+    /**
+     * Host MIB oid
+     */
+    public static final String hrDeviceTable = "1.3.6.1.2.1.25.3.2";
+    
+    /**
+     * If table oid
+     */
+    public static final String ifDescr = "1.3.6.1.2.1.2.2.1.2";    // String
 	
+    public static final String ifType = "1.3.6.1.2.1.2.2.1.3";     // Integer
+    
+    public static String ifMtu = "1.3.6.1.2.1.2.2.1.4";  // Integer
+    
+    public static String ifSpeed = "1.3.6.1.2.1.2.2.1.5";  // Long
+    
+    public static String ifPhysAddress = "1.3.6.1.2.1.2.2.1.6";  // String
+    
+    
 	public static VariableBinding[] sysVB = {
 		
 		new VariableBinding(new OID(CommonSnmpOids.sysContact)),

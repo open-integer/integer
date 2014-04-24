@@ -30,69 +30,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access.snmp;
+package edu.harvard.integer.service.discovery.element;
 
-import org.snmp4j.PDU;
-import org.snmp4j.smi.VariableBinding;
+import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.service.discovery.snmp.ContainmentServiceElementWorker;
+import edu.harvard.integer.service.discovery.snmp.EntityMibServiceElementDiscovery;
+import edu.harvard.integer.service.discovery.snmp.HostMibServiceElementDiscovery;
+import edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover;
 
 /**
  * @author dchan
  *
  */
-public class SnmpSysInfo {
+public class DiscoverWorkerFactory {
 
-	private String sysDescr;
-	private String sysObjectID;
-	private String sysContact;
-	private String sysName;
-	private String sysLocation;
-	
-	private PDU pdu;
-	
-
-	public SnmpSysInfo( PDU sysPdu ) {
+	public static SnmpServiceElementDiscover getSnmpServiceElementWorker( SnmpContainmentType sct ) {
 		
-		for ( int i=0; i<sysPdu.size(); i++ ) {
-			VariableBinding vb = sysPdu.get(i);
-			System.out.println("VB OID *************************************************** " + vb.getOid().toString());
-			
-			if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysContact) >= 0 ) {
-				sysContact = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysObjectID) >= 0) {
-				sysObjectID = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysLocation) >= 0 ) {
-				sysLocation = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysName) >= 0 ) {
-				sysName = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysDescr) >= 0 ) {
-				sysDescr = vb.getVariable().toString();
-			}
-		}		
-		this.pdu = sysPdu;
-	}
-	
-	public String getSysDescr() {
-		return sysDescr;
-	}
-	public String getSysObjectID() {
-		return sysObjectID;
-	}
-	public String getSysContact() {
-		return sysContact;
-	}
-	public String getSysName() {
-		return sysName;
-	}
-	public String getSysLocation() {
-		return sysLocation;
-	}
-	
-	
-	public PDU getPdu() {
-		return pdu;
+		if ( sct == null ) {
+			return null;
+		}
+		
+		switch ( sct ) {
+	    
+        case EntityMib:        	
+        	return new EntityMibServiceElementDiscovery();
+       	 
+        case HostResourcesMib:        	
+        	return new HostMibServiceElementDiscovery();
+       	 
+        case SnmpContainmintList:        	
+        	return new ContainmentServiceElementWorker();
+       	 
+        default:
+       	    break;
+        
+        }
+		return null;
 	}
 }

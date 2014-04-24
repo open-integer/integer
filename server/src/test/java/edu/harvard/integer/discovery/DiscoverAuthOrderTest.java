@@ -49,6 +49,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+import org.snmp4j.smi.OID;
+import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.AccessTypeEnum;
@@ -151,10 +153,16 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 	
 		DiscoveryId id = new DiscoveryId(Long.valueOf(1), Long.valueOf(1));
 		
-		List<SNMP> toplLevelOIDs = serviceElementDiscoveryManager.getToplLevelOIDs();
+		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
 		
-		netDisc = new NetworkDiscovery(seed, toplLevelOIDs, id);
-	
+		List<SNMP> mgrObjects = serviceElementDiscoveryManager.getToplLevelOIDs();
+		for ( SNMP snmp : mgrObjects ) {
+
+			VariableBinding vb = new VariableBinding(new OID(snmp.getOid()));
+			vbs.add(vb);
+
+		}
+		netDisc = new NetworkDiscovery(seed, vbs, id);	
 	}
 	
 	@Test

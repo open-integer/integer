@@ -55,7 +55,6 @@ import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
-import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.DiscoveryManager;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
@@ -78,7 +77,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
  * @param <E> the element type
  * @param <T> the generic type
  */
-public class DiscoverSubnetAsyncTask <E extends ElementAccess,  T extends ServiceElement>  implements Callable<Ipv4Range>, ResponseListener {
+public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Callable<Ipv4Range>, ResponseListener {
 
 
 	/** The logger. */
@@ -104,7 +103,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess,  T extends Servic
 	private ConcurrentHashMap<String, DiscoverNode> discoverMap = new ConcurrentHashMap<>();
 	
 	/** The net disc. */
-	private NetworkDiscovery<T>  netDisc;
+	private NetworkDiscovery  netDisc;
 	
 	
 	
@@ -115,7 +114,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess,  T extends Servic
 	 * @param seed the seed
 	 * @throws IntegerException the integer exception
 	 */
-	public DiscoverSubnetAsyncTask( NetworkDiscovery<T> dis,
+	public DiscoverSubnetAsyncTask( NetworkDiscovery dis,
 			                        IpDiscoverySeed seed) throws IntegerException {
 		
 		this.seed = seed;
@@ -312,7 +311,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess,  T extends Servic
 		 */
 		dn.setStage(DiscoverStageE.DetailScan);
 		PDU response = event.getResponse();
-		ElementDiscoverTask<E> elmTask = new ElementDiscoverTask<E>((NetworkDiscovery<ServiceElement>) netDisc, dn, new SnmpSysInfo(response));		
+		ElementDiscoverTask<E> elmTask =  new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));		
 		DiscoveryManager.getInstance().sutmitElementTask(elmTask);		
 	}
 	

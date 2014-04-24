@@ -30,69 +30,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access.snmp;
-
-import org.snmp4j.PDU;
-import org.snmp4j.smi.VariableBinding;
+package edu.harvard.integer.common.topology;
 
 /**
  * @author dchan
  *
  */
-public class SnmpSysInfo {
+public enum CategoryTypeEnum {
 
-	private String sysDescr;
-	private String sysObjectID;
-	private String sysContact;
-	private String sysName;
-	private String sysLocation;
-	
-	private PDU pdu;
-	
-
-	public SnmpSysInfo( PDU sysPdu ) {
-		
-		for ( int i=0; i<sysPdu.size(); i++ ) {
-			VariableBinding vb = sysPdu.get(i);
-			System.out.println("VB OID *************************************************** " + vb.getOid().toString());
-			
-			if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysContact) >= 0 ) {
-				sysContact = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysObjectID) >= 0) {
-				sysObjectID = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysLocation) >= 0 ) {
-				sysLocation = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysName) >= 0 ) {
-				sysName = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysDescr) >= 0 ) {
-				sysDescr = vb.getVariable().toString();
-			}
-		}		
-		this.pdu = sysPdu;
-	}
-	
-	public String getSysDescr() {
-		return sysDescr;
-	}
-	public String getSysObjectID() {
-		return sysObjectID;
-	}
-	public String getSysContact() {
-		return sysContact;
-	}
-	public String getSysName() {
-		return sysName;
-	}
-	public String getSysLocation() {
-		return sysLocation;
-	}
-	
-	
-	public PDU getPdu() {
-		return pdu;
-	}
+	portIf,
+	other,
+	powertSupply,
+	fan,
+	sensor,
+	module,
+	port,
+	cpu,
 }
