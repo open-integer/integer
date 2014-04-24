@@ -462,4 +462,34 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		
 		return dao.findById(id);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getManagementObjectsByIds(edu.harvard.integer.common.ID[])
+	 */
+	@Override
+	public ServiceElementManagementObject[] getManagementObjectsByIds(ID[] ids) throws IntegerException {
+		ServiceElementManagementObjectDAO dao = dbm.getServiceElementManagementObjectDAO();
+		
+		return dao.findByIds(ids);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#updateManagementObject(edu.harvard.integer.common.topology.ServiceElementManagementObject)
+	 */
+	@Override
+	public ServiceElementManagementObject updateManagementObject(ServiceElementManagementObject managementObject) throws IntegerException {
+		ServiceElementManagementObjectDAO dao = dbm.getServiceElementManagementObjectDAO();
+		
+		managementObject = dao.update(managementObject);
+		
+		return managementObject;
+	}
+	
+	@Override
+	public void deleteManagementObject(ID id) throws IntegerException {
+		ServiceElementManagementObjectDAO dao = dbm.getServiceElementManagementObjectDAO();
+		dao.delete(id);
+	}
 }

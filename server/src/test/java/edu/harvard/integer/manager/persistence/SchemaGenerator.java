@@ -76,7 +76,7 @@ public class SchemaGenerator {
 		export.setDelimiter(";");
 		
 		export.setOutputFile("build/create_" + dialect.name().toLowerCase() + ".sql");
-		export.execute(true, false, false, false);
+		export.execute(true, false, false, true);
 	}
 
 	/**

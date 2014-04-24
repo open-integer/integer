@@ -283,4 +283,31 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	ServiceElementManagementObject getManagementObjectById(ID id)
 			throws IntegerException;
 
+	/**
+	 * Update the management object. The identifier will be set on the returned object
+	 * @param managementObject
+	 * @return ManagementObject with the identifier set if this is a new instance.
+	 * @throws IntegerException
+	 */
+	ServiceElementManagementObject updateManagementObject(
+			ServiceElementManagementObject managementObject)
+			throws IntegerException;
+
+	/**
+	 * Delete the ServiceElementManagementObject that is identified by the ID.
+	 * @param id
+	 * @throws IntegerException
+	 */
+	void deleteManagementObject(ID id) throws IntegerException;
+
+	/**
+	 * Get the List of ManagementObejcts by the ID's
+	 * 
+	 * @param ids
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElementManagementObject[] getManagementObjectsByIds(ID[] ids)
+			throws IntegerException;
+
 }

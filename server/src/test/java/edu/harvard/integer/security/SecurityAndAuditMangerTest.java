@@ -144,6 +144,11 @@ public class SecurityAndAuditMangerTest {
 	public void getAllDirectUsers() {
 		try {
 			DirectUserLogin[] directUsers = securityManager.getAllDirectUsers();
+			if (directUsers == null || directUsers.length == 0) {
+				addDirectUser();
+				directUsers = securityManager.getAllDirectUsers();
+			}
+				
 			logger.info("Found " + directUsers.length + " Direct user logins");
 			
 			assert(directUsers.length > 0);

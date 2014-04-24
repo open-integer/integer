@@ -46,6 +46,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
@@ -55,7 +56,6 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
-import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * @author David Taylor
@@ -307,6 +307,7 @@ public class BaseDAO {
 	 * @return
 	 * @throws IntegerException
 	 */
+	@SuppressWarnings("unchecked")
 	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
 
 		Class<? extends BaseEntity> clazz = null;
@@ -324,6 +325,51 @@ public class BaseDAO {
 		return entity;
 	}
 
+	/**
+	 * Find a list of objects by the given list of identifiers.
+	 * @param ids
+	 * @param clazz
+	 * @return
+	 * @throws IntegerException
+	 */
+	@SuppressWarnings("unchecked")
+	protected <T extends BaseEntity> T[] findByIds(ID[] ids, Class<T> clazz) throws IntegerException {
+
+		List<Long> identifers = new ArrayList<Long>();
+		for (ID id : ids) {
+			identifers.add(id.getIdentifier());
+		}
+		
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+
+		Root<T> from = query.from(clazz);
+	
+		Predicate[] predicates = new Predicate[ids.length];
+		List<ParameterExpression<Long>> paramExpressions = new ArrayList<ParameterExpression<Long>>(); 
+		
+		for (int i = 0; i < ids.length; i++) {
+			ParameterExpression<Long> idParam = criteriaBuilder.parameter(Long.class);
+			paramExpressions.add(idParam);
+			
+			criteriaBuilder.equal(from.get("identifier"), idParam);
+			 
+			predicates[i] = criteriaBuilder.equal(from.get("identifier"), idParam);
+		}
+		
+		query.select(from).where(criteriaBuilder.or(predicates));
+		
+		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
+		for (int i = 0; i < ids.length; i++) 
+			typeQuery.setParameter(paramExpressions.get(i), ids[i].getIdentifier());
+		
+		List<T> resultList = typeQuery.getResultList();
+
+		return resultList.toArray((T[]) Array.newInstance(clazz, 0));
+	}
+	
 	/**
 	 * Update a list of entities of the type of this DAO. ex User
 	 * 
