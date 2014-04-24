@@ -37,6 +37,7 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -58,6 +59,7 @@ import edu.harvard.integer.common.ID;
  *         types could use SSH or other protocols.
  * 
  */
+@Entity
 public class VendorContainmentSelector extends BaseEntity {
 
 	/**
@@ -120,16 +122,6 @@ public class VendorContainmentSelector extends BaseEntity {
 		@AttributeOverride(name = "name", column = @Column(name = "containmentName")) })
 	private ID containmentId = null;
 
-	/**
-	 * This is the service element type that matches this
-	 * SnmpVendorContainmentSelector.
-	 */
-	 @Embedded
-	 @AttributeOverrides({
-		 @AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
-		 @AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
-		 @AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
-	private ID serviceElementTypeId = null;
 
 	/**
 	 * @return the vendor
@@ -206,19 +198,5 @@ public class VendorContainmentSelector extends BaseEntity {
 		this.containmentId = containmentId;
 	}
 
-	/**
-	 * @return the serviceElementTypeId
-	 */
-	public ID getServiceElementTypeId() {
-		return serviceElementTypeId;
-	}
-
-	/**
-	 * @param serviceElementTypeId
-	 *            the serviceElementTypeId to set
-	 */
-	public void setServiceElementTypeId(ID serviceElementTypeId) {
-		this.serviceElementTypeId = serviceElementTypeId;
-	}
 
 }

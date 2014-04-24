@@ -162,6 +162,60 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return dao.findAll();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#updateVendorContainmentSelector(edu.harvard.integer.common.discovery.VendorContainmentSelector)
+	 */
+	@Override
+	public VendorContainmentSelector updateVendorContainmentSelector(VendorContainmentSelector selector) throws IntegerException {
+		VendorContainmentSelectorDAO dao = dbm
+				.getVendorContainmentSelectorDAO();
+		
+		selector = dao.update(selector);
+		
+		return selector;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getAllVendorContainmentSelectors()
+	 */
+	@Override
+	public VendorContainmentSelector[] getAllVendorContainmentSelectors() throws IntegerException {
+		VendorContainmentSelectorDAO dao = dbm
+				.getVendorContainmentSelectorDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getVendorContainmentSelectorById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public VendorContainmentSelector getVendorContainmentSelectorById(ID id) throws IntegerException {
+		VendorContainmentSelectorDAO dao = dbm
+				.getVendorContainmentSelectorDAO();
+		
+		return dao.findById(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#deleteVendorContianmentSelector(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public void deleteVendorContianmentSelector(ID id) throws IntegerException {
+		VendorContainmentSelectorDAO dao = dbm
+				.getVendorContainmentSelectorDAO();
+		
+		dao.delete(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getSnmpContainment(edu.harvard.integer.common.discovery.VendorContainmentSelector)
+	 */
 	@Override
 	public SnmpContainment getSnmpContainment(VendorContainmentSelector selector)
 			throws IntegerException {

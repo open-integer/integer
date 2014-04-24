@@ -64,6 +64,7 @@ import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDescriminatorIntegerValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
+import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -312,10 +313,53 @@ public class ServiceElementDiscoveryManagerTest {
 	}
 	
 	@Test
+	public void createVendorContainmentSelector() {
+		VendorContainmentSelector vendorContainmentSelector = new VendorContainmentSelector();
+		vendorContainmentSelector.setContainmentId(new ID(Long.valueOf(1), "SnmpContainment", new IDType(SnmpContainment.class.getName())));
+		vendorContainmentSelector.setFirmware("Firmware");
+		vendorContainmentSelector.setModel("Model");
+		vendorContainmentSelector.setSoftwareVersion("12.32A");
+		vendorContainmentSelector.setVendor("Vendor");;
+		
+		try {
+			serviceElementDiscoveryManger.getSnmpContainment(vendorContainmentSelector);
+		} catch (IntegerException e) {
+		
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+	}
+	
+	
+	public void getAllVendorContainmentSelectors() {
+		try {
+			VendorContainmentSelector[] selectors = serviceElementDiscoveryManger.getAllVendorContainmentSelectors();
+			if (selectors == null || selectors.length == 0) {
+				createVendorContainmentSelector();
+				selectors = serviceElementDiscoveryManger.getAllVendorContainmentSelectors();
+			}
+			
+			assert(selectors != null);
+			
+			logger.info("Found " + selectors.length + " VendorContianmentSelectors");
+			
+			assert(selectors.length > 0);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	
+	@Test
 	public void createSnmpContainment() {
 		SnmpContainment snmpContainment = new SnmpContainment();
 		snmpContainment.setContainmentType(SnmpContainmentType.EntityMib);
 		snmpContainment.setName("MyContainment");
+		snmpContainment.setServiceElementTypeId(new ID(Long.valueOf(2), "ServiceElementType", new IDType(ServiceElementType.class.getName())));
 		
 		SnmpLevelOID snmpLevelOid = new SnmpLevelOID();
 		snmpLevelOid.setName("My level oid");

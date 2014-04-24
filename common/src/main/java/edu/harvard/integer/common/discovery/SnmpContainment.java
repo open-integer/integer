@@ -35,14 +35,14 @@ package edu.harvard.integer.common.discovery;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
-
-import org.hibernate.annotations.Index;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -86,6 +86,17 @@ public class SnmpContainment extends BaseEntity {
 	private List<SnmpLevelOID> snmpLevels = null;
 
 	/**
+	 * This is the service element type that matches this
+	 * SnmpVendorContainmentSelector.
+	 */
+	 @Embedded
+	 @AttributeOverrides({
+		 @AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
+		 @AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
+		 @AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
+	private ID serviceElementTypeId = null;
+	
+	/**
 	 * @return the containmentType
 	 */
 	public SnmpContainmentType getContainmentType() {
@@ -113,5 +124,20 @@ public class SnmpContainment extends BaseEntity {
 	 */
 	public void setSnmpLevels(List<SnmpLevelOID> snmpLevels) {
 		this.snmpLevels = snmpLevels;
+	}
+
+	/**
+	 * @return the serviceElementTypeId
+	 */
+	public ID getServiceElementTypeId() {
+		return serviceElementTypeId;
+	}
+
+	/**
+	 * @param serviceElementTypeId
+	 *            the serviceElementTypeId to set
+	 */
+	public void setServiceElementTypeId(ID serviceElementTypeId) {
+		this.serviceElementTypeId = serviceElementTypeId;
 	}
 }

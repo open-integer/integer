@@ -165,4 +165,33 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(String catetory, String vendorType)
 			throws IntegerException;
+
+	/**
+	 * @param selector
+	 * @return
+	 * @throws IntegerException
+	 */
+	VendorContainmentSelector updateVendorContainmentSelector(
+			VendorContainmentSelector selector) throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	VendorContainmentSelector[] getAllVendorContainmentSelectors()
+			throws IntegerException;
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws IntegerException
+	 */
+	VendorContainmentSelector getVendorContainmentSelectorById(ID id)
+			throws IntegerException;
+
+	/**
+	 * @param id
+	 * @throws IntegerException
+	 */
+	void deleteVendorContianmentSelector(ID id) throws IntegerException;
 }
