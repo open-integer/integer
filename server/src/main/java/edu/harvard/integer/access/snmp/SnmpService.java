@@ -34,6 +34,7 @@ package edu.harvard.integer.access.snmp;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +44,12 @@ import org.snmp4j.Snmp;
 import org.snmp4j.TransportMapping;
 import org.snmp4j.event.ResponseEvent;
 import org.snmp4j.event.ResponseListener;
+import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
+import org.snmp4j.util.DefaultPDUFactory;
+import org.snmp4j.util.TableEvent;
+import org.snmp4j.util.TableUtils;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
@@ -182,6 +187,36 @@ final public class SnmpService
         PDU rpdu = response.getResponse();
     	return rpdu;
     }
+    
+    
+    
+    /**
+     * 
+     * 
+     * @param endPoint
+     * @param columns
+     * @return
+     * @throws IntegerException 
+     */
+    public List<TableEvent> getTablePdu( ElementEndPoint endPoint, OID[] columns ) throws IntegerException {
+    	
+    	AbstractTarget target = SnmpCollectionUtil.createTarget(endPoint, true);  	
+    	TableUtils tableUtils = new TableUtils(_snmp, new DefaultPDUFactory());
+    	
+    	List<TableEvent> tblEvents = tableUtils.getTable(target, columns, null, null);
+    	for ( TableEvent te : tblEvents ) {
+ 
+    		if ( te.isError() ) {
+    			
+    			throw new IntegerException(null, NetworkErrorCodes.SNMPError, 
+ 	           		   new DisplayableInterface[] { new NonLocaleErrorMessage(te.getErrorMessage()) });
+    			
+    		}
+    	}
+    	return tblEvents;      
+    	
+    }
+    
     
     
     

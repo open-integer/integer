@@ -30,69 +30,39 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access.snmp;
-
-import org.snmp4j.PDU;
-import org.snmp4j.smi.VariableBinding;
+package edu.harvard.integer.service.discovery.snmp;
 
 /**
- * @author dchan
+ * The Class TableRowIndex store the SNMP entry oid, entry name and the index instance for each row.
  *
+ * @author dchan
  */
-public class SnmpSysInfo {
+public class TableRowIndex {
 
-	private String sysDescr;
-	private String sysObjectID;
-	private String sysContact;
-	private String sysName;
-	private String sysLocation;
+	private String tableName;
+	final private String tableOid;
+	final private String instanceOid;
 	
-	private PDU pdu;
-	
-
-	public SnmpSysInfo( PDU sysPdu ) {
+	public TableRowIndex( String tableOid, String instanceOid ) {
 		
-		for ( int i=0; i<sysPdu.size(); i++ ) {
-			VariableBinding vb = sysPdu.get(i);
-			System.out.println("VB OID *************************************************** " + vb.getOid().toString());
-			
-			if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysContact) >= 0 ) {
-				sysContact = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysObjectID) >= 0) {
-				sysObjectID = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysLocation) >= 0 ) {
-				sysLocation = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysName) >= 0 ) {
-				sysName = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysDescr) >= 0 ) {
-				sysDescr = vb.getVariable().toString();
-			}
-		}		
-		this.pdu = sysPdu;
+		this.tableOid = tableOid;
+		this.instanceOid = instanceOid;
 	}
 	
-	public String getSysDescr() {
-		return sysDescr;
+	public String getTableName() {
+		return tableName;
 	}
-	public String getSysObjectID() {
-		return sysObjectID;
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
-	public String getSysContact() {
-		return sysContact;
+
+	public String getTableOid() {
+		return tableOid;
 	}
-	public String getSysName() {
-		return sysName;
-	}
-	public String getSysLocation() {
-		return sysLocation;
+
+	public String getInstanceOid() {
+		return instanceOid;
 	}
 	
-	
-	public PDU getPdu() {
-		return pdu;
-	}
 }

@@ -33,9 +33,15 @@
 package edu.harvard.integer.service.discovery.subnet;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.snmp.DevicePhisicalPattern;
 
 /**
@@ -87,9 +93,10 @@ public class DiscoverNode extends ElementAccess {
 
 	private boolean reachable = false;
 
-	
 	private String subnetId;
 
+	private ServiceElementType topServiceElementType;
+	
 
 	/**  The ip address of the node. */
 	final private String ipAddress;
@@ -97,13 +104,19 @@ public class DiscoverNode extends ElementAccess {
 	private Access access;
 	
 
+	
 
 	/** The device physical pattern is used to discover the physical layout of the device. 
 	 *  One example is the physical entity mib pattern.  
 	 */
 	private DevicePhisicalPattern phyPattern;
 	
-	
+
+
+	/**
+	 * 
+	 */
+	private List<Identify>  identifies;
 
 
 	/**
@@ -217,6 +230,119 @@ public class DiscoverNode extends ElementAccess {
 	public void setSubnetId(String subnetId) {
 		this.subnetId = subnetId;
 	}
+	
+	
+	
 
+
+	/**
+	 * Set the identify for this discover object.
+	 * 
+	 * @param identifyDefs
+	 */
+	public void setIdentifyDefs(List<String> identifyDefs) {
+		
+		identifies = new ArrayList<>();
+		for ( String s : identifyDefs ) {
+		
+			Identify i = new Identify();
+			i.identifyDef = s;
+		}	
+		Collections.sort(identifies);
+	}
+
+	
+	/**
+	 * Check if there are enough data for identify a discover node not or.
+	 * If all values in "identifies" being set, it will return true.
+	 * @return
+	 */
+	public boolean isEnoughIdentifyValue() {
+	
+		if ( identifies == null ) {
+			return false;
+		}
+		for ( Identify i : identifies ) {
+			if ( i.value == null ) {
+		        return true;		
+			}
+		}		
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param identifyName
+	 * @param value
+	 * @return
+	 */
+	public boolean setIdentifyValue( String identifyName, String value ) {
+		
+		if ( identifies == null ) {
+			return false;
+		}
+		
+		for ( Identify i : identifies ) {
+			
+			if ( i.identifyDef.equals(identifyName) ) {
+				i.value = value;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * Return the identify value of the discover node.
+	 * @return
+	 */
+	public String getDiscoverNodeIdentify() {
+		
+		if ( !isEnoughIdentifyValue() ) {
+			return null;
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		for ( Identify i : identifies ) {
+			
+			sb.append(i.value + ":");
+		}	
+		return sb.toString();
+	}
+	
+
+	/**
+	 * Us to store the 
+	 * @author dchan
+	 *
+	 */
+	public class Identify implements Comparable<Identify> {
+		
+		String identifyDef;
+		String value;
+		
+		
+		/* (non-Javadoc)
+		 * @see java.lang.Comparable#compareTo(java.lang.Object)
+		 */
+		@Override
+		public int compareTo(Identify o) {
+			
+			return o.identifyDef.compareTo(identifyDef);
+		}
+	}
+
+
+
+
+	public ServiceElementType getTopServiceElementType() {
+		return topServiceElementType;
+	}
+
+
+	public void setTopServiceElementType(ServiceElementType topServiceElementType) {
+		this.topServiceElementType = topServiceElementType;
+	}
 
 }

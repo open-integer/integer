@@ -30,69 +30,65 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access.snmp;
 
-import org.snmp4j.PDU;
-import org.snmp4j.smi.VariableBinding;
+package edu.harvard.integer.service.persistance.dao.managementobject.copy;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.Mechanism;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
- * @author dchan
+ * @author David Taylor
  *
  */
-public class SnmpSysInfo {
+public class MechanismDAO extends BaseDAO {
 
-	private String sysDescr;
-	private String sysObjectID;
-	private String sysContact;
-	private String sysName;
-	private String sysLocation;
-	
-	private PDU pdu;
-	
-
-	public SnmpSysInfo( PDU sysPdu ) {
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public MechanismDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, Mechanism.class);
 		
-		for ( int i=0; i<sysPdu.size(); i++ ) {
-			VariableBinding vb = sysPdu.get(i);
-			System.out.println("VB OID *************************************************** " + vb.getOid().toString());
-			
-			if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysContact) >= 0 ) {
-				sysContact = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysObjectID) >= 0) {
-				sysObjectID = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysLocation) >= 0 ) {
-				sysLocation = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysName) >= 0 ) {
-				sysName = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysDescr) >= 0 ) {
-				sysDescr = vb.getVariable().toString();
-			}
-		}		
-		this.pdu = sysPdu;
 	}
-	
-	public String getSysDescr() {
-		return sysDescr;
+
+	/**
+	 * @param capabilites
+	 */
+	public List<Mechanism> findByCapabilites(List<Capability> capabilites) {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<Mechanism> query = criteriaBuilder.createQuery(Mechanism.class);
+
+		Root<Mechanism> from = query.from(Mechanism.class);
+		query.select(from);
+
+		ParameterExpression<String> oid = criteriaBuilder
+				.parameter(String.class);
+		query.select(from).where(
+				criteriaBuilder.equal(from.get("identifier"), oid));
+
+		TypedQuery<Mechanism> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, "identifier");
+
+		List<Mechanism> resultList = typeQuery.getResultList();
+
+		
+		return resultList;
 	}
-	public String getSysObjectID() {
-		return sysObjectID;
-	}
-	public String getSysContact() {
-		return sysContact;
-	}
-	public String getSysName() {
-		return sysName;
-	}
-	public String getSysLocation() {
-		return sysLocation;
-	}
-	
-	
-	public PDU getPdu() {
-		return pdu;
-	}
+
 }

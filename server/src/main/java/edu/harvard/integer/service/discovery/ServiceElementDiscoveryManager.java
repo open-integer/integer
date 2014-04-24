@@ -52,7 +52,6 @@ import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -99,7 +98,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 * @throws IntegerException
 	 */
 	@Override
-	public NetworkDiscovery<ServiceElement> startDiscovery(DiscoveryId id, IpDiscoverySeed seed) throws IntegerException {
+	public NetworkDiscovery startDiscovery(DiscoveryId id, IpDiscoverySeed seed) throws IntegerException {
 		
 		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
 	
@@ -111,7 +110,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		}
 		
-		NetworkDiscovery<ServiceElement> discovery = new NetworkDiscovery<ServiceElement>(seed, vbs, id);
+		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
 		
 		discovery.discoverNetwork();
 		
@@ -161,6 +160,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		return dao.findAll();
 	}
+	
 	
 	@Override
 	public SnmpContainment getSnmpContainment(VendorContainmentSelector selector)
@@ -271,7 +271,8 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		snmps = addOid(CommonSnmpOids.entPhysicalName, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.entPhysicalParentRelPos, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.entPhysicalSoftwareRev, snmps, snmpdao);
-		
+		snmps = addOid(CommonSnmpOids.entPhysicalSerialNum, snmps, snmpdao);
+		snmps = addOid(CommonSnmpOids.entPhysicalVendorType, snmps, snmpdao);
 		
 		return snmps;
 	}

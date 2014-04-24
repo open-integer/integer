@@ -171,7 +171,7 @@ public class DiscoveryService extends BaseService implements
 			IpDiscoverySeed seed = createIpDiscoverySeed(ipTopologySeed);
 		
 			try {
-				NetworkDiscovery<ServiceElement> discovery = serviceElementDiscoveryManager.startDiscovery(id, seed);
+				NetworkDiscovery discovery = serviceElementDiscoveryManager.startDiscovery(id, seed);
 				runningDiscoveries.get(id).getRunningDiscoveries().add(discovery);
 				
 			} catch (IntegerException e) {

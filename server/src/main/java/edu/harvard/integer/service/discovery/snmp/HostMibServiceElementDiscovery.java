@@ -30,69 +30,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.access.snmp;
+package edu.harvard.integer.service.discovery.snmp;
 
-import org.snmp4j.PDU;
-import org.snmp4j.smi.VariableBinding;
+import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 
 /**
  * @author dchan
  *
  */
-public class SnmpSysInfo {
+public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 
-	private String sysDescr;
-	private String sysObjectID;
-	private String sysContact;
-	private String sysName;
-	private String sysLocation;
-	
-	private PDU pdu;
-	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover#discover(edu.harvard.integer.common.discovery.SnmpContainment, edu.harvard.integer.service.discovery.subnet.DiscoverNode, edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface)
+	 */
+	@Override
+	public ServiceElement discover(SnmpContainment sc, DiscoverNode discNode )
+			throws IntegerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	public SnmpSysInfo( PDU sysPdu ) {
-		
-		for ( int i=0; i<sysPdu.size(); i++ ) {
-			VariableBinding vb = sysPdu.get(i);
-			System.out.println("VB OID *************************************************** " + vb.getOid().toString());
-			
-			if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysContact) >= 0 ) {
-				sysContact = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysObjectID) >= 0) {
-				sysObjectID = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysLocation) >= 0 ) {
-				sysLocation = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysName) >= 0 ) {
-				sysName = vb.getVariable().toString();
-			}
-			else if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysDescr) >= 0 ) {
-				sysDescr = vb.getVariable().toString();
-			}
-		}		
-		this.pdu = sysPdu;
-	}
-	
-	public String getSysDescr() {
-		return sysDescr;
-	}
-	public String getSysObjectID() {
-		return sysObjectID;
-	}
-	public String getSysContact() {
-		return sysContact;
-	}
-	public String getSysName() {
-		return sysName;
-	}
-	public String getSysLocation() {
-		return sysLocation;
-	}
-	
-	
-	public PDU getPdu() {
-		return pdu;
-	}
+
+
 }

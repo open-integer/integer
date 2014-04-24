@@ -75,6 +75,9 @@ public class ServiceElementType extends BaseEntity {
 	private String model = null;
 
 	private String vendor = null;
+	
+	private String software;
+
 
 	/**
 	 * A specific set of options installed.
@@ -166,12 +169,7 @@ public class ServiceElementType extends BaseEntity {
 	 * information. When this is available, the Discovery Process will attempt
 	 * to retrieve this information.
 	 */
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "vendorSpecificSubTypeId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "vendorSpecificSubTypeType")),
-			@AttributeOverride(name = "name", column = @Column(name = "vendorSpecificSubTypeName")) })
-	private ID vendorSpecificSubType = null;
+	private String vendorSpecificSubType = null;
 
 	/**
 	 * List of Applicability objects associated with this service element type.
@@ -451,7 +449,7 @@ public class ServiceElementType extends BaseEntity {
 	/**
 	 * @return the vendorSpecificSubType
 	 */
-	public ID getVendorSpecificSubType() {
+	public String getVendorSpecificSubType() {
 		return vendorSpecificSubType;
 	}
 
@@ -459,7 +457,7 @@ public class ServiceElementType extends BaseEntity {
 	 * @param vendorSpecificSubType
 	 *            the vendorSpecificSubType to set
 	 */
-	public void setVendorSpecificSubType(ID vendorSpecificSubType) {
+	public void setVendorSpecificSubType(String vendorSpecificSubType) {
 		this.vendorSpecificSubType = vendorSpecificSubType;
 	}
 
@@ -476,6 +474,14 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	public void setSnmpOverride(ID snmpOverride) {
 		this.snmpOverride = snmpOverride;
+	}
+
+	public String getSoftware() {
+		return software;
+	}
+
+	public void setSoftware(String software) {
+		this.software = software;
 	}
 
 }

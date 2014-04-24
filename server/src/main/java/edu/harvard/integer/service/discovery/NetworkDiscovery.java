@@ -40,20 +40,16 @@ import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 import edu.harvard.integer.service.distribution.DistributionManager;
-import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
 
 
@@ -74,8 +70,10 @@ import edu.harvard.integer.service.distribution.ServiceTypeEnum;
  * @author dchan
  * @param <T> the generic type
  */
-public class NetworkDiscovery <T extends ServiceElement> implements NetworkDiscoveryBase {
+public class NetworkDiscovery  implements NetworkDiscoveryBase {
 
+	public static String IPIDENTIFY = "IpIdentify";
+	
 	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
  	
@@ -89,9 +87,14 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	/** The end nodes. */
 	private ConcurrentHashMap<String, DiscoverNode> endNodes = new ConcurrentHashMap<>();
 	
-	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask<ElementAccess, T>>  subnetTasks = new ConcurrentHashMap<>();
+	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask>  subnetTasks = new ConcurrentHashMap<>();
 	
-	
+	/**
+     * Map to use to check if a device being discovered or not.
+     */
+    private ConcurrentHashMap<String, Boolean> discoveredIndicationMap = new ConcurrentHashMap<>();
+    
+
 	/** The discover seed. */
 	private final List<IpDiscoverySeed> discoverSeeds;
 	
@@ -108,6 +111,8 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	 * Discovery id to keep track of discovery.
 	 */
 	private final DiscoveryId discoverId;
+	
+	
 	
 	/**
 	 * Create a discovery  
@@ -147,7 +152,7 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 				
 				try {
 					@SuppressWarnings("unchecked")
-					DiscoverSubnetAsyncTask<ElementAccess, T> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+					DiscoverSubnetAsyncTask<ElementAccess> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
 	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
 					
 					Future<Ipv4Range> v = exService.submit(subTask);
@@ -260,7 +265,7 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 	private void removeIpaddressFromSubnet( String ip, String subnetid ) {
 		
 		if ( subnetid != null ) {
-			DiscoverSubnetAsyncTask<ElementAccess, T> subTask = subnetTasks.get(subnetid);
+			DiscoverSubnetAsyncTask<ElementAccess> subTask = subnetTasks.get(subnetid);
 			if ( subTask != null ) {
 				
 				subTask.removeDiscoverNode(ip);
@@ -313,6 +318,11 @@ public class NetworkDiscovery <T extends ServiceElement> implements NetworkDisco
 
 	public DiscoveryId getDiscoverId() {
 		return discoverId;
+	}
+
+   	
+	public ConcurrentHashMap<String, Boolean> getDiscoveredIndicationMap() {
+		return discoveredIndicationMap;
 	}
 
 

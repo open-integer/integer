@@ -1,3 +1,6 @@
+
+
+
 /*
  *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
@@ -45,8 +48,6 @@ import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -156,7 +157,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return
 	 * @throws IntegerException
 	 */
-	NetworkDiscovery<ServiceElement> startDiscovery(DiscoveryId id,
+	NetworkDiscovery startDiscovery(DiscoveryId id,
 			IpDiscoverySeed seed) throws IntegerException;
 
 	/**
@@ -166,4 +167,9 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(String catetory, String vendorType)
 			throws IntegerException;
+
+	/**
+	 * @return
+	 */
+	List<SNMP> getEntityMIBInfo();
 }
