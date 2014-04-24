@@ -45,6 +45,7 @@ import org.snmp4j.TransportMapping;
 import org.snmp4j.event.ResponseEvent;
 import org.snmp4j.event.ResponseListener;
 import org.snmp4j.smi.OID;
+import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 import org.snmp4j.util.DefaultPDUFactory;
@@ -82,7 +83,7 @@ final public class SnmpService
      */
     private SnmpService() throws IOException
     {
-        TransportMapping transport = new DefaultUdpTransportMapping();
+        TransportMapping transport = new DefaultUdpTransportMapping(new UdpAddress("127.0.0.1/0"));
         _snmp = new Snmp(transport);
         _snmp.listen();
     }
@@ -102,7 +103,9 @@ final public class SnmpService
             } 
             catch (IOException e)
             {
-                throw new RuntimeException( "IO error when create SnmpService");
+            	
+            	e.printStackTrace();
+                throw new RuntimeException( "IO error when create SnmpService " + e.toString());
             }
         }
         

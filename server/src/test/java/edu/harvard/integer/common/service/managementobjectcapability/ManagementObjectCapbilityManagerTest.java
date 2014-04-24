@@ -275,10 +275,10 @@ public class ManagementObjectCapbilityManagerTest {
 	public void exportJasonCapabilityManagementObjects() {
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
 														// org.codehaus.jackson.mapper.MappingJsonFactory
-		JsonGenerator jg = null;
+		JsonGenerator jsongenerator = null;
 		try {
 
-			jg = jsonFactory.createGenerator(new FileOutputStream(
+			jsongenerator = jsonFactory.createGenerator(new FileOutputStream(
 					"capabilites.json"), JsonEncoding.UTF8);
 		} catch (IOException e) {
 
@@ -303,7 +303,7 @@ public class ManagementObjectCapbilityManagerTest {
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 		try {
-			mapper.writeValue(jg, capabilities);
+			mapper.writeValue(jsongenerator, capabilities);
 
 		} catch (JsonProcessingException je) {
 			je.printStackTrace();
@@ -315,7 +315,7 @@ public class ManagementObjectCapbilityManagerTest {
 		}
 
 		try {
-			jg.close();
+			jsongenerator.close();
 		} catch (IOException e) {
 
 			e.printStackTrace();
