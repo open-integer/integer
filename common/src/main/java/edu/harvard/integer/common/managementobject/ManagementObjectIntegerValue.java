@@ -33,6 +33,8 @@
 
 package edu.harvard.integer.common.managementobject;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -43,7 +45,7 @@ import javax.persistence.Entity;
  */
 @Entity
 public class ManagementObjectIntegerValue extends
-		ManagementObjectValue<Integer> {
+		ManagementObjectValue<Integer> implements Serializable {
 
 	/**
 	 * Serial Version UID

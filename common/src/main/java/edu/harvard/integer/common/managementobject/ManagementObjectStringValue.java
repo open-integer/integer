@@ -33,6 +33,8 @@
 
 package edu.harvard.integer.common.managementobject;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -42,7 +44,7 @@ import javax.persistence.Entity;
  *         Hold a String value of a management object.
  */
 @Entity
-public class ManagementObjectStringValue extends ManagementObjectValue<String> {
+public class ManagementObjectStringValue extends ManagementObjectValue<String> implements Serializable {
 
 	@Column(name="stringValue")
 	private String value = null;
