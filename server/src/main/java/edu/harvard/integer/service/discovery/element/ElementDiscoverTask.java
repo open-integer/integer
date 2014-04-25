@@ -281,7 +281,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    }
 	    
 	    if ( sc != null ) {
-		    set =  serviceMgr.getServiceElementTypeById(vs.getServiceElementTypeId());
+		    set =  serviceMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
 		    discoverNode.setTopServiceElementType(set);
 	    }
 	    
