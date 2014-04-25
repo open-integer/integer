@@ -92,11 +92,13 @@ public class ServiceElementDAO extends BaseDAO {
 		
 		ManagementObjectValueDAO valueDao = new ManagementObjectValueDAO(getEntityManager(), getLogger());
 		List<ManagementObjectValue> dbValues = new ArrayList<ManagementObjectValue>();
-		for (ManagementObjectValue value : serviceElement.getAttributeValues()) {
-			dbValues.add(valueDao.update(value));
+		if (serviceElement.getAttributeValues() != null) {
+			for (ManagementObjectValue value : serviceElement.getAttributeValues()) {
+				dbValues.add(valueDao.update(value));
+			}
+
+			serviceElement.setAttributeValues(dbValues);
 		}
-			
-		serviceElement.setAttributeValues(dbValues);
 		
 		super.preSave(entity);
 	}
