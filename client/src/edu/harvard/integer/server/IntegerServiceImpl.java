@@ -15,9 +15,11 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,6 +41,9 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	/** The managed object service. */
 	@EJB
 	private ManagementObjectCapabilityManagerInterface managedObjectService;
+	
+	@EJB
+	private ServiceElementAccessManagerInterface serviceElementService;
 
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.client.IntegerService#mibImport(java.lang.String, java.lang.String, boolean)
@@ -68,7 +73,6 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws Exception {
-		//ArrayList<MIBInfo> mibInfoList = new ArrayList<MIBInfo>();
 		MIBInfo[] results;
 		
 		try {
@@ -131,6 +135,20 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	public List<Object> getEvents() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ServiceElement[] getTopLevelElements() throws Exception {
+		ServiceElement[] serviceElements;
+
+		try {
+			serviceElements = serviceElementService.getTopLevelServiceElements();
+		} 
+		catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+		return serviceElements;
 	}
 	
 }

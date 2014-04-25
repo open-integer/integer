@@ -1,13 +1,11 @@
 package edu.harvard.integer.client.ui;
 
-import java.util.List;
-
 import com.emitrom.lienzo.client.core.shape.Picture;
 
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.widget.HvMapIconWidget;
 import edu.harvard.integer.client.widget.WidgetLayer;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 public class DeviceMap extends WidgetLayer {
 	public static final int START_DRAW_X = 30;
@@ -24,15 +22,15 @@ public class DeviceMap extends WidgetLayer {
 	private void init() {	
 	}
 
-	public void update(List<ServiceElementManagementObject> result) {
+	public void update(ServiceElement[] result) {
 		
 		int col = 0;
 		int row = 0;
-		for (ServiceElementManagementObject object : result) {
+		for (ServiceElement device : result) {
 			int x = col * ICON_WIDTH*2 + START_DRAW_X;
         	int y = row * ICON_HEIGHT*2 + START_DRAW_Y;
         	
-        	HvMapIconWidget icon = new HvMapIconWidget(picture, object.getDisplayName());
+        	HvMapIconWidget icon = new HvMapIconWidget(picture, device.getName());
         	icon.draw(x, y);
         	
         	if (col < 5)

@@ -1,7 +1,5 @@
 package edu.harvard.integer.client.ui;
 
-import java.util.List;
-
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
@@ -17,7 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.DragImageWidget;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 public class SystemSplitViewPanel extends SplitLayoutPanel {
 	private static final int SPLITTER_SIZE = 3;
@@ -91,7 +89,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		            
 		            networkPanel.add(deviceMap);
 		            
-		            MainClient.integerService.getAllServiceElementManagementObjects(new AsyncCallback<List<ServiceElementManagementObject>>() {
+		            MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -99,7 +97,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 						}
 
 						@Override
-						public void onSuccess(List<ServiceElementManagementObject> result) {
+						public void onSuccess(ServiceElement[] result) {
 							deviceMap.update(result);
 						}
 					});

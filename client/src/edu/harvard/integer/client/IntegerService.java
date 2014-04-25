@@ -5,11 +5,10 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.GWTWhitelist;
-import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 // TODO: Auto-generated Javadoc
@@ -56,6 +55,14 @@ public interface IntegerService extends RemoteService {
 	 * @throws Exception the exception
 	 */
 	List<Capability> getCapabilities() throws Exception;
+	
+	/**
+	 * Gets the top level elements.
+	 *
+	 * @return the top level elements
+	 * @throws Exception the exception
+	 */
+	ServiceElement[] getTopLevelElements() throws Exception;
 	
 	/**
 	 * Gets the all service element management objects.

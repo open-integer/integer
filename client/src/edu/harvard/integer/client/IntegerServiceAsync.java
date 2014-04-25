@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 // TODO: Auto-generated Javadoc
@@ -71,5 +72,13 @@ public interface IntegerServiceAsync {
 	 * @return the events
 	 */
 	void getEvents(AsyncCallback<List<Object>> callback);
+
+	/**
+	 * Gets the top level elements.
+	 *
+	 * @param callback the callback
+	 * @return the top level elements
+	 */
+	void getTopLevelElements(AsyncCallback<ServiceElement[]> callback);
 
 }
