@@ -47,6 +47,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -84,11 +85,11 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	private String featureSet = null;
 
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> capabilityIds = null;
 
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> childServiceElementTypes;
 
@@ -122,7 +123,7 @@ public class ServiceElementType extends BaseEntity {
 	 * A list of the Capabilities used to uniquely identify the service element
 	 * type.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> uniqueIdentifierCapabilities = null;
 
@@ -130,7 +131,7 @@ public class ServiceElementType extends BaseEntity {
 	 * A listing of default attributes that the discovery system will collect.
 	 * This list can be modified by the system administrator.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> attributeIds = null;
 
@@ -174,7 +175,7 @@ public class ServiceElementType extends BaseEntity {
 	/**
 	 * List of Applicability objects associated with this service element type.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> applicabilities = null;
 
