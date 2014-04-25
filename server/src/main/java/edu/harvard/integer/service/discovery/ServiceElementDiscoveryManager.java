@@ -343,5 +343,18 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		
 		return types;
 	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getVendorName(int)
+	 */
+	@Override
+	public String getVendorName(int vendorIndex) {
+		
+		if ( vendorIndex == 9 ) {
+			return "cisco";
+		}
+		
+		return null;
+	}
 	
 }

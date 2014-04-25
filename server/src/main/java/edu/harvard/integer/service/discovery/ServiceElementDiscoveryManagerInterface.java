@@ -201,5 +201,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return
 	 */
 	List<SNMP> getEntityMIBInfo();
+	
+	public String getVendorName( int vendorIndex ); 
 
 }

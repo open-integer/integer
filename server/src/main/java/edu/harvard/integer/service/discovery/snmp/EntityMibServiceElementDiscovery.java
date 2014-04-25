@@ -32,9 +32,8 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -241,6 +240,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 							
 							if ( ssetd.getDiscriminatorValue().getValue().toString().equals(descriminatorVal.toString()) ) {
 								
+								logger.info("Find ServiceElementType with SNMP " + descriminator.getName() );
 								set = discMgr.getServiceElementTypeById(ssetd.getServiceElementTypeId());
 								break;
 							}
@@ -255,13 +255,14 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 						 * Check for if there is one in the database already exist.  If it is use it.
 						 * Else create a serviceElementType associated with the current entity row. 
 						 */
-						ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(ce.name(), row.getEntPhysicalVendorType());
+						ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(ce.name(), discNode.getTopServiceElementType().getVendor());
 						if ( sets != null && sets.length > 0 ) {
 							
 							for ( ServiceElementType tmpSet : sets ) {
 								
 								if ( findServiceElementTypeMatch(tmpSet, row) ) {
 									
+									logger.info("Find a match ServiceElementType with SNMP " + row.getEntPhysicalVendorType() );
 									set = tmpSet;
 									break;
 								}
@@ -272,29 +273,9 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 					 * If ServiceElementType is still null, create one. 
 					 */
 					if ( set == null ) {
-						
-						ServiceElementType[] sets = discMgr.getServiceElementTypesByCategoryAndVendor(ce.name(), row.getEntPhysicalVendorType());
-						if ( sets != null && sets.length > 0 ) {
-						
-							set = sets[0];
-							se = createAndDiscoverServiceElement(set, row);
-						}
-						else {
-							logger.info("No service element type avaiable " 
-						                                + discNode.getIpAddress() + " " + row.getEntPhysicalVendorType() );
-							
-							set = createServiceElementType(row);						
-							try {
-								set = capMgr.updateServiceElementType(set);
-								se = createAndDiscoverServiceElement(set, row);
-							
-							} catch (IntegerException e) {
-						
-								e.printStackTrace();
-								fail(e.toString());
-							}
-						}
+						set = createServiceElementType(row);
 					}
+					se = createAndDiscoverServiceElement(set, row);
 					
 				} catch (IntegerException e) {
 					
@@ -316,7 +297,15 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 				 * Discover more detail for that service element.
 				 */
 				try {
-					discoverServiceElementAttribute(discNode.getElementEndPoint(), ee.serviceElement, set, capMgr);
+					
+					String tblOid = getTableOidFromVBOid(CommonSnmpOids.entPhysicalClass);
+					Map<String, TableRowIndex> tblInstMap = new HashMap<>();
+					
+					TableRowIndex trIndex = new TableRowIndex(tblOid, row.getIndex());
+					tblInstMap.put(tblOid, trIndex);	
+					
+					discoverServiceElementAttribute(discNode.getElementEndPoint(), ee.serviceElement, set, tblInstMap, capMgr);
+					
 				} catch (IntegerException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -356,6 +345,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 						 
 						 for ( AliasMapping mapp : mapps ) {
 							 
+							 PDU p = new PDU();
 							 /**
 							  * Get the ifIndex from the alias mapping index.
 							  */
@@ -369,21 +359,24 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								tblOid = getTableOidFromVBOid(CommonSnmpOids.ifType);
 							 } catch (IntegerException e1) {}
 							 o.append(ifIndex);
+							 p.add(new VariableBinding(o));
+							 
+							 o = new OID((CommonSnmpOids.ifDescr));
+							 o.append(ifIndex);
+							 p.add(new VariableBinding(o));
 							 
 							 /**
 							  * Store ifTable instance oid for later used.
 							  */
-							 storeTableIndex(tblOid, Integer.toString(ifIndex));
+							 Map<String, TableRowIndex> tblInstMap = new HashMap<>();
+							 TableRowIndex trIndex = new TableRowIndex(tblOid, Integer.toString(ifIndex));
+							 tblInstMap.put(tblOid, trIndex);
 							 
-							 
-							 PDU p = new PDU();
-							 p.add(new VariableBinding(o));
 							 try {								 
 								 PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), p);
 								 
 								 ServiceElementType[] sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.portIf.name(), 
-										                    Integer.toString(rpdu.get(0).getVariable().toInt()) );
-								 
+										                             discNode.getTopServiceElementType().getVendor() );
 								 
 								 String ifSubType = row.getEntPhysicalVendorType() + ":" + rpdu.get(0).getVariable().toInt();
 								 
@@ -398,6 +391,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 										 }
 									 }									 
 								 }
+								 ServiceElement ise = new ServiceElement();
 								 if ( iset == null ) {
 									 iset = new ServiceElementType();
 									 iset.setCategory(CategoryTypeEnum.portIf.name());
@@ -422,20 +416,24 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 									 snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.ifType);
 									 iset.getAttributeIds().add(snmp.getID());
 									 
-									 set = capMgr.updateServiceElementType(set);
+									 iset = capMgr.updateServiceElementType(iset);
 								 }
 
-								 ServiceElement ise = new ServiceElement();
+								 logger.info("ServiceElement and ServiceElemenType identifier " + se.getIdentifier() + " * " + iset.getIdentifier() + " " + iset.getVendorSpecificSubType());
+								 
 								 ise.setParentId(se.getID());
 								 ise.setServiceElementTypeId(iset.getID());
+								 ise.setName(se.getName() + ":If" + mapp.logicalIndex);
+								 ise.setUpdated(new Date());
+								 ise.setDescription(rpdu.get(1).getVariable().toString());
 								 
-								 discoverServiceElementAttribute(discNode.getElementEndPoint(), ise, iset, capMgr);
+								 discoverServiceElementAttribute(discNode.getElementEndPoint(), ise, iset, tblInstMap, capMgr);
 								 
 								 /**
 								  * Create service element in the database.
 								  */
 								 ise = accessMgr.updateServiceElement(ise);
-								 System.out.println("Create If element " + " ifIndex:" + ifIndex + " Descr:" + rpdu.get(0).getVariable().toString() + " on Parent:" + se.getName());
+								 logger.info("Create If element " + " ifIndex:" + ifIndex + " Descr:" + rpdu.get(0).getVariable().toString() + " on Parent:" + se.getName());
 								 
 							 } catch (IntegerException e) {
 								 
@@ -623,7 +621,12 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 			}
 		}
 		
-		return true;
+		if ( pr.getEntPhysicalVendorType().equals(set.getVendorSpecificSubType()) ) {
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	
@@ -632,8 +635,9 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	 *
 	 * @param pr the pr
 	 * @return the service element type
+	 * @throws IntegerException 
 	 */
-	public ServiceElementType createServiceElementType( PhysEntityRow pr ) {
+	public ServiceElementType createServiceElementType( PhysEntityRow pr ) throws IntegerException {
 		
 		ServiceElementType set = new ServiceElementType();
 		set.setCategory(convertEntityClassType(pr.getEntityClass()).name());
@@ -644,7 +648,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		set.setSoftware(pr.getEntPhysicalSoftwareRev());		
 		set.setModel(pr.getEntPhysicalModelName());
 		
-		logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& create an service element type " + pr.getEntPhysicalVendorType());
+		logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& create an service element type " + pr.getEntPhysicalVendorType());
 		
 		if ( pr.isEntPhysicalIsFRU() ) {
 			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
@@ -664,7 +668,8 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		}
 		catch ( IntegerException ie ) {
 			logger.warn("Fail to add attribute on ServiceElementType");
-		}				
+		}	
+		set = capMgr.updateServiceElementType(set);
 		return set;
 	}
 	
@@ -680,6 +685,12 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	public ServiceElement createAndDiscoverServiceElement( ServiceElementType set, PhysEntityRow row ) throws IntegerException {
 		
 		ServiceElement se = new ServiceElement();
+		se.setUpdated(new Date());
+		row.getEntPhysicalContainedIn();
+		se.setDescription(row.getEntPhysicalDescr());
+		
+		EntityElement parentEE = elmMap.get( Integer.toString(row.getEntPhysicalContainedIn() ));
+		se.setParentId(parentEE.serviceElement.getID());
 		
 		se.setName(defineModelName(row.getEntPhysicalParentRelPos(), row.getEntityClass(), row));
 		logger.info("Create Element <" + se.getName() + "> " + " entityClass:" + row.getEntityClass().name() 
@@ -687,10 +698,17 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		
 	    se.setServiceElementTypeId(set.getID());
 	    
+	    String tblOid = getTableOidFromVBOid(CommonSnmpOids.entPhysicalClass);
+	    
+	    
+		Map<String, TableRowIndex> tblInstMap = new HashMap<>();
+		
+		TableRowIndex trIndex = new TableRowIndex(tblOid, row.getIndex());
+		tblInstMap.put(tblOid, trIndex);			
 	    /**
 	     * Discover more detail for that service element.
 	     */
-	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, capMgr);
+	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, tblInstMap, capMgr);
 	    
 	    /**
 	     * Create service element in the database.

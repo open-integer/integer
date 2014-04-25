@@ -33,7 +33,6 @@
 package edu.harvard.integer.service.discovery.snmp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +51,7 @@ import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
+import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -69,8 +69,7 @@ public abstract class SnmpServiceElementDiscover {
 	/** The logger. */
     private static Logger logger = LoggerFactory.getLogger(SnmpServiceElementDiscover.class);
     
-	private Map<String, TableRowIndex>  discoveredTableIndexMap = new HashMap<String, TableRowIndex>();
-	
+    
 	/**
 	 * 
 	 * @param ePoint
@@ -79,12 +78,15 @@ public abstract class SnmpServiceElementDiscover {
 	 * @throws IntegerException 
 	 */
 	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
-			                            ServiceElement se, 
-			                            ServiceElementType set,
-			                            ManagementObjectCapabilityManagerInterface capMgr ) throws IntegerException {
+			                                     ServiceElement se, 
+			                                     ServiceElementType set,
+			                                     Map<String, TableRowIndex> discoveredTableIndexMap,
+			                                     ManagementObjectCapabilityManagerInterface capMgr ) throws IntegerException {
+		
 		
 		if ( set.getAttributeIds() != null && set.getAttributeIds().size() > 0 ) {
 			
+			logger.info("Size of attributesIds " + set.getAttributeIds().size() );
 			PDU pdu = new PDU();
 			List<VariableBinding> vbs = new ArrayList<>();
 			
@@ -94,15 +96,19 @@ public abstract class SnmpServiceElementDiscover {
 				ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
 				if ( mrgObj instanceof SNMP ) {
 					
+					
 					SNMP snmp = (SNMP) mrgObj;
 					OID vbOid = new OID(snmp.getOid());
+					
+					logger.info("SNMP attribute oid " + snmp.getOid() + " " + vbOid.get(vbOid.size() - 2));
 					
 					if ( vbOid.get(vbOid.size() - 2) == 1 ) {
 						
 						String tblOid = getTableOidFromVBOid(vbOid.toString());
 			            if ( tblOid != null ) {
 			            	
-			            	TableRowIndex rowIndex = getTableIndex(tblOid);
+			            	TableRowIndex rowIndex = discoveredTableIndexMap.get(tblOid);
+			            	
 			            	if ( rowIndex != null ) {
 			            		vbOid.append(rowIndex.getInstanceOid());
 			            		vbs.add(new VariableBinding(vbOid));
@@ -128,9 +134,22 @@ public abstract class SnmpServiceElementDiscover {
 				
 				pdu.addAll(vbs);
 				
-				/*
+				logger.info("Start Retrieve SNMP request back from " + ePoint.getIpAddress());
 			    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
+			    logger.info("Retrieve SNMP request back from " + ePoint.getIpAddress());
 			    
+			    List<ManagementObjectValue> attributes = se.getAttributeValues();
+				if ( attributes == null )
+				{
+					attributes = new ArrayList<>();
+					se.setAttributeValues(attributes);
+				}
+				List<ServiceElementProtocolInstanceIdentifier> insts = se.getValues();
+				if ( insts == null ) {
+					insts = new ArrayList<>();
+					se.setValues(insts);
+				}
+				
 			    for ( ID id : attributeIds ) {
 					
 					ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
@@ -143,6 +162,7 @@ public abstract class SnmpServiceElementDiscover {
 								vb.getVariable() instanceof Integer32 ) {
 							
 							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+							
 							iv.setValue(vb.getVariable().toInt());
 							
 							se.getAttributeValues().add(iv);
@@ -151,47 +171,23 @@ public abstract class SnmpServiceElementDiscover {
 							String tblOid = getTableOidFromVBOid(snmp.getOid());
 				            if ( tblOid != null ) {
 				            	
-				            	TableRowIndex rowIndex = getTableIndex(tblOid);
+				            	TableRowIndex rowIndex = discoveredTableIndexMap.get(tblOid); 
 				            	inst.setValue(rowIndex.getInstanceOid());
 				            }
 				            else {
 				            	inst.setValue("0");
 				            }
-							
 				            se.getValues().add(inst);
 						}
 						
 					}
-				}	
-				*/			
+				}				
 			}	
 			
 		}
 	}
 	
-	/**
-	 * @param sc
-	 * @param discNode
-	 * @param servMgr
-	 * @return
-	 * @throws IntegerException
-	 */
-	public abstract ServiceElement discover(SnmpContainment sc, DiscoverNode discNode ) throws IntegerException;
-
 	
-	
-	public TableRowIndex storeTableIndex( String tblOid, String instOid ) {
-		
-		TableRowIndex tri = new TableRowIndex(tblOid, instOid);
-		tri = discoveredTableIndexMap.put(tblOid, tri);
-		
-		return tri;
-	}
-	
-	
-	public TableRowIndex getTableIndex( String tblOid ) {
-		return discoveredTableIndexMap.get(tblOid);
-	}
 	
 	/**
 	 * This method get part MIB table oid from a variable binding oid which is an attribute of the table.
@@ -221,5 +217,15 @@ public abstract class SnmpServiceElementDiscover {
 		}
 		return null;
 	}
+
+
+
+	/**
+	 * @param sc
+	 * @param discNode
+	 * @return
+	 * @throws IntegerException
+	 */
+	public abstract ServiceElement discover(SnmpContainment sc, DiscoverNode discNode) throws IntegerException;
 }
 

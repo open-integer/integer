@@ -83,7 +83,7 @@ final public class SnmpService
      */
     private SnmpService() throws IOException
     {
-        TransportMapping transport = new DefaultUdpTransportMapping(new UdpAddress("127.0.0.1/0"));
+        TransportMapping transport = new DefaultUdpTransportMapping();
         _snmp = new Snmp(transport);
         _snmp.listen();
     }
