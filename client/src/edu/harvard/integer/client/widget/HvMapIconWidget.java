@@ -9,6 +9,8 @@ import com.emitrom.lienzo.client.core.event.NodeDragMoveEvent;
 import com.emitrom.lienzo.client.core.event.NodeDragMoveHandler;
 import com.emitrom.lienzo.client.core.event.NodeDragStartEvent;
 import com.emitrom.lienzo.client.core.event.NodeDragStartHandler;
+import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
 import com.emitrom.lienzo.client.core.event.NodeMouseEnterEvent;
 import com.emitrom.lienzo.client.core.event.NodeMouseEnterHandler;
 import com.emitrom.lienzo.client.core.event.NodeMouseExitEvent;
@@ -22,11 +24,13 @@ import com.emitrom.lienzo.client.core.types.Point2D;
 import com.emitrom.lienzo.client.core.types.Point2DArray;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
+import com.google.gwt.user.client.Window;
 
+import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
 
-public class HvMapIconWidget extends Group implements NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler {
+public class HvMapIconWidget extends Group implements NodeMouseClickHandler, NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler {
 
 	private Picture picture;
 	private String title;
@@ -65,7 +69,8 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 		
 		addNodeDragStartHandler(this);  
         addNodeDragMoveHandler(this);  
-        addNodeDragEndHandler(this); 
+        addNodeDragEndHandler(this);
+        addNodeMouseClickHandler(this);
 	}
 	
 	public void draw(int x, int y) {
@@ -151,5 +156,11 @@ public class HvMapIconWidget extends Group implements NodeDragStartHandler, Node
 			if (draw)
 				cur_line.getScene().draw();
 		}
+	}
+
+	@Override
+	public void onNodeMouseClick(NodeMouseClickEvent event) {
+		//Window.alert("Mouse clicked");
+		SystemSplitViewPanel.enableContaineeView(true);
 	}
 }

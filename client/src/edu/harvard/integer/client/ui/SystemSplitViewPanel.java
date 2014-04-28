@@ -24,7 +24,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	private static final int WIDGET_WIDTH = 90;
 	private static final int WIDGET_HEIGHT = 50;
 	
-	LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH, CONTENT_HEIGHT);
+	public static SplitLayoutPanel westPanel = null;
+	public static SplitLayoutPanel eastPanel = null;
+	
+	public static final String title = "Device Children";
+	public static final String[] headers = {"Name", "Status", "Description"};
+	public static ContaineeView containeeView = null;
+
+	private LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH, CONTENT_HEIGHT);
 
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
@@ -36,16 +43,21 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
 		setSize(MainClient.WINDOW_WIDTH+"px", MainClient.WINDOW_HEIGHT+"px");
-		SplitLayoutPanel westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		SplitLayoutPanel eastPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		
 		FilterView filterView = createFilterView();
+		westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		westPanel.addSouth(filterView, 200);
 		westPanel.add(createNetworkTreePanel());
 		westPanel.setWidgetToggleDisplayAllowed(filterView, true);
 
 		EventView eventView = createEventView();
+		
+		eastPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		eastPanel.addSouth(eventView, 150);
+		
+		containeeView = new ContaineeView(title, headers);
+		eastPanel.addEast(containeeView, 200);
+		eastPanel.setWidgetHidden(containeeView, true);
 		eastPanel.add(networkPanel);
 		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
 		
@@ -84,12 +96,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				if(event.getSelectedItem() == deviceNode) {
 					
 		            networkPanel.removeAll();
+		            // eastPanel.setWidgetHidden(containeeView, false);
 		            
 		            final DeviceMap deviceMap = new DeviceMap(WIDGET_WIDTH, WIDGET_HEIGHT);
 		            
 		            networkPanel.add(deviceMap);
+		            networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
 		            
-		            MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
+		            /*MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -100,7 +114,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 						public void onSuccess(ServiceElement[] result) {
 							deviceMap.update(result);
 						}
-					});
+					});*/
 		        }
 			}
 	    	
@@ -155,5 +169,9 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			}
 		});*/
 		return eventView;
+	}
+
+	public static void enableContaineeView(boolean enable) {
+		eastPanel.setWidgetHidden(containeeView, !enable);
 	}
 }
