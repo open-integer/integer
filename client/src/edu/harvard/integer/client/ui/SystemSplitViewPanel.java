@@ -1,5 +1,8 @@
 package edu.harvard.integer.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
@@ -54,12 +57,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		
 		eastPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		eastPanel.addSouth(eventView, 150);
+		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
 		
 		containeeView = new ContaineeView(title, headers);
 		eastPanel.addEast(containeeView, 200);
+		eastPanel.setWidgetToggleDisplayAllowed(containeeView, true);
+		
 		eastPanel.setWidgetHidden(containeeView, true);
 		eastPanel.add(networkPanel);
-		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
 		
 		addWest(westPanel, 250);
 		add(eastPanel);
@@ -96,14 +101,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				if(event.getSelectedItem() == deviceNode) {
 					
 		            networkPanel.removeAll();
-		            // eastPanel.setWidgetHidden(containeeView, false);
-		            
+
 		            final DeviceMap deviceMap = new DeviceMap(WIDGET_WIDTH, WIDGET_HEIGHT);
 		            
 		            networkPanel.add(deviceMap);
 		            networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
 		            
-		            /*MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
+		            MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -114,7 +118,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 						public void onSuccess(ServiceElement[] result) {
 							deviceMap.update(result);
 						}
-					});*/
+					});
 		        }
 			}
 	    	
@@ -173,5 +177,19 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 	public static void enableContaineeView(boolean enable) {
 		eastPanel.setWidgetHidden(containeeView, !enable);
+	}
+	
+	public static void showContaineeView(String name) {
+		eastPanel.setWidgetHidden(containeeView, false);
+		int index = name.lastIndexOf(".");
+		String lastNumberStr = name.substring(index+1);
+		int lastNumber = Integer.parseInt(lastNumberStr);
+		
+		List<Object[]> children = new ArrayList<Object[]>();
+		for (int i = 0; i < lastNumber; i++) {
+			Object[] obj = {"id-"+i, "ok", "cisco-"+i};
+			children.add(obj);
+		}
+		containeeView.update("Objects in " + name, children);
 	}
 }

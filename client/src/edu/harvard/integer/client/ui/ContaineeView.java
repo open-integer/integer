@@ -33,12 +33,18 @@ public class ContaineeView extends HvTableViewPanel {
 	 *
 	 * @param result the result
 	 */
-	public void update(List<Object> result) {
+	public void update(String name, List<Object[]> result) {
+		updateTitle(name);
+		
 		if (result == null || result.isEmpty())
 			return;
 		
 		flexTable.clean();
 
-		flexTable.applyDataRowStyles();
+		int i = 0;
+		for (Object[] obj: result) {
+			flexTable.addRow(obj);
+		}
+
 	}
 }

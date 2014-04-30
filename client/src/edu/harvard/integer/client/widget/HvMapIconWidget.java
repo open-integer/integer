@@ -24,7 +24,6 @@ import com.emitrom.lienzo.client.core.types.Point2D;
 import com.emitrom.lienzo.client.core.types.Point2DArray;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
-import com.google.gwt.user.client.Window;
 
 import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.utils.Coordinate;
@@ -33,13 +32,13 @@ import edu.harvard.integer.client.utils.LinePoints;
 public class HvMapIconWidget extends Group implements NodeMouseClickHandler, NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler {
 
 	private Picture picture;
-	private String title;
+	private String name;
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
 	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
 	
 	public HvMapIconWidget(Picture picture, String title) {
 		this.picture = picture;
-		this.title = title;
+		this.name = title;
 		
 		setDraggable(true);
 		setListening(true);
@@ -87,7 +86,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 			
 		});
 		
-		Text text = new Text(title, "oblique normal bold", 20);
+		Text text = new Text(name, "oblique normal bold", 20);
 		text.setX(x).setY(y+DragImageWidget.IMAGE_HEIGHT+16).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
 		add(text);
 	}
@@ -160,7 +159,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 
 	@Override
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
-		//Window.alert("Mouse clicked");
-		SystemSplitViewPanel.enableContaineeView(true);
+		SystemSplitViewPanel.showContaineeView(name);
+		
 	}
 }

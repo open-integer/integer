@@ -4,6 +4,7 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -16,6 +17,8 @@ public class HvTableViewPanel extends VerticalPanel {
 	
 	/** The title panel. */
 	protected VerticalPanel titlePanel = new VerticalPanel();
+	protected Label firstTitleLabel = new Label();
+	protected Label secondTitleLabel = new Label();
 	
 	/** The action panel. */
 	protected HorizontalPanel actionPanel = new HorizontalPanel();
@@ -37,9 +40,12 @@ public class HvTableViewPanel extends VerticalPanel {
 	 * @param headers the headers
 	 */
 	public HvTableViewPanel(String title, String subTitle, String[] headers) {
-		titlePanel.add(new HTMLPanel(title));
-		if (subTitle != null)
-			titlePanel.add(new HTMLPanel(subTitle));
+		firstTitleLabel.setText(title);
+		titlePanel.add(firstTitleLabel);
+		if (subTitle != null) {
+			secondTitleLabel.setText(subTitle);
+			titlePanel.add(secondTitleLabel);
+		}
 		
 		flexTable = new HvFlexTable(headers);
 		actionPanel.setCellHorizontalAlignment(addButton, HasHorizontalAlignment.ALIGN_RIGHT);
@@ -51,5 +57,9 @@ public class HvTableViewPanel extends VerticalPanel {
 		
 		add(dockPanel);
 		add(flexTable.getVisualPanel());
+	}
+	
+	public void updateTitle(String title) {
+		firstTitleLabel.setText(title);
 	}
 }
