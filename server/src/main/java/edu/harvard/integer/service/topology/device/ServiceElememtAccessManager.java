@@ -40,6 +40,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
@@ -90,6 +91,13 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		return serviceElements;
 	}
 	
+	public ServiceElement getServiceElementByUninque(ID parentId, ManagementObjectValue value) throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+		
+		return null;
+		//return serviceElementDAO.findByIdAndValue(parentId, value);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getTopLevelServiceElements()
@@ -99,7 +107,11 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
 		ServiceElement[] topLevel = serviceElementDAO.findTopLevelServiceElements();
-		
+		for (int i = 0; i < topLevel.length; i++) {
+			
+			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
+				
+		}
 		return topLevel;
 	}
 	
