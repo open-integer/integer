@@ -23,7 +23,7 @@ public class DeviceMap extends WidgetLayer {
 		ServiceElement[] serviceElements = new ServiceElement[DEVICE_COUNT];
 		for (int i = 0; i < DEVICE_COUNT; i++) {
 			serviceElements[i] = new ServiceElement();
-			serviceElements[i].setName("cisco-"+i);
+			serviceElements[i].setName("cisco."+i);
 		}
 		update(serviceElements);
 	}

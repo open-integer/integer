@@ -16,8 +16,8 @@ public class FilterView extends HvTableViewPanel {
 	 * @param headers the headers
 	 */
 	public FilterView(String viewName, String filterName, String[] headers) {
-		super("<h3>Current View: <font color=#0020C2>" + viewName + "</font></h3>", 
-			  "<h3>Current Filter: <font color=#0020C2>" + filterName + "</font></h3>", headers);
+		super("Current View: " + viewName, 
+			  "Current Filter: " + filterName, headers);
 		addButton.setVisible(false);
 
 		flexTable.setSize("250px", "200px");
