@@ -40,7 +40,8 @@ package edu.harvard.integer.common.properties;
  *         be specified for each key.
  */
 public enum StringPropertyNames {
-	StringPropName("SomeProp", "Value");
+	MIBDir("MibDir", "../standalone/data/mibs"),
+	BaseMibList("BaseMibList", "RFC1065-SMI,RFC1213-MIB,SNMPv2-SMI,SNMPv2-MIB,IANAifType-MIB,IF-MIB,SNMP-FRAMEWORK-MIB,ENTITY-MIB,HOST-RESOURCES-MIB,CISCO-SMI,CISCO-ENTITY-VENDORTYPE-OID-MIB,CISCO-TC,CISCO-PRODUCTS-MIB,INET-ADDRESS-MIB,IP-MIB,CISCO-CEF-TC,CISCO-FIREWALL-TC,CISCO-IMAGE-TC,CISCO-IPSEC-TC,CISCO-ST-TC,CISCO-VIDEO-TC,DIFFSERV-DSCP-TC,HCNUM-TC");
 	
 	private String fieldName = null;
 	private String defaultValue = null;

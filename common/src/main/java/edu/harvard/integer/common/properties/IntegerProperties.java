@@ -138,7 +138,11 @@ public class IntegerProperties {
 		if (settings == null) {
 			return null;
 		} else {
-			return settings.getProperty(key.getFieldName());
+			String value = settings.getProperty(key.getFieldName());
+			if (value != null)
+				return value;
+			else
+				return key.getDefaultValue();
 		}
 	}
 

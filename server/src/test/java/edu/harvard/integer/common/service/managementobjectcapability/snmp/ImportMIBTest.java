@@ -136,6 +136,8 @@ public class ImportMIBTest {
 		importMib("SNMPv2-MIB");
 		importMib("IANAifType-MIB");
 		importMib("IF-MIB");
+		importMib("INET-ADDRESS-MIB.my");
+		importMib("IP-MIB.my");
 		importMib("SNMP-FRAMEWORK-MIB");
 		importMib("ENTITY-MIB.my");
 		importMib("HOST-RESOURCES-MIB.my");
@@ -144,12 +146,23 @@ public class ImportMIBTest {
 		importMib("CISCO-TC.my");
 		importMib("CISCO-PRODUCTS-MIB.my");
 
+		importMib("CISCO-CEF-TC.my");
+		importMib("CISCO-FIREWALL-TC.my");
+		importMib("CISCO-IMAGE-TC.my");
+		importMib("CISCO-IPSEC-TC.my");
+		importMib("CISCO-ST-TC.my");
+		importMib("CISCO-TC.my");
+		importMib("CISCO-VIDEO-TC.my");
+		importMib("DIFFSERV-DSCP-TC.my");
+		importMib("HCNUM-TC.my");
+		importMib("IPV6-TC.my");
+
 	}
 
 	public void importDir() {
 
 		List<MIBImportInfo> importMibs = new ArrayList<>();
-		String commonDir = "../server/mibs";
+		String commonDir = "mibs";
 		File dirf = new File(commonDir);
 		File[] fs = dirf.listFiles();
 
@@ -170,12 +183,16 @@ public class ImportMIBTest {
 	}
 
 	private void importMib(String mibName) {
+		importMib(mibName, true);
+	}
+
+	private void importMib(String mibName, boolean checkForErrors) {
 
 		logger.warn("Start test import of ******************************** "
 				+ mibName);
 
 		File mibFile = null;
-		mibFile = new File("../server/mibs/" + mibName);
+		mibFile = new File("mibs/" + mibName);
 
 		if (mibFile.exists())
 			System.out.println("Found rfc");
@@ -221,11 +238,14 @@ public class ImportMIBTest {
 				} else
 					logger.info("SNMModule   :   MODULE IS NULL!!!!");
 
-				logger.info("Errors      :   "
-						+ Arrays.toString(mibImportResult.getErrors()));
+				if (mibImportResult.getErrors() != null && mibImportResult
+						.getErrors().length > 0)
+					logger.info("Errors      :   "
+							+ Arrays.toString(mibImportResult.getErrors()));
 
-				assert (mibImportResult.getErrors() == null || mibImportResult
-						.getErrors().length == 0);
+				if (checkForErrors)
+					assert (mibImportResult.getErrors() == null || mibImportResult
+					.getErrors().length == 0);
 
 				if (mibImportResult.getSnmpTable() != null) {
 					logger.info("Num of Tables:  "
