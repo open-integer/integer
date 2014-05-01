@@ -55,12 +55,12 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
-import edu.harvard.integer.service.persistence.dao.discovery.VendorIdentifierDAO;
 
 /**
  * @author David Taylor
@@ -258,7 +258,6 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	@Override
 	public VendorIdentifier updateVendorIdentifier(VendorIdentifier vendorIdentifier) throws IntegerException {
 		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
-		
 		
 		return dao.update(vendorIdentifier);
 	}

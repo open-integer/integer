@@ -41,6 +41,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
@@ -49,6 +50,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
@@ -135,6 +137,47 @@ public class ServiceElementDAO extends BaseDAO {
 		
 		return findByIDField(parent, "parentId", ServiceElement.class);
 		
+	}
+
+	/**
+	 * @param parentId
+	 * @param value
+	 * @return
+	 */
+	public ServiceElement findByIdAndValue(ID parentId,
+			ID serviceElementTypeId,
+			ManagementObjectValue value) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+		.getCriteriaBuilder();
+
+		CriteriaQuery<ServiceElement> query = criteriaBuilder.createQuery(ServiceElement.class);
+
+		Root<ServiceElement> from = query.from(ServiceElement.class);
+		
+		Join<ServiceElement, ManagementObjectStringValue> join = from.join("valueId");
+		
+//		if (value instanceof ManagementObjectStringValue) 
+//			from.join(ManagementObjectStringValue.class);
+		
+		ParameterExpression<Long> idParam = criteriaBuilder
+				.parameter(Long.class);
+
+		ParameterExpression<ID> serviceElementTypeParam = criteriaBuilder
+				.parameter(ID.class);
+
+		query.select(from).where(
+				criteriaBuilder.and(
+						criteriaBuilder.equal(from.get("identifier"), idParam),
+						criteriaBuilder.equal(from.get("serviceElementTypeId"), serviceElementTypeParam)));
+
+		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(idParam, parentId.getIdentifier());
+		typeQuery.setParameter(serviceElementTypeParam, serviceElementTypeId);
+
+		List<ServiceElement> resultList = typeQuery.getResultList();
+
+		
+		return null;
 	}
 	
 }
