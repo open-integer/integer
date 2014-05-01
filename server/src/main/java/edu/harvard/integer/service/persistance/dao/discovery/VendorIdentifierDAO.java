@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.service.persistence.dao.discovery;
+package edu.harvard.integer.service.persistance.dao.discovery;
 
 import javax.persistence.EntityManager;
 

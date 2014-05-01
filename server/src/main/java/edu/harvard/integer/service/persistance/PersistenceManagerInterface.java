@@ -37,6 +37,9 @@ package edu.harvard.integer.service.persistance;
 import javax.ejb.Local;
 
 import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
+import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
+import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServiceDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
@@ -65,7 +68,6 @@ import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
 import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
 import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
-import edu.harvard.integer.service.persistence.dao.discovery.VendorIdentifierDAO;
 
 /**
  * @author David Taylor
@@ -219,6 +221,16 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	SnmpServiceElementTypeOverrideDAO getSnmpServiceElementTypeOverrideDAO();
+
+	/**
+	 * @return
+	 */
+	DistributedManagerDAO getDistributedManagerDAO();
+
+	/**
+	 * @return
+	 */
+	DistributedServiceDAO getDistributedServiceDAO();
 	
 }
 	
