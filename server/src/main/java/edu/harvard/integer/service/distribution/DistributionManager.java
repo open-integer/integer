@@ -86,7 +86,49 @@ public class DistributionManager {
 
 		return b.toString();
 	}
+	
+	public static <T extends BaseManagerInterface> T getRemoteManager(
+			ManagerTypeEnum managerType) throws IntegerException {
 
+		return lookupRemote(getLocalManagerName(managerType));
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T> T lookupRemote(String managerName) throws IntegerException {
+
+		InitialContext ctx = null;
+		try {
+
+			final Properties env = new Properties();
+			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+			env.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
+			ctx = new InitialContext(env);
+
+			T manager = null;
+
+			manager = (T) lookupBean(managerName, ctx);
+			if (manager == null) {
+
+				throw new IntegerException(null,
+						SystemErrorCodes.ManagerNotFound);
+			}
+
+			if (logger.isDebugEnabled())
+				logger.info("Got localBean " + managerName);
+
+			return manager;
+
+		} catch (Exception e) {
+			logger.error("Error getting service " + managerName + e.toString(),
+					e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+		} catch (Throwable e) {
+			logger.error("Error getting service " + managerName + e.toString(),
+					e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	private static <T> T lookupLocalBean(String managerName)
 			throws IntegerException {

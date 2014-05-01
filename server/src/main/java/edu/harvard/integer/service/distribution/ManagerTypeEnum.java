@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.distribution;
 
+import edu.harvard.integer.common.distribution.DistributedManagerInterface;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
@@ -46,11 +47,12 @@ import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElememtAccessManager;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
+
 /**
  * @author David Taylor
  *
  */
-public enum ManagerTypeEnum {
+public enum ManagerTypeEnum implements DistributedManagerInterface {
 	PersistenceManager(PersistenceManager.class,
 			PersistenceManagerInterface.class),
 	ServiceElementDiscoveryManager(ServiceElementDiscoveryManager.class,

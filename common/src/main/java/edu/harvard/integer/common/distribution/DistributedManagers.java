@@ -31,50 +31,74 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.common.distribution;
 
-import edu.harvard.integer.common.distribution.DistributedServiceInterface;
-import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
-import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.topology.TopologyServiceInterface;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class);
+@Entity
+public class DistributedManagers extends BaseEntity {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "serverId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "serverType")),
+			@AttributeOverride(name = "name", column = @Column(name = "serverName")) })
+	private ID serverId = null;
+
 	
-	Class<? extends BaseService> mgrClazz;
-	Class<? extends BaseServiceInterface> intfClazz;
-	
-	private ServiceTypeEnum(Class<? extends BaseService> mgrClazz,
-			Class<? extends BaseServiceInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
+	private String managerType = null;
+
+	/**
+	 * 
+	 */
+	public DistributedManagers() {
+		
 	}
 
 	/**
-	 * @return
+	 * @return the serverId
 	 */
-	public Class<? extends BaseService> getServiceClass() {
-		
-		return mgrClazz;
+	public ID getServerId() {
+		return serverId;
 	}
 
 	/**
-	 * @return
+	 * @param serverId
+	 *            the serverId to set
 	 */
-	public Class<? extends BaseServiceInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
+	public void setServerId(ID serverId) {
+		this.serverId = serverId;
 	}
-	
+
+	/**
+	 * @return the managerType
+	 */
+	public String getManagerType() {
+		return managerType;
+	}
+
+	/**
+	 * @param managerType
+	 *            the managerType to set
+	 */
+	public void setManagerType(String managerType) {
+		this.managerType = managerType;
+	}
+
 }

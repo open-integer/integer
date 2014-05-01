@@ -31,50 +31,17 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.common.distribution;
 
-import edu.harvard.integer.common.distribution.DistributedServiceInterface;
-import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
-import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.topology.TopologyServiceInterface;
-
+import javax.persistence.Embeddable;
 
 /**
  * @author David Taylor
  *
  */
-public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class);
-	
-	Class<? extends BaseService> mgrClazz;
-	Class<? extends BaseServiceInterface> intfClazz;
-	
-	private ServiceTypeEnum(Class<? extends BaseService> mgrClazz,
-			Class<? extends BaseServiceInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
+@Embeddable
+public interface DistributedServiceInterface {
 
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseService> getServiceClass() {
-		
-		return mgrClazz;
-	}
-
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseServiceInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
-	}
+	public String name();
 	
 }

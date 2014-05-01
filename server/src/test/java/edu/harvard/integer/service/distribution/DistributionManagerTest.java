@@ -52,6 +52,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
@@ -132,6 +134,34 @@ public class DistributionManagerTest {
 			BaseServiceInterface service = DistributionManager.getService(ServiceTypeEnum.TopologyService);
 			
 			logger.info("Found TopologyService " + service);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+
+	@Test
+	public void getLocalManagementObjectCapabilityManager() {
+		try {
+			BaseManagerInterface service = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+			
+			logger.info("Found ManagementObjectCapabilityManager " + service);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getRemoteManagementObjectCapabilityManager() {
+		try {
+			BaseManagerInterface service = DistributionManager.getRemoteManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+			
+			logger.info("Found Remote ManagementObjectCapabilityManager " + service);
 			
 		} catch (IntegerException e) {
 			
