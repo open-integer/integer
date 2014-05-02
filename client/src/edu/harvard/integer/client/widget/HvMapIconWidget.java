@@ -28,22 +28,23 @@ import com.emitrom.lienzo.shared.core.types.TextAlign;
 import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 public class HvMapIconWidget extends Group implements NodeMouseClickHandler, NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler {
 
 	private Picture picture;
-	private String name;
+	private ServiceElement serviceElement;
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
 	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
 	
-	public HvMapIconWidget(Picture picture, String title) {
+	public HvMapIconWidget(Picture picture, ServiceElement serviceElement) {
 		this.picture = picture;
-		this.name = title;
+		this.serviceElement = serviceElement;
 		
 		setDraggable(true);
 		setListening(true);
 
-		final HvMapIconPopup popup = new HvMapIconPopup(title, "Ok", "Cambridge");
+		final HvMapIconPopup popup = new HvMapIconPopup(serviceElement.getName(), "Ok", "Cambridge");
 		final int dw = (int)picture.getClippedImageDestinationWidth()*3/2;
 		final int dh = (int)picture.getClippedImageDestinationHeight()/2;
 		
@@ -86,7 +87,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 			
 		});
 		
-		Text text = new Text(name, "oblique normal bold", 20);
+		Text text = new Text(serviceElement.getName(), "oblique normal bold", 20);
 		text.setX(x).setY(y+DragImageWidget.IMAGE_HEIGHT+16).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
 		add(text);
 	}
@@ -159,7 +160,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 
 	@Override
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
-		SystemSplitViewPanel.showContaineeView(name);
+		SystemSplitViewPanel.showContaineeView(serviceElement);
 		
 	}
 }

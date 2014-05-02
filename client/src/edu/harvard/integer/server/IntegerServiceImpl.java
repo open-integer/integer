@@ -11,12 +11,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.common.GWTWhitelist;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
@@ -76,6 +76,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		MIBInfo[] results;
 		
 		try {
+			System.out.println("Enter getImportedMibs: snmpService: " + snmpService);
 			results = snmpService.getImportedMibs();
 
 		}
@@ -111,24 +112,6 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#getAllServiceElementManagementObjects()
-	 */
-	@Override
-	public List<ServiceElementManagementObject> getAllServiceElementManagementObjects()
-			throws Exception {
-		List<ServiceElementManagementObject> list;
-
-		try {
-			list = managedObjectService.getAllServiceElementManagementObjects();
-		} 
-		catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-
-		return list;
-	}
-
-	/* (non-Javadoc)
 	 * @see edu.harvard.integer.client.IntegerService#getEvents()
 	 */
 	@Override
@@ -142,7 +125,22 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		ServiceElement[] serviceElements;
 
 		try {
+			System.out.println("Enter getTopLevelElements: serviceElementService: " + serviceElementService);
 			serviceElements = serviceElementService.getTopLevelServiceElements();
+		} 
+		catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+		return serviceElements;
+	}
+
+	@Override
+	public ServiceElement[] getServiceElementByParentId(ID id) throws Exception {
+		ServiceElement[] serviceElements;
+
+		try {
+			serviceElements = serviceElementService.getServiceElementByParentId(id);
 		} 
 		catch (Exception e) {
 			throw new Exception(e.getMessage());

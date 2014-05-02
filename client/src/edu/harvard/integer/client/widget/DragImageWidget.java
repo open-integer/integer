@@ -15,6 +15,7 @@ import com.google.gwt.resources.client.ImageResource;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * The Class DragImageWidget.
@@ -90,8 +91,9 @@ public class DragImageWidget extends WidgetLayer {
 	        	Picture picture = new Picture(images[i], IMAGE_WIDTH, IMAGE_HEIGHT, true, null);
 	        	int x = col * IMAGE_WIDTH*2 + 30;
 	        	int y = row * IMAGE_HEIGHT*2 + 30;
-	        	
-	        	HvMapIconWidget icon = new HvMapIconWidget(picture, "192.168.100."+i++);
+	        	ServiceElement serviceElement = new ServiceElement();
+	        	serviceElement.setName("192.168.1."+i++);
+	        	HvMapIconWidget icon = new HvMapIconWidget(picture, serviceElement);
 	        	HvMapIconWidget last_icon = null;
 	        	
 	        	if (col > 0) {

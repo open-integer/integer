@@ -6,10 +6,10 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import edu.harvard.integer.common.GWTWhitelist;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -65,13 +65,13 @@ public interface IntegerService extends RemoteService {
 	ServiceElement[] getTopLevelElements() throws Exception;
 	
 	/**
-	 * Gets the all service element management objects.
+	 * Gets the service element by parent id.
 	 *
-	 * @return the all service element management objects
+	 * @param id the id
+	 * @return the service element by parent id
 	 * @throws Exception the exception
 	 */
-	List<ServiceElementManagementObject> getAllServiceElementManagementObjects() throws Exception;
-
+	ServiceElement[] getServiceElementByParentId(ID id) throws Exception;
 	
 	/**
 	 * Gets the events.
