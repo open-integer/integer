@@ -1,8 +1,5 @@
 package edu.harvard.integer.client.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
@@ -179,17 +176,20 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.setWidgetHidden(containeeView, !enable);
 	}
 	
-	public static void showContaineeView(String name) {
+	public static void showContaineeView(final ServiceElement se) {
 		eastPanel.setWidgetHidden(containeeView, false);
-		int index = name.lastIndexOf(".");
-		String lastNumberStr = name.substring(index+1);
-		int lastNumber = Integer.parseInt(lastNumberStr);
 		
-		List<Object[]> children = new ArrayList<Object[]>();
-		for (int i = 0; i < lastNumber; i++) {
-			Object[] obj = {"id-"+i, "ok", "cisco-"+i};
-			children.add(obj);
-		}
-		containeeView.update("Objects in " + name, children);
+		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(ServiceElement[] result) {
+				containeeView.update(se.getName(), result);
+			}
+		});
+		
 	}
 }

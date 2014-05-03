@@ -3,9 +3,8 @@
  */
 package edu.harvard.integer.client.ui;
 
-import java.util.List;
-
 import edu.harvard.integer.client.widget.HvTableViewPanel;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * The Class CapabilityView.
@@ -21,8 +20,6 @@ public class ContaineeView extends HvTableViewPanel {
 	public ContaineeView(String title, String[] headers) {
 		super(title, headers);
 		addButton.setVisible(false);
-		flexTable.insertRow(1);
-		flexTable.insertRow(2);
 		
 		flexTable.applyDataRowStyles();
 		flexTable.getVisualPanel().setSize("200px", "500px");
@@ -33,18 +30,19 @@ public class ContaineeView extends HvTableViewPanel {
 	 *
 	 * @param result the result
 	 */
-	public void update(String name, List<Object[]> result) {
+	public void update(String name, ServiceElement[] results) {
+		flexTable.clean();
+		
 		updateTitle(name);
 		
-		if (result == null || result.isEmpty())
+		if (results == null || results.length == 0)
 			return;
-		
-		flexTable.clean();
 
-		int i = 0;
-		for (Object[] obj: result) {
-			flexTable.addRow(obj);
+		for (ServiceElement se: results) {
+			Object[] row = {se.getName(), se.getConfiguredState(), se.getDescription()};
+			flexTable.addRow(row);
 		}
 
+		flexTable.applyDataRowStyles();
 	}
 }
