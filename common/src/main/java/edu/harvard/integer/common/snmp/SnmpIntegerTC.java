@@ -30,57 +30,80 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.discovery;
 
+package edu.harvard.integer.common.snmp;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.snmp4j.smi.OID;
-
-import edu.harvard.integer.access.element.ElementEndPoint;
-import edu.harvard.integer.access.snmp.CommonSnmpOids;
-import edu.harvard.integer.access.snmp.CommunityAuth;
-import edu.harvard.integer.access.snmp.SnmpService;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
- * @author dchan
- *
+ * @author David Taylor
+ * 
  */
-public class EntityMibTest {
-	private Logger logger = LoggerFactory.getLogger(EntityMibTest.class);
-	@Test
-	public void retrieveTable() {
-		
-		SnmpV2cCredentail snmpV2c = new SnmpV2cCredentail();
-		snmpV2c.setReadCommunity("integerrw");
-		snmpV2c.setWriteCommunity("integerrw");
-		
-		OID[] eOid = new OID[5];
-		eOid[0] = new OID(CommonSnmpOids.entPhysicalClass);
-		eOid[1] = new OID(CommonSnmpOids.entPhysicalContainedIn);
-		eOid[2] = new OID(CommonSnmpOids.entPhysicalDescr);
-		eOid[3] = new OID(CommonSnmpOids.entPhysicalModelName);
-		eOid[4] = new OID(CommonSnmpOids.entPhysicalVendorType);
-		
-		CommunityAuth ca = new CommunityAuth(snmpV2c);
-		
-		String hostAddress = "10.240.127.121";
-		ElementEndPoint ePoint = new ElementEndPoint( hostAddress, 161, ca);
-		
-		try {
-			SnmpService.instance().getTablePdu(ePoint, eOid);
-		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RuntimeException e) {
-			logger.error("Unable to connect to " + hostAddress);
-		}
-		
-		System.out.println("Done with snmp table get ........ ");
+@Entity
+public class SnmpIntegerTC extends SnmpSyntax {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer minimumValue = null;
+
+	private Integer maximumValue = null;
+
+	private Integer defaultValue = null;
+
+	/**
+	 * 
+	 */
+	public SnmpIntegerTC() {
+		super();
 	}
-	
-	
+
+	/**
+	 * @return the minValue
+	 */
+	public Integer getMinimumValue() {
+		return minimumValue;
+	}
+
+	/**
+	 * @param minValue
+	 *            the minValue to set
+	 */
+	public void setMinimumValue(Integer minValue) {
+		this.minimumValue = minValue;
+	}
+
+	/**
+	 * @return the maximumValue
+	 */
+	public Integer getMaximumValue() {
+		return maximumValue;
+	}
+
+	/**
+	 * @param maximumValue
+	 *            the maximumValue to set
+	 */
+	public void setMaximumValue(Integer maxValue) {
+		this.maximumValue = maxValue;
+	}
+
+	/**
+	 * @return the defaultValue
+	 */
+	public Integer getDefaultValue() {
+		return defaultValue;
+	}
+
+	/**
+	 * @param defaultValue
+	 *            the defaultValue to set
+	 */
+	public void setDefaultValue(Integer defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
 }

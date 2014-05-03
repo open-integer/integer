@@ -35,6 +35,7 @@ package edu.harvard.integer.common;
 
 import java.io.Serializable;
 
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
@@ -62,6 +63,8 @@ public class GWTWhitelist implements Serializable {
 	
 	@SuppressWarnings("unused")
 	private IDType idType = null;
+	
+	private ServiceElement[] serviceElementList; 
 	
 	public GWTWhitelist() {
 		super();
@@ -95,5 +98,19 @@ public class GWTWhitelist implements Serializable {
 //	public void setSnmp(SNMP snmp) {
 //		this.snmp = snmp;
 //	}
+
+	/**
+	 * @return the serviceElementList
+	 */
+	public ServiceElement[] getServiceElementList() {
+		return serviceElementList;
+	}
+
+	/**
+	 * @param serviceElementList the serviceElementList to set
+	 */
+	public void setServiceElementList(ServiceElement[] serviceElementList) {
+		this.serviceElementList = serviceElementList;
+	}
 
 }

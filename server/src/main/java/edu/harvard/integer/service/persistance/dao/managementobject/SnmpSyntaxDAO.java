@@ -31,64 +31,57 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.managementobject.copy;
-
-import java.util.List;
+package edu.harvard.integer.service.persistance.dao.managementobject;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.topology.Capability;
-import edu.harvard.integer.common.topology.Mechanism;
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SnmpEnumList;
+import edu.harvard.integer.common.snmp.SnmpEnumValue;
+import edu.harvard.integer.common.snmp.SnmpSyntax;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public class MechanismDAO extends BaseDAO {
+public class SnmpSyntaxDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-	public MechanismDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, Mechanism.class);
+	public SnmpSyntaxDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, SnmpSyntax.class);
 		
 	}
 
-	/**
-	 * @param capabilites
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
 	 */
-	public List<Mechanism> findByCapabilites(List<Capability> capabilites) {
-
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-				.getCriteriaBuilder();
-
-		CriteriaQuery<Mechanism> query = criteriaBuilder.createQuery(Mechanism.class);
-
-		Root<Mechanism> from = query.from(Mechanism.class);
-		query.select(from);
-
-		ParameterExpression<String> oid = criteriaBuilder
-				.parameter(String.class);
-		query.select(from).where(
-				criteriaBuilder.equal(from.get("identifier"), oid));
-
-		TypedQuery<Mechanism> typeQuery = getEntityManager().createQuery(query);
-		typeQuery.setParameter(oid, "identifier");
-
-		List<Mechanism> resultList = typeQuery.getResultList();
-
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
 		
-		return resultList;
+		if (entity instanceof SnmpEnumList) {
+			SnmpEnumList list = (SnmpEnumList) entity;
+			if (list.getValues() != null) {
+				SnmpEnumValueDAO dao = new SnmpEnumValueDAO(getEntityManager(), getLogger());
+				
+				for (int i = 0; i < list.getValues().size(); i++) {
+					SnmpEnumValue value = list.getValues().get(i);
+					list.getValues().set(i, dao.update(value));
+				}
+				
+			}
+		}
+		
+		super.preSave(entity);
 	}
 
+	
 }

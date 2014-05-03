@@ -63,9 +63,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SnmpDisplayStringTC;
+import edu.harvard.integer.common.snmp.SnmpEnumList;
+import edu.harvard.integer.common.snmp.SnmpEnumValue;
+import edu.harvard.integer.common.snmp.SnmpIntegerTC;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
@@ -456,4 +461,79 @@ public class ManagementObjectCapbilityManagerTest {
 		assert(managementObjects.length == 3);
 	}
 
+	@Test
+	public void addEnumSnmpSyntax() {
+		SnmpEnumList enumTc = new SnmpEnumList();
+		List<SnmpEnumValue> values = new ArrayList<SnmpEnumValue>();
+		
+		for (int i = 0; i < 10; i++) {
+			SnmpEnumValue eValue1 = new SnmpEnumValue("Value" + i, Integer.valueOf(i));
+			eValue1.setName("MyEnum" + i);
+			values.add(eValue1);
+		}
+		
+		enumTc.setValues(values);
+		enumTc.setName("MyEnumTC");
+		
+		SNMP snmp = new SNMP();
+		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class.getName())));
+		snmp.setDescription("A good description");
+		snmp.setDisplayName("Hi");
+		snmp.setTextualConvetion("EnumList");
+		snmp.setSyntax(enumTc);
+		
+		try {
+			snmpManager.updateSNMP(snmp);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void addStringSnmpSyntax() {
+		
+		SnmpDisplayStringTC stringTC = new SnmpDisplayStringTC();
+		stringTC.setName("String Syntax");
+ 		stringTC.setMinimumValue(0);
+		stringTC.setMaximumValue(255);
+		
+		SNMP snmp = new SNMP();
+		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class.getName())));
+		snmp.setDescription("A good description");
+		snmp.setDisplayName("Hi");
+		snmp.setTextualConvetion("String");
+		snmp.setSyntax(stringTC);
+		
+		try {
+			snmpManager.updateSNMP(snmp);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void addIntegerSnmpSyntax() {
+		
+		SnmpIntegerTC stringTC = new SnmpIntegerTC();
+		stringTC.setName("Integer Syntax");
+		
+		SNMP snmp = new SNMP();
+		snmp.setCapabilityId(new ID(Long.valueOf(2), "Name", new IDType(Capability.class.getName())));
+		snmp.setDescription("A good description");
+		snmp.setDisplayName("Hi");
+		snmp.setTextualConvetion("Integer");
+		snmp.setSyntax(stringTC);
+ 		stringTC.setMinimumValue(0);
+		stringTC.setMaximumValue(255);
+		stringTC.setDefaultValue(333);
+		
+		try {
+			snmpManager.updateSNMP(snmp);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
 }

@@ -45,8 +45,11 @@ import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 
 /**
  * @author David Taylor
@@ -65,6 +68,26 @@ public class SNMPDAO extends BaseDAO {
 		super(entityManger, logger, SNMP.class);
 		
 	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	 */
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+
+		SNMP snmp = (SNMP) entity;
+		if (snmp.getTextualConvetion() != null) {
+			SnmpSyntaxDAO dao = new SnmpSyntaxDAO(getEntityManager(), getLogger());
+			snmp.setSyntax(dao.update(snmp.getSyntax()));
+		}
+		
+		super.preSave(entity);
+	}
+
+
 
 	/**
 	 * Find the SNMPModule that has the given OID.

@@ -31,32 +31,41 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.managementobject.copy;
+package edu.harvard.integer.common.snmp;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.topology.Capability;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 /**
  * @author David Taylor
  *
- * All add, delete, modifiy, findXXX methods for the Capability object are done
- * in this class. 
- * 
  */
-public class CapabilityDAO extends BaseDAO {
+@Entity
+public class SnmpEnumList extends SnmpSyntax {
 
 	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
+	 * Serial Version UID
 	 */
-	public CapabilityDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, Capability.class);
-		
+	private static final long serialVersionUID = 1L;
+
+	@ManyToMany
+	private List<SnmpEnumValue> values = null;
+	
+
+	/**
+	 * @return the values
+	 */
+	public List<SnmpEnumValue> getValues() {
+		return values;
+	}
+
+	/**
+	 * @param values the values to set
+	 */
+	public void setValues(List<SnmpEnumValue> values) {
+		this.values = values;
 	}
 
 }

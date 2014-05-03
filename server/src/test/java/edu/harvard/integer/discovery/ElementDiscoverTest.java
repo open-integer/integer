@@ -63,7 +63,9 @@ import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.snmp.CommunityAuth;
 import edu.harvard.integer.common.discovery.DiscoveryId;
+import edu.harvard.integer.common.exception.DiscoveryErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -292,7 +294,8 @@ public class ElementDiscoverTest {
 		snmpV2c.setWriteCommunity("integerrw");
 		CommunityAuth ca = new CommunityAuth(snmpV2c);
 		
-		DiscoverNode discNode = new DiscoverNode("10.240.127.121");
+		String deviceAddress = "10.240.127.121";
+		DiscoverNode discNode = new DiscoverNode(deviceAddress);
 		Access ac = new Access(161, ca);
 		
 		discNode.setAccessElement(new ServiceElement());
@@ -306,9 +309,18 @@ public class ElementDiscoverTest {
 		
 		try {
 			discTask.call();
+		} catch (IntegerException e) {
+			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
+				logger.info("Unable to reace " + deviceAddress);
+			else {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+				
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			fail(e.toString());
 		}
 		
 	}

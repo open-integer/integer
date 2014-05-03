@@ -1,5 +1,6 @@
 /*
 
+
  *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
@@ -44,6 +45,7 @@ import edu.harvard.integer.service.persistance.dao.managementobject.Applicabilit
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
@@ -231,6 +233,11 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	DistributedServiceDAO getDistributedServiceDAO();
+
+	/**
+	 * @return
+	 */
+	SnmpSyntaxDAO getTextualConventionDAO();
 	
 }
 	

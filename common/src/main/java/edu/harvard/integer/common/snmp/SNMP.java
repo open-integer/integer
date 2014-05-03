@@ -41,6 +41,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.ID;
@@ -93,6 +94,9 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 */
 	private String textualConvetion = null;
 
+	@ManyToOne
+	private SnmpSyntax syntax = null;
+	
 	/*
 	 * In some cases this information is not appropriate (orther than say
 	 * string). In others degrees, or other information may be useful. In some
@@ -215,6 +219,20 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 
 	public void setScalarVB(Boolean scalarVB) {
 		this.scalarVB = scalarVB;
+	}
+
+	/**
+	 * @return the syntax
+	 */
+	public SnmpSyntax getSyntax() {
+		return syntax;
+	}
+
+	/**
+	 * @param syntax the syntax to set
+	 */
+	public void setSyntax(SnmpSyntax syntax) {
+		this.syntax = syntax;
 	}
 	
 

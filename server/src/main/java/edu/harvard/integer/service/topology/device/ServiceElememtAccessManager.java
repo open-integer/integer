@@ -124,7 +124,11 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
 		ServiceElement[] topLevel = serviceElementDAO.findByParentId(parentId);
-		
+		for (int i = 0; i < topLevel.length; i++) {
+			
+			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
+				
+		}
 		return topLevel;
 	}
 	
