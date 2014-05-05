@@ -208,7 +208,7 @@ public class MibbleParser implements MibParser{
 	{
 		List<SNMPTable>  tblList = new ArrayList<>();
     	List<SNMP>  scaleList = new ArrayList<>();
-		List<SNMP> objectIdentifiers = new ArrayList<SNMP>();
+    	List<SNMP>  objectList = new ArrayList<>();
 		
 		Collection<MibSymbol> ss = mib.getAllSymbols();
     	for (MibSymbol s : ss)
@@ -285,15 +285,6 @@ public class MibbleParser implements MibParser{
     					
     					scaleList.add(snmp);				    	
     				}
-    			} else if (vs.getType() instanceof ObjectIdentifierType) {
-    				
-    				ObjectIdentifierValue obj = (ObjectIdentifierValue) vs.getValue();
-    				SNMP snmp = new SNMP();
-    				snmp.setComment(vs.getComment());
-    				snmp.setName(vs.getName());
-    				snmp.setOid(obj.toObject().toString());
-					
-					objectIdentifiers.add(snmp);
     			}
     			else if ( vs.getType() instanceof SnmpModuleIdentity ) {
     				
@@ -327,19 +318,31 @@ public class MibbleParser implements MibParser{
         				}
     				}    				
     			}
+    			else if ( vs.getType() instanceof ObjectIdentifierType ) {
+    				
+    				SNMP snmp = new SNMP();
+    				snmp.setName(vs.getName());
+    				snmp.setOid(vs.getValue().toString());
+    				snmp.setMaxAccess(MaxAccess.NotAccessible);
+    				snmp.setDescription(vs.getComment());
+    				
+    				objectList.add(snmp);	
+    			}
     		}
     	}
-    	moduleCache.getObjectIdentifiers().addAll(objectIdentifiers);
-
-    	if ( tblList.size() > 0 || scaleList.size() > 0 ) {
+    	if ( tblList.size() > 0 || scaleList.size() > 0 || objectList.size() > 0 ) {
     		
 	    	for ( SNMPTable tbl : tblList ) {
 	    		moduleCache.getTbllist().add(tbl);
 	    	}
+	    	
 	    	for ( SNMP snmp : scaleList ) {
 	    		moduleCache.getScalelist().add(snmp);
 	    	}
 	    	
+	    	if ( objectList.size() > 0 ) {
+	    	    moduleCache.setObjectIdentifiers(objectList);
+	    	}
 	        return true;	
     	}
 		return false;
@@ -703,7 +706,6 @@ public class MibbleParser implements MibParser{
 	    	snmp.setTextualConvetion(snmpType.getSyntax().getReferenceSymbol().getName());
 	    }
 	    snmp.setName(obj.getName());
-	    snmp.setComment(obj.getSymbol().getComment());
 	    
 	    snmp.setOid(obj.toObject().toString());
 	    snmp.setDescription(snmpType.getDescription());
