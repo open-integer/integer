@@ -101,4 +101,13 @@ public interface SnmpManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	SNMP updateSNMP(SNMP oid) throws IntegerException;
+
+	/**
+	 * @param vendor
+	 * @param mibImport
+	 * @return
+	 * @throws IntegerException
+	 */
+	MIBImportResult importProductMib(String vendor, MIBImportInfo mibImport)
+			throws IntegerException;
 }

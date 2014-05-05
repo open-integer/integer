@@ -57,34 +57,38 @@ import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
- *
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Stateless
 public class SnmpManager extends BaseManager implements SnmpManagerInterface {
-	
+
 	@Inject
 	private MibLoaderLocalInterface mibLoader;
 
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
-	
+
 	@Inject
 	private Logger logger;
 
 	@Resource
 	private EJBContext context;
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#importMib(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface
+	 * #importMib(java.lang.String)
 	 */
 	@Override
-	public MIBImportResult[] importMib(MIBImportInfo[] mibFile) throws IntegerException {
+	public MIBImportResult[] importMib(MIBImportInfo[] mibFile)
+			throws IntegerException {
 
-	
 		logger.info("Caller: " + context.getCallerPrincipal());
-		
+
 		try {
 			logger.info("Importing " + mibFile.length + " MIB's");
 			for (MIBImportInfo mibImportInfo : mibFile) {
@@ -92,70 +96,134 @@ public class SnmpManager extends BaseManager implements SnmpManagerInterface {
 				int fileNameIdx = fileName.lastIndexOf('/');
 				if (fileNameIdx > 0)
 					fileName = fileName.substring(fileNameIdx + 1);
-				
+
 				fileNameIdx = fileName.lastIndexOf('\\');
 				if (fileNameIdx > 0)
 					fileName = fileName.substring(fileNameIdx + 1);
-				
+
 				mibImportInfo.setFileName(fileName);
-				
-				logger.info("MIB " + mibImportInfo.getFileName() + " Size " + mibImportInfo.getMib().length());
+
+				logger.info("MIB " + mibImportInfo.getFileName() + " Size "
+						+ mibImportInfo.getMib().length());
 			}
-			
-			MibParser mibParser =  MibParserFactory.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
+
+			MibParser mibParser = MibParserFactory
+					.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
 			MIBImportResult[] results = mibParser.importMIB(mibFile, true);
 			for (MIBImportResult result : results) {
-			
+
 				// Only save mib if the load was a success!
-				if (result.getErrors() == null || result.getErrors().length == 0)
+				if (result.getErrors() == null
+						|| result.getErrors().length == 0)
 					mibLoader.load(result);
 				else {
-					logger.error("MIB " + result.getFileName() + " Not loaded!! " + Arrays.toString(result.getErrors()));
+					logger.error("MIB " + result.getFileName()
+							+ " Not loaded!! "
+							+ Arrays.toString(result.getErrors()));
 				}
 
 			}
-			
-			logger.info("Load of mibs complete! Got " + results.length + " results");	
+
+			logger.info("Load of mibs complete! Got " + results.length
+					+ " results");
 
 			return results;
-		}
-    	catch (IntegerException e) {
+		} catch (IntegerException e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#getImportedMibs()
+
+	@Override
+	public MIBImportResult importProductMib(String vendor, MIBImportInfo mibImport)
+			throws IntegerException {
+		logger.info("Caller: " + context.getCallerPrincipal());
+
+		try {
+
+			String fileName = mibImport.getFileName();
+			int fileNameIdx = fileName.lastIndexOf('/');
+			if (fileNameIdx > 0)
+				fileName = fileName.substring(fileNameIdx + 1);
+
+			fileNameIdx = fileName.lastIndexOf('\\');
+			if (fileNameIdx > 0)
+				fileName = fileName.substring(fileNameIdx + 1);
+
+			mibImport.setFileName(fileName);
+
+			logger.info("Load Product MIB " + mibImport.getFileName() + " Size "
+					+ mibImport.getMib().length());
+
+			MibParser mibParser = MibParserFactory
+					.getParserSource(MibParserFactory.ParserProvider.MIBBLE);
+			MIBImportResult[] results = mibParser.importMIB(
+					new MIBImportInfo[] { mibImport }, true);
+			
+			for (MIBImportResult result : results) {
+
+				logger.info("Number of product OIDs " + result.getObjectIdentifiers());
+				
+				// Only save mib if the load was a success!
+				if (result.getErrors() == null
+						|| result.getErrors().length == 0)
+					mibLoader.loadProductMib(vendor, result);
+				else {
+					logger.error("MIB " + result.getFileName()
+							+ " Not loaded!! "
+							+ Arrays.toString(result.getErrors()));
+				}
+
+			}
+
+			logger.info("Load of mibs complete! Got " + results.length
+					+ " results");
+
+			return results[0];
+		}
+
+		catch (IntegerException e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface
+	 * #getImportedMibs()
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws IntegerException {
-		
-		logger.info("Caller: " + context.getCallerPrincipal().getName() 
-				+ " " + context.getCallerPrincipal().getClass());
-		
+
+		logger.info("Caller: " + context.getCallerPrincipal().getName() + " "
+				+ context.getCallerPrincipal().getClass());
+
 		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
-		
+
 		MIBInfo[] mibInfos = mibInfoDAO.findAll();
 		MIBInfo[] mibs = new MIBInfo[mibInfos.length];
 		for (int i = 0; i < mibInfos.length; i++) {
-			
+
 			mibs[i] = mibInfoDAO.createCleanCopy(mibInfos[i]);
-				
+
 		}
-		
+
 		return mibs;
 	}
-	
+
 	@Override
 	public MIBInfo getMIBInfoByID(ID id) throws IntegerException {
-	
+
 		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
 		MIBInfo mibInfo = mibInfoDAO.findById(id);
-		
+
 		return mibInfo;
 	}
-	
+
 	@Override
 	public List<SNMP> findByNameStartsWith(String name) throws IntegerException {
 		SNMPDAO dao = persistenceManager.getSNMPDAO();
@@ -163,8 +231,12 @@ public class SnmpManager extends BaseManager implements SnmpManagerInterface {
 		return oids;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#getSNMPByOid(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface
+	 * #getSNMPByOid(java.lang.String)
 	 */
 	@Override
 	public SNMP getSNMPByOid(String oid) throws IntegerException {
@@ -172,12 +244,12 @@ public class SnmpManager extends BaseManager implements SnmpManagerInterface {
 
 		return snmpdao.findByOid(oid);
 	}
-	
+
 	/**
 	 * Update a single SNMP OID.
 	 * 
 	 * @param oid
-	 * @return the updated OID. 
+	 * @return the updated OID.
 	 * @throws IntegerException
 	 */
 	@Override
@@ -186,5 +258,5 @@ public class SnmpManager extends BaseManager implements SnmpManagerInterface {
 		oid = snmpdao.update(oid);
 		return oid;
 	}
-	
+
 }

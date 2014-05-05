@@ -110,6 +110,11 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 */
 	private Boolean scalarVB = null;
 	
+
+	private transient static final int MaxCommentLenth = 2000;
+	@Size(min=1, max=MaxCommentLenth)
+	private String comment = null;
+	
 	public SNMP() {
 		super();
 	}
@@ -233,6 +238,23 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 */
 	public void setSyntax(SnmpSyntax syntax) {
 		this.syntax = syntax;
+	}
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment) {
+		if (comment != null && comment.length() > MaxCommentLenth)
+			this.comment = comment.substring(0, MaxCommentLenth - 1);
+		else
+			this.comment = comment;
 	}
 	
 

@@ -44,5 +44,14 @@ import edu.harvard.integer.common.snmp.MIBImportResult;
  */
 @Local
 public interface MibLoaderLocalInterface {
+	
 	public void load(MIBImportResult result) throws IntegerException;
+
+	/**
+	 * @param vendor
+	 * @param result
+	 * @throws IntegerException
+	 */
+	void loadProductMib(String vendor, MIBImportResult result)
+			throws IntegerException;
 }

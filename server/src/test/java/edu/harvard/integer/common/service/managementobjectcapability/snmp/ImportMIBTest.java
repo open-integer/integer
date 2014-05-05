@@ -46,6 +46,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.BasicConfigurator;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -122,6 +123,8 @@ public class ImportMIBTest {
 		// System.setProperty(MibbleParser.MIBFILELOCATON,
 		// "../server/build/mibs");
 		// importDir();
+		
+		 BasicConfigurator.configure();
 	}
 
 	@Test
@@ -157,6 +160,7 @@ public class ImportMIBTest {
 		importMib("HCNUM-TC.my");
 		importMib("IPV6-TC.my");
 
+		importProductMib("Cisco", "CISCO-PRODUCTS-MIB.my");
 	}
 
 	public void importDir() {
@@ -299,6 +303,46 @@ public class ImportMIBTest {
 
 	}
 
+	private void importProductMib(String vendor, String mibName) {
+
+		logger.warn("Start test import of ******************************** "
+				+ mibName);
+
+		File mibFile = null;
+		mibFile = new File("mibs/" + mibName);
+
+		if (mibFile.exists())
+			System.out.println("Found rfc");
+		else {
+			System.out.println("rfc not found! PATH: "
+					+ mibFile.getAbsolutePath());
+
+			fail("rfc not found! PATH: " + mibFile.getAbsolutePath());
+		}
+
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(mibFile.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading MIB: " + e.getMessage());
+		}
+
+		MIBImportInfo importInfo = new MIBImportInfo();
+		importInfo.setFileName(mibFile.getName());
+		importInfo.setMib(content);
+
+		try {
+
+			snmpObjectManager.importProductMib(vendor,  importInfo);
+
+		} catch(Exception e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
 	/**
 	 * Import files into importMibs for fs.
 	 * 

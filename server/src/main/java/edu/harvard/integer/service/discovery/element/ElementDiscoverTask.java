@@ -178,17 +178,18 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	     */
 	    if ( template == null ) {
 	    	template = new SnmpVendorDiscoveryTemplate();
-	    	IDType type = new IDType(VendorIdentifier.class.getName());
-	    	String vendor = serviceMgr.getVendorName((int) sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
 	    	
-			ID vendorId = new ID(Long.valueOf(sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex)), vendor, type);
-	    	template.setVendorId(vendorId);
+			VendorIdentifier vendorIdentifier = serviceMgr.getVendorIdentifier(sysId.toDottedString());
+			if (vendorIdentifier != null)
+				template.setVendorId(vendorIdentifier.getID());
+			else
+				logger.error("Unable to find vendor identifier for " + sysId.toDottedString());
+			
 	    	template.setDescription(sysInfo.getSysDescr());
 	    	
 	    	template = serviceMgr.updateSnmpVendorDiscoveryTemplate(template);
 	    }
 	    
-	   
 	    String firmwareVer = null;
 	    String model = null;
 	    String softwareVer = null;
@@ -258,10 +259,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    
 	    if ( model == null ) {
 	    	if ( sysId.size() >=  CommonSnmpOids.vendorSysIdIndex ) {
-	    		model = defineUnknownVendor(sysId.get(CommonSnmpOids.vendorSysIdIndex)) + ":" + sysId.get(CommonSnmpOids.vendorSysIdIndex+1); 
+	    		model = defineUnknownVendor(sysId) + ":" + sysId.get(CommonSnmpOids.vendorSysIdIndex+1); 
 	    	}
 	    	else {
-	    		model = defineUnknownVendor(sysId.get(CommonSnmpOids.vendorSysIdIndex));
+	    		model = defineUnknownVendor(sysId);
 	    	}
 	    }
 	    
@@ -269,7 +270,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    vs.setFirmware(firmwareVer);
 	    vs.setModel(model);
 	    vs.setSoftwareVersion(softwareVer);
-	    vs.setVendor(defineUnknownVendor(sysId.get(CommonSnmpOids.vendorSysIdIndex)));
+	    vs.setVendor(defineUnknownVendor(sysId));
 	    
 	    ServiceElementType set = null;
 	    SnmpContainment sc = null;
@@ -289,7 +290,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    if ( sc == null ) {
 	    	
 	    	set = new ServiceElementType();
-			set.setVendor(defineUnknownVendor(sysId.get(CommonSnmpOids.vendorSysIdIndex)));
+			set.setVendor(defineUnknownVendor(sysId));
 			set.setModel(checkContainmentType(discoverNode.getElementEndPoint()).name());
 			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 			
@@ -409,9 +410,9 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	}
 	
 	
-	public String defineUnknownVendor( int sysId ) throws IntegerException {
+	public String defineUnknownVendor( OID sysId ) throws IntegerException {
 		
-		String vendorName = serviceMgr.getVendorName(sysId);
+		String vendorName = serviceMgr.getVendorIdentifier(sysId.toDottedString()).getName();
 		if ( vendorName != null ) {
 			return vendorName;
 		}

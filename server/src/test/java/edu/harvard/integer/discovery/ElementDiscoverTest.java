@@ -63,7 +63,6 @@ import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.snmp.CommunityAuth;
 import edu.harvard.integer.common.discovery.DiscoveryId;
-import edu.harvard.integer.common.exception.DiscoveryErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -73,9 +72,6 @@ import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.server.parser.mibparser.MibParser;
-import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
-import edu.harvard.integer.server.parser.mibparser.MibParserFactory.ParserProvider;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
@@ -325,4 +321,110 @@ public class ElementDiscoverTest {
 		
 	}
 
+	@Test
+	public void discoverTestRouter() {
+		
+		System.out.println("Start service element task ******************************************** .");
+		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
+		
+		SnmpV2cCredentail snmpV2c = new SnmpV2cCredentail();
+		snmpV2c.setReadCommunity("public");
+		
+		String netIp = "10.251.41.172";
+		String mask = "255.255.255.248";   // Expect 8 address and usable address is 6.
+		
+		DiscoverNet dNet = new DiscoverNet(netIp, mask);
+		List<Credential> creds = new ArrayList<>();
+		creds.add(snmpV2c);
+		
+		snmpV2c = new SnmpV2cCredentail();
+		snmpV2c.setReadCommunity("private");
+		creds.add(snmpV2c);
+		
+		IpDiscoverySeed seed = new IpDiscoverySeed(dNet, creds);
+		AccessPort ap = new AccessPort(161, AccessTypeEnum.SNMPv1);
+		ap.addAccess(AccessTypeEnum.SNMPv2c);
+		ap.addAccess(AccessTypeEnum.SNMPv3);
+	
+		seed.addAccessPort(ap);
+		
+		ap = new AccessPort(163, AccessTypeEnum.SNMPv1);
+		ap.addAccess(AccessTypeEnum.SNMPv2c);
+		ap.addAccess(AccessTypeEnum.SNMPv3);
+		
+		seed.addAccessPort(ap);
+		
+		DiscoveryId id = new DiscoveryId(Long.valueOf(1), Long.valueOf(1));
+		
+		List<SNMP> mgrObjects = serviceMgr.getToplLevelOIDs();
+		for ( SNMP snmp : mgrObjects ) {
+
+			VariableBinding vb = new VariableBinding(new OID(snmp.getOid() + ".0"));
+			vbs.add(vb);
+		}
+		
+		snmpV2c = new SnmpV2cCredentail();
+		snmpV2c.setReadCommunity("integerrw");
+		snmpV2c.setWriteCommunity("integerrw");
+		CommunityAuth ca = new CommunityAuth(snmpV2c);
+		
+		String deviceAddress = "10.240.127.121";
+		DiscoverNode discNode = new DiscoverNode(deviceAddress);
+		Access ac = new Access(161, ca);
+		
+		discNode.setAccessElement(new ServiceElement());
+		
+		discNode.setAccess(ac);;
+		
+		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
+		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
+		
+		System.out.println("After creation element discover task *********************************************************** ");
+		
+		try {
+			discTask.call();
+		} catch (IntegerException e) {
+			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
+				logger.info("Unable to reace " + deviceAddress);
+			else {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+				
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		deviceAddress = "10.240.127.144";
+		discNode = new DiscoverNode(deviceAddress);
+		ac = new Access(161, ca);
+		
+		discNode.setAccessElement(new ServiceElement());
+		
+		discNode.setAccess(ac);;
+		
+
+		ElementDiscoverTask<ElementAccess> discTask2 = new ElementDiscoverTask<>(discovery, discNode);
+		
+		System.out.println("After creation element discover task *********************************************************** ");
+		
+		try {
+			discTask2.call();
+		} catch (IntegerException e) {
+			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
+				logger.info("Unable to reace " + deviceAddress);
+			else {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+				
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+	}
 }

@@ -64,6 +64,8 @@ public class MIBImportResult extends MIBImportInfo implements Serializable {
 	 * SNMP scalar list in the module. It can be null if table is not available
 	 */
 	private List<SNMP> snmpScalars;
+	
+	private List<SNMP> objectIdentifiers;
 
 	private String[] errors = null;
 
@@ -137,6 +139,20 @@ public class MIBImportResult extends MIBImportInfo implements Serializable {
 	 */
 	public void setHistory(List<SNMPModuleHistory> history) {
 		this.history = history;
+	}
+
+	/**
+	 * @return the objectIdentifiers
+	 */
+	public List<SNMP> getObjectIdentifiers() {
+		return objectIdentifiers;
+	}
+
+	/**
+	 * @param objectIdentifiers the objectIdentifiers to set
+	 */
+	public void setObjectIdentifiers(List<SNMP> objectIdentifiers) {
+		this.objectIdentifiers = objectIdentifiers;
 	}
 
 }

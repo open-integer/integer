@@ -243,14 +243,14 @@ public class ServiceElementDiscoveryManagerTest {
 	@Test
 	public void getVendorByID() {
 		
-		Long vendorId = Long.valueOf(9);
+		String vendorId = new String("9");
 		
 		try {
 			VendorIdentifier vendorIdentifier = serviceElementDiscoveryManger.getVendorIdentifier(vendorId);
 			if (vendorIdentifier == null) {
 
 				vendorIdentifier = new VendorIdentifier();
-				vendorIdentifier.setVendorId(vendorId);
+				vendorIdentifier.setVendorOid(vendorId);
 				vendorIdentifier.setName("Cisco");
 				
 				serviceElementDiscoveryManger.updateVendorIdentifier(vendorIdentifier);

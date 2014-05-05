@@ -243,10 +243,26 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 * 
 	 */
 	@Override
-	public VendorIdentifier getVendorIdentifier(Long vendorId) throws IntegerException {
+	public VendorIdentifier getVendorIdentifier(String vendorOid) throws IntegerException {
 		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
 		
-		return dao.findByVendorId(vendorId);
+		if (countDots(vendorOid) <= 6)
+			return dao.findByVendorOid(vendorOid);
+		else
+			return dao.findByVendorSubtypeId(vendorOid);
+	}
+	
+	private int countDots(String oidString) {
+		int count = 0;
+		int offset = 0;
+		offset = oidString.indexOf('.');
+		
+		while (offset > 0) {
+			offset = oidString.indexOf(offset + 1, '.');
+			count++;
+		}
+		
+		return count;
 	}
 	
 	/*
@@ -343,17 +359,4 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return types;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getVendorName(int)
-	 */
-	@Override
-	public String getVendorName(int vendorIndex) {
-		
-		if ( vendorIndex == 9 ) {
-			return "cisco";
-		}
-		
-		return null;
-	}
-	
 }

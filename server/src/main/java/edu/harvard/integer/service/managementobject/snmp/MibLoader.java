@@ -42,6 +42,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.MIBInfo;
@@ -50,6 +51,7 @@ import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
@@ -291,6 +293,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 				dbOid.setNamespace(snmpOid.getNamespace());
 				dbOid.setServiceElementTypes(snmpOid.getServiceElementTypes());
 				dbOid.setSnmpModuleId(snmpOid.getSnmpModuleId());
+				dbOid.setComment(snmpOid.getComment());
 				
 				snmpOid = snmpDao.update(dbOid);
 			} else
@@ -303,5 +306,46 @@ public class MibLoader implements MibLoaderLocalInterface {
 		}
 
 		return snmpOid;
+	}
+	
+	
+	@Override
+	public void loadProductMib(String vendor, MIBImportResult result) throws IntegerException 
+	{
+		snmpDao = persistenceManager.getSNMPDAO();
+		snmpModuleDAO = persistenceManager.getSNMPModuleDAO();
+		VendorIdentifierDAO vendorIdentifierDAO = persistenceManager.getVendorIdentifierDAO();
+	
+		List<SNMP> scalars = result.getObjectIdentifiers();
+		
+		for (SNMP snmp : scalars) {
+		
+			VendorIdentifier dbVendorSubtype = vendorIdentifierDAO.findByVendorSubtypeId(snmp.getOid());
+			if (dbVendorSubtype == null) {
+				dbVendorSubtype = new VendorIdentifier();
+			}
+			
+			logger.info("Load " + vendor + " SubType " + snmp.getOid() + " :: " + snmp.getName()
+					+ " VendorId " + getVendorId(snmp.getOid()) + " Comment " + snmp.getComment());
+			
+			dbVendorSubtype.setName(vendor);
+			dbVendorSubtype.setVendorOid(getVendorId(snmp.getOid()));
+			dbVendorSubtype.setVendorSubtypeId(snmp.getOid());
+			dbVendorSubtype.setVendorSubtypeName(snmp.getName());
+			dbVendorSubtype.setComment(snmp.getComment());
+			
+			vendorIdentifierDAO.update(dbVendorSubtype);
+		}
+	}
+	
+	private String getVendorId(String oid) {
+		String parts[] = oid.split("\\.");
+		StringBuffer b = new StringBuffer();
+		
+		b.append(parts[0]);
+		for (int i = 1; i < 7; i++) 
+			b.append('.').append(parts[i]);
+		
+		return b.toString();
 	}
 }

@@ -34,6 +34,7 @@
 package edu.harvard.integer.common.discovery;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 
@@ -49,21 +50,72 @@ public class VendorIdentifier extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Long vendorId;
+	private String vendorOid;
+
+	private String vendorSubtypeName;
+	
+	private String vendorSubtypeId;
+	
+	@Size(max=2000)
+	private String comment = null;
+	
 
 	/**
-	 * @return the vendorId
+	 * 
 	 */
-	public Long getVendorId() {
-		return vendorId;
+	public String getVendorOid() {
+		return vendorOid;
 	}
 
 	/**
 	 * @param vendorId
 	 *            the vendorId to set
 	 */
-	public void setVendorId(Long vendorId) {
-		this.vendorId = vendorId;
+	public void setVendorOid(String vendorId) {
+		this.vendorOid = vendorId;
+	}
+
+	/**
+	 * @return the vendorSubtype
+	 */
+	public String getVendorSubtypeId() {
+		return vendorSubtypeId;
+	}
+
+	/**
+	 * @param vendorSubtype
+	 *            the vendorSubtype to set
+	 */
+	public void setVendorSubtypeId(String vendorSubtype) {
+		this.vendorSubtypeId = vendorSubtype;
+	}
+
+	/**
+	 * @return the vendorSubtypeName
+	 */
+	public String getVendorSubtypeName() {
+		return vendorSubtypeName;
+	}
+
+	/**
+	 * @param vendorSubtypeName the vendorSubtypeName to set
+	 */
+	public void setVendorSubtypeName(String vendorSubtypeName) {
+		this.vendorSubtypeName = vendorSubtypeName;
+	}
+
+	/**
+	 * @return the comment
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @param comment the comment to set
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

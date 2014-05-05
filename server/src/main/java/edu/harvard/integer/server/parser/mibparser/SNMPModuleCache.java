@@ -67,6 +67,8 @@ public class SNMPModuleCache {
 	 * Any scale contained by the module.
 	 */
 	private List<SNMP> scalelist = new ArrayList<>();
+	
+	private List<SNMP> objectIdentifiers = new ArrayList<SNMP>();
 
 	/**
 	 * A map for fast searching based on OID.
@@ -110,6 +112,20 @@ public class SNMPModuleCache {
 	 */
 	public void setHistory(List<SNMPModuleHistory> history) {
 		this.history = history;
+	}
+
+	/**
+	 * @return the objectIdentifiers
+	 */
+	public List<SNMP> getObjectIdentifiers() {
+		return objectIdentifiers;
+	}
+
+	/**
+	 * @param objectIdentifiers the objectIdentifiers to set
+	 */
+	public void setObjectIdentifiers(List<SNMP> objectIdentifiers) {
+		this.objectIdentifiers = objectIdentifiers;
 	}
 
 }

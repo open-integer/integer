@@ -129,7 +129,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return
 	 * @throws IntegerException
 	 */
-	VendorIdentifier getVendorIdentifier(Long vendorId) throws IntegerException;
+	VendorIdentifier getVendorIdentifier(String vendorOid) throws IntegerException;
 
 	/**
 	 * 
@@ -202,6 +202,4 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	List<SNMP> getEntityMIBInfo();
 	
-	public String getVendorName( int vendorIndex ); 
-
 }

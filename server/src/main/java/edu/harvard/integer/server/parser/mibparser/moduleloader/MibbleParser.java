@@ -67,6 +67,7 @@ import net.percederberg.mibble.snmp.SnmpModuleIdentity;
 import net.percederberg.mibble.snmp.SnmpObjectType;
 import net.percederberg.mibble.snmp.SnmpRevision;
 import net.percederberg.mibble.snmp.SnmpTextualConvention;
+import net.percederberg.mibble.type.ObjectIdentifierType;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -207,6 +208,7 @@ public class MibbleParser implements MibParser{
 	{
 		List<SNMPTable>  tblList = new ArrayList<>();
     	List<SNMP>  scaleList = new ArrayList<>();
+		List<SNMP> objectIdentifiers = new ArrayList<SNMP>();
 		
 		Collection<MibSymbol> ss = mib.getAllSymbols();
     	for (MibSymbol s : ss)
@@ -283,6 +285,15 @@ public class MibbleParser implements MibParser{
     					
     					scaleList.add(snmp);				    	
     				}
+    			} else if (vs.getType() instanceof ObjectIdentifierType) {
+    				
+    				ObjectIdentifierValue obj = (ObjectIdentifierValue) vs.getValue();
+    				SNMP snmp = new SNMP();
+    				snmp.setComment(vs.getComment());
+    				snmp.setName(vs.getName());
+    				snmp.setOid(obj.toObject().toString());
+					
+					objectIdentifiers.add(snmp);
     			}
     			else if ( vs.getType() instanceof SnmpModuleIdentity ) {
     				
@@ -318,6 +329,8 @@ public class MibbleParser implements MibParser{
     			}
     		}
     	}
+    	moduleCache.getObjectIdentifiers().addAll(objectIdentifiers);
+
     	if ( tblList.size() > 0 || scaleList.size() > 0 ) {
     		
 	    	for ( SNMPTable tbl : tblList ) {
@@ -326,6 +339,7 @@ public class MibbleParser implements MibParser{
 	    	for ( SNMP snmp : scaleList ) {
 	    		moduleCache.getScalelist().add(snmp);
 	    	}
+	    	
 	        return true;	
     	}
 		return false;
@@ -689,6 +703,7 @@ public class MibbleParser implements MibParser{
 	    	snmp.setTextualConvetion(snmpType.getSyntax().getReferenceSymbol().getName());
 	    }
 	    snmp.setName(obj.getName());
+	    snmp.setComment(obj.getSymbol().getComment());
 	    
 	    snmp.setOid(obj.toObject().toString());
 	    snmp.setDescription(snmpType.getDescription());
@@ -841,6 +856,7 @@ public class MibbleParser implements MibParser{
 		     	    		mResult.setMib(importMib.importInfo.getMib());
 							mResult.setSnmpTable(snmpCache.getTbllist());
 							mResult.setSnmpScalars(snmpCache.getScalelist());
+							mResult.setObjectIdentifiers(snmpCache.getObjectIdentifiers());
 							mResult.setModule(snmpCache.getModule());
 							mResult.setHistory(snmpCache.getHistory());
 						}

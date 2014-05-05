@@ -57,7 +57,11 @@ public class VendorIdentifierDAO extends BaseDAO {
 
 	}
 
-	public VendorIdentifier findByVendorId(Long identifier) throws IntegerException {
-		return findByLongField(identifier, "vendorId", VendorIdentifier.class);
+	public VendorIdentifier findByVendorOid(String identifier) throws IntegerException {
+		return findByStringField(identifier, "vendorOid", VendorIdentifier.class);
+	}
+	
+	public VendorIdentifier findByVendorSubtypeId(String identifier) throws IntegerException {
+		return findByStringField(identifier, "vendorSubtypeId", VendorIdentifier.class);
 	}
 }
