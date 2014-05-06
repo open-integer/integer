@@ -65,7 +65,7 @@ public class MibParserTest {
 		
 		try {
 			File mibFile = null;
-			mibFile = new File("mibs/" + mibName);
+			mibFile = new File(ImportMIBTest.MibDir + mibName);
 
 			if (mibFile.exists())
 				System.out.println("Found rfc");

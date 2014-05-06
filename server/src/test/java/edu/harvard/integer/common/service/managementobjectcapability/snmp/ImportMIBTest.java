@@ -91,6 +91,8 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 @RunWith(Arquillian.class)
 public class ImportMIBTest {
 
+	public static final String MibDir = "src/wildfly/standalone/data/mibs/";
+	
 	@Inject
 	private SnmpManagerInterface snmpObjectManager;
 
@@ -126,7 +128,19 @@ public class ImportMIBTest {
 		
 		 BasicConfigurator.configure();
 	}
+	
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
 
+	public void setSnmpObjectManager(SnmpManagerInterface snmpObjectManger) {
+		this.snmpObjectManager = snmpObjectManger;
+	}
+	
+	public void setPersistenceManger(PersistenceManagerInterface persistenceManager) {
+		this.persistenceManager = persistenceManager;
+	}
+	
 	@Test
 	public void importMIBs() {
 		importMib("RFC1065-SMI");
@@ -136,12 +150,12 @@ public class ImportMIBTest {
 		importMib("SNMPv2-SMI");
 		importMib("SNMPv2-TC");
 		importMib("SNMPv2-CONF");
-		importMib("SNMPv2-MIB");
+		importMib("SNMPv2-MIB.my");
 		importMib("IANAifType-MIB");
-		importMib("IF-MIB");
+		importMib("IF-MIB.my");
 		importMib("INET-ADDRESS-MIB.my");
 		importMib("IP-MIB.my");
-		importMib("SNMP-FRAMEWORK-MIB");
+		importMib("SNMP-FRAMEWORK-MIB.my");
 		importMib("ENTITY-MIB.my");
 		importMib("HOST-RESOURCES-MIB.my");
 		importMib("CISCO-SMI.my");
@@ -196,7 +210,7 @@ public class ImportMIBTest {
 				+ mibName);
 
 		File mibFile = null;
-		mibFile = new File("mibs/" + mibName);
+		mibFile = new File(MibDir + mibName);
 
 		if (mibFile.exists())
 			System.out.println("Found rfc");
@@ -309,7 +323,7 @@ public class ImportMIBTest {
 				+ mibName);
 
 		File mibFile = null;
-		mibFile = new File("mibs/" + mibName);
+		mibFile = new File("src/wildfly/standalone/data/mibs/" + mibName);
 
 		if (mibFile.exists())
 			System.out.println("Found rfc");

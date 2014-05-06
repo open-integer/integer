@@ -431,7 +431,8 @@ public class ServiceElementDiscoveryManagerTest {
 		
 		try {
 			 SnmpContainment[] containments = managementObjectCapabilityManager.getAllSnmpContainments();
-			logger.info("Found " + containments.length + " SnmpContainments"); 
+			 if (containments != null)
+				 logger.info("Found " + containments.length + " SnmpContainments"); 
 			
 			assert(containments != null);
 			assert(containments.length > 0);
