@@ -1,0 +1,199 @@
+---
+technologies:
+    # CDP, the Cisco Discovery Protocol.
+    # 3 components: cdp-global, cdp-interface, cdp-device (cache entry).
+    - name: cdp
+      parent: null
+      description: Cisco Discovery Protocol
+      components:
+          - name: cdp-global
+            parent: null 
+            index: null
+            description: CDP global information on this device.
+            capabilities:
+                - name: cdp-global-run
+                  description: Whether CDP is running on this device.
+                  adminstatus: true 
+
+                - name: cdp-global-deviceId
+                  description: The global device ID being advertised via CDP.
+        
+          - name: cdp-interface
+            parent: cdp-global
+            index: cdp-interface-index
+            description: >
+                Each interface on the box that is capable of doing CDP has a
+                corresponding CDP interface service element (certain types of
+                physical interfaces only).
+            capabilities:
+                - name: cdp-interface-index
+                  description: >
+                      The ifIndex if there is one, or a unique value if there
+                      isn't, as in the case of 802.3 repeaters.
+
+                - name: cdp-interface-name
+                  description: The name of each interface as advertised by CDP.
+
+                - name: cdp-interface-enable
+                  description: Whether CDP is enabled on each interface.
+                  adminstatus: true 
+
+          - name: cdp-device
+            parent: cdp-interface
+            index: [ cdp-interface-index, cdp-device-index ]
+            description: >
+                For every remote CDP neighbor on each interface, there is a
+                device entry in the local CDP cache.
+            capabilities:
+                - name: cdp-device-index
+                  description: > 
+                      There can be more than one device visible on an
+                      interface, so this is the index for this particular device.
+
+                - name: cdp-device-addressType
+                  description: The type of address advertised by the remove device. (e.g. IP, IPv6, CLNS)
+
+                - name: cdp-device-address
+                  description: The address advertised by the remote device.
+
+                - name: cdp-device-version
+                  description: The OS version string advertised by the remote device.
+
+                - name: cdp-device-deviceId
+                  description: The device ID of the remote device.
+
+                - name: cdp-device-port
+                  description: The port on the remote device that we're connected to.
+
+                - name: cdp-device-platform
+                  description: The remote device's hardware platform.
+
+relations:
+    # CDP relations
+    # There are 4 total relations for the CDP technology.
+    - name: cdp-global-to-interface
+      description: Each CDP interface is a child of the global CDP process on a device.
+      type: hierarchy
+      components:
+          source: cdp-global
+          destination: cdp-interface
+      capabilities: null
+
+    - name: cdp-interface-to-device
+      description: Each CDP device entry is a child of its corresponding CDP interface.
+      type: hierarchy
+      components:
+          source: cdp-interface
+          destination: cdp-device
+      capabilities: 
+          source: cdp-interface-index
+          destination: cdp-interface-index
+
+    - name: interface-to-cdp-interface
+      description: Each CDP interface represents a physical interface with the same index, if one exists.
+      type: equality
+      components:
+          source: interface
+          destination: cdp-interface
+      capabilities: 
+          source: interface-index
+          destination: cdp-interface-index
+
+    - name: cdp-device-to-remote-cdp-interface
+      description: >
+          The local CDP device suggests a link to a remote CDP interface, but
+          since CDP doesn't keep state, we have no way of knowing whether we're
+          right. For example, if two devices have the same device name, we
+          won't know which one to draw a link to, especially if we can't pull
+          data from the remote device. To try and be as specific as possible,
+          we match a network address on the remote side as well, if we can.
+      type: topology
+      components:
+          source: cdp-device
+          destination: cdp-interface
+      capabilities: 
+        - source: cdp-device-deviceId
+          destination: cdp-global-deviceId 
+
+        - source: cdp-device-devicePort
+          destination: cdp-interface-name
+
+        - source: cdp-device-address
+          destination: network-address
+          optional: true
+
+serviceElementTypes:
+    # 3 total, to match the 3 components above.
+    # Cisco devices should all do this the same way over SNMP, although there
+    # may be some strange differences in the type of information we get back.
+
+    - name: cisco-cdp-global
+      parent: null
+      description: Cisco's general CDP global element.
+      technologyComponent: cdp-global
+      managementObjects:
+          - name: cisco-cdpGlobalRun
+            uri: SNMP::CISCO-CDP-MIB::cdpGlobalRun
+            capabilities: [ cdp-global-run ]
+            unique: 1 
+
+          - name: cisco-cdpGlobalDeviceId
+            uri: SNMP::CISCO-CDP-MIB::cdpGlobalDeviceId
+            capabilities: [ cdp-global-deviceId ]
+
+    - name: cisco-cdp-interface
+      parent: null
+      description: Cisco's general CDP interface.
+      technologyComponent: cdp-interface
+      managementObjects:
+          - name: cisco-cdpInterfaceIfIndex
+            uri: SNMP::CISCO-CDP-MIB::cdpInterfaceIfIndex
+            capabilities: [ cdp-interface-index ]
+            unique: 1
+
+          - name: cisco-cdpInterfaceEnable
+            uri: 
+                protocol: SNMP
+                mib: ciscoCdpMIB
+                objectName: cdpInterfaceEnable
+            capabilities: [ cdp-interface-enable ]
+
+          - name: cisco-cdpInterfaceName
+            uri: SNMP::CISCO-CDP-MIB::cdpInterfaceName
+            capabilities: [ cdp-interface-name ]
+
+    - name: cisco-cdp-device
+      parent: null
+      description: Cisco's general CDP remote device cache element.
+      technologyComponent: cdp-device
+      managementObjects:
+          - name: cisco-cdpCacheDeviceIndex
+            uri: SNMP::CISCO-CDP-MIB::cdpCacheDeviceIndex
+            capabilities: [ cdp-device-index ]
+            unique: 1 
+
+          - name: cisco-cdpCacheAddressType
+            uri: SNMP::CISCO-CDP-MIB::cdpCacheAddressType
+            capabilities: [ cdp-device-addressType ]
+
+          - name: cisco-cdpCacheAddress
+            uri: SNMP::CISCO-CDP-MIB::cdpCacheAddress
+            capabilities: [ cdp-device-address ]
+
+          - name: cisco-cdpCacheVersion
+            uri: SNMP::CISCO-CDP-MIB::cdpCacheVersion
+            capabilities: [ cdp-device-version ]
+
+          - name: cisco-cdpCacheDeviceId
+            uri: SNMP::CISCO-CDP-MIB::cdpCacheDeviceId
+            capabilities: [ cdp-device-deviceId ]
+
+          - name: cisco-cdpCacheDevicePort
+            uri: SNMP::CISCO-CDP-MIB::cdpCacheDevicePort
+            capabilities: [ cdp-device-port ]
+
+          - name: cisco-cdpCachePlatform
+            uri: SNMP::CISCO-CDP-MIB::cdpCachePlatform
+            capabilities: [ cdp-device-platform ]
+
+...
