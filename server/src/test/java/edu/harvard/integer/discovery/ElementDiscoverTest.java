@@ -286,11 +286,11 @@ public class ElementDiscoverTest {
 		}
 		
 		snmpV2c = new SnmpV2cCredentail();
-		snmpV2c.setReadCommunity("integerrw");
-		snmpV2c.setWriteCommunity("integerrw");
+		snmpV2c.setReadCommunity("public");
+		snmpV2c.setWriteCommunity("public");
 		CommunityAuth ca = new CommunityAuth(snmpV2c);
 		
-		String deviceAddress = "10.240.127.121";
+		String deviceAddress = "127.0.0.1";
 		DiscoverNode discNode = new DiscoverNode(deviceAddress);
 		Access ac = new Access(161, ca);
 		
