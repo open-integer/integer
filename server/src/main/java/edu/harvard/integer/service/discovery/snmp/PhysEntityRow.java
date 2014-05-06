@@ -54,9 +54,9 @@ public class PhysEntityRow {
     private String entPhysicalFirmwareRev;
     private String entPhysicalSoftwareRev;
     private String entPhysicalSerialNum;
-    private String entPhysicalMfgName;
+ //   private String entPhysicalMfgName;
     private String entPhysicalModelName;
-    private String entPhysicalAlias;
+//    private String entPhysicalAlias;
     private boolean entPhysicalIsFRU;
     
     private String index;
@@ -182,15 +182,15 @@ public class PhysEntityRow {
 	public String getEntPhysicalSerialNum() {
 		return entPhysicalSerialNum;
 	}
-	public String getEntPhysicalMfgName() {
-		return entPhysicalMfgName;
-	}
+//	public String getEntPhysicalMfgName() {
+//		return entPhysicalMfgName;
+//	}
 	public String getEntPhysicalModelName() {
 		return entPhysicalModelName;
 	}
-	public String getEntPhysicalAlias() {
-		return entPhysicalAlias;
-	}
+//	public String getEntPhysicalAlias() {
+//		return entPhysicalAlias;
+//	}
 	public boolean isEntPhysicalIsFRU() {
 		return entPhysicalIsFRU;
 	}

@@ -210,8 +210,9 @@ public class MibLoader implements MibLoaderLocalInterface {
 			System.err.println("PersistenceManage is null!!!");
 
 		}
-		logger.info("Save SNMPModule " + result.getModule().getName() + " OID: "
-				+ result.getModule().getOid());
+		if (logger != null)
+			logger.info("Save SNMPModule " + result.getModule().getName() + " OID: "
+					+ result.getModule().getOid());
 		try {
 			
 			SNMPModule dbModule = snmpModuleDAO.findByOid(result.getModule().getOid());
@@ -279,8 +280,9 @@ public class MibLoader implements MibLoaderLocalInterface {
 			System.err.println("PersistenceManage is null!!!");
 
 		}
-		logger.info("Save SNMP Oid: " + snmpOid.getName() + " OID: "
-				+ snmpOid.getOid() + " " + snmpOid.getClass().getSimpleName());
+		if (logger != null)
+			logger.info("Save SNMP Oid: " + snmpOid.getName() + " OID: "
+					+ snmpOid.getOid() + " " + snmpOid.getClass().getSimpleName());
 		try {
 			
 			SNMP dbOid = snmpDao.findByOid(snmpOid.getOid());

@@ -65,6 +65,7 @@ import edu.harvard.integer.access.snmp.CommunityAuth;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.service.managementobjectcapability.snmp.ImportMIBTest;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -79,6 +80,7 @@ import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 
 /**
  * @author dchan
@@ -96,6 +98,9 @@ public class ElementDiscoverTest {
 	@Inject
 	private Logger logger;
 	
+	@Inject
+	private PersistenceManagerInterface persistenceManager;
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
@@ -105,6 +110,7 @@ public class ElementDiscoverTest {
 				.addPackages(true, "org.apache.commons")
 				.addPackages(true, "org.snmp4j")
 				.addPackages(true, "uk.co.westhawk.snmp")
+				.addPackages(true, "com.fasterxml.jackson")
 				//.addPackages(true, "org.jboss")
 				//.addPackages(true, "org.wildfly")
 				.addPackages(true, "org.xnio")
@@ -120,128 +126,19 @@ public class ElementDiscoverTest {
 		
 		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
 		
-		importMib("RFC1065-SMI");
-		importMib("RFC1155-SMI");
-		importMib("RFC-1212");
-		importMib("RFC1213-MIB");
-		importMib("SNMPv2-SMI");
-		importMib("SNMPv2-TC");
-		importMib("SNMPv2-CONF");
-		importMib("SNMPv2-MIB");
-		importMib("IANAifType-MIB");
-		importMib("IF-MIB");
-		importMib("SNMP-FRAMEWORK-MIB");
-		importMib("ENTITY-MIB.my");
-		importMib("HOST-RESOURCES-MIB.my");
-		importMib("CISCO-SMI.my");
-		importMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
-		importMib("CISCO-TC.my");
-		importMib("CISCO-PRODUCTS-MIB.my");
+		/**
+		 * Make sure the MIB's have been loaded.
+		 */
+		ImportMIBTest importMibsTest = new ImportMIBTest();
+		importMibsTest.setLogger(logger);
+		importMibsTest.setPersistenceManger(persistenceManager);
+		importMibsTest.setSnmpObjectManager(snmpManager);
+		importMibsTest.importMIBs();
+		
+
 	}
 		
 	
-	private void importMib(String mibName) {
-
-		logger.warn("Start test import of ******************************** "
-				+ mibName);
-
-		File mibFile = null;
-		mibFile = new File("../server/mibs/" + mibName);
-
-		if (mibFile.exists())
-			System.out.println("Found rfc");
-		else {
-			System.out.println("rfc not found! PATH: "
-					+ mibFile.getAbsolutePath());
-
-			fail("rfc not found! PATH: " + mibFile.getAbsolutePath());
-		}
-
-		String content = null;
-		try {
-			content = new String(Files.readAllBytes(mibFile.toPath()));
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail("Error loading MIB: " + e.getMessage());
-		}
-
-		MIBImportInfo importInfo = new MIBImportInfo();
-		importInfo.setFileName(mibFile.getName());
-		importInfo.setMib(content);
-
-		try {
-
-			MIBImportResult[] importMib = snmpManager
-					.importMib(new MIBImportInfo[] { importInfo });
-
-			if (importMib == null) {
-				logger.error("Got null back from importMIB");
-				return;
-			}
-
-			System.out.println("Got " + importMib.length + " import results");
-			for (MIBImportResult mibImportResult : importMib) {
-				logger.info("MIB filename:   " + mibImportResult.getFileName());
-				if (mibImportResult.getModule() != null) {
-					logger.info("SNMPModlue  :   "
-							+ mibImportResult.getModule().getOid());
-					logger.info("Description :   "
-							+ mibImportResult.getModule().getDescription());
-				} else
-					logger.info("SNMModule   :   MODULE IS NULL!!!!");
-
-				logger.info("Errors      :   "
-						+ Arrays.toString(mibImportResult.getErrors()));
-
-				assert (mibImportResult.getErrors() == null || mibImportResult
-						.getErrors().length == 0);
-
-				if (mibImportResult.getSnmpTable() != null) {
-					logger.info("Num of Tables:  "
-							+ mibImportResult.getSnmpTable().size());
-					for (SNMPTable snmpTable : mibImportResult.getSnmpTable()) {
-						logger.info("Table: " + snmpTable.getIdentifier() + " "
-								+ snmpTable.getName() + " "
-								+ snmpTable.getOid());
-
-						if (snmpTable.getTableOids() != null) {
-							logger.info("Num of table oids: "
-									+ snmpTable.getTableOids().size());
-							for (SNMP snmpOid : snmpTable.getTableOids()) {
-								logger.info("Oid: " + snmpOid.getIdentifier()
-										+ " " + snmpOid.getDisplayName() + " "
-										+ snmpOid.getOid());
-							}
-						}
-					}
-				} else {
-					logger.error("NO TABLES for "
-							+ mibImportResult.getFileName());
-				}
-
-				if (mibImportResult.getSnmpScalars() != null) {
-					logger.info("Num of Scalors: "
-							+ mibImportResult.getSnmpScalars().size());
-					for (SNMP snmpOid : mibImportResult.getSnmpScalars()) {
-						logger.info("Oid: " + snmpOid.getIdentifier() + " "
-								+ snmpOid.getDisplayName() + " "
-								+ snmpOid.getOid());
-					}
-				} else {
-					logger.error("NO SCALORS for "
-							+ mibImportResult.getFileName());
-				}
-			}
-
-
-		} catch (IntegerException e) {
-
-			e.printStackTrace();
-			fail("Error getting mib parser");
-		}
-	}
 	
 	@Test
 	public void serviceElementTask() {

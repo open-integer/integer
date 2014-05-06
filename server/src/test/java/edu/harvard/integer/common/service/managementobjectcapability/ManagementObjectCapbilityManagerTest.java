@@ -38,6 +38,7 @@ import static org.junit.Assert.fail;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -320,7 +321,8 @@ public class ManagementObjectCapbilityManagerTest {
 		}
 
 		try {
-			jsongenerator.close();
+			if (jsongenerator != null)
+				jsongenerator.close();
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -423,7 +425,7 @@ public class ManagementObjectCapbilityManagerTest {
 			assert (overrides != null);
 			assert (overrides.length != 0);
 
-			logger.info("Found " + overrides + " SnmpOverides ");
+			logger.info("Found " + Arrays.toString(overrides) + " SnmpOverides ");
 
 		} catch (IntegerException e) {
 			e.printStackTrace();

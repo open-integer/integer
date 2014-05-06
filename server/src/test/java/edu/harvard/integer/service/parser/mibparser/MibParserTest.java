@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.service.managementobjectcapability.snmp.ImportMIBTest;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -107,10 +108,7 @@ public class MibParserTest {
 
 			logger.info("Start test import of " + mibName);
 
-			System.setProperty(MibbleParser.MIBFILELOCATON,
-					"../server/mibs");
-
-			File mibFile = new File("../server/mibs/" + mibName);
+			File mibFile = new File(ImportMIBTest.MibDir + mibName);
 			if (mibFile.exists())
 				System.out.println("Found rfc");
 			else

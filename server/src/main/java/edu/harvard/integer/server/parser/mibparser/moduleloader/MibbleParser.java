@@ -92,8 +92,6 @@ import edu.harvard.integer.server.parser.mibparser.SNMPModuleCache;
  * @author dchan
  */
 public class MibbleParser implements MibParser{
-	/** The repository local directory location. */
-	public static String MIBFILELOCATON = "mibFileLocation";
 	
 	/** The Mib resource dir. */
 	public static String MibResourceDir = "mibs/ietf/";
@@ -324,7 +322,7 @@ public class MibbleParser implements MibParser{
     				snmp.setName(vs.getName());
     				snmp.setOid(vs.getValue().toString());
     				snmp.setMaxAccess(MaxAccess.NotAccessible);
-    				snmp.setDescription(vs.getComment());
+    				snmp.setComment(vs.getComment());
     				
     				objectList.add(snmp);	
     			}
@@ -709,6 +707,7 @@ public class MibbleParser implements MibParser{
 	    
 	    snmp.setOid(obj.toObject().toString());
 	    snmp.setDescription(snmpType.getDescription());
+	    snmp.setComment(obj.getSymbol().getComment());
 	     					    
 	    MaxAccess access = null;
 	    if ( snmpType.getAccess() == SnmpAccess.READ_ONLY ) {
