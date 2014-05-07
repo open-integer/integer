@@ -1,0 +1,448 @@
+---
+technologies:
+    # These are physical and virtual interfaces, found in the IF-MIB in the
+    # case of SNMP.
+    - name: interfaces
+      parent: null
+      description: Physical and virtual interfaces
+      components:
+          # A global component for a couple of global attributes related to
+          # interfaces.
+          - name: interface-global
+            parent: null
+            index: null
+            description: Global attributes for the interfaces on this system.
+            capabilities:
+                - name: interface-global-number
+                  description: The total number of interfaces on this system.
+
+                - name: interface-global-lastChangeTime
+                  description: > 
+                      The system uptime at the last time an interface was added
+                      or deleted.
+
+          # An interface has many capabilities. Some of these will have null
+          # values depending on whether or not the interfaces extension table
+          # is supported by the device. 
+          - name: interface
+            parent: null
+            index: interface-index
+            description: >
+                Each interface is represented as a single component called an
+                interface. No surprises here.
+            capabilities:
+                - name: interface-index
+                  description: > 
+                      Also known as the ifIndex, interfaces are tied to other
+                      technologies using this number.
+
+                - name: interface-name
+                  description: >
+                      The name for the interface that can be used on the
+                      console to configure this interface.
+
+                - name: interface-longname
+                  description: >
+                      Another name for the interface, originally supported by
+                      ifDescr. Sometimes this is the same as interface-name,
+                      sometimes not.
+
+                - name: interface-description
+                  description: >
+                      This is the text in the "description" field on the
+                      interface, set by the local administrator.
+
+                - name: interface-type
+                  description: >
+                      The IANA type of the interface. (e.g.  ethernetCsmacd,
+                      propVirtual, softwareLoopback)
+
+                - name: interface-physicalAddress
+                  description: >
+                      The physical address for this interface, usually a MAC
+                      address.
+
+                - name: interface-adminStatus
+                  type: admin
+                  description: Administrative status (up or down).
+
+                - name: interface-operationalStatus
+                  type: health
+                  description: Operational status (up or down).
+
+                - name: interface-speed
+                  description: The speed of this interface, in megabits.
+
+                - name: interface-mtu
+                  description: The current MTU of this interface.
+
+                - name: interface-lastChangeTime
+                  description: The system uptime the last time this interface was changed.
+
+                - name: interface-inputOctets
+                  type: counter
+                  description: > 
+                      Input octets counter. 
+                      64 bit if we can get it, 32 bit otherwise.
+
+                - name: interface-outputOctets
+                  type: counter
+                  description: > 
+                      Output octets counter. 
+                      64 bit if we can get it, 32 bit otherwise.
+
+                - name: interface-inputUnicastPackets
+                  type: counter
+                  description: > 
+                      Input unicast packets counter. 
+                      64 bit if we can get it, 32 bit otherwise.
+
+                - name: interface-outputUnicastPackets
+                  type: counter
+                  description: > 
+                      Output unicast packets counter. 
+                      64 bit if we can get it, 32 bit otherwise.
+
+                - name: interface-inputMulticastPackets
+                  type: counter
+                  description: > 
+                      Input multicast packets counter. This will be empty if
+                      the interface extension table isn't supported.
+
+                - name: interface-outputMulticastPackets
+                  type: counter
+                  description: > 
+                      Output multicast packets counter. This will be empty if
+                      the interface extension table isn't supported.
+
+                - name: interface-inputBroadcastPackets
+                  type: counter
+                  description: > 
+                      Input broadcast packets counter. This will be empty if
+                      the interface extension table isn't supported.
+
+                - name: interface-outputBroadcastPackets
+                  type: counter
+                  description: > 
+                      Output broadcast packets counter. This will be empty if
+                      the interface extension table isn't supported.
+
+                - name: interface-inputDiscards
+                  type: counter
+                  description: >
+                      The number of inbound packets which were discarded even
+                      though no errors had been detected. This usually means
+                      input buffers filled up on the interface.
+
+                - name: interface-outputDiscards
+                  type: counter
+                  description: >
+                      The number of outbound packets which were discarded even
+                      though no errors had been detected. This usually means
+                      output buffers filled up on the interface.
+
+                - name: interface-inputErrors
+                  type: counter
+                  description: Input errors counter. 
+
+                - name: interface-outputErrors
+                  type: counter
+                  description: Output errors counter. 
+
+                - name: interface-inputUnknownProtocols
+                  type: counter
+                  description: >
+                      The number of packets or transmission units received via
+                      this interface which were discarded because of an unknown
+                      or unsupported protocol.  
+
+                - name: interface-linkUpDownTrapEnable
+                  description: > 
+                      Whether or not SNMP traps are sent on link up/down
+                      events.
+
+                - name: interface-promiscuousMode
+                  description: > 
+                      Whether or not this interface is in promiscuous mode.
+
+                - name: interface-connectorPresent
+                  description: > 
+                      Whether or not this interface has a physical connector
+                      present. This is a good way to find out whether an
+                      interface is physical or virtual without checking for
+                      physical entity relations.
+
+serviceElementTypes:
+    - name: generic-interface-global
+      parent: null
+      description: >
+          The generic way to access a couple of interface-related global
+          attributes.
+      technologyComponent: interface-global
+      managementObjects:
+          - name: ifNumber
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifNumber
+            capabilities: interface-global-number
+            unique: 1
+
+          - name: ifTableLastChange
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifTableLastChange
+            capabilities: interface-global-lastChangeTime
+
+    # Interfaces tend to be globally supported by SNMP, but there is an
+    # extension table which some devices don't support. The first
+    # serviceElementType is for legacy devices, the second is for devices that
+    # implement the extension table.
+
+    - name: generic-interface
+      parent: null
+      description: >
+          A generic interface, accessed via SNMP using IF-MIB, not including
+          the extension table.
+      technologyComponent: interface
+      managementObjects:
+          - name: ifIndex
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifIndex
+            capabilities: interface-index
+            unique: 1
+
+          - name: ifDescr
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifName
+            capabilities: [ interface-name, interface-longname ]
+
+          - name: ifType
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifType
+            capabilities: interface-type
+
+          - name: ifMtu
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifMtu
+            capabilities: interface-mtu
+
+          - name: ifSpeed
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifSpeed
+            transforms: / 1000000
+            capabilities: interface-speed
+
+          - name: ifPhysAddress
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifPhysAddress
+            capabilities: interface-physicalAddress
+
+          - name: ifAdminStatus
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifAdminStatus
+            capabilities: interface-adminStatus
+
+          - name: ifOperStatus
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifOperStatus
+            capabilities: interface-operationalStatus
+
+          - name: ifLastChange
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifLastChange
+            capabilities: interface-lastChangeTime
+
+          - name: ifInOctets
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifInOctets
+            capabilities: interface-inputOctets
+
+          - name: ifInUcastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifInUcastPkts
+            capabilities: interface-inputUnicastPackets
+
+          - name: ifInDiscards
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifInDiscards
+            capabilities: interface-inputDiscards
+
+          - name: ifInErrors
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifInErrors
+            capabilities: interface-inputErrors
+
+          - name: ifInUnknownProtos
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifInUnknownProtos
+            capabilities: interface-inputUnknownProtocols
+
+          - name: ifOutOctets
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifOutOctets
+            capabilities: interface-outputOctets
+
+          - name: ifOutUcastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifOutUcastPkts
+            capabilities: interface-outputUnicastPackets
+
+          - name: ifOutDiscards
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifOutDiscards
+            capabilities: interface-outputDiscards
+
+          - name: ifOutErrors
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifOutErrors
+            capabilities: interface-outputErrors
+
+    # I'm assuming that if something supports the interface extension table at
+    # all, then it supports the 8 high-capacity counters. I could be wrong
+    # here, but hopefully this covers all modern cases.
+
+    - name: generic-interface-extended
+      parent: generic-interface
+      description: > 
+          A generic interface that also supports the interface extension table,
+          including things like 64-bit counters, an ifName, etc.
+      technologyComponent: interface
+      managementObjects:
+          - name: ifName
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifName
+            capabilities: interface-name
+            unique: 1
+
+          - name: ifHCInOctets
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCInOctets
+            capabilities: interface-inputOctets
+
+          - name: ifHCInUcastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCInUcastPkts
+            capabilities: interface-inputUnicastPackets
+
+          - name: ifHCInMulticastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCInMulticastPkts
+            capabilities: interface-inputMulticastPackets
+
+          - name: ifHCInBroadcastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCInBroadcastPkts
+            capabilities: interface-inputBroadcastPackets
+
+          - name: ifHCOutOctets
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCOutOctets
+            capabilities: interface-outputOctets
+
+          - name: ifHCOutUcastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCOutUcastPkts
+            capabilities: interface-outputUnicastPackets
+
+          - name: ifHCOutMulticastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCOutMulticastPkts
+            capabilities: interface-outputMulticastPackets
+
+          - name: ifHCOutBroadcastPkts
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHCOutBroadcastPkts
+            capabilities: interface-outputBroadcastPackets
+
+          - name: ifLinkUpDownTrapEnable
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifLinkUpDownTrapEnable
+            capabilities: interface-linkUpDownTrapEnable
+
+          - name: ifHighSpeed
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifHighSpeed
+            capabilities: interface-speed
+
+          - name: ifPromiscuousMode
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifPromiscuousMode
+            capabilities: interface-promiscuousMode
+
+          - name: ifConnectorPresent
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifConnectorPresent
+            capabilities: interface-connectorPresent
+
+          - name: ifAlias
+            uri:
+                protocol: SNMP
+                mib: IF-MIB
+                objectName: ifAlias
+            capabilities: interface-description
+
+...

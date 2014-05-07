@@ -13,7 +13,7 @@ technologies:
             capabilities:
                 - name: cdp-global-run
                   description: Whether CDP is running on this device.
-                  admin: true 
+                  type: admin
 
                 - name: cdp-global-deviceId
                   description: The global device ID being advertised via CDP.
@@ -36,7 +36,7 @@ technologies:
 
                 - name: cdp-interface-enable
                   description: Whether CDP is enabled on each interface.
-                  admin: true 
+                  type: admin
 
           - name: cdp-device
             parent: cdp-interface
