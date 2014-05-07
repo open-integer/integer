@@ -68,6 +68,7 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.snmp.SnmpDisplayStringTC;
 import edu.harvard.integer.common.snmp.SnmpEnumList;
 import edu.harvard.integer.common.snmp.SnmpEnumValue;
@@ -538,4 +539,5 @@ public class ManagementObjectCapbilityManagerTest {
 			fail(e.toString());
 		}
 	}
+
 }

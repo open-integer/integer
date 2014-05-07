@@ -1,3 +1,4 @@
+
 /*
  * 
  */
@@ -80,5 +81,10 @@ public interface IntegerServiceAsync {
 	 * @return the service element by parent id
 	 */
 	void getServiceElementByParentId(ID id, AsyncCallback<ServiceElement[]> callback);
+
+	void startDiscovery(AsyncCallback<Void> callback);
+
+	void startDiscovery(String address, String mask,
+			AsyncCallback<Void> callback);
 
 }

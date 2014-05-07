@@ -49,7 +49,7 @@ import edu.harvard.integer.common.exception.SystemErrorCodes;
  * 
  */
 @Embeddable
-public abstract class Address implements Serializable {
+public class Address implements Serializable {
 
 	/**
 	 * Serial Version UID
@@ -58,6 +58,14 @@ public abstract class Address implements Serializable {
 	
 	private String address = null;
 
+	public Address() {
+		this.address = null;
+	}
+	
+	public Address(String address) {
+		this.address = address;
+	}
+	
 	/**
 	 * @return the address
 	 */

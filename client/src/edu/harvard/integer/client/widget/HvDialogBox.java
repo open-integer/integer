@@ -94,6 +94,8 @@ public class HvDialogBox extends DialogBox {
 		public void onClick(ClickEvent event) {
 			if (formPanel != null)
 				formPanel.submit();
+			
+			hide();
 		}
 	};
 }
