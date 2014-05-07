@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.discovery;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -137,9 +138,7 @@ public class DiscoveryService extends BaseService implements
 		DiscoveryId id = new DiscoveryId();
 		id.setServerId(IntegerProperties.getInstance().getLongProperty(LongPropertyNames.ServerId));
 		id.setDiscoveryId(discoverySeqId++);
-		
-		runningDiscoveries.put(id, new RunningDiscovery());
-		
+				
 		switch (rule.getDiscoveryType()) {
 		case Both:
 		case ServiceElement:
@@ -172,7 +171,18 @@ public class DiscoveryService extends BaseService implements
 		
 			try {
 				NetworkDiscovery discovery = serviceElementDiscoveryManager.startDiscovery(id, seed);
-				runningDiscoveries.get(id).getRunningDiscoveries().add(discovery);
+				RunningDiscovery runningDiscovery = runningDiscoveries.get(id);
+				if (runningDiscovery == null) {
+					runningDiscovery = new RunningDiscovery();
+					runningDiscovery.setId(id);
+					List<NetworkDiscovery> discoveries = new  ArrayList<NetworkDiscovery>();
+					runningDiscovery.setRunningDiscoveries(discoveries);
+		
+					runningDiscoveries.put(id, runningDiscovery);
+				}
+				
+				runningDiscovery.getRunningDiscoveries().add(discovery);
+				
 				
 			} catch (IntegerException e) {
 				logger.error("Error starting ServiceElementDiscovery " + e.toString());
