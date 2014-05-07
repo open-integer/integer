@@ -20,7 +20,7 @@ technologies:
         
           - name: cdp-interface
             parent: cdp-global
-            index: cdp-interface-index
+            index: [ cdp-interface-index ]
             description: >
                 Each interface on the box that is capable of doing CDP has a
                 corresponding CDP interface service element (certain types of
@@ -86,8 +86,8 @@ relations:
           source: interface
           destination: cdp-interface
       capabilities: 
-          source: interface-index
-          destination: cdp-interface-index
+          - source: interface-index
+            destination: cdp-interface-index
 
     # This goes from a cdp device component on the local side to a
     # cdp-interface on the remote side.
@@ -133,7 +133,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpGlobalRun
-            capabilities: cdp-global-run
+            capabilities: [ cdp-global-run ]
             unique: 1 
 
           - name: cisco-cdpGlobalDeviceId
@@ -141,7 +141,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpGlobalDeviceId
-            capabilities: cdp-global-deviceId
+            capabilities: [ cdp-global-deviceId ]
 
     - name: cisco-cdp-interface
       parent: null
@@ -153,7 +153,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpInterfaceIfIndex
-            capabilities: cdp-interface-index
+            capabilities: [ cdp-interface-index ]
             unique: 1
 
           - name: cisco-cdpInterfaceEnable
@@ -161,14 +161,14 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpInterfaceEnable
-            capabilities: cdp-interface-enable
+            capabilities: [ cdp-interface-enable ]
 
           - name: cisco-cdpInterfaceName
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpInterfaceName
-            capabilities: cdp-interface-name
+            capabilities: [ cdp-interface-name ]
 
     - name: cisco-cdp-device
       parent: null
@@ -180,7 +180,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheDeviceIndex
-            capabilities: cdp-device-index
+            capabilities: [ cdp-device-index ]
             unique: 1 
 
           - name: cisco-cdpCacheAddressType
@@ -188,41 +188,41 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheAddressType
-            capabilities: cdp-device-addressType
+            capabilities: [ cdp-device-addressType ]
 
           - name: cisco-cdpCacheAddress
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheAddress
-            capabilities: cdp-device-address
+            capabilities: [ cdp-device-address ]
 
           - name: cisco-cdpCacheVersion
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheVersion
-            capabilities: cdp-device-version
+            capabilities: [ cdp-device-version ]
 
           - name: cisco-cdpCacheDeviceId
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheDeviceId
-            capabilities: cdp-device-deviceId
+            capabilities: [ cdp-device-deviceId ]
 
           - name: cisco-cdpCacheDevicePort
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheDevicePort
-            capabilities: cdp-device-port
+            capabilities: [ cdp-device-port ]
 
           - name: cisco-cdpCachePlatform
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCachePlatform
-            capabilities: cdp-device-platform
+            capabilities: [ cdp-device-platform ]
 
 ...

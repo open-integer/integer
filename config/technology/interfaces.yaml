@@ -26,7 +26,7 @@ technologies:
           # is supported by the device. 
           - name: interface
             parent: null
-            index: interface-index
+            index: [ interface-index ]
             description: >
                 Each interface is represented as a single component called an
                 interface. No surprises here.
@@ -185,7 +185,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifNumber
-            capabilities: interface-global-number
+            capabilities: [ interface-global-number ]
             unique: 1
 
           - name: ifTableLastChange
@@ -193,12 +193,14 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifTableLastChange
-            capabilities: interface-global-lastChangeTime
+            capabilities: [ interface-global-lastChangeTime ]
 
     # Interfaces tend to be globally supported by SNMP, but there is an
     # extension table which some devices don't support. The first
-    # serviceElementType is for legacy devices, the second is for devices that
-    # implement the extension table.
+    # serviceElementType is for legacy devices, the second type is for devices
+    # that implement the extension table. The second type inherits all
+    # management objects from the first, overwriting some of the capabilities
+    # with 64-bit counter information when available.
 
     - name: generic-interface
       parent: null
@@ -212,7 +214,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifIndex
-            capabilities: interface-index
+            capabilities: [ interface-index ]
             unique: 1
 
           - name: ifDescr
@@ -227,14 +229,14 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifType
-            capabilities: interface-type
+            capabilities: [ interface-type ]
 
           - name: ifMtu
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifMtu
-            capabilities: interface-mtu
+            capabilities: [ interface-mtu ]
 
           - name: ifSpeed
             uri:
@@ -242,98 +244,98 @@ serviceElementTypes:
                 mib: IF-MIB
                 objectName: ifSpeed
             transforms: / 1000000
-            capabilities: interface-speed
+            capabilities: [ interface-speed ]
 
           - name: ifPhysAddress
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifPhysAddress
-            capabilities: interface-physicalAddress
+            capabilities: [ interface-physicalAddress ]
 
           - name: ifAdminStatus
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifAdminStatus
-            capabilities: interface-adminStatus
+            capabilities: [ interface-adminStatus ]
 
           - name: ifOperStatus
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOperStatus
-            capabilities: interface-operationalStatus
+            capabilities: [ interface-operationalStatus ]
 
           - name: ifLastChange
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifLastChange
-            capabilities: interface-lastChangeTime
+            capabilities: [ interface-lastChangeTime ]
 
           - name: ifInOctets
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInOctets
-            capabilities: interface-inputOctets
+            capabilities: [ interface-inputOctets ]
 
           - name: ifInUcastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInUcastPkts
-            capabilities: interface-inputUnicastPackets
+            capabilities: [ interface-inputUnicastPackets ]
 
           - name: ifInDiscards
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInDiscards
-            capabilities: interface-inputDiscards
+            capabilities: [ interface-inputDiscards ]
 
           - name: ifInErrors
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInErrors
-            capabilities: interface-inputErrors
+            capabilities: [ interface-inputErrors ]
 
           - name: ifInUnknownProtos
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInUnknownProtos
-            capabilities: interface-inputUnknownProtocols
+            capabilities: [ interface-inputUnknownProtocols ]
 
           - name: ifOutOctets
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutOctets
-            capabilities: interface-outputOctets
+            capabilities: [ interface-outputOctets ]
 
           - name: ifOutUcastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutUcastPkts
-            capabilities: interface-outputUnicastPackets
+            capabilities: [ interface-outputUnicastPackets ]
 
           - name: ifOutDiscards
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutDiscards
-            capabilities: interface-outputDiscards
+            capabilities: [ interface-outputDiscards ]
 
           - name: ifOutErrors
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutErrors
-            capabilities: interface-outputErrors
+            capabilities: [ interface-outputErrors ]
 
     # I'm assuming that if something supports the interface extension table at
     # all, then it supports the 8 high-capacity counters. I could be wrong
@@ -351,7 +353,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifName
-            capabilities: interface-name
+            capabilities: [ interface-name ]
             unique: 1
 
           - name: ifHCInOctets
@@ -359,90 +361,90 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInOctets
-            capabilities: interface-inputOctets
+            capabilities: [ interface-inputOctets ]
 
           - name: ifHCInUcastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInUcastPkts
-            capabilities: interface-inputUnicastPackets
+            capabilities: [ interface-inputUnicastPackets ]
 
           - name: ifHCInMulticastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInMulticastPkts
-            capabilities: interface-inputMulticastPackets
+            capabilities: [ interface-inputMulticastPackets ]
 
           - name: ifHCInBroadcastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInBroadcastPkts
-            capabilities: interface-inputBroadcastPackets
+            capabilities: [ interface-inputBroadcastPackets ]
 
           - name: ifHCOutOctets
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutOctets
-            capabilities: interface-outputOctets
+            capabilities: [ interface-outputOctets ]
 
           - name: ifHCOutUcastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutUcastPkts
-            capabilities: interface-outputUnicastPackets
+            capabilities: [ interface-outputUnicastPackets ]
 
           - name: ifHCOutMulticastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutMulticastPkts
-            capabilities: interface-outputMulticastPackets
+            capabilities: [ interface-outputMulticastPackets ]
 
           - name: ifHCOutBroadcastPkts
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutBroadcastPkts
-            capabilities: interface-outputBroadcastPackets
+            capabilities: [ interface-outputBroadcastPackets ]
 
           - name: ifLinkUpDownTrapEnable
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifLinkUpDownTrapEnable
-            capabilities: interface-linkUpDownTrapEnable
+            capabilities: [ interface-linkUpDownTrapEnable ]
 
           - name: ifHighSpeed
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHighSpeed
-            capabilities: interface-speed
+            capabilities: [ interface-speed ]
 
           - name: ifPromiscuousMode
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifPromiscuousMode
-            capabilities: interface-promiscuousMode
+            capabilities: [ interface-promiscuousMode ]
 
           - name: ifConnectorPresent
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifConnectorPresent
-            capabilities: interface-connectorPresent
+            capabilities: [ interface-connectorPresent ]
 
           - name: ifAlias
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifAlias
-            capabilities: interface-description
+            capabilities: [ interface-description ]
 
 ...
