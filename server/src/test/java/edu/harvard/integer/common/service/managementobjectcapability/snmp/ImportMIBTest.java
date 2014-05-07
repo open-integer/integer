@@ -126,23 +126,9 @@ public class ImportMIBTest {
 		// "../server/build/mibs");
 		// importDir();
 		
-		 BasicConfigurator.configure();
-	}
-	
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
+		// BasicConfigurator.configure();
+		
 
-	public void setSnmpObjectManager(SnmpManagerInterface snmpObjectManger) {
-		this.snmpObjectManager = snmpObjectManger;
-	}
-	
-	public void setPersistenceManger(PersistenceManagerInterface persistenceManager) {
-		this.persistenceManager = persistenceManager;
-	}
-	
-	@Test
-	public void importMIBs() {
 		importMib("RFC1065-SMI");
 		importMib("RFC1155-SMI");
 		importMib("RFC-1212");
@@ -173,8 +159,27 @@ public class ImportMIBTest {
 		importMib("DIFFSERV-DSCP-TC.my");
 		importMib("HCNUM-TC.my");
 		importMib("IPV6-TC.my");
-
+		importMib("NET-SNMP-MIB");
+		
 		importProductMib("Cisco", "CISCO-PRODUCTS-MIB.my");
+		importProductMib("Net-SNMP", "NET-SNMP-TC");
+	}
+	
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
+
+	public void setSnmpObjectManager(SnmpManagerInterface snmpObjectManger) {
+		this.snmpObjectManager = snmpObjectManger;
+	}
+	
+	public void setPersistenceManger(PersistenceManagerInterface persistenceManager) {
+		this.persistenceManager = persistenceManager;
+	}
+	
+	@Test
+	public void importMIBs() {
+		logger.info("Loaded all MIBs!!");
 	}
 
 	public void importDir() {
@@ -350,13 +355,21 @@ public class ImportMIBTest {
 
 		try {
 
-			snmpObjectManager.importProductMib(vendor,  importInfo);
+			MIBImportResult result = snmpObjectManager.importProductMib(vendor,  importInfo);
+			if (result.getErrors() != null && result
+					.getErrors().length > 0)
+				logger.info("Errors      :   "
+						+ Arrays.toString(result.getErrors()));
+
+			assert (result.getErrors() == null || result
+				.getErrors().length == 0);
 
 		} catch(Exception e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
 	}
+	
 	/**
 	 * Import files into importMibs for fs.
 	 * 
@@ -463,5 +476,35 @@ public class ImportMIBTest {
 			fail(e.toString());
 		}
 
+	}
+	
+
+	@Test
+	public void loadIfTable() {
+		
+		SNMP snmp = null;
+		try {
+			snmp = snmpObjectManager.getSNMPByOid("1.3.6.1.2.1.2.2.1");
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail("Failed to load ifENtry table. " + e.toString());
+		}
+		
+		assert (snmp != null);
+		
+		logger.info("Loaded ifEnttry" );
+		
+		if (snmp instanceof SNMPTable) {
+			SNMPTable table = (SNMPTable) snmp;
+			
+			for (SNMP indexValue : table.getIndex()) {
+				logger.info("Index " + indexValue.getID() + " OID " + indexValue.getOid());
+			}
+
+			for (SNMP tableOid : table.getTableOids()) {
+				logger.info("Table Oid " + tableOid.getID() + " OID " + tableOid.getOid());
+			}
+		}
 	}
 }

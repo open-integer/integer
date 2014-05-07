@@ -179,8 +179,12 @@ public class MibLoader implements MibLoaderLocalInterface {
 			snmpOid.setTableOids( saveOids(snmpOid.getTableOids()) );
 			snmpOid.setIndex( saveOids(snmpOid.getIndex()) );
 		
-			SNMPTable dbTable = (SNMPTable) snmpDao.findByOid(snmpOid.getOid());
-			if (dbTable != null) {
+			SNMPTable dbTable = null;
+			SNMP dbOid = snmpDao.findByOid(snmpOid.getOid());
+			
+			if (dbOid instanceof SNMPTable) {
+				dbTable = (SNMPTable) dbOid;
+
 				logger.info("Found table " + dbTable.getID() + "::" +
 							snmpOid.getName() + "::" + snmpOid.getOid() + " In the database. Will update it.");
 				
@@ -274,12 +278,17 @@ public class MibLoader implements MibLoaderLocalInterface {
 
 		if (logger == null) {
 			System.err.println("Logger is null!!!");
-
 		}
+		
 		if (persistenceManager == null) {
-			System.err.println("PersistenceManage is null!!!");
-
+			logger.error("PersistenceManage is null!!!");
 		}
+		
+		if (snmpOid == null) {
+			logger.error("SNMP oid is null!! Can not save");
+			return null;
+		}
+		
 		if (logger != null)
 			logger.info("Save SNMP Oid: " + snmpOid.getName() + " OID: "
 					+ snmpOid.getOid() + " " + snmpOid.getClass().getSimpleName());
