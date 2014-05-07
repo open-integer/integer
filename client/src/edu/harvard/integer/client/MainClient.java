@@ -18,6 +18,7 @@ import edu.harvard.integer.client.ui.CalendarPolicyPanel;
 import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.CapabilityView;
 import edu.harvard.integer.client.ui.ContactPanel;
+import edu.harvard.integer.client.ui.DiscoveryRulePanel;
 import edu.harvard.integer.client.ui.LocationPanel;
 import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.ui.MechanismPanel;
@@ -96,6 +97,9 @@ public class MainClient implements EntryPoint {
 		
 		// User
 		createAddUserLink();
+		
+		// Start Discovery
+		createStartDiscoveryLink();
 		
 		currentWidget = new SystemSplitViewPanel();
 		RootPanel.get("root").add(currentWidget);
@@ -419,6 +423,24 @@ public class MainClient implements EntryPoint {
 				HvDialogBox dialog = new HvDialogBox("Add User",
 						panel);
 				dialog.setSize("400px", "300px");
+				dialog.center();
+				dialog.show();
+			}
+		});
+	}
+	
+	private void createStartDiscoveryLink() {
+		Element element = (Element) Document.get().getElementById(
+				"startDiscovery");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				DiscoveryRulePanel panel = new DiscoveryRulePanel();
+				HvDialogBox dialog = new HvDialogBox("Start Discovery",
+						panel);
+				dialog.setSize("400px", "250px");
 				dialog.center();
 				dialog.show();
 			}
