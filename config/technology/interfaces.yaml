@@ -2,7 +2,7 @@
 technologies:
     # These are physical and virtual interfaces, found in the IF-MIB in the
     # case of SNMP.
-    - name: interfaces
+    - name: interface
       parent: null
       description: Physical and virtual interfaces
       components:
@@ -54,7 +54,7 @@ technologies:
 
                 - name: interface-type
                   description: >
-                      The IANA type of the interface. (e.g.  ethernetCsmacd,
+                      The IANA type of the interface. (e.g. ethernetCsmacd,
                       propVirtual, softwareLoopback)
 
                 - name: interface-physicalAddress
@@ -221,8 +221,8 @@ serviceElementTypes:
             uri:
                 protocol: SNMP
                 mib: IF-MIB
-                objectName: ifName
-            capabilities: [ interface-name, interface-longname ]
+                objectName: ifDescr
+            capabilities: [ interface-longname ]
 
           - name: ifType
             uri:
@@ -243,8 +243,8 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifSpeed
-            transforms: / 1000000
             capabilities: [ interface-speed ]
+            transforms: [ "/ 1000000" ]
 
           - name: ifPhysAddress
             uri:

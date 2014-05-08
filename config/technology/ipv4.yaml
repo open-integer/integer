@@ -1,0 +1,77 @@
+---
+technologies:
+    # IP network objects, not including IPv6 because IPv6 support is a complex
+    # kind of monster.
+    - name: ipv4
+      parent: network
+      description: IPv4 network objects, including all attributes associated with one.
+      components:
+          - name: ipv4-network
+            parent: null
+            index: ipv4-network-address
+            description: One IPv4 network object.
+            capabilities:
+                - name: ipv4-network-address
+                  description: IP address of this object.
+
+                - name: ipv4-network-mask
+                  description: Subnet mask for this network object.
+
+                - name: ipv4-network-ifIndex
+                  description: ifIndex mapping for the associated interface.
+
+                - name: ipv4-network-reassembleSize
+                  description: > 
+                      The size of the largest datagram that this entity can
+                      re-assemble from fragmented datagrams received by this
+                      address.
+
+relations:
+    # The ipv4-network-ifIndex value maps to the interface-index.
+    - name: ipv4-network-to-interface
+      description: The ipv4-network-ifIndex value maps to the interface-index.
+      type: association
+      components:
+          source: ipv4-network
+          destination: interface
+      capabilities:
+          - source: ipv4-network-ifIndex
+            destination: interface-index
+
+serviceElementTypes:
+    - name: generic-ipv4-network
+      parent: null
+      description: > 
+          Generic IPv4 address support from IP-MIB, circa 1994. Technically,
+          this should have been deprecated back in 2006, but everything I've
+          looked at so far uses it.
+      technologyComponent: ipv4-network
+      managementObjects:
+          - name: ipAdEntAddr
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipAdEntAddr
+            capabilities: [ ipv4-network-address ]
+
+          - name: ipAdEntIfIndex 
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipAdEntIfIndex
+            capabilities: [ ipv4-network-ifIndex ]
+
+          - name: ipAdEntNetMask
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipAdEntNetMask
+            capabilities: [ ipv4-network-mask ]
+
+          - name: ipAdEntReasmMaxSize
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipAdEntReasmMaxSize
+            capabilities: [ ipv4-network-reassembleSize ]
+
