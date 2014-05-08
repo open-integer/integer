@@ -1,15 +1,139 @@
 ---
+
+# IPv4 technology definition for Integer
+# by Loren Jan Wilson, 2014-05-08
+
 technologies:
     # IP network objects, not including IPv6 because IPv6 support is a complex
     # kind of monster.
     - name: ipv4
-      parent: network
+      provides: [ network-configuration ]
       description: IPv4 network objects, including all attributes associated with one.
       components:
-          - name: ipv4-network
+          # A component for global ipv4 attributes. 
+          - name: ipv4-global
             parent: null
-            index: ipv4-network-address
-            description: One IPv4 network object.
+            index: null
+            description: Global attributes for ipv4 on this system.
+            capabilities:
+                - name: ipv4-global-forwarding
+                  description: Are we acting as a router for ipv4?
+
+                - name: ipv4-global-defaultTTL
+                  description: The default TTL of datagrams we originate.
+
+                - name: ipv4-global-inputReceives
+                  type: counter
+                  description: The number of datagrams we've received.
+
+                - name: ipv4-global-inputHeaderErrors
+                  type: counter
+                  description: > 
+                      The number of input datagrams discarded due to errors in
+                      their IPv4 headers including bad checksums, version
+                      number mismatch, other format errors, time-to-live
+                      exceeded, errors discovered in processing their IPv4
+                      options, etc.
+
+                - name: ipv4-global-inputAddressErrors
+                  type: counter
+                  description: >
+                      The number of input datagrams discarded because the IPv4
+                      address in their IPv4 header's destination field was not
+                      a valid address to be received at this entity. For
+                      entities which are not IPv4 routers, this counter
+                      includes datagrams discarded because the destination
+                      address was not a local address.
+
+                - name: ipv4-global-forwarded
+                  type: counter
+                  description: >
+                      The number of input datagrams for which this entity was
+                      not their final IPv4 destination, as a result of which an
+                      attempt was made to find a route to forward them to that
+                      final destination.
+
+                - name: ipv4-global-inputUnknownProtocols
+                  description: >
+                      The number of locally-addressed datagrams received
+                      successfully but discarded because of an unknown or
+                      unsupported protocol.
+
+                - name: ipv4-global-inputDiscards
+                  type: counter
+                  description: > 
+                      The number of packets which were discarded due to lack of
+                      buffer space, not including datagrams that timed out
+                      before reassembly.
+
+                - name: ipv4-global-inputDeliveries
+                  type: counter
+                  description: > 
+                      The total number of input datagrams successfully
+                      delivered to IPv4 user-protocols (including ICMP).
+
+                - name: ipv4-global-outputRequests
+                  type: counter
+                  description: > 
+                      The total number of IPv4 datagrams which local IPv4 user
+                      protocols (including ICMP) supplied to IPv4 in requests
+                      for transmission, not including forwarded datagrams. 
+
+                - name: ipv4-global-outputDiscards
+                  type: counter
+                  description: > 
+                      The number of outbound packets discarded, usually due to
+                      output buffers filling up.
+
+                - name: ipv4-global-outputNoRoutes
+                  type: counter
+                  description: >
+                      The number of packets discarded because no route could be
+                      found to transmit them to their destination.
+
+                - name: ipv4-global-reassemblyTimeout
+                  description: >
+                      The maximum number of seconds that received fragments are
+                      held while they are awaiting reassembly.
+
+                - name: ipv4-global-reassemblyRequired
+                  type: counter
+                  description: The number of fragments which needed to be
+                  reassembled by this device.
+
+                - name: ipv4-global-reassemblyOk
+                  type: counter
+                  description: > 
+                      The number of fragments successfully reassembled.
+
+                - name: ipv4-global-reassemblyFails
+                  type: counter
+                  description: >
+                      The number of fragments which could not be reassembled.
+
+                - name: ipv4-global-outputFragmentOk
+                  type: counter
+                  description: > 
+                      The number of datagrams fragmented by this device.
+
+                - name: ipv4-global-outputFragmentFails
+                  type: counter
+                  description: > 
+                      The number of datagrams which could not be fragmented by
+                      this device (perhaps because their "Don't Fragment" flag
+                      was set).
+
+                - name: ipv4-global-outputFragments
+                  type: counter
+                  description: >
+                      The number of IPv4 datagram fragments that have been
+                      generated as a result of fragmentation at this entity.
+
+          # Each network configuration is one ipv4-network component.
+          - name: ipv4-network
+            parent: ipv4-global
+            index: [ ipv4-network-address ]
+            description: One IPv4 network configuration.
             capabilities:
                 - name: ipv4-network-address
                   description: IP address of this object.
@@ -26,11 +150,12 @@ technologies:
                       re-assemble from fragmented datagrams received by this
                       address.
 
+
 relations:
     # The ipv4-network-ifIndex value maps to the interface-index.
     - name: ipv4-network-to-interface
       description: The ipv4-network-ifIndex value maps to the interface-index.
-      type: association
+      type: application
       components:
           source: ipv4-network
           destination: interface
@@ -39,19 +164,29 @@ relations:
             destination: interface-index
 
 serviceElementTypes:
-    - name: generic-ipv4-network
-      parent: null
+    # There are multiple versions of IP-MIB (and interim vendor MIBs, too), and
+    # figuring out which ones are supported in what combinations is not that
+    # straightforward. It's way more complicated for IPv6 than IPv4.  This type
+    # here is the most generic 1994 version (most of which is deprecated). In
+    # the future, it may be augmented with a second type that attempts to get
+    # information from the newer 2006 tables for IPv4, but currently I can't
+    # find any device that puts IPv4 network information in the 2006 tables, so
+    # I'm postponing that work for now.
+
+    - name: generic-ipv4-1994
+      inherits: null
       description: > 
-          Generic IPv4 address support from IP-MIB, circa 1994. Technically,
-          this should have been deprecated back in 2006, but everything I've
-          looked at so far uses it.
-      technologyComponent: ipv4-network
+          Generic IPv4 support from IP-MIB, circa 1994. Technically, much of
+          this was deprecated back in 2006, but everything I've looked at so
+          far uses at least some of the deprecated objects.
+      technology: ipv4
       managementObjects:
           - name: ipAdEntAddr
             uri:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipAdEntAddr
+                index: null
             capabilities: [ ipv4-network-address ]
 
           - name: ipAdEntIfIndex 
@@ -59,6 +194,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipAdEntIfIndex
+                index: [ ipAdEntAddr ]
             capabilities: [ ipv4-network-ifIndex ]
 
           - name: ipAdEntNetMask
@@ -66,6 +202,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipAdEntNetMask
+                index: [ ipAdEntAddr ]
             capabilities: [ ipv4-network-mask ]
 
           - name: ipAdEntReasmMaxSize
@@ -73,5 +210,152 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipAdEntReasmMaxSize
+                index: [ ipAdEntAddr ]
             capabilities: [ ipv4-network-reassembleSize ]
 
+          - name: ipForwarding
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipForwarding
+                index: [ 0 ]
+            capabilities: [ ipv4-global-forwarding ]
+            unique: 1
+
+          - name: ipDefaultTTL
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipDefaultTTL
+                index: [ 0 ]
+            capabilities: [ ipv4-global-defaultTTL ]
+
+          - name: ipInReceives
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipInReceives
+                index: [ 0 ]
+            capabilities: [ ipv4-global-inputReceives ]
+
+          - name: ipInHdrErrors
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipInHdrErrors
+                index: [ 0 ]
+            capabilities: [ ipv4-global-inputHeaderErrors ]
+
+          - name: ipForwDatagrams
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipForwDatagrams
+                index: [ 0 ]
+            capabilities: [ ipv4-global-forwarded ]
+
+          - name: ipInUnknownProtos
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipInUnknownProtos
+                index: [ 0 ]
+            capabilities: [ ipv4-global-unknownProtocols ]
+
+          - name: ipInDiscards
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipInDiscards
+                index: [ 0 ]
+            capabilities: [ ipv4-global-inputDiscards ]
+
+          - name: ipInDelivers
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipInDelivers
+                index: [ 0 ]
+            capabilities: [ ipv4-global-inputDeliveries ]
+
+          - name: ipOutRequests
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipOutRequests
+                index: [ 0 ]
+            capabilities: [ ipv4-global-outputRequests ]
+
+          - name: ipOutDiscards
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipOutDiscards
+                index: [ 0 ]
+            capabilities: [ ipv4-global-outputDiscards ]
+
+          - name: ipOutNoRoutes
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipOutNoRoutes
+                index: [ 0 ]
+            capabilities: [ ipv4-global-outputNoRoutes ]
+
+          - name: ipReasmTimeout
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipReasmTimeout
+                index: [ 0 ]
+            capabilities: [ ipv4-global-reassemblyTimeout ]
+
+          - name: ipReasmReqds
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipReasmReqds
+                index: [ 0 ]
+            capabilities: [ ipv4-global-reassemblyRequired ]
+
+          - name: ipReasmOKs
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipReasmOKs
+                index: [ 0 ]
+            capabilities: [ ipv4-global-reassemblyOk ]
+
+          - name: ipReasmFails
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipReasmFails
+                index: [ 0 ]
+            capabilities: [ ipv4-global-reassemblyFails ]
+
+          - name: ipFragOKs
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipFragOKs 
+                index: [ 0 ]
+            capabilities: [ ipv4-global-outputFragmentOk ]
+
+          - name: ipFragFails
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipFragFails
+                index: [ 0 ]
+            capabilities: [ ipv4-global-outputFragmentFails ]
+
+          - name: ipFragCreates
+            uri:
+                protocol: SNMP
+                mib: IP-MIB
+                objectName: ipFragCreates
+                index: [ 0 ]
+            capabilities: [ ipv4-global-outputFragments ]
+
+...

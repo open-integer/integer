@@ -1,12 +1,16 @@
 ---
+
+# Interfaces technology definition for Integer
+# by Loren Jan Wilson, 2014-05-07
+
 technologies:
     # These are physical and virtual interfaces, found in the IF-MIB in the
     # case of SNMP.
-    - name: interface
-      parent: null
+    - name: interfaces
+      provides: [ interfaces ]
       description: Physical and virtual interfaces
       components:
-          # A global component for a couple of global attributes related to
+          # A component for a couple of global attributes related to
           # interfaces.
           - name: interface-global
             parent: null
@@ -25,7 +29,7 @@ technologies:
           # values depending on whether or not the interfaces extension table
           # is supported by the device. 
           - name: interface
-            parent: null
+            parent: interface-global
             index: [ interface-index ]
             description: >
                 Each interface is represented as a single component called an
@@ -173,18 +177,26 @@ technologies:
                       physical entity relations.
 
 serviceElementTypes:
-    - name: generic-interface-global
-      parent: null
+    # Interfaces tend to be globally supported by SNMP, but there is an
+    # extension table which some devices don't support. The first
+    # serviceElementType here is for legacy devices, and the second type is for
+    # devices that implement the extension table. The second type inherits all
+    # management objects from the first, overwriting some of the capabilities
+    # with 64-bit counter information when available.
+
+    - name: generic-interface
+      inherits: null
       description: >
-          The generic way to access a couple of interface-related global
-          attributes.
-      technologyComponent: interface-global
+          The generic interface information, accessed via SNMP using IF-MIB,
+          not including the extension table.
+      technology: interface
       managementObjects:
           - name: ifNumber
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifNumber
+                index: [ 0 ]
             capabilities: [ interface-global-number ]
             unique: 1
 
@@ -193,35 +205,23 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifTableLastChange
+                index: [ 0 ]
             capabilities: [ interface-global-lastChangeTime ]
 
-    # Interfaces tend to be globally supported by SNMP, but there is an
-    # extension table which some devices don't support. The first
-    # serviceElementType is for legacy devices, the second type is for devices
-    # that implement the extension table. The second type inherits all
-    # management objects from the first, overwriting some of the capabilities
-    # with 64-bit counter information when available.
-
-    - name: generic-interface
-      parent: null
-      description: >
-          A generic interface, accessed via SNMP using IF-MIB, not including
-          the extension table.
-      technologyComponent: interface
-      managementObjects:
           - name: ifIndex
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifIndex
+                index: null
             capabilities: [ interface-index ]
-            unique: 1
 
           - name: ifDescr
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifDescr
+                index: [ ifIndex ]
             capabilities: [ interface-longname ]
 
           - name: ifType
@@ -229,6 +229,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifType
+                index: [ ifIndex ]
             capabilities: [ interface-type ]
 
           - name: ifMtu
@@ -236,6 +237,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifMtu
+                index: [ ifIndex ]
             capabilities: [ interface-mtu ]
 
           - name: ifSpeed
@@ -243,6 +245,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifSpeed
+                index: [ ifIndex ]
             capabilities: [ interface-speed ]
             transforms: [ "/ 1000000" ]
 
@@ -251,6 +254,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifPhysAddress
+                index: [ ifIndex ]
             capabilities: [ interface-physicalAddress ]
 
           - name: ifAdminStatus
@@ -258,6 +262,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifAdminStatus
+                index: [ ifIndex ]
             capabilities: [ interface-adminStatus ]
 
           - name: ifOperStatus
@@ -265,6 +270,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOperStatus
+                index: [ ifIndex ]
             capabilities: [ interface-operationalStatus ]
 
           - name: ifLastChange
@@ -272,6 +278,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifLastChange
+                index: [ ifIndex ]
             capabilities: [ interface-lastChangeTime ]
 
           - name: ifInOctets
@@ -279,6 +286,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInOctets
+                index: [ ifIndex ]
             capabilities: [ interface-inputOctets ]
 
           - name: ifInUcastPkts
@@ -286,6 +294,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInUcastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-inputUnicastPackets ]
 
           - name: ifInDiscards
@@ -293,6 +302,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInDiscards
+                index: [ ifIndex ]
             capabilities: [ interface-inputDiscards ]
 
           - name: ifInErrors
@@ -300,6 +310,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInErrors
+                index: [ ifIndex ]
             capabilities: [ interface-inputErrors ]
 
           - name: ifInUnknownProtos
@@ -307,6 +318,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifInUnknownProtos
+                index: [ ifIndex ]
             capabilities: [ interface-inputUnknownProtocols ]
 
           - name: ifOutOctets
@@ -314,6 +326,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutOctets
+                index: [ ifIndex ]
             capabilities: [ interface-outputOctets ]
 
           - name: ifOutUcastPkts
@@ -321,6 +334,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutUcastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-outputUnicastPackets ]
 
           - name: ifOutDiscards
@@ -328,6 +342,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutDiscards
+                index: [ ifIndex ]
             capabilities: [ interface-outputDiscards ]
 
           - name: ifOutErrors
@@ -335,6 +350,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifOutErrors
+                index: [ ifIndex ]
             capabilities: [ interface-outputErrors ]
 
     # I'm assuming that if something supports the interface extension table at
@@ -342,17 +358,18 @@ serviceElementTypes:
     # here, but hopefully this covers all modern cases.
 
     - name: generic-interface-extended
-      parent: generic-interface
+      inherits: generic-interface
       description: > 
           A generic interface that also supports the interface extension table,
           including things like 64-bit counters, an ifName, etc.
-      technologyComponent: interface
+      technology: interface
       managementObjects:
           - name: ifName
             uri:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifName
+                index: [ ifIndex ]
             capabilities: [ interface-name ]
             unique: 1
 
@@ -361,6 +378,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInOctets
+                index: [ ifIndex ]
             capabilities: [ interface-inputOctets ]
 
           - name: ifHCInUcastPkts
@@ -368,6 +386,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInUcastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-inputUnicastPackets ]
 
           - name: ifHCInMulticastPkts
@@ -375,6 +394,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInMulticastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-inputMulticastPackets ]
 
           - name: ifHCInBroadcastPkts
@@ -382,6 +402,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCInBroadcastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-inputBroadcastPackets ]
 
           - name: ifHCOutOctets
@@ -389,6 +410,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutOctets
+                index: [ ifIndex ]
             capabilities: [ interface-outputOctets ]
 
           - name: ifHCOutUcastPkts
@@ -396,6 +418,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutUcastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-outputUnicastPackets ]
 
           - name: ifHCOutMulticastPkts
@@ -403,6 +426,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutMulticastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-outputMulticastPackets ]
 
           - name: ifHCOutBroadcastPkts
@@ -410,6 +434,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHCOutBroadcastPkts
+                index: [ ifIndex ]
             capabilities: [ interface-outputBroadcastPackets ]
 
           - name: ifLinkUpDownTrapEnable
@@ -417,6 +442,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifLinkUpDownTrapEnable
+                index: [ ifIndex ]
             capabilities: [ interface-linkUpDownTrapEnable ]
 
           - name: ifHighSpeed
@@ -424,6 +450,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifHighSpeed
+                index: [ ifIndex ]
             capabilities: [ interface-speed ]
 
           - name: ifPromiscuousMode
@@ -431,6 +458,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifPromiscuousMode
+                index: [ ifIndex ]
             capabilities: [ interface-promiscuousMode ]
 
           - name: ifConnectorPresent
@@ -438,6 +466,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifConnectorPresent
+                index: [ ifIndex ]
             capabilities: [ interface-connectorPresent ]
 
           - name: ifAlias
@@ -445,6 +474,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IF-MIB
                 objectName: ifAlias
+                index: [ ifIndex ]
             capabilities: [ interface-description ]
 
 ...

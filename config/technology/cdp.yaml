@@ -1,9 +1,13 @@
 ---
+
+# CDP technology definition for Integer
+# by Loren Jan Wilson, 2014-05-06
+
 technologies:
     # CDP, the Cisco Discovery Protocol.
     # 3 components: cdp-global, cdp-interface, cdp-device (cache entry).
     - name: cdp
-      parent: null
+      provides: [ neighbor-discovery ]
       description: Cisco Discovery Protocol
       components:
           - name: cdp-global
@@ -40,7 +44,7 @@ technologies:
 
           - name: cdp-device
             parent: cdp-interface
-            index: [ cdp-interface-index, cdp-device-index ]
+            index: [ cdp-device-index ]
             description: >
                 For every remote CDP neighbor on each interface, there is a
                 device entry in the local CDP cache.
@@ -119,20 +123,21 @@ relations:
           destination: network-address
 
 serviceElementTypes:
-    # 3 total, to match the 3 components above.
     # Cisco devices should all do this the same way over SNMP, although there
     # may be some strange differences in the type of information we get back.
+    # As such, there's one serviceElementType for now.
 
-    - name: cisco-cdp-global
-      parent: null
-      description: Cisco's general CDP global element.
-      technologyComponent: cdp-global
+    - name: cisco-generic-cdp
+      inherits: null
+      description: Cisco's generic CDP support.
+      technology: cdp
       managementObjects:
           - name: cisco-cdpGlobalRun
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpGlobalRun
+                index: [ 0 ]
             capabilities: [ cdp-global-run ]
             unique: 1 
 
@@ -141,18 +146,15 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpGlobalDeviceId
+                index: [ 0 ]
             capabilities: [ cdp-global-deviceId ]
 
-    - name: cisco-cdp-interface
-      parent: null
-      description: Cisco's general CDP interface.
-      technologyComponent: cdp-interface
-      managementObjects:
           - name: cisco-cdpInterfaceIfIndex
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpInterfaceIfIndex
+                index: null
             capabilities: [ cdp-interface-index ]
             unique: 1
 
@@ -161,6 +163,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpInterfaceEnable
+                index: [ cisco-cdpInterfaceIfIndex ]
             capabilities: [ cdp-interface-enable ]
 
           - name: cisco-cdpInterfaceName
@@ -168,18 +171,15 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpInterfaceName
+                index: [ cisco-cdpInterfaceIfIndex ]
             capabilities: [ cdp-interface-name ]
 
-    - name: cisco-cdp-device
-      parent: null
-      description: Cisco's general CDP remote device cache element.
-      technologyComponent: cdp-device
-      managementObjects:
           - name: cisco-cdpCacheDeviceIndex
             uri:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheDeviceIndex
+                index: [ cisco-cdpInterfaceIfIndex ]
             capabilities: [ cdp-device-index ]
             unique: 1 
 
@@ -188,6 +188,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheAddressType
+                index: [ cisco-cdpInterfaceIfIndex, cisco-cdpCacheDeviceIndex ]
             capabilities: [ cdp-device-addressType ]
 
           - name: cisco-cdpCacheAddress
@@ -195,6 +196,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheAddress
+                index: [ cisco-cdpInterfaceIfIndex, cisco-cdpCacheDeviceIndex ]
             capabilities: [ cdp-device-address ]
 
           - name: cisco-cdpCacheVersion
@@ -202,6 +204,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheVersion
+                index: [ cisco-cdpInterfaceIfIndex, cisco-cdpCacheDeviceIndex ]
             capabilities: [ cdp-device-version ]
 
           - name: cisco-cdpCacheDeviceId
@@ -209,6 +212,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheDeviceId
+                index: [ cisco-cdpInterfaceIfIndex, cisco-cdpCacheDeviceIndex ]
             capabilities: [ cdp-device-deviceId ]
 
           - name: cisco-cdpCacheDevicePort
@@ -216,6 +220,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCacheDevicePort
+                index: [ cisco-cdpInterfaceIfIndex, cisco-cdpCacheDeviceIndex ]
             capabilities: [ cdp-device-port ]
 
           - name: cisco-cdpCachePlatform
@@ -223,6 +228,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: CISCO-CDP-MIB
                 objectName: cdpCachePlatform
+                index: [ cisco-cdpInterfaceIfIndex, cisco-cdpCacheDeviceIndex ]
             capabilities: [ cdp-device-platform ]
 
 ...
