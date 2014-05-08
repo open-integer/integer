@@ -118,13 +118,12 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 		for (SnmpLevelOID levelOid : levelOids) {
 
 			SNMP doid = levelOid.getDescriminatorOID();
-			if (levelOid.getDisriminators() != null
-					&& levelOid.getDisriminators().size() > 0) {
+			OID[] oids = new OID[1];
+	        oids[0] = new OID(doid.getOid());
+	        
+	        List<TableEvent> deviceEvents = SnmpService.instance().getTablePdu( endPoint, oids);
+			if (levelOid.getDisriminators() != null && levelOid.getDisriminators().size() > 1 ) {
 
-				OID[] oids = new OID[1];
-		        oids[0] = new OID(doid.getOid());
-		        
-		        List<TableEvent> deviceEvents = SnmpService.instance().getTablePdu( endPoint, oids);
 				for (SnmpServiceElementTypeDiscriminator discriminator : levelOid.getDisriminators()) {
 
 					TableEvent te = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
@@ -135,13 +134,29 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 						
 						se = accessMgr.updateServiceElement(se);
 					} 
-					else if (discriminator.getDiscriminatorValue() == null) {
+				}
+			}
+			else if ( levelOid.getDisriminators() != null && levelOid.getDisriminators().size() == 1 ) {
+				
+				SnmpServiceElementTypeDiscriminator discriminator = levelOid.getDisriminators().get(0);
+				if ( discriminator.getDiscriminatorValue() != null ) {
+					
+					TableEvent te = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
+					if (te != null) {
 
-						/**
-						 * Create service elements associated with discriminator
-						 * OID contains.
-						 */
-
+						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+						ServiceElement se =  createServiceElementFromType(discNode, set, te, discNode.getAccessElement());
+						
+						se = accessMgr.updateServiceElement(se);
+					} 
+				}
+				else {
+					
+					ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+					for ( TableEvent de : deviceEvents ) {
+						
+						ServiceElement se =  createServiceElementFromType(discNode, set, de, discNode.getAccessElement());
+						se = accessMgr.updateServiceElement(se);
 					}
 				}
 			}

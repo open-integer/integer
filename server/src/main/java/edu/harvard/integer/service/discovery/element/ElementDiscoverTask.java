@@ -152,7 +152,11 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    SnmpVendorDiscoveryTemplate template = null;
 	    
 	    try {
-	         template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
+	    	 VendorIdentifier identify = discMgr.getVendorIdentifier(sysId.toString());
+	    	 if ( identify != null ) {
+	    		 template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(identify.getID());
+	    	 }
+	         
 	    }
 	    catch (Exception e ) {
 	    	
@@ -165,8 +169,6 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	     */
 	    if ( template == null ) {
 	    	template = new SnmpVendorDiscoveryTemplate();
-	    	
-	    	
 			VendorIdentifier vendorIdentifier = discMgr.getVendorIdentifier(sysId.toDottedString());
 			if (vendorIdentifier != null)
 				template.setVendorId(vendorIdentifier.getID());
@@ -199,6 +201,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 					vendorIdentifier.setVendorOid(o.toString());
 					vendorIdentifier = discMgr.updateVendorIdentifier(vendorIdentifier);
 				}
+				
+				template.setVendorId(vendorIdentifier.getID());
 				logger.error("Unable to find vendor identifier for " + sysId.toDottedString());
 				
 				

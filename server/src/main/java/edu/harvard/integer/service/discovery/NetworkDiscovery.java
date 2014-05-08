@@ -273,20 +273,20 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					
 					subnetTasks.remove(subnetid);
 					try {
-						((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryComplete(discoverId);
+						DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+						dsif.discoveryComplete(discoverId);
 					} catch (IntegerException e) {
 					
 						e.printStackTrace();
 						logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
 					}
-
-					
-					logger.debug("Discovered subnet " + subnetid);
+					logger.debug("Discovered subnet **** " + subnetid);
 				}
 			}
 			if ( subnetTasks.size() == 0 ) {
 				try {
-					((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryComplete(discoverId);
+					DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+					dsif.discoveryComplete(discoverId);
 				} catch (IntegerException e) {
 				
 					e.printStackTrace();
