@@ -45,6 +45,8 @@ import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.properties.IntegerProperties;
+import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 
@@ -60,7 +62,22 @@ public class DistributionManager {
 	public static <T extends BaseServiceInterface> T getService(
 			ServiceTypeEnum type) throws IntegerException {
 
-		return lookupLocalBean(getLocalServiceName(type));
+		String moduleName = IntegerProperties.getInstance().getProperty(StringPropertyNames.ModuleName);
+		try {
+		
+			if (logger.isDebugEnabled())
+				logger.debug("Lookup " + type + " module " + moduleName);
+			
+			if (moduleName.length() > 1)
+				return lookupLocalBean(getLocalServiceName(moduleName, type));
+			else
+				return lookupLocalBean(getLocalServiceName(type));
+		} catch (IntegerException e) {
+			if (SystemErrorCodes.ManagerNotFound.equals(e.getErrorCode()))
+				return lookupLocalBean( getLocalServiceName("integer/server-1.0", type) );
+			else
+				throw e;
+		}
 	}
 
 	private static String getLocalServiceName(ServiceTypeEnum serviceType) {
@@ -68,9 +85,26 @@ public class DistributionManager {
 
 		b.append("java:module/");
 		b.append(serviceType.getServiceClass().getSimpleName());
-
+		b.append("!");
+		b.append(serviceType.getBeanLocalInterfaceClass().getName());
+		
 		return b.toString();
 	}
+
+	private static String getLocalServiceName(String module, ServiceTypeEnum serviceType) {
+		StringBuffer b = new StringBuffer();
+
+		b.append("java:global/");
+		b.append(module);
+		b.append('/');
+		
+		b.append(serviceType.getServiceClass().getSimpleName());
+		b.append("!");
+		b.append(serviceType.getBeanLocalInterfaceClass().getName());
+		
+		return b.toString();
+	}
+
 
 	public static <T extends BaseManagerInterface> T getManager(
 			ManagerTypeEnum managerType) throws IntegerException {

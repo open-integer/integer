@@ -114,6 +114,8 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		
 		discovery.discoverNetwork();
 		
+		logger.info("Start ServiceElement discovery of " + seed.getSeedId());
+		
 		return discovery;
 	}
 	
