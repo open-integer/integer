@@ -139,6 +139,50 @@ public class ElementDiscoverTest {
 	}
 		
 	
+	@Test
+	public void hostMibTest() {
+		
+		SnmpV2cCredentail snmpV2c = new SnmpV2cCredentail();
+		snmpV2c.setReadCommunity("public");
+		snmpV2c.setWriteCommunity("public");
+		CommunityAuth ca = new CommunityAuth(snmpV2c);
+		
+		String deviceAddress = "127.0.0.1";
+		DiscoverNode discNode = new DiscoverNode(deviceAddress);
+		Access ac = new Access(161, ca);
+		
+		discNode.setAccessElement(new ServiceElement());
+		discNode.setAccess(ac);;
+		
+		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
+		List<SNMP> mgrObjects = serviceMgr.getToplLevelOIDs();
+		for ( SNMP snmp : mgrObjects ) {
+
+			VariableBinding vb = new VariableBinding(new OID(snmp.getOid() + ".0"));
+			vbs.add(vb);
+		}
+		
+		NetworkDiscovery discovery = new NetworkDiscovery(null, vbs, new DiscoveryId(Long.valueOf(1), Long.valueOf(1)));
+		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
+		
+		System.out.println("After creation element discover task for host MIB test ");
+		try {
+			discTask.call();
+		} catch (IntegerException e) {
+			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
+				logger.info("Unable to reace " + deviceAddress);
+			else {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+				
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
 	
 	@Test
 	public void serviceElementTask() {

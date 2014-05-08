@@ -58,13 +58,7 @@ import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
-import edu.harvard.integer.service.distribution.DistributionManager;
-import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
  * The Class EntityMibServiceElementDiscovery discover service element using 
@@ -74,26 +68,15 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
  */
 public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 	
-	 /** The logger. */
+	
+	/** The logger. */
     private static Logger logger = LoggerFactory.getLogger(EntityMibServiceElementDiscovery.class);
     
 	/** The snmp containment. */
 	private SnmpContainment snmpContainment;
 	
-	/** The disc node. */
+	/** The discovery node. */
 	private DiscoverNode discNode;
-	
-	/** The disc mgr. */
-	private ServiceElementDiscoveryManagerInterface discMgr;
-	
-	/** The access mgr. */
-	private ServiceElementAccessManagerInterface accessMgr;
-	
-	/** The snmp mgr. */
-	private SnmpManagerInterface snmpMgr;
-	
-	/** The cap mgr. */
-	private ManagementObjectCapabilityManagerInterface capMgr;
 	
 	/** The top entity. */
 	private PhysEntityRow topEntity;
@@ -110,6 +93,13 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	private Map<String, List<AliasMapping>> entityMappingTbl;
 	
 	
+	 /**
+	  * @throws IntegerException
+	  */
+	public EntityMibServiceElementDiscovery() throws IntegerException {
+		super();
+	}
+	
 	/* 
 	 * Here are the steps for discovery based on entity mib.
 	 * First it retrieves all rows in AliaisMapping table and physical entity table.
@@ -124,11 +114,6 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	public ServiceElement discover( SnmpContainment sc, DiscoverNode discNode ) throws IntegerException 
 	{
 		logger.debug("Start EntityMibServiceElementDiscovery ************************************************ " + discNode.getIpAddress());
-		
-		capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
-		this.accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-		this.snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
-		this.discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
 		
 		this.snmpContainment = sc;
 		this.discNode = discNode;
@@ -304,10 +289,9 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 					TableRowIndex trIndex = new TableRowIndex(tblOid, row.getIndex());
 					tblInstMap.put(tblOid, trIndex);	
 					
-					discoverServiceElementAttribute(discNode.getElementEndPoint(), ee.serviceElement, set, tblInstMap, capMgr);
+					discoverServiceElementAttribute(discNode.getElementEndPoint(), ee.serviceElement, set, tblInstMap );
 					
 				} catch (IntegerException e2) {
-					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
 				/**
@@ -427,7 +411,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								 ise.setUpdated(new Date());
 								 ise.setDescription(rpdu.get(1).getVariable().toString());
 								 
-								 discoverServiceElementAttribute(discNode.getElementEndPoint(), ise, iset, tblInstMap, capMgr);
+								 discoverServiceElementAttribute(discNode.getElementEndPoint(), ise, iset, tblInstMap);
 								 
 								 /**
 								  * Create service element in the database.
@@ -663,8 +647,8 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 			if ( pr.getEntityClass() == EntityClassEnum.module ) {
 				SNMP snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.entPhysicalSerialNum);
 				attributeIds.add(snmp.getID());
-				set.setApplicabilities(attributeIds);;
-			}			
+			}	
+			set.setApplicabilities(attributeIds);;
 		}
 		catch ( IntegerException ie ) {
 			logger.warn("Fail to add attribute on ServiceElementType");
@@ -708,7 +692,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	    /**
 	     * Discover more detail for that service element.
 	     */
-	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, tblInstMap, capMgr);
+	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, tblInstMap );
 	    
 	    /**
 	     * Create service element in the database.

@@ -43,11 +43,15 @@ import org.snmp4j.smi.Integer32;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.UnsignedInteger32;
 import org.snmp4j.smi.VariableBinding;
+import org.snmp4j.util.TableEvent;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDescriminatorIntegerValue;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
@@ -57,18 +61,46 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
  * @author dchan
  *
  */
-public abstract class SnmpServiceElementDiscover {
+public abstract class SnmpServiceElementDiscover  {
 
 	/** The logger. */
     private static Logger logger = LoggerFactory.getLogger(SnmpServiceElementDiscover.class);
+
     
+    /** The disc mgr. */
+	protected ServiceElementDiscoveryManagerInterface discMgr;
+	
+	/** The access mgr. */
+	protected ServiceElementAccessManagerInterface accessMgr;
+	
+	/** The snmp mgr. */
+	protected SnmpManagerInterface snmpMgr;
+	
+	/** The cap mgr. */
+	protected ManagementObjectCapabilityManagerInterface capMgr;
+	
+	
+	
+	public SnmpServiceElementDiscover() throws IntegerException {
+		
+		capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+		this.accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+		this.snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+		this.discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+	}
+	
     
 	/**
 	 * 
@@ -80,8 +112,7 @@ public abstract class SnmpServiceElementDiscover {
 	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
 			                                     ServiceElement se, 
 			                                     ServiceElementType set,
-			                                     Map<String, TableRowIndex> discoveredTableIndexMap,
-			                                     ManagementObjectCapabilityManagerInterface capMgr ) throws IntegerException {
+			                                     String instOid ) throws IntegerException {
 		
 		
 		if ( set.getAttributeIds() != null && set.getAttributeIds().size() > 0 ) {
@@ -96,6 +127,96 @@ public abstract class SnmpServiceElementDiscover {
 				ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
 				if ( mrgObj instanceof SNMP ) {
 					
+					SNMP snmp = (SNMP) mrgObj;
+					OID vbOid = new OID(snmp.getOid());
+					vbOid.append(instOid);
+					
+					vbs.add(new VariableBinding(vbOid));
+					
+					logger.info("Search for this oid ****************************** " + vbOid );
+				}
+			}
+			PDU rpdu = null;
+			if ( vbs.size() > 0 ) {
+				
+				pdu.addAll(vbs);
+				
+				logger.info("Start Retrieve SNMP request back from " + ePoint.getIpAddress());
+				
+				for ( int i=0; i<pdu.getVariableBindings().size(); i++ ) {
+					
+					logger.info("Get value from this oid " +  pdu.getVariableBindings().get(i).getOid().toString());
+				}
+				
+			    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
+			    logger.info("Retrieve SNMP request back from " + ePoint.getIpAddress());
+			    
+			    List<ManagementObjectValue> attributes = se.getAttributeValues();
+				if ( attributes == null )
+				{
+					attributes = new ArrayList<>();
+					se.setAttributeValues(attributes);
+				}
+				List<ServiceElementProtocolInstanceIdentifier> insts = se.getValues();
+				if ( insts == null ) {
+					insts = new ArrayList<>();
+					se.setValues(insts);
+				}
+				
+			    for ( ID id : attributeIds ) {
+					
+					ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
+					if ( mrgObj instanceof SNMP ) {
+						
+						SNMP snmp = (SNMP) mrgObj;
+						VariableBinding vb = findMatchVB(snmp, rpdu);
+						
+						if ( vb.getVariable() instanceof UnsignedInteger32 ||
+								vb.getVariable() instanceof Integer32 ) {
+							
+							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+							
+							iv.setValue(vb.getVariable().toInt());
+							
+							se.getAttributeValues().add(iv);
+							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+				            inst.setValue(instOid);
+				            se.getValues().add(inst);
+						}
+						
+					}
+				}				
+			}	
+			
+		}
+	}
+	
+    
+    
+	/**
+	 * 
+	 * @param ePoint
+	 * @param se
+	 * @param set
+	 * @throws IntegerException 
+	 */
+	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
+			                                     ServiceElement se, 
+			                                     ServiceElementType set,
+			                                     Map<String, TableRowIndex> discoveredTableIndexMap) throws IntegerException {
+		
+		
+		if ( set.getAttributeIds() != null && set.getAttributeIds().size() > 0 ) {
+			
+			logger.info("Size of attributesIds " + set.getAttributeIds().size() );
+			PDU pdu = new PDU();
+			List<VariableBinding> vbs = new ArrayList<>();
+			
+			List<ID>  attributeIds =  set.getAttributeIds();		
+			for ( ID id : attributeIds ) {
+				
+				ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
+				if ( mrgObj instanceof SNMP ) {
 					
 					SNMP snmp = (SNMP) mrgObj;
 					OID vbOid = new OID(snmp.getOid());
@@ -218,6 +339,54 @@ public abstract class SnmpServiceElementDiscover {
 		return null;
 	}
 
+	
+	
+	/**
+	 * 
+	 * @param events
+	 * @param attrOid
+	 * @param value
+	 * @return
+	 */
+	public TableEvent findTableEventRow( List<TableEvent> events, String attrOid, SnmpServiceElementTypeDiscriminatorValue<?> value ) {
+		
+		
+		for ( TableEvent event : events ) {
+			
+			VariableBinding[] vbs = event.getColumns();
+			for ( VariableBinding vb : vbs ) {
+				
+				if ( vb == null ) {
+					
+					logger.info( "vb is null *** " + attrOid + " " + event.getErrorMessage() );
+				}
+				else if ( vb.getOid() == null ) {
+					logger.info( "vb Oid is null *** " +  event.getErrorMessage() + " " + attrOid );
+				}
+				logger.info(vb.getOid().toString() + " *** " + attrOid );
+				if ( vb.getOid().toString().indexOf(attrOid) >= 0 ) {
+					
+					if ( value instanceof SnmpServiceElementTypeDescriminatorIntegerValue ) {
+						
+						if ( vb.getVariable().toInt() == ((SnmpServiceElementTypeDescriminatorIntegerValue)value).getValue().intValue() ) {
+							return event;
+						}
+					}
+					else if ( value instanceof SnmpServiceElementTypeDiscriminatorStringValue ) {
+						
+						if ( vb.getVariable().toString().indexOf(((SnmpServiceElementTypeDiscriminatorStringValue)value).getValue()) >= 0 ) {
+							return event;
+						}
+					}
+				}
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	
 
 
 	/**

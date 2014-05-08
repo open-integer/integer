@@ -35,6 +35,8 @@ package edu.harvard.integer.access.snmp;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.snmp4j.AbstractTarget;
 import org.snmp4j.CommunityTarget;
@@ -44,12 +46,16 @@ import org.snmp4j.UserTarget;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
+import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.snmp.MaxAccess;
+import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
 import edu.harvard.integer.common.util.DisplayableInterface;
 
@@ -212,5 +218,28 @@ public class SnmpCollectionUtil {
     	return sysPdu;
     	
     }
+ 	
+ 	
+ 	/**
+ 	 * Return readable oid from the SNMP table.
+ 	 * 
+ 	 * @param snmpTbl
+ 	 * @return
+ 	 */
+ 	public static List<OID>  returnReadableOID( SNMPTable snmpTbl ) {
+ 		
+ 		List<OID> oids = new ArrayList<>();
+ 		for ( SNMP snmp : snmpTbl.getTableOids() ) {
+ 			
+ 			if ( snmp.getMaxAccess() == MaxAccess.ReadOnly || snmp.getMaxAccess() == MaxAccess.ReadWrite ) {
+ 				
+ 				OID o = new OID(snmp.getOid());
+ 				oids.add(o);
+ 			}
+ 		}
+ 		
+ 		
+ 		return oids;
+ 	}
     
 }

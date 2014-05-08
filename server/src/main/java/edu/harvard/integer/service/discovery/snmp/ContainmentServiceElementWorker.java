@@ -43,6 +43,14 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
  */
 public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover {
 
+	/**
+	 * @throws IntegerException
+	 */
+	public ContainmentServiceElementWorker() throws IntegerException {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover#discover(edu.harvard.integer.common.discovery.SnmpContainment, edu.harvard.integer.service.discovery.subnet.DiscoverNode, edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface)
 	 */

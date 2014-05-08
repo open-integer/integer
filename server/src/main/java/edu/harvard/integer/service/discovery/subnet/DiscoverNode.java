@@ -40,9 +40,7 @@ import java.util.List;
 import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
-import edu.harvard.integer.service.discovery.snmp.DevicePhisicalPattern;
 
 /**
  * The Class DiscoverNode is a data object used for IP node discovery.
@@ -102,14 +100,6 @@ public class DiscoverNode extends ElementAccess {
 	final private String ipAddress;
 	
 	private Access access;
-	
-
-	
-
-	/** The device physical pattern is used to discover the physical layout of the device. 
-	 *  One example is the physical entity mib pattern.  
-	 */
-	private DevicePhisicalPattern phyPattern;
 	
 
 
@@ -175,29 +165,7 @@ public class DiscoverNode extends ElementAccess {
 		this.stage = stage;
 	}
 
-	
-	
-	/**
-	 * Gets the device physical pattern.
-	 *
-	 * @return the phy pattern
-	 */
-	public DevicePhisicalPattern getPhyPattern() {
-		return phyPattern;
-	}
 
-
-
-	/**
-	 * Sets the device physical pattern.
-	 *
-	 * @param phyPattern the new phy pattern
-	 */
-	public void setPhyPattern(DevicePhisicalPattern phyPattern) {
-		this.phyPattern = phyPattern;
-	}
-
-	
 	
 	public boolean isReachable() {
 		return reachable;

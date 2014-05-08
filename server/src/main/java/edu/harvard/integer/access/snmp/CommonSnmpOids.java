@@ -100,10 +100,47 @@ public class CommonSnmpOids {
     public static final String entAliasMappingIdentifier = "1.3.6.1.2.1.47.1.3.2.1.2";
     
     
-    /**
-     * Host MIB oid
-     */
-    public static final String hrDeviceTable = "1.3.6.1.2.1.25.3.2";
+    public static final String hrDeviceType = "1.3.6.1.2.1.25.3.2.1.2";
+    
+    public static final String hrDeviceDescr = "1.3.6.1.2.1.25.3.2.1.3";
+    
+    public static final String hrDeviceID = "1.3.6.1.2.1.25.3.2.1.4";
+    
+    public static final String hrDeviceStatus = "1.3.6.1.2.1.25.3.2.1.5";
+    
+    public static final String hrDeviceErrors = "1.3.6.1.2.1.25.3.2.1.6";
+    
+    public static final String hrProcessorFrwID = "1.3.6.1.2.1.25.3.3.1.1";
+    
+    public static final String hrProcessorLoad = "1.3.6.1.2.1.25.3.3.1.2";
+    
+    public static final String hrNetworkIfIndex = "1.3.6.1.2.1.25.3.4.1.1";
+    
+    public static final String hrDiskStorageAccess = "1.3.6.1.2.1.25.3.6.1.1";
+    
+    public static final String hrDiskStorageMedia = "1.3.6.1.2.1.25.3.6.1.2";
+    
+    public static final String  hrDiskStorageRemoveble = "1.3.6.1.2.1.25.3.6.1.3";
+    
+    public static final String hrPrinterStatus = "1.3.6.1.2.1.25.3.5.1.1";
+    
+    public static final String hrPrinterDetectedErrorState = "1.3.6.1.2.1.25.3.5.1.2";
+    
+    public static final String hrNetworkEntry = "1.3.6.1.2.1.25.3.4.1";
+    
+    public static final String hrDeviceEntry = "1.3.6.1.2.1.25.3.2.1";
+    
+    public static final String hrProcessorEntry = "1.3.6.1.2.1.25.3.3.1";
+    
+    public static final String hrDiskStorageEntry = "1.3.6.1.2.1.25.3.6.1";
+    
+    public static final String hrPartitionEntry = "1.3.6.1.2.1.25.3.7.1";
+    
+    public static final String hrSWInstalledEntry = "1.3.6.1.2.1.25.6.3.1";
+    
+    public static final String ifEntry = "1.3.6.1.2.1.2.2.1";
+    
+   
     
     /**
      * If table oid

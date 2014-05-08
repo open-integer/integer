@@ -30,23 +30,73 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.service.discovery.snmp;
+
+
+import edu.harvard.integer.common.snmp.SNMPTable;
 
 /**
- * @author dchan
+ * The Class SNMPAliasMapping store the alias mapping between two SNMP tables which
+ * contains different SNMP instance oid.
+ * 
+ * For example, htNetworkTable provides the mapping between hrDeviceTable and ifTable.
+ * The instance oid of the mapping table is the instance oid of the owner table (hrDevoceTable).
+ * The value of the attribute is the alias table (ifTable).
+ * 
+ * 
  *
+ * @author dchan
  */
-public enum CategoryTypeEnum {
+public class SNMPAliasMapping {
 
-	portIf,
-	other,
-	powertSupply,
-	fan,
-	sensor,
-	module,
-	port,
-	cpu,
-	printer,
-	disk,
-	software
+	/** The owner table */
+	private SNMPTable ownerTbl;
+	
+	/** The alias table which is related to owner table */
+	private SNMPTable aliasTbl;
+	
+	/**
+	 * The mapping table which provide the mapping between two tables. 
+	 */
+	private SNMPTable mappingTbl;
+	
+
+	/**
+     * Instantiates a new SNMP alias mapping.
+     *
+     * @param ownerTbl the owner tbl
+     * @param aliasTbl the alias tbl
+     */
+    public SNMPAliasMapping( SNMPTable ownerTbl, SNMPTable aliasTbl, SNMPTable mappingTbl ) {
+		
+		this.ownerTbl = ownerTbl;
+		this.aliasTbl = aliasTbl;
+		this.mappingTbl = mappingTbl;
+	}
+	
+	
+	/**
+	 * Gets the alias tbl.
+	 *
+	 * @return the alias tbl
+	 */
+	public SNMPTable getAliasTbl() {
+		return aliasTbl;
+	}
+
+	
+	/**
+	 * Gets the owner tbl.
+	 *
+	 * @return the owner tbl
+	 */
+	public SNMPTable getOwnerTbl() {
+		return ownerTbl;
+	}
+
+	
+    public SNMPTable getMappingTbl() {
+		return mappingTbl;
+	}
+
 }

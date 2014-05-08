@@ -57,20 +57,6 @@ public class SNMPElementDiscover implements ElementDiscoveryBase {
 	}
 	
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#discoverElementNode(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.access.snmp.DevicePhisicalPattern)
-	 */
-	@Override
-	public ServiceElement discoverElementNode(ElementEndPoint endEpt,
-			DevicePhisicalPattern topoPattern) throws IntegerException {
-		
-		
-		
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 
 	/* (non-Javadoc)

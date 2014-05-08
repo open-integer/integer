@@ -40,11 +40,9 @@ import org.snmp4j.smi.OID;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 
 /**
@@ -80,7 +78,7 @@ public class EntitySNMPInfo {
 					entityInfo = new EntitySNMPInfo();
 				}
 			}
-		}
+		}		
 		return entityInfo;
 	}
 

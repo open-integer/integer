@@ -37,7 +37,6 @@ import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
-import edu.harvard.integer.service.discovery.snmp.DevicePhisicalPattern;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
@@ -59,7 +58,7 @@ public interface ElementDiscoveryBase {
 	 * @return the service element
 	 * @throws IntegerException the integer exception
 	 */
-	public ServiceElement discoverElementNode( ElementEndPoint endEpt, DevicePhisicalPattern topoPattern  ) throws IntegerException;
+//	public ServiceElement discoverElementNode( ElementEndPoint endEpt, DevicePhisicalPattern topoPattern  ) throws IntegerException;
 	
 	/**
 	 * Discover element with a given node service element templete. It is considering a full discovery,

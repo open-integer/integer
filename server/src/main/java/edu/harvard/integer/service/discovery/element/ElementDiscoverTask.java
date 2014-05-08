@@ -33,13 +33,9 @@
 package edu.harvard.integer.service.discovery.element;
 
 
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import net.percederberg.mibble.MibLoaderLog.LogEntry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +50,6 @@ import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpContainment;
@@ -63,7 +58,6 @@ import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -71,6 +65,7 @@ import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover;
+import edu.harvard.integer.service.discovery.snmp.containment.ContainmentGenerator;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -94,27 +89,16 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	private DiscoverNode discoverNode;
 	private SnmpSysInfo sysInfo;
 	
-	private ServiceElementDiscoveryManagerInterface serviceMgr;
+	private ServiceElementDiscoveryManagerInterface discMgr;
 	private ManagementObjectCapabilityManagerInterface capMgr;
 	private ServiceElementAccessManagerInterface accessMgr;
 	
 	
-	public ElementDiscoverTask( NetworkDiscovery netDisc, DiscoverNode node ) {
+    public ElementDiscoverTask( NetworkDiscovery netDisc, DiscoverNode node ) {
 		
 		super(node.getElementEndPoint());
 		
-		this.netDiscover = netDisc;
-		this.discoverNode = node;
-		
-		try {
-            serviceMgr = (ServiceElementDiscoveryManagerInterface) DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-            capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
-            accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-            
-         } catch (IntegerException e) {
-            logger.error("Unable to get Integer core manager " + e.toString());
-            return;
-         }
+		init( netDisc, node, null );
 	}
 	
 	
@@ -123,21 +107,27 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		
 		super(node.getElementEndPoint());
 		
-		this.netDiscover = netDisc;
+		init( netDisc, node, sysInfo );
+	}
+    
+    
+    private void init( NetworkDiscovery netDisc, 
+                       DiscoverNode node, SnmpSysInfo sysInfo ) {
+    	
+    	this.netDiscover = netDisc;
 		this.discoverNode = node;
 		this.sysInfo = sysInfo;
 		
 		try {
-            serviceMgr = (ServiceElementDiscoveryManagerInterface) DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+            discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
             capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+            accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
             
          } catch (IntegerException e) {
             logger.error("Unable to get ServiceElementDiscoveryManager " + e.toString());
             return;
          }
-		
-	}
-	
+    }
 	
 	
 	/* 
@@ -159,41 +149,71 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 			sysInfo = new SnmpSysInfo(rpdu);					
 	    }
 	    OID sysId = new OID(sysInfo.getSysObjectID());
-	    
-	    /**
-	     * TODO Need to call Integer Server to get vendor based on sysOID.
-	     */
 	    SnmpVendorDiscoveryTemplate template = null;
 	    
 	    try {
-	         template = serviceMgr.getSnmpVendorDiscoveryTemplateByVendor(sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
+	         template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
 	    }
 	    catch (Exception e ) {
 	    	
 	    	logger.info("********************************* Cannot find vendor information " + sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
 	    }
 	    
+	    logger.info( "Call check template ");
 	    /**
 	     * It is possible that no template being create for that SysId yet.
 	     */
 	    if ( template == null ) {
 	    	template = new SnmpVendorDiscoveryTemplate();
 	    	
-			VendorIdentifier vendorIdentifier = serviceMgr.getVendorIdentifier(sysId.toDottedString());
+	    	
+			VendorIdentifier vendorIdentifier = discMgr.getVendorIdentifier(sysId.toDottedString());
 			if (vendorIdentifier != null)
 				template.setVendorId(vendorIdentifier.getID());
-			else
+			else {
+				/**
+				 * No such vendorIdentifier exist. Create one.  Later on this vendor identifier should be configured to 
+				 * associated with the real vendor name.
+				 */
+				vendorIdentifier = new VendorIdentifier();
+				
+				int[] oida = sysId.getValue();
+				vendorIdentifier.setName(sysId.toString());
+				vendorIdentifier.setVendorSubtypeId(sysId.toString());
+				vendorIdentifier.setVendorSubtypeName(sysId.toString());
+				
+				if ( oida.length < CommonSnmpOids.vendorSysIdIndex ) {
+					
+					vendorIdentifier.setVendorOid(sysId.toString());
+					vendorIdentifier.setIdentifier(100000L);
+				}
+				else {
+					
+					vendorIdentifier.setIdentifier(sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
+					int[] sysOida = new int[CommonSnmpOids.vendorSysIdIndex]; 
+					
+					for ( int i=0; i<CommonSnmpOids.vendorSysIdIndex; i++ ) {
+						sysOida[i] = oida[i];
+					}
+					OID o = new OID(sysOida);
+					vendorIdentifier.setVendorOid(o.toString());
+					vendorIdentifier = discMgr.updateVendorIdentifier(vendorIdentifier);
+				}
 				logger.error("Unable to find vendor identifier for " + sysId.toDottedString());
+				
+				
+			}
 			
 	    	template.setDescription(sysInfo.getSysDescr());
-	    	
-	    	template = serviceMgr.updateSnmpVendorDiscoveryTemplate(template);
+	    	template = discMgr.updateSnmpVendorDiscoveryTemplate(template);
 	    }
 	    
 	    String firmwareVer = null;
 	    String model = null;
 	    String softwareVer = null;
 	    	    
+	    logger.info( "Call check check firmware. ");
+	    
 	    DiscoveryParseString dps = template.getParseString();
 	    if ( dps != null ) {
 	    	firmwareVer = dps.parseElement(DiscoveryParseElementTypeEnum.FirmwareVersion, sysInfo.getSysDescr());
@@ -259,10 +279,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    
 	    if ( model == null ) {
 	    	if ( sysId.size() >=  CommonSnmpOids.vendorSysIdIndex ) {
-	    		model = defineUnknownVendor(sysId) + ":" + sysId.get(CommonSnmpOids.vendorSysIdIndex+1); 
+	    		model = defineUnknownVendor(sysId.toString()); 
 	    	}
 	    	else {
-	    		model = defineUnknownVendor(sysId);
+	    		model = defineUnknownVendor(sysId.toString());
 	    	}
 	    }
 	    
@@ -270,27 +290,27 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    vs.setFirmware(firmwareVer);
 	    vs.setModel(model);
 	    vs.setSoftwareVersion(softwareVer);
-	    vs.setVendor(defineUnknownVendor(sysId));
+	    vs.setVendor(defineUnknownVendor(sysId.toString()));
 	    
 	    ServiceElementType set = null;
 	    SnmpContainment sc = null;
 	    
 	    try {
-	    	sc = serviceMgr.getSnmpContainment(vs);
+	    	sc = discMgr.getSnmpContainment(vs);
 	    }
 	    catch ( Exception e ) {
 	        logger.info("************************  No vendor containment selector configured.  " + sysId.get(CommonSnmpOids.vendorSysIdIndex));
 	    }
 	    
 	    if ( sc != null ) {
-		    set =  serviceMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
+		    set =  discMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
 		    discoverNode.setTopServiceElementType(set);
 	    }
 	    
 	    if ( sc == null ) {
 	    	
 	    	set = new ServiceElementType();
-			set.setVendor(defineUnknownVendor(sysId));
+			set.setVendor(defineUnknownVendor(sysId.toString()));
 			set.setModel(checkContainmentType(discoverNode.getElementEndPoint()).name());
 			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 			
@@ -299,21 +319,15 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				discoverNode.setTopServiceElementType(set);
 			} catch (IntegerException e) {
 				e.printStackTrace();
-				fail(e.toString());
 			}
-	    	
-	    	sc = new SnmpContainment();
-			sc.setContainmentType(checkContainmentType(discoverNode.getElementEndPoint()));
 			
-			sc.setName("AutoDiscoverContainment");		
+			sc = ContainmentGenerator.generator(set, checkContainmentType(discoverNode.getElementEndPoint()));	    	
 			try {
 				SnmpContainment updateSnmpContainment = capMgr.updateSnmpContainment(sc);
-				
 				logger.info("Created SnmpContainment " + updateSnmpContainment.getID());
 				
 			} catch (IntegerException e) {
 				e.printStackTrace();
-				fail(e.toString());
 			}
 	    }
 	    
@@ -397,7 +411,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		 * Check if host resource MIB exists or not.
 		 */
 		pdu.clear();
-		checkOid = new OID(CommonSnmpOids.hrDeviceTable);
+		checkOid = new OID(CommonSnmpOids.hrDeviceEntry);
 		pdu.add(new VariableBinding(checkOid));
 		
 		rpdu = SnmpService.instance().getNextPdu(ept, pdu);
@@ -410,16 +424,25 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	}
 	
 	
-	public String defineUnknownVendor( OID sysId ) throws IntegerException {
+	public String defineUnknownVendor( String vendorOid ) throws IntegerException {
 		
-		String vendorName = serviceMgr.getVendorIdentifier(sysId.toDottedString()).getName();
-		if ( vendorName != null ) {
-			return vendorName;
+		VendorIdentifier vendorIdent = discMgr.getVendorIdentifier(vendorOid);
+		if ( vendorIdent != null ) {
+			return vendorIdent.getName();
 		}
 		
-		return "Undefine:" + sysId;
+		return "Undefine:" + vendorOid;
 	}
 	
 }
-
-
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
