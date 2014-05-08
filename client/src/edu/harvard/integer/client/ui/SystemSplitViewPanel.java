@@ -7,6 +7,8 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -15,17 +17,19 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.DragImageWidget;
+import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 public class SystemSplitViewPanel extends SplitLayoutPanel {
 	private static final int SPLITTER_SIZE = 3;
-	private static final int CONTENT_WIDTH = 950;
+	private static final int CONTENT_WIDTH = 1000;
 	private static final int CONTENT_HEIGHT = 550;
 	private static final int WIDGET_WIDTH = 90;
 	private static final int WIDGET_HEIGHT = 50;
 	
 	public static SplitLayoutPanel westPanel = null;
-	public static SplitLayoutPanel eastPanel = null;
+	public static DockPanel eastPanel = null;
+	public static SplitLayoutPanel eastSplitPanel = null;
 	
 	public static final String title = "Device Children";
 	public static final String[] headers = {"Name", "Status", "Description"};
@@ -52,16 +56,24 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 		EventView eventView = createEventView();
 		
-		eastPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		eastPanel.addSouth(eventView, 150);
-		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
+		eastPanel = new DockPanel();
+
+		HorizontalPanel mapToolbarPanel = new HorizontalPanel();
+		mapToolbarPanel.setSpacing(5);
+		mapToolbarPanel.add(new HvIconButton("Details"));
+		mapToolbarPanel.add(new HvIconButton("Contained Items"));
+		
+		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
+		eastSplitPanel.setSize(MainClient.WINDOW_WIDTH+"px",  CONTENT_HEIGHT+"px");
 		
 		containeeView = new ContaineeView(title, headers);
-		eastPanel.addEast(containeeView, 200);
-		eastPanel.setWidgetToggleDisplayAllowed(containeeView, true);
+		eastSplitPanel.addEast(containeeView, 200);
+		eastSplitPanel.setWidgetHidden(containeeView, true);
+		eastSplitPanel.add(networkPanel);
 		
-		eastPanel.setWidgetHidden(containeeView, true);
-		eastPanel.add(networkPanel);
+		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);
+		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
+		eastPanel.add(eventView, DockPanel.SOUTH);
 		
 		addWest(westPanel, 250);
 		add(eastPanel);
@@ -173,16 +185,17 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	}
 
 	public static void enableContaineeView(boolean enable) {
-		eastPanel.setWidgetHidden(containeeView, !enable);
+		eastSplitPanel.setWidgetHidden(containeeView, !enable);
 	}
 	
 	public static void showContaineeView(final ServiceElement se) {
-		eastPanel.setWidgetHidden(containeeView, false);
+		eastSplitPanel.setWidgetHidden(containeeView, false);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert("Error");
 			}
 
 			@Override
