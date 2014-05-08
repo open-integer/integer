@@ -107,10 +107,8 @@ public class IntegerProperties {
 			if (resourceAsStream == null) {
 				logger.error("Unable to load properties from "
 						+ PROPERTIES_FILENAME);
-				throw new IntegerException(null,
-						SystemErrorCodes.PropertyFileNotFound, new DisplayableInterface[] {
-						new FilePathName(PROPERTIES_FILENAME)
-				});
+				return;
+				
 			}
 			settings.load(resourceAsStream);
 
@@ -136,7 +134,7 @@ public class IntegerProperties {
 	 */
 	public String getProperty(StringPropertyNames key) {
 		if (settings == null) {
-			return null;
+			return key.getDefaultValue();
 		} else {
 			String value = settings.getProperty(key.getFieldName());
 			if (value != null)
@@ -158,7 +156,7 @@ public class IntegerProperties {
 		String strValue = null;
 
 		if (settings == null) {
-			return null;
+			return key.getDefaultValue();
 		} else {
 			strValue = settings.getProperty(key.getFieldName());
 		}
@@ -202,7 +200,7 @@ public class IntegerProperties {
 		String strValue = null;
 
 		if (settings == null) {
-			return null;
+			return key.getDefaultValue();
 		} else {
 			strValue = settings.getProperty(key.getFieldName());
 		}

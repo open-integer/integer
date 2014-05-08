@@ -178,6 +178,7 @@ public class DiscoveryService extends BaseService implements
 					List<NetworkDiscovery> discoveries = new  ArrayList<NetworkDiscovery>();
 					runningDiscovery.setRunningDiscoveries(discoveries);
 		
+					logger.info("Add to running quue ServiceElement discovery of " + seed.getSeedId());
 					runningDiscoveries.put(id, runningDiscovery);
 				}
 				
@@ -221,9 +222,9 @@ public class DiscoveryService extends BaseService implements
 		 
 		
 		if (runningDiscovery != null)
-			logger.info("Discovery complete for " + discoveryId);
+			logger.info("Discovery complete for " + discoveryId.getDiscoveryId());
 		else
-			logger.warn("Discovery " + discoveryId + " not running. Unable to mark as complete!");
+			logger.warn("Discovery " + discoveryId.getDiscoveryId() + " not running. Unable to mark as complete!");
 	}
 	
 	/**
