@@ -138,6 +138,18 @@ public class CommonSnmpOids {
     
     public static final String hrSWInstalledEntry = "1.3.6.1.2.1.25.6.3.1";
     
+    /**
+     * hrSWInstalledEntry vb.
+     */
+    public static final String hrSWInstalledName = "1.3.6.1.2.1.25.6.3.1.2";
+    
+    public static final String hrSWInstalledID = "1.3.6.1.2.1.25.6.3.1.3";
+    
+    public static final String hrSWInstalledType = "1.3.6.1.2.1.25.6.3.1.4";
+    
+    public static final String hrSWInstalledDate = "1.3.6.1.2.1.25.6.3.1.5";
+    
+    
     public static final String ifEntry = "1.3.6.1.2.1.2.2.1";
     
    

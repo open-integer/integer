@@ -273,7 +273,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					
 					subnetTasks.remove(subnetid);
 					try {
-						((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryComplete(discoverId);
+						DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+						dsif.discoveryComplete(discoverId);
 					} catch (IntegerException e) {
 					
 						e.printStackTrace();
@@ -286,7 +287,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			}
 			if ( subnetTasks.size() == 0 ) {
 				try {
-					((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryComplete(discoverId);
+					DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+					dsif.discoveryComplete(discoverId);
 				} catch (IntegerException e) {
 				
 					e.printStackTrace();
