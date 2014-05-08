@@ -280,9 +280,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 						e.printStackTrace();
 						logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
 					}
-
-					
-					logger.debug("Discovered subnet " + subnetid);
+					logger.debug("Discovered subnet **** " + subnetid);
 				}
 			}
 			if ( subnetTasks.size() == 0 ) {
