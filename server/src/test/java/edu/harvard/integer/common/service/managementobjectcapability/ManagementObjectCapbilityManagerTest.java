@@ -35,10 +35,8 @@ package edu.harvard.integer.common.service.managementobjectcapability;
 
 import static org.junit.Assert.fail;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +53,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
-import org.yaml.snakeyaml.Yaml;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -71,7 +68,6 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.snmp.SnmpDisplayStringTC;
 import edu.harvard.integer.common.snmp.SnmpEnumList;
 import edu.harvard.integer.common.snmp.SnmpEnumValue;
