@@ -50,6 +50,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
 
 
@@ -139,6 +140,15 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	public List<Future<Ipv4Range>> discoverNetwork()  {
 		
 		logger.debug("In discoverNetwork ");
+		
+		try {
+			ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+			logger.debug("Interface Manager ... ");
+			
+		} catch (IntegerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		List<Future<Ipv4Range>> discFuture = new ArrayList<>();
 		/**

@@ -156,10 +156,11 @@ public class ElementDiscoverTest {
 		}
 		
 		NetworkDiscovery discovery = new NetworkDiscovery(null, vbs, new DiscoveryId(Long.valueOf(1), Long.valueOf(1)));
-		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 		
 		System.out.println("After creation element discover task for host MIB test ");
 		try {
+			
+			ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 			discTask.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
@@ -233,11 +234,12 @@ public class ElementDiscoverTest {
 		discNode.setAccess(ac);;
 		
 		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
-		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
+		
 		
 		System.out.println("After creation element discover task *********************************************************** ");
 		
 		try {
+			ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 			discTask.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
@@ -311,11 +313,10 @@ public class ElementDiscoverTest {
 		discNode.setAccess(ac);;
 		
 		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
-		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
-		
 		System.out.println("After creation element discover task *********************************************************** ");
 		
 		try {
+			ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 			discTask.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
@@ -337,14 +338,11 @@ public class ElementDiscoverTest {
 		
 		discNode.setAccessElement(new ServiceElement());
 		
-		discNode.setAccess(ac);;
-		
-
-		ElementDiscoverTask<ElementAccess> discTask2 = new ElementDiscoverTask<>(discovery, discNode);
-		
+		discNode.setAccess(ac);		
 		System.out.println("After creation element discover task *********************************************************** ");
 		
 		try {
+			ElementDiscoverTask<ElementAccess> discTask2 = new ElementDiscoverTask<>(discovery, discNode);
 			discTask2.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
