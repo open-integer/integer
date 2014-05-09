@@ -116,11 +116,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
     	
     	this.netDiscover = netDisc;
 		this.discoverNode = node;
-		this.sysInfo = sysInfo;
-		
-        discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-        capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
-        accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+		this.sysInfo = sysInfo;	
     }
 	
 	
@@ -133,6 +129,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	 */
 	@Override
 	public DiscoverNode call() throws Exception {
+		
+        discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+        capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+        accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 		
 	    if ( sysInfo == null ) {
 	    	

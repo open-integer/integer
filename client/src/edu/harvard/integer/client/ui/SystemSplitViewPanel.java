@@ -22,7 +22,7 @@ import edu.harvard.integer.common.topology.ServiceElement;
 
 public class SystemSplitViewPanel extends SplitLayoutPanel {
 	private static final int SPLITTER_SIZE = 3;
-	private static final int CONTENT_WIDTH = 1000;
+	private static final int CONTENT_WIDTH = 1200;
 	private static final int CONTENT_HEIGHT = 550;
 	private static final int WIDGET_WIDTH = 90;
 	private static final int WIDGET_HEIGHT = 50;
@@ -57,17 +57,22 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		EventView eventView = createEventView();
 		
 		eastPanel = new DockPanel();
+		eastPanel.setSize(CONTENT_WIDTH+"px", MainClient.WINDOW_HEIGHT+"px");
 
 		HorizontalPanel mapToolbarPanel = new HorizontalPanel();
 		mapToolbarPanel.setSpacing(5);
-		mapToolbarPanel.add(new HvIconButton("Details"));
-		mapToolbarPanel.add(new HvIconButton("Contained Items"));
+		HvIconButton addButton = new HvIconButton("Add");
+		mapToolbarPanel.add(addButton);
+		mapToolbarPanel.add(new HvIconButton("Bee"));
+		mapToolbarPanel.add(new HvIconButton("Copy"));
+		mapToolbarPanel.add(new HvIconButton("Del"));
+		mapToolbarPanel.add(new HvIconButton("List"));
 		
 		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		eastSplitPanel.setSize(MainClient.WINDOW_WIDTH+"px",  CONTENT_HEIGHT+"px");
+		eastSplitPanel.setSize("1000px",  "500px");
 		
 		containeeView = new ContaineeView(title, headers);
-		eastSplitPanel.addEast(containeeView, 200);
+		eastSplitPanel.addEast(containeeView, 300);
 		eastSplitPanel.setWidgetHidden(containeeView, true);
 		eastSplitPanel.add(networkPanel);
 		
@@ -189,13 +194,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	}
 	
 	public static void showContaineeView(final ServiceElement se) {
+		containeeView.updateTitle(se.getName());
 		eastSplitPanel.setWidgetHidden(containeeView, false);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error");
 			}
 
 			@Override
