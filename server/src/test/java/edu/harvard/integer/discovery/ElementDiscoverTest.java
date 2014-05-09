@@ -34,11 +34,7 @@ package edu.harvard.integer.discovery;
 
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -66,10 +62,7 @@ import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.service.managementobjectcapability.snmp.ImportMIBTest;
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -163,10 +156,11 @@ public class ElementDiscoverTest {
 		}
 		
 		NetworkDiscovery discovery = new NetworkDiscovery(null, vbs, new DiscoveryId(Long.valueOf(1), Long.valueOf(1)));
-		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 		
 		System.out.println("After creation element discover task for host MIB test ");
 		try {
+			
+			ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 			discTask.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
@@ -240,11 +234,12 @@ public class ElementDiscoverTest {
 		discNode.setAccess(ac);;
 		
 		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
-		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
+		
 		
 		System.out.println("After creation element discover task *********************************************************** ");
 		
 		try {
+			ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 			discTask.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
@@ -318,11 +313,10 @@ public class ElementDiscoverTest {
 		discNode.setAccess(ac);;
 		
 		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
-		ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
-		
 		System.out.println("After creation element discover task *********************************************************** ");
 		
 		try {
+			ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);
 			discTask.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 
@@ -344,14 +338,11 @@ public class ElementDiscoverTest {
 		
 		discNode.setAccessElement(new ServiceElement());
 		
-		discNode.setAccess(ac);;
-		
-
-		ElementDiscoverTask<ElementAccess> discTask2 = new ElementDiscoverTask<>(discovery, discNode);
-		
+		discNode.setAccess(ac);		
 		System.out.println("After creation element discover task *********************************************************** ");
 		
 		try {
+			ElementDiscoverTask<ElementAccess> discTask2 = new ElementDiscoverTask<>(discovery, discNode);
 			discTask2.call();
 		} catch (IntegerException e) {
 			if (NetworkErrorCodes.CannotReach.equals(e.getErrorCode())) 

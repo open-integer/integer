@@ -105,13 +105,10 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		List<SNMP> mgrObjects = getToplLevelOIDs();
 		for ( SNMP snmp : mgrObjects ) {
 
-			VariableBinding vb = new VariableBinding(new OID(snmp.getOid()));
+			VariableBinding vb = new VariableBinding(new OID(snmp.getOid() + ".0" ));
 			vbs.add(vb);
-
 		}
-		
 		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
-		
 		discovery.discoverNetwork();
 		
 		logger.info("Start ServiceElement discovery of " + seed.getSeedId());

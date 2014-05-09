@@ -272,6 +272,56 @@ public class ContainmentGenerator {
 		sstd.setServiceElementTypeId(storageType.getID());		
 		discriminators.add(sstd);
 		
+		/**
+		 * 
+		 */
+		levelOid = new SnmpLevelOID();
+		levelOids.add(levelOid);		
+		levelOid.setName("HostMibSWInstalled");
+		
+		discriminators = new ArrayList<>();
+		levelOid.setDisriminators(discriminators);
+			
+		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledEntry);
+		levelOid.setContextOID(snmp);
+		
+		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledName);
+		levelOid.setContextOID(snmp);
+		levelOid.setDescriminatorOID(snmp);
+		
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.software.name(), serviceElmType.getVendor());
+		ServiceElementType swType = null;
+		if ( sets == null || sets.length == 0 ) {
+			
+			swType = new ServiceElementType();
+			swType.setVendor(serviceElmType.getVendor());
+			swType.setCategory(CategoryTypeEnum.software.name());
+			swType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
+			
+			List<ID> attributeIds = new ArrayList<>();
+			SNMP defName = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledName);
+			swType.setDefaultNameCababilityId(defName.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledID);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledType);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledDate);
+			attributeIds.add(snmp.getID());
+			
+			swType.setAttributeIds(attributeIds);			
+			swType = capMgr.updateServiceElementType(swType);
+			
+		}
+		else {
+			swType = sets[0];
+		}
+		sstd = new SnmpServiceElementTypeDiscriminator();
+		sstd.setServiceElementTypeId(swType.getID());		
+		discriminators.add(sstd);
+		
 		logger.info("out HostMibGenerator ......... ");
 		return sc;
 	}
