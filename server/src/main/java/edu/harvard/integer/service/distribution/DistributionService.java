@@ -51,6 +51,7 @@ import edu.harvard.integer.common.distribution.IntegerServer;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.LongPropertyNames;
+import edu.harvard.integer.jmxconsole.JMXConsole;
 import edu.harvard.integer.server.IntegerApplication;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -119,7 +120,21 @@ public class DistributionService extends BaseService {
 	private Integer getServerPort() {
 		// TODO Fix ME!!
 		logger.warn("Need to get sever port from Wildfly");
-
+		
+		try {
+			String property = System.getProperty("jboss.http.port");
+			if (property != null) {
+				logger.info("got http port " + property + " from System properties");
+				
+				return Integer.valueOf(property);
+			}
+			
+			return JMXConsole.getWebServerPort();
+		} catch (IntegerException e) {
+			logger.error("Error gettting webserver port!! " + e.toString());
+			e.printStackTrace();
+		}
+		
 		return Integer.valueOf(8080);
 	}
 

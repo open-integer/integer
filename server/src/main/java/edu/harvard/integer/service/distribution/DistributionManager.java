@@ -88,9 +88,7 @@ public class DistributionManager {
 		try {
 		
 		//	if (logger.isDebugEnabled())
-				logger.info
-				
-				("Lookup " + type + " module " + moduleName);
+				logger.info("Lookup " + type + " module " + moduleName);
 			
 			if (moduleName.length() > 1)
 				return lookupLocalBean(getHostNameForService(type), getLocalServiceName(moduleName, type));
@@ -107,8 +105,11 @@ public class DistributionManager {
 	
 	public static String getHostName(Long serverId) {
 		for (IntegerServer server : servers) {
-			if (server.getServerId().equals(serverId))
-				return server.getServerAddress().getAddress();
+			if (server.getServerId().equals(serverId)) {
+				String hostUrl = server.getServerAddress().getAddress() + ":" + server.getPort();
+				logger.info("Using " + hostUrl + " for serverId " + serverId);
+				return hostUrl;
+			}
 		}
 		
 		logger.error("Unable to find server for " + serverId);
@@ -213,24 +214,44 @@ public class DistributionManager {
 
 	public static <T extends BaseManagerInterface> T getManager(
 			ManagerTypeEnum managerType) throws IntegerException {
-
-		return lookupLocalBean(getHostNameForManager(managerType), getLocalManagerName(managerType));
+		String moduleName = IntegerProperties.getInstance().getProperty(StringPropertyNames.ModuleName);
+		if (moduleName.length() > 1)
+			return lookupLocalBean(getHostNameForManager(managerType), getLocalManagerName(moduleName, managerType));
+		else
+			return lookupLocalBean(getHostNameForManager(managerType), getLocalManagerName(managerType));
 	}
 
 
+	private static String getLocalManagerName(String moduleName, ManagerTypeEnum managerType) {
+		StringBuffer b = new StringBuffer();
+
+		b.append("java:global/");
+		b.append(moduleName);
+		b.append('/');
+		b.append(managerType.getBeanClass().getSimpleName());
+		b.append("!");
+		b.append(managerType.getBeanLocalInterfaceClass().getName());
+		
+		return b.toString();
+	}
+	
 	private static String getLocalManagerName(ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
 		b.append("java:module/");
 		b.append(managerType.getBeanClass().getSimpleName());
-
+		b.append("!");
+		b.append(managerType.getBeanLocalInterfaceClass().getName());
+		
 		return b.toString();
 	}
 	
 	public static <T extends BaseManagerInterface> T getRemoteManager(
 			ManagerTypeEnum managerType) throws IntegerException {
 
-		return lookupRemote(getLocalManagerName(managerType));
+		String moduleName = IntegerProperties.getInstance().getProperty(StringPropertyNames.ModuleName);
+		
+		return lookupRemote(getLocalManagerName(moduleName, managerType));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -279,7 +300,7 @@ public class DistributionManager {
 			final Properties env = new Properties();
 			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
-			env.put(Context.PROVIDER_URL, "http-remoting://" + hostName + ":8080");
+			env.put(Context.PROVIDER_URL, "http-remoting://" + hostName );
 			
 			ctx = new InitialContext(env);
 
