@@ -252,6 +252,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 
 
 	
+	
 	/* 
 	 * SNMP asynch request response handler.  If an IP address is un-reachable, try other scan based 
 	 * on the access list.
@@ -311,8 +312,15 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		 */
 		dn.setStage(DiscoverStageE.DetailScan);
 		PDU response = event.getResponse();
-		ElementDiscoverTask<E> elmTask =  new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));		
-		DiscoveryManager.getInstance().sutmitElementTask(elmTask);		
+		ElementDiscoverTask<E> elmTask = null;
+		try {
+			elmTask = new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));
+			DiscoveryManager.getInstance().sutmitElementTask(elmTask);	
+		} 
+		catch (IntegerException e) {
+			logger.info("Exception on element discover task " + e.getMessage());
+		}		
+			
 	}
 	
 	

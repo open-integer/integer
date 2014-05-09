@@ -94,7 +94,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	private ServiceElementAccessManagerInterface accessMgr;
 	
 	
-    public ElementDiscoverTask( NetworkDiscovery netDisc, DiscoverNode node ) {
+    public ElementDiscoverTask( NetworkDiscovery netDisc, DiscoverNode node ) throws IntegerException {
 		
 		super(node.getElementEndPoint());
 		
@@ -103,7 +103,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	
 	
     public ElementDiscoverTask( NetworkDiscovery netDisc, 
-    		                    DiscoverNode node, SnmpSysInfo sysInfo ) {
+    		                    DiscoverNode node, SnmpSysInfo sysInfo ) throws IntegerException {
 		
 		super(node.getElementEndPoint());
 		
@@ -112,21 +112,15 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
     
     
     private void init( NetworkDiscovery netDisc, 
-                       DiscoverNode node, SnmpSysInfo sysInfo ) {
+                       DiscoverNode node, SnmpSysInfo sysInfo ) throws IntegerException {
     	
     	this.netDiscover = netDisc;
 		this.discoverNode = node;
 		this.sysInfo = sysInfo;
 		
-		try {
-            discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-            capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
-            accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-            
-         } catch (IntegerException e) {
-            logger.error("Unable to get ServiceElementDiscoveryManager " + e.toString());
-            return;
-         }
+        discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+        capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+        accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
     }
 	
 	
