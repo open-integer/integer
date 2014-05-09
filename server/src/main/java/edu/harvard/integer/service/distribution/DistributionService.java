@@ -51,7 +51,6 @@ import edu.harvard.integer.common.distribution.IntegerServer;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.LongPropertyNames;
-import edu.harvard.integer.jmxconsole.JMXConsole;
 import edu.harvard.integer.server.IntegerApplication;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
