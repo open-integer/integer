@@ -121,7 +121,7 @@ public class DistributionService extends BaseService {
 		// TODO Fix ME!!
 		logger.warn("Need to get sever port from Wildfly");
 		
-		try {
+	//	try {
 			String property = System.getProperty("jboss.http.port");
 			if (property != null) {
 				logger.info("got http port " + property + " from System properties");
@@ -129,11 +129,13 @@ public class DistributionService extends BaseService {
 				return Integer.valueOf(property);
 			}
 			
-			return JMXConsole.getWebServerPort();
-		} catch (IntegerException e) {
-			logger.error("Error gettting webserver port!! " + e.toString());
-			e.printStackTrace();
-		}
+			// TODO: Fix call to get web server port
+			// return JMXConsole.getWebServerPort();
+		
+//		} catch (IntegerException e) {
+//			logger.error("Error gettting webserver port!! " + e.toString());
+//			e.printStackTrace();
+//		}
 		
 		return Integer.valueOf(8080);
 	}
