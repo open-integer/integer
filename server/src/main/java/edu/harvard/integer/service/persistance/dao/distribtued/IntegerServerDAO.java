@@ -31,74 +31,49 @@
  *      
  */
 
-package edu.harvard.integer.common.distribution;
+package edu.harvard.integer.service.persistance.dao.distribtued;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.ID;
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.distribution.IntegerServer;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-@Entity
-public class DistributedManagers extends BaseEntity {
+public class IntegerServerDAO extends BaseDAO {
 
 	/**
-	 * Serial Version UID
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	private static final long serialVersionUID = 1L;
-
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "serverId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "serverType")),
-			@AttributeOverride(name = "name", column = @Column(name = "serverName")) })
-	private ID serverId = null;
-
-	
-	private String managerType = null;
+	public IntegerServerDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, IntegerServer.class);
+	}
 
 	/**
+	 * Find the server for the given serverId
 	 * 
+	 * @param serverId
+	 * @return
+	 * @throws IntegerException
 	 */
-	public DistributedManagers() {
+	public IntegerServer findByServerId(Long serverId) throws IntegerException {
+		return findByLongField(serverId, "serverId", IntegerServer.class);
+	}
+
+	/**
+	 * @param hostAddress
+	 */
+	public IntegerServer findByAddress(Address hostAddress) {
+		
+		return findByAddressField(hostAddress, "serverAddress", IntegerServer.class);
 		
 	}
-
-	/**
-	 * @return the serverId
-	 */
-	public ID getServerId() {
-		return serverId;
-	}
-
-	/**
-	 * @param serverId
-	 *            the serverId to set
-	 */
-	public void setServerId(ID serverId) {
-		this.serverId = serverId;
-	}
-
-	/**
-	 * @return the managerType
-	 */
-	public String getManagerType() {
-		return managerType;
-	}
-
-	/**
-	 * @param managerType
-	 *            the managerType to set
-	 */
-	public void setManagerType(String managerType) {
-		this.managerType = managerType;
-	}
-
 }

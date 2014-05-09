@@ -47,57 +47,52 @@ import edu.harvard.integer.common.ID;
  * 
  */
 @Entity
-public class DistributedServices extends BaseEntity {
+public class DistributedManager extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "serverId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "serverType")),
-			@AttributeOverride(name = "name", column = @Column(name = "serverName")) })
-	private ID serverId = null;
+	private Long serverId = null;
 
-
-	private String service = null;
+	private String managerType = null;
 
 	/**
 	 * 
 	 */
-	public DistributedServices() {
+	public DistributedManager() {
 		
-	}
-
-	/**
-	 * @return the service
-	 */
-	public String getService() {
-		return service;
-	}
-
-	/**
-	 * @param service
-	 *            the service to set
-	 */
-	public void setService(String service) {
-		this.service = service;
 	}
 
 	/**
 	 * @return the serverId
 	 */
-	public ID getServerId() {
+	public Long getServerId() {
 		return serverId;
 	}
 
 	/**
-	 * @param serverId the serverId to set
+	 * @param serverId
+	 *            the serverId to set
 	 */
-	public void setServerId(ID serverId) {
+	public void setServerId(Long serverId) {
 		this.serverId = serverId;
+	}
+
+	/**
+	 * @return the managerType
+	 */
+	public String getManagerType() {
+		return managerType;
+	}
+
+	/**
+	 * @param managerType
+	 *            the managerType to set
+	 */
+	public void setManagerType(String managerType) {
+		this.managerType = managerType;
 	}
 
 }

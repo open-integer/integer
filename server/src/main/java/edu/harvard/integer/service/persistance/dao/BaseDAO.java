@@ -51,6 +51,7 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
@@ -161,6 +162,40 @@ public class BaseDAO {
 
 		ParameterExpression<String> oid = criteriaBuilder
 				.parameter(String.class);
+		query.select(from).where(
+				criteriaBuilder.equal(from.get(fieldName), oid));
+
+		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, fieldValue);
+
+		List<T> resultList = typeQuery.getResultList();
+
+		if (resultList.size() > 0)
+			return resultList.get(0);
+		else
+			return null;
+	}
+	
+	/**
+	 * Find the entity in the database by the specified field.
+	 * 
+	 * @param fieldValue
+	 * @param fieldName
+	 * @param clazz
+	 * @return
+	 */
+	protected <T extends BaseEntity> T findByAddressField(Address fieldValue,
+			String fieldName, Class<T> clazz) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+
+		Root<T> from = query.from(clazz);
+		query.select(from);
+
+		ParameterExpression<Address> oid = criteriaBuilder
+				.parameter(Address.class);
 		query.select(from).where(
 				criteriaBuilder.equal(from.get(fieldName), oid));
 

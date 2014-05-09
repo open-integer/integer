@@ -35,8 +35,10 @@ package edu.harvard.integer.common.service.managementobjectcapability;
 
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +55,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+import org.yaml.snakeyaml.Yaml;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -539,5 +542,4 @@ public class ManagementObjectCapbilityManagerTest {
 			fail(e.toString());
 		}
 	}
-
 }

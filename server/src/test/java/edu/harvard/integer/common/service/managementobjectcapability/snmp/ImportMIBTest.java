@@ -417,15 +417,6 @@ public class ImportMIBTest {
 		return content;
 	}
 
-	public void findSysName() {
-		SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
-
-		SNMP snmp = snmpdao.findByOid(CommonSnmpOids.sysName);
-
-		assert (snmp != null);
-
-	}
-
 	@After
 	public void exportSNMPObjects() {
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,

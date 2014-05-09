@@ -178,7 +178,7 @@ public class DiscoveryService extends BaseService implements
 					List<NetworkDiscovery> discoveries = new  ArrayList<NetworkDiscovery>();
 					runningDiscovery.setRunningDiscoveries(discoveries);
 		
-					logger.info("Add to running quue ServiceElement discovery of " + seed.getSeedId());
+					logger.info("Add to running queue ServiceElement discovery of " + seed.getSeedId());
 					runningDiscoveries.put(id, runningDiscovery);
 				}
 				

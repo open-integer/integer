@@ -33,56 +33,52 @@
 
 package edu.harvard.integer.common.distribution;
 
-import java.util.Date;
-
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
-import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
  * 
  */
 @Entity
-public class IntegerServer extends BaseEntity {
+public class DistributedService extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Unique Identifier for this server. This will be used by other servers to
-	 * find out what services are on this server and how to invoke the service
-	 * on the server.
-	 */
+	
 	private Long serverId = null;
 
-	/**
-	 * Address the server is listening on.
-	 */
-	@Embedded
-	private Address serverAddress = null;
-
-	/**
-	 * Port the server is listening on.
-	 */
-	private Integer port = null;
-
-	/**
-	 * Date the server was last started.
-	 */
-	private Date lastStarted = null;
+	private String service = null;
 
 	/**
 	 * 
 	 */
-	public IntegerServer() {
+	public DistributedService() {
+		
+	}
 
+	/**
+	 * @return the service
+	 */
+	public String getService() {
+		return service;
+	}
+
+	/**
+	 * @param service
+	 *            the service to set
+	 */
+	public void setService(String service) {
+		this.service = service;
 	}
 
 	/**
@@ -93,55 +89,10 @@ public class IntegerServer extends BaseEntity {
 	}
 
 	/**
-	 * @param serverId
-	 *            the serverId to set
+	 * @param serverId the serverId to set
 	 */
 	public void setServerId(Long serverId) {
 		this.serverId = serverId;
-	}
-
-	/**
-	 * @return the port
-	 */
-	public Integer getPort() {
-		return port;
-	}
-
-	/**
-	 * @param port
-	 *            the port to set
-	 */
-	public void setPort(Integer port) {
-		this.port = port;
-	}
-
-	/**
-	 * @return the lastStarted
-	 */
-	public Date getLastStarted() {
-		return lastStarted;
-	}
-
-	/**
-	 * @param lastStarted
-	 *            the lastStarted to set
-	 */
-	public void setLastStarted(Date lastStarted) {
-		this.lastStarted = lastStarted;
-	}
-
-	/**
-	 * @return the serverAddress
-	 */
-	public Address getServerAddress() {
-		return serverAddress;
-	}
-
-	/**
-	 * @param serverAddress the serverAddress to set
-	 */
-	public void setServerAddress(Address serverAddress) {
-		this.serverAddress = serverAddress;
 	}
 
 }

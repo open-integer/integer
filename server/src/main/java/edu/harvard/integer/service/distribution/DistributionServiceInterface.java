@@ -31,29 +31,14 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.distribtued;
+package edu.harvard.integer.service.distribution;
 
-import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.distribution.DistributedManager;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
  * @author David Taylor
  *
  */
-public class DistributedManagerDAO extends BaseDAO {
-
-	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
-	 */
-	public DistributedManagerDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, DistributedManager.class);
-		
-	}
+public interface DistributionServiceInterface extends BaseServiceInterface {
 
 }

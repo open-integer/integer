@@ -43,6 +43,10 @@ import javax.naming.NamingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.distribution.DistributedManager;
+import edu.harvard.integer.common.distribution.DistributedService;
+import edu.harvard.integer.common.distribution.IntegerServer;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
 import edu.harvard.integer.common.properties.IntegerProperties;
@@ -59,27 +63,128 @@ public class DistributionManager {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DistributionManager.class);
 
+	/**
+	 * List of all managers in the Integer system regardless of where the
+	 * manager is running. This list will be updated by the DistributionService.
+	 * 
+	 */
+	private static DistributedManager[] managers = null;
+
+	/**
+	 * List of all Services running in the Integer system regardless of where the
+	 * services are running. This list will be updated by the DistributionService.
+	 */
+	private static DistributedService[] services = null;
+
+	/**
+	 * List of IntegerServers. This list will be updated by the DistributionService.
+	 */
+	private static IntegerServer[] servers = null;
+	
 	public static <T extends BaseServiceInterface> T getService(
 			ServiceTypeEnum type) throws IntegerException {
 
 		String moduleName = IntegerProperties.getInstance().getProperty(StringPropertyNames.ModuleName);
 		try {
 		
-			if (logger.isDebugEnabled())
-				logger.debug("Lookup " + type + " module " + moduleName);
+		//	if (logger.isDebugEnabled())
+				logger.info
+				
+				("Lookup " + type + " module " + moduleName);
 			
 			if (moduleName.length() > 1)
-				return lookupLocalBean(getLocalServiceName(moduleName, type));
+				return lookupLocalBean(getHostNameForService(type), getLocalServiceName(moduleName, type));
 			else
-				return lookupLocalBean(getLocalServiceName(type));
+				return lookupLocalBean(getHostNameForService(type), getLocalServiceName(type));
 		} catch (IntegerException e) {
-			if (SystemErrorCodes.ManagerNotFound.equals(e.getErrorCode()))
-				return lookupLocalBean( getLocalServiceName("integer/server-1.0", type) );
-			else
+			if (SystemErrorCodes.ManagerNotFound.equals(e.getErrorCode())) {
+				logger.error("Unable to find " + type + " with module " + moduleName + " try 'integer/server-1.0'");
+				return lookupLocalBean(getHostNameForService(type), getLocalServiceName("integer/server-1.0", type) );
+			} else
 				throw e;
 		}
 	}
+	
+	public static String getHostName(Long serverId) {
+		for (IntegerServer server : servers) {
+			if (server.getServerId().equals(serverId))
+				return server.getServerAddress().getAddress();
+		}
+		
+		logger.error("Unable to find server for " + serverId);
+		
+		return "localhost";
+	}
 
+	/**
+	 * @param type
+	 * @return
+	 */
+	private static String getHostNameForService(ServiceTypeEnum type) {
+		if (services == null) {
+			logger.error("Services list is empty! Has the server completed startup? Try loalhost");
+			return "localhost";
+		}
+		
+		for (DistributedService service : services) {
+			if (service.getService().equals(type.name()))
+				return getHostName(service.getServerId());
+		}
+		
+		logger.error("Service " + type + " Not found in Distribtued service cache!!");
+		
+		return "localhost";
+	}
+	
+	private static String getHostNameForManager(ManagerTypeEnum type) {
+		if (managers == null) {
+			logger.error("Manager list is empty! Has the server completed startup? Try loalhost");
+			return "localhost";
+		}
+
+		for (DistributedManager manager : managers) {
+			if (manager.getManagerType().equals(type.name()))
+				return getHostName(manager.getServerId());
+		}
+		
+		logger.error("Service " + type + " Not found in Distribtued service cache!!");
+		
+		return "localhost";
+	}
+	
+	public DistributedManager getDistributedManager(ManagerTypeEnum type) {
+		if (managers == null) {
+			logger.error("Manager list is empty! Has the server completed startup? Can not get " + type);
+			return null;
+		}
+	
+		for (DistributedManager manager : managers) {
+			if (manager.getManagerType().equals(type.name()))
+				return manager;
+		}
+		
+		logger.error("Manager " + type + " Not found in Distribtued manager cache!!");
+		
+		return null;
+	}
+	
+	public DistributedService getDistributedService(ServiceTypeEnum type) {
+
+		if (services == null) {
+			logger.error("Service list is empty! Has the server completed startup? Can not get " + type);
+			return null;
+		}
+	
+		for (DistributedService service : services) {
+			if (service.getService().equals(type.name()))
+				return service;
+		}
+		
+		logger.error("Manager " + type + " Not found in Distribtued manager cache!!");
+		
+		return null;
+	}
+	
 	private static String getLocalServiceName(ServiceTypeEnum serviceType) {
 		StringBuffer b = new StringBuffer();
 
@@ -109,8 +214,9 @@ public class DistributionManager {
 	public static <T extends BaseManagerInterface> T getManager(
 			ManagerTypeEnum managerType) throws IntegerException {
 
-		return lookupLocalBean(getLocalManagerName(managerType));
+		return lookupLocalBean(getHostNameForManager(managerType), getLocalManagerName(managerType));
 	}
+
 
 	private static String getLocalManagerName(ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
@@ -164,7 +270,7 @@ public class DistributionManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static <T> T lookupLocalBean(String managerName)
+	private static <T> T lookupLocalBean(String hostName, String managerName)
 			throws IntegerException {
 
 		InitialContext ctx = null;
@@ -173,6 +279,8 @@ public class DistributionManager {
 			final Properties env = new Properties();
 			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
+			env.put(Context.PROVIDER_URL, "http-remoting://" + hostName + ":8080");
+			
 			ctx = new InitialContext(env);
 
 			T manager = null;
@@ -228,15 +336,44 @@ public class DistributionManager {
 	}
 
 	/**
-	 * Get the identifier for this server instance. This value is retrieved
-	 * from the "ServerID" property. 
-	 * 
-	 * @return
-	 * @throws IntegerException
+	 * @return the managers
 	 */
-	public Long getServerId() throws IntegerException {
+	public static DistributedManager[] getManagers() {
+		return managers;
+	}
 
-		// TODO: This needs to be read from a property file. 
-		return Long.valueOf(1);
+	/**
+	 * @param managers the managers to set
+	 */
+	public static void setManagers(DistributedManager[] distributeManagers) {
+		managers = distributeManagers;
+	}
+
+	/**
+	 * @return the services
+	 */
+	public static DistributedService[] getServices() {
+		return services;
+	}
+
+	/**
+	 * @param services the services to set
+	 */
+	public static void setServices(DistributedService[] distributedServers) {
+		services = distributedServers;
+	}
+
+	/**
+	 * @return the servers
+	 */
+	public static IntegerServer[] getServers() {
+		return servers;
+	}
+
+	/**
+	 * @param servers the servers to set
+	 */
+	public static void setServers(IntegerServer[] servers) {
+		DistributionManager.servers = servers;
 	}
 }

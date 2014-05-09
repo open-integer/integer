@@ -56,7 +56,7 @@ import edu.harvard.integer.common.ID;
 @Entity
 public class User extends BaseEntity {
 	/**
-	 * Serializtion ID
+	 * Serialization UID
 	 */
 	private static final long serialVersionUID = 1L;
 

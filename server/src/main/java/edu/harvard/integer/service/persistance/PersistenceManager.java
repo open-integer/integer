@@ -43,6 +43,7 @@ import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServiceDAO;
+import edu.harvard.integer.service.persistance.dao.distribtued.IntegerServerDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
@@ -323,6 +324,11 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public DistributedServiceDAO getDistributedServiceDAO() {
 		return new DistributedServiceDAO(em, logger);
+	}
+	
+	@Override
+	public IntegerServerDAO getIntegerServerDAO() {
+		return new IntegerServerDAO(em, logger);
 	}
 	
 	@Override

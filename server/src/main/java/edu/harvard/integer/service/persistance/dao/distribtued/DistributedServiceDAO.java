@@ -37,7 +37,7 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.distribution.DistributedServices;
+import edu.harvard.integer.common.distribution.DistributedService;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -52,7 +52,7 @@ public class DistributedServiceDAO extends BaseDAO {
 	 * @param clazz
 	 */
 	public DistributedServiceDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, DistributedServices.class);
+		super(entityManger, logger, DistributedService.class);
 		
 	}
 
