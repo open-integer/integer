@@ -52,8 +52,6 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.jmxconsole.JMXConsole;
-import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 
