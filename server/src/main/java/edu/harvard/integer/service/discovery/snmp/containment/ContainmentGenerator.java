@@ -132,6 +132,8 @@ public class ContainmentGenerator {
 			setCpu.setCategory(CategoryTypeEnum.cpu.name());
 			setCpu.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
+			setDeviceTblComponentIdentify(setCpu, snmpMgr);
+			
 			SNMP defName = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceDescr);
 			setCpu.setDefaultNameCababilityId(defName.getID());
 			
@@ -170,6 +172,8 @@ public class ContainmentGenerator {
 			setPrinter.setVendor(serviceElmType.getVendor());
 			setPrinter.setCategory(CategoryTypeEnum.printer.name());
 			setPrinter.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
+			
+			setDeviceTblComponentIdentify(setPrinter, snmpMgr);
 			
 			SNMP defName = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceDescr);
 			setPrinter.setDefaultNameCababilityId(defName.getID());
@@ -217,6 +221,12 @@ public class ContainmentGenerator {
 			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrNetworkIfIndex);
 			attributeIds.add(snmp.getID());
 			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrNetworkIfIndex);
+			List<ID> ids = new ArrayList<>();
+			
+			ids.add(snmp.getID());
+			setIf.setUniqueIdentifierCapabilities(ids);
+			
 			setIf.setAttributeIds(attributeIds);			
 			setIf = capMgr.updateServiceElementType(setIf);
 		}
@@ -229,7 +239,6 @@ public class ContainmentGenerator {
 		discriminatorValue.setValue("1.3.6.1.2.1.25.3.1.4");
 		sstd.setDiscriminatorValue(discriminatorValue);
 		sstd.setServiceElementTypeId(setIf.getID());
-		
 		discriminators.add(sstd);
 		
 		
@@ -242,6 +251,8 @@ public class ContainmentGenerator {
 			storageType.setVendor(serviceElmType.getVendor());
 			storageType.setCategory(CategoryTypeEnum.disk.name());
 			storageType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
+			
+			setDeviceTblComponentIdentify(storageType, snmpMgr);
 			
 			List<ID> attributeIds = new ArrayList<>();
 			addDeviceTblAttributes(attributeIds, snmpMgr);
@@ -311,6 +322,12 @@ public class ContainmentGenerator {
 			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledDate);
 			attributeIds.add(snmp.getID());
 			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledIndex);
+			List<ID> ids = new ArrayList<>();
+			
+			ids.add(snmp.getID());
+			setIf.setUniqueIdentifierCapabilities(ids);
+			
 			swType.setAttributeIds(attributeIds);			
 			swType = capMgr.updateServiceElementType(swType);
 			
@@ -341,5 +358,20 @@ public class ContainmentGenerator {
 		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceID);
 		attributeIds.add(snmp.getID());
 		
+	}
+	
+	/**
+	 * 
+	 * @param set
+	 * @param snmpMgr
+	 * @throws IntegerException
+	 */
+	public static void setDeviceTblComponentIdentify( ServiceElementType set, SnmpManagerInterface snmpMgr ) throws IntegerException {
+		
+		SNMP snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceIndex);
+		List<ID> ids = new ArrayList<>();
+		
+		ids.add(snmp.getID());
+		set.setUniqueIdentifierCapabilities(ids);
 	}
 }

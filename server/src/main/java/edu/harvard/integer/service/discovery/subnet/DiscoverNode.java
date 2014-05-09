@@ -40,6 +40,7 @@ import java.util.List;
 import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
 /**
@@ -94,6 +95,13 @@ public class DiscoverNode extends ElementAccess {
 	private String subnetId;
 
 	private ServiceElementType topServiceElementType;
+	
+	/**
+	 * Existing service element which contains same unique Identifiers as the current
+	 * discover service element.
+	 */
+	private ServiceElement existingSE;
+	
 	
 
 	/**  The ip address of the node. */
@@ -302,8 +310,6 @@ public class DiscoverNode extends ElementAccess {
 	}
 
 
-
-
 	public ServiceElementType getTopServiceElementType() {
 		return topServiceElementType;
 	}
@@ -312,5 +318,17 @@ public class DiscoverNode extends ElementAccess {
 	public void setTopServiceElementType(ServiceElementType topServiceElementType) {
 		this.topServiceElementType = topServiceElementType;
 	}
+	
+
+
+	public ServiceElement getExistingSE() {
+		return existingSE;
+	}
+
+
+	public void setExistingSE(ServiceElement existingSE) {
+		this.existingSE = existingSE;
+	}
+
 
 }

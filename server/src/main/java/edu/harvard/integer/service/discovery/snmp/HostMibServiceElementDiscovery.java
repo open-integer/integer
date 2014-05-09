@@ -32,14 +32,12 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
@@ -113,7 +111,6 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 
 			ifIndexMap.put(deviceIndex, ifIndex);
 		}
-		
 		List<SnmpLevelOID> levelOids = sc.getSnmpLevels();
 		for (SnmpLevelOID levelOid : levelOids) {
 
@@ -126,14 +123,12 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 
 				for (SnmpServiceElementTypeDiscriminator discriminator : levelOid.getDisriminators()) {
 
-					TableEvent te = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
-					if (te != null) {
-
+					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
+					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te, discNode.getAccessElement());
-						
+						ServiceElement se =  createServiceElementFromType(discNode, set, te, discNode.getAccessElement());						
 						se = accessMgr.updateServiceElement(se);
-					} 
+					}
 				}
 			}
 			else if ( levelOid.getDisriminators() != null && levelOid.getDisriminators().size() == 1 ) {
@@ -141,14 +136,12 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 				SnmpServiceElementTypeDiscriminator discriminator = levelOid.getDisriminators().get(0);
 				if ( discriminator.getDiscriminatorValue() != null ) {
 					
-					TableEvent te = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
-					if (te != null) {
-
+					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
+					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te, discNode.getAccessElement());
-						
+						ServiceElement se =  createServiceElementFromType(discNode, set, te, discNode.getAccessElement());						
 						se = accessMgr.updateServiceElement(se);
-					} 
+					}
 				}
 				else {
 					
@@ -165,56 +158,7 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 		return discNode.getAccessElement();
 	}
 
-	/**
-	 * 
-	 * 
-	 * @param set
-	 * @param te
-	 * @param parentElm
-	 * @return
-	 * @throws IntegerException
-	 */
-	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
-			TableEvent te, ServiceElement parentElm) throws IntegerException {
-
-		ServiceElement se = new ServiceElement();
-		se.setUpdated(new Date());
-
-		if (parentElm != null) {
-			se.setParentId(parentElm.getID());
-		}
-
-		SNMP nameAttr = null;
-		if (set.getDefaultNameCababilityId() != null) {
-
-			nameAttr = (SNMP) capMgr.getManagementObjectById(set.getDefaultNameCababilityId()); 
-			PDU pdu = new PDU();
-			
-			OID o = new OID(nameAttr.getOid());
-			o.append(te.getIndex());
-			
-			pdu.add(new VariableBinding(o));
-			PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
-			se.setName(rpdu.get(0).getVariable().toString());
-		}
-		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, te.getIndex().toString());
-		
-		return se;
-	}
 	
 	
-
-	public VariableBinding findVBFromTableEvent(TableEvent te, String oid) {
-
-		VariableBinding[] vbs = te.getColumns();
-		for (VariableBinding vb : vbs) {
-
-			if (vb.getOid().toString().indexOf(oid) >= 0) {
-
-				return vb;
-			}
-		}
-		return null;
-	}
 
 }

@@ -108,6 +108,8 @@ public class CommonSnmpOids {
     
     public static final String hrDeviceStatus = "1.3.6.1.2.1.25.3.2.1.5";
     
+    public static final String hrDeviceIndex = "1.3.6.1.2.1.25.3.2.1.1";
+    
     public static final String hrDeviceErrors = "1.3.6.1.2.1.25.3.2.1.6";
     
     public static final String hrProcessorFrwID = "1.3.6.1.2.1.25.3.3.1.1";
@@ -148,6 +150,8 @@ public class CommonSnmpOids {
     public static final String hrSWInstalledType = "1.3.6.1.2.1.25.6.3.1.4";
     
     public static final String hrSWInstalledDate = "1.3.6.1.2.1.25.6.3.1.5";
+    
+    public static final String hrSWInstalledIndex = "1.3.6.1.2.1.25.6.3.1.1";
     
     
     public static final String ifEntry = "1.3.6.1.2.1.2.2.1";

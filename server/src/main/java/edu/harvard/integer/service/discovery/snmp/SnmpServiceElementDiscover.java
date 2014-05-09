@@ -33,6 +33,7 @@
 package edu.harvard.integer.service.discovery.snmp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorV
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
+import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -183,7 +185,16 @@ public abstract class SnmpServiceElementDiscover  {
 				            inst.setValue(instOid);
 				            se.getValues().add(inst);
 						}
+						else {
 						
+							ManagementObjectStringValue sv = new ManagementObjectStringValue();
+                            sv.setValue(vb.getVariable().toString());
+							
+							se.getAttributeValues().add(sv);
+							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+				            inst.setValue(instOid);
+				            se.getValues().add(inst);
+						}						
 					}
 				}				
 			}	
@@ -348,9 +359,9 @@ public abstract class SnmpServiceElementDiscover  {
 	 * @param value
 	 * @return
 	 */
-	public TableEvent findTableEventRow( List<TableEvent> events, String attrOid, SnmpServiceElementTypeDiscriminatorValue<?> value ) {
+	public List<TableEvent> findTableEventRow( List<TableEvent> events, String attrOid, SnmpServiceElementTypeDiscriminatorValue<?> value ) {
 		
-		
+		List<TableEvent> targetTes = new ArrayList<>();
 		for ( TableEvent event : events ) {
 			
 			VariableBinding[] vbs = event.getColumns();
@@ -369,13 +380,13 @@ public abstract class SnmpServiceElementDiscover  {
 					if ( value instanceof SnmpServiceElementTypeDescriminatorIntegerValue ) {
 						
 						if ( vb.getVariable().toInt() == ((SnmpServiceElementTypeDescriminatorIntegerValue)value).getValue().intValue() ) {
-							return event;
+							targetTes.add(event);
 						}
 					}
 					else if ( value instanceof SnmpServiceElementTypeDiscriminatorStringValue ) {
 						
 						if ( vb.getVariable().toString().indexOf(((SnmpServiceElementTypeDiscriminatorStringValue)value).getValue()) >= 0 ) {
-							return event;
+							targetTes.add(event);
 						}
 					}
 				}
@@ -383,9 +394,87 @@ public abstract class SnmpServiceElementDiscover  {
 			
 		}
 		
-		return null;
+		return targetTes;
 	}
 	
+	
+	/**
+	 * 
+	 * 
+	 * @param set
+	 * @param te
+	 * @param parentElm
+	 * @return
+	 * @throws IntegerException
+	 */
+	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
+			TableEvent te, ServiceElement parentElm) throws IntegerException {
+
+		ServiceElement se = new ServiceElement();
+		se.setUpdated(new Date());
+		
+		if ( discNode.getExistingSE() == null ) {
+			se.setCreated(new Date());
+		}
+		se.setServiceElementTypeId(set.getID());
+        se.setDescription(set.getCategory());
+		
+		if (parentElm != null) {
+			se.setParentId(parentElm.getID());
+		}
+
+		SNMP nameAttr = null;
+		if (set.getDefaultNameCababilityId() != null) {
+
+			nameAttr = (SNMP) capMgr.getManagementObjectById(set.getDefaultNameCababilityId()); 
+			PDU pdu = new PDU();
+			
+			OID o = new OID(nameAttr.getOid());
+			o.append(te.getIndex());
+			
+			pdu.add(new VariableBinding(o));
+			PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
+			se.setName(rpdu.get(0).getVariable().toString());
+		}
+		
+		if ( set.getUniqueIdentifierCapabilities() != null ) {
+			
+			PDU rpdu = null;
+			PDU pdu = new PDU();
+			for ( ID id : set.getUniqueIdentifierCapabilities() ) {
+				
+				SNMP snmp = (SNMP) capMgr.getManagementObjectById(id);
+				OID o = new OID(snmp.getOid());
+				o.append(te.getIndex());
+				
+				pdu.add(new VariableBinding(o));
+				rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);				
+			}
+			if ( rpdu != null ) {
+				
+			}
+		}
+		
+		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, te.getIndex().toString());
+		
+		return se;
+	}
+	
+
+	
+
+	public VariableBinding findVBFromTableEvent(TableEvent te, String oid) {
+
+		VariableBinding[] vbs = te.getColumns();
+		for (VariableBinding vb : vbs) {
+
+			if (vb.getOid().toString().indexOf(oid) >= 0) {
+
+				return vb;
+			}
+		}
+		return null;
+	}
 	
 
 
