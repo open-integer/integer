@@ -22,6 +22,7 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.client.core.shape.Text;
 import com.emitrom.lienzo.client.core.types.Point2D;
 import com.emitrom.lienzo.client.core.types.Point2DArray;
+import com.emitrom.lienzo.client.core.types.Shadow;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
 
@@ -36,6 +37,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 	private ServiceElement serviceElement;
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
 	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
+	private boolean highlighted = false;
 	
 	public HvMapIconWidget(Picture picture, ServiceElement serviceElement) {
 		this.picture = picture;
@@ -77,7 +79,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 		/*center_x = x + DragImageWidget.IMAGE_WIDTH/2;
 		center_y = y + DragImageWidget.IMAGE_HEIGHT/2;*/
 		
-		picture.setX(x).setY(y).onLoad(new PictureLoadedHandler() {
+		picture.setStrokeColor(ColorName.CYAN).setStrokeWidth(3).setX(x).setY(y).onLoad(new PictureLoadedHandler() {
 
 			@Override
 			public void onPictureLoaded(Picture picture) {
@@ -162,5 +164,20 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
 		SystemSplitViewPanel.showContaineeView(serviceElement);
 		
+		setHighLighted(!highlighted);
+	}
+	
+	public void setHighLighted(boolean highlighted) {
+		this.highlighted = highlighted;
+		drawHighLights(highlighted);
+	}
+	
+	public boolean getHighLighted() {
+		return highlighted;
+	}
+	
+	private void drawHighLights(boolean highLight) {
+		ColorName highLightColor = highLight ? ColorName.DARKBLUE : ColorName.WHITE;
+		picture.setShadow(new Shadow(highLightColor, 3,3,3)).getLayer().draw();
 	}
 }

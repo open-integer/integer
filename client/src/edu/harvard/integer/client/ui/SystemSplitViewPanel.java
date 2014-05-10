@@ -21,7 +21,7 @@ import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 public class SystemSplitViewPanel extends SplitLayoutPanel {
-	private static final int SPLITTER_SIZE = 3;
+	private static final int SPLITTER_SIZE = 4;
 	private static final int CONTENT_WIDTH = 1200;
 	private static final int CONTENT_HEIGHT = 550;
 	private static final int WIDGET_WIDTH = 90;
@@ -46,7 +46,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
-		setSize(MainClient.WINDOW_WIDTH+"px", MainClient.WINDOW_HEIGHT+"px");
+        setSize("100%", MainClient.WINDOW_HEIGHT+"px");
 		
 		FilterView filterView = createFilterView();
 		westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
@@ -57,23 +57,22 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		EventView eventView = createEventView();
 		
 		eastPanel = new DockPanel();
-		eastPanel.setSize(CONTENT_WIDTH+"px", MainClient.WINDOW_HEIGHT+"px");
+		eastPanel.setBorderWidth(1);
+		eastPanel.setWidth("100%");
 
 		HorizontalPanel mapToolbarPanel = new HorizontalPanel();
-		mapToolbarPanel.setSpacing(5);
-		HvIconButton addButton = new HvIconButton("Add");
+		mapToolbarPanel.setStyleName("toolbar");
+		HvIconButton addButton = new HvIconButton("Details");
 		mapToolbarPanel.add(addButton);
-		mapToolbarPanel.add(new HvIconButton("Bee"));
-		mapToolbarPanel.add(new HvIconButton("Copy"));
-		mapToolbarPanel.add(new HvIconButton("Del"));
-		mapToolbarPanel.add(new HvIconButton("List"));
+		mapToolbarPanel.add(new HvIconButton("Compare"));
 		
 		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		eastSplitPanel.setSize("1000px",  "500px");
+		eastSplitPanel.setSize("100%",  "500px");
 		
 		containeeView = new ContaineeView(title, headers);
 		eastSplitPanel.addEast(containeeView, 300);
 		eastSplitPanel.setWidgetHidden(containeeView, true);
+		eastSplitPanel.setWidgetToggleDisplayAllowed(containeeView, true);
 		eastSplitPanel.add(networkPanel);
 		
 		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);

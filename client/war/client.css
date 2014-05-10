@@ -59,6 +59,19 @@ h4 {
     text-align: left;
 }
 
+.toolbar {
+	background-color: CYAN;
+	color: #FFFFFF;
+	width: 100%;
+	height: 32px;
+	padding-top: 5px;
+	padding-right: auto;
+	padding-bottom: 5px;
+	padding-left: auto;
+	float: left;
+	display: block;
+}
+
 .sendButton {
   display: block;
   font-size: 16pt;
@@ -71,21 +84,20 @@ h4 {
 }
 
 .iconButton {
-	background: white;
-	color: #293352;
-	font-size: 1.2em;
+	background-color: CYAN;
+	color: #1c5a80;
+	font-size: 10pt;
     font-weight: bold;
 	margin: 0;
-	text-align: center;
 	border: none;
 }
 
 .iconButton:active {
-   background: #ccc;
+   color: #ccc;
 }
 
 .iconButton:hover {
-   background: #939393;
+   color: #939393;
 }
 
 .littleSquareButton {

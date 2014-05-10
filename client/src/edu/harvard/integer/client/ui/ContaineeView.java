@@ -22,7 +22,7 @@ public class ContaineeView extends HvTableViewPanel {
 		addButton.setVisible(false);
 		
 		flexTable.applyDataRowStyles();
-		flexTable.getVisualPanel().setSize("200px", "500px");
+		flexTable.getVisualPanel().setSize("250px", "500px");
 	}
 
 	/**

@@ -22,7 +22,7 @@ public class EventView extends HvTableViewPanel {
 		flexTable.insertRow(2);
 		
 		flexTable.applyDataRowStyles();
-		flexTable.getVisualPanel().setSize("1150px", "200px");
+		flexTable.getVisualPanel().setSize("100%", "150px");
 	}
 
 	/**
