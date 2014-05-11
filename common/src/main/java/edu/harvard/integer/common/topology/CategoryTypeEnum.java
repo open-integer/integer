@@ -38,6 +38,9 @@ package edu.harvard.integer.common.topology;
  */
 public enum CategoryTypeEnum {
 
+	stack,
+	backplane,
+	chassis,
 	portIf,
 	other,
 	powertSupply,
