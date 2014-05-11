@@ -113,7 +113,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	@Override
 	public ServiceElement discover( SnmpContainment sc, DiscoverNode discNode ) throws IntegerException 
 	{
-		logger.debug("Start EntityMibServiceElementDiscovery ************************************************ " + discNode.getIpAddress());
+		logger.debug("Start EntityMibServiceElementDiscovery ***************************************** " + discNode.getIpAddress());
 		
 		this.snmpContainment = sc;
 		this.discNode = discNode;
@@ -151,12 +151,28 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		for ( TableEvent te : tblEvents ) {
 			
 			PhysEntityRow er = new PhysEntityRow(te);
+			String containIndex = Integer.toString(er.getEntPhysicalContainedIn());
+			
+			List<PhysEntityRow> physRows = physRowMap.get(containIndex);
+			if ( physRows == null ) {
+				physRows = new ArrayList<>();
+				physRowMap.put(containIndex, physRows);
+			}
+			if ( er.getEntPhysicalContainedIn() == 0 ) {
+				topEntity = er;
+			}
+			
+			physRows.add(er);	
+			
+			/*
 			if ( er.getEntPhysicalContainedIn() == 0 ) {
 				topEntity = er;
 				
 				EntityElement ee = new EntityElement();
 				ee.index = er.getIndex();
 				ee.parentIndex = Integer.toString(er.getEntPhysicalContainedIn());
+				
+				
 				ee.serviceElement = discNode.getAccessElement();
 				ee.serviceElement.setName(er.getEntPhysicalDescr());
 				
@@ -172,16 +188,16 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 					physRowMap.put(containIndex, physRows);
 				}
 				physRows.add(er);				
-			}			
+			}	
+			*/		
 		}
 		
-		/**
-		 * Create a dummy SNMPLevelOID for the top level
-		 */
-		SnmpLevelOID levelOid = new SnmpLevelOID();
-		levelOid.setChildren(snmpContainment.getSnmpLevels());
-		
-		recursiveDiscovery(topEntity, levelOid);		
+		if ( snmpContainment.getSnmpLevels() != null && snmpContainment.getSnmpLevels().size() > 0 ) {
+			recursiveDiscovery(topEntity, snmpContainment.getSnmpLevels());				
+		}
+		else {
+			recursiveDiscovery(topEntity, null);
+		}	
 		return discNode.getAccessElement();
 	}
 	
@@ -194,8 +210,9 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	 * @param row the row
 	 * @param levelOid the level oid
 	 */
-	private void recursiveDiscovery( PhysEntityRow row,  SnmpLevelOID levelOid ) {
+	private void recursiveDiscovery( PhysEntityRow row,  List<SnmpLevelOID> levelOids ) {
 
+		SnmpLevelOID pickLevelOid = null;
 		if ( row.getEntityClass() != EntityClassEnum.other ) {
 			/**
 			 * Check if an associated service element being discovered for current Physical Entity row or not.
@@ -216,18 +233,23 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 					/**
 					 * If passing SnmpLevelOID is not null, find the ServiceElementType from SnmpLevelOid.
 					 */
-					if ( levelOid != null ) {
+					if ( levelOids != null ) {
 						
-						SNMP descriminator = levelOid.getDescriminatorOID();
-						Object descriminatorVal = row.getValueByOid(descriminator.getOid());
-						
-						for ( SnmpServiceElementTypeDiscriminator ssetd : levelOid.getDisriminators() ) {
+						for ( SnmpLevelOID levelOid : levelOids ) {
 							
-							if ( ssetd.getDiscriminatorValue().getValue().toString().equals(descriminatorVal.toString()) ) {
+							SNMP descriminator = levelOid.getDescriminatorOID();
+							Object descriminatorVal = row.getValueByOid(descriminator.getOid());
+							
+							for ( SnmpServiceElementTypeDiscriminator ssetd : levelOid.getDisriminators() ) {
 								
-								logger.info("Find ServiceElementType with SNMP " + descriminator.getName() );
-								set = discMgr.getServiceElementTypeById(ssetd.getServiceElementTypeId());
-								break;
+								if ( ssetd.getDiscriminatorValue().getValue().toString().equals(descriminatorVal.toString()) ) {
+									
+									logger.info("Find ServiceElementType with SNMP " + descriminator.getName() );
+									set = discMgr.getServiceElementTypeById(ssetd.getServiceElementTypeId());
+									
+									pickLevelOid = levelOid;
+									break;
+								}
 							}
 						}
 					}
@@ -408,6 +430,13 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								 ise.setParentId(se.getID());
 								 ise.setServiceElementTypeId(iset.getID());
 								 ise.setName(se.getName() + ":If" + mapp.logicalIndex);
+								 
+								 if ( discNode.getExistingSE() != null ) {
+									 ise.setCreated(discNode.getExistingSE().getCreated());
+								 }
+								 else {
+									 ise.setCreated(new Date());
+								 }
 								 ise.setUpdated(new Date());
 								 ise.setDescription(rpdu.get(1).getVariable().toString());
 								 
@@ -458,9 +487,9 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 			/**
 			 * Pick the right SNMP oid for each sub-children if levelOid is not empty.
 			 */
-			if ( levelOid != null ) {
+			if ( pickLevelOid != null &&  pickLevelOid.getChildren() != null ) {
 				
-				List<SnmpLevelOID> snmpLevels = levelOid.getChildren();
+				List<SnmpLevelOID> snmpLevels = pickLevelOid.getChildren();	
 				/**
 				 * Empty is allowed in that case it will create service element type base on default type.
 				 */
@@ -479,8 +508,13 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 						}
 					}					
 				}
-			}	    
-			recursiveDiscovery(pr, levelOID);
+			}	   
+			if ( levelOID != null ) {
+				recursiveDiscovery(pr, levelOID.getChildren());
+			}
+			else {
+			    recursiveDiscovery(pr, null);
+			}
 		}		
 	}
 	
@@ -495,6 +529,12 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		
 		switch (e) {
 		
+		   case backplane:
+			   return CategoryTypeEnum.backplane;
+			
+		   case  chassis: 
+			   return CategoryTypeEnum.chassis;
+			   
 		   case cpu:
 			   return CategoryTypeEnum.cpu;
 			   
@@ -506,6 +546,15 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 				 
 		   case sensor:
 			   return CategoryTypeEnum.sensor;
+			   
+		   case fan:
+			   return CategoryTypeEnum.fan;
+			   
+		   case powertSupply:
+			   return CategoryTypeEnum.powertSupply;
+			   
+		   case stack:
+			   return CategoryTypeEnum.stack;
 
 		    default:
 			   break;
@@ -589,7 +638,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		/**
 		 * Only module need to check for version information.
 		 */
-		if ( pr.getEntityClass() == EntityClassEnum.module ) {
+		if ( pr.getEntityClass() == EntityClassEnum.module || pr.getEntityClass() == EntityClassEnum.chassis ) {
 			
 			if ( pr.getEntPhysicalSoftwareRev() != null )
 			{
@@ -644,7 +693,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		try {
 			
 			List<ID> attributeIds = new ArrayList<>();
-			if ( pr.getEntityClass() == EntityClassEnum.module ) {
+			if ( pr.getEntityClass() == EntityClassEnum.module || pr.getEntityClass() == EntityClassEnum.chassis ) {
 				SNMP snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.entPhysicalSerialNum);
 				attributeIds.add(snmp.getID());
 			}	
@@ -669,12 +718,25 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	public ServiceElement createAndDiscoverServiceElement( ServiceElementType set, PhysEntityRow row ) throws IntegerException {
 		
 		ServiceElement se = new ServiceElement();
+		
+		if ( discNode.getExistingSE() == null ) {
+			se.setCreated(new Date());
+		}
+		else {
+			se.setCreated(discNode.getExistingSE().getCreated());
+		}
 		se.setUpdated(new Date());
 		row.getEntPhysicalContainedIn();
 		se.setDescription(row.getEntPhysicalDescr());
 		
-		EntityElement parentEE = elmMap.get( Integer.toString(row.getEntPhysicalContainedIn() ));
-		se.setParentId(parentEE.serviceElement.getID());
+		if ( row.getEntPhysicalContainedIn() == 0 ) {
+			se.setParentId(discNode.getAccessElement().getID());
+		}
+		else {
+
+			EntityElement parentEE = elmMap.get( Integer.toString(row.getEntPhysicalContainedIn() ));
+			se.setParentId(parentEE.serviceElement.getID());
+		}
 		
 		se.setName(defineModelName(row.getEntPhysicalParentRelPos(), row.getEntityClass(), row));
 		logger.info("Create Element <" + se.getName() + "> " + " entityClass:" + row.getEntityClass().name() 
@@ -682,9 +744,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		
 	    se.setServiceElementTypeId(set.getID());
 	    
-	    String tblOid = getTableOidFromVBOid(CommonSnmpOids.entPhysicalClass);
-	    
-	    
+	    String tblOid = getTableOidFromVBOid(CommonSnmpOids.entPhysicalClass);	    
 		Map<String, TableRowIndex> tblInstMap = new HashMap<>();
 		
 		TableRowIndex trIndex = new TableRowIndex(tblOid, row.getIndex());
