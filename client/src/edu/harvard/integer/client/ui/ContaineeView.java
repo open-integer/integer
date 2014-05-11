@@ -39,7 +39,7 @@ public class ContaineeView extends HvTableViewPanel {
 			return;
 
 		for (ServiceElement se: results) {
-			Object[] row = {se.getName(), se.getConfiguredState(), se.getDescription()};
+			Object[] row = {se.getName(), "n/a", se.getDescription()};
 			flexTable.addRow(row);
 		}
 
