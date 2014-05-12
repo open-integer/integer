@@ -155,6 +155,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			serviceElements = serviceElementService.getServiceElementByParentId(id);
+			System.out.println("Found " + serviceElements.length + " ServiceElements for " + id);
 		} 
 		catch (Exception e) {
 			throw new Exception(e.getMessage());

@@ -42,7 +42,6 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
@@ -107,7 +106,9 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 		
 		ServiceElement[] topLevel = serviceElementDAO.findTopLevelServiceElements();
+		
 		for (int i = 0; i < topLevel.length; i++) {
+			logger.info("Top level Service element " + topLevel[i].getID());
 			
 			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
 				
@@ -127,7 +128,7 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		for (int i = 0; i < topLevel.length; i++) {
 			
 			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
-				
+			logger.info("Service element " + topLevel[i].getID() + " Parent " + parentId);	
 		}
 		return topLevel;
 	}

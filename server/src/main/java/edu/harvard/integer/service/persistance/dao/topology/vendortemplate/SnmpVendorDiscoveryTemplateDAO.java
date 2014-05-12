@@ -33,23 +33,16 @@
 
 package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.discovery.DiscoveryParseElement;
-import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -73,7 +66,12 @@ public class SnmpVendorDiscoveryTemplateDAO extends BaseDAO {
 	 * @param vendor
 	 */
 	public SnmpVendorDiscoveryTemplate findByVendor(Long vendor) throws IntegerException{
-		SnmpVendorDiscoveryTemplate snmpVendorDiscoveryTemplate = findByLongField(vendor, "vendor", SnmpVendorDiscoveryTemplate.class);
+		SnmpVendorDiscoveryTemplate[] templates = findByLongField(vendor, "vendor", SnmpVendorDiscoveryTemplate.class);
+	
+		SnmpVendorDiscoveryTemplate snmpVendorDiscoveryTemplate = null;
+		
+		if (templates.length > 0)
+			snmpVendorDiscoveryTemplate = templates[0];
 		
 		return snmpVendorDiscoveryTemplate;
 	}

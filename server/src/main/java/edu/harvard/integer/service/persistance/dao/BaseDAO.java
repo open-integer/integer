@@ -218,7 +218,7 @@ public class BaseDAO {
 	 * @param clazz
 	 * @return
 	 */
-	protected <T extends BaseEntity> T findByLongField(Long fieldValue,
+	protected <T extends BaseEntity> T[] findByLongField(Long fieldValue,
 			String fieldName, Class<T> clazz) {
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
@@ -238,10 +238,26 @@ public class BaseDAO {
 
 		List<T> resultList = typeQuery.getResultList();
 
-		if (resultList.size() > 0)
-			return resultList.get(0);
-		else
-			return null;
+
+		if (resultList != null) {
+			T[] objs = (T[]) Array.newInstance(clazz, resultList.size());
+
+			for (int i = 0; i < resultList.size(); i++) {
+				T t = resultList.get(i);
+
+				if (t instanceof BaseEntity)
+					logger.info("Found " + ((BaseEntity) t).getName() + " ID "
+							+ ((BaseEntity) t).getIdentifier());
+				else
+					logger.info("Found Non-BaseEntity " + t);
+
+				objs[i] = t;
+			}
+
+			return objs;
+		}
+		
+		return null;
 	}
 
 	/**
@@ -581,9 +597,10 @@ public class BaseDAO {
 
 					f.invoke(toInstance, value);
 
-					logger.info(toInstance.getClass().getSimpleName() + " "
-							+ ((BaseEntity) toInstance).getID() + " "
-							+ f.getName() + "(" + value + ")");
+					if (logger.isDebugEnabled())
+						logger.debug(toInstance.getClass().getSimpleName() + " "
+								+ ((BaseEntity) toInstance).getID() + " "
+								+ f.getName() + "(" + value + ")");
 
 				} catch (NoSuchMethodException e) {
 					throw new IntegerException(

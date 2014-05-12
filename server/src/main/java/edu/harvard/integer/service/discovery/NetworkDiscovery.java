@@ -141,31 +141,28 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		
 		logger.debug("In discoverNetwork ");
 		
-		try {
-			ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-			logger.debug("Interface Manager ... ");
-			
-		} catch (IntegerException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		List<Future<Ipv4Range>> discFuture = new ArrayList<>();
 		/**
 		 * Create subnet tasks based on discover configuration subnet.
 		 */
 		if ( discoverSeeds != null ) {
 			
-			ExecutorService exService =  DiscoveryManager.getInstance().getSubPool();
+			DiscoveryServiceInterface discoveryService = null;
+			try {
+				discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+			} catch (IntegerException e1) {
+				
+				logger.error("Error getting DiscoveryService " + e1.toString(), e1);
+			}
+		
 			for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
-			
 				
 				try {
 					@SuppressWarnings("unchecked")
 					DiscoverSubnetAsyncTask<ElementAccess> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
 	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
 					
-					Future<Ipv4Range> v = exService.submit(subTask);
+					Future<Ipv4Range> v = discoveryService.submitSubnetDiscovery(subTask);
 					discFuture.add(v);
 					
 				} catch (IntegerException e) {

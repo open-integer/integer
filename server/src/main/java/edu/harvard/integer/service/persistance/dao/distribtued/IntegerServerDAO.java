@@ -65,7 +65,11 @@ public class IntegerServerDAO extends BaseDAO {
 	 * @throws IntegerException
 	 */
 	public IntegerServer findByServerId(Long serverId) throws IntegerException {
-		return findByLongField(serverId, "serverId", IntegerServer.class);
+		 IntegerServer[] servers = findByLongField(serverId, "serverId", IntegerServer.class);
+		 if (servers.length > 0)
+			 return servers[0];
+		 else
+			 return null;
 	}
 
 	/**

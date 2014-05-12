@@ -32,15 +32,8 @@
  */
 package edu.harvard.integer.service.discovery;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
  * @author dchan
@@ -49,67 +42,5 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 public class DiscoveryManager {
 
 	private static Logger logger = LoggerFactory.getLogger(DiscoveryManager.class);
-    /**
-     * Use to limit the number of discovery tasks.  The number should be small since
-     * we are not suggest too many tasks for discovery.
-     */
-	private static int discoveryTaskLimit = 5;
 	
-	private static int subTaskLimit = 10;
-	
-	/**
-	 * Use to limit the number of element discovery task.
-	 */
-	private static int elementTaskLimit = 20;
-	
-
-	private ExecutorService pool = Executors.newFixedThreadPool(discoveryTaskLimit);
-	
-	private ExecutorService subPool = Executors.newFixedThreadPool(subTaskLimit);
-	
-	/**
-	 * Used to manager the task pool for element discovery.  
-	 */
-	private ExecutorService elementPool = Executors.newFixedThreadPool(elementTaskLimit);
-	
-	
-	
-	public static int getDiscoveryTaskLimit() {
-		return discoveryTaskLimit;
-	}
-
-	public static int getSubTaskLimit() {
-		return subTaskLimit;
-	}
-
-	public static int getElementTaskLimit() {
-		return elementTaskLimit;
-	}
-
-	public ExecutorService getPool() {
-		return pool;
-	}
-
-	public ExecutorService getSubPool() {
-		return subPool;
-	}
-
-	public ExecutorService getElementPool() {
-		return elementPool;
-	}
-
-	public static DiscoveryManager getMgrInst() {
-		return mgrInst;
-	}
-
-	private static DiscoveryManager mgrInst = new DiscoveryManager();
-	
-	public static DiscoveryManager getInstance() {
-		
-		return mgrInst;
-	}
-	
-	public Future<DiscoverNode> sutmitElementTask( ElementDiscoverTask elmTask ) {
-		return elementPool.submit(elmTask);
-	}
 }

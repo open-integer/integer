@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -58,7 +59,10 @@ import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.service.BaseService;
+import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
+import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
+import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 
 /**
  * @author David Taylor
@@ -75,23 +79,21 @@ public class DiscoveryService extends BaseService implements
 	@Inject
 	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManager;
 	
-    /**
-     * Use to limit the number of discovery tasks.  The number should be small since
-     * we are not suggest too many tasks for discovery.
-     */
-	private int discoveryTaskLimit = 5;
-	
+ 	
 	private int subTaskLimit = 10;
 	
 	/**
 	 * Use to limit the number of element discovery task.
 	 */
 	private int elementTaskLimit = 20;
-	
-	private ExecutorService pool = Executors.newFixedThreadPool(discoveryTaskLimit);
-	
+		
 	private ExecutorService subPool = Executors.newFixedThreadPool(subTaskLimit);
 		
+	/**
+	 * Used to manager the task pool for element discovery.  
+	 */
+	private ExecutorService elementPool = Executors.newFixedThreadPool(elementTaskLimit);
+	
 	/**
 	 * Discovery sequence id used for network discovery.  This id only valid within an integer server.
 	 */
@@ -115,16 +117,29 @@ public class DiscoveryService extends BaseService implements
 		}
 
 	}
-	
-	public ExecutorService getPool() {
-		return pool;
-	}
 
 	public ExecutorService getSubPool() {
 		return subPool;
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#submitElementDiscoveryTask(edu.harvard.integer.service.discovery.element.ElementDiscoverTask)
+	 */
+	@Override
+	public void submitElementDiscoveryTask(ElementDiscoverTask discoveryTask) {
+		elementPool.submit(discoveryTask);	
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#submitSubnetDiscovery(edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask)
+	 */
+	@Override
+	public Future<Ipv4Range> submitSubnetDiscovery(DiscoverSubnetAsyncTask task) {
+		return subPool.submit(task);
+	}
+
 	/**
 	 * Start a discovery with the given DiscoveryRule. The returned DiscoveryId can be used as a handle to 
 	 * get status of the discovery as well as stop the discovery.

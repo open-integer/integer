@@ -33,6 +33,9 @@
 
 package edu.harvard.integer.service.discovery;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
@@ -40,6 +43,9 @@ import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
+import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
+import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
+import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 
 
 /**
@@ -85,4 +91,18 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 */
 	void stopDiscovery(DiscoveryId id);
 
+
+	/**
+	 * Submit a ServiceElement Discovery task for execution.
+	 * 
+	 * @param discoveryTask
+	 */
+	void submitElementDiscoveryTask(ElementDiscoverTask discoveryTask);
+
+	/**
+	 * Submit a SubnetDiscovery task for execution.
+	 *  
+	 * @param task
+	 */
+	Future<Ipv4Range> submitSubnetDiscovery(DiscoverSubnetAsyncTask task);
 }

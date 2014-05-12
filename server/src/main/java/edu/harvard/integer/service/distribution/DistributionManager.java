@@ -43,7 +43,6 @@ import javax.naming.NamingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.distribution.DistributedManager;
 import edu.harvard.integer.common.distribution.DistributedService;
 import edu.harvard.integer.common.distribution.IntegerServer;

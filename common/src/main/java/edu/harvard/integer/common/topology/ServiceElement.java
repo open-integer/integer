@@ -209,16 +209,13 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	private int serviceElementCriticalityOverride = 0;
 
 	/**
-	 * Unique identifier of the Service Element. ID of the management object
+	 * Unique identifier of the Service Element. ID's of the management object
 	 * that is used to uniquely identify this object. ex. (IpAddress or serial
-	 * numnber)
+	 * number)
 	 */
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "uniqueIdentifierId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "uniqueIdentifierType")),
-			@AttributeOverride(name = "name", column = @Column(name = "uniqueIdentifierName")) })
-	private ID uniqueIdentifier = null;
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> uniqueIdentifierIds = null;
 
 	/**
 	 * If this value is not null, then the value it contains will be used in the
@@ -278,6 +275,10 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	@OrderColumn(name = "idx")
 	private List<ID> serviceElementProtocolInstanceIdentifiers = null;
 
+	public ServiceElement() {
+		super();
+	}
+	
 	/**
 	 * Configured state includes whether the service element is in compliance
 	 * with current policy or not. If it is not, then other methods would be
@@ -501,16 +502,16 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	/**
 	 * @return the uniqueIdentifier
 	 */
-	public ID getUniqueIdentifier() {
-		return uniqueIdentifier;
+	public List<ID> getUniqueIdentifierIds() {
+		return uniqueIdentifierIds;
 	}
 
 	/**
 	 * @param uniqueIdentifier
 	 *            the uniqueIdentifier to set
 	 */
-	public void setUniqueIdentifier(ID uniqueIdentifier) {
-		this.uniqueIdentifier = uniqueIdentifier;
+	public void setUniqueIdentifierIds(List<ID> uniqueIdentifierIds) {
+		this.uniqueIdentifierIds = uniqueIdentifierIds;
 	}
 
 	/**

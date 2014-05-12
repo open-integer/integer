@@ -35,8 +35,6 @@ package edu.harvard.integer.common;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-
-import edu.harvard.integer.common.discovery.VendorIdentifier;
 /**
  * @author David Taylor
  * 

@@ -108,8 +108,10 @@ public class HvFlexTable extends FlexTable {
 
 	    if (cellObject instanceof Widget)
 	      widget = (Widget) cellObject;
-	    else
+	    else if (cellObject != null)
 	      widget = new Label(cellObject.toString());
+	    else
+	    	widget = new Label("N/A");
 
 	    return widget;
 	}

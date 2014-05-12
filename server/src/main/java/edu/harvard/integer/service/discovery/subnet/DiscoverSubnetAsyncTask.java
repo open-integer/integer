@@ -55,11 +55,15 @@ import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.service.BaseServiceInterface;
 import edu.harvard.integer.service.discovery.DiscoveryManager;
+import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ServiceTypeEnum;
 
 
 /**
@@ -315,7 +319,8 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		ElementDiscoverTask<E> elmTask = null;
 		try {
 			elmTask = new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));
-			DiscoveryManager.getInstance().sutmitElementTask(elmTask);	
+			DiscoveryServiceInterface service = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+			service.submitElementDiscoveryTask(elmTask);
 		} 
 		catch (IntegerException e) {
 			logger.info("Exception on element discover task " + e.getMessage());
