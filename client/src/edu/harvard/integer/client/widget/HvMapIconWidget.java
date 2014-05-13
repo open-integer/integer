@@ -37,11 +37,13 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 	private ServiceElement serviceElement;
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
 	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
+	private NodeMouseClickHandler clickHandler;
 	private boolean highlighted = false;
 	
-	public HvMapIconWidget(Picture picture, ServiceElement serviceElement) {
+	public HvMapIconWidget(Picture picture, ServiceElement serviceElement, NodeMouseClickHandler clickHandler) {
 		this.picture = picture;
 		this.serviceElement = serviceElement;
+		this.clickHandler = clickHandler;
 		
 		setDraggable(true);
 		setListening(true);
@@ -162,9 +164,11 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 
 	@Override
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
-		SystemSplitViewPanel.showContaineeView(serviceElement);
+		if (clickHandler != null)
+			clickHandler.onNodeMouseClick(event);
+		// SystemSplitViewPanel.showContaineeView(serviceElement);
 		
-		setHighLighted(!highlighted);
+		setHighLighted(true); // highlighted whenever it gets clicked for now
 	}
 	
 	public void setHighLighted(boolean highlighted) {

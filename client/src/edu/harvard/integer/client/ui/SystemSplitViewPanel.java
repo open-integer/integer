@@ -3,6 +3,8 @@ package edu.harvard.integer.client.ui;
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Window;
@@ -17,6 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.DragImageWidget;
+import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -34,14 +37,32 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public static final String title = "Device Children";
 	public static final String[] headers = {"Name", "Status", "Description"};
 	public static ContaineeView containeeView = null;
+	
+	public static HvIconButton detailsButton = new HvIconButton("Details");
+
+	public static ServiceElement selectedElement;
 
 	private LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH, CONTENT_HEIGHT);
 
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
 
-        DragImageWidget dragImageWidget = new DragImageWidget(WIDGET_WIDTH, WIDGET_HEIGHT);
-        networkPanel.add(dragImageWidget);
+        //DragImageWidget dragImageWidget = new DragImageWidget(WIDGET_WIDTH, WIDGET_HEIGHT);
+		final DeviceMap deviceMap = new DeviceMap(WIDGET_WIDTH, WIDGET_HEIGHT);
+		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Failed to receive Devices from Integer");
+			}
+
+			@Override
+			public void onSuccess(ServiceElement[] result) {
+				deviceMap.update(result);
+			}
+		});
+		
+        networkPanel.add(deviceMap);
         
         networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
         LienzoPanel.enableWindowMouseWheelScroll(true);
@@ -62,9 +83,23 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 		HorizontalPanel mapToolbarPanel = new HorizontalPanel();
 		mapToolbarPanel.setStyleName("toolbar");
-		HvIconButton addButton = new HvIconButton("Details");
-		mapToolbarPanel.add(addButton);
-		mapToolbarPanel.add(new HvIconButton("Compare"));
+		
+		// Details button
+		detailsButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				selectedElement = deviceMap.getSelectedElement();
+				ServiceElementPanel detailsPanel = new ServiceElementPanel();
+				HvDialogBox detailsDialog = new HvDialogBox("Service Element: " + selectedElement.getName(),
+						detailsPanel);
+				detailsDialog.setSize("400px", "200px");
+				detailsDialog.center();
+				detailsDialog.show();
+			}
+			
+		});
+		mapToolbarPanel.add(detailsButton);
 		
 		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		eastSplitPanel.setSize("100%",  "500px");
@@ -203,8 +238,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			}
 
 			@Override
-			public void onSuccess(ServiceElement[] result) {
-				containeeView.update(se.getName(), result);
+			public void onSuccess(ServiceElement[] results) {
+				containeeView.update(se.getName(), results);
 			}
 		});
 		

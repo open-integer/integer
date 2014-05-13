@@ -1,5 +1,7 @@
 package edu.harvard.integer.client.ui;
 
+import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
 import com.emitrom.lienzo.client.core.shape.Picture;
 
 import edu.harvard.integer.client.resources.Resources;
@@ -13,6 +15,8 @@ public class DeviceMap extends WidgetLayer {
 	public static final int START_DRAW_Y = 30;
 	public static final int ICON_WIDTH = 60;
 	public static final int ICON_HEIGHT = 60;
+	
+	private ServiceElement selectedElement;
 	
 	public DeviceMap(int width, int height) {
 		super(width, height);
@@ -28,17 +32,33 @@ public class DeviceMap extends WidgetLayer {
 		update(serviceElements);
 	}*/
 
+	public ServiceElement getSelectedElement() {
+		return selectedElement;
+	}
+
+	public void setSelectedElement(ServiceElement selectedElement) {
+		this.selectedElement = selectedElement;
+	}
+
 	public void update(ServiceElement[] result) {
 		removeAll();
 		
 		int col = 0;
 		int row = 0;
-		for (ServiceElement device : result) {
+		for (final ServiceElement device : result) {
 			int x = col * ICON_WIDTH*2 + START_DRAW_X;
         	int y = row * ICON_HEIGHT*2 + START_DRAW_Y;
         	
         	Picture picture = new Picture(Resources.IMAGES.pcom(), ICON_WIDTH, ICON_HEIGHT, true, null);
-        	HvMapIconWidget icon = new HvMapIconWidget(picture, device);
+        	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
+
+        		@Override
+        		public void onNodeMouseClick(NodeMouseClickEvent event) {
+        			selectedElement = device;
+        		}
+        		
+        	};
+        	HvMapIconWidget icon = new HvMapIconWidget(picture, device, mouseClickHandler);
         	icon.draw(x, y);
         	
         	if (col < 5)
@@ -50,5 +70,7 @@ public class DeviceMap extends WidgetLayer {
         	add(icon);
 		}
 	}
+	
+	
 
 }

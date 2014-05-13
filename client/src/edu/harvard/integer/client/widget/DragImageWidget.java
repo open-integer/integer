@@ -93,7 +93,7 @@ public class DragImageWidget extends WidgetLayer {
 	        	int y = row * IMAGE_HEIGHT*2 + 30;
 	        	ServiceElement serviceElement = new ServiceElement();
 	        	serviceElement.setName("192.168.1."+i++);
-	        	HvMapIconWidget icon = new HvMapIconWidget(picture, serviceElement);
+	        	HvMapIconWidget icon = new HvMapIconWidget(picture, serviceElement, null);
 	        	HvMapIconWidget last_icon = null;
 	        	
 	        	if (col > 0) {
