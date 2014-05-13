@@ -187,7 +187,10 @@ serviceElementTypes:
                 mib: IP-MIB
                 objectName: ipAdEntAddr
                 index: null
-            capabilities: [ ipv4-network-address ]
+            capabilities: 
+                - name: ipv4-network-address
+                  index: [ ipAdEntAddr ]
+            unique: 1
 
           - name: ipAdEntIfIndex 
             uri:
@@ -195,7 +198,9 @@ serviceElementTypes:
                 mib: IP-MIB
                 objectName: ipAdEntIfIndex
                 index: [ ipAdEntAddr ]
-            capabilities: [ ipv4-network-ifIndex ]
+            capabilities: 
+                - name: ipv4-network-ifIndex
+                  index: [ ipAdEntAddr ]
 
           - name: ipAdEntNetMask
             uri:
@@ -203,7 +208,9 @@ serviceElementTypes:
                 mib: IP-MIB
                 objectName: ipAdEntNetMask
                 index: [ ipAdEntAddr ]
-            capabilities: [ ipv4-network-mask ]
+            capabilities: 
+                - name: ipv4-network-mask 
+                  index: [ ipAdEntAddr ]
 
           - name: ipAdEntReasmMaxSize
             uri:
@@ -211,23 +218,24 @@ serviceElementTypes:
                 mib: IP-MIB
                 objectName: ipAdEntReasmMaxSize
                 index: [ ipAdEntAddr ]
-            capabilities: [ ipv4-network-reassembleSize ]
+            capabilities: 
+                - name: ipv4-network-reassembleSize
+                  index: [ ipAdEntAddr ]
 
           - name: ipForwarding
             uri:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipForwarding
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-forwarding ]
-            unique: 1
 
           - name: ipDefaultTTL
             uri:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipDefaultTTL
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-defaultTTL ]
 
           - name: ipInReceives
@@ -235,7 +243,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipInReceives
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-inputReceives ]
 
           - name: ipInHdrErrors
@@ -243,7 +251,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipInHdrErrors
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-inputHeaderErrors ]
 
           - name: ipForwDatagrams
@@ -251,7 +259,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipForwDatagrams
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-forwarded ]
 
           - name: ipInUnknownProtos
@@ -259,7 +267,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipInUnknownProtos
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-unknownProtocols ]
 
           - name: ipInDiscards
@@ -267,7 +275,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipInDiscards
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-inputDiscards ]
 
           - name: ipInDelivers
@@ -275,7 +283,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipInDelivers
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-inputDeliveries ]
 
           - name: ipOutRequests
@@ -283,7 +291,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipOutRequests
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-outputRequests ]
 
           - name: ipOutDiscards
@@ -291,7 +299,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipOutDiscards
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-outputDiscards ]
 
           - name: ipOutNoRoutes
@@ -299,7 +307,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipOutNoRoutes
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-outputNoRoutes ]
 
           - name: ipReasmTimeout
@@ -307,7 +315,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipReasmTimeout
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-reassemblyTimeout ]
 
           - name: ipReasmReqds
@@ -315,7 +323,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipReasmReqds
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-reassemblyRequired ]
 
           - name: ipReasmOKs
@@ -323,7 +331,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipReasmOKs
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-reassemblyOk ]
 
           - name: ipReasmFails
@@ -331,7 +339,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipReasmFails
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-reassemblyFails ]
 
           - name: ipFragOKs
@@ -339,7 +347,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipFragOKs 
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-outputFragmentOk ]
 
           - name: ipFragFails
@@ -347,7 +355,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipFragFails
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-outputFragmentFails ]
 
           - name: ipFragCreates
@@ -355,7 +363,7 @@ serviceElementTypes:
                 protocol: SNMP
                 mib: IP-MIB
                 objectName: ipFragCreates
-                index: [ 0 ]
+                index: null
             capabilities: [ ipv4-global-outputFragments ]
 
 ...
