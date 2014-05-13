@@ -166,7 +166,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
 		if (clickHandler != null)
 			clickHandler.onNodeMouseClick(event);
-		// SystemSplitViewPanel.showContaineeView(serviceElement);
+		SystemSplitViewPanel.showContaineeTreeView(serviceElement);
 		
 		setHighLighted(true); // highlighted whenever it gets clicked for now
 	}

@@ -151,7 +151,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public ServiceElement[] getServiceElementByParentId(ID id) throws Exception {
-		ServiceElement[] serviceElements;
+		ServiceElement[] serviceElements = null;
 
 		try {
 			serviceElements = serviceElementService.getServiceElementByParentId(id);

@@ -36,7 +36,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	public static final String title = "Device Children";
 	public static final String[] headers = {"Name", "Status", "Description"};
-	public static ContaineeView containeeView = null;
+	public static ContaineeTreeView containeeTreeView = null;
 	
 	public static HvIconButton detailsButton = new HvIconButton("Details");
 
@@ -104,10 +104,10 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		eastSplitPanel.setSize("100%",  "500px");
 		
-		containeeView = new ContaineeView(title, headers);
-		eastSplitPanel.addEast(containeeView, 300);
-		eastSplitPanel.setWidgetHidden(containeeView, true);
-		eastSplitPanel.setWidgetToggleDisplayAllowed(containeeView, true);
+		containeeTreeView = new ContaineeTreeView(title, headers);
+		eastSplitPanel.addEast(containeeTreeView, 300);
+		eastSplitPanel.setWidgetHidden(containeeTreeView, true);
+		eastSplitPanel.setWidgetToggleDisplayAllowed(containeeTreeView, true);
 		eastSplitPanel.add(networkPanel);
 		
 		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);
@@ -223,23 +223,32 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		return eventView;
 	}
 
-	public static void enableContaineeView(boolean enable) {
-		eastSplitPanel.setWidgetHidden(containeeView, !enable);
+	public static void enablecontaineeTreeView(boolean enable) {
+		eastSplitPanel.setWidgetHidden(containeeTreeView, !enable);
 	}
 	
-	public static void showContaineeView(final ServiceElement se) {
-		containeeView.updateTitle(se.getName());
-		eastSplitPanel.setWidgetHidden(containeeView, false);
+	public static void showContaineeTreeView(final ServiceElement se) {
+		//containeeTreeView.updateTitle(se.getName());
+		eastSplitPanel.setWidgetHidden(containeeTreeView, false);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert("Error");
 			}
 
 			@Override
-			public void onSuccess(ServiceElement[] results) {
-				containeeView.update(se.getName(), results);
+			public void onSuccess(ServiceElement[] serviceElements) {
+				if (serviceElements == null || serviceElements.length == 0) {
+					serviceElements = new ServiceElement[9];
+					for (int i = 0; i < serviceElements.length; i++) {
+						serviceElements[i] = new ServiceElement();
+						serviceElements[i].setName("fake-se" + (i+1));
+					}
+				}
+				
+				containeeTreeView.updateTree(se.getName(), serviceElements);
 			}
 		});
 		
