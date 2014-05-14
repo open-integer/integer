@@ -40,6 +40,7 @@ import javax.ejb.Local;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
@@ -308,6 +309,25 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * @throws IntegerException
 	 */
 	ServiceElementManagementObject[] getManagementObjectsByIds(ID[] ids)
+			throws IntegerException;
+
+	/**
+	 * Update the management object value specified. The Identifier will be valid after this call.
+	 * @param managementObjectValue
+	 * @return
+	 * @throws IntegerException
+	 */
+	ManagementObjectValue updateManagementObjectValue(
+			ManagementObjectValue managementObjectValue)
+			throws IntegerException;
+
+	/**
+	 * Load the management object value specified by the given ID.
+	 * @param ids
+	 * @return
+	 * @throws IntegerException
+	 */
+	ManagementObjectValue getManagementObjectValuesById(ID ids)
 			throws IntegerException;
 
 }

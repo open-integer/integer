@@ -45,6 +45,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
@@ -56,6 +57,7 @@ import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.SnmpServiceElementTypeOverrideDAO;
@@ -491,5 +493,26 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 	public void deleteManagementObject(ID id) throws IntegerException {
 		ServiceElementManagementObjectDAO dao = dbm.getServiceElementManagementObjectDAO();
 		dao.delete(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#updateManagementObjectValue(edu.harvard.integer.common.managementobject.ManagementObjectValue)
+	 */
+	@Override
+	public ManagementObjectValue updateManagementObjectValue(ManagementObjectValue managementObjectValue) throws IntegerException {
+		ManagementObjectValueDAO managementObjectValueDAO = dbm.getManagementObjectValueDAO();
+		return managementObjectValueDAO.update(managementObjectValue);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getManagementObjectValuesById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ManagementObjectValue getManagementObjectValuesById(ID id) throws IntegerException {
+		ManagementObjectValueDAO managementObjectValueDAO = dbm.getManagementObjectValueDAO();
+		
+		return managementObjectValueDAO.findById(id);
 	}
 }
