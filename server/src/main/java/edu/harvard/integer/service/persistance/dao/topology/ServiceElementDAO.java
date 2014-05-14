@@ -102,6 +102,13 @@ public class ServiceElementDAO extends BaseDAO {
 			serviceElement.setAttributeValues(dbValues);
 		}
 		
+		if (serviceElement.getParentId() != null) {
+			ServiceElement parent = findById(serviceElement.getParentId());
+			if (parent != null)
+				parent.setHasChildren(true);
+			update(parent);
+		}
+		
 		super.preSave(entity);
 	}
 

@@ -103,7 +103,8 @@ public class ServiceElement extends BaseEntity implements Serializable {
 			@AttributeOverride(name = "name", column = @Column(name = "parentName")) })
 	private ID parentId = null;
 
-
+	private Boolean hasChildren = null;
+	
 	// Since some ServiceElements will have many capabilities this attribute
 	// will list all the capabilities the serviceElement has. This does not mean
 	// that the service element has been configured, that would be determined by
@@ -633,6 +634,20 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	public void setServiceElementProtocolInstanceIdentifiers(
 			List<ID> serviceElementProtocolInstanceIdentifiers) {
 		this.serviceElementProtocolInstanceIdentifiers = serviceElementProtocolInstanceIdentifiers;
+	}
+
+	/**
+	 * @return the hasChildren
+	 */
+	public Boolean getHasChildren() {
+		return hasChildren;
+	}
+
+	/**
+	 * @param hasChildren the hasChildren to set
+	 */
+	public void setHasChildren(Boolean hasChildren) {
+		this.hasChildren = hasChildren;
 	}
 
 }
