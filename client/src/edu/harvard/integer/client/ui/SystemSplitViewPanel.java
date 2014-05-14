@@ -18,7 +18,6 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
-import edu.harvard.integer.client.widget.DragImageWidget;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -240,17 +239,25 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onSuccess(ServiceElement[] serviceElements) {
-				if (serviceElements == null || serviceElements.length == 0) {
+				/*if (serviceElements == null || serviceElements.length == 0) {
 					serviceElements = new ServiceElement[9];
 					for (int i = 0; i < serviceElements.length; i++) {
 						serviceElements[i] = new ServiceElement();
 						serviceElements[i].setName("fake-se" + (i+1));
 					}
 				}
-				
+				*/
 				containeeTreeView.updateTree(se.getName(), serviceElements);
 			}
 		});
+		
+		/*ServiceElement[] serviceElements = new ServiceElement[9];
+		for (int i = 0; i < serviceElements.length; i++) {
+			serviceElements[i] = new ServiceElement();
+			serviceElements[i].setName("fake-se" + (i+1));
+		}
+	
+		containeeTreeView.updateTree(se.getName(), serviceElements);*/
 		
 	}
 }

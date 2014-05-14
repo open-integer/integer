@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
-import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -34,29 +33,40 @@ public class ContaineeTreeView extends VerticalPanel {
 		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 
 			@Override
-			public void onSelection(SelectionEvent event) {
-				final TreeItem selectedItem = tree.getSelectedItem();
-				ID id = new ID();
-				id.setName(selectedItem.getText());
-				MainClient.integerService.getServiceElementByParentId(id, new AsyncCallback<ServiceElement[]>() {
+			public void onSelection(SelectionEvent<TreeItem> event) {
+				final TreeItem treeItem = event.getSelectedItem();
+				
+				ServiceElement se = (ServiceElement)treeItem.getUserObject();
+				
+				MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						for (int i = 0; i < 3; i++) {
-							selectedItem.addTextItem("grand son-"+i);
-						}
+						/*for (int i = 0; i < 3; i++) {
+							ServiceElement se = new ServiceElement();
+							se.setName("fake son-" + i);
+							TreeItem item = new TreeItem();
+							item.setText(se.getName());
+							item.setUserObject(se);
+							treeItem.addItem(item);
+						}*/
 					}
 
 					@Override
 					public void onSuccess(ServiceElement[] serviceElements) {
-						if (serviceElements == null || serviceElements.length == 0) {
+						/*if (serviceElements == null || serviceElements.length == 0) {
+							serviceElements = new ServiceElement[4];
 							for (int i = 0; i < 4; i++) {
-								selectedItem.addTextItem("grand child-"+i);
+								serviceElements[i] = new ServiceElement();
+								serviceElements[i].setName("grand son-" + i);
 							}
-						}
+						}*/
 						
 						for (ServiceElement se : serviceElements) {
-							selectedItem.addTextItem(se.getName());
+							TreeItem item = new TreeItem();
+							item.setText(se.getName());
+							item.setUserObject(se);
+							treeItem.addItem(item);
 						}
 					}
 				});
@@ -82,8 +92,11 @@ public class ContaineeTreeView extends VerticalPanel {
 	    TreeItem root = new TreeItem();
 	    root.setText(name);
 	    
-	    for (ServiceElement element : elements) {
-	    	root.addTextItem(element.getName());
+	    for (ServiceElement se : elements) {
+	    	TreeItem item = new TreeItem();
+	    	item.setUserObject(se);
+	    	item.setText(se.getName());
+	    	root.addItem(item);
 	    }
 	    
 	    root.setState(true);
