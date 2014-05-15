@@ -9,7 +9,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -17,7 +16,7 @@ import edu.harvard.integer.common.topology.ServiceElement;
 /**
  * The Class CapabilityView.
  */
-public class ContaineeTreeView extends VerticalPanel {
+public class ContaineeTreeView extends ScrollPanel {
 	
 	private Tree tree = new Tree();
 	
@@ -53,15 +52,7 @@ public class ContaineeTreeView extends VerticalPanel {
 					}
 
 					@Override
-					public void onSuccess(ServiceElement[] serviceElements) {
-						/*if (serviceElements == null || serviceElements.length == 0) {
-							serviceElements = new ServiceElement[4];
-							for (int i = 0; i < 4; i++) {
-								serviceElements[i] = new ServiceElement();
-								serviceElements[i].setName("grand son-" + i);
-							}
-						}*/
-						
+					public void onSuccess(ServiceElement[] serviceElements) {	
 						for (ServiceElement se : serviceElements) {
 							TreeItem item = new TreeItem();
 							item.setText(se.getName());
@@ -74,10 +65,7 @@ public class ContaineeTreeView extends VerticalPanel {
 			
 		});
 		
-	    ScrollPanel staticTreeWrapper = new ScrollPanel(tree);
-	    staticTreeWrapper.setSize("250px", "500px");
-	    
-	    add(tree);
+	    setWidget(tree);
 	}
 
 	/**
