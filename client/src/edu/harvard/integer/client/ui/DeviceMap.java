@@ -2,35 +2,37 @@ package edu.harvard.integer.client.ui;
 
 import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
 import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
+import com.emitrom.lienzo.client.core.shape.Layer;
 import com.emitrom.lienzo.client.core.shape.Picture;
 
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.widget.HvMapIconWidget;
-import edu.harvard.integer.client.widget.WidgetLayer;
 import edu.harvard.integer.common.topology.ServiceElement;
 
-public class DeviceMap extends WidgetLayer {
-	//private static final int DEVICE_COUNT = 20;
-	public static final int START_DRAW_X = 30;
-	public static final int START_DRAW_Y = 30;
-	public static final int ICON_WIDTH = 60;
-	public static final int ICON_HEIGHT = 60;
+public class DeviceMap extends Layer {
+	public static final int OFFSET_X = 30;
+	public static final int OFFSET_Y = 30;
+	
+	private int icon_row_total;
+	private int icon_col_total;
+	private int icon_width;
+	private int icon_height;
 	
 	private ServiceElement selectedElement;
 	
-	public DeviceMap(int width, int height) {
-		super(width, height);
-		//init();
+	public DeviceMap() {
+		//super(width, height);
+		//demo();
 	}
 
-	/*private void init() {
-		ServiceElement[] serviceElements = new ServiceElement[DEVICE_COUNT];
-		for (int i = 0; i < DEVICE_COUNT; i++) {
+	public void demo(int total) {
+		ServiceElement[] serviceElements = new ServiceElement[total];
+		for (int i = 0; i < total; i++) {
 			serviceElements[i] = new ServiceElement();
 			serviceElements[i].setName("cisco."+i);
 		}
 		update(serviceElements);
-	}*/
+	}
 
 	public ServiceElement getSelectedElement() {
 		return selectedElement;
@@ -39,17 +41,25 @@ public class DeviceMap extends WidgetLayer {
 	public void setSelectedElement(ServiceElement selectedElement) {
 		this.selectedElement = selectedElement;
 	}
+	
+	private void init_layout(int total) {
+		icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
+		icon_col_total = 2 * icon_row_total;
+		icon_width = SystemSplitViewPanel.CONTENT_WIDTH / (2 * icon_col_total);
+		icon_height = icon_width;
+	}
 
 	public void update(ServiceElement[] result) {
 		removeAll();
+		init_layout(result.length);
 		
 		int col = 0;
 		int row = 0;
 		for (final ServiceElement device : result) {
-			int x = col * ICON_WIDTH*2 + START_DRAW_X;
-        	int y = row * ICON_HEIGHT*2 + START_DRAW_Y;
+			int x = col * icon_width*2 + OFFSET_X;
+        	int y = row * icon_height*2 + OFFSET_Y;
         	
-        	Picture picture = new Picture(Resources.IMAGES.pcom(), ICON_WIDTH, ICON_HEIGHT, true, null);
+        	Picture picture = new Picture(Resources.IMAGES.pcom(), icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
         		@Override
@@ -61,7 +71,7 @@ public class DeviceMap extends WidgetLayer {
         	HvMapIconWidget icon = new HvMapIconWidget(picture, device, mouseClickHandler);
         	icon.draw(x, y);
         	
-        	if (col < 5)
+        	if (col < icon_col_total)
         		col++;
         	else {
         		col = 0;

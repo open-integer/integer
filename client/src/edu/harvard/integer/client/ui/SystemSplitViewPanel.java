@@ -23,11 +23,10 @@ import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 public class SystemSplitViewPanel extends SplitLayoutPanel {
-	private static final int SPLITTER_SIZE = 4;
-	private static final int CONTENT_WIDTH = 1200;
-	private static final int CONTENT_HEIGHT = 550;
-	private static final int WIDGET_WIDTH = 90;
-	private static final int WIDGET_HEIGHT = 50;
+	public static final int SPLITTER_SIZE = 4;
+	public static final int CONTENT_WIDTH = 1200;
+	public static final int CONTENT_HEIGHT = 600;
+	public static final int WESTPANEL_WIDTH = 250;
 	
 	public static SplitLayoutPanel westPanel = null;
 	public static DockPanel eastPanel = null;
@@ -47,12 +46,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		super(SPLITTER_SIZE);
 
         //DragImageWidget dragImageWidget = new DragImageWidget(WIDGET_WIDTH, WIDGET_HEIGHT);
-		final DeviceMap deviceMap = new DeviceMap(WIDGET_WIDTH, WIDGET_HEIGHT);
+		final DeviceMap deviceMap = new DeviceMap();
 		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Failed to receive Devices from Integer");
+				// Window.alert("Failed to receive Devices from Integer");
+				deviceMap.demo(100);
 			}
 
 			@Override
@@ -113,7 +113,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
 		eastPanel.add(eventView, DockPanel.SOUTH);
 		
-		addWest(westPanel, 250);
+		addWest(westPanel, WESTPANEL_WIDTH);
 		add(eastPanel);
 	}
 	
@@ -149,7 +149,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 					
 		            networkPanel.removeAll();
 
-		            final DeviceMap deviceMap = new DeviceMap(WIDGET_WIDTH, WIDGET_HEIGHT);
+		            final DeviceMap deviceMap = new DeviceMap();
 		            
 		            networkPanel.add(deviceMap);
 		            networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
@@ -158,7 +158,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							Window.alert("Failed to receive Devices from Integer");
+							//Window.alert("Failed to receive Devices from Integer");
+							deviceMap.demo(1000);
 						}
 
 						@Override
@@ -251,13 +252,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			}
 		});
 		
-		/*ServiceElement[] serviceElements = new ServiceElement[9];
+		ServiceElement[] serviceElements = new ServiceElement[39];
 		for (int i = 0; i < serviceElements.length; i++) {
 			serviceElements[i] = new ServiceElement();
 			serviceElements[i].setName("fake-se" + (i+1));
 		}
 	
-		containeeTreeView.updateTree(se.getName(), serviceElements);*/
+		containeeTreeView.updateTree(se.getName(), serviceElements);
 		
 	}
 }

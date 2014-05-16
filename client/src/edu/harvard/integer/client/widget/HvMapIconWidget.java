@@ -40,6 +40,11 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 	private NodeMouseClickHandler clickHandler;
 	private boolean highlighted = false;
 	
+	private int clippedImageWidth;
+	private int clippedImageHeight;
+	private int fontSize ;
+	private int labelBelowOffset;
+	
 	public HvMapIconWidget(Picture picture, ServiceElement serviceElement, NodeMouseClickHandler clickHandler) {
 		this.picture = picture;
 		this.serviceElement = serviceElement;
@@ -49,15 +54,18 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 		setListening(true);
 
 		final HvMapIconPopup popup = new HvMapIconPopup(serviceElement.getName(), "Ok", "Cambridge");
-		final int dw = (int)picture.getClippedImageDestinationWidth()*3/2;
-		final int dh = (int)picture.getClippedImageDestinationHeight()/2;
-		
+		clippedImageWidth = (int)picture.getClippedImageDestinationWidth();
+		clippedImageHeight = (int)picture.getClippedImageDestinationHeight();
+		fontSize = (int) Math.ceil(clippedImageWidth * 2 / 9);
+		labelBelowOffset = clippedImageHeight + (int) Math.ceil(clippedImageHeight * 15 / 90);
 		
 		picture.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
             
 			@Override
 			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
-				popup.setPopupPosition(event.getX()+dw, event.getY()+dh);
+				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX();
+				int y = 100 - clippedImageHeight/2 + event.getY(); // sum of topBanner and topMenu height - clippedImageHeight/2;
+				popup.setPopupPosition(x, y);
 				popup.show();
 			}  
         });  
@@ -78,9 +86,6 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 	}
 	
 	public void draw(int x, int y) {
-		/*center_x = x + DragImageWidget.IMAGE_WIDTH/2;
-		center_y = y + DragImageWidget.IMAGE_HEIGHT/2;*/
-		
 		picture.setStrokeColor(ColorName.CYAN).setStrokeWidth(3).setX(x).setY(y).onLoad(new PictureLoadedHandler() {
 
 			@Override
@@ -91,8 +96,8 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 			
 		});
 		
-		Text text = new Text(serviceElement.getName(), "oblique normal bold", 20);
-		text.setX(x).setY(y+DragImageWidget.IMAGE_HEIGHT+16).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
+		Text text = new Text(serviceElement.getName(), "oblique normal bold", fontSize);
+		text.setX(x).setY(y+labelBelowOffset).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
 		add(text);
 	}
 	
