@@ -36,7 +36,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public static final String[] headers = {"Name", "Status", "Description"};
 	public static ContaineeTreeView containeeTreeView = null;
 	
-	public static HvIconButton detailsButton = new HvIconButton("Details");
+	public static HvIconButton detailsButton = new HvIconButton("Summary");
 
 	public static ServiceElement selectedElement;
 
@@ -92,7 +92,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				ServiceElementPanel detailsPanel = new ServiceElementPanel();
 				HvDialogBox detailsDialog = new HvDialogBox("Service Element: " + selectedElement.getName(),
 						detailsPanel);
-				detailsDialog.setSize("400px", "200px");
+				detailsDialog.setSize("400px", "150px");
 				detailsDialog.center();
 				detailsDialog.show();
 			}
@@ -158,12 +158,15 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							//Window.alert("Failed to receive Devices from Integer");
-							deviceMap.demo(1000);
+							Window.alert("Failed to receive Devices from Integer");
+							deviceMap.demo(500);
 						}
 
 						@Override
 						public void onSuccess(ServiceElement[] result) {
+							if (result != null || result.length == 0)
+								deviceMap.demo(1000);
+							
 							deviceMap.update(result);
 						}
 					});
