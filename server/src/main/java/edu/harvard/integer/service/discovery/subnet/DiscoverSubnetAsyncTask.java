@@ -235,6 +235,9 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     			}
     			
     			String ip = range.next();
+    			if ( ip.equals("10.240.127.2") ) {
+    				ip = "127.0.0.1";
+    			}
     			
     			DiscoverNode dn = new DiscoverNode(ip);
     			dn.setSubnetId(seed.getSeedId());

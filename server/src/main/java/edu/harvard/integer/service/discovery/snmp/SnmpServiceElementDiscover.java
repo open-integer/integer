@@ -47,6 +47,8 @@ import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.access.snmp.MacIPInfo;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
@@ -72,8 +74,13 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
- * @author dchan
+ * The Class SnmpServiceElementDiscover is the base class for all SNMP service element
+ * discover classes.  It provides some basic methods used on SNMP service element discovery.
+ * 
+ * In order to kick off a discover for a service element this abstract method "discover"
+ * is called. 
  *
+ * @author dchan
  */
 public abstract class SnmpServiceElementDiscover  {
 
@@ -81,20 +88,25 @@ public abstract class SnmpServiceElementDiscover  {
     private static Logger logger = LoggerFactory.getLogger(SnmpServiceElementDiscover.class);
 
     
-    /** The disc mgr. */
+    /** The discovery manager. */
 	protected ServiceElementDiscoveryManagerInterface discMgr;
 	
-	/** The access mgr. */
+	/** The service element access manager. */
 	protected ServiceElementAccessManagerInterface accessMgr;
 	
-	/** The snmp mgr. */
+	/** The snmp manager. */
 	protected SnmpManagerInterface snmpMgr;
 	
-	/** The cap mgr. */
+	/** The capability manager. */
 	protected ManagementObjectCapabilityManagerInterface capMgr;
 	
 	
 	
+	/**
+	 * Instantiates a new snmp service element discover.
+	 *
+	 * @throws IntegerException the integer exception
+	 */
 	public SnmpServiceElementDiscover() throws IntegerException {
 		
 		capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
@@ -105,17 +117,18 @@ public abstract class SnmpServiceElementDiscover  {
 	
     
 	/**
-	 * 
-	 * @param ePoint
-	 * @param se
-	 * @param set
-	 * @throws IntegerException 
+	 * Discover service element attributes which defined on the service element type.
+	 *
+	 * @param ePoint for the device
+	 * @param se -- service element on which attributes be set.
+	 * @param set the service element type for the service element
+	 * @param instOid the inst oid of the service element attributes.
+	 * @throws IntegerException the integer exception
 	 */
 	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
 			                                     ServiceElement se, 
 			                                     ServiceElementType set,
 			                                     String instOid ) throws IntegerException {
-		
 		
 		if ( set.getAttributeIds() != null && set.getAttributeIds().size() > 0 ) {
 			
@@ -151,8 +164,6 @@ public abstract class SnmpServiceElementDiscover  {
 				}
 				
 			    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
-			    logger.info("Retrieve SNMP request back from " + ePoint.getIpAddress());
-			    
 			    List<ManagementObjectValue> attributes = se.getAttributeValues();
 				if ( attributes == null )
 				{
@@ -179,6 +190,7 @@ public abstract class SnmpServiceElementDiscover  {
 							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
 							
 							iv.setValue(vb.getVariable().toInt());
+							iv.setManagementObject(snmp.getID());
 							
 							se.getAttributeValues().add(iv);
 							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
@@ -189,7 +201,8 @@ public abstract class SnmpServiceElementDiscover  {
 						
 							ManagementObjectStringValue sv = new ManagementObjectStringValue();
                             sv.setValue(vb.getVariable().toString());
-							
+                            sv.setManagementObject(snmp.getID());
+                            
 							se.getAttributeValues().add(sv);
 							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
 				            inst.setValue(instOid);
@@ -205,11 +218,14 @@ public abstract class SnmpServiceElementDiscover  {
     
     
 	/**
-	 * 
-	 * @param ePoint
-	 * @param se
-	 * @param set
-	 * @throws IntegerException 
+	 * Discover service element attributes similar to another discover attributes method. 
+	 * However Passing in include a map contains instance oids for discovered MIB tables.
+	 *
+	 * @param ePoint for the device
+	 * @param se -- service element on which attributes be set.
+	 * @param set the service element type for the service element
+	 * @param discoveredTableIndexMap the discovered table index map
+	 * @throws IntegerException the integer exception
 	 */
 	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
 			                                     ServiceElement se, 
@@ -296,8 +312,29 @@ public abstract class SnmpServiceElementDiscover  {
 							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
 							
 							iv.setValue(vb.getVariable().toInt());
+							iv.setManagementObject(snmp.getID());
 							
 							se.getAttributeValues().add(iv);
+							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();
+							
+							String tblOid = getTableOidFromVBOid(snmp.getOid());
+				            if ( tblOid != null ) {
+				            	
+				            	TableRowIndex rowIndex = discoveredTableIndexMap.get(tblOid); 
+				            	inst.setValue(rowIndex.getInstanceOid());
+				            }
+				            else {
+				            	inst.setValue("0");
+				            }
+				            se.getValues().add(inst);
+						}
+						else {
+							
+							ManagementObjectStringValue sv = new ManagementObjectStringValue();
+                            sv.setValue(vb.getVariable().toString());
+                            sv.setManagementObject(snmp.getID());
+							
+							se.getAttributeValues().add(sv);
 							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();
 							
 							String tblOid = getTableOidFromVBOid(snmp.getOid());
@@ -322,11 +359,11 @@ public abstract class SnmpServiceElementDiscover  {
 	
 	
 	/**
-	 * This method get part MIB table oid from a variable binding oid which is an attribute of the table.
-	 * 
-	 * @param vbOid
-	 * @return
-	 * @throws IntegerException 
+	 * This method get part of MIB oid from a variable binding oid which is an attribute of the table.
+	 *
+	 * @param vbOid the vb oid
+	 * @return the table oid from vb oid
+	 * @throws IntegerException the integer exception
 	 */
 	public static String getTableOidFromVBOid( String vbOid ) throws IntegerException {
 		
@@ -339,6 +376,13 @@ public abstract class SnmpServiceElementDiscover  {
 	}
 	
 	
+	/**
+	 * Find match variable binding from a return PDU based on a SNMP object.
+	 *
+	 * @param snmp the snmp
+	 * @param rpdu the rpdu
+	 * @return the variable binding
+	 */
 	public VariableBinding findMatchVB( SNMP snmp, PDU rpdu ) {
 		
 		for ( VariableBinding vb : rpdu.getVariableBindings() ) {
@@ -353,11 +397,12 @@ public abstract class SnmpServiceElementDiscover  {
 	
 	
 	/**
-	 * 
-	 * @param events
-	 * @param attrOid
-	 * @param value
-	 * @return
+	 * Find table event row.
+	 *
+	 * @param events the events
+	 * @param attrOid the attr oid
+	 * @param value the value
+	 * @return the list
 	 */
 	public List<TableEvent> findTableEventRow( List<TableEvent> events, String attrOid, SnmpServiceElementTypeDiscriminatorValue<?> value ) {
 		
@@ -399,13 +444,14 @@ public abstract class SnmpServiceElementDiscover  {
 	
 	
 	/**
-	 * 
-	 * 
-	 * @param set
-	 * @param te
-	 * @param parentElm
-	 * @return
-	 * @throws IntegerException
+	 * Creates the service element from service element type.
+	 *
+	 * @param discNode the disc node
+	 * @param set the set
+	 * @param te the te
+	 * @param parentElm the parent elm
+	 * @return the service element
+	 * @throws IntegerException the integer exception
 	 */
 	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
 			TableEvent te, ServiceElement parentElm) throws IntegerException {
@@ -432,6 +478,8 @@ public abstract class SnmpServiceElementDiscover  {
 			OID o = new OID(nameAttr.getOid());
 			o.append(te.getIndex());
 			
+			logger.info("set value " + o.toString());
+			
 			pdu.add(new VariableBinding(o));
 			PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
 			se.setName(rpdu.get(0).getVariable().toString());
@@ -448,21 +496,141 @@ public abstract class SnmpServiceElementDiscover  {
 				o.append(te.getIndex());
 				
 				pdu.add(new VariableBinding(o));
-				rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);				
-			}
-			if ( rpdu != null ) {
+				rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
 				
+				if ( rpdu != null ) {
+					
+					ManagementObjectValue<?> mov = null;
+					VariableBinding vb = findMatchVB(snmp, rpdu);
+					
+					if ( vb.getVariable() instanceof UnsignedInteger32 ||
+							vb.getVariable() instanceof Integer32 ) {
+						
+						ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+						iv.setValue(vb.getVariable().toInt());
+						iv.setManagementObject(snmp.getID());
+						
+						mov = iv;
+					}
+					else {
+						ManagementObjectStringValue sv = new ManagementObjectStringValue();
+						sv.setValue(vb.getVariable().toString());
+						sv.setManagementObject(snmp.getID());
+						
+						mov = sv;						
+					}
+					mov = capMgr.updateManagementObjectValue(mov);
+					List<ID> uids = se.getUniqueIdentifierIds();
+					
+					if ( uids == null ) {
+						uids = new ArrayList<>();
+						se.setUniqueIdentifierIds(uids);
+					}
+					uids.add(mov.getID());
+				}
 			}
 		}
-		
 		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, te.getIndex().toString());
-		
 		return se;
 	}
 	
 
+	/**
+	 * Find UID For Top Service Element.
+	 * 
+	 * @param set
+	 * @param se
+	 * @param ept
+	 * @throws IntegerException
+	 */
+	public void findUIDForTopServiceElement( ServiceElementType set, ServiceElement se, ElementEndPoint ept ) throws IntegerException {
+		
+       if ( set.getUniqueIdentifierCapabilities() != null ) {
+			
+			PDU rpdu = null;
+			PDU pdu = new PDU();
+			for ( ID id : set.getUniqueIdentifierCapabilities() ) {
+				
+				SNMP snmp = (SNMP) capMgr.getManagementObjectById(id);			
+				if ( snmp.getScalarVB() == null || snmp.getScalarVB() ) {
+					OID o = new OID(snmp.getOid());
+					o.append(0);
+					
+					logger.info("pick out " + o.toString());
+					pdu.add(new VariableBinding(o));
+					
+					rpdu = SnmpService.instance().getPdu(ept, pdu);
+					if ( rpdu != null ) {
+						
+						ManagementObjectValue<?> mov = null;
+						VariableBinding vb = findMatchVB(snmp, rpdu);
+						
+						if ( vb.getVariable() instanceof UnsignedInteger32 ||
+								vb.getVariable() instanceof Integer32 ) {
+							
+							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+							iv.setValue(vb.getVariable().toInt());
+							iv.setManagementObject(snmp.getID());
+							
+							mov = iv;
+						}
+						else {
+							ManagementObjectStringValue sv = new ManagementObjectStringValue();
+							sv.setValue(vb.getVariable().toString());
+							sv.setManagementObject(snmp.getID());
+							
+							mov = sv;						
+						}
+						mov = capMgr.updateManagementObjectValue(mov);
+						List<ID> uids = se.getUniqueIdentifierIds();
+						
+						if ( uids == null ) {
+							uids = new ArrayList<>();
+							se.setUniqueIdentifierIds(uids);
+						}
+						uids.add(mov.getID());
+					}
+				}
+				else {
+					
+					OID[] ids = new OID[1];
+					ids[0] = new OID(snmp.getOid());
+					List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(ept, ids);
+					
+					for (TableEvent te : tblEvents) {
+						
+						String idValue = te.getColumns()[0].getVariable().toString();
+						if ( idValue != null && !idValue.equals("")) {
+							
+							ManagementObjectStringValue sv = new ManagementObjectStringValue();
+							sv.setValue(idValue);
+							sv.setManagementObject(snmp.getID());
+							
+							sv = (ManagementObjectStringValue) capMgr.updateManagementObjectValue(sv);
+							List<ID> uids = se.getUniqueIdentifierIds();
+							
+							if ( uids == null ) {
+								uids = new ArrayList<>();
+								se.setUniqueIdentifierIds(uids);
+							}
+							uids.add(sv.getID());
+						}	
+					}
+				}
+				
+			}
+		}
+	}
+	
 	
 
+	/**
+	 * Find variable binding from snmp4j table event.
+	 *
+	 * @param te the te
+	 * @param oid the oid
+	 * @return the variable binding
+	 */
 	public VariableBinding findVBFromTableEvent(TableEvent te, String oid) {
 
 		VariableBinding[] vbs = te.getColumns();
@@ -476,13 +644,51 @@ public abstract class SnmpServiceElementDiscover  {
 		return null;
 	}
 	
+	
+	/**
+	 * Return mac address from IF table.
+	 * 
+	 * @param ept
+	 * @return
+	 * @throws IntegerException
+	 */
+    public List<String>  getMacAddress( ElementEndPoint ept ) throws IntegerException {
+    	
+    	List<String>  macs = new ArrayList<>();
+    	
+    	OID[] ifp = new OID[1];
+    	ifp[0] = new OID(CommonSnmpOids.ifPhysAddress);
+    	
+    	List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(ept, ifp);
+
+		for (TableEvent te : tblEvents) {
+
+			String ifphy = te.getColumns()[0].getVariable().toString();
+			if ( ifphy != null && !ifphy.equals("") ) {
+				macs.add(ifphy);
+			}
+		}		
+		return macs;
+    }
+	
+	
+	
+    public List<MacIPInfo>  getHostMacIPInfo( ElementEndPoint ept ) throws IntegerException {
+    	
+    	List<MacIPInfo>  macIps = new ArrayList<>();
+    	return macIps;
+    }
+	
+	
 
 
 	/**
-	 * @param sc
-	 * @param discNode
-	 * @return
-	 * @throws IntegerException
+	 * Discover.
+	 *
+	 * @param sc the sc
+	 * @param discNode the disc node
+	 * @return the service element
+	 * @throws IntegerException the integer exception
 	 */
 	public abstract ServiceElement discover(SnmpContainment sc, DiscoverNode discNode) throws IntegerException;
 }

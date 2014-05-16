@@ -153,10 +153,49 @@ public class CommonSnmpOids {
     
     public static final String hrSWInstalledIndex = "1.3.6.1.2.1.25.6.3.1.1";
     
+    /**
+     * Device System Information.
+     */
+    
+    public static final String hrSystemUptime = "1.3.6.1.2.1.25.1.1";
+    
+    public static final String hrSystemDate = "1.3.6.1.2.1.25.1.2";
+    
+    public static final String hrSystemInitialLoadDevice = "1.3.6.1.2.1.25.1.3";
+    
+    public static final String hrSystemNumUsers = "1.3.6.1.2.1.25.1.5";
+    
+    public static final String hrSystemMaxProcesses = "1.3.6.1.2.1.25.1.7";
+    
+    public static final String hrMemorySize = "1.3.6.1.2.1.25.2.2";
+    
+    /**
+     * 
+     */
+    public static final String hrStorageEntry = "1.3.6.1.2.1.25.2.3.1";
+    
+    public static final String hrStorageIndex = "1.3.6.1.2.1.25.2.3.1.1";
+    
+    public static final String hrStorageType = "1.3.6.1.2.1.25.2.3.1.2";
+    
+    public static final String hrStorageDescr = "1.3.6.1.2.1.25.2.3.1.3";
+    
+    public static final String hrStorageAllocationUnits = "1.3.6.1.2.1.25.2.3.1.4";
+    
+    public static final String hrStorageSize = "1.3.6.1.2.1.25.2.3.1.5";
+    
+    public static final String hrStorageUsed = "1.3.6.1.2.1.25.2.3.1.6";
+    
+    
     
     public static final String ifEntry = "1.3.6.1.2.1.2.2.1";
     
-   
+    public static final String ipAdEntIfIndex = "1.3.6.1.2.1.4.20.1.2";
+    
+    public static final String ipAdEntNetMask = "1.3.6.1.2.1.4.20.1.3";
+    
+    public static final String ipAdEntBcastAddr = "1.3.6.1.2.1.4.20.1.4";
+    
     
     /**
      * If table oid
@@ -170,6 +209,9 @@ public class CommonSnmpOids {
     public static String ifSpeed = "1.3.6.1.2.1.2.2.1.5";  // Long
     
     public static String ifPhysAddress = "1.3.6.1.2.1.2.2.1.6";  // String
+    
+    
+    
     
     
 	public static VariableBinding[] sysVB = {

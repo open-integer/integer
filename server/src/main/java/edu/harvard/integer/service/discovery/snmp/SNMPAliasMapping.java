@@ -38,6 +38,9 @@ import edu.harvard.integer.common.snmp.SNMPTable;
 /**
  * The Class SNMPAliasMapping store the alias mapping between two SNMP tables which
  * contains different SNMP instance oid.
+ * The index of owner table and the alias table should share a same index.
+ * The 
+ * 
  * 
  * For example, htNetworkTable provides the mapping between hrDeviceTable and ifTable.
  * The instance oid of the mapping table is the instance oid of the owner table (hrDevoceTable).
@@ -59,6 +62,10 @@ public class SNMPAliasMapping {
 	 * The mapping table which provide the mapping between two tables. 
 	 */
 	private SNMPTable mappingTbl;
+	
+	private String mappingValue;
+	
+	private IndexEmbeddedEnum indexEmbedded;
 	
 
 	/**
@@ -98,5 +105,28 @@ public class SNMPAliasMapping {
     public SNMPTable getMappingTbl() {
 		return mappingTbl;
 	}
+    
+
+	
+	public String getMappingValue() {
+		return mappingValue;
+	}
+
+
+	public void setMappingValue(String mappingValue) {
+		this.mappingValue = mappingValue;
+	}
+
+
+	public IndexEmbeddedEnum getIndexEmbedded() {
+		return indexEmbedded;
+	}
+
+
+	public void setIndexEmbedded(IndexEmbeddedEnum indexEmbedded) {
+		this.indexEmbedded = indexEmbedded;
+	}
+
+
 
 }

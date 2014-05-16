@@ -36,6 +36,7 @@ package edu.harvard.integer.service.discovery.element;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -307,11 +308,14 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    
 	    if ( sc == null ) {
 	    	
+			SnmpContainmentType containmentType = checkContainmentType(discoverNode.getElementEndPoint());  
+			
 	    	set = new ServiceElementType();
 			set.setVendor(defineUnknownVendor(sysId.toString()));
 			set.setModel(checkContainmentType(discoverNode.getElementEndPoint()).name());
 			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 			
+			ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, containmentType);
 			try {
 				set = capMgr.updateServiceElementType(set);
 				discoverNode.setTopServiceElementType(set);
@@ -319,7 +323,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				e.printStackTrace();
 			}
 			
-			sc = ContainmentGenerator.generator(set, checkContainmentType(discoverNode.getElementEndPoint()));	    	
+			sc = ContainmentGenerator.generator(set, containmentType);	 
+				
 			try {
 				SnmpContainment updateSnmpContainment = capMgr.updateSnmpContainment(sc);
 				logger.info("Created SnmpContainment " + updateSnmpContainment.getID());
@@ -348,7 +353,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    	identifyDefs.add(NetworkDiscovery.IPIDENTIFY);	    	
 	    }
 	    discoverNode.setIdentifyDefs(identifyDefs);
-	    
+	    SnmpServiceElementDiscover discover = DiscoverWorkerFactory.getSnmpServiceElementWorker(sc.getContainmentType());
 	    
 	    /**
 	     * Get uniqueIdentifier to determine if the service element being discovered.
@@ -360,10 +365,23 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    se.setName(sysInfo.getSysName());
 	    se.setUpdated(new Date());
 	    
+	    logger.info("call update service element " + se.getName());
+	    
+	    try {
+	    	 if ( discover != null ) {
+	 	    	
+	 	    	discover.findUIDForTopServiceElement(set, se, discoverNode.getElementEndPoint());
+	 	    	discover.discoverServiceElementAttribute(discoverNode.getElementEndPoint(), se, set, "0");
+	 	    }
+	    }
+	    catch ( Exception ee ) {
+	    
+	    	ee.printStackTrace();
+	    }
+	    logger.info("call update service element " + se.getName());
 	    se = accessMgr.updateServiceElement(se);
 	    
 	    discoverNode.setAccessElement(se);
-	    SnmpServiceElementDiscover discover = DiscoverWorkerFactory.getSnmpServiceElementWorker(sc.getContainmentType());
 	    if ( discover != null ) {
 	    	
 	    	discover.discover(sc, discoverNode);
@@ -372,8 +390,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		return discoverNode;
 	}
 
-	
-	
+
 	
 	/**
 	 * Check containment type of the device by make SNMP getNext to check
