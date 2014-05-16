@@ -19,6 +19,7 @@ public class DeviceMap extends Layer {
 	private int icon_height;
 	
 	private ServiceElement selectedElement;
+	private long selectedTimestamp;
 	
 	public DeviceMap() {
 		//super(width, height);
@@ -37,11 +38,11 @@ public class DeviceMap extends Layer {
 	public ServiceElement getSelectedElement() {
 		return selectedElement;
 	}
-
-	public void setSelectedElement(ServiceElement selectedElement) {
-		this.selectedElement = selectedElement;
-	}
 	
+	public long getSelectedTimestamp() {
+		return selectedTimestamp;
+	}
+
 	private void init_layout(int total) {
 		icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
 		icon_col_total = 2 * icon_row_total;
@@ -65,6 +66,7 @@ public class DeviceMap extends Layer {
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
         			selectedElement = device;
+        			selectedTimestamp = System.currentTimeMillis();
         		}
         		
         	};

@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
 import edu.harvard.integer.client.widget.HvListBoxPanel;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * This class represents a form panel for importing MIB file.
@@ -32,10 +33,14 @@ public class ServiceElementPanel extends FormPanel {
 	private final IntegerServiceAsync integerService = GWT
 			.create(IntegerService.class);
 
+	private ServiceElement serviceElement;
+	
 	/**
 	 * Create a new MibImportPanel.
 	 */
-	public ServiceElementPanel() {
+	public ServiceElementPanel(ServiceElement serviceElement) {
+		this.serviceElement = serviceElement;
+		
 		// Because we're going to add a FileUpload widget, we'll need to set the
 		// form to use the POST method, and multipart MIME encoding.
 		setEncoding(FormPanel.ENCODING_MULTIPART);
@@ -48,14 +53,17 @@ public class ServiceElementPanel extends FormPanel {
 		// Create a CheckBox widget to indicate it is a standard MIB
 		grid.setWidget(0, 0, new Label("Name"));
 		final TextBox nameTextBox = new TextBox();
+		nameTextBox.setText(serviceElement.getName());
 		grid.setWidget(0, 1, nameTextBox);
 
 		grid.setWidget(1, 0, new Label("Description"));
 		final TextBox descTextBox = new TextBox();
+		descTextBox.setText(serviceElement.getDescription());
 		grid.setWidget(1, 1, descTextBox);
 		
 		grid.setWidget(2, 0, new Label("Primary Location"));
 		final TextBox locationTextBox = new TextBox();
+		locationTextBox.setText(""+serviceElement.getPrimaryLocation());
 		grid.setWidget(2, 1, locationTextBox);
 
 		grid.setWidget(3, 0, new Label("Operational Control ID"));

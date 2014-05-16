@@ -44,6 +44,11 @@ public class HvDialogBox extends DialogBox {
 	 * @param formPanel the form panel
 	 */
 	public HvDialogBox(String title, FormPanel formPanel) {
+		this(title, formPanel, false, false);
+	}
+	
+	public HvDialogBox(String title, FormPanel formPanel, boolean autoHide, boolean modal) {
+		super(autoHide, modal);
 		this.formPanel = formPanel;
 		setText(title);
 		setGlassEnabled(false);

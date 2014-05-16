@@ -32,6 +32,7 @@ import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvFlexTable;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -275,7 +276,8 @@ public class MainClient implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				ServiceElementPanel addPanel = new ServiceElementPanel();
+				ServiceElement se = new ServiceElement();
+				ServiceElementPanel addPanel = new ServiceElementPanel(se);
 				HvDialogBox addDialog = new HvDialogBox("Add Service Element",
 						addPanel);
 				addDialog.setSize("450px", "520px");

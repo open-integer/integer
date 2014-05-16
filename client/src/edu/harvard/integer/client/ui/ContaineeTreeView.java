@@ -19,6 +19,8 @@ import edu.harvard.integer.common.topology.ServiceElement;
 public class ContaineeTreeView extends ScrollPanel {
 	
 	private Tree tree = new Tree();
+	private ServiceElement selectedServiceElement;
+	private long selectedTimestamp;
 	
 	/**
 	 * Instantiates a new capability view.
@@ -35,24 +37,30 @@ public class ContaineeTreeView extends ScrollPanel {
 			public void onSelection(SelectionEvent<TreeItem> event) {
 				final TreeItem treeItem = event.getSelectedItem();
 				
-				ServiceElement se = (ServiceElement)treeItem.getUserObject();
+				selectedServiceElement = (ServiceElement)treeItem.getUserObject();
+				selectedTimestamp = System.currentTimeMillis();
 				
-				MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
+				MainClient.integerService.getServiceElementByParentId(selectedServiceElement.getID(), new AsyncCallback<ServiceElement[]>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						/*for (int i = 0; i < 3; i++) {
-							ServiceElement se = new ServiceElement();
-							se.setName("fake son-" + i);
-							TreeItem item = new TreeItem();
-							item.setText(se.getName());
-							item.setUserObject(se);
-							treeItem.addItem(item);
-						}*/
 					}
 
 					@Override
-					public void onSuccess(ServiceElement[] serviceElements) {	
+					public void onSuccess(ServiceElement[] serviceElements) {
+						if (serviceElements == null || serviceElements.length == 0) {
+							for (int i = 0; i < 30; i++) {
+								ServiceElement se = new ServiceElement();
+								se.setName("fake child - " + i);
+								se.setDescription("This is a fake child " + i);
+								TreeItem item = new TreeItem();
+								item.setText(se.getName());
+								item.setUserObject(se);
+								treeItem.addItem(item);
+							}
+						}
+						else
+							
 						for (ServiceElement se : serviceElements) {
 							TreeItem item = new TreeItem();
 							item.setText(se.getName());
@@ -91,4 +99,13 @@ public class ContaineeTreeView extends ScrollPanel {
 	    tree.addItem(root);
 
 	}
+
+	public ServiceElement getSelectedServiceElement() {
+		return selectedServiceElement;
+	}
+	
+	public long getSelectedTimestamp() {
+		return selectedTimestamp;
+	}
+
 }

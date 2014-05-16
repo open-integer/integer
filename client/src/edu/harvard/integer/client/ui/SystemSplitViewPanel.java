@@ -44,15 +44,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
-
-        //DragImageWidget dragImageWidget = new DragImageWidget(WIDGET_WIDTH, WIDGET_HEIGHT);
+		
 		final DeviceMap deviceMap = new DeviceMap();
+
 		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// Window.alert("Failed to receive Devices from Integer");
-				deviceMap.demo(100);
+				Window.alert("Failed to receive Devices from Integer");
 			}
 
 			@Override
@@ -88,10 +87,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				selectedElement = deviceMap.getSelectedElement();
-				ServiceElementPanel detailsPanel = new ServiceElementPanel();
-				HvDialogBox detailsDialog = new HvDialogBox("Service Element: " + selectedElement.getName(),
-						detailsPanel);
+				if (deviceMap.getSelectedTimestamp() > containeeTreeView.getSelectedTimestamp())
+					selectedElement = deviceMap.getSelectedElement();
+				else
+					selectedElement = containeeTreeView.getSelectedServiceElement();
+				
+				ServiceElementPanel detailsPanel = new ServiceElementPanel(selectedElement);
+				HvDialogBox detailsDialog = new HvDialogBox("Service Element", detailsPanel);
 				detailsDialog.setSize("400px", "150px");
 				detailsDialog.center();
 				detailsDialog.show();
@@ -159,14 +161,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 						@Override
 						public void onFailure(Throwable caught) {
 							Window.alert("Failed to receive Devices from Integer");
-							deviceMap.demo(500);
 						}
 
 						@Override
 						public void onSuccess(ServiceElement[] result) {
-							if (result != null || result.length == 0)
+							if (result != null || result.length <= 2)
 								deviceMap.demo(1000);
-							
+							else
 							deviceMap.update(result);
 						}
 					});
