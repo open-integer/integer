@@ -38,6 +38,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
@@ -138,7 +139,6 @@ public class ContainmentGenerator {
 			setCpu.setDefaultNameCababilityId(defName.getID());
 			
 			List<ID> attributeIds = new ArrayList<>();
-		
 			addDeviceTblAttributes(attributeIds, snmpMgr);
 			
 			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrProcessorFrwID);
@@ -242,23 +242,23 @@ public class ContainmentGenerator {
 		discriminators.add(sstd);
 		
 		
-		ServiceElementType storageType = null;
+		ServiceElementType diskType = null;
 		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.disk.name(), serviceElmType.getVendor());
 		
 		if ( sets == null || sets.length == 0 ) {
 			
-            storageType = new ServiceElementType();
-			storageType.setVendor(serviceElmType.getVendor());
-			storageType.setCategory(CategoryTypeEnum.disk.name());
-			storageType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
+            diskType = new ServiceElementType();
+			diskType.setVendor(serviceElmType.getVendor());
+			diskType.setCategory(CategoryTypeEnum.disk.name());
+			diskType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
-			setDeviceTblComponentIdentify(storageType, snmpMgr);
+			setDeviceTblComponentIdentify(diskType, snmpMgr);
 			
 			List<ID> attributeIds = new ArrayList<>();
 			addDeviceTblAttributes(attributeIds, snmpMgr);
 			
 			SNMP defName = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceDescr);
-			storageType.setDefaultNameCababilityId(defName.getID());
+			diskType.setDefaultNameCababilityId(defName.getID());
 			
 			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDiskStorageAccess);
 			attributeIds.add(snmp.getID());
@@ -269,22 +269,22 @@ public class ContainmentGenerator {
 			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDiskStorageRemoveble);
 			attributeIds.add(snmp.getID());
 			
-			storageType.setAttributeIds(attributeIds);			
-			storageType = capMgr.updateServiceElementType(storageType);
+			diskType.setAttributeIds(attributeIds);			
+			diskType = capMgr.updateServiceElementType(diskType);
 		}
 		else {
-			storageType = sets[0];
+			diskType = sets[0];
 		}
 		
 		sstd = new SnmpServiceElementTypeDiscriminator();
 		discriminatorValue = new SnmpServiceElementTypeDiscriminatorStringValue();
 		discriminatorValue.setValue("1.3.6.1.2.1.25.3.1.6");
 		sstd.setDiscriminatorValue(discriminatorValue);
-		sstd.setServiceElementTypeId(storageType.getID());		
+		sstd.setServiceElementTypeId(diskType.getID());		
 		discriminators.add(sstd);
 		
 		/**
-		 * 
+		 * Snmp SW installed.
 		 */
 		levelOid = new SnmpLevelOID();
 		levelOids.add(levelOid);		
@@ -297,7 +297,6 @@ public class ContainmentGenerator {
 		levelOid.setContextOID(snmp);
 		
 		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledName);
-		levelOid.setContextOID(snmp);
 		levelOid.setDescriminatorOID(snmp);
 		
 		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.software.name(), serviceElmType.getVendor());
@@ -326,7 +325,7 @@ public class ContainmentGenerator {
 			List<ID> ids = new ArrayList<>();
 			
 			ids.add(snmp.getID());
-			setIf.setUniqueIdentifierCapabilities(ids);
+			swType.setUniqueIdentifierCapabilities(ids);
 			
 			swType.setAttributeIds(attributeIds);			
 			swType = capMgr.updateServiceElementType(swType);
@@ -337,6 +336,63 @@ public class ContainmentGenerator {
 		}
 		sstd = new SnmpServiceElementTypeDiscriminator();
 		sstd.setServiceElementTypeId(swType.getID());		
+		discriminators.add(sstd);
+		
+		
+		/**
+		 * Snmp Storage installed.
+		 */
+		levelOid = new SnmpLevelOID();
+		levelOids.add(levelOid);		
+		levelOid.setName("HostMibStorage");
+		
+		discriminators = new ArrayList<>();
+		levelOid.setDisriminators(discriminators);
+			
+		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageEntry);
+		levelOid.setContextOID(snmp);
+		
+		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageDescr);
+		levelOid.setDescriminatorOID(snmp);
+		
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.storage.name(), serviceElmType.getVendor());
+		ServiceElementType storageType = null;
+		if ( sets == null || sets.length == 0 ) {
+			
+			storageType = new ServiceElementType();
+			storageType.setVendor(serviceElmType.getVendor());
+			
+			storageType.setCategory(CategoryTypeEnum.storage.name());
+			storageType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
+			
+			List<ID> attributeIds = new ArrayList<>();
+			SNMP defName = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageDescr);
+			storageType.setDefaultNameCababilityId(defName.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageAllocationUnits);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageSize);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageType);
+			attributeIds.add(snmp.getID());
+		
+			List<ID> ids = new ArrayList<>();
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageDescr);
+			ids.add(snmp.getID());
+			storageType.setUniqueIdentifierCapabilities(ids);
+			
+			storageType.setAttributeIds(attributeIds);			
+			storageType = capMgr.updateServiceElementType(storageType);
+			
+		}
+		else {
+			storageType = sets[0];
+		}
+		sstd = new SnmpServiceElementTypeDiscriminator();
+		sstd.setServiceElementTypeId(storageType.getID());		
+		
 		discriminators.add(sstd);
 		
 		logger.info("out HostMibGenerator ......... ");
@@ -374,4 +430,51 @@ public class ContainmentGenerator {
 		ids.add(snmp.getID());
 		set.setUniqueIdentifierCapabilities(ids);
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @param ept
+	 * @param snmpType
+	 * @throws IntegerException 
+	 */
+	public static void setUpTopServiceElementProperty( ElementEndPoint ept,
+			                                    ServiceElementType set,
+			                                    SnmpContainmentType snmpType ) throws IntegerException {
+		
+		SnmpManagerInterface snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+		if ( snmpType == SnmpContainmentType.HostResourcesMib ) {
+			List<ID> ids = new ArrayList<>();
+			
+			SNMP snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.sysName);
+			ids.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.ifPhysAddress);
+			ids.add(snmp.getID());
+			
+			set.setUniqueIdentifierCapabilities(ids);
+			
+			List<ID> attributeIds = new ArrayList<>();
+			set.setAttributeIds(attributeIds);
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSystemUptime);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSystemDate);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSystemInitialLoadDevice);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSystemMaxProcesses);
+			attributeIds.add(snmp.getID());
+			
+			snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSystemNumUsers);
+			attributeIds.add(snmp.getID());
+			
+		//	snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrMemorySize);
+		//	attributeIds.add(snmp.getID());
+		}
+	}
+		
 }

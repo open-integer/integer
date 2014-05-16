@@ -234,8 +234,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     				break;
     			}
     			
-    			String ip = range.next();
-    			
+    			String ip = range.next();    			
     			DiscoverNode dn = new DiscoverNode(ip);
     			dn.setSubnetId(seed.getSeedId());
     			

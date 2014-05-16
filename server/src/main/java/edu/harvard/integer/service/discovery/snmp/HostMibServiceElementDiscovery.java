@@ -38,6 +38,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
@@ -118,7 +119,20 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 			OID[] oids = new OID[1];
 	        oids[0] = new OID(doid.getOid());
 	        
+	        logger.info("get descriminator table " + doid.getOid());
+	        	        
+	        PDU pdu = new PDU();
+	        VariableBinding vb = new VariableBinding(new OID(doid.getOid()));
+	        pdu.add(vb);
+	        
+	        List<PDU> rpdu = SnmpService.instance().getAllEntryPduByNext(endPoint, pdu);
+	        logger.info("Number of row " + rpdu.size());
+	        
+	        
 	        List<TableEvent> deviceEvents = SnmpService.instance().getTablePdu( endPoint, oids);
+	        logger.info("Number of table event " + deviceEvents.size());
+	        
+	       
 			if (levelOid.getDisriminators() != null && levelOid.getDisriminators().size() > 1 ) {
 
 				for (SnmpServiceElementTypeDiscriminator discriminator : levelOid.getDisriminators()) {
@@ -146,6 +160,8 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 				else {
 					
 					ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+					logger.info("found this SET " + set.getCategory() + " " + set.getName());
+					
 					for ( TableEvent de : deviceEvents ) {
 						
 						ServiceElement se =  createServiceElementFromType(discNode, set, de, discNode.getAccessElement());

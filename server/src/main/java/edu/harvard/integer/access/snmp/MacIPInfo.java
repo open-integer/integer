@@ -30,27 +30,39 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.access.snmp;
 
 /**
- * @author dchan
+ * The Class MacIPInfo contains MAC and IP address information of device.
+ * The purpose of this device is used for storing host system MAC and IP information.
  *
+ * @author dchan
  */
-public enum CategoryTypeEnum {
+public class MacIPInfo {
 
-	stack,
-	backplane,
-	chassis,
-	portIf,
-	other,
-	powertSupply,
-	fan,
-	sensor,
-	module,
-	port,
-	cpu,
-	printer,
-	disk,
-	software,
-	storage
+	private final String macAddress;
+	private final String ipAddress;
+	private final int ifIndex;
+	
+	
+	public MacIPInfo( String macAddress, String ipAddress, int ifIndex ) {
+		
+		this.macAddress = macAddress;
+		this.ipAddress = ipAddress;
+		this.ifIndex = ifIndex;
+	}
+	
+	
+	public String getMacAddress() {
+		return macAddress;
+	}
+	public String getIpAddress() {
+		return ipAddress;
+	}
+	public int getIfIndex() {
+		return ifIndex;
+	}
+	
+	
+	
 }

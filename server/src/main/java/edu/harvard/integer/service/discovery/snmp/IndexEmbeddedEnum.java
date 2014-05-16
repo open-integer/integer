@@ -30,27 +30,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.service.discovery.snmp;
 
 /**
- * @author dchan
+ * The IndexEmbeddedEnum enum class for identify how to decode alias mapping  
  *
+ * @author dchan
  */
-public enum CategoryTypeEnum {
+public enum IndexEmbeddedEnum {
 
-	stack,
-	backplane,
-	chassis,
-	portIf,
-	other,
-	powertSupply,
-	fan,
-	sensor,
-	module,
-	port,
-	cpu,
-	printer,
-	disk,
-	software,
-	storage
+	bitMark,
+	fullOid,
+	onlyIndex
+	
 }

@@ -81,8 +81,7 @@ public class SnmpCollectionUtil {
 			CommunityTarget ct = createCommunityTarget((CommunityAuth) endPoint.getAuth(), 
                                          endPoint.getIpAddress(), endPoint.getAccessPort(), isRead );
 			ct.setTimeout(((SnmpAuthentication)endPoint.getAuth()).getTimeOut());
-			ct.setRetries(((SnmpAuthentication)endPoint.getAuth()).getTryCount());
-			
+			ct.setRetries(((SnmpAuthentication)endPoint.getAuth()).getTryCount());			
 			return ct;
 		}
 		else if ( endPoint.getAuth() instanceof SnmpSecureAuth ) {

@@ -32,9 +32,19 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
+import java.util.List;
+
+import org.snmp4j.smi.OID;
+import org.snmp4j.util.TableEvent;
+
+import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpLevelOID;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
@@ -61,5 +71,72 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 		return null;
 	}
 
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param discNode
+	 * @param levelOid
+	 * @param set
+	 * @param parentSe
+	 * @throws IntegerException
+	 */
+	public void discoverByContainment( DiscoverNode discNode, SnmpLevelOID levelOid, 
+			                           ServiceElementType parentSet,
+			                           ServiceElement parentSe ) throws IntegerException {
+
+		SNMP discrimatorSnmp = levelOid.getDescriminatorOID();		
+		OID[] oids = new OID[1];
+        oids[0] = new OID(discrimatorSnmp.getOid());
+        
+        List<TableEvent> deviceEvents = SnmpService.instance().getTablePdu( discNode.getElementEndPoint(), oids);
+		if (levelOid.getDisriminators() != null && levelOid.getDisriminators().size() > 1 ) {
+
+			for (SnmpServiceElementTypeDiscriminator discriminator : levelOid.getDisriminators()) {
+
+				List<TableEvent> tes = findTableEventRow(deviceEvents, discrimatorSnmp.getOid(), discriminator.getDiscriminatorValue());
+				for ( TableEvent te : tes ) {
+					ServiceElementType matchSet = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+					ServiceElement se =  createServiceElementFromType(discNode, matchSet, te, parentSe );						
+					se = accessMgr.updateServiceElement(se);
+				}
+			}
+		}
+		else if ( levelOid.getDisriminators() != null && levelOid.getDisriminators().size() == 1 ) {
+			
+			SnmpServiceElementTypeDiscriminator discriminator = levelOid.getDisriminators().get(0);
+			if ( discriminator.getDiscriminatorValue() != null ) {
+				
+				List<TableEvent> tes = findTableEventRow(deviceEvents, discrimatorSnmp.getOid(), discriminator.getDiscriminatorValue());
+				for ( TableEvent te : tes ) {
+					ServiceElementType matchSet = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+					ServiceElement se =  createServiceElementFromType(discNode, matchSet, te, parentSe);						
+					se = accessMgr.updateServiceElement(se);
+				}
+			}
+			else {
+				
+				ServiceElementType matchSet = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+				for ( TableEvent de : deviceEvents ) {
+					
+					ServiceElement se =  createServiceElementFromType(discNode, matchSet, de, parentSe);
+					se = accessMgr.updateServiceElement(se);
+				}
+			}
+		}
+		
+		if ( levelOid.getChildren() != null ) {
+			
+			List<SnmpLevelOID> snmpLevels = levelOid.getChildren();				
+			for ( SnmpLevelOID so : snmpLevels ) {	
+				
+				 so.getDisriminators().get(0).getServiceElementTypeId();
+				
+				
+			}	
+		}	  
+		
+	}
 	
 }

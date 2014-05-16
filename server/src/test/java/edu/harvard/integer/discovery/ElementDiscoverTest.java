@@ -140,7 +140,7 @@ public class ElementDiscoverTest {
 		snmpV2c.setWriteCommunity("public");
 		CommunityAuth ca = new CommunityAuth(snmpV2c);
 		
-		String deviceAddress = "127.0.0.8";
+		String deviceAddress = "127.0.0.1";
 		DiscoverNode discNode = new DiscoverNode(deviceAddress);
 		Access ac = new Access(161, ca);
 		
