@@ -1,8 +1,10 @@
 package edu.harvard.integer.client.ui;
 
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
+import com.emitrom.lienzo.client.core.mediator.MousePanMediator;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -46,6 +48,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		super(SPLITTER_SIZE);
 		
 		final DeviceMap deviceMap = new DeviceMap();
+		deviceMap.demo(10);
 
 		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
@@ -63,6 +66,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         networkPanel.add(deviceMap);
         
         networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
+        networkPanel.getViewport().pushMediator(new MousePanMediator(EventFilter.ANY));
+        
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
         setSize("100%", MainClient.WINDOW_HEIGHT+"px");
@@ -77,7 +82,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		
 		eastPanel = new DockPanel();
 		eastPanel.setBorderWidth(1);
-		eastPanel.setWidth("100%");
+		eastPanel.setSize("100%", "100%");
 
 		HorizontalPanel mapToolbarPanel = new HorizontalPanel();
 		mapToolbarPanel.setStyleName("toolbar");
@@ -115,8 +120,12 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
 		eastPanel.add(eventView, DockPanel.SOUTH);
 		
-		addWest(westPanel, WESTPANEL_WIDTH);
+		FilterPanel filterPanel = new FilterPanel(Unit.EM);
+		addWest(filterPanel, WESTPANEL_WIDTH);
+		setWidgetToggleDisplayAllowed(filterPanel, true);
+		
 		add(eastPanel);
+		
 	}
 	
 	private VerticalPanel createNetworkTreePanel() {
@@ -152,6 +161,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		            networkPanel.removeAll();
 
 		            final DeviceMap deviceMap = new DeviceMap();
+		            deviceMap.demo(100);
 		            
 		            networkPanel.add(deviceMap);
 		            networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
@@ -165,9 +175,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 						@Override
 						public void onSuccess(ServiceElement[] result) {
-							if (result != null || result.length <= 2)
-								deviceMap.demo(1000);
-							else
 							deviceMap.update(result);
 						}
 					});
