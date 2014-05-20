@@ -35,6 +35,7 @@ package edu.harvard.integer.service.topology.device;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -90,5 +91,5 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 	 */
 	void deleteServiceElememts(ID[] ids) throws IntegerException;
 
-
+	public DeviceDetails getDeviceDetails(ID serviceElementId) throws IntegerException;
 }

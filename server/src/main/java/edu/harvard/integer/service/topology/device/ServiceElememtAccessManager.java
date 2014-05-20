@@ -35,12 +35,15 @@ package edu.harvard.integer.service.topology.device;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.print.attribute.standard.Severity;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -143,5 +146,27 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		
 		serviceElementDAO.delete(ids);
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getDeviceDetails(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public DeviceDetails getDeviceDetails(ID serviceElementId) throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+		
+		ServiceElement serviceElement = serviceElementDAO.findById(serviceElementId);
+		
+		DeviceDetails deviceDetails = new DeviceDetails();
+		deviceDetails.setServiceElementId(serviceElementId);
+		deviceDetails.setComment(serviceElement.getComment());
+		deviceDetails.setCreated(serviceElement.getCreated());
+		deviceDetails.setDescription(serviceElement.getDescription());
+		deviceDetails.setOperationalControlId(serviceElement.getOperationalControlId());
+		deviceDetails.setPrimaryLocation(serviceElement.getPrimaryLocation());
+		deviceDetails.setServiceElementCriticality(serviceElement.getServiceElementCriticality());
+		deviceDetails.setUpdated(serviceElement.getUpdated());
+		
+		return deviceDetails;
+	}
 }
