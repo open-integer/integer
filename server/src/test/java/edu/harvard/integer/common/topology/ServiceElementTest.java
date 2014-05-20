@@ -181,6 +181,39 @@ public class ServiceElementTest {
 			fail(e.toString());
 		}
 	}
+
+	@Test
+	public void getDeviceDetails() {
+		try {
+			ServiceElement[] serviceElements = serviceElementManager.getTopLevelServiceElements();
+			if (serviceElements == null || serviceElements.length == 0) {
+				addServiceElement();
+				serviceElements = serviceElementManager.getTopLevelServiceElements();
+			}
+			
+			assert (serviceElements != null);
+
+			logger.info("found " + serviceElements.length + " top level service elements");
+			
+			assert (serviceElements.length > 0);
+			
+			for (ServiceElement serviceElement : serviceElements) {
+				DeviceDetails deviceDetails = serviceElementManager.getDeviceDetails(serviceElement.getID());
+				logger.info("DeviceDetails " + deviceDetails.getServiceElementId()
+						+ " " + deviceDetails.getDescription()
+						+ " " + deviceDetails.getCreated()
+						+ " " + deviceDetails.getUpdated()
+						+ " " + deviceDetails.getPrimaryLocation()
+						+ " " + deviceDetails.getComment());
+						
+			}
+		} catch (IntegerException e) {
+			e.printStackTrace();
+
+			fail(e.toString());
+		}
+		
+	}
 	
 	public void getServiceElementByID() {
 		try {
