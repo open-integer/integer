@@ -51,6 +51,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
@@ -75,21 +76,7 @@ public class DistributionManagerTest {
 	  
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "DistributionManagerTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "uk.co.westhawk.snmp")
-				.addPackages(true, "org.jboss")
-				.addPackages(true, "org.wildfly")
-				.addPackages(true, "org.xnio")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("DistributionManagerTest.war");
 	}
 	
 	@Before
@@ -103,6 +90,8 @@ public class DistributionManagerTest {
 	public void getDiscoveryService() {
 		try {
 			BaseServiceInterface service = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+			
+			assert(service != null);
 			
 			logger.info("Found DiscoveryService " + service);
 			
@@ -118,6 +107,8 @@ public class DistributionManagerTest {
 		try {
 			BaseServiceInterface service = DistributionManager.getService(ServiceTypeEnum.PersistenceService);
 			
+			assert(service != null);
+			
 			logger.info("Found PersistenceService " + service);
 			
 		} catch (IntegerException e) {
@@ -131,6 +122,8 @@ public class DistributionManagerTest {
 	public void TopologyService() {
 		try {
 			BaseServiceInterface service = DistributionManager.getService(ServiceTypeEnum.TopologyService);
+			
+			assert(service != null);
 			
 			logger.info("Found TopologyService " + service);
 			
@@ -146,6 +139,8 @@ public class DistributionManagerTest {
 		try {
 			BaseManagerInterface service = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
 			
+			assert(service != null);
+			
 			logger.info("Found ManagementObjectCapabilityManager " + service);
 			
 		} catch (IntegerException e) {
@@ -154,6 +149,65 @@ public class DistributionManagerTest {
 			fail(e.toString());
 		}
 	}
+	
+	@Test
+	public void getLocalSnmpManager() {
+		try {
+			BaseManagerInterface service = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+			
+			assert(service != null);
+			
+			logger.info("Found SnmpManager " + service);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getLocalAllManager() {
+		try {
+			
+			for (ManagerTypeEnum managerType : ManagerTypeEnum.values()) {
+				BaseManagerInterface service = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+				
+				assert(service != null);
+				
+				logger.info("Found " + managerType + " Instance " + service);
+				
+			}
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getLocalAllServices() {
+		try {
+			
+			for (ServiceTypeEnum serviceType : ServiceTypeEnum.values()) {
+				BaseServiceInterface service = DistributionManager.getService(serviceType);
+				
+				assert(service != null);
+				
+				logger.info("Found " + serviceType + " Instance " + service);
+				
+			}
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	
+	
 	
 //	@Test
 //	public void getWebServerPort() {

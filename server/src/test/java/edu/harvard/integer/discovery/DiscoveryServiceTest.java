@@ -51,6 +51,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
@@ -74,22 +75,7 @@ public class DiscoveryServiceTest {
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "DiscoverAuthOrderTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "org.jboss")
-				.addPackages(true, "org.wildfly")
-				.addPackages(true, "org.xnio")
-				.addAsResource("jboss-ejb-client.properties")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsResource("integer.properties")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("DiscoverAuthOrderTest.war");
 	}
 	
 	@Test

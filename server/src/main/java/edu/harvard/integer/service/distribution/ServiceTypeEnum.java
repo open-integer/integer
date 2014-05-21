@@ -49,7 +49,8 @@ public enum ServiceTypeEnum implements DistributedServiceInterface {
 	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
 			DiscoveryServiceInterface.class),
 	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class);
+	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
+	DistributionService(DistributionService.class, DistributionServiceInterface.class);
 	
 	Class<? extends BaseService> mgrClazz;
 	Class<? extends BaseServiceInterface> intfClazz;

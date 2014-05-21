@@ -12,6 +12,17 @@
 			<module name="org.snmp4j" slot="main" export="true" />
 			<module name="org.apache.commons.net" slot="main" export="true" />
 			<module name="edu.harvard.integer.settings" slot="main" export="true" />
+			<module name="org.jboss.remote-naming" slot="main" export="true"/>
+			
+      		<module name="org.jboss.xnio" slot="main" export="true"/>
+  			<module name="org.jboss.invocation" slot="main" export="true" />
+  			<module name="org.wildfly.security.manager" slot="main" export="true"/>
+  			<module name="org.jboss.as.naming" slot="main" export="true"/>
+      		<module name="org.jboss.as.ee" slot="main" export="true" />
+      		
+      		<module name="org.jboss.remoting" slot="main" export="true" />
+      		<module name="org.jboss.remoting3" slot="main" export="true" />
+      		
 		</dependencies>
 	</deployment>
 

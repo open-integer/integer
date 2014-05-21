@@ -36,6 +36,11 @@ package edu.harvard.integer.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+
 /**
  * @author David Taylor
  *
@@ -55,5 +60,26 @@ public class TestUtil {
 			ids.add(new ID(Long.valueOf(i), name + i, new IDType(clazz.getName())));
 
 		return ids;
+	}
+	
+	public static Archive<?> createTestArchive(String warName) {
+		return ShrinkWrap
+				.create(WebArchive.class, warName)
+				.addPackages(true, "edu.harvard.integer")
+				.addPackages(true, "net.percederberg")
+				.addPackages(true, "org.apache.commons")
+				.addPackages(true, "org.snmp4j")
+				.addPackages(true, "uk.co.westhawk.snmp")
+				.addPackages(true, "org.jboss")
+				.addPackages(true, "org.wildfly")
+				.addPackages(true, "org.xnio")
+				.addPackages(true, "org.slf4j.logger")
+				.addPackages(true, "org/jasypt")
+				.addPackages(true, "com.fasterxml.jackson")
+				.addAsResource("META-INF/test-persistence.xml",
+						"META-INF/persistence.xml")
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+				// Deploy our test data source
+				.addAsWebInfResource("test-ds.xml");
 	}
 }

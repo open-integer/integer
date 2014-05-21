@@ -41,14 +41,12 @@ import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.IntegerPropertyNames;
@@ -66,22 +64,7 @@ public class SystemPropertyTest {
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "DistributionManagerTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "uk.co.westhawk.snmp")
-				.addPackages(true, "org.jboss")
-				.addPackages(true, "org.wildfly")
-				.addPackages(true, "org.xnio")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsResource("integer.properties")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("DistributionManagerTest.war");
 	}
 	
 	@Before

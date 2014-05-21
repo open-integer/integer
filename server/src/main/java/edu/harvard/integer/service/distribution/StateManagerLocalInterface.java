@@ -31,77 +31,15 @@
  *      
  */
 
-package edu.harvard.integer.common.distribution;
+package edu.harvard.integer.service.distribution;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.ID;
+import javax.ejb.Local;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-@Entity
-public class DistributedManager extends BaseEntity {
-
-	/**
-	 * Serial Version UID
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private Long serverId = null;
-
-	private String managerType = null;
-
-	/**
-	 * 
-	 */
-	public DistributedManager() {
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "DistributedManager [serverId=" + serverId + ", managerType="
-				+ managerType + "]";
-	}
-
-	/**
-	 * @return the serverId
-	 */
-	public Long getServerId() {
-		return serverId;
-	}
-
-	/**
-	 * @param serverId
-	 *            the serverId to set
-	 */
-	public void setServerId(Long serverId) {
-		this.serverId = serverId;
-	}
-
-	/**
-	 * @return the managerType
-	 */
-	public String getManagerType() {
-		return managerType;
-	}
-
-	/**
-	 * @param managerType
-	 *            the managerType to set
-	 */
-	public void setManagerType(String managerType) {
-		this.managerType = managerType;
-	}
+@Local
+public interface StateManagerLocalInterface extends StateManagerInterface {
 
 }

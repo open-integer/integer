@@ -58,6 +58,7 @@ import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.snmp.CommunityAuth;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
@@ -96,22 +97,7 @@ public class ElementDiscoverTest {
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "ServiceElementDiscoveryManagerTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "uk.co.westhawk.snmp")
-				.addPackages(true, "com.fasterxml.jackson")
-				//.addPackages(true, "org.jboss")
-				//.addPackages(true, "org.wildfly")
-				.addPackages(true, "org.xnio")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("ServiceElementDiscoveryManagerTest.war");
 	}
 	
 	@Before

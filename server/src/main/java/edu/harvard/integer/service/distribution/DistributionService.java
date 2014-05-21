@@ -46,12 +46,14 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.distribution.DistributedManager;
+import edu.harvard.integer.common.distribution.DistributedManagerInterface;
 import edu.harvard.integer.common.distribution.DistributedService;
 import edu.harvard.integer.common.distribution.IntegerServer;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.LongPropertyNames;
 import edu.harvard.integer.server.IntegerApplication;
+import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
@@ -65,7 +67,7 @@ import edu.harvard.integer.service.persistance.dao.distribtued.IntegerServerDAO;
 @Singleton
 @Startup
 @Path("/DistributionService")
-public class DistributionService extends BaseService {
+public class DistributionService extends BaseService implements DistributionServiceInterface {
 
 	@Inject
 	private Logger logger;
@@ -110,8 +112,115 @@ public class DistributionService extends BaseService {
 			e.printStackTrace();
 		}
 
+		try {
+			showAllManagers();
+		} catch (IntegerException e) {
+			logger.error("Error checking all managers! " + e.toString());
+			e.printStackTrace();
+		} catch (Throwable e) { 
+			logger.error("Error checking all managers! " + e.toString());
+			e.printStackTrace();
+		}
+////
+//		try {
+//			showAllServicess();
+//		} catch (IntegerException e) {
+//			logger.error("Error checking all services! " + e.toString());
+//			e.printStackTrace();
+//		}
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.distribution.DistributionServiceInterface#getManagers()
+	 */
+	@Override
+	public DistributedManager[] getManagers() throws IntegerException  {
+
+		DistributedManagerDAO distributedManagerDAO = persistenceManager
+				.getDistributedManagerDAO();
+		DistributedManager[] managers = distributedManagerDAO.findAll();
+	
+		logger.info("Found " + managers.length + " managers " + managers);
+		
+		return managers;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.distribution.DistributionServiceInterface#getServices()
+	 */
+	@Override
+	public DistributedService[] getServices() throws IntegerException {
+
+		DistributedServiceDAO dao = persistenceManager
+				.getDistributedServiceDAO();
+		DistributedService[] services = dao.findAll();
+		
+		logger.info("Found " + services.length + " managers " + services);
+		
+		return services;
+	}
+	
+	/**
+	 * @throws IntegerException 
+	 * 
+	 */
+	private void showAllManagers() throws IntegerException {
+		
+		IntegerServer[] servers = DistributionManager.getServers();
+		for (IntegerServer integerServer : servers) {
+			logger.info("Server " + integerServer.getName() + " ID: " + integerServer.getServerId() 
+					+ " " + integerServer.getServerAddress().getAddress()
+					+ " My ID: " + getServerID()
+					+ " started " + integerServer.getLastStarted());
+			
+			DistributedManager[] knownManagers = null;
+			if (integerServer.getServerId().equals(getServerID())) {
+				knownManagers = getManagers();
+			} else {
+				
+				StateManagerInterface manager = DistributionManager.getManager(integerServer.getServerId(), ManagerTypeEnum.StateManager);
+				knownManagers = manager.getConfiguredManagers();
+			}
+			
+			for (DistributedManager distributedManager : knownManagers) {
+				logger.info("Manager " + distributedManager.getName() + " type " + distributedManager.getManagerType());
+			}
+		}
+		
+	}
+
+	/**
+	 * @throws IntegerException 
+	 * 
+	 */
+	private void showAllServicess() throws IntegerException {
+		IntegerServer[] servers = DistributionManager.getServers();
+		for (IntegerServer integerServer : servers) {
+			logger.info("Server " + integerServer.getName() + " ID: " + integerServer.getServerId() 
+					+ " " + integerServer.getServerAddress()
+					+ " started " + integerServer.getLastStarted());
+			
+
+			DistributedService[] services = DistributionManager.getServices();
+			for (DistributedService service : services) {
+				logger.info("Manager " + service.getName() + " type " + service.getService());
+			}
+		}
+		
+		
+	}
+
+	@Override
+	public DistributedManager[] getKnownManagers() throws IntegerException {
+		DistributedManagerDAO distributedManagerDAO = persistenceManager
+				.getDistributedManagerDAO();
+		DistributedManager[] managers = distributedManagerDAO.findAll();
+		
+		return managers;
+	}
 
 	/**
 	 * @return

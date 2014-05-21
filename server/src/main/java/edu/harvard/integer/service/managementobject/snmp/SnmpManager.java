@@ -246,6 +246,16 @@ public class SnmpManager extends BaseManager implements SnmpManagerInterface {
 		return snmpdao.findByOid(oid);
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#getSNMPByName(java.lang.String)
+	 */
+	@Override
+	public SNMP getSNMPByName(String name) throws IntegerException {
+		SNMPDAO snmpdao = persistenceManager.getSNMPDAO();
+		
+		return snmpdao.findByName(name);
+	}
+
 	/**
 	 * Update a single SNMP OID.
 	 * 

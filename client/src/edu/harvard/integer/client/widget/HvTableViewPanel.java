@@ -1,7 +1,6 @@
 package edu.harvard.integer.client.widget;
 
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;

@@ -53,6 +53,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -96,27 +97,12 @@ public class ManagementObjectCapbilityManagerTest {
 	@Inject
 	SnmpManagerInterface snmpManager;
 
-	@Inject
-	Logger logger;
+//	@Inject
+	Logger logger = LoggerFactory.getLogger(ManagementObjectCapbilityManagerTest.class);
 
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		WebArchive archive = ShrinkWrap
-				.create(WebArchive.class,
-						"ManagementObjectCapbilityManagerTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "com.fasterxml.jackson")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
-
-		return archive;
-	}
+		return TestUtil.createTestArchive("ManagementObjectCapbilityManagerTest.war");	}
 
 	@Before
 	public void initializeLogger() {

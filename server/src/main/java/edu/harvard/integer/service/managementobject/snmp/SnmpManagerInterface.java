@@ -93,6 +93,14 @@ public interface SnmpManagerInterface extends BaseManagerInterface {
 	SNMP getSNMPByOid(String oid) throws IntegerException;
 
 	/**
+	 * Get the SNMP object with the specified name.
+	 * @param name
+	 * @return
+	 * @throws IntegerException
+	 */
+	SNMP getSNMPByName(String name) throws IntegerException;
+	
+	/**
 	 * Update the SNMP OID.
 	 * 
 	 * @param oid

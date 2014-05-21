@@ -33,8 +33,10 @@
 
 package edu.harvard.integer.service.discovery;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+
+import javax.ejb.Local;
+import javax.ejb.Remote;
 
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -53,6 +55,7 @@ import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
  *
  * @author David Taylor
  */
+@Local
 public interface DiscoveryServiceInterface extends BaseServiceInterface {
 
 	/**

@@ -41,6 +41,7 @@ import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
  * @author David Taylor
@@ -91,6 +92,15 @@ public class VendorContainmentSelector extends BaseEntity {
 	 */
 	private String softwareVersion = null;
 
+	/**
+	 * If the vendor, model, firmware and software version do not map 
+	 * to a specific VendorContainmentSelector then this value can be
+	 * used to test the device for existence of a value. If a value
+	 * is returned then this VendorContainmentSelector can be used to
+	 * discover the device containment.
+	 */
+	private ServiceElementManagementObject testManagementObject = null;
+	
 	/**
 	 * The idId of the instances of the hardware containment structure class
 	 * that tells the discovery system how to learn the structure of

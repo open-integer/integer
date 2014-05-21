@@ -60,7 +60,8 @@ public enum ManagerTypeEnum implements DistributedManagerInterface {
 	SnmpManager(SnmpManager.class, SnmpManagerInterface.class),
     ServiceElementAccessManager(ServiceElememtAccessManager.class, ServiceElementAccessManagerInterface.class),
     ManagementObjectCapabilityManager(ManagementObjectCapabilityManager.class,
-    		ManagementObjectCapabilityManagerInterface.class);
+    		ManagementObjectCapabilityManagerInterface.class),
+    StateManager(StateManager.class, StateManagerRemoteInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
 	Class<? extends BaseManagerInterface> intfClazz;

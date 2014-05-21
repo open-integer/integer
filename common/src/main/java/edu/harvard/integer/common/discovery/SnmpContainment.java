@@ -72,11 +72,11 @@ public class SnmpContainment extends BaseEntity {
 	/**
 	 * The containment type defines how the discovery program will use the data
 	 * in instances of this class. If the containment type is Entity MIB, then
-	 * it uses the OID structure of the Entitiy MIB to determine the containment
+	 * it uses the OID structure of the Entity MIB to determine the containment
 	 * of the ServiceElementTypes from the vendor(s) in the associated
 	 * SnmpVendorDiscoveryTemplate
 	 * 
-	 * If the containment type is hierarchal then there will be a list of top
+	 * If the containment type is hierarchical then there will be a list of top
 	 * level SnmpLevelOID instances in the snmpLevelOidList attribute.
 	 */
 	@Enumerated(EnumType.STRING)

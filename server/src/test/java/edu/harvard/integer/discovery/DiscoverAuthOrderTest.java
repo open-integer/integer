@@ -54,6 +54,7 @@ import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.AccessTypeEnum;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
@@ -95,21 +96,7 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "DiscoverAuthOrderTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "org.jboss")
-				.addPackages(true, "org.wildfly")
-				.addPackages(true, "org.xnio")
-				.addAsResource("jboss-ejb-client.properties")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("DiscoverAuthOrderTest.war");
 	}
 	
 	@Before

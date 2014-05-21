@@ -49,6 +49,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.user.UserManagerInterface;
 
@@ -67,17 +68,7 @@ public class UserTest {
 	
 	 @Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "UserTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test datasource
-				.addAsWebInfResource("test-ds.xml");
+		 return TestUtil.createTestArchive("UserTest.war");
 	}
 	
 

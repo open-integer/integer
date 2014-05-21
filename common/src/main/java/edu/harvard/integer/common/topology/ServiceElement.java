@@ -103,7 +103,7 @@ public class ServiceElement extends BaseEntity implements Serializable {
 			@AttributeOverride(name = "name", column = @Column(name = "parentName")) })
 	private ID parentId = null;
 
-	private Boolean hasChildren = null;
+	private Boolean hasChildren = false;
 	
 	// Since some ServiceElements will have many capabilities this attribute
 	// will list all the capabilities the serviceElement has. This does not mean
@@ -137,7 +137,6 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	// this is not always the case. For example a router at an interchange that
 	// has many interfaces. Only some of which may be under the operational
 	// control of one customer, while others may be under the control of others.
-
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "operationalControlId")),

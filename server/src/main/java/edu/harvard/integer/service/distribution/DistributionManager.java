@@ -49,6 +49,7 @@ import edu.harvard.integer.common.distribution.IntegerServer;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
 import edu.harvard.integer.common.properties.IntegerProperties;
+import edu.harvard.integer.common.properties.LongPropertyNames;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
@@ -70,49 +71,108 @@ public class DistributionManager {
 	private static DistributedManager[] managers = null;
 
 	/**
-	 * List of all Services running in the Integer system regardless of where the
-	 * services are running. This list will be updated by the DistributionService.
+	 * List of all Services running in the Integer system regardless of where
+	 * the services are running. This list will be updated by the
+	 * DistributionService.
 	 */
 	private static DistributedService[] services = null;
 
 	/**
-	 * List of IntegerServers. This list will be updated by the DistributionService.
+	 * List of IntegerServers. This list will be updated by the
+	 * DistributionService.
 	 */
 	private static IntegerServer[] servers = null;
-	
+
 	public static <T extends BaseServiceInterface> T getService(
 			ServiceTypeEnum type) throws IntegerException {
 
-		String moduleName = IntegerProperties.getInstance().getProperty(StringPropertyNames.ModuleName);
+		String moduleName = IntegerProperties.getInstance().getProperty(
+				StringPropertyNames.ModuleName);
 		try {
-		
-		//	if (logger.isDebugEnabled())
-				logger.info("Lookup " + type + " module " + moduleName);
+
+			// if (logger.isDebugEnabled())
+			logger.info("Lookup " + type + " module " + moduleName);
+
+			String hostName = getHostNameForService(type);
 			
-			if (moduleName.length() > 1)
-				return lookupLocalBean(getHostNameForService(type), getLocalServiceName(moduleName, type));
-			else
-				return lookupLocalBean(getHostNameForService(type), getLocalServiceName(type));
+			if (moduleName.length() > 1) {
+				if (isLocalhost(type))
+					return lookupLocalBean(hostName, getLocalServiceName(moduleName, type));
+				else
+					return lookupRemoteBean(getHostNameForService(type),
+							getLocalServiceName(moduleName, type));
+				
+			} else
+				return lookupLocalBean("localhost",
+						getLocalServiceName(type));
 		} catch (IntegerException e) {
 			if (SystemErrorCodes.ManagerNotFound.equals(e.getErrorCode())) {
-				logger.error("Unable to find " + type + " with module " + moduleName + " try 'integer/server-1.0'");
-				return lookupLocalBean(getHostNameForService(type), getLocalServiceName("integer/server-1.0", type) );
+				logger.error("Unable to find " + type + " with module "
+						+ moduleName + " try 'integer/server-1.0'");
+				return lookupRemoteBean(getHostNameForService(type),
+						getLocalServiceName("integer/server-1.0", type));
 			} else
 				throw e;
 		}
+	}
+
+	public static <T extends BaseServiceInterface> T getService(Long serverId,
+			ServiceTypeEnum type) throws IntegerException {
+
+		String moduleName = IntegerProperties.getInstance().getProperty(
+				StringPropertyNames.ModuleName);
+		try {
+
+			// if (logger.isDebugEnabled())
+			logger.info("Lookup " + type + " module " + moduleName);
+
+			if (moduleName.length() > 1)
+				return lookupRemoteBean(getHostName(serverId),
+						getLocalServiceName(moduleName, type));
+			else
+				return lookupRemoteBean(getHostName(serverId),
+						getLocalServiceName(type));
+		} catch (IntegerException e) {
+			if (SystemErrorCodes.ManagerNotFound.equals(e.getErrorCode())) {
+				logger.error("Unable to find " + type + " with module "
+						+ moduleName + " try 'integer/server-1.0'");
+				return lookupRemoteBean(getHostName(serverId),
+						getLocalServiceName("integer/server-1.0", type));
+			} else
+				throw e;
+		}
+	}
+
+	
+	private static boolean isLocalHost(Long serverId) {
+		try {
+			Long id = IntegerProperties.getInstance().getLongProperty(
+					LongPropertyNames.ServerId);
+			
+			if (id.equals(serverId))
+				return true;
+			else
+				return false;
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 	
 	public static String getHostName(Long serverId) {
 		for (IntegerServer server : servers) {
 			if (server.getServerId().equals(serverId)) {
-				String hostUrl = server.getServerAddress().getAddress() + ":" + server.getPort();
+				String hostUrl = server.getServerAddress().getAddress() + ":"
+						+ server.getPort();
 				logger.info("Using " + hostUrl + " for serverId " + serverId);
 				return hostUrl;
 			}
 		}
-		
+
 		logger.error("Unable to find server for " + serverId);
-		
+
 		return "localhost";
 	}
 
@@ -125,15 +185,43 @@ public class DistributionManager {
 			logger.error("Services list is empty! Has the server completed startup? Try loalhost");
 			return "localhost";
 		}
-		
+
 		for (DistributedService service : services) {
 			if (service.getService().equals(type.name()))
 				return getHostName(service.getServerId());
 		}
-		
-		logger.error("Service " + type + " Not found in Distribtued service cache!!");
-		
+
+		logger.error("Service " + type
+				+ " Not found in Distribtued service cache!!");
+
 		return "localhost";
+	}
+
+	private static boolean isLocalhost(ServiceTypeEnum type) {
+		if (services == null) {
+			logger.error("Services list is empty! Has the server completed startup? Try loalhost");
+			return true;
+		}
+
+		Long id = null;
+		try {
+			id = IntegerProperties.getInstance().getLongProperty(
+					LongPropertyNames.ServerId);
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return true;
+		}
+		
+		for (DistributedService service : services) {
+			if (service.getService().equals(type.name()))
+				return service.getServerId().equals(id);
+		}
+
+		logger.error("Service " + type
+				+ " Not found in Distribtued service cache!!");
+
+		return true;
 	}
 	
 	private static String getHostNameForManager(ManagerTypeEnum type) {
@@ -146,45 +234,50 @@ public class DistributionManager {
 			if (manager.getManagerType().equals(type.name()))
 				return getHostName(manager.getServerId());
 		}
-		
-		logger.error("Service " + type + " Not found in Distribtued service cache!!");
-		
+
+		logger.error("Service " + type
+				+ " Not found in Distribtued service cache!!");
+
 		return "localhost";
 	}
-	
+
 	public DistributedManager getDistributedManager(ManagerTypeEnum type) {
 		if (managers == null) {
-			logger.error("Manager list is empty! Has the server completed startup? Can not get " + type);
+			logger.error("Manager list is empty! Has the server completed startup? Can not get "
+					+ type);
 			return null;
 		}
-	
+
 		for (DistributedManager manager : managers) {
 			if (manager.getManagerType().equals(type.name()))
 				return manager;
 		}
-		
-		logger.error("Manager " + type + " Not found in Distribtued manager cache!!");
-		
+
+		logger.error("Manager " + type
+				+ " Not found in Distribtued manager cache!!");
+
 		return null;
 	}
-	
+
 	public DistributedService getDistributedService(ServiceTypeEnum type) {
 
 		if (services == null) {
-			logger.error("Service list is empty! Has the server completed startup? Can not get " + type);
+			logger.error("Service list is empty! Has the server completed startup? Can not get "
+					+ type);
 			return null;
 		}
-	
+
 		for (DistributedService service : services) {
 			if (service.getService().equals(type.name()))
 				return service;
 		}
-		
-		logger.error("Manager " + type + " Not found in Distribtued manager cache!!");
-		
+
+		logger.error("Manager " + type
+				+ " Not found in Distribtued manager cache!!");
+
 		return null;
 	}
-	
+
 	private static String getLocalServiceName(ServiceTypeEnum serviceType) {
 		StringBuffer b = new StringBuffer();
 
@@ -192,45 +285,83 @@ public class DistributionManager {
 		b.append(serviceType.getServiceClass().getSimpleName());
 		b.append("!");
 		b.append(serviceType.getBeanLocalInterfaceClass().getName());
-		
+
 		return b.toString();
 	}
 
-	private static String getLocalServiceName(String module, ServiceTypeEnum serviceType) {
+	private static String getLocalServiceName(String module,
+			ServiceTypeEnum serviceType) {
 		StringBuffer b = new StringBuffer();
 
 		b.append("java:global/");
 		b.append(module);
 		b.append('/');
-		
+
 		b.append(serviceType.getServiceClass().getSimpleName());
 		b.append("!");
 		b.append(serviceType.getBeanLocalInterfaceClass().getName());
-		
+
 		return b.toString();
 	}
 
-
 	public static <T extends BaseManagerInterface> T getManager(
 			ManagerTypeEnum managerType) throws IntegerException {
-		String moduleName = IntegerProperties.getInstance().getProperty(StringPropertyNames.ModuleName);
-		if (moduleName.length() > 1)
-			return lookupLocalBean(getHostNameForManager(managerType), getLocalManagerName(moduleName, managerType));
-		else
-			return lookupLocalBean(getHostNameForManager(managerType), getLocalManagerName(managerType));
+
+		for (DistributedManager manager : managers) {
+			if (manager.getManagerType().equals(managerType.name()))
+				return getManager(manager.getServerId(), managerType);
+		}
+	
+		System.out.println("Manager not found for " + managerType + " Types " + managers);
+		for (DistributedManager manager : managers) {
+			System.out.println("Manager " + manager);
+		}
+		logger.error("Manager not found for " + managerType);
+		return null;
+	
+//		
+//		String moduleName = IntegerProperties.getInstance().getProperty(
+//				StringPropertyNames.ModuleName);
+//		if (moduleName.length() > 1)
+//			return lookupRemoteBean(getHostNameForManager(managerType),
+//					getLocalManagerName(moduleName, managerType));
+//		else
+//			return lookupRemoteBean(getHostNameForManager(managerType),
+//					getLocalManagerName(managerType));
+
 	}
 
+	public static <T extends BaseManagerInterface> T getManager(Long serverId,
+			ManagerTypeEnum managerType) throws IntegerException {
+		String moduleName = IntegerProperties.getInstance().getProperty(
+				StringPropertyNames.ModuleName);
 
-	private static String getLocalManagerName(String moduleName, ManagerTypeEnum managerType) {
+		try {
+			if (moduleName.length() > 1)
+				return lookupRemoteBean(getHostName(serverId),
+						getLocalManagerName(moduleName, managerType));
+			else
+				return lookupLocalBean(getHostName(serverId),
+						getLocalManagerName(managerType));
+		} catch (Throwable e) {
+			logger.error("Failed to get manager " + managerType + " Error "
+					+ e.toString());
+		}
+
+		return null;
+	}
+
+	private static String getLocalManagerName(String moduleName,
+			ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
-		b.append("java:global/");
+	//	b.append("java:global/");
 		b.append(moduleName);
 		b.append('/');
 		b.append(managerType.getBeanClass().getSimpleName());
 		b.append("!");
 		b.append(managerType.getBeanLocalInterfaceClass().getName());
-		
+
 		return b.toString();
 	}
 	
@@ -241,54 +372,11 @@ public class DistributionManager {
 		b.append(managerType.getBeanClass().getSimpleName());
 		b.append("!");
 		b.append(managerType.getBeanLocalInterfaceClass().getName());
-		
+
 		return b.toString();
 	}
-	
-	public static <T extends BaseManagerInterface> T getRemoteManager(
-			ManagerTypeEnum managerType) throws IntegerException {
 
-		String moduleName = IntegerProperties.getInstance().getProperty(StringPropertyNames.ModuleName);
-		
-		return lookupRemote(getLocalManagerName(moduleName, managerType));
-	}
-	
-	@SuppressWarnings("unchecked")
-	private static <T> T lookupRemote(String managerName) throws IntegerException {
 
-		InitialContext ctx = null;
-		try {
-
-			final Properties env = new Properties();
-			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-			env.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
-			ctx = new InitialContext(env);
-
-			T manager = null;
-
-			manager = (T) lookupBean(managerName, ctx);
-			if (manager == null) {
-
-				throw new IntegerException(null,
-						SystemErrorCodes.ManagerNotFound);
-			}
-
-			if (logger.isDebugEnabled())
-				logger.info("Got localBean " + managerName);
-
-			return manager;
-
-		} catch (Exception e) {
-			logger.error("Error getting service " + managerName + e.toString(),
-					e);
-			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
-		} catch (Throwable e) {
-			logger.error("Error getting service " + managerName + e.toString(),
-					e);
-			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
-		}
-	}
-	
 	@SuppressWarnings("unchecked")
 	private static <T> T lookupLocalBean(String hostName, String managerName)
 			throws IntegerException {
@@ -299,7 +387,7 @@ public class DistributionManager {
 			final Properties env = new Properties();
 			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
-			env.put(Context.PROVIDER_URL, "http-remoting://" + hostName );
+		//	env.put(Context.PROVIDER_URL, "http-remoting://" + hostName );
 			
 			ctx = new InitialContext(env);
 
@@ -324,6 +412,55 @@ public class DistributionManager {
 		} catch (Throwable e) {
 			logger.error("Error getting service " + managerName + e.toString(),
 					e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T> T lookupRemoteBean(String hostName, String managerName)
+			throws IntegerException {
+
+		InitialContext ctx = null;
+		try {
+
+			final Properties env = new Properties();
+
+			env.put(Context.INITIAL_CONTEXT_FACTORY,
+					"org.jboss.naming.remote.client.InitialContextFactory");
+			env.put(Context.PROVIDER_URL, "http-remoting://" + hostName);
+			//
+			env.put(Context.SECURITY_PRINCIPAL, "admin");
+			env.put(Context.SECURITY_CREDENTIALS, "public");
+
+			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+			//
+			env.put("jboss.naming.client.ejb.context", true);
+			//
+			ctx = new InitialContext(env);
+
+			T manager = null;
+
+			manager = (T) lookupBean(managerName, ctx);
+			if (manager == null) {
+
+				throw new IntegerException(null,
+						SystemErrorCodes.ManagerNotFound);
+			}
+
+			// if (logger.isDebugEnabled())
+			logger.info("Got bean " + managerName + " from host " + hostName
+					+ " with context " + env.toString());
+
+			return manager;
+
+		} catch (Exception e) {
+			logger.error("Error getting service " + managerName + " Error: "
+					+ e.toString(), e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+		} catch (Throwable e) {
+			logger.error("Error getting service " + managerName + " Error: "
+					+ e.toString(), e);
 			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
 		}
 
@@ -363,7 +500,8 @@ public class DistributionManager {
 	}
 
 	/**
-	 * @param managers the managers to set
+	 * @param managers
+	 *            the managers to set
 	 */
 	public static void setManagers(DistributedManager[] distributeManagers) {
 		managers = distributeManagers;
@@ -377,7 +515,8 @@ public class DistributionManager {
 	}
 
 	/**
-	 * @param services the services to set
+	 * @param services
+	 *            the services to set
 	 */
 	public static void setServices(DistributedService[] distributedServers) {
 		services = distributedServers;
@@ -391,7 +530,8 @@ public class DistributionManager {
 	}
 
 	/**
-	 * @param servers the servers to set
+	 * @param servers
+	 *            the servers to set
 	 */
 	public static void setServers(IntegerServer[] servers) {
 		DistributionManager.servers = servers;

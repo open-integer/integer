@@ -84,20 +84,6 @@ public class GWTWhitelist implements Serializable {
 	public void setBaseEntity(BaseEntity baseEntity) {
 		this.baseEntity = baseEntity;
 	}
-//
-//	/**
-//	 * @return the snmp
-//	 */
-//	public SNMP getSnmp() {
-//		return snmp;
-//	}
-//
-//	/**
-//	 * @param snmp the snmp to set
-//	 */
-//	public void setSnmp(SNMP snmp) {
-//		this.snmp = snmp;
-//	}
 
 	/**
 	 * @return the serviceElementList
@@ -112,5 +98,6 @@ public class GWTWhitelist implements Serializable {
 	public void setServiceElementList(ServiceElement[] serviceElementList) {
 		this.serviceElementList = serviceElementList;
 	}
+
 
 }

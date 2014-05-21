@@ -52,27 +52,28 @@ import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 
 /**
- * @author David Taylor
- * All add, delete, modify, findXXX methods for the SNMP object are done
- * in this class. 
+ * @author David Taylor All add, delete, modify, findXXX methods for the SNMP
+ *         object are done in this class.
  */
 public class SNMPDAO extends BaseDAO {
 
 	private Logger logger = LoggerFactory.getLogger(SNMPDAO.class);
-	
+
 	/**
 	 * @param entityManger
 	 * @param logger
 	 */
 	public SNMPDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, SNMP.class);
-		
+
 	}
 
-	
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
+	 * .integer.common.BaseEntity)
 	 */
 	@Override
 	public <T extends BaseEntity> void preSave(T entity)
@@ -80,17 +81,17 @@ public class SNMPDAO extends BaseDAO {
 
 		SNMP snmp = (SNMP) entity;
 		if (snmp.getTextualConvetion() != null) {
-			SnmpSyntaxDAO dao = new SnmpSyntaxDAO(getEntityManager(), getLogger());
+			SnmpSyntaxDAO dao = new SnmpSyntaxDAO(getEntityManager(),
+					getLogger());
 			snmp.setSyntax(dao.update(snmp.getSyntax()));
 		}
-		
+
 		super.preSave(entity);
 	}
 
-
-
 	/**
 	 * Find the SNMPModule that has the given OID.
+	 * 
 	 * @return
 	 */
 	public SNMP findByOid(String oidString) {
@@ -102,29 +103,46 @@ public class SNMPDAO extends BaseDAO {
 	 * @param name
 	 */
 	public List<SNMP> findByOidSubtree(String name) {
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
 		CriteriaQuery<SNMP> query = criteriaBuilder.createQuery(SNMP.class);
 
 		Root<SNMP> from = query.from(SNMP.class);
 		query.select(from);
-		
-		ParameterExpression<String> oid = criteriaBuilder.parameter(String.class);
+
+		ParameterExpression<String> oid = criteriaBuilder
+				.parameter(String.class);
 		query.select(from).where(criteriaBuilder.like(oid, name + "%"));
-		
+
 		TypedQuery<SNMP> typeQuery = getEntityManager().createQuery(query);
 		typeQuery.setParameter(oid, name);
-		
+
 		List<SNMP> resultList = typeQuery.getResultList();
-		
+
 		if (resultList.size() > 0) {
 			if (getLogger().isDebugEnabled())
-				getLogger().debug("Found OID " + resultList.get(0).getIdentifier() + " " + resultList.get(0).getOid() + " " + resultList.get(0).getName());
-			
+				getLogger().debug(
+						"Found OID " + resultList.get(0).getIdentifier() + " "
+								+ resultList.get(0).getOid() + " "
+								+ resultList.get(0).getName());
+
 			return resultList;
 		} else
 			return null;
-		
-		
+
+	}
+
+	/**
+	 * Find the SNMP object with the given name. This should only match ONE SNMP
+	 * object.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public SNMP findByName(String name) {
+
+		SNMP snmp = findByStringField(name, "name", SNMP.class);
+		return snmp;
 	}
 }

@@ -31,77 +31,42 @@
  *      
  */
 
-package edu.harvard.integer.common.distribution;
+package edu.harvard.integer.service.distribution;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.ID;
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.distribution.DistributedManager;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
 
 /**
  * @author David Taylor
  * 
  */
-@Entity
-public class DistributedManager extends BaseEntity {
+@Stateless
+public class StateManager extends BaseManager implements StateManagerLocalInterface, StateManagerRemoteInterface {
 
-	/**
-	 * Serial Version UID
-	 */
-	private static final long serialVersionUID = 1L;
+	@Inject
+	private Logger logger;
 
-	private Long serverId = null;
+	@Inject
+	private PersistenceManagerInterface persistenceManager;
 
-	private String managerType = null;
-
-	/**
-	 * 
-	 */
-	public DistributedManager() {
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
-	public String toString() {
-		return "DistributedManager [serverId=" + serverId + ", managerType="
-				+ managerType + "]";
-	}
+	public DistributedManager[] getConfiguredManagers() throws IntegerException {
 
-	/**
-	 * @return the serverId
-	 */
-	public Long getServerId() {
-		return serverId;
-	}
+		DistributedManagerDAO distributedManagerDAO = persistenceManager
+				.getDistributedManagerDAO();
+		DistributedManager[] managers = distributedManagerDAO.findAll();
 
-	/**
-	 * @param serverId
-	 *            the serverId to set
-	 */
-	public void setServerId(Long serverId) {
-		this.serverId = serverId;
-	}
+		logger.info("Found " + managers.length + " managers " + managers);
 
-	/**
-	 * @return the managerType
-	 */
-	public String getManagerType() {
-		return managerType;
-	}
-
-	/**
-	 * @param managerType
-	 *            the managerType to set
-	 */
-	public void setManagerType(String managerType) {
-		this.managerType = managerType;
+		return managers;
 	}
 
 }

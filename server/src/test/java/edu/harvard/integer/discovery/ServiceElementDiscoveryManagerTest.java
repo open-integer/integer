@@ -40,6 +40,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -55,6 +56,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.discovery.DiscoveryParseElement;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
@@ -98,27 +100,13 @@ public class ServiceElementDiscoveryManagerTest {
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "ServiceElementDiscoveryManagerTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "uk.co.westhawk.snmp")
-				//.addPackages(true, "org.jboss")
-				//.addPackages(true, "org.wildfly")
-				.addPackages(true, "org.xnio")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("ServiceElementDiscoveryManagerTest.war");
 	}
 	
 	@Before
 	public void initializeLogger() {
 		//BasicConfigurator.configure();
-		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
+		//org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
 	}
 
 	private SNMP createOid(String name, String oidString) {
@@ -168,6 +156,7 @@ public class ServiceElementDiscoveryManagerTest {
 		
 	}
 	
+	
 	@Test
 	public void createSnmpVendorDiscoveryTemplate() {
 		
@@ -185,6 +174,9 @@ public class ServiceElementDiscoveryManagerTest {
 		ID vendorId = new ID(Long.valueOf(9), "Cisco", type);
 		template.setVendorId(vendorId);
 		try {
+			logger.info("Manager is " + snmpManager);
+			assert(snmpManager != null);
+			
 			template.setModel(snmpManager.getSNMPByOid(CommonSnmpOids.sysObjectID));
 		} catch (IntegerException e) {
 			

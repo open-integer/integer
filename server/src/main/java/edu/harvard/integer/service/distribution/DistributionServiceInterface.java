@@ -33,12 +33,36 @@
 
 package edu.harvard.integer.service.distribution;
 
+import javax.ejb.Remote;
+
+import edu.harvard.integer.common.distribution.DistributedManager;
+import edu.harvard.integer.common.distribution.DistributedService;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
  * @author David Taylor
  *
  */
+@Remote
 public interface DistributionServiceInterface extends BaseServiceInterface {
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	DistributedManager[] getKnownManagers() throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	DistributedManager[] getManagers() throws IntegerException;
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	DistributedService[] getServices() throws IntegerException;
 
 }

@@ -46,18 +46,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.BasicConfigurator;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -68,7 +65,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
@@ -80,7 +77,6 @@ import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory.ParserProvider;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
  * @author David Taylor
@@ -99,24 +95,12 @@ public class ImportMIBTest {
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
 
-	@Inject
-	private Logger logger;
+	//@Inject
+	private Logger logger = LoggerFactory.getLogger(ImportMIBTest.class);
 
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "ImportMIBTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "uk.co.westhawk")
-				.addPackages(true, "com.fasterxml.jackson")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsResource("integer.properties")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("ImportMIBTest.war");
 	}
 
 	@Before

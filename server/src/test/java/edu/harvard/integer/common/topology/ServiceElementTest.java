@@ -53,6 +53,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
@@ -73,17 +74,7 @@ public class ServiceElementTest {
 
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap
-				.create(WebArchive.class, "ServiceElementTest.war")
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
+		return TestUtil.createTestArchive("ServiceElementTest.war");
 	}
 
 	@Before

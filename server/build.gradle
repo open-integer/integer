@@ -24,6 +24,7 @@ repositories {
 	maven { url "https://repository.jboss.org" }
 	maven { url "http://repository.jboss.org/nexus/content/groups/public/" }
 	maven { url "http://repo1.maven.org/maven2/com/fasterxml/jackson/" }
+	maven { url "http://oss.sonatype.org/content/groups/public/" }
 }
 
 dependencies {
@@ -45,6 +46,7 @@ dependencies {
 	compile "com.fasterxml.jackson.core:jackson-core:${jaxsonVersion}"
 	compile "com.fasterxml.jackson.core:jackson-annotations:${jaxsonVersion}"
 	compile "com.fasterxml.jackson.core:jackson-databind:${jaxsonVersion}"
+	compile "org.yaml:snakeyaml:1.13"
 	
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${junitArquillianVersion}"
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${junitArquillianVersion}"

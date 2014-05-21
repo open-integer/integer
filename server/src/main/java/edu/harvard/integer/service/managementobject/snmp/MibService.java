@@ -103,9 +103,7 @@ public class MibService extends BaseService {
 		
 		String mibDirPath = null;
 		
-		
-			mibDirPath = props.getProperty(StringPropertyNames.MIBDir) + "/";
-		
+		mibDirPath = props.getProperty(StringPropertyNames.MIBDir) + "/";
 		
 		for (String string : mibNames) {
 			
@@ -119,13 +117,13 @@ public class MibService extends BaseService {
 			importInfo.setFileName(string);
 			importInfo.setMib(readInMIB(file));
 
-			try {
-				snmpManager.importMib( new MIBImportInfo[] { importInfo });
-			} catch (IntegerException e) {
-				
-				e.printStackTrace();
-				logger.error("Error loading MIB " + string + " Error " + e.toString());
-			}
+//			try {
+//				snmpManager.importMib( new MIBImportInfo[] { importInfo });
+//			} catch (IntegerException e) {
+//				
+//				e.printStackTrace();
+//				logger.error("Error loading MIB " + string + " Error " + e.toString());
+//			}
 			
 			logger.info("Loaded " + string);
 		}
