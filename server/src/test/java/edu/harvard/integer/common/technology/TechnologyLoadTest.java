@@ -33,150 +33,138 @@
 
 package edu.harvard.integer.common.technology;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-
-import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
-import edu.harvard.integer.common.device.containment.ServiceElementTypeYaml;
-import edu.harvard.integer.common.device.containment.VendorContainmentSelectorYaml;
 
 /**
  * @author David Taylor
  *
  */
 public class TechnologyLoadTest {
-
-
-	@Test
-	public void readCDPTechnology() {
-		File mibFile = new File("../config/technology/cdp.yaml");
-		
-		String content = null;
-		try {
-			content = new String(Files.readAllBytes(mibFile.toPath()));
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail("Error loading MIB: " + e.getMessage());
-		}
-		
-		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
-		
-		Object load = yaml.load(content);
-		System.out.println("YAML Object is " + load.getClass().getName());
-//		System.out.println("YAML: " + load.toString());
-		
-		System.out.println("Technology read in: " + yaml.dump(load));
-	}
-	
-	
-	@Test
-	public void readInterfaceTechnology() {
-		File mibFile = new File("../config/technology/interfaces.yaml");
-		
-		String content = null;
-		try {
-			content = new String(Files.readAllBytes(mibFile.toPath()));
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail("Error loading MIB: " + e.getMessage());
-		}
-		
-		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
-		
-		Object load = yaml.load(content);
-		System.out.println("YAML Object is " + load.getClass().getName());
-//		System.out.println("YAML: " + load.toString());
-		
-		System.out.println("Technology read in: " + yaml.dump(load));
-	}
-	
-	@Test
-	public void readIv4Technology() {
-		File mibFile = new File("../config/technology/ipv4.yaml");
-		
-		String content = null;
-		try {
-			content = new String(Files.readAllBytes(mibFile.toPath()));
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail("Error loading MIB: " + e.getMessage());
-		}
-		
-		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
-		
-		Object load = yaml.load(content);
-		System.out.println("YAML Object is " + load.getClass().getName());
-//		System.out.println("YAML: " + load.toString());
-		
-		System.out.println("Technology read in: " + yaml.dump(load));
-	}
-	
+//
+//
 //	@Test
-	public void readDeviceContainment() {
-		File mibFile = new File("../config/technology/juniper-containment.yaml");
-		
-		String content = null;
-		try {
-			content = new String(Files.readAllBytes(mibFile.toPath()));
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail("Error loading MIB: " + e.getMessage());
-		}
-		
-		Yaml yaml = new Yaml(new Constructor(VendorContainmentSelectorYaml.class));
-		
-		Object load = yaml.load(content);
-		System.out.println("YAML Object is " + load.getClass().getName());
-//		System.out.println("YAML: " + load.toString());
-		
-		System.out.println("Device Containment read in: " + yaml.dump(load));
-	}
-	
+//	public void readCDPTechnology() {
+//		File mibFile = new File("../config/technology/cdp.yaml");
+//		
+//		String content = null;
+//		try {
+//			content = new String(Files.readAllBytes(mibFile.toPath()));
+//
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//			fail("Error loading MIB: " + e.getMessage());
+//		}
+//		
+//		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
+//		
+//		Object load = yaml.load(content);
+//		System.out.println("YAML Object is " + load.getClass().getName());
+////		System.out.println("YAML: " + load.toString());
+//		
+//		System.out.println("Technology read in: " + yaml.dump(load));
+//	}
+//	
+//	
 //	@Test
-	public void readHostContainment() {
-		File mibFile = new File("../config/technology/host-resources.yaml");
-		
-		String content = null;
-		try {
-			content = new String(Files.readAllBytes(mibFile.toPath()));
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail("Error loading MIB: " + e.getMessage());
-		}
-		
-		Yaml yaml = new Yaml(new Constructor(VendorContainmentSelectorYaml.class));
-		
-		Object load = yaml.load(content);
-		System.out.println("YAML Object is " + load.getClass().getName());
-//		System.out.println("YAML: " + load.toString());
-		
-		System.out.println("Device Containment read in: " + yaml.dump(load));
-		if (load instanceof VendorContainmentSelectorYaml) {
-			VendorContainmentSelectorYaml vendorContainment = (VendorContainmentSelectorYaml) load;
-			System.out.println("Found " + vendorContainment.getMappings().size()
-					+ " Service Element mappings");
-			for (ServiceElementTypeYaml set : vendorContainment.getServiceElementTypes()) {
-				System.out.println("Service Element Type " + set.getName()
-						+ " Children " + set.getChildServiceElementTypes());
-			}
-			System.out.println("Found " + vendorContainment.getServiceElementTypes().size()
-					+ " Service Elements");
-		}
-	}
+//	public void readInterfaceTechnology() {
+//		File mibFile = new File("../config/technology/interfaces.yaml");
+//		
+//		String content = null;
+//		try {
+//			content = new String(Files.readAllBytes(mibFile.toPath()));
+//
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//			fail("Error loading MIB: " + e.getMessage());
+//		}
+//		
+//		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
+//		
+//		Object load = yaml.load(content);
+//		System.out.println("YAML Object is " + load.getClass().getName());
+////		System.out.println("YAML: " + load.toString());
+//		
+//		System.out.println("Technology read in: " + yaml.dump(load));
+//	}
+//	
+//	@Test
+//	public void readIv4Technology() {
+//		File mibFile = new File("../config/technology/ipv4.yaml");
+//		
+//		String content = null;
+//		try {
+//			content = new String(Files.readAllBytes(mibFile.toPath()));
+//
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//			fail("Error loading MIB: " + e.getMessage());
+//		}
+//		
+//		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
+//		
+//		Object load = yaml.load(content);
+//		System.out.println("YAML Object is " + load.getClass().getName());
+////		System.out.println("YAML: " + load.toString());
+//		
+//		System.out.println("Technology read in: " + yaml.dump(load));
+//	}
+//	
+////	@Test
+//	public void readDeviceContainment() {
+//		File mibFile = new File("../config/technology/juniper-containment.yaml");
+//		
+//		String content = null;
+//		try {
+//			content = new String(Files.readAllBytes(mibFile.toPath()));
+//
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//			fail("Error loading MIB: " + e.getMessage());
+//		}
+//		
+//		Yaml yaml = new Yaml(new Constructor(VendorContainmentSelectorYaml.class));
+//		
+//		Object load = yaml.load(content);
+//		System.out.println("YAML Object is " + load.getClass().getName());
+////		System.out.println("YAML: " + load.toString());
+//		
+//		System.out.println("Device Containment read in: " + yaml.dump(load));
+//	}
+//	
+////	@Test
+//	public void readHostContainment() {
+//		File mibFile = new File("../config/technology/host-resources.yaml");
+//		
+//		String content = null;
+//		try {
+//			content = new String(Files.readAllBytes(mibFile.toPath()));
+//
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//			fail("Error loading MIB: " + e.getMessage());
+//		}
+//		
+//		Yaml yaml = new Yaml(new Constructor(VendorContainmentSelectorYaml.class));
+//		
+//		Object load = yaml.load(content);
+//		System.out.println("YAML Object is " + load.getClass().getName());
+////		System.out.println("YAML: " + load.toString());
+//		
+//		System.out.println("Device Containment read in: " + yaml.dump(load));
+//		if (load instanceof VendorContainmentSelectorYaml) {
+//			VendorContainmentSelectorYaml vendorContainment = (VendorContainmentSelectorYaml) load;
+//			System.out.println("Found " + vendorContainment.getMappings().size()
+//					+ " Service Element mappings");
+//			for (ServiceElementTypeYaml set : vendorContainment.getServiceElementTypes()) {
+//				System.out.println("Service Element Type " + set.getName()
+//						+ " Children " + set.getChildServiceElementTypes());
+//			}
+//			System.out.println("Found " + vendorContainment.getServiceElementTypes().size()
+//					+ " Service Elements");
+//		}
+//	}
 }
