@@ -10,6 +10,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 // TODO: Auto-generated Javadoc
@@ -83,6 +84,8 @@ public interface IntegerService extends RemoteService {
 	 *             the exception
 	 */
 	ServiceElement[] getServiceElementByParentId(ID id) throws Exception;
+	
+	DeviceDetails getDeviceDetails(ID id) throws Exception;
 
 	/**
 	 * Gets the events.

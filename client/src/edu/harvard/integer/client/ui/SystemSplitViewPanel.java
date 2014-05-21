@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvIconButton;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 public class SystemSplitViewPanel extends SplitLayoutPanel {
@@ -97,11 +98,24 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				else
 					selectedElement = containeeTreeView.getSelectedServiceElement();
 				
-				ServiceElementPanel detailsPanel = new ServiceElementPanel(selectedElement);
-				HvDialogBox detailsDialog = new HvDialogBox("Service Element", detailsPanel);
-				detailsDialog.setSize("400px", "150px");
-				detailsDialog.center();
-				detailsDialog.show();
+				MainClient.integerService.getDeviceDetails(selectedElement.getID(), new AsyncCallback<DeviceDetails>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Failed to receive Devices from Integer");
+					}
+
+					@Override
+					public void onSuccess(DeviceDetails deviceDetails) {
+						DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedElement.getName(), deviceDetails);
+						HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
+						detailsDialog.enableOkButton(false);
+						detailsDialog.setSize("400px", "150px");
+						detailsDialog.center();
+						detailsDialog.show();
+					}
+				});
+				
 			}
 			
 		});

@@ -22,6 +22,7 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Credential;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
@@ -212,7 +213,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 * @see edu.harvard.integer.client.IntegerService#startDiscovery(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void startDiscovery(String address, String mask) throws Exception{
+	public void startDiscovery(String address, String mask) throws Exception {
 		
 		IpTopologySeed seed = new IpTopologySeed();
 		Subnet subnet = new Subnet();
@@ -247,4 +248,19 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			fail(e.toString());
 		}
 }
+
+	@Override
+	public DeviceDetails getDeviceDetails(ID id) throws Exception {
+		DeviceDetails deviceDetails = null;
+
+		try {
+			deviceDetails = serviceElementService.getDeviceDetails(id);
+		} 
+		catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+		return deviceDetails;
+	}
 }
