@@ -3,6 +3,8 @@
  */
 package edu.harvard.integer.client.ui;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLTable;
@@ -11,6 +13,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.DeviceDetails;
 
 /**
@@ -41,12 +44,16 @@ public class DeviceDetailsPanel extends FormPanel {
 		
 		grid.setWidget(2, 0, new Label("Primary Location"));
 		final TextBox locationTextBox = new TextBox();
-		locationTextBox.setText(""+deviceDetails.getPrimaryLocation());
+		ID primaryLocationId = deviceDetails.getPrimaryLocation();
+		if (primaryLocationId != null && primaryLocationId.getName() != null)
+			locationTextBox.setText(primaryLocationId.getName());
 		grid.setWidget(2, 1, locationTextBox);
 
 		grid.setWidget(3, 0, new Label("Operational Control ID"));
 		final TextBox controlIdTextBox = new TextBox();
-		controlIdTextBox.setText(""+deviceDetails.getOperationalControlId());
+		ID operationalControlId = deviceDetails.getOperationalControlId();
+		if (operationalControlId != null && operationalControlId.getName() != null)
+			controlIdTextBox.setText(operationalControlId.getName());
 		grid.setWidget(3, 1, controlIdTextBox);
 		
 		grid.setWidget(4, 0, new Label("Criticality"));
@@ -56,17 +63,23 @@ public class DeviceDetailsPanel extends FormPanel {
 		
 		grid.setWidget(5, 0, new Label("Created Date"));
 		final TextBox createdTextBox = new TextBox();
-		createdTextBox.setText(deviceDetails.getCreated() != null ? deviceDetails.getCreated().toString() : "");
+		Date createdDate = deviceDetails.getCreated();
+		if (createdDate != null && createdDate.toString() != null)
+			createdTextBox.setText(createdDate.toString());
 		grid.setWidget(5, 1, createdTextBox);
 		
 		grid.setWidget(6, 0, new Label("Update Date"));
 		final TextBox updatedTextBox = new TextBox();
-		updatedTextBox.setText(deviceDetails.getUpdated() != null ? deviceDetails.getUpdated().toString() : "");
+		Date updatedDate = deviceDetails.getUpdated();
+		if (updatedDate != null && updatedDate.toString() != null)
+		updatedTextBox.setText(updatedDate.toString());
 		grid.setWidget(6, 1, updatedTextBox);
 		
 		grid.setWidget(7, 0, new Label("Comment"));
 		final TextBox commentTextBox = new TextBox();
-		commentTextBox.setText(deviceDetails.getComment());
+		String comment = deviceDetails.getComment();
+		if (comment != null)
+			commentTextBox.setText(comment);
 		grid.setWidget(7, 1, commentTextBox);
 
 		// You can use the CellFormatter to affect the layout of the grid's
