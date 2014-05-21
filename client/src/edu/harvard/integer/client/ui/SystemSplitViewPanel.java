@@ -67,7 +67,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         networkPanel.add(deviceMap);
         
         networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-        networkPanel.getViewport().pushMediator(new MousePanMediator(EventFilter.ANY));
+        networkPanel.getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_RIGHT));
         
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
