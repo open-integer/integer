@@ -38,8 +38,6 @@ package edu.harvard.integer.service.discovery;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.SnmpContainment;
@@ -55,7 +53,6 @@ import edu.harvard.integer.service.BaseManagerInterface;
  * @author David Taylor
  * 
  */
-@Local
 public interface ServiceElementDiscoveryManagerInterface extends
 		BaseManagerInterface {
 

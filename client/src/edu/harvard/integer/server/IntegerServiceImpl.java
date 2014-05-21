@@ -27,7 +27,12 @@ import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.Subnet;
+import edu.harvard.integer.service.discovery.DiscoveryManager;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.distribution.ServiceTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
@@ -45,20 +50,6 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** The snmp service. */
-	@EJB
-	private SnmpManagerInterface snmpService;
-	
-	/** The managed object service. */
-	@EJB
-	private ManagementObjectCapabilityManagerInterface managedObjectService;
-	
-	@EJB
-	private ServiceElementAccessManagerInterface serviceElementService;
-
-	@EJB
-	private DiscoveryServiceInterface discoveryService;
-	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.client.IntegerService#mibImport(java.lang.String, java.lang.String, boolean)
 	 */
@@ -73,6 +64,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		ArrayList<MIBImportInfo> mibList = new ArrayList<MIBImportInfo>();
 		mibList.add(mibImportInfo);
 		try {
+			SnmpManagerInterface snmpService = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
 			snmpService.importMib(mibList.toArray(new MIBImportInfo[0]));
 		} catch (IntegerException e) {
 			e.printStackTrace();
@@ -90,6 +82,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		MIBInfo[] results;
 		
 		try {
+			SnmpManagerInterface snmpService = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+			
 			System.out.println("Enter getImportedMibs: snmpService: " + snmpService);
 			results = snmpService.getImportedMibs();
 
@@ -117,6 +111,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	public List<Capability> getCapabilities() throws Exception {
 		List<Capability> capabilityList;
 		try {
+			ManagementObjectCapabilityManager managedObjectService = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+			
 			capabilityList = managedObjectService.getCapabilities();
 		}
 		catch (IntegerException e) {
@@ -139,6 +135,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		ServiceElement[] serviceElements;
 
 		try {
+			ServiceElementAccessManagerInterface serviceElementService = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+			
 			System.out.println("Enter getTopLevelElements: serviceElementService: " + serviceElementService);
 			serviceElements = serviceElementService.getTopLevelServiceElements();
 		} 
@@ -154,6 +152,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		ServiceElement[] serviceElements = null;
 
 		try {
+			ServiceElementAccessManagerInterface serviceElementService = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+			
 			serviceElements = serviceElementService.getServiceElementByParentId(id);
 			System.out.println("Found " + serviceElements.length + " ServiceElements for " + id);
 		} 
@@ -199,6 +199,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			rule.setCreated(new Date());
 			
 			try {
+				DiscoveryServiceInterface discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+				
 				discoveryService.startDiscovery(rule);
 			} catch (IntegerException e) {
 				
@@ -240,6 +242,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		rule.setCreated(new Date());
 		
 		try {
+			DiscoveryServiceInterface discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+			
 			discoveryService.startDiscovery(rule);
 		} catch (IntegerException e) {
 			

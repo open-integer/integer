@@ -37,15 +37,19 @@ import edu.harvard.integer.common.distribution.DistributedManagerInterface;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
-import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
-import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManager;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface;
 import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElememtAccessManager;
-import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface;
 
 
 /**
@@ -54,23 +58,35 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
  */
 public enum ManagerTypeEnum implements DistributedManagerInterface {
 	PersistenceManager(PersistenceManager.class,
+			PersistenceManagerInterface.class,
 			PersistenceManagerInterface.class),
+			
 	ServiceElementDiscoveryManager(ServiceElementDiscoveryManager.class,
-			ServiceElementDiscoveryManagerInterface.class),
-	SnmpManager(SnmpManager.class, SnmpManagerInterface.class),
-    ServiceElementAccessManager(ServiceElememtAccessManager.class, ServiceElementAccessManagerInterface.class),
+			ServiceElementDiscoveryManagerLocalInterface.class,
+			ServiceElementDiscoveryManagerRemoteInterface.class),
+			
+	SnmpManager(SnmpManager.class, SnmpManagerLocalInterface.class, SnmpManagerRemoteInterface.class),
+	
+    ServiceElementAccessManager(ServiceElememtAccessManager.class, ServiceElementAccessManagerLocalInterface.class,
+    		ServiceElementAccessManagerRemoteInterface.class),
+    
     ManagementObjectCapabilityManager(ManagementObjectCapabilityManager.class,
-    		ManagementObjectCapabilityManagerInterface.class),
-    StateManager(StateManager.class, StateManagerRemoteInterface.class);
+    		ManagementObjectCapabilityManagerLocalInterface.class,
+    		ManagementObjectCapabilityManagerRemoteInterface.class),
+    		
+    StateManager(StateManager.class, StateManagerLocalInterface.class, StateManagerRemoteInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
-	Class<? extends BaseManagerInterface> intfClazz;
+	Class<? extends BaseManagerInterface> remoteIntfClazz;
+	Class<? extends BaseManagerInterface> localIntfClazz;
 	
 	private ManagerTypeEnum(Class<? extends BaseManager> mgrClazz,
-			Class<? extends BaseManagerInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
+			Class<? extends BaseManagerInterface> localIntfClazz,
+			Class<? extends BaseManagerInterface> remoteIntfClazz) {
+
 		this.mgrClazz = mgrClazz;
+		this.localIntfClazz = localIntfClazz;
+		this.remoteIntfClazz = remoteIntfClazz;
 	}
 
 	/**
@@ -86,6 +102,14 @@ public enum ManagerTypeEnum implements DistributedManagerInterface {
 	 */
 	public Class<? extends BaseManagerInterface> getBeanLocalInterfaceClass() {
 		
-		return intfClazz;
+		return localIntfClazz;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Class<? extends BaseManagerInterface> getBeanRemoteInterfaceClass() {
+		
+		return remoteIntfClazz;
 	}
 }

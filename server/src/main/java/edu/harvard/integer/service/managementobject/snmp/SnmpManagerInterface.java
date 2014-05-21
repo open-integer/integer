@@ -35,8 +35,6 @@ package edu.harvard.integer.service.managementobject.snmp;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -49,7 +47,6 @@ import edu.harvard.integer.service.BaseManagerInterface;
  * @author David Taylor
  * 
  */
-@Local
 public interface SnmpManagerInterface extends BaseManagerInterface {
 
 	/**

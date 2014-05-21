@@ -81,7 +81,7 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.Vendo
  */
 @Stateless
 public class ServiceElementDiscoveryManager extends BaseManager implements
-		ServiceElementDiscoveryManagerInterface {
+		ServiceElementDiscoveryManagerLocalInterface, ServiceElementDiscoveryManagerRemoteInterface {
 
 	@Inject
 	private Logger logger;

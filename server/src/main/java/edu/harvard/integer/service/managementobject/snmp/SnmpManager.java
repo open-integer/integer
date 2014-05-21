@@ -62,7 +62,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
  * 
  */
 @Stateless
-public class SnmpManager extends BaseManager implements SnmpManagerInterface {
+public class SnmpManager extends BaseManager implements SnmpManagerLocalInterface, SnmpManagerRemoteInterface {
 
 	@Inject
 	private MibLoaderLocalInterface mibLoader;

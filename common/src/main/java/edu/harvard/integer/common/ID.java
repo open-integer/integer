@@ -161,6 +161,28 @@ public class ID implements IDInterface, Serializable {
 
 	@Override
 	public String toString() {
-		return "[" + name + ":" + identifier + ":" + idType + "]";
+		if (name != null)
+			return name;
+		
+		if (identifier != null)
+			return idType + ":" + identifier;
+		
+		return super.toString();
 	}
+	
+	public String toDebugString() {
+		StringBuffer b = new StringBuffer();
+		
+		if (getName() != null) {
+			b.append(getName());
+		}
+	
+		b.append('(').append(getIdType()).append(':');
+		b.append(getIdentifier()).append(')');
+		
+		return b.toString();
+	}
+	
+	
+	
 }

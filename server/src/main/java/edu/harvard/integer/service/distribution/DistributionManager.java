@@ -318,29 +318,23 @@ public class DistributionManager {
 		}
 		logger.error("Manager not found for " + managerType);
 		return null;
-	
-//		
-//		String moduleName = IntegerProperties.getInstance().getProperty(
-//				StringPropertyNames.ModuleName);
-//		if (moduleName.length() > 1)
-//			return lookupRemoteBean(getHostNameForManager(managerType),
-//					getLocalManagerName(moduleName, managerType));
-//		else
-//			return lookupRemoteBean(getHostNameForManager(managerType),
-//					getLocalManagerName(managerType));
-
 	}
 
 	public static <T extends BaseManagerInterface> T getManager(Long serverId,
 			ManagerTypeEnum managerType) throws IntegerException {
+		
 		String moduleName = IntegerProperties.getInstance().getProperty(
 				StringPropertyNames.ModuleName);
 
 		try {
-			if (moduleName.length() > 1)
-				return lookupRemoteBean(getHostName(serverId),
-						getLocalManagerName(moduleName, managerType));
-			else
+			if (moduleName.length() > 1) {
+				if (isLocalHost(serverId))
+					return lookupLocalBean(getHostName(serverId),
+							getLocalManagerName(moduleName, managerType));
+				else
+					return lookupRemoteBean(getHostName(serverId),
+							getRemoteManagerName(moduleName, managerType));
+			} else
 				return lookupLocalBean(getHostName(serverId),
 						getLocalManagerName(managerType));
 		} catch (Throwable e) {
@@ -355,7 +349,7 @@ public class DistributionManager {
 			ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
-	//	b.append("java:global/");
+		b.append("java:global/");
 		b.append(moduleName);
 		b.append('/');
 		b.append(managerType.getBeanClass().getSimpleName());
@@ -364,6 +358,21 @@ public class DistributionManager {
 
 		return b.toString();
 	}
+	
+	private static String getRemoteManagerName(String moduleName,
+			ManagerTypeEnum managerType) {
+		StringBuffer b = new StringBuffer();
+
+		b.append("java:global/");
+		b.append(moduleName);
+		b.append('/');
+		b.append(managerType.getBeanClass().getSimpleName());
+		b.append("!");
+		b.append(managerType.getBeanRemoteInterfaceClass().getName());
+
+		return b.toString();
+	}
+	
 	
 	private static String getLocalManagerName(ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
@@ -386,13 +395,13 @@ public class DistributionManager {
 
 			final Properties env = new Properties();
 			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-
-		//	env.put(Context.PROVIDER_URL, "http-remoting://" + hostName );
+			env.put("jboss.naming.client.ejb.context", true);
 			
 			ctx = new InitialContext(env);
 
 			T manager = null;
 
+			
 			manager = (T) lookupBean(managerName, ctx);
 			if (manager == null) {
 

@@ -71,7 +71,7 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpC
  */
 @Stateless
 public class ManagementObjectCapabilityManager extends BaseManager implements
-		ManagementObjectCapabilityManagerInterface {
+		ManagementObjectCapabilityManagerLocalInterface, ManagementObjectCapabilityManagerRemoteInterface {
 
 	@Inject
 	private Logger logger;
