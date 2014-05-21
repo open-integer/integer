@@ -50,6 +50,9 @@ import edu.harvard.integer.service.persistance.dao.managementobject.ManagementOb
 import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
+import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
+import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
+import edu.harvard.integer.service.persistance.dao.selection.ViewDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
@@ -334,5 +337,20 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public SnmpSyntaxDAO getTextualConventionDAO() {
 		return new SnmpSyntaxDAO(em, logger);
+	}
+	
+	@Override
+	public SelectionDAO getSelectionDAO() {
+		return new SelectionDAO(em, logger);
+	}
+	
+	@Override
+	public FilterDAO getFilterDAO() {
+		return new FilterDAO(em, logger);
+	}
+	
+	@Override
+	public ViewDAO getViewDAO() {
+		return new ViewDAO(em, logger);
 	}
 }

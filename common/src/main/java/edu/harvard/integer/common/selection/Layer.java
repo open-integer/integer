@@ -31,54 +31,63 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.common.selection;
 
-import edu.harvard.integer.common.distribution.DistributedServiceInterface;
-import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
-import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.selection.SelectionService;
-import edu.harvard.integer.service.selection.SelectionServiceInterface;
-import edu.harvard.integer.service.topology.TopologyServiceInterface;
+import java.util.Date;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
  *
  */
-public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
-	DistributionService(DistributionService.class, DistributionServiceInterface.class),
-	SelectionService(SelectionService.class, SelectionServiceInterface.class);
-	
-	Class<? extends BaseService> mgrClazz;
-	Class<? extends BaseServiceInterface> intfClazz;
-	
-	private ServiceTypeEnum(Class<? extends BaseService> mgrClazz,
-			Class<? extends BaseServiceInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
+@Entity
+public class Layer extends BaseEntity {
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @return
+	 * Description of the filter.
 	 */
-	public Class<? extends BaseService> getServiceClass() {
-		
-		return mgrClazz;
-	}
+	private String description = null;
 
 	/**
-	 * @return
+	 * User that created the filter.
 	 */
-	public Class<? extends BaseServiceInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
-	}
-	
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "userId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "userType")),
+			@AttributeOverride(name = "name", column = @Column(name = "userName")) })
+	private ID userId = null;
+
+	/**
+	 * Date and time the filter was created.
+	 */
+	private Date created = null;
+
+	/**
+	 * User that made the last modification.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "modifiedById")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "modifiedByType")),
+			@AttributeOverride(name = "name", column = @Column(name = "modifiedByName")) })
+	private ID modifiedBy = null;
+
+	/**
+	 * Date of last modification to the filter.
+	 */
+	private Date lastModifyed = null;
+
 }

@@ -31,54 +31,40 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.common.selection;
 
-import edu.harvard.integer.common.distribution.DistributedServiceInterface;
-import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
-import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.selection.SelectionService;
-import edu.harvard.integer.service.selection.SelectionServiceInterface;
-import edu.harvard.integer.service.topology.TopologyServiceInterface;
-
+import javax.persistence.Entity;
 
 /**
  * @author David Taylor
  *
  */
-public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
-	DistributionService(DistributionService.class, DistributionServiceInterface.class),
-	SelectionService(SelectionService.class, SelectionServiceInterface.class);
-	
-	Class<? extends BaseService> mgrClazz;
-	Class<? extends BaseServiceInterface> intfClazz;
-	
-	private ServiceTypeEnum(Class<? extends BaseService> mgrClazz,
-			Class<? extends BaseServiceInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
+@Entity
+public class LayerInformationIntegerValue extends LayerInformation<Integer> {
 
 	/**
-	 * @return
+	 * Serial Version UID 
 	 */
-	public Class<? extends BaseService> getServiceClass() {
-		
-		return mgrClazz;
+	private static final long serialVersionUID = 1L;
+	
+	private Integer integerValue = null;
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.selection.LayerInformation#getValue()
+	 */
+	@Override
+	public Integer getValue() {
+
+		return integerValue;
 	}
 
-	/**
-	 * @return
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.selection.LayerInformation#setValue(java.lang.Object)
 	 */
-	public Class<? extends BaseServiceInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
+	@Override
+	public void setValue(Integer value) {
+		integerValue = value;
+
 	}
-	
+
 }

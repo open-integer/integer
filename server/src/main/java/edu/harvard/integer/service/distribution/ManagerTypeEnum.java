@@ -47,6 +47,9 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterfa
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface;
 import edu.harvard.integer.service.persistance.PersistenceManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.selection.SelectionManager;
+import edu.harvard.integer.service.selection.SelectionManagerLocalInterface;
+import edu.harvard.integer.service.selection.SelectionManagerRemoteInterface;
 import edu.harvard.integer.service.topology.device.ServiceElememtAccessManager;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface;
@@ -74,7 +77,9 @@ public enum ManagerTypeEnum implements DistributedManagerInterface {
     		ManagementObjectCapabilityManagerLocalInterface.class,
     		ManagementObjectCapabilityManagerRemoteInterface.class),
     		
-    StateManager(StateManager.class, StateManagerLocalInterface.class, StateManagerRemoteInterface.class);
+    StateManager(StateManager.class, StateManagerLocalInterface.class, StateManagerRemoteInterface.class),
+    
+    SelectionManager(SelectionManager.class, SelectionManagerLocalInterface.class, SelectionManagerRemoteInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
 	Class<? extends BaseManagerInterface> remoteIntfClazz;

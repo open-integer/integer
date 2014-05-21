@@ -31,54 +31,25 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.service.selection;
 
-import edu.harvard.integer.common.distribution.DistributedServiceInterface;
 import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
-import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.selection.SelectionService;
-import edu.harvard.integer.service.selection.SelectionServiceInterface;
-import edu.harvard.integer.service.topology.TopologyServiceInterface;
-
 
 /**
  * @author David Taylor
- *
+ * 
+ *         The selection service manages SelectionManagers that are used to
+ *         construct views of data in the system and pass them on for UI
+ *         rendering as appropriate. It interacts extensively with the Security,
+ *         Topology and UserAndSystem Managers.
+ * 
+ *         The views are user customizable consistent with security
+ *         restrictions.
+ * 
+ *         Multiple selection managers may be needed due to the distributed
+ *         nature of Integer and to help scale as the number of concurrent users
+ *         grows.
  */
-public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
-	DistributionService(DistributionService.class, DistributionServiceInterface.class),
-	SelectionService(SelectionService.class, SelectionServiceInterface.class);
-	
-	Class<? extends BaseService> mgrClazz;
-	Class<? extends BaseServiceInterface> intfClazz;
-	
-	private ServiceTypeEnum(Class<? extends BaseService> mgrClazz,
-			Class<? extends BaseServiceInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
+public class SelectionService extends BaseService {
 
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseService> getServiceClass() {
-		
-		return mgrClazz;
-	}
-
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseServiceInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
-	}
-	
 }

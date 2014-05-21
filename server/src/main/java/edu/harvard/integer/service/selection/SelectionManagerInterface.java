@@ -31,54 +31,37 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.service.selection;
 
-import edu.harvard.integer.common.distribution.DistributedServiceInterface;
-import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
-import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.selection.SelectionService;
-import edu.harvard.integer.service.selection.SelectionServiceInterface;
-import edu.harvard.integer.service.topology.TopologyServiceInterface;
-
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
  *
  */
-public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
-	DistributionService(DistributionService.class, DistributionServiceInterface.class),
-	SelectionService(SelectionService.class, SelectionServiceInterface.class);
-	
-	Class<? extends BaseService> mgrClazz;
-	Class<? extends BaseServiceInterface> intfClazz;
-	
-	private ServiceTypeEnum(Class<? extends BaseService> mgrClazz,
-			Class<? extends BaseServiceInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
-	}
+public interface SelectionManagerInterface extends BaseManagerInterface {
+
+	/**
+	 * @param selection
+	 * @return
+	 * @throws IntegerException
+	 */
+	Selection updateSelection(Selection selection) throws IntegerException;
 
 	/**
 	 * @return
+	 * @throws IntegerException
 	 */
-	public Class<? extends BaseService> getServiceClass() {
-		
-		return mgrClazz;
-	}
+	Selection[] getAllSeletions() throws IntegerException;
 
 	/**
+	 * @param selectionId
 	 * @return
+	 * @throws IntegerException
 	 */
-	public Class<? extends BaseServiceInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
-	}
-	
+	Selection getSelectionById(ID selectionId) throws IntegerException;
+
 }
