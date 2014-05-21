@@ -258,6 +258,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		DeviceDetails deviceDetails = null;
 
 		try {
+			ServiceElementAccessManagerInterface serviceElementService = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+			
 			deviceDetails = serviceElementService.getDeviceDetails(id);
 		} 
 		catch (IntegerException e) {
