@@ -12,6 +12,7 @@ import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 // TODO: Auto-generated Javadoc
@@ -84,7 +85,8 @@ public interface IntegerServiceAsync {
 
 	void startDiscovery(AsyncCallback<Void> callback);
 
-	void startDiscovery(String address, String mask,
-			AsyncCallback<Void> callback);
+	void startDiscovery(String address, String mask, AsyncCallback<Void> callback);
+
+	void getDeviceDetails(ID id, AsyncCallback<DeviceDetails> callback);
 
 }

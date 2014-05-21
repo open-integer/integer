@@ -103,4 +103,12 @@ public class HvDialogBox extends DialogBox {
 			hide();
 		}
 	};
+	
+	public void enableOkButton(boolean enable) {
+		okButton.setVisible(enable);
+	}
+	
+	public void enableCloseButton(boolean enable) {
+		closeButton.setVisible(enable);
+	}
 }
