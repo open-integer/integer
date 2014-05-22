@@ -31,40 +31,35 @@
  *      
  */
 
-package edu.harvard.integer.common.selection;
+package edu.harvard.integer.common.audit;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 @Entity
-public class Layer extends BaseEntity {
+public class AuditLog extends BaseEntity {
+
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Description of the filter.
-	 */
-	private String description = null;
+	private Date time = null;
 
-	/**
-	 * User that created the filter.
-	 */
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "identifier", column = @Column(name = "userId")),
@@ -72,41 +67,31 @@ public class Layer extends BaseEntity {
 			@AttributeOverride(name = "name", column = @Column(name = "userName")) })
 	private ID userId = null;
 
-	/**
-	 * Date and time the filter was created.
-	 */
-	private Date created = null;
-
-	/**
-	 * User that made the last modification.
-	 */
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "modifiedById")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "modifiedByType")),
-			@AttributeOverride(name = "name", column = @Column(name = "modifiedByName")) })
-	private ID modifiedBy = null;
+			@AttributeOverride(name = "identifier", column = @Column(name = "entityId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "entityType")),
+			@AttributeOverride(name = "name", column = @Column(name = "entityName")) })
+	private ID entityId = null;
+
+	private String message = null;
+
+	@Enumerated(EnumType.STRING)
+	private AuditLogTypeEnum auditType = null;
 
 	/**
-	 * Date of last modification to the filter.
+	 * @return the time
 	 */
-	private Date lastModifyed = null;
-
-	@ManyToMany
-	private List<LayerInformation<?>> layerInformations = null;
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
+	public Date getTime() {
+		return time;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param time
+	 *            the time to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 	/**
@@ -117,67 +102,56 @@ public class Layer extends BaseEntity {
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param userId
+	 *            the userId to set
 	 */
 	public void setUserId(ID userId) {
 		this.userId = userId;
 	}
 
 	/**
-	 * @return the created
+	 * @return the entityId
 	 */
-	public Date getCreated() {
-		return created;
+	public ID getEntityId() {
+		return entityId;
 	}
 
 	/**
-	 * @param created the created to set
+	 * @param entityId
+	 *            the entityId to set
 	 */
-	public void setCreated(Date created) {
-		this.created = created;
+	public void setEntityId(ID entityId) {
+		this.entityId = entityId;
 	}
 
 	/**
-	 * @return the modifiedBy
+	 * @return the message
 	 */
-	public ID getModifiedBy() {
-		return modifiedBy;
+	public String getMessage() {
+		return message;
 	}
 
 	/**
-	 * @param modifiedBy the modifiedBy to set
+	 * @param message
+	 *            the message to set
 	 */
-	public void setModifiedBy(ID modifiedBy) {
-		this.modifiedBy = modifiedBy;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	/**
-	 * @return the lastModifyed
+	 * @return the auditType
 	 */
-	public Date getLastModifyed() {
-		return lastModifyed;
+	public AuditLogTypeEnum getAuditType() {
+		return auditType;
 	}
 
 	/**
-	 * @param lastModifyed the lastModifyed to set
+	 * @param auditType
+	 *            the auditType to set
 	 */
-	public void setLastModifyed(Date lastModifyed) {
-		this.lastModifyed = lastModifyed;
+	public void setAuditType(AuditLogTypeEnum auditType) {
+		this.auditType = auditType;
 	}
 
-	/**
-	 * @return the layerInformations
-	 */
-	public List<LayerInformation<?>> getLayerInformations() {
-		return layerInformations;
-	}
-
-	/**
-	 * @param layerInformations the layerInformations to set
-	 */
-	public void setLayerInformations(List<LayerInformation<?>> layerInformations) {
-		this.layerInformations = layerInformations;
-	}
-	
-	
 }

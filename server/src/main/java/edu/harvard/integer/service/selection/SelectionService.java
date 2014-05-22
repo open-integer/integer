@@ -36,7 +36,6 @@ package edu.harvard.integer.service.selection;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -60,7 +59,7 @@ import edu.harvard.integer.service.BaseService;
  */
 @Singleton
 @Startup
-public class SelectionService extends BaseService {
+public class SelectionService extends BaseService implements SelectionServiceInterface {
 
 	@Inject
 	private Logger logger;

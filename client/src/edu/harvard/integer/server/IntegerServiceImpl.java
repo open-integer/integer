@@ -1,12 +1,9 @@
 package edu.harvard.integer.server;
 
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.ServletSecurity;
 
@@ -28,13 +25,11 @@ import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.Subnet;
-import edu.harvard.integer.service.discovery.DiscoveryManager;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
-import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
@@ -206,7 +201,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			} catch (IntegerException e) {
 				
 				e.printStackTrace();
-				fail(e.toString());
+				
 			}
 	}
 	
@@ -249,9 +244,9 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		} catch (IntegerException e) {
 			
 			e.printStackTrace();
-			fail(e.toString());
+			
 		}
-}
+	}
 
 	@Override
 	public DeviceDetails getDeviceDetails(ID id) throws Exception {
@@ -264,7 +259,6 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		} 
 		catch (IntegerException e) {
 			e.printStackTrace();
-			fail(e.toString());
 		}
 
 		return deviceDetails;

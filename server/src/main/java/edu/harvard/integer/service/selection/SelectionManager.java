@@ -38,9 +38,13 @@ import javax.inject.Inject;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.Layer;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
+import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 
 /**
@@ -87,5 +91,70 @@ public class SelectionManager extends BaseManager implements SelectionManagerLoc
 		SelectionDAO selectionDAO = persistenceManager.getSelectionDAO();
 		
 		return selectionDAO.findById(selectionId);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#updateFilter(edu.harvard.integer.common.selection.Filter)
+	 */
+	@Override
+	public Filter updateFilter(Filter filter) throws IntegerException {
+		FilterDAO dao = persistenceManager.getFilterDAO();
+		
+		return dao.update(filter);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getAllFilters()
+	 */
+	@Override
+	public Filter[] getAllFilters() throws IntegerException {
+		FilterDAO dao = persistenceManager.getFilterDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getFilterById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public Filter getFilterById(ID filterId) throws IntegerException {
+		FilterDAO dao = persistenceManager.getFilterDAO();
+		
+		return dao.findById(filterId);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#updateLayer(edu.harvard.integer.common.selection.Layer)
+	 */
+	@Override
+	public Layer updateLayer(Layer layer) throws IntegerException {
+		LayerDAO dao = persistenceManager.getLayerDAO();
+		
+		return dao.update(layer);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getAllLayers()
+	 */
+	@Override
+	public Layer[] getAllLayers() throws IntegerException {
+		LayerDAO dao = persistenceManager.getLayerDAO();
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getLayerById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public Layer getLayerById(ID layerId) throws IntegerException {
+		LayerDAO dao = persistenceManager.getLayerDAO();
+		
+		return dao.findById(layerId);
 	}
 }

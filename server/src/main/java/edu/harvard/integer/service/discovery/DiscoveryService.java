@@ -48,7 +48,11 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
+import edu.harvard.integer.common.discovery.DiscoveryStatusEnum;
+import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
+import edu.harvard.integer.common.event.EventTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.properties.IntegerProperties;
@@ -63,6 +67,9 @@ import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
+import edu.harvard.integer.service.persistance.dao.event.EventDAO;
 
 /**
  * @author David Taylor
@@ -79,6 +86,8 @@ public class DiscoveryService extends BaseService implements
 	@Inject
 	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManager;
 	
+	@Inject
+ 	private PersistenceManagerInterface persistenceManager;
  	
 	private int subTaskLimit = 10;
 	
@@ -240,6 +249,10 @@ public class DiscoveryService extends BaseService implements
 			logger.info("Discovery complete for " + discoveryId.getDiscoveryId());
 		else
 			logger.warn("Discovery " + discoveryId.getDiscoveryId() + " not running. Unable to mark as complete!");
+		
+		DiscoveryCompleteEvent discoveryComplete = new DiscoveryCompleteEvent();
+		discoveryComplete.setDiscoveryStatus(DiscoveryStatusEnum.Complete);
+		discoveryComplete.setName("Discovery Complete");
 	}
 	
 	/**
@@ -251,6 +264,7 @@ public class DiscoveryService extends BaseService implements
 	@Override
 	public void discoveryError(DiscoveryId id,  NetworkErrorCodes errorCode, DisplayableInterface[] args) {
 		logger.error("Error during discovery " + id + " Error "  + errorCode);
+		
 	}
 	
 	/*
@@ -275,6 +289,13 @@ public class DiscoveryService extends BaseService implements
 		if ( runningDiscovery != null ) {
 			runningDiscovery.stopDiscovery();	
 		}
+	}
+
+	@Override
+	public DiscoveryCompleteEvent[] getDiscoveryStatus(ID serviceElementId) throws IntegerException {
+		DiscoveryCompleteEventDAO dao = persistenceManager.getDiscoveryCompleteEventDAO();
+		
+		return dao.findAll();
 	}
 	
 }

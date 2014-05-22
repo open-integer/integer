@@ -38,7 +38,9 @@ import java.util.concurrent.Future;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
+import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.DiscoveryRule;
@@ -108,4 +110,12 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * @param task
 	 */
 	Future<Ipv4Range> submitSubnetDiscovery(DiscoverSubnetAsyncTask task);
+
+	/**
+	 * @param serviceElementId
+	 * @return
+	 * @throws IntegerException
+	 */
+	DiscoveryCompleteEvent[] getDiscoveryStatus(ID serviceElementId)
+			throws IntegerException;
 }

@@ -31,54 +31,42 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.common.event;
 
-import edu.harvard.integer.common.distribution.DistributedServiceInterface;
-import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
-import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.selection.SelectionService;
-import edu.harvard.integer.service.selection.SelectionServiceInterface;
-import edu.harvard.integer.service.topology.TopologyServiceInterface;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
+import edu.harvard.integer.common.discovery.DiscoveryStatusEnum;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
-	DistributionService(DistributionService.class, DistributionServiceInterface.class),
-	SelectionService(SelectionService.class, SelectionServiceInterface.class);
-	
-	Class<? extends BaseService> mgrClazz;
-	Class<? extends BaseServiceInterface> intfClazz;
-	
-	private ServiceTypeEnum(Class<? extends BaseService> mgrClazz,
-			Class<? extends BaseServiceInterface> intfClazz) {
-	
-		this.intfClazz = intfClazz;
-		this.mgrClazz = mgrClazz;
+@Entity
+public class DiscoveryCompleteEvent extends Event {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Enumerated(EnumType.STRING)
+	private DiscoveryStatusEnum discoveryStatus = null;
+
+	/**
+	 * @return the discoveryStatus
+	 */
+	public DiscoveryStatusEnum getDiscoveryStatus() {
+		return discoveryStatus;
 	}
 
 	/**
-	 * @return
+	 * @param discoveryStatus
+	 *            the discoveryStatus to set
 	 */
-	public Class<? extends BaseService> getServiceClass() {
-		
-		return mgrClazz;
+	public void setDiscoveryStatus(DiscoveryStatusEnum discoveryStatus) {
+		this.discoveryStatus = discoveryStatus;
 	}
 
-	/**
-	 * @return
-	 */
-	public Class<? extends BaseServiceInterface> getBeanLocalInterfaceClass() {
-		
-		return intfClazz;
-	}
-	
 }

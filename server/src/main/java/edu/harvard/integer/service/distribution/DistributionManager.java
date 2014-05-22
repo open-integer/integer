@@ -153,6 +153,7 @@ public class DistributionManager {
 				return true;
 			else
 				return false;
+			
 		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -363,7 +364,7 @@ public class DistributionManager {
 			ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
-		b.append("java:global/");
+		//b.append("java:global/");
 		b.append(moduleName);
 		b.append('/');
 		b.append(managerType.getBeanClass().getSimpleName());
