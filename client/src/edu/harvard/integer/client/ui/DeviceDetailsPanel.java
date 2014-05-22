@@ -5,6 +5,7 @@ package edu.harvard.integer.client.ui;
 
 import java.util.Date;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLTable;
@@ -22,6 +23,8 @@ import edu.harvard.integer.common.topology.DeviceDetails;
  * @author jhuang
  */
 public class DeviceDetailsPanel extends FormPanel {
+	
+	public static DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat("MMM-dd-yyyy HH:mm:ss z");
 	
 	public DeviceDetailsPanel(String name, DeviceDetails deviceDetails) {
 		setEncoding(FormPanel.ENCODING_MULTIPART);
@@ -60,19 +63,19 @@ public class DeviceDetailsPanel extends FormPanel {
 		final TextBox criticalityTextBox = new TextBox();
 		criticalityTextBox.setText(""+deviceDetails.getServiceElementCriticality());
 		grid.setWidget(4, 1, criticalityTextBox);
-		
+
 		grid.setWidget(5, 0, new Label("Created Date"));
 		final TextBox createdTextBox = new TextBox();
 		Date createdDate = deviceDetails.getCreated();
 		if (createdDate != null && createdDate.toString() != null)
-			createdTextBox.setText(createdDate.toString());
+			createdTextBox.setText(DATE_FORMAT.format(createdDate));
 		grid.setWidget(5, 1, createdTextBox);
 		
 		grid.setWidget(6, 0, new Label("Update Date"));
 		final TextBox updatedTextBox = new TextBox();
 		Date updatedDate = deviceDetails.getUpdated();
 		if (updatedDate != null && updatedDate.toString() != null)
-		updatedTextBox.setText(updatedDate.toString());
+			updatedTextBox.setText(DATE_FORMAT.format(updatedDate));
 		grid.setWidget(6, 1, updatedTextBox);
 		
 		grid.setWidget(7, 0, new Label("Comment"));
