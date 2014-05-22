@@ -33,6 +33,14 @@
 
 package edu.harvard.integer.service.selection;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+
 import edu.harvard.integer.service.BaseService;
 
 /**
@@ -50,6 +58,17 @@ import edu.harvard.integer.service.BaseService;
  *         nature of Integer and to help scale as the number of concurrent users
  *         grows.
  */
+@Singleton
+@Startup
 public class SelectionService extends BaseService {
 
+	@Inject
+	private Logger logger;
+	
+	@PostConstruct
+	public void init() {
+
+		logger.warn("SelectionService is starting");
+		
+	}
 }

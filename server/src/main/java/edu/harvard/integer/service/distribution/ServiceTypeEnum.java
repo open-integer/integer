@@ -38,8 +38,6 @@ import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.BaseServiceInterface;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
-import edu.harvard.integer.service.selection.SelectionService;
-import edu.harvard.integer.service.selection.SelectionServiceInterface;
 import edu.harvard.integer.service.topology.TopologyServiceInterface;
 
 
@@ -52,8 +50,8 @@ public enum ServiceTypeEnum implements DistributedServiceInterface {
 			DiscoveryServiceInterface.class),
 	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
 	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
-	DistributionService(DistributionService.class, DistributionServiceInterface.class),
-	SelectionService(SelectionService.class, SelectionServiceInterface.class);
+	DistributionService(DistributionService.class, DistributionServiceInterface.class);
+	//SelectionService(SelectionService.class, SelectionServiceInterface.class);
 	
 	Class<? extends BaseService> mgrClazz;
 	Class<? extends BaseServiceInterface> intfClazz;

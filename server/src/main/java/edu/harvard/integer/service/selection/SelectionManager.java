@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.selection;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import edu.harvard.integer.common.ID;
@@ -49,6 +50,7 @@ import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
  *         Integer system (as in the case of reporting) to create, delete,
  *         modify and show selections
  */
+@Stateless
 public class SelectionManager extends BaseManager implements SelectionManagerLocalInterface, SelectionManagerRemoteInterface {
 
 	@Inject
