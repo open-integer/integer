@@ -42,7 +42,9 @@ translations:
               # corresponding cdp-interface element.
 
               - type: equality
-                match: "cdp-interface-index == interface-index"
+                match: 
+                    - source: cdp-interface-index 
+                      destination: interface-index
 
     - name: cisco-cdp-cache-to-cdp-cache
       managementGroup: cisco-cdp-cache
