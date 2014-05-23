@@ -12,11 +12,8 @@ translations:
           type: static
           mechanismType: cdp-global
           atoms:
-              - managementObject: cdpGlobalRun
-                capability: cdp-global-run
-
-              - managementObject: cdpGlobalDeviceId
-                capability: cdp-global-deviceId
+              cdpGlobalRun: cdp-global-run
+              cdpGlobalDeviceId: cdp-global-deviceId
 
     - name: cisco-cdp-interface-to-cdp-interface
       managementGroup: cisco-cdp-interface
@@ -26,14 +23,9 @@ translations:
           type: static
           mechanismType: cdp-interface
           atoms:
-              - managementObject: cdpInterfaceIfIndex
-                capability: cdp-interface-index
-
-              - managementObject: cdpInterfaceEnable
-                capability: cdp-interface-enable
-
-              - managementObject: cdpInterfaceName
-                capability: cdp-interface-name
+              cdpInterfaceIfIndex: cdp-interface-index
+              cdpInterfaceEnable: cdp-interface-enable
+              cdpInterfaceName: cdp-interface-name
 
           relations:
               # Each CDP interface represents a physical interface with the
@@ -54,29 +46,14 @@ translations:
           type: static
           mechanismType: cdp-cache
           atoms: 
-              - managementObject: cdpCacheIfIndex
-                capability: cdp-cache-ifIndex
-
-              - managementObject: cdpCacheDeviceIndex
-                capability: cdp-cache-deviceIndex
-
-              - managementObject: cdpCacheAddressType
-                capability: cdp-cache-addressType
-
-              - managementObject: cdpCacheAddress
-                capability: cdp-cache-address
-
-              - managementObject: cdpCacheVersion
-                capability: cdp-cache-version
-
-              - managementObject: cdpCacheDeviceId
-                capability: cdp-cache-deviceId
-
-              - managementObject: cdpCacheDevicePort
-                capability: cdp-cache-devicePort
-
-              - managementObject: cdpCachePlatform
-                capability: cdp-cache-platform
+              cdpCacheIfIndex: cdp-cache-ifIndex
+              cdpCacheDeviceIndex: cdp-cache-deviceIndex
+              cdpCacheAddressType: cdp-cache-addressType
+              cdpCacheAddress: cdp-cache-address
+              cdpCacheVersion: cdp-cache-version
+              cdpCacheDeviceId: cdp-cache-deviceId
+              cdpCacheDevicePort: cdp-cache-devicePort
+              cdpCachePlatform: cdp-cache-platform
 
           relations:
               # Each CDP cache object has a CDP interface as its logical
