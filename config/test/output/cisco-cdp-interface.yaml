@@ -1,0 +1,33 @@
+mechanisms:
+- capabilities:
+    cdp-interface-enable: true
+    cdp-interface-index: 10101
+    cdp-interface-name: GigabitEthernet1/0/1
+  mechanismType: cdp-interface
+- capabilities:
+    cdp-interface-enable: true
+    cdp-interface-index: 10102
+    cdp-interface-name: GigabitEthernet1/0/2
+  mechanismType: cdp-interface
+- capabilities:
+    cdp-interface-enable: true
+    cdp-interface-index: 10103
+    cdp-interface-name: GigabitEthernet1/0/3
+  mechanismType: cdp-interface
+relations:
+- destination:
+    interface-index: 10101
+  source:
+    cdp-interface-index: 10101
+  type: equality
+- destination:
+    interface-index: 10102
+  source:
+    cdp-interface-index: 10102
+  type: equality
+- destination:
+    interface-index: 10103
+  source:
+    cdp-interface-index: 10103
+  type: equality
+

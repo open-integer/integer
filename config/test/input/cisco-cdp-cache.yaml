@@ -1,0 +1,27 @@
+---
+name: cisco-cdp-cache
+rows:
+    - cdpCacheIfIndex: 10101
+      cdpCacheDeviceIndex: 1
+      cdpCacheAddressType: ip
+      cdpCacheAddress: 10.240.127.251
+      cdpCacheVersion: | 
+          Cisco IOS Software, C3550 Software (C3550-IPSERVICESK9-M), Version 12.2(35)SE, RELEASE SOFTWARE (fc2)
+          Copyright (c) 1986-2006 by Cisco Systems, Inc.
+          Compiled Sun 03-Dec-06 14:34 by yenanh
+      cdpCacheDeviceId: ox60-lab-sw2.net.harvard.edu
+      cdpCacheDevicePort: FastEthernet0/3
+      cdpCachePlatform: Cisco WS-C3550-24
+    - cdpCacheIfIndex: 10102
+      cdpCacheDeviceIndex: 2
+      cdpCacheAddressType: ip
+      cdpCacheAddress: 192.168.90.2
+      cdpCacheVersion: | 
+          Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXI4a, RELEASE SOFTWARE (fc2)
+          Technical Support: http://www.cisco.com/techsupport
+          Copyright (c) 1986-2010 by Cisco Systems, Inc.
+          Compiled Fri 16-Jul-10 19:51 by prod_rel_team
+      cdpCacheDeviceId: INTEGER-TEST-7600.netlab.harvard.edu
+      cdpCacheDevicePort: GigabitEthernet2/1
+      cdpCachePlatform: cisco CISCO7604
+...

@@ -1,0 +1,6 @@
+---
+name: cisco-cdp-global
+rows:
+    - cdpGlobalRun: true
+      cdpGlobalDeviceId: INTEGER-LAB-3750G.net.harvard.edu
+...

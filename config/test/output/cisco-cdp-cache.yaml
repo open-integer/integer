@@ -1,0 +1,61 @@
+mechanisms:
+- capabilities:
+    cdp-cache-address: 10.240.127.251
+    cdp-cache-addressType: ip
+    cdp-cache-deviceId: ox60-lab-sw2.net.harvard.edu
+    cdp-cache-deviceIndex: 1
+    cdp-cache-devicePort: FastEthernet0/3
+    cdp-cache-ifIndex: 10101
+    cdp-cache-platform: Cisco WS-C3550-24
+    cdp-cache-version: 'Cisco IOS Software, C3550 Software (C3550-IPSERVICESK9-M), Version 12.2(35)SE, RELEASE SOFTWARE (fc2)
+
+      Copyright (c) 1986-2006 by Cisco Systems, Inc.
+
+      Compiled Sun 03-Dec-06 14:34 by yenanh
+
+      '
+  mechanismType: cdp-cache
+- capabilities:
+    cdp-cache-address: 192.168.90.2
+    cdp-cache-addressType: ip
+    cdp-cache-deviceId: INTEGER-TEST-7600.netlab.harvard.edu
+    cdp-cache-deviceIndex: 2
+    cdp-cache-devicePort: GigabitEthernet2/1
+    cdp-cache-ifIndex: 10102
+    cdp-cache-platform: cisco CISCO7604
+    cdp-cache-version: 'Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXI4a, RELEASE SOFTWARE (fc2)
+
+      Technical Support: http://www.cisco.com/techsupport
+
+      Copyright (c) 1986-2010 by Cisco Systems, Inc.
+
+      Compiled Fri 16-Jul-10 19:51 by prod_rel_team
+
+      '
+  mechanismType: cdp-cache
+relations:
+- destination:
+    cdp-interface-index: 10101
+  source:
+    cdp-cache-ifIndex: 10101
+  type: parent
+- destination:
+    cdp-interface-index: 10102
+  source:
+    cdp-cache-ifIndex: 10102
+  type: parent
+- destination:
+    cdp-global-deviceId: ox60-lab-sw2.net.harvard.edu
+    cdp-interface-name: FastEthernet0/3
+  source:
+    cdp-cache-deviceId: ox60-lab-sw2.net.harvard.edu
+    cdp-cache-devicePort: FastEthernet0/3
+  type: topology
+- destination:
+    cdp-global-deviceId: INTEGER-TEST-7600.netlab.harvard.edu
+    cdp-interface-name: GigabitEthernet2/1
+  source:
+    cdp-cache-deviceId: INTEGER-TEST-7600.netlab.harvard.edu
+    cdp-cache-devicePort: GigabitEthernet2/1
+  type: topology
+

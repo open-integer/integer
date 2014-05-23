@@ -1,0 +1,7 @@
+mechanisms:
+- capabilities:
+    cdp-global-deviceId: INTEGER-LAB-3750G.net.harvard.edu
+    cdp-global-run: true
+  mechanismType: cdp-global
+relations: []
+

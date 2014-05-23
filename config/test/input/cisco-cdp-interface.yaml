@@ -1,0 +1,13 @@
+---
+name: cisco-cdp-interface
+rows:
+    - cdpInterfaceIfIndex: 10101
+      cdpInterfaceEnable: true
+      cdpInterfaceName: GigabitEthernet1/0/1
+    - cdpInterfaceIfIndex: 10102
+      cdpInterfaceEnable: true
+      cdpInterfaceName: GigabitEthernet1/0/2
+    - cdpInterfaceIfIndex: 10103
+      cdpInterfaceEnable: true
+      cdpInterfaceName: GigabitEthernet1/0/3
+...
