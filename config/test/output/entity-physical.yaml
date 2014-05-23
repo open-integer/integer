@@ -1,45 +1,45 @@
-- mechanisms:
-  - capabilities:
-      physical-class: chassis
-      physical-description: Cisco Systems Cisco 7600 4-slot Chassis System
-      physical-firmwareRevision: null
-      physical-fru: true
-      physical-hardwareRevision: V01
-      physical-index: 2
-      physical-model: CISCO7604
-      physical-name: CISCO7604
-      physical-parentIndex: 1
-      physical-relativePosition: -1
-      physical-serialNumber: FOX1212GDHQ
-      physical-softwareRevision: null
-      physical-vendor: Cisco Systems
-      physical-vendorType: cevChassisCisco7604
-    mechanismType: physical-chassis
-  - capabilities:
-      physical-class: chassis
-      physical-description: Cisco Systems Cisco 7600 4-slot Chassis System
-      physical-firmwareRevision: null
-      physical-fru: true
-      physical-hardwareRevision: V01
-      physical-index: 3
-      physical-model: CISCO7604
-      physical-name: CISCO7604
-      physical-parentIndex: 1
-      physical-relativePosition: -1
-      physical-serialNumber: FOX1212GDHQ
-      physical-softwareRevision: null
-      physical-vendor: Cisco Systems
-      physical-vendorType: cevChassisCisco7604
-    mechanismType: physical-chassis
-  relations:
-  - destination:
-      physical-index: 1
-    source:
-      physical-index: 2
-    type: parent
-  - destination:
-      physical-index: 1
-    source:
-      physical-index: 3
-    type: parent
+mechanisms:
+- capabilities:
+    physical-class: chassis
+    physical-description: Cisco Systems Cisco 7600 4-slot Chassis System
+    physical-firmwareRevision: null
+    physical-fru: true
+    physical-hardwareRevision: V01
+    physical-index: 2
+    physical-model: CISCO7604
+    physical-name: CISCO7604
+    physical-parentIndex: 1
+    physical-relativePosition: -1
+    physical-serialNumber: FOX1212GDHQ
+    physical-softwareRevision: null
+    physical-vendor: Cisco Systems
+    physical-vendorType: cevChassisCisco7604
+  mechanismType: physical-chassis
+- capabilities:
+    physical-class: chassis
+    physical-description: Cisco Systems Cisco 7600 4-slot Chassis System
+    physical-firmwareRevision: null
+    physical-fru: true
+    physical-hardwareRevision: V01
+    physical-index: 3
+    physical-model: CISCO7604
+    physical-name: CISCO7604
+    physical-parentIndex: 1
+    physical-relativePosition: -1
+    physical-serialNumber: FOX1212GDHQ
+    physical-softwareRevision: null
+    physical-vendor: Cisco Systems
+    physical-vendorType: cevChassisCisco7604
+  mechanismType: physical-chassis
+relations:
+- destination:
+    physical-index: 1
+  source:
+    physical-index: 2
+  type: parent
+- destination:
+    physical-index: 1
+  source:
+    physical-index: 3
+  type: parent
 

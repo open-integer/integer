@@ -51,5 +51,5 @@ class Integer:
         output = { "mechanisms": self.mechanisms, "relations": self.relations }
         #print(yaml.dump([output], canonical=True))
         #print(yaml.dump([output], width=9000))
-        print(yaml.dump([output], default_flow_style=False, width=1000))
+        print(yaml.dump(output, default_flow_style=False, width=1000))
 

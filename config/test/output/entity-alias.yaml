@@ -1,8 +1,8 @@
-- mechanisms: []
-  relations:
-  - destination:
-      interface-index: 3
-    source:
-      physical-index: 1005
-    type: equality
+mechanisms: []
+relations:
+- destination:
+    interface-index: 3
+  source:
+    physical-index: 1005
+  type: equality
 
