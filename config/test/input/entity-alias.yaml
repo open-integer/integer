@@ -1,0 +1,7 @@
+---
+name: entity-alias
+rows:
+    - entPhysicalIndex: 1005
+      entAliasLogicalIndexOrZero: 0
+      entAliasMappingIdentifier: ifIndex.3
+...

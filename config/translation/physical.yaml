@@ -1,0 +1,24 @@
+---
+
+# translation definition for physical hardware
+# by Loren Jan Wilson, 2014-05-21
+
+translations:
+    - name: entity-physical-to-physical
+      managementGroup: entity-physical
+      description: >
+          We make mechanisms where the mechanism type is roughly based on
+          hardware class of each item we see in entPhysicalTable.
+      mapping:
+          type: dynamic
+          mapper: mapping/entity-physical.py
+
+    - name: entity-alias-to-physical
+      managementGroup: entity-alias
+      description: >
+          The entity-alias table gives us mappings from each physical (and
+          logical) entry to any possible row in any other MIB. Flexible, but
+          a bit frustrating.
+      mapping:
+          type: dynamic
+          mapper: mapping/entity-alias.py

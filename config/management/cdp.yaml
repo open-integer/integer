@@ -1,0 +1,73 @@
+---
+
+# management definition for CDP
+# by Loren Jan Wilson, 2014-05-21
+
+managementGroups:
+    - name: cisco-cdp-global
+      description: Cisco enterprise CDP MIB, global variables.
+      accessMethod: 
+          protocol: SNMP
+          mib: CISCO-CDP-MIB
+          table: null
+          index: null
+      managementObjects:
+          - name: cdpGlobalRun
+            uri: cdpGlobalRun
+            unique: 1
+
+          - name: cdpGlobalDeviceId
+            uri: cdpGlobalDeviceId
+
+    - name: cisco-cdp-interface
+      description: Cisco enterprise CDP MIB, per-interface attributes.
+      accessMethod: 
+          protocol: SNMP
+          mib: CISCO-CDP-MIB
+          table: cdpInterfaceTable
+          index: [ cdpInterfaceIfIndex ]
+      managementObjects:
+          - name: cdpInterfaceIfIndex
+            uri: cdpInterfaceIfIndex
+            unique: 1
+
+          - name: cdpInterfaceEnable
+            uri: cdpInterfaceEnable
+
+          - name: cdpInterfaceName
+            uri: cdpInterfaceName
+
+    - name: cisco-cdp-cache
+      description: Cisco enterprise CDP MIB, device cache per interface.
+      accessMethod: 
+          protocol: SNMP
+          mib: CISCO-CDP-MIB
+          table: cdpCacheTable
+          index: [ cdpCacheIfIndex, cdpCacheDeviceIndex ]
+      managementObjects:
+          - name: cdpCacheIfIndex
+            uri: cdpCacheIfIndex
+            unique: 1
+
+          - name: cdpCacheDeviceIndex
+            uri: cdpCacheDeviceIndex
+
+          - name: cdpCacheAddressType
+            uri: cdpCacheAddressType
+
+          - name: cdpCacheAddress
+            uri: cdpCacheAddress
+
+          - name: cdpCacheVersion
+            uri: cdpCacheVersion
+
+          - name: cdpCacheDeviceId
+            uri: cdpCacheDeviceId
+
+          - name: cdpCacheDevicePort
+            uri: cdpCacheDevicePort
+
+          - name: cdpCachePlatform
+            uri: cdpCachePlatform
+
+...

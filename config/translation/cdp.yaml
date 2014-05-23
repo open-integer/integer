@@ -1,0 +1,112 @@
+---
+
+# translation definition for CDP
+# by Loren Jan Wilson, 2014-05-21
+
+translations:
+    - name: cisco-cdp-global-to-cdp-global
+      managementGroup: cisco-cdp-global
+      description: >
+          We make one CDP global mechanism for every set of CDP global data.
+      mapping: 
+          type: static
+          mechanismType: cdp-global
+          atoms:
+              - managementObject: cdpGlobalRun
+                capability: cdp-global-run
+
+              - managementObject: cdpGlobalDeviceId
+                capability: cdp-global-deviceId
+
+    - name: cisco-cdp-interface-to-cdp-interface
+      managementGroup: cisco-cdp-interface
+      description: >
+          We make one CDP interface mechanism for every CDP interface index.
+      mapping:
+          type: static
+          mechanismType: cdp-interface
+          atoms:
+              - managementObject: cdpInterfaceIfIndex
+                capability: cdp-interface-index
+
+              - managementObject: cdpInterfaceEnable
+                capability: cdp-interface-enable
+
+              - managementObject: cdpInterfaceName
+                capability: cdp-interface-name
+
+          relations:
+              # Each CDP interface represents a physical interface with the
+              # same index, if one exists. If an interface in the ifTable
+              # does exist, we create an equality link between that and its
+              # corresponding cdp-interface element.
+
+              - type: equality
+                match: "cdp-interface-index == interface-index"
+
+    - name: cisco-cdp-cache-to-cdp-cache
+      managementGroup: cisco-cdp-cache
+      description: >
+          We make one CDP cache mechanism for every CDP cache object.
+      mapping:
+          type: static
+          mechanismType: cdp-cache
+          atoms: 
+              - managementObject: cdpCacheIfIndex
+                capability: cdp-cache-ifIndex
+
+              - managementObject: cdpCacheDeviceIndex
+                capability: cdp-cache-deviceIndex
+
+              - managementObject: cdpCacheAddressType
+                capability: cdp-cache-addressType
+
+              - managementObject: cdpCacheAddress
+                capability: cdp-cache-address
+
+              - managementObject: cdpCacheVersion
+                capability: cdp-cache-version
+
+              - managementObject: cdpCacheDeviceId
+                capability: cdp-cache-deviceId
+
+              - managementObject: cdpCacheDevicePort
+                capability: cdp-cache-devicePort
+
+              - managementObject: cdpCachePlatform
+                capability: cdp-cache-platform
+
+          relations:
+              # Each CDP cache object has a CDP interface as its logical
+              # parent, and cdp-cache-ifIndex is always equal to 
+              # cdp-interface-index.
+
+              - type: parent
+                match:
+                    - source: cdp-cache-ifIndex 
+                      destination: cdp-interface-index
+
+              # Each local CDP cache object represents a connection to a CDP
+              # interface on a remote device.
+              #
+              # Since CDP doesn't keep state, we have no way of knowing for
+              # sure which device is sending CDP messages to us. For example,
+              # if two devices advertise the same device name ("default") and
+              # port name ("Gi1/1"), we won't know which one to draw a link to,
+              # especially if we can't pull data from the remote device. 
+              #
+              # To be more specific in cases like these, we could match a
+              # network address on the remote side as well, although we would
+              # need to introduce some complex logic to look at the
+              # "addressType" and use that to figure out which "address"
+              # capability to match against. I'm going to pass on this until we
+              # decide we need such complexity.
+
+              - type: topology
+                match:
+                    - source: cdp-cache-deviceId
+                      destination: cdp-global-deviceId
+                    - source: cdp-cache-devicePort
+                      destination: cdp-interface-name
+
+...

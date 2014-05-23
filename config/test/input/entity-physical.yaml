@@ -1,0 +1,32 @@
+---
+name: entity-physical
+rows:
+    - entPhysicalIndex: 2
+      entPhysicalDescr: "Cisco Systems Cisco 7600 4-slot Chassis System"
+      entPhysicalVendorType: cevChassisCisco7604
+      entPhysicalContainedIn: 1
+      entPhysicalClass: chassis
+      entPhysicalParentRelPos: -1
+      entPhysicalName: CISCO7604
+      entPhysicalHardwareRev: V01
+      entPhysicalFirmwareRev: 
+      entPhysicalSoftwareRev: 
+      entPhysicalSerialNum: FOX1212GDHQ
+      entPhysicalMfgName: Cisco Systems
+      entPhysicalModelName: CISCO7604
+      entPhysicalIsFRU: true
+    - entPhysicalIndex: 3
+      entPhysicalDescr: "Cisco Systems Cisco 7600 4-slot Chassis System"
+      entPhysicalVendorType: cevChassisCisco7604
+      entPhysicalContainedIn: 1
+      entPhysicalClass: chassis
+      entPhysicalParentRelPos: -1
+      entPhysicalName: CISCO7604
+      entPhysicalHardwareRev: V01
+      entPhysicalFirmwareRev: 
+      entPhysicalSoftwareRev: 
+      entPhysicalSerialNum: FOX1212GDHQ
+      entPhysicalMfgName: Cisco Systems
+      entPhysicalModelName: CISCO7604
+      entPhysicalIsFRU: true
+

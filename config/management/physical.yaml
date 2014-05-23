@@ -1,0 +1,77 @@
+---
+
+# management definition for physical hardware
+# by Loren Jan Wilson, 2014-05-21
+
+managementGroups:
+    - name: entity-physical
+      description: The physical table in the ENTITY-MIB.
+      accessMethod:
+          protocol: SNMP
+          mib: ENTITY-MIB
+          table: entPhysicalTable
+          index: [ entPhysicalIndex ]
+      managementObjects:
+          - name: entPhysicalIndex
+            uri: entPhysicalIndex
+            unique: 1
+
+          - name: entPhysicalDescr
+            uri: entPhysicalDescr
+
+          - name: entPhysicalVendorType
+            uri: entPhysicalVendorType
+
+          - name: entPhysicalContainedIn
+            uri: entPhysicalContainedIn
+
+          - name: entPhysicalClass
+            uri: entPhysicalClass
+
+          - name: entPhysicalParentRelPos
+            uri: entPhysicalParentRelPos
+
+          - name: entPhysicalName
+            uri: entPhysicalName
+
+          - name: entPhysicalHardwareRev
+            uri: entPhysicalHardwareRev
+
+          - name: entPhysicalFirmwareRev
+            uri: entPhysicalFirmwareRev
+
+          - name: entPhysicalSoftwareRev
+            uri: entPhysicalSoftwareRev
+
+          - name: entPhysicalSerialNum
+            uri: entPhysicalSerialNum
+
+          - name: entPhysicalMfgName
+            uri: entPhysicalMfgName
+
+          - name: entPhysicalModelName
+            uri: entPhysicalModelName
+
+          - name: entPhysicalIsFRU
+            uri: entPhysicalIsFRU
+
+    - name: entity-alias
+      description: > 
+          A bunch of aliases which establish relations from the physical
+          objects to other tables (e.g. ifTable).
+      accessMethod:
+          protocol: SNMP
+          mib: ENTITY-MIB
+          table: entAliasMappingTable
+          index: [ entPhysicalIndex, entAliasLogicalIndexOrZero ]
+      managementObjects:
+          - name: entPhysicalIndex
+            uri: entPhysicalIndex
+
+          - name: entAliasLogicalIndexOrZero
+            uri: entAliasLogicalIndexOrZero
+
+          - name: entAliasMappingIdentifier
+            uri: entAliasMappingIdentifier
+
+...
