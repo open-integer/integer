@@ -3,9 +3,6 @@
 # mapping for physical hardware coming from the entity-physical management group
 # by Loren Jan Wilson, 2014-05-22
 
-import os
-import sys
-import yaml
 import integer
 
 mapper = "entity-physical"

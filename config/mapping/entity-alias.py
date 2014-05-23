@@ -3,9 +3,6 @@
 # mapping for the entity-alias management group
 # by Loren Jan Wilson, 2014-05-22
 
-import os
-import sys
-import yaml
 import integer
 
 mapper = "entity-alias"
