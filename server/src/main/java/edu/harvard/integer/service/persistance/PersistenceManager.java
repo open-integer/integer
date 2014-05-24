@@ -44,6 +44,8 @@ import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServiceDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.IntegerServerDAO;
+import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
+import edu.harvard.integer.service.persistance.dao.event.EventDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
@@ -51,6 +53,7 @@ import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO
 import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
+import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.selection.ViewDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
@@ -352,5 +355,19 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public ViewDAO getViewDAO() {
 		return new ViewDAO(em, logger);
+	}
+	
+	public LayerDAO getLayerDAO() {
+		return new LayerDAO(em, logger);
+	}
+	
+	@Override
+	public EventDAO getEventDAO() {
+		return new EventDAO(em, logger);
+	}
+	
+	@Override
+	public DiscoveryCompleteEventDAO getDiscoveryCompleteEventDAO() {
+		return new DiscoveryCompleteEventDAO(em, logger);
 	}
 }

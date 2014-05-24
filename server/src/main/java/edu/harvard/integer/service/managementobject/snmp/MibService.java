@@ -50,6 +50,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.BaseService;
 
 
@@ -105,6 +106,14 @@ public class MibService extends BaseService {
 		
 		mibDirPath = props.getProperty(StringPropertyNames.MIBDir) + "/";
 		
+		MIBInfo[] loadedMibs = null;
+		try {
+			loadedMibs = snmpManager.getImportedMibs();
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		for (String string : mibNames) {
 			
 			MIBImportInfo importInfo = new MIBImportInfo();
@@ -117,15 +126,30 @@ public class MibService extends BaseService {
 			importInfo.setFileName(string);
 			importInfo.setMib(readInMIB(file));
 
-//			try {
-//				snmpManager.importMib( new MIBImportInfo[] { importInfo });
-//			} catch (IntegerException e) {
-//				
-//				e.printStackTrace();
-//				logger.error("Error loading MIB " + string + " Error " + e.toString());
-//			}
+			boolean mibLoaded = false;
+			if (loadedMibs != null) {
+				for (MIBInfo mibInfo : loadedMibs) {
+					if (mibInfo.getName().equals(string)) {
+						logger.info("MIB " + string + " already loaded!");
+						mibLoaded = true;
+						break;
+					}
+
+				}
+			}
 			
-			logger.info("Loaded " + string);
+			if (!mibLoaded) {
+				try {
+					snmpManager.importMib( new MIBImportInfo[] { importInfo });
+					logger.info("Loaded " + string);
+					
+				} catch (IntegerException e) {
+
+					e.printStackTrace();
+					logger.error("Error loading MIB " + string + " Error " + e.toString());
+				}
+			}
+			
 		}
 	}
 	

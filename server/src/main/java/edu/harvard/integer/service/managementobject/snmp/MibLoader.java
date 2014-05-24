@@ -214,6 +214,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 			System.err.println("PersistenceManage is null!!!");
 
 		}
+		
 		if (logger != null)
 			logger.info("Save SNMPModule " + result.getModule().getName() + " OID: "
 					+ result.getModule().getOid());

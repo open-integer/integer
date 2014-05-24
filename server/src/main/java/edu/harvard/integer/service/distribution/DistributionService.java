@@ -40,20 +40,21 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.distribution.DistributedManager;
-import edu.harvard.integer.common.distribution.DistributedManagerInterface;
 import edu.harvard.integer.common.distribution.DistributedService;
 import edu.harvard.integer.common.distribution.IntegerServer;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.LongPropertyNames;
 import edu.harvard.integer.server.IntegerApplication;
-import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
@@ -167,14 +168,23 @@ public class DistributionService extends BaseService implements DistributionServ
 	 * @throws IntegerException 
 	 * 
 	 */
-	private void showAllManagers() throws IntegerException {
+	@Path(value="/AllManagers")
+	@GET
+	@Produces({ MediaType.TEXT_HTML })
+	private String showAllManagers() throws IntegerException {
+		StringBuffer b = new StringBuffer();
+		
+		b.append("My ServerID: ").append(getServerID());
 		
 		IntegerServer[] servers = DistributionManager.getServers();
 		for (IntegerServer integerServer : servers) {
-			logger.info("Server " + integerServer.getName() + " ID: " + integerServer.getServerId() 
+			String message = "Server " + integerServer.getName() + " ID: " + integerServer.getServerId() 
 					+ " " + integerServer.getServerAddress().getAddress()
 					+ " My ID: " + getServerID()
-					+ " started " + integerServer.getLastStarted());
+					+ " started " + integerServer.getLastStarted();
+			
+			b.append(message).append('\n');
+			logger.info(message);
 			
 			DistributedManager[] knownManagers = null;
 			if (integerServer.getServerId().equals(getServerID())) {
@@ -186,33 +196,46 @@ public class DistributionService extends BaseService implements DistributionServ
 			}
 			
 			for (DistributedManager distributedManager : knownManagers) {
-				logger.info("Manager " + distributedManager.getName() + " type " + distributedManager.getManagerType());
+				String managerMessage = "Manager " + distributedManager.getName() + " type " + distributedManager.getManagerType();
+				logger.info(managerMessage);
+				b.append("Manager " + distributedManager.getName() + " type " + distributedManager.getManagerType()).append('\n');
 			}
 		}
 		
+		return b.toString();
 	}
 
 	/**
 	 * @throws IntegerException 
 	 * 
 	 */
-	private void showAllServicess() throws IntegerException {
+	@Path(value="/AllManagers")
+	@GET
+	@Produces({ MediaType.TEXT_HTML })
+	private String showAllServicess() throws IntegerException {
+		StringBuffer b = new StringBuffer();
+		
+		b.append("My ServerID: ").append(getServerID());
+		
 		IntegerServer[] servers = DistributionManager.getServers();
 		for (IntegerServer integerServer : servers) {
-			logger.info("Server " + integerServer.getName() + " ID: " + integerServer.getServerId() 
+			b.append("\nServer " + integerServer.getName() + " ID: " + integerServer.getServerId() 
 					+ " " + integerServer.getServerAddress()
 					+ " started " + integerServer.getLastStarted());
 			
 
 			DistributedService[] services = DistributionManager.getServices();
 			for (DistributedService service : services) {
-				logger.info("Manager " + service.getName() + " type " + service.getService());
+				b.append("\nManager " + service.getName() + " type " + service.getService());
 			}
 		}
 		
-		
+		return b.toString();
 	}
 
+	@Path(value="/AllServices")
+	@GET
+	@Produces({ MediaType.TEXT_HTML })
 	@Override
 	public DistributedManager[] getKnownManagers() throws IntegerException {
 		DistributedManagerDAO distributedManagerDAO = persistenceManager

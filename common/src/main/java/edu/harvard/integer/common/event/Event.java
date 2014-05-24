@@ -31,79 +31,105 @@
  *      
  */
 
-package edu.harvard.integer.service.selection;
+package edu.harvard.integer.common.event;
 
+import java.util.Date;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.selection.Filter;
-import edu.harvard.integer.common.selection.Layer;
-import edu.harvard.integer.common.selection.Selection;
-import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public interface SelectionManagerInterface extends BaseManagerInterface {
+@Entity
+public class Event extends BaseEntity {
 
 	/**
-	 * @param selection
-	 * @return
-	 * @throws IntegerException
+	 * Serial Version UID
 	 */
-	Selection updateSelection(Selection selection) throws IntegerException;
+	private static final long serialVersionUID = 1L;
+
+	private Date time = null;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "entityId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "entityType")),
+			@AttributeOverride(name = "name", column = @Column(name = "entityName")) })
+	private ID entityId = null;
+
+	@Enumerated(EnumType.STRING)
+	private EventTypeEnum eventType = null;
+
+	private String description = null;
 
 	/**
-	 * @return
-	 * @throws IntegerException
+	 * @return the time
 	 */
-	Selection[] getAllSeletions() throws IntegerException;
+	public Date getTime() {
+		return time;
+	}
 
 	/**
-	 * @param selectionId
-	 * @return
-	 * @throws IntegerException
+	 * @param time
+	 *            the time to set
 	 */
-	Selection getSelectionById(ID selectionId) throws IntegerException;
+	public void setTime(Date time) {
+		this.time = time;
+	}
 
 	/**
-	 * @param filter
-	 * @return
-	 * @throws IntegerException
+	 * @return the entityId
 	 */
-	Filter updateFilter(Filter filter) throws IntegerException;
+	public ID getEntityId() {
+		return entityId;
+	}
 
 	/**
-	 * @return
-	 * @throws IntegerException
+	 * @param entityId
+	 *            the entityId to set
 	 */
-	Filter[] getAllFilters() throws IntegerException;
+	public void setEntityId(ID entityId) {
+		this.entityId = entityId;
+	}
 
 	/**
-	 * @param filterId
-	 * @return
-	 * @throws IntegerException
+	 * @return the eventType
 	 */
-	Filter getFilterById(ID filterId) throws IntegerException;
+	public EventTypeEnum getEventType() {
+		return eventType;
+	}
 
 	/**
-	 * @param layer
-	 * @return
-	 * @throws IntegerException
+	 * @param eventType
+	 *            the eventType to set
 	 */
-	Layer updateLayer(Layer layer) throws IntegerException;
+	public void setEventType(EventTypeEnum eventType) {
+		this.eventType = eventType;
+	}
 
 	/**
-	 * @return
-	 * @throws IntegerException
+	 * @return the description
 	 */
-	Layer[] getAllLayers() throws IntegerException;
+	public String getDescription() {
+		return description;
+	}
 
 	/**
-	 * @param layerId
-	 * @return
-	 * @throws IntegerException
+	 * @param description
+	 *            the description to set
 	 */
-	Layer getLayerById(ID layerId) throws IntegerException;
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }
