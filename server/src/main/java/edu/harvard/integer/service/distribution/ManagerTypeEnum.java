@@ -36,6 +36,9 @@ package edu.harvard.integer.service.distribution;
 import edu.harvard.integer.common.distribution.DistributedManagerInterface;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.service.discovery.DiscoveryManager;
+import edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface;
+import edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface;
@@ -50,6 +53,9 @@ import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.selection.SelectionManager;
 import edu.harvard.integer.service.selection.SelectionManagerLocalInterface;
 import edu.harvard.integer.service.selection.SelectionManagerRemoteInterface;
+import edu.harvard.integer.service.technology.TechnologyManager;
+import edu.harvard.integer.service.technology.TechnologyManagerLocalInterface;
+import edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface;
 import edu.harvard.integer.service.topology.device.ServiceElememtAccessManager;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface;
@@ -79,7 +85,10 @@ public enum ManagerTypeEnum implements DistributedManagerInterface {
     		
     StateManager(StateManager.class, StateManagerLocalInterface.class, StateManagerRemoteInterface.class),
     
-    SelectionManager(SelectionManager.class, SelectionManagerLocalInterface.class, SelectionManagerRemoteInterface.class);
+    SelectionManager(SelectionManager.class, SelectionManagerLocalInterface.class, SelectionManagerRemoteInterface.class),
+    
+    TechnologyManager(TechnologyManager.class, TechnologyManagerLocalInterface.class, TechnologyManagerRemoteInterface.class),
+    DiscoveryManager(DiscoveryManager.class, DiscoveryManagerLocalInterface.class, DiscoveryManagerRemoteInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
 	Class<? extends BaseManagerInterface> remoteIntfClazz;

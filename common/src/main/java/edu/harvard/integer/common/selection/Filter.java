@@ -111,6 +111,17 @@ public class Filter extends BaseEntity {
 	private Date lastModifyed = null;
 
 	/**
+	 * List of service elements providing (business services). This should not
+	 * be confused with a TechnologyService. Those are specified in the
+	 * technologyList. This attribute restricts the filter to those
+	 * serviceElements that have been tagged as supporting a specific business
+	 * service like payroll.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> services = null;
+
+	/**
 	 * List of technologies included in this filter.
 	 */
 	@ElementCollection
@@ -139,17 +150,7 @@ public class Filter extends BaseEntity {
 	@OrderColumn(name = "idx")
 	private List<ID> locations = null;
 
-	/**
-	 * List of service elements providing (business services). This should not
-	 * be confused with a TechnologyService. Those are specified in the
-	 * technologyList. This attribute restricts the filter to those
-	 * serviceElements that have been tagged as supporting a specific business
-	 * service like payroll.
-	 */
-	@ElementCollection
-	@OrderColumn(name = "idx")
-	private List<ID> services = null;
-
+	
 	/**
 	 * Restricts the filter to service elements associated with a specific
 	 * organization

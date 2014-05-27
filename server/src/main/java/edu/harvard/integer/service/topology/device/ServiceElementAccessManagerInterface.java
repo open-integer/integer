@@ -35,6 +35,7 @@ package edu.harvard.integer.service.topology.device;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManagerInterface;
@@ -92,4 +93,22 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 	void deleteServiceElememts(ID[] ids) throws IntegerException;
 
 	public DeviceDetails getDeviceDetails(ID serviceElementId) throws IntegerException;
+
+	/**
+	 * Return all top level service elements that match the given selection. 
+	 * @param selection
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElement[] getTopLevelServiceElementBySelection(Selection selection)
+			throws IntegerException;
+
+	/**
+	 * Return all top level service elements that match the given selection id. 
+	 * @param selection
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElement[] getTopLevelServiceElementBySelection(ID selectionId)
+			throws IntegerException;
 }

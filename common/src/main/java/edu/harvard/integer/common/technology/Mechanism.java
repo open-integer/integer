@@ -30,40 +30,47 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.discovery;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+package edu.harvard.integer.common.technology;
 
-import org.slf4j.Logger;
+import java.util.List;
 
-import edu.harvard.integer.common.discovery.DiscoveryId;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.DiscoveryRule;
-import edu.harvard.integer.service.BaseManager;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OrderColumn;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
- * @author dchan
+ * @author David Taylor
  *
  */
-@Stateless
-public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLocalInterface, DiscoveryManagerRemoteInterface {
+@Entity
+public class Mechanism extends BaseEntity {
 
-	@Inject
-	private Logger logger;
-	
-	@Inject
-	DiscoveryServiceInterface discoveryService;
-	
-	/*
-	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#startDiscovery(edu.harvard.integer.common.topology.DiscoveryRule)
+	/**
+	 * Serialization ID 
 	 */
-	@Override
-	public DiscoveryId startDiscovery(DiscoveryRule rule) throws IntegerException {
-		
-		logger.info("Start discovery of " + rule);
-		
-		return discoveryService.startDiscovery(rule);
+	private static final long serialVersionUID = 1L;
+	
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> capabilities;
+
+	/**
+	 * @return the capabilities
+	 */
+	public List<ID> getCapabilities() {
+		return capabilities;
 	}
+
+	/**
+	 * @param capabilities the capabilities to set
+	 */
+	public void setCapabilities(List<ID> capabilities) {
+		this.capabilities = capabilities;
+	}
+	
+	
 }

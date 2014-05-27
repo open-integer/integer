@@ -38,13 +38,16 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 
 /**
@@ -132,6 +135,29 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 			logger.info("Service element " + topLevel[i].getID() + " Parent " + parentId);	
 		}
 		return topLevel;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementBySelection(edu.harvard.integer.common.selection.Selection)
+	 */
+	@Override
+	public ServiceElement[] getTopLevelServiceElementBySelection(Selection selection) throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+		
+		return serviceElementDAO.findBySelection(selection);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementBySelection(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ServiceElement[] getTopLevelServiceElementBySelection(ID selectionId) throws IntegerException {
+		SelectionDAO dao = dbm.getSelectionDAO();
+		Selection selection = dao.findById(selectionId);
+		
+		return getTopLevelServiceElementBySelection(selection);
 	}
 	
 	/*

@@ -30,40 +30,65 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.discovery;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+package edu.harvard.integer.service.persistance.dao.technology;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.discovery.DiscoveryId;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.DiscoveryRule;
-import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.common.technology.Mechanism;
+import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
- * @author dchan
+ * @author David Taylor
  *
  */
-@Stateless
-public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLocalInterface, DiscoveryManagerRemoteInterface {
+public class MechanismDAO extends BaseDAO {
 
-	@Inject
-	private Logger logger;
-	
-	@Inject
-	DiscoveryServiceInterface discoveryService;
-	
-	/*
-	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#startDiscovery(edu.harvard.integer.common.topology.DiscoveryRule)
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	@Override
-	public DiscoveryId startDiscovery(DiscoveryRule rule) throws IntegerException {
+	public MechanismDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, Mechanism.class);
 		
-		logger.info("Start discovery of " + rule);
-		
-		return discoveryService.startDiscovery(rule);
 	}
+
+	/**
+	 * @param capabilites
+	 */
+	public List<Mechanism> findByCapabilites(List<Capability> capabilites) {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<Mechanism> query = criteriaBuilder.createQuery(Mechanism.class);
+
+		Root<Mechanism> from = query.from(Mechanism.class);
+		query.select(from);
+
+		ParameterExpression<String> oid = criteriaBuilder
+				.parameter(String.class);
+		query.select(from).where(
+				criteriaBuilder.equal(from.get("identifier"), oid));
+
+		TypedQuery<Mechanism> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, "identifier");
+
+		List<Mechanism> resultList = typeQuery.getResultList();
+
+		
+		return resultList;
+	}
+
 }

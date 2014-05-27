@@ -30,40 +30,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+
 package edu.harvard.integer.service.discovery;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.discovery.DiscoveryId;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.DiscoveryRule;
-import edu.harvard.integer.service.BaseManager;
+import javax.ejb.Remote;
 
 /**
- * @author dchan
+ * @author David Taylor
  *
  */
-@Stateless
-public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLocalInterface, DiscoveryManagerRemoteInterface {
+@Remote
+public interface DiscoveryManagerRemoteInterface extends DiscoveryManagerInterface {
 
-	@Inject
-	private Logger logger;
-	
-	@Inject
-	DiscoveryServiceInterface discoveryService;
-	
-	/*
-	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#startDiscovery(edu.harvard.integer.common.topology.DiscoveryRule)
-	 */
-	@Override
-	public DiscoveryId startDiscovery(DiscoveryRule rule) throws IntegerException {
-		
-		logger.info("Start discovery of " + rule);
-		
-		return discoveryService.startDiscovery(rule);
-	}
 }

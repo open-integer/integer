@@ -49,7 +49,6 @@ import edu.harvard.integer.service.persistance.dao.event.EventDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
-import edu.harvard.integer.service.persistance.dao.managementobject.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
@@ -61,6 +60,9 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
+import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
+import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
+import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
@@ -357,6 +359,7 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 		return new ViewDAO(em, logger);
 	}
 	
+	@Override
 	public LayerDAO getLayerDAO() {
 		return new LayerDAO(em, logger);
 	}
@@ -369,5 +372,15 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public DiscoveryCompleteEventDAO getDiscoveryCompleteEventDAO() {
 		return new DiscoveryCompleteEventDAO(em, logger);
+	}
+	
+	@Override
+	public ServiceDAO getServiceDAO() {
+		return new ServiceDAO(em, logger);
+	}
+	
+	@Override
+	public TechnologyDAO getTechnologyDAO() {
+		return new TechnologyDAO(em, logger);
 	}
 }

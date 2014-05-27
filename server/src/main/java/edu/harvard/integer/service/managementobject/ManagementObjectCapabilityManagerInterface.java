@@ -42,7 +42,6 @@ import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
-import edu.harvard.integer.common.topology.Mechanism;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
@@ -114,45 +113,6 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 */
 	public abstract List<Capability> getCapabilities() throws IntegerException;
 
-	/**
-	 * Returns a list of mechanisms that are associated with specific
-	 * capabilities.
-	 * 
-	 * @return List<Mechanisim>. The Mechanisms for the capabilities.
-	 */
-	public abstract List<Mechanism> getMechanisms(List<Capability> capabilites);
-
-	/**
-	 * Associates a mechanism with a specific capability.
-	 * 
-	 * @param capability
-	 * @param mechanism
-	 * @return Mechanism. The updated mechanism.
-	 */
-	public abstract Mechanism setMechamism(Capability capability,
-			Mechanism mechanism);
-
-	/**
-	 * Associates a specific ServiceElementManagementObject (or objects) with a
-	 * specific capability.
-	 */
-	public abstract Capability setServiceElementManagementObjects(
-			Capability capability,
-			List<ServiceElementManagementObject> managementObjects);
-
-	/**
-	 * Get a list of all ServiceElementManagementObejcts.
-	 * 
-	 * @return
-	 */
-	public abstract List<ServiceElementManagementObject> getAllServiceElementManagementObjects() throws IntegerException;
-
-	/**
-	 * 
-	 * @return List of ServiceElementManagementObjects that have not been
-	 *         assigned to a capability.
-	 */
-	public abstract List<ServiceElementManagementObject> getUnassignedServiceElementManagementObjects();
 
 	/**
 	 * @param ID. The ID of capability that the management objects are for.
@@ -314,8 +274,8 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * @return
 	 * @throws IntegerException
 	 */
-	ManagementObjectValue updateManagementObjectValue(
-			ManagementObjectValue managementObjectValue)
+	ManagementObjectValue<?> updateManagementObjectValue(
+			ManagementObjectValue<?> managementObjectValue)
 			throws IntegerException;
 
 	/**
@@ -324,7 +284,7 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * @return
 	 * @throws IntegerException
 	 */
-	ManagementObjectValue getManagementObjectValuesById(ID ids)
+	ManagementObjectValue<?> getManagementObjectValuesById(ID ids)
 			throws IntegerException;
 
 }

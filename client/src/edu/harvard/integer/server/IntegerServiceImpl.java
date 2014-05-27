@@ -25,6 +25,8 @@ import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.Subnet;
+import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.service.discovery.DiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -195,9 +197,9 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			rule.setCreated(new Date());
 			
 			try {
-				DiscoveryServiceInterface discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+				DiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
 				
-				discoveryService.startDiscovery(rule);
+				manager.startDiscovery(rule);
 			} catch (IntegerException e) {
 				
 				e.printStackTrace();
@@ -238,9 +240,9 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		rule.setCreated(new Date());
 		
 		try {
-			DiscoveryServiceInterface discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+			DiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
 			
-			discoveryService.startDiscovery(rule);
+			manager.startDiscovery(rule);
 		} catch (IntegerException e) {
 			
 			e.printStackTrace();

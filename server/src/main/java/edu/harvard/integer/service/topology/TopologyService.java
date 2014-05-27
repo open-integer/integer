@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.topology;
 
+import javax.ejb.Init;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
@@ -46,4 +47,9 @@ import edu.harvard.integer.service.BaseService;
 @Startup
 public class TopologyService extends BaseService implements TopologyServiceInterface {
 
+	@Init
+	public void startService() {
+		
+	}
+	
 }

@@ -36,10 +36,13 @@ package edu.harvard.integer.service.distribution;
 import edu.harvard.integer.common.distribution.DistributedServiceInterface;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.BaseServiceInterface;
+import edu.harvard.integer.service.discovery.DiscoveryService;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
+import edu.harvard.integer.service.persistance.PersistenceService;
 import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
 import edu.harvard.integer.service.selection.SelectionService;
 import edu.harvard.integer.service.selection.SelectionServiceInterface;
+import edu.harvard.integer.service.topology.TopologyService;
 import edu.harvard.integer.service.topology.TopologyServiceInterface;
 
 
@@ -48,10 +51,9 @@ import edu.harvard.integer.service.topology.TopologyServiceInterface;
  *
  */
 public enum ServiceTypeEnum implements DistributedServiceInterface {
-	DiscoveryService(edu.harvard.integer.service.discovery.DiscoveryService.class,
-			DiscoveryServiceInterface.class),
-	TopologyService(edu.harvard.integer.service.topology.TopologyService.class, TopologyServiceInterface.class),
-	PersistenceService(edu.harvard.integer.service.persistance.PersistenceService.class, PersistenceServiceInterface.class),
+	DiscoveryService(DiscoveryService.class, DiscoveryServiceInterface.class),
+	TopologyService(TopologyService.class, TopologyServiceInterface.class),
+	PersistenceService(PersistenceService.class, PersistenceServiceInterface.class),
 	DistributionService(DistributionService.class, DistributionServiceInterface.class),
 	SelectionService(SelectionService.class, SelectionServiceInterface.class);
 	

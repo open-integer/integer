@@ -52,15 +52,15 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 
-
 /**
  * @author David Taylor
- *
+ * 
  */
 public class ServiceElementDAO extends BaseDAO {
 
@@ -73,42 +73,50 @@ public class ServiceElementDAO extends BaseDAO {
 		super(entityManger, logger, ServiceElement.class);
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
+	 * .integer.common.BaseEntity)
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
-	public <T extends BaseEntity> void preSave(T entity) throws IntegerException {
-		
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+
 		ServiceElement serviceElement = (ServiceElement) entity;
 		if (serviceElement.getValues() != null) {
 			List<ServiceElementProtocolInstanceIdentifier> values = new ArrayList<ServiceElementProtocolInstanceIdentifier>();
-			
-			ServiceElementProtocolInstanceIdentifierDAO seiDAO = new ServiceElementProtocolInstanceIdentifierDAO(getEntityManager(), getLogger());
+
+			ServiceElementProtocolInstanceIdentifierDAO seiDAO = new ServiceElementProtocolInstanceIdentifierDAO(
+					getEntityManager(), getLogger());
 			for (int i = 0; i < serviceElement.getValues().size(); i++) {
 				values.add(seiDAO.update(serviceElement.getValues().get(i)));
 			}
-			
+
 			serviceElement.setValues(values);
 		}
-		
-		ManagementObjectValueDAO valueDao = new ManagementObjectValueDAO(getEntityManager(), getLogger());
+
+		ManagementObjectValueDAO valueDao = new ManagementObjectValueDAO(
+				getEntityManager(), getLogger());
 		List<ManagementObjectValue> dbValues = new ArrayList<ManagementObjectValue>();
 		if (serviceElement.getAttributeValues() != null) {
-			for (ManagementObjectValue value : serviceElement.getAttributeValues()) {
+			for (ManagementObjectValue value : serviceElement
+					.getAttributeValues()) {
 				dbValues.add(valueDao.update(value));
 			}
 
 			serviceElement.setAttributeValues(dbValues);
 		}
-		
+
 		if (serviceElement.getParentId() != null) {
 			ServiceElement parent = findById(serviceElement.getParentId());
 			if (parent != null)
 				parent.setHasChildren(true);
 			update(parent);
 		}
-		
+
 		super.preSave(entity);
 	}
 
@@ -120,30 +128,31 @@ public class ServiceElementDAO extends BaseDAO {
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
 
-		CriteriaQuery<ServiceElement> query = criteriaBuilder.createQuery(ServiceElement.class);
+		CriteriaQuery<ServiceElement> query = criteriaBuilder
+				.createQuery(ServiceElement.class);
 
 		Root<ServiceElement> from = query.from(ServiceElement.class);
 		query.select(from);
 
 		query.select(from).where(criteriaBuilder.isNull(from.get("parentId")));
-				
-		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(query);
-		
+
+		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(
+				query);
+
 		List<ServiceElement> resultList = typeQuery.getResultList();
-		
-		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList
-				.size()]);
+
+		return (ServiceElement[]) resultList
+				.toArray(new ServiceElement[resultList.size()]);
 	}
-	
 
 	/**
 	 * @param object
 	 * @return
 	 */
 	public ServiceElement[] findByParentId(ID parent) {
-		
+
 		return findByIDField(parent, "parentId", ServiceElement.class);
-		
+
 	}
 
 	/**
@@ -152,20 +161,21 @@ public class ServiceElementDAO extends BaseDAO {
 	 * @return
 	 */
 	public ServiceElement findByIdAndValue(ID parentId,
-			ID serviceElementTypeId,
-			ManagementObjectValue value) {
+			ID serviceElementTypeId, ManagementObjectValue value) {
 		CriteriaBuilder criteriaBuilder = getEntityManager()
-		.getCriteriaBuilder();
+				.getCriteriaBuilder();
 
-		CriteriaQuery<ServiceElement> query = criteriaBuilder.createQuery(ServiceElement.class);
+		CriteriaQuery<ServiceElement> query = criteriaBuilder
+				.createQuery(ServiceElement.class);
 
 		Root<ServiceElement> from = query.from(ServiceElement.class);
-		
-		Join<ServiceElement, ManagementObjectStringValue> join = from.join("valueId");
-		
-//		if (value instanceof ManagementObjectStringValue) 
-//			from.join(ManagementObjectStringValue.class);
-		
+
+		Join<ServiceElement, ManagementObjectStringValue> join = from
+				.join("valueId");
+
+		// if (value instanceof ManagementObjectStringValue)
+		// from.join(ManagementObjectStringValue.class);
+
 		ParameterExpression<Long> idParam = criteriaBuilder
 				.parameter(Long.class);
 
@@ -173,18 +183,28 @@ public class ServiceElementDAO extends BaseDAO {
 				.parameter(ID.class);
 
 		query.select(from).where(
-				criteriaBuilder.and(
-						criteriaBuilder.equal(from.get("identifier"), idParam),
-						criteriaBuilder.equal(from.get("serviceElementTypeId"), serviceElementTypeParam)));
+				criteriaBuilder.and(criteriaBuilder.equal(
+						from.get("identifier"), idParam), criteriaBuilder
+						.equal(from.get("serviceElementTypeId"),
+								serviceElementTypeParam)));
 
-		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(query);
+		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(
+				query);
 		typeQuery.setParameter(idParam, parentId.getIdentifier());
 		typeQuery.setParameter(serviceElementTypeParam, serviceElementTypeId);
 
 		List<ServiceElement> resultList = typeQuery.getResultList();
 
-		
 		return null;
 	}
-	
+
+	/**
+	 * @param selection
+	 * @return
+	 */
+	public ServiceElement[] findBySelection(Selection selection) {
+
+		return null;
+	}
+
 }

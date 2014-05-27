@@ -100,7 +100,7 @@ public class DistributionManager {
 					return lookupLocalBean(hostName, getLocalServiceName(moduleName, type));
 				else
 					return lookupRemoteBean(getHostNameForService(type),
-							getLocalServiceName(moduleName, type));
+							getRemoteServiceName(moduleName, type));
 				
 			} else
 				return lookupLocalBean("localhost",
@@ -297,6 +297,21 @@ public class DistributionManager {
 		b.append("java:global/");
 		b.append(module);
 		b.append('/');
+
+		b.append(serviceType.getServiceClass().getSimpleName());
+		b.append("!");
+		b.append(serviceType.getBeanLocalInterfaceClass().getName());
+
+		return b.toString();
+	}
+
+	private static String getRemoteServiceName(String module,
+			ServiceTypeEnum serviceType) {
+		StringBuffer b = new StringBuffer();
+
+		b.append("java:module/");
+//		b.append(module);
+//		b.append('/');
 
 		b.append(serviceType.getServiceClass().getSimpleName());
 		b.append("!");

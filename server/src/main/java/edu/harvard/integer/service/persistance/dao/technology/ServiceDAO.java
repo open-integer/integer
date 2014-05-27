@@ -31,46 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.service.persistance.dao.technology;
 
-import java.util.List;
+import javax.persistence.EntityManager;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.OrderColumn;
+import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.technology.Service;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-@Entity
-public class Mechanism extends BaseEntity {
+public class ServiceDAO extends BaseDAO {
 
 	/**
-	 * Serialization ID 
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	private static final long serialVersionUID = 1L;
-	
-	@ElementCollection
-	@OrderColumn(name="idx")
-	private List<ID> capabilities;
-
-	/**
-	 * @return the capabilities
-	 */
-	public List<ID> getCapabilities() {
-		return capabilities;
+	public ServiceDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, Service.class);
+		
 	}
 
-	/**
-	 * @param capabilities the capabilities to set
-	 */
-	public void setCapabilities(List<ID> capabilities) {
-		this.capabilities = capabilities;
-	}
-	
-	
 }
