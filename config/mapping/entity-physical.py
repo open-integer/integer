@@ -90,6 +90,7 @@ for mechanism in integer.mechanisms:
             relation["destination"] = { "physical-index": mechanism["capabilities"]["physical-parentIndex"] }
             integer.relations.append(relation)
     except:
+        integer.logger.debug("[mapper %s] Not creating relation for a mechanism because it looks like there is no value for capability 'physical-parentIndex' for this mechanism", integer.mapper)
         continue
 
 # Send the completed mechanisms and relations back to Integer.

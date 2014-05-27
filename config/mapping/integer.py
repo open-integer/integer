@@ -10,8 +10,6 @@ import sys
 import logging
 import yaml
 
-logging.basicConfig(level=logging.WARNING, format='%(levelname)s %(asctime)s %(message)s')
-
 class Integer:
     def __init__(self, mapper):
         # Keep track of the mapper that instantiated this class.
@@ -27,6 +25,11 @@ class Integer:
         # a mapping of atoms-to-capabilities.
         self.mechanisms = []
         self.relations = []
+        # Provide a logging object.
+        log_format = '%(levelname)s %(asctime)s %(message)s'
+        logging.basicConfig(level=logging.WARNING, format=log_format)
+        self.logger = logging.getLogger("integer")
+
 
     def parse(self):
         # Check to make sure we were passed the correct management group and
@@ -35,26 +38,31 @@ class Integer:
         try:
             self.name = self.management_group["name"]
         except:
-            logging.error("[mapper %s] no management group name present in input YAML.. is this a parsing issue?", self.mapper)
+            self.logger.error("[mapper %s] no management group name present in input YAML.. is this a parsing issue?", self.mapper)
             raise
         # Make sure the name matches the mapper that called us.
         if self.name != self.mapper:
-            logging.error("[mapper %s] called on the wrong management group (%s), this shouldn't happen!", self.mapper, self.management_group["name"])
+            self.logger.error("[mapper %s] called on the wrong management group (%s), this shouldn't happen!", self.mapper, self.management_group["name"])
             raise
         # Access the rows, and complain if we can't.
         try:
             self.rows = self.management_group["rows"]
         except:
-            logging.error("[mapper %s] no rows present in input YAML.. is this a parsing issue?", self.mapper)
+            self.logger.error("[mapper %s] no rows present in input YAML.. is this a parsing issue?", self.mapper)
             raise
 
     def dump(self):
-        # We build a dictionary with our mechanisms and relations, and print it
+        # Build a dictionary with our mechanisms and relations, and print it
         # back to Integer as YAML.
         output = { "mechanisms": self.mechanisms, "relations": self.relations }
-        #print(yaml.dump([output], canonical=True))
-        #print(yaml.dump([output], width=9000))
-        print(yaml.dump(output, default_flow_style=False, width=1000))
+        print(yaml.dump(output, default_flow_style=False, width=9000))
+
+        # We might need to switch to canonical format depending on how the Java
+        # YAML import and the Python YAML export work with the kinds of values
+        # we see in the wild.  If we do, just comment out the above print line
+        # and uncomment this one:
+
+        #print(yaml.dump(output, canonical=True, width=9000))
 
     def build_mechanisms(self, mechanism_type, mobj_to_capability):
         # Given a mechanism type and a management-objects-to-capabilities
@@ -72,7 +80,7 @@ class Integer:
                 try:
                     capability_name = mobj_to_capability[mobj_name]
                 except:
-                    logging.warning("[mapper %s] Saw a management object we didn't recognize! (name: %s, value: %s)", self.mapper, mobj_name, mobj_value)
+                    self.logger.warning("[mapper %s] Saw a management object we didn't recognize! (name: %s, value: %s)", self.mapper, mobj_name, mobj_value)
                     continue
                 # Add this capability to our mechanism's capabilities list.
                 mechanism["capabilities"][capability_name] = mobj_value
@@ -80,8 +88,10 @@ class Integer:
             self.mechanisms.append(mechanism)
 
     def build_relations(self, relation_type, relation_match):
-        # Go through the mechanisms that exist and create relations for each.
+        # Given a relation type and a capability-to-capability matching
+        # dictionary, make mechanisms from the management group rows we loaded.
         for mechanism in self.mechanisms:
+            # Go through the mechanisms that exist and create relations for each.
             try:
                 # Build a relation with source and destination match conditions.
                 relation = {}
@@ -94,12 +104,17 @@ class Integer:
                     # same value. If your management group is more complex than
                     # this, don't use this function and instead create these
                     # manually in your mapping code.
-                    shared_value = mechanism["capabilities"][src_cap]
-                    relation["source"][src_cap] = shared_value
-                    relation["destination"][dest_cap] = shared_value
+                    try:
+                        shared_value = mechanism["capabilities"][src_cap]
+                        relation["source"][src_cap] = shared_value
+                        relation["destination"][dest_cap] = shared_value
+                    except KeyError:
+                        self.logger.warning("[mapper %s] Couldn't find a capability '%s' for this entry, so can't create relation!", self.mapper, src_cap)
+                        continue
+
                 # Append this relation to our list.
                 self.relations.append(relation)
             except Exception, ex:
-                logging.exception("[mapper %s] Couldn't create relation!", self.mapper)
+                self.logger.exception("[mapper %s] Couldn't create relation for unknown reason!", self.mapper)
                 continue
 
