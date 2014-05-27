@@ -27,6 +27,9 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**
  * The Class FilterPanel.
@@ -38,15 +41,15 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @param unit the unit
 	 */
-	public FilterPanel(Unit unit) {
-		super(unit);
+	public FilterPanel(Filter filter) {
+		super(Unit.EM);
 		
-		add(createTechnologyFilterPanel(), "Technology", 3);
-		add(getAbsolutePanel(), "Provider", 3);
-		add(createCriticalityFiltersItem(), "Criticality", 3);
-		add(createLocationFiltersItem(), "Location", 3);
-		add(createServiceFiltersItem(), "Service", 3);
-		add(getOrganizationFilterPanel(), "Organization", 3);
+		add(createTechnologyFilterPanel(filter), "Technology", 3);
+		add(getProviderFilterPanel(filter), "Provider", 3);
+		add(createCriticalityFilterPanel(filter), "Criticality", 3);
+		add(createLocationFilterPanel(filter), "Location", 3);
+		add(createServiceFilterPanel(filter), "Service", 3);
+		add(getOrganizationFilterPanel(filter), "Organization", 3);
 	}
 
 	/** The technology filter panel. */
@@ -60,7 +63,7 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the widget
 	 */
-	private Widget createTechnologyFilterPanel() {
+	private Widget createTechnologyFilterPanel(Filter filter) {
 		if (technologyFilterPanel != null)
 			return technologyFilterPanel;
 		
@@ -102,12 +105,13 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the widget
 	 */
-	private Widget createCriticalityFiltersItem() {
+	private Widget createCriticalityFilterPanel(Filter filter) {
 		VerticalPanel filtersPanel = new VerticalPanel();
 		filtersPanel.setSpacing(4);
-		filtersPanel.add(new CheckBox("1"));
-		filtersPanel.add(new CheckBox("2"));
-		filtersPanel.add(new CheckBox("3"));
+		List<CriticalityEnum> ids = filter.getCriticalities();
+		for (CriticalityEnum id : ids) {
+			filtersPanel.add(new CheckBox(id.name()));
+		}
 		
 		return new SimplePanel(filtersPanel);
 	}
@@ -117,12 +121,13 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the widget
 	 */
-	private Widget createLocationFiltersItem() {
+	private Widget createLocationFilterPanel(Filter filter) {
 		VerticalPanel filtersPanel = new VerticalPanel();
 		filtersPanel.setSpacing(4);
-		filtersPanel.add(new CheckBox("Cambridge"));
-		filtersPanel.add(new CheckBox("Boston"));
-		filtersPanel.add(new CheckBox("New York"));
+		List<ID> ids = filter.getLocations();
+		for (ID id : ids) {
+			filtersPanel.add(new CheckBox(id.getName()));
+		}
 		
 		return new SimplePanel(filtersPanel);
 	}
@@ -132,12 +137,13 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the widget
 	 */
-	private Widget createServiceFiltersItem() {
+	private Widget createServiceFilterPanel(Filter filter) {
 		VerticalPanel filtersPanel = new VerticalPanel();
 		filtersPanel.setSpacing(4);
-		filtersPanel.add(new CheckBox("Internet"));
-		filtersPanel.add(new CheckBox("Cable TV"));
-		filtersPanel.add(new CheckBox("Wireless"));
+		List<ID> ids = filter.getServices();
+		for (ID id : ids) {
+			filtersPanel.add(new CheckBox(id.getName()));
+		}
 		
 		return new SimplePanel(filtersPanel);
 	}
@@ -150,13 +156,15 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the organization filter panel
 	 */
-	private VerticalPanel getOrganizationFilterPanel() {
-		if (organizationFilterPanel == null) {
-			organizationFilterPanel = new VerticalPanel();
-			organizationFilterPanel.setSize("612px", "482px");
-			organizationFilterPanel.add(getOrganizationCellTree());
+	private Widget getOrganizationFilterPanel(Filter filter) {
+		VerticalPanel filtersPanel = new VerticalPanel();
+		filtersPanel.setSpacing(4);
+		List<ID> ids = filter.getOrginizations();
+		for (ID id : ids) {
+			filtersPanel.add(new CheckBox(id.getName()));
 		}
-		return organizationFilterPanel;
+		
+		return new SimplePanel(filtersPanel);
 	}
 	
 	/** The organization cell tree. */
@@ -231,15 +239,15 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the absolute panel
 	 */
-	private AbsolutePanel getAbsolutePanel() {
-		if (absolutePanel == null) {
-			absolutePanel = new AbsolutePanel();
-			absolutePanel.setSize("612px", "482px");
-			absolutePanel.add(getCellTree(), 0, 0);
-			absolutePanel.add(getBtnAdd(), 265, 428);
-			absolutePanel.add(getBtnRemove(), 336, 428);
+	private Widget getProviderFilterPanel(Filter filter) {
+		VerticalPanel filtersPanel = new VerticalPanel();
+		filtersPanel.setSpacing(4);
+		List<ID> ids = filter.getProviders();
+		for (ID id : ids) {
+			filtersPanel.add(new CheckBox(id.getName()));
 		}
-		return absolutePanel;
+		
+		return new SimplePanel(filtersPanel);
 	}
 	
 	/**

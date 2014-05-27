@@ -1,10 +1,12 @@
 package edu.harvard.integer.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MousePanMediator;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -22,6 +24,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvIconButton;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -134,12 +140,56 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
 		eastPanel.add(eventView, DockPanel.SOUTH);
 		
-		FilterPanel filterPanel = new FilterPanel(Unit.EM);
+		FilterPanel filterPanel = new FilterPanel(getDemoFilter());
 		addWest(filterPanel, WESTPANEL_WIDTH);
 		setWidgetToggleDisplayAllowed(filterPanel, true);
 		
 		add(eastPanel);
 		
+	}
+	
+	private Filter getDemoFilter() {
+		Filter filter = new Filter();
+		List<ID> ids = new ArrayList<ID>();
+		ids.add(new ID(1L, "Load Balancers/Round Robin", new IDType("Technology")));
+		ids.add(new ID(2L, "Load Balancers/Dynamic Ratio", new IDType("Technology")));
+		ids.add(new ID(3L, "Load Balancers/Fastest", new IDType("Technology")));
+		ids.add(new ID(4L, "Load Balancers/Least", new IDType("Technology")));
+		ids.add(new ID(5L, "Routers/BGP", new IDType("Technology")));
+		ids.add(new ID(6L, "Routers/OSPF", new IDType("Technology")));
+		filter.setTechnologies(ids);
+		
+		List<ID> providerIds = new ArrayList<ID>();
+		providerIds.add(new ID(11L, "Cisco", new IDType("Technology")));
+		providerIds.add(new ID(12L, "Lucent", new IDType("Technology")));
+		providerIds.add(new ID(13L, "Juniper", new IDType("Technology")));
+		filter.setProviders(providerIds);
+		
+		List<CriticalityEnum> criticalities = new ArrayList<CriticalityEnum>();
+		for (CriticalityEnum e : CriticalityEnum.values()) {
+			criticalities.add(e);
+		}
+		filter.setCriticalities(criticalities );
+		
+		List<ID> locationIds = new ArrayList<ID>();
+		locationIds.add(new ID(31L, "Boston", new IDType("Technology")));
+		locationIds.add(new ID(32L, "Cambridge", new IDType("Technology")));
+		locationIds.add(new ID(33L, "New York", new IDType("Technology")));
+		filter.setLocations(locationIds);
+		
+		List<ID> serviceIds = new ArrayList<ID>();
+		serviceIds.add(new ID(41L, "Internet", new IDType("Technology")));
+		serviceIds.add(new ID(42L, "Video", new IDType("Technology")));
+		serviceIds.add(new ID(43L, "Wireless", new IDType("Technology")));
+		filter.setServices(serviceIds);
+		
+		List<ID> organizationIds = new ArrayList<ID>();
+		organizationIds.add(new ID(51L, "Harvard University", new IDType("Technology")));
+		organizationIds.add(new ID(52L, "Boston University", new IDType("Technology")));
+		organizationIds.add(new ID(53L, "Northeastern University", new IDType("Technology")));
+		filter.setOrginizations(organizationIds);
+		
+		return filter;
 	}
 	
 	private VerticalPanel createNetworkTreePanel() {
