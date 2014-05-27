@@ -40,10 +40,11 @@ import javax.persistence.Entity;
 import javax.persistence.OrderColumn;
 
 /**
+ * This class holds a list of email address. This can be used to send reports to
+ * a named list of email addresses.
+ * 
  * @author David Taylor
  * 
- *         This class holds a list of email address. This can be used to send
- *         reports to a named list of email addresses.
  */
 @Entity
 public class EmailList extends BaseEntity {
@@ -53,8 +54,7 @@ public class EmailList extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<EmailAddress> emailAddresses = null;
 }

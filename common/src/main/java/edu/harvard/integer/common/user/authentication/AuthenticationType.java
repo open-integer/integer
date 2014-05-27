@@ -36,10 +36,13 @@ package edu.harvard.integer.common.user.authentication;
 import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * 
+ * 
+ * This class holds the authentication information required to connect to and
+ * authenticate a user.
+ * 
  * @author David Taylor
  * 
- *         This class holds the authentication information required to connect
- *         to and authenticate a user.
  */
 public class AuthenticationType extends BaseEntity {
 

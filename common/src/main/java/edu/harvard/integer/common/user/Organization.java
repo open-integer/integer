@@ -47,11 +47,12 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * 
+ * Identifies an organization. Organizations have hierarchies/containment. That
+ * is why this element can contain more Organizations.
+ * 
  * @author David Taylor
  * 
- *         Identifies an organization. Organizations have
- *         hierarchies/containment. That is why this element can contain more
- *         Organizations.
  */
 @Entity
 public class Organization extends BaseEntity {

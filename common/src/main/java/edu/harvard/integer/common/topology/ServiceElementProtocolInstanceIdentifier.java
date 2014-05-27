@@ -40,19 +40,21 @@ import javax.persistence.Entity;
 import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * 
+ * A variety of protocols may be used to access a devices for different
+ * management functions, for example, SNMP may be used for certain data
+ * collection or alarm information while the CLI or other protocols may be used
+ * for configuration. The system needs to know which protocol is to be used for
+ * each function for each service element in the system. There will be as many
+ * instances of these as are needed to cover all the functions for which an
+ * instance of a service object might be accessed.
+ * 
  * @author David Taylor
  * 
- *         A variety of protocols may be used to access a devices for different
- *         management functions, for example, SNMP may be used for certain data
- *         collection or alarm information while the CLI or other protocols may
- *         be used for configuration. The system needs to know which protocol is
- *         to be used for each function for each service element in the system.
- *         There will be as many instances of these as are needed to cover all
- *         the functions for which an instance of a service object might be
- *         accessed.
  */
 @Entity
-public class ServiceElementProtocolInstanceIdentifier extends BaseEntity implements Serializable {
+public class ServiceElementProtocolInstanceIdentifier extends BaseEntity
+		implements Serializable {
 
 	/**
 	 * Serial Version UID.
@@ -62,9 +64,9 @@ public class ServiceElementProtocolInstanceIdentifier extends BaseEntity impleme
 	private String value = null;
 
 	public ServiceElementProtocolInstanceIdentifier() {
-		
+
 	}
-	
+
 	/**
 	 * @return the value
 	 */
@@ -80,19 +82,19 @@ public class ServiceElementProtocolInstanceIdentifier extends BaseEntity impleme
 		this.value = value;
 	}
 
-//	/**
-//	 * @return the fcaps
-//	 */
-//	public List<FCAPSEnum> getFcaps() {
-//		return fcaps;
-//	}
-//
-//	/**
-//	 * @param fcaps
-//	 *            the fcaps to set
-//	 */
-//	public void setFcaps(List<FCAPSEnum> fcaps) {
-//		this.fcaps = fcaps;
-//	}
+	// /**
+	// * @return the fcaps
+	// */
+	// public List<FCAPSEnum> getFcaps() {
+	// return fcaps;
+	// }
+	//
+	// /**
+	// * @param fcaps
+	// * the fcaps to set
+	// */
+	// public void setFcaps(List<FCAPSEnum> fcaps) {
+	// this.fcaps = fcaps;
+	// }
 
 }

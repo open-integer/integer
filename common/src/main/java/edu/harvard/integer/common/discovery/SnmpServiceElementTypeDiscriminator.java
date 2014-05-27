@@ -44,14 +44,15 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * When the contextOid in the SnmpLevelOID instance that is associated with the
+ * SnmpDiscriminatorOID to which this SnmpServiceElementTypeDiscriminator is
+ * attached is a table that has an OID that can get a number of return values
+ * that indicated different service element types, then we will need as many of
+ * these as there are possible return types for that oid.
+ * 
  * @author David Taylor
  * 
- *         When the contextOid in the SnmpLevelOID instance that is associated
- *         with the SnmpDiscriminatorOID to which this
- *         SnmpServiceElementTypeDiscriminator is attached is a table that has
- *         an OID that can get a number of return values that indicated
- *         different service element types, then we will need as many of these
- *         as there are possible return types for that oid.
+ * 
  */
 @Entity
 public class SnmpServiceElementTypeDiscriminator extends BaseEntity {
@@ -105,7 +106,8 @@ public class SnmpServiceElementTypeDiscriminator extends BaseEntity {
 	 * @param discriminatorValue
 	 *            the discriminatorValue to set
 	 */
-	public void setDiscriminatorValue(SnmpServiceElementTypeDiscriminatorValue discriminatorValue) {
+	public void setDiscriminatorValue(
+			SnmpServiceElementTypeDiscriminatorValue discriminatorValue) {
 		this.discriminatorValue = discriminatorValue;
 	}
 

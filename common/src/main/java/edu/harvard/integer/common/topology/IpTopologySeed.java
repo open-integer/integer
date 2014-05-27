@@ -50,16 +50,18 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryOrderEnum;
 
 /**
+ * 
+ * TopologySeeds are used by the system to start and limit the scope of a
+ * topology discovery.
+ * 
+ * <p>Note that the way the include and exclude attributes work is that if none are
+ * filled in then, the system would discovery everything. If the technology has
+ * an Include or Exclude list, then the technologies listed determine whether
+ * the discovery program will include those devices and the service elements
+ * they contain or not.
+ * 
  * @author David Taylor
  * 
- *         TopologySeeds are used by the system to start and limit the scope of
- *         a topology discovery.
- * 
- *         Note that the way the include and exclude attributes work is that if
- *         none are filled in then, the system would discovery everything. If
- *         the technology has an Include or Exclude list, then the technologies
- *         listed determine whether the discovery program will include those
- *         devices and the service elements they contain or not.
  */
 @Entity
 public class IpTopologySeed extends BaseEntity {
@@ -74,14 +76,14 @@ public class IpTopologySeed extends BaseEntity {
 	 * within the radius of the discovery.
 	 */
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<Subnet> netExclustions = null;
 
 	/**
 	 * A list of gateways to exclude.
 	 */
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<Address> gatewayExclusuions = null;
 
 	/**
@@ -132,7 +134,7 @@ public class IpTopologySeed extends BaseEntity {
 	 * the technologyIncludeExclude attribute.
 	 */
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> technologys = null;
 
 	/**
@@ -164,7 +166,7 @@ public class IpTopologySeed extends BaseEntity {
 	@OrderColumn(name = "idx")
 	@CollectionTable(name = "IpTopologySeed_Credentials")
 	private List<Credential> credentials = null;
-	
+
 	/**
 	 * @return the netExclustions
 	 */
@@ -342,7 +344,8 @@ public class IpTopologySeed extends BaseEntity {
 	}
 
 	/**
-	 * @param credentials the credentials to set
+	 * @param credentials
+	 *            the credentials to set
 	 */
 	public void setCredentials(List<Credential> credentials) {
 		this.credentials = credentials;

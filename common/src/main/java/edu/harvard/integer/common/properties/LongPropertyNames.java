@@ -33,12 +33,13 @@
 
 package edu.harvard.integer.common.properties;
 
-
 /**
+ * 
+ * This holds the keys for the Integer properties used. The values must have a
+ * default, min and max value. The units are also specified.
+ * 
  * @author David Taylor
  * 
- *         This holds the keys for the Integer properties used. The values must
- *         have a default, min and max value. The units are also specified. 
  */
 public enum LongPropertyNames {
 	ServerId("ServerId", 1, 1, 1000, UnitsEnum.NA);

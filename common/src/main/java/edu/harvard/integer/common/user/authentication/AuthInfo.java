@@ -36,17 +36,18 @@ package edu.harvard.integer.common.user.authentication;
 import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * 
+ * Authentication for each organization (and possibly - but hopefully not each
+ * sub organization).
+ * 
+ * <p>It is possible that more than one Authentication method (e.g., CAS) could be
+ * used with different access policies. This may be useful in test environments.
+ * 
+ * <p>Local Authentication will be supported meaning users could log into the
+ * system with a password but it is not recommended.
+ * 
  * @author David Taylor
  * 
- *         Authentication for each organization (and possibly - but hopefully
- *         not each sub organization).
- * 
- *         It is possible that more than one Authentication method (e.g., CAS)
- *         could be used with different access policies. This may be useful in
- *         test environments.
- * 
- *         Local Authentication will be supported meaning users could log into
- *         the system with a password but it is not recommended.
  */
 public class AuthInfo extends BaseEntity {
 

@@ -51,21 +51,22 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**
+ * A filter is the way users tell the system the range of ServiceElements they
+ * want to select for some purpose.
+ * 
+ * <p>Note that the selections attributes (e.g., technology, provider, etc.) are
+ * AND. For example if the technology is routing AND a provider is acme service
+ * company, then only service elements from the acme service company will be the
+ * output of the filter. If one of the attributes like location or service is
+ * null, then it is as if the user had selected all possibilities to which they
+ * have access.
+ * 
+ * <P.Also not that within a selector such as technology, users are able to select
+ * multiples. This means that they could select routing and DNS. In this event,
+ * these are treated as OR.
+ * 
  * @author David Taylor
  * 
- *         A filter is the way users tell the system the range of
- *         ServiceElements they want to select for some purpose.
- * 
- *         Note that the selections attributes (e.g., technology, provider,
- *         etc.) are AND. For example if the technology is routing AND a
- *         provider is acme service company, then only service elements from the
- *         acme service company will be the output of the filter. If one of the
- *         attributes like location or service is null, then it is as if the
- *         user had selected all possibilities to which they have access.
- * 
- *         Also not that within a selector such as technology, users are able to
- *         select multiples. This means that they could select routing and DNS.
- *         In this event, these are treated as OR.
  */
 @Entity
 public class Filter extends BaseEntity {
@@ -150,7 +151,6 @@ public class Filter extends BaseEntity {
 	@OrderColumn(name = "idx")
 	private List<ID> locations = null;
 
-	
 	/**
 	 * Restricts the filter to service elements associated with a specific
 	 * organization

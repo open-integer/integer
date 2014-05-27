@@ -45,10 +45,12 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.schedule.CalendarPolicy;
 
 /**
+ * 
+ * A discovery rule identifies the type of discovery to be performed along with
+ * the calendar frequency.
+ * 
  * @author David Taylor
  * 
- *         A discovery rule identifies the type of discovery to be performed
- *         along with the calendar frequency.
  */
 @Entity
 public class DiscoveryRule extends BaseEntity {

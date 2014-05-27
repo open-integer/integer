@@ -38,13 +38,13 @@ import javax.persistence.Entity;
 import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * The contains a calendar policy that may be used by many different elements in
+ * the system from roles to data collection.
+ * 
+ * <p>When associated with a Report Template it is the frequency that the report is
+ * generated.
+ * 
  * @author David Taylor
- * 
- *         The contains a calendar policy that may be used by many different
- *         elements in the system from roles to data collection.
- * 
- *         When associated with a Report Template it is the frequency that the
- *         report is generated.
  */
 @Entity
 public class CalendarPolicy extends BaseEntity {

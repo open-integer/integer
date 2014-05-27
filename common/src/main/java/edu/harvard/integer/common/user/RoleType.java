@@ -34,9 +34,9 @@
 package edu.harvard.integer.common.user;
 
 /**
- * @author David Taylor
- * 
  * Type of role. Either primary or secondary.
+ * 
+ * @author David Taylor
  * 
  */
 public enum RoleType {

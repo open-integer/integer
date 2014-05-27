@@ -43,19 +43,23 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * 
+ * The mechanism object in the technology hierarchy is the lowest level
+ * abstraction that contains the capabilities the realize it.
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Entity
 public class Mechanism extends BaseEntity {
 
 	/**
-	 * Serialization ID 
+	 * Serialization ID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> capabilities;
 
 	/**
@@ -66,11 +70,11 @@ public class Mechanism extends BaseEntity {
 	}
 
 	/**
-	 * @param capabilities the capabilities to set
+	 * @param capabilities
+	 *            the capabilities to set
 	 */
 	public void setCapabilities(List<ID> capabilities) {
 		this.capabilities = capabilities;
 	}
-	
-	
+
 }

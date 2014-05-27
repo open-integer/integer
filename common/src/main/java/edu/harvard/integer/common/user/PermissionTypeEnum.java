@@ -34,12 +34,12 @@
 package edu.harvard.integer.common.user;
 
 /**
+ * Permissions used in the access policy.
+ * 
  * @author David Taylor
- *
- * Permissions used in the access policy. 
+ * 
+ * 
  */
 public enum PermissionTypeEnum {
-	Read,
-	Write,
-	Create
+	Read, Write, Create
 }

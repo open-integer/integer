@@ -34,11 +34,12 @@
 package edu.harvard.integer.common.user;
 
 /**
+ * Permit or deny a permission.
+ * 
  * @author David Taylor
  * 
- * Permit or deny a permission. 
+ * 
  */
 public enum PermitDenyEnum {
-	Pemit,
-	Deny;
+	Pemit, Deny;
 }

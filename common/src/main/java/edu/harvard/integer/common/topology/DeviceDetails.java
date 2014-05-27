@@ -44,18 +44,21 @@ import javax.persistence.Embedded;
 import edu.harvard.integer.common.ID;
 
 /**
+ * Hold device details. This is used to pass the device details up to the GUI.
+ * 
+ * 
  * @author David Taylor
- *
+ * 
  */
 public class DeviceDetails implements Serializable {
-	
+
 	/**
-	 * Serial Version UID 
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private ID serviceElementId = null;
-	
+
 	private String description = null;
 
 	// The id of the id object instance that identifies the Location instance to
@@ -120,7 +123,8 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param serviceElementId the serviceElementId to set
+	 * @param serviceElementId
+	 *            the serviceElementId to set
 	 */
 	public void setServiceElementId(ID serviceElementId) {
 		this.serviceElementId = serviceElementId;
@@ -134,7 +138,8 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -148,7 +153,8 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param primaryLocation the primaryLocation to set
+	 * @param primaryLocation
+	 *            the primaryLocation to set
 	 */
 	public void setPrimaryLocation(ID primaryLocation) {
 		this.primaryLocation = primaryLocation;
@@ -162,7 +168,8 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param operationalControlId the operationalControlId to set
+	 * @param operationalControlId
+	 *            the operationalControlId to set
 	 */
 	public void setOperationalControlId(ID operationalControlId) {
 		this.operationalControlId = operationalControlId;
@@ -176,7 +183,8 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param serviceElementCriticality the serviceElementCriticality to set
+	 * @param serviceElementCriticality
+	 *            the serviceElementCriticality to set
 	 */
 	public void setServiceElementCriticality(int serviceElementCriticality) {
 		this.serviceElementCriticality = serviceElementCriticality;
@@ -190,7 +198,8 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param created the created to set
+	 * @param created
+	 *            the created to set
 	 */
 	public void setCreated(Date created) {
 		this.created = created;
@@ -204,7 +213,8 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param updated the updated to set
+	 * @param updated
+	 *            the updated to set
 	 */
 	public void setUpdated(Date updated) {
 		this.updated = updated;
@@ -218,11 +228,11 @@ public class DeviceDetails implements Serializable {
 	}
 
 	/**
-	 * @param comment the comment to set
+	 * @param comment
+	 *            the comment to set
 	 */
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	
 }

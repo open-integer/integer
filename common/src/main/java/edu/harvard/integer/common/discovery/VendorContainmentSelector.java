@@ -44,20 +44,22 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
+ * 
+ * 
+ * This object is created by the user. It tells the system which SnmpContainment
+ * instance (in the case of SNMP) to use based on a combination of vendor, model
+ * firmware and software revision. Not all of these attributes need be filled
+ * in.
+ * 
+ * <p>The SnmpVendorDiscoveryTemplate tells the system where to look on the systems
+ * to get the model, firmware and softwareVersion data.
+ * 
+ * <p>The containment ID will contain the ID of the specific containment object to
+ * use for this specific type of system. Other containment types could use SSH
+ * or other protocols.
+ * 
  * @author David Taylor
  * 
- * 
- *         This object is created by the user. It tells the system which
- *         SnmpContainment instance (in the case of SNMP) to use based on a
- *         combination of vendor, model firmware and software revision. Not all
- *         of these attributes need be filled in.
- * 
- *         The SnmpVendorDiscoveryTemplate tells the system where to look on the
- *         systems to get the model, firmware and softwareVersion data.
- * 
- *         The containment ID will contain the ID of the specific containment
- *         object to use for this specific type of system. Other containment
- *         types could use SSH or other protocols.
  * 
  */
 @Entity
@@ -93,14 +95,13 @@ public class VendorContainmentSelector extends BaseEntity {
 	private String softwareVersion = null;
 
 	/**
-	 * If the vendor, model, firmware and software version do not map 
-	 * to a specific VendorContainmentSelector then this value can be
-	 * used to test the device for existence of a value. If a value
-	 * is returned then this VendorContainmentSelector can be used to
-	 * discover the device containment.
+	 * If the vendor, model, firmware and software version do not map to a
+	 * specific VendorContainmentSelector then this value can be used to test
+	 * the device for existence of a value. If a value is returned then this
+	 * VendorContainmentSelector can be used to discover the device containment.
 	 */
 	private ServiceElementManagementObject testManagementObject = null;
-	
+
 	/**
 	 * The idId of the instances of the hardware containment structure class
 	 * that tells the discovery system how to learn the structure of
@@ -127,11 +128,10 @@ public class VendorContainmentSelector extends BaseEntity {
 	 */
 	@Embedded
 	@AttributeOverrides({
-		@AttributeOverride(name = "identifier", column = @Column(name = "containmentId")),
-		@AttributeOverride(name = "idType.classType", column = @Column(name = "containmentType")),
-		@AttributeOverride(name = "name", column = @Column(name = "containmentName")) })
+			@AttributeOverride(name = "identifier", column = @Column(name = "containmentId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "containmentType")),
+			@AttributeOverride(name = "name", column = @Column(name = "containmentName")) })
 	private ID containmentId = null;
-
 
 	/**
 	 * @return the vendor
@@ -207,6 +207,5 @@ public class VendorContainmentSelector extends BaseEntity {
 	public void setContainmentId(ID containmentId) {
 		this.containmentId = containmentId;
 	}
-
 
 }

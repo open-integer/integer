@@ -48,17 +48,18 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * 
+ * The SnmpContainment object tells the system the SNMP model to follow to
+ * discover the service elements that are contained within an instance of the
+ * device identified by the SnmpVendorContainmentSelector that pointed to the
+ * SnmpContainment instance.
+ * 
+ * <p>The reason for having many of these (potentially) for an SnmpContainment
+ * instance is that some vendors may have discontinuous tables that represent
+ * the containment hierarchy.
+ * 
  * @author David Taylor
  * 
- *         The SnmpContainment object tells the system the SNMP model to follow
- *         to discover the service elements that are contained within an
- *         instance of the device identified by the
- *         SnmpVendorContainmentSelector that pointed to the SnmpContainment
- *         instance.
- * 
- *         The reason for having many of these (potentially) for an
- *         SnmpContainment instance is that some vendors may have discontinuous
- *         tables that represent the containment hierarchy.
  * 
  */
 @Entity
@@ -89,13 +90,13 @@ public class SnmpContainment extends BaseEntity {
 	 * This is the service element type that matches this
 	 * SnmpVendorContainmentSelector.
 	 */
-	 @Embedded
-	 @AttributeOverrides({
-		 @AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
-		 @AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
-		 @AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
+			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
 	private ID serviceElementTypeId = null;
-	
+
 	/**
 	 * @return the containmentType
 	 */

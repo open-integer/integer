@@ -39,11 +39,13 @@ import java.util.Locale;
 import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
+ * 
+ * All exceptions created by the Integer system will be an IntegerException. The
+ * exception will take an ErrorCode and optional arguments. The cause of the
+ * exception may be includes when known.
+ * 
  * @author David Taylor
  * 
- *         All exceptions created by the Integer system will be an
- *         IntegerException. The exception will take an ErrorCode and optional
- *         arguments. The cause of the exception may be includes when known.
  * 
  */
 public class IntegerException extends Exception implements DisplayableInterface {
@@ -57,7 +59,7 @@ public class IntegerException extends Exception implements DisplayableInterface 
 
 	public IntegerException(Throwable cause, ErrorCodeInterface errorCode) {
 		super(cause);
-		
+
 		this.errorCode = errorCode;
 	}
 
@@ -71,7 +73,7 @@ public class IntegerException extends Exception implements DisplayableInterface 
 	 */
 	public IntegerException(Throwable cause, ErrorCodeInterface errorCode,
 			DisplayableInterface[] arguments) {
-		
+
 		super(errorCode.getErrorCode(), cause);
 		this.arguments = arguments;
 		this.errorCode = errorCode;
@@ -84,7 +86,8 @@ public class IntegerException extends Exception implements DisplayableInterface 
 		// TODO: the message must be converted to a localized message. Once the
 		// bundles are added this must be implemented.
 
-		if (errorCode != null && errorCode.getErrorCode() != null && errorCode.getErrorCode().indexOf("{0}") > 0 ) {
+		if (errorCode != null && errorCode.getErrorCode() != null
+				&& errorCode.getErrorCode().indexOf("{0}") > 0) {
 			MessageFormat mf = new MessageFormat(errorCode.getErrorCode());
 			return mf.format(arguments);
 		} else
@@ -130,12 +133,14 @@ public class IntegerException extends Exception implements DisplayableInterface 
 		this.errorCode = errorCode;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Throwable#toString()
 	 */
 	@Override
 	public String toString() {
-		
+
 		return toDisplayString(Locale.US);
 	}
 

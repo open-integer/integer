@@ -39,14 +39,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
+ * Hold a String value of a management object.
+ * 
  * @author David Taylor
  * 
- *         Hold a String value of a management object.
  */
 @Entity
-public class ManagementObjectStringValue extends ManagementObjectValue<String> implements Serializable {
+public class ManagementObjectStringValue extends ManagementObjectValue<String>
+		implements Serializable {
 
-	@Column(name="stringValue")
+	@Column(name = "stringValue")
 	private String value = null;
 
 	/**

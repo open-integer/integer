@@ -42,11 +42,11 @@ import javax.persistence.Transient;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
 /**
+ * Base class for IPV4 and IPV6 address. 
+ * 
  * @author David Taylor
  *
  *
- * Base class for IPV4 and IPV6 address. 
- * 
  */
 @Embeddable
 public class Address implements Serializable {

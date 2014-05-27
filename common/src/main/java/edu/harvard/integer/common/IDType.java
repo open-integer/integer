@@ -35,10 +35,12 @@ package edu.harvard.integer.common;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+
 /**
+ * This class encapsulates the type of object.
+ * 
  * @author David Taylor
  * 
- * This class encapsulates the type of object. 
  */
 
 @Embeddable
@@ -54,11 +56,11 @@ public class IDType implements Serializable {
 	public IDType() {
 		super();
 	}
-	
+
 	public IDType(String class1) {
 		this.classType = class1;
 	}
-	
+
 	public String getClassType() {
 		return classType;
 	}
@@ -67,7 +69,9 @@ public class IDType implements Serializable {
 		this.classType = classType;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -77,6 +81,5 @@ public class IDType implements Serializable {
 		else
 			return "";
 	}
-	
-	
+
 }

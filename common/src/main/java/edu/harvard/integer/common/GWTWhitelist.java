@@ -39,12 +39,12 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
+ * Fake class used to force GWT to add classes to the whitelist. The white list
+ * is used to say what classes can be serialized and sent to the client. The
+ * inherited abstract classes do not get added to the whitelist.
+ * 
  * @author David Taylor
  * 
- *         Fake class used to force GWT to add classes to the whitelist. The
- *         white list is used to say what classes can be serialized and sent to
- *         the client. The inherited abstract classes do not get added to the
- *         whitelist.
  */
 public class GWTWhitelist implements Serializable {
 
@@ -57,19 +57,19 @@ public class GWTWhitelist implements Serializable {
 
 	@SuppressWarnings("unused")
 	private ServiceElementManagementObject snmp = null;
-	
+
 	@SuppressWarnings("unused")
 	private String classType = null;
-	
+
 	@SuppressWarnings("unused")
 	private IDType idType = null;
-	
-	private ServiceElement[] serviceElementList; 
-	
+
+	private ServiceElement[] serviceElementList;
+
 	public GWTWhitelist() {
 		super();
 	}
-	
+
 	/**
 	 * @return the baseEntity
 	 */
@@ -93,11 +93,11 @@ public class GWTWhitelist implements Serializable {
 	}
 
 	/**
-	 * @param serviceElementList the serviceElementList to set
+	 * @param serviceElementList
+	 *            the serviceElementList to set
 	 */
 	public void setServiceElementList(ServiceElement[] serviceElementList) {
 		this.serviceElementList = serviceElementList;
 	}
-
 
 }

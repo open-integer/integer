@@ -50,29 +50,30 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * 
+ * An access policy is associated with one or more roles. It is used to identify
+ * which ServiceElement instances are accessible to a user and what operations
+ * on those elements are permitted.
+ * 
+ * <p>Each of the attributes allows narrower and narrower control. The most
+ * restrictive of which would be the identification of specific ServiceElement
+ * instance(s).
+ * 
+ * <p>The way to think about how AccessPolicy instances work in association with
+ * roles is that roles have a deny all basic function until an AccessPolicy is
+ * associated with them.
+ * 
+ * <p>Permit policies grant access according to the rules they contain. In some
+ * cases it is more convenient to grant the policies and create a deny policy
+ * that restricts the permission granted in the first access policy.
+ * 
+ * <p>If an AccessPolicy is a Deny policy then the permitParentId policy will be
+ * filled in. This is to ensure that the deny filter is associated with the
+ * correct permit policy since a role may have many AccessPolicies associated
+ * with it.
+ * 
  * @author David Taylor
  * 
- *         An access policy is associated with one or more roles. It is used to
- *         identify which ServiceElement instances are accessible to a user and
- *         what operations on those elements are permitted.
- * 
- *         Each of the attributes allows narrower and narrower control. The most
- *         restrictive of which would be the identification of specific
- *         ServiceElement instance(s).
- * 
- *         The way to think about how AccessPolicy instances work in association
- *         with roles is that roles have a deny all basic function until an
- *         AccessPolicy is associated with them.
- * 
- *         Permit policies grant access according to the rules they contain. In
- *         some cases it is more convenient to grant the policies and create a
- *         deny policy that restricts the permission granted in the first access
- *         policy.
- * 
- *         If an AccessPolicy is a Deny policy then the permitParentId policy
- *         will be filled in. This is to ensure that the deny filter is
- *         associated with the correct permit policy since a role may have many
- *         AccessPolicies associated with it.
  */
 @Entity
 public class AccessPolicy extends BaseEntity {
@@ -283,8 +284,7 @@ public class AccessPolicy extends BaseEntity {
 	 * @param serviceElementTypes
 	 *            the serviceElementTypes to set
 	 */
-	public void setServiceElementTypes(
-			List<ID> serviceElementTypes) {
+	public void setServiceElementTypes(List<ID> serviceElementTypes) {
 		this.serviceElementTypes = serviceElementTypes;
 	}
 

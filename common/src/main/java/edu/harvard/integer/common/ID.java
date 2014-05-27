@@ -38,11 +38,12 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 
 /**
+ * This class is used to pass the identifier of a data object in the Integer
+ * system. The name and type are included so the GUI can display the object
+ * correctly and allows for a common way to ask for an object.
+ * 
  * @author David Taylor
  * 
- *         This class is used to pass the identifier of a data object in the
- *         Integer system. The name and type are included so the GUI can display
- *         the object correctly and allows for a common way to ask for an object.
  */
 @Embeddable
 public class ID implements IDInterface, Serializable {
@@ -62,7 +63,7 @@ public class ID implements IDInterface, Serializable {
 	public ID() {
 		super();
 	}
-	
+
 	/**
 	 * @param identifier2
 	 * @param name2
@@ -163,26 +164,24 @@ public class ID implements IDInterface, Serializable {
 	public String toString() {
 		if (name != null)
 			return name;
-		
+
 		if (identifier != null)
 			return idType + ":" + identifier;
-		
+
 		return super.toString();
 	}
-	
+
 	public String toDebugString() {
 		StringBuffer b = new StringBuffer();
-		
+
 		if (getName() != null) {
 			b.append(getName());
 		}
-	
+
 		b.append('(').append(getIdType()).append(':');
 		b.append(getIdentifier()).append(')');
-		
+
 		return b.toString();
 	}
-	
-	
-	
+
 }

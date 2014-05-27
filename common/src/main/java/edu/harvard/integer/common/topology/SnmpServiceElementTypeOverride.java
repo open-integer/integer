@@ -38,11 +38,13 @@ import javax.persistence.Entity;
 import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * 
+ * Some systems have difficulty processing snmp messages or snmp messages over a
+ * certain rate. In those cases, this object allows the system to tailor its
+ * behavior to service element types.
+ * 
  * @author David Taylor
  * 
- *         Some systems have difficulty processing snmp messages or snmp
- *         messages over a certain rate. In those cases, this object allows the
- *         system to tailor its behavior to service element types.
  */
 @Entity
 public class SnmpServiceElementTypeOverride extends BaseEntity {

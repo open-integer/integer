@@ -46,11 +46,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *      
  */
 /**
+ * Base class for all data objects in the Integer system. This class defines the
+ * database identifier, name and type used by all the data objects in the
+ * Integer system.
+ * 
  * @author David Taylor
  * 
- *         Base class for all data objects in the Integer system. This class
- *         defines the database identifier, name and type used by all the data
- *         objects in the Integer system.
  */
 @MappedSuperclass
 public abstract class BaseEntity implements IDInterface, Serializable {
@@ -70,7 +71,7 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 	private String name = null;
 
 	public BaseEntity() {
-		this.idType = new IDType( getClass().getName() );	
+		this.idType = new IDType(getClass().getName());
 	}
 
 	/**
@@ -110,12 +111,11 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 		return idType;
 	}
 
-
 	@JsonIgnore
 	public ID getID() {
 		return new ID(identifier, name, idType);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -156,7 +156,9 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

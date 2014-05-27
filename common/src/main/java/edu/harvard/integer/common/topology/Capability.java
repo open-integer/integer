@@ -48,7 +48,7 @@ import javax.persistence.OrderColumn;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
-/*
+/**
  * A capability represents the lowest layer of abstraction in the system before it becomes device and protocol 
  * specific. For example, a firewall would have the ability to permit or deny access based on source subnet,
  *  port, and potentially other factors. This would be the canonical form for the system. In our case, the 
@@ -56,13 +56,14 @@ import edu.harvard.integer.common.ID;
  *  For this reason, there may be several parameters that comprise a single capability to use our firewall
  *   example. For this reason, there is a list of the parameters with a name and description
  *
- * Another way of saying this is that a capability is also the lowest layer of abstraction that does a unit 
+ * <p>Another way of saying this is that a capability is also the lowest layer of abstraction that does a unit 
  * of work. In the above example port number would be one of the parameters in a CLI command to a router, but 
  * if you were to just type a port number on the command line, it would not make any sense (ignoring for 
  * the moment where you are in a mode where sometimes a single attribute is entered in a series of commands). 
  *
- * Note that the instance of the Capabilities object must come from a Capabilities template when they 
+ * <p>Note that the instance of the Capabilities object must come from a Capabilities template when they 
  * are initially created.
+ * 
  */
 @Entity
 public class Capability extends BaseEntity {

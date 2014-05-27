@@ -39,9 +39,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
+ * Hold an Integer value of a management object
+ * 
  * @author David Taylor
  * 
- *         Hold an Integer value of a management object
  */
 @Entity
 public class ManagementObjectIntegerValue extends
@@ -52,7 +53,7 @@ public class ManagementObjectIntegerValue extends
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="integerValue")
+	@Column(name = "integerValue")
 	private Integer value = null;
 
 	/**

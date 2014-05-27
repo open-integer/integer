@@ -45,6 +45,12 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * A business service is the highest level of abstraction in this hierarchy and
+ * is the think that is most visible to customers. Examples include Payroll,
+ * Personnel, Learning Managagement, and student information. These services
+ * will be comprised of potentially many technologies required to realize the
+ * service.
+ * 
  * @author David Taylor
  * 
  */
@@ -71,21 +77,22 @@ public class Service extends BaseEntity {
 	 * Services on whose functionin this service depends. This is a list of the
 	 * ids of those services.
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
-	@OrderColumn(name="idx")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<ID> dependsOn = null;
 
 	/**
 	 * A brief tesctual description of the service instance. The system will use
-	 * 'template' objects from which additional service instances may be created.
+	 * 'template' objects from which additional service instances may be
+	 * created.
 	 */
 	private String description = null;
 
 	/**
 	 * Technology's that make up this business service
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
-	@OrderColumn(name="idx")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<ID> technologies = null;
 
 	/**

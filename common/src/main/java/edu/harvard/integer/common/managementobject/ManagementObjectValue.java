@@ -43,9 +43,10 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * Hold the value for a given management object.
+ * 
  * @author David Taylor
  * 
- *         Hold the value for a given management object.
  */
 @Entity
 public abstract class ManagementObjectValue<T> extends BaseEntity {

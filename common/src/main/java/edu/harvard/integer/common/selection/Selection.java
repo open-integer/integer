@@ -47,13 +47,13 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * Three selectors are combined to create a selection in the Integer
+ * environment. Together, these items form a Selection. The major elements of a
+ * selection are:
+ * 
+ * A Filter A View A Layer
+ * 
  * @author David Taylor
- * 
- *         Three selectors are combined to create a selection in the Integer
- *         environment. Together, these items form a Selection. The major
- *         elements of a selection are:
- * 
- *         A Filter A View A Layer
  */
 @Entity
 public class Selection extends BaseEntity {

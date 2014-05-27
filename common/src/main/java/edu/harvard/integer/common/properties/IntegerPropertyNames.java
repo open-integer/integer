@@ -33,16 +33,16 @@
 
 package edu.harvard.integer.common.properties;
 
-
 /**
+ * This holds the keys for the Integer properties used. The values must have a
+ * default, min and max value. The units are also specified.
+ * 
  * @author David Taylor
  * 
- *         This holds the keys for the Integer properties used. The values must
- *         have a default, min and max value. The units are also specified. 
  */
 public enum IntegerPropertyNames {
-	ServerId("ServerID", 1, 1, 1000, UnitsEnum.NA),
-	SystemPropertyCheckInterval("SystemPropertyCheckInterval", 30, 1, 10000, UnitsEnum.Minute);
+	ServerId("ServerID", 1, 1, 1000, UnitsEnum.NA), SystemPropertyCheckInterval(
+			"SystemPropertyCheckInterval", 30, 1, 10000, UnitsEnum.Minute);
 
 	private String fieldName = null;
 	private Integer defaultValue = null;

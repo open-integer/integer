@@ -38,11 +38,12 @@ import java.util.Locale;
 import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
- * @author David Taylor
- *
+ * 
  * This is a wrapper around a String that can not be converted to a users locale. This should only be used 
  * for things like exception messages that are not handled. So the message must be passed as is.
  * 
+ * @author David Taylor
+ *
  */
 public class NonLocaleErrorMessage implements DisplayableInterface {
 

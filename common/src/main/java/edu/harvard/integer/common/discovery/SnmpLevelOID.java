@@ -43,16 +43,18 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.snmp.SNMP;
 
 /**
+ * 
+ * These objects are used to identify the OIDs starting at the top level of a
+ * physical or virtual entity when the Entity MIB or other standard containment
+ * model is not used.
+ * 
+ *<p> There will always be one (potentially) many
+ * SnmpServiceElementTypeDiscrininator instances associated with an instance of
+ * this object. The Discriminator instances take the value returned from the
+ * contextOid to determine the service element type.
+ * 
  * @author David Taylor
  * 
- *         These objects are used to identify the OIDs starting at the top level
- *         of a physical or virtual entity when the Entity MIB or other standard
- *         containment model is not used.
- * 
- *         There will always be one (potentially) many
- *         SnmpServiceElementTypeDiscrininator instances associated with an
- *         instance of this object. The Discriminator instances take the value
- *         returned from the contextOid to determine the service element type.
  */
 @Entity
 public class SnmpLevelOID extends BaseEntity {
@@ -92,14 +94,12 @@ public class SnmpLevelOID extends BaseEntity {
 	@OneToMany
 	private List<SnmpLevelOID> children = null;
 
-
 	/**
 	 * List of SnmpServiceElementTypeDiscriptors for this SnmpLevel
 	 */
 	@OneToMany
 	private List<SnmpServiceElementTypeDiscriminator> disriminators = null;
-	
-	
+
 	/**
 	 * @return the contextOID
 	 */

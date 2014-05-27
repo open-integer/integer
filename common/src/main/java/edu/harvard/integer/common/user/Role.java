@@ -47,15 +47,17 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * 
+ * 
+ * A role is associated with every individual known to the system. In some cases
+ * an individual may have many roles, however, they are only permitted to
+ * operate in the system as one role at a time.
+ * 
+ * <p>Note that role is distinct from one or more access policies that a user may
+ * be associated with. The reason is that role can influence how the system
+ * interacts with users (e.g., menus, messages, prompts).
+ * 
  * @author David Taylor
- * 
- *         A role is associated with every individual known to the system. In
- *         some cases an individual may have many roles, however, they are only
- *         permitted to operate in the system as one role at a time.
- * 
- *         Note that role is distinct from one or more access policies that a
- *         user may be associated with. The reason is that role can influence
- *         how the system interacts with users (e.g., menus, messages, prompts).
  */
 @Entity
 public class Role extends BaseEntity {

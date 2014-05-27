@@ -47,11 +47,11 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * Every system user will have a User instance. Additionally, locations and many
+ * other objects in the system may also have users associated with them.
+ * 
  * @author David Taylor
  * 
- *         Every system user will have a User instance. Additionally, locations
- *         and many other objects in the system may also have users associated
- *         with them.
  */
 @Entity
 public class User extends BaseEntity {
@@ -61,7 +61,7 @@ public class User extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	private String password = null;
-	
+
 	/**
 	 * The contact ID
 	 */
@@ -277,7 +277,8 @@ public class User extends BaseEntity {
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;

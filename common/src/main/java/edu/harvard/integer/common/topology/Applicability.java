@@ -45,18 +45,18 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * 
+ * There will be an instance of the applicability object for each unique
+ * combination of vendor, model, software, firmware revision, feature set,
+ * hardware configuration list that uniquely describe a valid management object.
+ * This means that a ServiceElementManagementObject instance may potentially be
+ * associated with many Applicability objects.
+ * 
+ * <p>Not that it is assumed that management objects do not apply across management
+ * access methods since the data formats, encapsulation, etc. are all different.
+ * 
  * @author David Taylor
  * 
- *         There will be an instance of the applicability object for each unique
- *         combination of vendor, model, software, firmware revision, feature
- *         set, hardware configuration list that uniquely describe a valid
- *         management object. This means that a ServiceElementManagementObject
- *         instance may potentially be associated with many Applicability
- *         objects.
- * 
- *         Not that it is assumed that management objects do not apply across
- *         management access methods since the data formats, encapsulation, etc.
- *         are all different.
  */
 @Entity
 public class Applicability extends BaseEntity {
@@ -136,7 +136,8 @@ public class Applicability extends BaseEntity {
 	}
 
 	/**
-	 * @param managementObjects the managementObjects to set
+	 * @param managementObjects
+	 *            the managementObjects to set
 	 */
 	public void setManagementObjects(List<ID> managementObjects) {
 		this.managementObjects = managementObjects;

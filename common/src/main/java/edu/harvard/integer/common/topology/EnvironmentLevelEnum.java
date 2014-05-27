@@ -34,12 +34,14 @@
 package edu.harvard.integer.common.topology;
 
 /**
+ * 
+ * The environmentLevel attribute indicates whether a system is in production,
+ * test, etc. It is an enumerated integer where 1 is the production level and
+ * there can be a number of configured levels such as test as level 2,
+ * development as level 3 etc.
+ * 
  * @author David Taylor
  * 
- *         The environmentLevel attribute indicates whether a system is in
- *         production, test, etc. It is an enumerated integer where 1 is the
- *         production level and there can be a number of configured levels such
- *         as test as level 2, development as level 3 etc.
  */
 public enum EnvironmentLevelEnum {
 	Production, Test, Development;

@@ -34,10 +34,10 @@
 package edu.harvard.integer.common.topology;
 
 /**
+ * Is this a field replaceable unit? Values are yes, no, unknown
+ * 
  * @author David Taylor
- * 
- *         Is this a field replaceable unit? Values are yes, no, unknown
- * 
+ *
  */
 public enum FieldReplaceableUnitEnum {
 	Yes, No, Unknown;

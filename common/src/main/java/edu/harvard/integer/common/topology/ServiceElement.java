@@ -57,7 +57,7 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 
-/*
+/**
  * A service element can be any function from an os manager in a vm environment to a high-level 
  * web service.  The idea is that services are defined independently of the physical systems on 
  * which they run.  For the system to work there must be a connection between the service and 

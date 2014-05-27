@@ -36,9 +36,11 @@ package edu.harvard.integer.common.user;
 import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * Location information usually associated with a user or organization.
+ * 
  * @author David Taylor
  * 
- *         Location information usually associated with a user or organization.
+ * 
  */
 public class Location extends BaseEntity {
 

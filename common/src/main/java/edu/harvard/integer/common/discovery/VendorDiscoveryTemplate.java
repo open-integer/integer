@@ -45,34 +45,32 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
+ * This template is used for a specific vendor in order to determine what the
+ * model, firmware and software revision are of an instance of something from
+ * that vendor. There are two ways to collect this information. If model,
+ * firmware and software revision OIDs have been populated in an instance of
+ * this class, then the discovery system retrieves that information. If the
+ * firmware, software and model information are not populated in an instance of
+ * this class, then the parseStringOid must be present. The discovery system
+ * will use that information to retrieve an SNMP Object with structured
+ * information. It will use the parseSting attribute that has been configured to
+ * parse out the available model, firmware and software information. Then it can
+ * query the database for the correct SnmpVendorContainmentSelector object
+ * instance. In the rare case where one of the three pieces of information is in
+ * an OID, then that OID (e..g, firmware) would be populated, the other two
+ * would be blank and if there was an object with a parseString that could get
+ * the other two, then the parseStringOID would be populated with the OID of the
+ * object to get and the parseString used to get the other two attributes.
+ * 
+ * <p>What is in the parseString is the information needed to figure out how to
+ * parse the string.
+ * 
  * @author David Taylor
  * 
- * 
- *         This template is used for a specific vendor in order to determine
- *         what the model, firmware and software revision are of an instance of
- *         something from that vendor. There are two ways to collect this
- *         information. If model, firmware and software revision OIDs have been
- *         populated in an instance of this class, then the discovery system
- *         retrieves that information. If the firmware, software and model
- *         information are not populated in an instance of this class, then the
- *         parseStringOid must be present. The discovery system will use that
- *         information to retrieve an SNMP Object with structured information.
- *         It will use the parseSting attribute that has been configured to
- *         parse out the available model, firmware and software information.
- *         Then it can query the database for the correct
- *         SnmpVendorContainmentSelector object instance. In the rare case where
- *         one of the three pieces of information is in an OID, then that OID
- *         (e..g, firmware) would be populated, the other two would be blank and
- *         if there was an object with a parseString that could get the other
- *         two, then the parseStringOID would be populated with the OID of the
- *         object to get and the parseString used to get the other two
- *         attributes.
- * 
- *         What is in the parseString is the information needed to figure out
- *         how to parse the string.
  */
 @MappedSuperclass
-public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagementObject> extends BaseEntity {
+public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagementObject>
+		extends BaseEntity {
 
 	/**
 	 * Serialization UID
@@ -112,8 +110,6 @@ public abstract class VendorDiscoveryTemplate<T extends ServiceElementManagement
 		this.description = description;
 	}
 
-	
-	
 	/**
 	 * @return the parseString
 	 */

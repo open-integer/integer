@@ -34,9 +34,10 @@
 package edu.harvard.integer.common.properties;
 
 /**
+ * Units for integer and long values.
+ * 
  * @author David Taylor
  * 
- *         Units for integer and long values.
  */
 public enum UnitsEnum {
 	Second, Minute, Hour, Day, NA;

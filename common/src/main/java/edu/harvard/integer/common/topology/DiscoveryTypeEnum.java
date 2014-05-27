@@ -34,12 +34,13 @@
 package edu.harvard.integer.common.topology;
 
 /**
+ * 
+ * Discovery type is the type(s) of discovery to perform. For example service
+ * element only, topology only or both. Topology will always include topology
+ * modifiers such as a load balancer, o/r NAT or global site selector.
+ * 
  * @author David Taylor
  * 
- *         Discovery type is the type(s) of discovery to perform. For example
- *         service element only, topology only or both. Topology will always
- *         include topology modifiers such as a load balancer, o/r NAT or global
- *         site selector.
  */
 public enum DiscoveryTypeEnum {
 	ServiceElement, Topology, Both;

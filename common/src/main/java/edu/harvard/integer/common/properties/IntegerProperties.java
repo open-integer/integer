@@ -44,10 +44,11 @@ import org.slf4j.LoggerFactory;
 import edu.harvard.integer.common.exception.IntegerException;
 
 /**
+ * Utility to load Integer properties. The properties are specified in the
+ * XXXXPropertyNames enum. Ex IntegerPropertyNames.
+ * 
  * @author David Taylor
  * 
- *         Utility to load Integer properties. The properties are specified in
- *         the XXXXPropertyNames enum. Ex IntegerPropertyNames.
  * 
  */
 public class IntegerProperties {
@@ -105,14 +106,14 @@ public class IntegerProperties {
 				logger.error("Unable to load properties from "
 						+ PROPERTIES_FILENAME);
 				return;
-				
+
 			}
 			settings.load(resourceAsStream);
 
 			logger.info("Loaded properties " + settings.toString());
-			
+
 			resourceAsStream.close();
-			
+
 			lastLoaded = System.currentTimeMillis();
 
 			checkInterval = getIntProperty(IntegerPropertyNames.SystemPropertyCheckInterval);

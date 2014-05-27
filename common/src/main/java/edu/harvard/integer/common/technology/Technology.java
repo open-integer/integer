@@ -44,16 +44,16 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * This class which can contain parents and children is used to organize details
+ * of a particular technology. For example in the routing technology area, BGP
+ * might be a mail element followed by information about neighbors, and then
+ * more detailed information about them. Users can define as many
+ * levels/refinements as they find useful. Some technologies will have very
+ * short hierarchies. For example specific technologies for redundancy of one
+ * type or another (e.g., RAID or VRRP).
+ * 
  * @author David Taylor
  * 
- *         This class which can contain parents and children is used to organize
- *         details of a particular technology. For example in the routing
- *         technology area, BGP might be a mail element followed by information
- *         about neighbors, and then more detailed information about them. Users
- *         can define as many levels/refinements as they find useful. Some
- *         technologies will have very short hierarchies. For example specific
- *         technologies for redundancy of one type or another (e.g., RAID or
- *         VRRP).
  */
 @Entity
 public class Technology extends BaseEntity {
@@ -71,8 +71,8 @@ public class Technology extends BaseEntity {
 	/**
 	 * Child technologies
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
-	@OrderColumn(name="idx")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<ID> technologies = null;
 
 	/**
@@ -80,8 +80,8 @@ public class Technology extends BaseEntity {
 	 * for the lowest technology. So the technologies list must be empty to have
 	 * mechanisms
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
-	@OrderColumn(name="idx")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<ID> mechanisims = null;
 
 	/**

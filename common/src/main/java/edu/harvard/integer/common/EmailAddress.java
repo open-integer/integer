@@ -40,10 +40,10 @@ import javax.persistence.Embeddable;
 
 /**
  * 
- * @author David Taylor
+ * Holds an email address. This will allow for formating of email address and
+ * validation of email addresses.
  * 
- *         Holds an email address. This will allow for formating of email
- *         address and validation of email addresses.
+ * @author David Taylor
  * 
  */
 @Embeddable
