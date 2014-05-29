@@ -61,33 +61,34 @@ import edu.harvard.integer.common.selection.Selection;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 @RunWith(Arquillian.class)
 public class SelectionManagerTest {
 
 	@Inject
 	private SelectionManagerInterface selectionManager;
-	
+
 	private Logger logger = LoggerFactory.getLogger(SelectionManagerTest.class);
-	
+
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return TestUtil.createTestArchive("ServiceElementDiscoveryManagerTest.war");
+		return TestUtil
+				.createTestArchive("ServiceElementDiscoveryManagerTest.war");
 	}
-	
+
 	@Before
 	public void setUpLogger() {
 		org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
 	}
-	
+
 	@Test
 	public void updateSelection() {
-		
+
 		try {
 			selectionManager.updateSelection(createNewSelection());
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
 			fail(e.toString());
 		}
@@ -96,134 +97,150 @@ public class SelectionManagerTest {
 	@Test
 	public void getAllSelections() {
 		updateSelection();
-		
-		
+
 		try {
 			Selection[] selections = selectionManager.getAllSeletions();
-			
-			assert(selections != null);
-			
-			assert(selections.length > 0);
-			
+
+			assert (selections != null);
+
+			assert (selections.length > 0);
+
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
 			fail(e.toString());
 		}
 	}
-	
-	
+
 	private Selection createNewSelection() {
 		Selection selection = null;
-		
+
 		selection = new Selection();
 		selection.setCreated(new Date());
 		selection.setDescription("My Description");
 		selection.setLastModifyed(new Date());
-		
+
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
 		filter.setServices(TestUtil.createIdList(5, ID.class, "Service"));
-		
+
 		filter.setTechnologies(getTechnologyTree());
-		
+
+		List<Filter> filters = new ArrayList<Filter>();
+		filters.add(filter);
+		selection.setFilters(filters);
+
+		logger.info("Create Selection " + selection.getFilters().size()
+				+ " TopLevel Technology's");
+		for (FilterNode filterNode : selection.getFilters().get(0)
+				.getTechnologies()) {
+			showFilterNode("TopLevel", filterNode);
+		}
+
 		return selection;
 	}
-	
+
 	private List<FilterNode> getTechnologyTree() {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
-		
+
 		FilterNode root = new FilterNode();
-		
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType("Technology")));
+
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
+				"Technology")));
 		root.setChildren(getRoutersLevel1());
-	
+
 		nodes.add(root);
-		
+
 		root = new FilterNode();
-		
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType("Technology")));
+
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
+				"Technology")));
 		root.setChildren(getServersLevel1());
 		nodes.add(root);
-		
+
 		return nodes;
 	}
-	
+
 	private List<FilterNode> getRoutersLevel1() {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
-		
+
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType("Technology")));
+		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(
+				"Technology")));
 		nodes.add(root);
-		
+
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType("Technology")));
+		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(
+				"Technology")));
 		nodes.add(root);
-		
+
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType("Technology")));
+		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(
+				"Technology")));
 		nodes.add(root);
-		
+
 		return nodes;
 	}
-	
+
 	private List<FilterNode> getServersLevel1() {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
-		
+
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType("Technology")));
+		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(
+				"Technology")));
 		nodes.add(root);
-		
+
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType("Technology")));
+		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(
+				"Technology")));
 		nodes.add(root);
-		
+
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Server3", new IDType("Technology")));
+		root.setItemId(new ID(Long.valueOf(3), "Server3", new IDType(
+				"Technology")));
 		nodes.add(root);
-		
+
 		return nodes;
 	}
-	
+
 	@Test
 	public void getBlankSelection() {
-		
+
 		updateSelection();
-		
+
 		try {
-			
+
 			Selection blankSelection = selectionManager.getBlankSelection();
 
-			logger.info("Found " + blankSelection.getFilters().size() + " TopLevel Technology's");
-			for (FilterNode filterNode : blankSelection.getFilters().get(0).getTechnologies()) {
-				showFilterNode("TopLevel", filterNode);
-			}
-			
 			assert (blankSelection != null);
 			assert (blankSelection.getFilters() != null);
 			assert (blankSelection.getFilters().size() > 0);
-			
+
 			Filter filter = blankSelection.getFilters().get(0);
 			List<FilterNode> technologies = filter.getTechnologies();
 			assert (technologies != null);
 			//assert (technologies.size() > 0);
-			
-			logger.info("Found " + technologies.size() + " TopLevel Technology's");
+
+			logger.info("Found " + technologies.size()
+					+ " TopLevel Technology's");
 			for (FilterNode filterNode : technologies) {
 				showFilterNode("TopLevel", filterNode);
 			}
-			
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
 	}
-	
-	private void showFilterNode(String name, FilterNode node)  {
-		logger.info(name + " Node " + node.getName() + " ID " + node.getItemId().toDebugString());
-		
-		for (FilterNode filterNode : node.getChildren()) {
-			showFilterNode(name + "::" + node.getName(), filterNode);
+
+	private void showFilterNode(String name, FilterNode node) {
+		logger.info(name + " Node " + node.getName() + " ID "
+				+ node.getItemId().toDebugString());
+
+		if (node.getChildren() != null) {
+			for (FilterNode filterNode : node.getChildren()) {
+				showFilterNode(name + "::" + node.getName(), filterNode);
+			}
 		}
 	}
 }

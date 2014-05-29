@@ -43,12 +43,13 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 public class SelectionDAO extends BaseDAO {
 
@@ -61,27 +62,29 @@ public class SelectionDAO extends BaseDAO {
 		super(entityManger, logger, Selection.class);
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
+	 * .integer.common.BaseEntity)
 	 */
 	@Override
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
-		
+
 		Selection selection = (Selection) entity;
-		
+
 		if (selection.getFilters() != null) {
 			FilterDAO filterDAO = new FilterDAO(getEntityManager(), getLogger());
 			List<Filter> dbFilters = new ArrayList<Filter>();
 			for (Filter filter : selection.getFilters()) {
 				dbFilters.add(filterDAO.update(filter));
 			}
-			
+
 			selection.setFilters(dbFilters);
 		}
-		
+
 		super.preSave(entity);
 	}
-
-	
 }

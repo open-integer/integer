@@ -44,6 +44,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinTable;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -126,6 +127,7 @@ public class Filter extends BaseEntity {
 	 * List of technologies included in this filter.
 	 */
 	@ElementCollection
+	@JoinTable(name="FilterTechnologies")
 	@OrderColumn(name = "idx")
 	private List<FilterNode> technologies = null;
 
@@ -156,6 +158,7 @@ public class Filter extends BaseEntity {
 	 * organization
 	 */
 	@ElementCollection
+	@JoinTable(name="FilterOrginizations")
 	@OrderColumn(name = "idx")
 	private List<FilterNode> orginizations = null;
 
@@ -165,6 +168,7 @@ public class Filter extends BaseEntity {
 	 * do want included, for example CDP, or OSPF.
 	 */
 	@ElementCollection
+	@JoinTable(name="FilterLinkTechnologies")
 	@OrderColumn(name = "idx")
 	private List<FilterNode> linkTechnologies = null;
 

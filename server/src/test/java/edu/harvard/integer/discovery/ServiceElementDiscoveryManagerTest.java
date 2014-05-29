@@ -172,7 +172,10 @@ public class ServiceElementDiscoveryManagerTest {
 			logger.info("Manager is " + snmpManager);
 			assert(snmpManager != null);
 			
-			template.setModel(snmpManager.getSNMPByOid(CommonSnmpOids.sysObjectID));
+			template.setModel(snmpManager.getSNMPByOid(CommonSnmpOids.sysDescr));
+			template.setFirmware(snmpManager.getSNMPByOid(CommonSnmpOids.sysDescr));
+			template.setSoftwareRevision(snmpManager.getSNMPByOid(CommonSnmpOids.sysDescr));
+			
 		} catch (IntegerException e) {
 			
 			e.printStackTrace();

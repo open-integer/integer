@@ -33,6 +33,9 @@
 
 package edu.harvard.integer.service.persistance.dao.selection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
@@ -40,11 +43,12 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 public class FilterDAO extends BaseDAO {
 
@@ -55,24 +59,46 @@ public class FilterDAO extends BaseDAO {
 	 */
 	public FilterDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, Filter.class);
-	
+
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
+	 * .integer.common.BaseEntity)
 	 */
 	@Override
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
-		
+
 		Filter filter = (Filter) entity;
-		
-		if (filter.getTechnologies() != null) {
-			
-		}
-		
+
+		filter.setTechnologies(updateFilterNodes(filter.getTechnologies()));
+		filter.setOrginizations(updateFilterNodes(filter.getOrginizations()));
+		filter.setLinkTechnologies(updateFilterNodes(filter
+				.getLinkTechnologies()));
+
 		super.preSave(entity);
 	}
 
-	
+	private List<FilterNode> updateFilterNodes(List<FilterNode> nodes)
+			throws IntegerException {
+		if (nodes == null) {
+			return null;
+		}
+
+		FilterNodeDAO dao = new FilterNodeDAO(getEntityManager(), getLogger());
+
+		List<FilterNode> dbNodes = new ArrayList<FilterNode>();
+
+		for (FilterNode node : nodes) {
+			dbNodes.add(dao.update(node));
+		}
+
+		return dbNodes;
+
+	}
+
 }
