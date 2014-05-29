@@ -33,11 +33,21 @@
 
 package edu.harvard.integer.service.persistance.dao.technology;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.technology.Technology;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -56,4 +66,51 @@ public class TechnologyDAO extends BaseDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	 */
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+		
+		Technology technology = (Technology) entity;
+		
+		if (technology.getParentId() != null) {
+			ServiceElement parent = findById(technology.getParentId());
+			if (parent != null)
+				parent.setHasChildren(true);
+			update(parent);
+		}
+
+		super.preSave(entity);
+	}
+
+	/**
+	 * 
+	 */
+	public Technology[] findTopLevel() {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<Technology> query = criteriaBuilder
+				.createQuery(Technology.class);
+
+		Root<Technology> from = query.from(Technology.class);
+		query.select(from);
+
+		query.select(from).where(criteriaBuilder.isNull(from.get("parentId")));
+
+		TypedQuery<Technology> typeQuery = getEntityManager().createQuery(
+				query);
+
+		List<Technology> resultList = typeQuery.getResultList();
+
+		return (Technology[]) resultList
+				.toArray(new Technology[resultList.size()]);
+
+	}
+
+	public Technology[] findByParentId(ID parentId) throws IntegerException {
+		return findByIDField(parentId, "parentId", Technology.class);
+	}
 }

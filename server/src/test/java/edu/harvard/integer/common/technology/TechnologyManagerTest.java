@@ -107,7 +107,7 @@ public class TechnologyManagerTest {
 		
 		technology.setDescription("Descrption of technolgoy");
 		technology.setName("Technology");
-		technology.setTechnologies(TestUtil.createIdList(5, ID.class, "Technology"));
+	
 		technology.setMechanisims(TestUtil.createIdList(5, ID.class, "Mechanism"));
 		
 		try {

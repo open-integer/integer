@@ -127,7 +127,7 @@ public class Filter extends BaseEntity {
 	 */
 	@ElementCollection
 	@OrderColumn(name = "idx")
-	private List<ID> technologies = null;
+	private List<FilterNode> technologies = null;
 
 	/**
 	 * Providers selects for the filter.
@@ -157,7 +157,7 @@ public class Filter extends BaseEntity {
 	 */
 	@ElementCollection
 	@OrderColumn(name = "idx")
-	private List<ID> orginizations = null;
+	private List<FilterNode> orginizations = null;
 
 	/**
 	 * If this is null, the user does not want to include technology links in
@@ -166,7 +166,7 @@ public class Filter extends BaseEntity {
 	 */
 	@ElementCollection
 	@OrderColumn(name = "idx")
-	private List<ID> linkTechnologies = null;
+	private List<FilterNode> linkTechnologies = null;
 
 	/**
 	 * @return the description
@@ -246,7 +246,7 @@ public class Filter extends BaseEntity {
 	/**
 	 * @return the technologies
 	 */
-	public List<ID> getTechnologies() {
+	public List<FilterNode> getTechnologies() {
 		return technologies;
 	}
 
@@ -254,7 +254,7 @@ public class Filter extends BaseEntity {
 	 * @param technologies
 	 *            the technologies to set
 	 */
-	public void setTechnologies(List<ID> technologies) {
+	public void setTechnologies(List<FilterNode> technologies) {
 		this.technologies = technologies;
 	}
 
@@ -321,7 +321,7 @@ public class Filter extends BaseEntity {
 	/**
 	 * @return the orginizations
 	 */
-	public List<ID> getOrginizations() {
+	public List<FilterNode> getOrginizations() {
 		return orginizations;
 	}
 
@@ -329,14 +329,14 @@ public class Filter extends BaseEntity {
 	 * @param orginizations
 	 *            the orginizations to set
 	 */
-	public void setOrginizations(List<ID> orginizations) {
+	public void setOrginizations(List<FilterNode> orginizations) {
 		this.orginizations = orginizations;
 	}
 
 	/**
 	 * @return the linkTechnologies
 	 */
-	public List<ID> getLinkTechnologies() {
+	public List<FilterNode> getLinkTechnologies() {
 		return linkTechnologies;
 	}
 
@@ -344,7 +344,7 @@ public class Filter extends BaseEntity {
 	 * @param linkTechnologies
 	 *            the linkTechnologies to set
 	 */
-	public void setLinkTechnologies(List<ID> linkTechnologies) {
+	public void setLinkTechnologies(List<FilterNode> linkTechnologies) {
 		this.linkTechnologies = linkTechnologies;
 	}
 

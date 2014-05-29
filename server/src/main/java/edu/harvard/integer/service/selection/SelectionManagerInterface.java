@@ -106,4 +106,13 @@ public interface SelectionManagerInterface extends BaseManagerInterface {
 	 */
 	Layer getLayerById(ID layerId) throws IntegerException;
 
+	/**
+	 * Create a selection with the Technology, Orginization and Link Technologies filled in
+	 * with the complete tree.
+	 * 
+	 * @return A "Blank" Selection.
+	 * @throws IntegerException
+	 */
+	Selection getBlankSelection() throws IntegerException;
+
 }

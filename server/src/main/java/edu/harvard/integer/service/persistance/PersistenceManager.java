@@ -52,6 +52,7 @@ import edu.harvard.integer.service.persistance.dao.managementobject.ManagementOb
 import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
+import edu.harvard.integer.service.persistance.dao.selection.FilterNodeDAO;
 import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.selection.ViewDAO;
@@ -382,5 +383,10 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public TechnologyDAO getTechnologyDAO() {
 		return new TechnologyDAO(em, logger);
+	}
+	
+	@Override
+	public FilterNodeDAO getFilterNodeDAO() {
+		return new FilterNodeDAO(em, logger);
 	}
 }

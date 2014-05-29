@@ -35,7 +35,11 @@ package edu.harvard.integer.common.technology;
 
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OrderColumn;
@@ -68,13 +72,16 @@ public class Technology extends BaseEntity {
 	 */
 	private String description = null;
 
-	/**
-	 * Child technologies
-	 */
-	@ElementCollection(fetch = FetchType.EAGER)
-	@OrderColumn(name = "idx")
-	private List<ID> technologies = null;
 
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "parentId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "parentType")),
+			@AttributeOverride(name = "name", column = @Column(name = "parentName")) })
+	private ID parentId = null;
+	
+	private Boolean hasChildren = null;
+	
 	/**
 	 * Mechanisms for this technology. The technology can only have mechanisms
 	 * for the lowest technology. So the technologies list must be empty to have
@@ -99,19 +106,33 @@ public class Technology extends BaseEntity {
 		this.description = description;
 	}
 
+
 	/**
-	 * @return the technologies
+	 * @return the parentId
 	 */
-	public List<ID> getTechnologies() {
-		return technologies;
+	public ID getParentId() {
+		return parentId;
 	}
 
 	/**
-	 * @param technologies
-	 *            the technologies to set
+	 * @param parentId the parentId to set
 	 */
-	public void setTechnologies(List<ID> technologies) {
-		this.technologies = technologies;
+	public void setParentId(ID parentId) {
+		this.parentId = parentId;
+	}
+
+	/**
+	 * @return the hasChildren
+	 */
+	public Boolean getHasChildren() {
+		return hasChildren;
+	}
+
+	/**
+	 * @param hasChildren the hasChildren to set
+	 */
+	public void setHasChildren(Boolean hasChildren) {
+		this.hasChildren = hasChildren;
 	}
 
 	/**

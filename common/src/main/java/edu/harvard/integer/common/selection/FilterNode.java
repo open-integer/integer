@@ -31,57 +31,97 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.selection;
+package edu.harvard.integer.common.selection;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.selection.Filter;
-import edu.harvard.integer.common.selection.Selection;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.common.ID;
 
 /**
+ * Hold the selected items for a Device, Technology, Provider, Criticality, Location,
+ * Service, Organization or Link
+ * 
+ * <p>If an item is selected then all the child elements will also be returned. Ex.
+ *<ul>
+ * <li>Device:
+ * <li>Server
+ * <li>Load balancer
+ * <li>Router
+ *</ul>
  * @author David Taylor
- *
+ * 
  */
-public class SelectionDAO extends BaseDAO {
+@Entity
+public class FilterNode extends BaseEntity {
 
 	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
+	 * Serial version UID
 	 */
-	public SelectionDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, Selection.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
-	 */
-	@Override
-	public <T extends BaseEntity> void preSave(T entity)
-			throws IntegerException {
-		
-		Selection selection = (Selection) entity;
-		
-		if (selection.getFilters() != null) {
-			FilterDAO filterDAO = new FilterDAO(getEntityManager(), getLogger());
-			List<Filter> dbFilters = new ArrayList<Filter>();
-			for (Filter filter : selection.getFilters()) {
-				dbFilters.add(filterDAO.update(filter));
-			}
-			
-			selection.setFilters(dbFilters);
-		}
-		
-		super.preSave(entity);
-	}
-
+	private static final long serialVersionUID = 1L;
 	
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "itemId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "itemType")),
+			@AttributeOverride(name = "name", column = @Column(name = "itemName")) })
+	private ID itemId = null;
+
+	private Boolean selected = null;
+
+	@OneToMany
+	private List<FilterNode> children = null;
+
+	/**
+	 * @return the itemId
+	 */
+	public ID getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId
+	 *            the itemId to set
+	 */
+	public void setItemId(ID itemId) {
+		this.itemId = itemId;
+	}
+
+	/**
+	 * @return the selected
+	 */
+	public Boolean getSelected() {
+		return selected;
+	}
+
+	/**
+	 * @param selected
+	 *            the selected to set
+	 */
+	public void setSelected(Boolean selected) {
+		this.selected = selected;
+	}
+
+	/**
+	 * @return the children
+	 */
+	public List<FilterNode> getChildren() {
+		return children;
+	}
+
+	/**
+	 * @param children
+	 *            the children to set
+	 */
+	public void setChildren(List<FilterNode> children) {
+		this.children = children;
+	}
+
 }

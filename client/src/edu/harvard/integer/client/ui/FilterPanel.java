@@ -159,10 +159,10 @@ public class FilterPanel extends StackLayoutPanel {
 	private Widget getOrganizationFilterPanel(Filter filter) {
 		VerticalPanel filtersPanel = new VerticalPanel();
 		filtersPanel.setSpacing(4);
-		List<ID> ids = filter.getOrginizations();
-		for (ID id : ids) {
-			filtersPanel.add(new CheckBox(id.getName()));
-		}
+//		List<ID> ids = filter.getOrginizations();
+//		for (ID id : ids) {
+//			filtersPanel.add(new CheckBox(id.getName()));
+//		}
 		
 		return new SimplePanel(filtersPanel);
 	}

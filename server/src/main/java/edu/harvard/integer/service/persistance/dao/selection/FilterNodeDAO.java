@@ -33,29 +33,32 @@
 
 package edu.harvard.integer.service.persistance.dao.selection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public class FilterDAO extends BaseDAO {
+public class FilterNodeDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-	public FilterDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, Filter.class);
-	
+	public FilterNodeDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, FilterNode.class);
+		
 	}
 
 	/* (non-Javadoc)
@@ -65,14 +68,18 @@ public class FilterDAO extends BaseDAO {
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
 		
-		Filter filter = (Filter) entity;
-		
-		if (filter.getTechnologies() != null) {
+		FilterNode filterNode = (FilterNode) entity;
+		if (filterNode.getChildren() != null) {
+			List<FilterNode> dbNodes = new ArrayList<FilterNode>();
 			
+			for (FilterNode node : filterNode.getChildren()) {
+				dbNodes.add(update(node));
+			}
+			
+			filterNode.setChildren(dbNodes);
 		}
 		
 		super.preSave(entity);
 	}
-
 	
 }

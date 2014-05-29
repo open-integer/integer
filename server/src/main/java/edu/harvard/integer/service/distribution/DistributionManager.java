@@ -55,6 +55,11 @@ import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
+ * This class is used to lookup managers in the Integer system. The manager may be running on the local
+ * server or on a remote server. The lookup of the manager is the same in both cases. 
+ * 
+ * <p>To lookup a manager on a specific server the serverId will need to be passed into the getManager() call. 
+ * 
  * @author David Taylor
  * 
  */
@@ -225,22 +230,6 @@ public class DistributionManager {
 		return true;
 	}
 	
-	private static String getHostNameForManager(ManagerTypeEnum type) {
-		if (managers == null) {
-			logger.error("Manager list is empty! Has the server completed startup? Try loalhost");
-			return "localhost";
-		}
-
-		for (DistributedManager manager : managers) {
-			if (manager.getManagerType().equals(type.name()))
-				return getHostName(manager.getServerId());
-		}
-
-		logger.error("Service " + type
-				+ " Not found in Distribtued service cache!!");
-
-		return "localhost";
-	}
 
 	public DistributedManager getDistributedManager(ManagerTypeEnum type) {
 		if (managers == null) {

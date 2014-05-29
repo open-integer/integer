@@ -33,19 +33,26 @@
 
 package edu.harvard.integer.service.selection;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Layer;
 import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
 import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
+import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 
 /**
  * @author David Taylor
@@ -69,6 +76,55 @@ public class SelectionManager extends BaseManager implements SelectionManagerLoc
 		SelectionDAO selectionDAO = persistenceManager.getSelectionDAO();
 		
 		return selectionDAO.update(selection);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getBlankSelection()
+	 */
+	@Override
+	public Selection getBlankSelection() throws IntegerException {
+		TechnologyDAO dao = persistenceManager.getTechnologyDAO();
+		Technology[] technologies = dao.findTopLevel();
+		
+		List<FilterNode> nodes = new ArrayList<FilterNode>();
+		for (Technology technology : technologies) {
+			FilterNode node = new FilterNode();
+			node.setItemId(technology.getID());
+			node.setName(technology.getName());
+			
+			node.setChildren(findChildren(dao, technology.getID()));
+			
+			nodes.add(node);
+		}
+		
+		Filter filter = new Filter();
+		filter.setCreated(new Date());
+		filter.setTechnologies(nodes);
+		
+		List<Filter> filters = new ArrayList<Filter>();
+		filters.add(filter);
+		
+		Selection selection = new Selection();
+		selection.setFilters(filters);
+		
+		return selection;
+	}
+	
+	private List<FilterNode> findChildren(TechnologyDAO dao, ID parentId) throws IntegerException {
+		Technology[] children = dao.findByParentId(parentId);
+		
+		List<FilterNode> nodes = new ArrayList<FilterNode>();
+		for (Technology technology : children) {
+			FilterNode node = new FilterNode();
+			node.setItemId(technology.getID());
+			node.setName(technology.getName());
+			node.setChildren(findChildren(dao, technology.getID()));
+			
+			nodes.add(node);
+		}
+		
+		return nodes;
 	}
 	
 	/*

@@ -157,7 +157,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		ids.add(new ID(4L, "Load Balancers/Least", new IDType("Technology")));
 		ids.add(new ID(5L, "Routers/BGP", new IDType("Technology")));
 		ids.add(new ID(6L, "Routers/OSPF", new IDType("Technology")));
-		filter.setTechnologies(ids);
+	//	filter.setTechnologies(ids);
 		
 		List<ID> providerIds = new ArrayList<ID>();
 		providerIds.add(new ID(11L, "Cisco", new IDType("Technology")));
@@ -187,7 +187,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		organizationIds.add(new ID(51L, "Harvard University", new IDType("Technology")));
 		organizationIds.add(new ID(52L, "Boston University", new IDType("Technology")));
 		organizationIds.add(new ID(53L, "Northeastern University", new IDType("Technology")));
-		filter.setOrginizations(organizationIds);
+//		filter.setOrginizations(organizationIds);
 		
 		return filter;
 	}
