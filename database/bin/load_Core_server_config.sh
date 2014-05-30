@@ -10,7 +10,7 @@ if [ -z "${serverType}" ]; then
    echo "ERROR: serverType Must be provided. Core or FE"
    exit 1
 fi
-if [ "${serverTypr}" != "${myType}" ]; then
+if [ "${serverType}" != "${myType}" ]; then
    echo "INFO: Skipping $0 as this is server type ${serverType} NOT ${myType}"
    exit 0
 fi
