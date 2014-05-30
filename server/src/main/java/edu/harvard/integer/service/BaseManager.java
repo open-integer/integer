@@ -33,11 +33,21 @@
 
 package edu.harvard.integer.service;
 
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+
 /**
+ * 
+ * Base class for all managers.
+ * 
  * @author David Taylor
  * 
- *         Base class for all managers.
  */
 public class BaseManager {
 
+	public BaseManager(ManagerTypeEnum managerType) {
+		if (!managerType.getBeanClass().equals(getClass())) {
+			throw new IllegalArgumentException("Invalid manager type " + managerType + " for " + getClass());
+		}
+				
+	}
 }

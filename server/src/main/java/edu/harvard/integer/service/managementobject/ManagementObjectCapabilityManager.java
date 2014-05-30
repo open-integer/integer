@@ -53,6 +53,7 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
@@ -77,6 +78,15 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface dbm;
 
+
+	/**
+	 * @param managerType
+	 */
+	public ManagementObjectCapabilityManager() {
+		super(ManagerTypeEnum.ManagementObjectCapabilityManager);
+		
+	}
+	
 	@Override
 	public ServiceElementType updateServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	

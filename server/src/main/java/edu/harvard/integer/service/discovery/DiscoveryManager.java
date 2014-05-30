@@ -41,6 +41,7 @@ import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 
 /**
  * @author dchan
@@ -55,6 +56,15 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	@Inject
 	DiscoveryServiceInterface discoveryService;
 	
+
+	/**
+	 * @param managerType
+	 */
+	public DiscoveryManager() {
+		super(ManagerTypeEnum.DiscoveryManager);
+		
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#startDiscovery(edu.harvard.integer.common.topology.DiscoveryRule)

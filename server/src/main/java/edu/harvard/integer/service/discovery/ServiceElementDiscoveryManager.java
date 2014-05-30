@@ -54,6 +54,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
@@ -88,6 +89,14 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 	@Inject
 	private PersistenceManagerInterface dbm;
+
+	/**
+	 * @param managerType
+	 */
+	public ServiceElementDiscoveryManager() {
+		super(ManagerTypeEnum.ServiceElementDiscoveryManager);
+		
+	}
 
 	/**
 	 * Start a discovery of ServiceElements with the given Discovery seed. 

@@ -46,6 +46,7 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
@@ -56,11 +57,20 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
  */
 @Stateless
 public class ServiceElememtAccessManager extends BaseManager implements ServiceElementAccessManagerLocalInterface, ServiceElementAccessManagerRemoteInterface {
+	
 	@Inject
 	private Logger logger;
 		
 	@Inject
 	private PersistenceManagerInterface dbm;
+
+	/**
+	 * @param managerType
+	 */
+	public ServiceElememtAccessManager() {
+		super(ManagerTypeEnum.ServiceElementAccessManager);
+
+	}
 
 	/**
 	 * Add or update a service element. If the service element does not exist in the database. Then 

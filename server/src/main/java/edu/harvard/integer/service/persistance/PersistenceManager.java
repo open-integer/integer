@@ -40,6 +40,7 @@ import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServiceDAO;
@@ -95,7 +96,14 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Inject
 	private Logger logger;
 		
-	
+
+	/**
+	 * @param managerType
+	 */
+	public PersistenceManager() {
+		super(ManagerTypeEnum.PersistenceManager);
+		
+	}
 	/**
 	 * Get the SNMPModuleDAO. 
 	 * 

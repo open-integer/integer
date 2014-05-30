@@ -31,51 +31,39 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.service.event;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.distribution.DistributedManager;
+import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
+import edu.harvard.integer.common.event.Event;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-@Stateless
-public class StateManager extends BaseManager implements StateManagerLocalInterface, StateManagerRemoteInterface {
-
-	@Inject
-	private Logger logger;
-
-	@Inject
-	private PersistenceManagerInterface persistenceManager;
-
+public interface EventManagerInterface extends BaseManagerInterface {
 
 	/**
-	 * @param managerType
+	 * Get all the events in the Integer systme.
+	 * 
+	 * @return
+	 * @throws IntegerException
 	 */
-	public StateManager() {
-		super(ManagerTypeEnum.StateManager);
-		
-	}
+	Event[] getAllEvents() throws IntegerException;
 
-	@Override
-	public DistributedManager[] getConfiguredManagers() throws IntegerException {
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	DiscoveryCompleteEvent[] getAllDiscoveryEvents() throws IntegerException;
 
-		DistributedManagerDAO distributedManagerDAO = persistenceManager
-				.getDistributedManagerDAO();
-		DistributedManager[] managers = distributedManagerDAO.findAll();
-
-		logger.info("Found " + managers.length + " managers " + managers);
-
-		return managers;
-	}
+	/**
+	 * Save one event into the database. 
+	 * @param event
+	 * @return
+	 * @throws IntegerException
+	 */
+	Event saveEvent(Event event) throws IntegerException;
 
 }

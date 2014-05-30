@@ -299,6 +299,8 @@ public class DistributionService extends BaseService implements DistributionServ
 				manager.setManagerType(managerType.name());
 				manager.setServerId(getServerID());
 				distributedManagerDAO.update(manager);
+				
+				logger.info("Added Manager " + manager.getManagerType() +  " ID: " + manager.getID().toDebugString());
 			}
 
 			managers = distributedManagerDAO.findAll();

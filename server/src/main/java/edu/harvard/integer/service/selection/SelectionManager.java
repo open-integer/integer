@@ -49,6 +49,7 @@ import edu.harvard.integer.common.selection.Layer;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
 import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
@@ -67,6 +68,10 @@ public class SelectionManager extends BaseManager implements SelectionManagerLoc
 
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
+	
+	public SelectionManager() {
+		super(ManagerTypeEnum.SelectionManager);
+	}
 	
 	/*
 	 * (non-Javadoc)

@@ -31,51 +31,15 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.service.event;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.distribution.DistributedManager;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
+import javax.ejb.Local;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-@Stateless
-public class StateManager extends BaseManager implements StateManagerLocalInterface, StateManagerRemoteInterface {
-
-	@Inject
-	private Logger logger;
-
-	@Inject
-	private PersistenceManagerInterface persistenceManager;
-
-
-	/**
-	 * @param managerType
-	 */
-	public StateManager() {
-		super(ManagerTypeEnum.StateManager);
-		
-	}
-
-	@Override
-	public DistributedManager[] getConfiguredManagers() throws IntegerException {
-
-		DistributedManagerDAO distributedManagerDAO = persistenceManager
-				.getDistributedManagerDAO();
-		DistributedManager[] managers = distributedManagerDAO.findAll();
-
-		logger.info("Found " + managers.length + " managers " + managers);
-
-		return managers;
-	}
+@Local
+public interface EventManagerLocalInterface extends EventManagerInterface {
 
 }

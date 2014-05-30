@@ -8,7 +8,6 @@ client/war/WEB-INF/lib/gwt-servlet.jar
 .gradle
 .classpath
 build
-bin
 client.gwt.xml
 .metadata
 .settings

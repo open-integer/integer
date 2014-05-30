@@ -225,7 +225,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		List<Credential> credentials = new ArrayList<Credential>();
 		
 		SnmpV2cCredentail credential = new SnmpV2cCredentail();
-		credential.setReadCommunity("integerrw");
+		credential.setReadCommunity("integer");
 		credential.setWriteCommunity("integerrw");;
 		
 		credentials.add(credential);

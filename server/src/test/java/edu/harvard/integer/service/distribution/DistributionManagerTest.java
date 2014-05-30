@@ -170,9 +170,9 @@ public class DistributionManagerTest {
 			for (ManagerTypeEnum managerType : ManagerTypeEnum.values()) {
 				BaseManagerInterface service = DistributionManager.getManager(managerType);
 				
-				assert(service != null);
+				logger.info("Lookup manager " + managerType);
 				
-				logger.info("Found " + managerType + " Instance " + service);
+				assert(service != null);
 				
 			}
 			

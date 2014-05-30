@@ -31,51 +31,83 @@
  *      
  */
 
-package edu.harvard.integer.service.distribution;
+package edu.harvard.integer.service.event;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.distribution.DistributedManager;
+import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
+import edu.harvard.integer.common.event.Event;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
+import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
+import edu.harvard.integer.service.persistance.dao.event.EventDAO;
 
 /**
+ * The event manager is used to get/save/update the events created by the
+ * services in Integer or external devices sending alerts to the Integer serv.er
+ * 
  * @author David Taylor
  * 
  */
 @Stateless
-public class StateManager extends BaseManager implements StateManagerLocalInterface, StateManagerRemoteInterface {
-
+public class EventManager extends BaseManager implements EventManagerLocalInterface, EventManagerRemoteInterface {
+	
 	@Inject
 	private Logger logger;
-
+	
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
-
 
 	/**
 	 * @param managerType
 	 */
-	public StateManager() {
-		super(ManagerTypeEnum.StateManager);
+	public EventManager() {
+		super(ManagerTypeEnum.EventManager);
 		
 	}
 
+
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.event.EventManagerInterface#getAllEvents()
+	 */
 	@Override
-	public DistributedManager[] getConfiguredManagers() throws IntegerException {
-
-		DistributedManagerDAO distributedManagerDAO = persistenceManager
-				.getDistributedManagerDAO();
-		DistributedManager[] managers = distributedManagerDAO.findAll();
-
-		logger.info("Found " + managers.length + " managers " + managers);
-
-		return managers;
+	public Event[] getAllEvents() throws IntegerException {
+		EventDAO dao = persistenceManager.getEventDAO();
+		
+		Event[] allEvents = dao.findAll();
+		logger.info("Get all events! found " + allEvents.length);
+		
+		return allEvents;
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.event.EventManagerInterface#getAllDiscoveryEvents()
+	 */
+	@Override
+	public DiscoveryCompleteEvent[] getAllDiscoveryEvents() throws IntegerException {
+		DiscoveryCompleteEventDAO dao = persistenceManager.getDiscoveryCompleteEventDAO();
+		
+		DiscoveryCompleteEvent[] discoveryCompleteEvents = dao.findAll();
+		logger.info("Found " + discoveryCompleteEvents.length + " Discovery Complete Events");
+		
+		return discoveryCompleteEvents;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.event.EventManagerInterface#saveEvent(edu.harvard.integer.common.event.Event)
+	 */
+	@Override
+	public Event saveEvent(Event event) throws IntegerException {
+		EventDAO dao = persistenceManager.getEventDAO();
+		
+		return dao.update(event);
+	}
 }

@@ -42,6 +42,9 @@ import edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface;
+import edu.harvard.integer.service.event.EventManager;
+import edu.harvard.integer.service.event.EventManagerLocalInterface;
+import edu.harvard.integer.service.event.EventManagerRemoteInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface;
@@ -88,7 +91,8 @@ public enum ManagerTypeEnum implements DistributedManagerInterface {
     SelectionManager(SelectionManager.class, SelectionManagerLocalInterface.class, SelectionManagerRemoteInterface.class),
     
     TechnologyManager(TechnologyManager.class, TechnologyManagerLocalInterface.class, TechnologyManagerRemoteInterface.class),
-    DiscoveryManager(DiscoveryManager.class, DiscoveryManagerLocalInterface.class, DiscoveryManagerRemoteInterface.class);
+    DiscoveryManager(DiscoveryManager.class, DiscoveryManagerLocalInterface.class, DiscoveryManagerRemoteInterface.class),
+    EventManager(EventManager.class, EventManagerLocalInterface.class, EventManagerRemoteInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
 	Class<? extends BaseManagerInterface> remoteIntfClazz;

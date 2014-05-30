@@ -52,6 +52,7 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
@@ -75,6 +76,15 @@ public class SnmpManager extends BaseManager implements SnmpManagerLocalInterfac
 
 	@Resource
 	private EJBContext context;
+
+
+	/**
+	 * @param managerType
+	 */
+	public SnmpManager() {
+		super(ManagerTypeEnum.SnmpManager);
+
+	}
 
 	/*
 	 * (non-Javadoc)

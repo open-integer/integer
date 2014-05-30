@@ -45,6 +45,7 @@ import edu.harvard.integer.common.technology.Service;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
@@ -60,6 +61,15 @@ public class TechnologyManager extends BaseManager implements TechnologyManagerL
 	@Inject
 	PersistenceManagerInterface persistenceManager;
 	
+
+	/**
+	 * @param managerType
+	 */
+	public TechnologyManager() {
+		super(ManagerTypeEnum.TechnologyManager);
+
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#updateService(edu.harvard.integer.common.technology.Service)

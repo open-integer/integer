@@ -253,6 +253,9 @@ public class DiscoveryService extends BaseService implements
 		DiscoveryCompleteEvent discoveryComplete = new DiscoveryCompleteEvent();
 		discoveryComplete.setDiscoveryStatus(DiscoveryStatusEnum.Complete);
 		discoveryComplete.setName("Discovery Complete");
+		
+		DiscoveryCompleteEventDAO dao = persistenceManager.getDiscoveryCompleteEventDAO();
+		dao.update(discoveryComplete);
 	}
 	
 	/**

@@ -74,7 +74,7 @@ public class SelectionManagerTest {
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return TestUtil
-				.createTestArchive("ServiceElementDiscoveryManagerTest.war");
+				.createTestArchive("SelectionManagerTest.war");
 	}
 
 	@Before
