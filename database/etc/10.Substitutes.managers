@@ -1,0 +1,2 @@
+#assumes you are in the databases dir
+preload/insertIntegerServer.sql
