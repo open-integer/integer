@@ -41,10 +41,10 @@ package edu.harvard.integer.common.properties;
  * 
  */
 public enum StringPropertyNames {
-	MIBDir("MibDir", "../standalone/data/mibs"), BaseMibList(
-			"BaseMibList",
-			"RFC1065-SMI,RFC1213-MIB,SNMPv2-SMI,SNMPv2-MIB,IANAifType-MIB,IF-MIB,SNMP-FRAMEWORK-MIB,ENTITY-MIB,HOST-RESOURCES-MIB,CISCO-SMI,CISCO-ENTITY-VENDORTYPE-OID-MIB,CISCO-TC,CISCO-PRODUCTS-MIB,INET-ADDRESS-MIB,IP-MIB,CISCO-CEF-TC.my,CISCO-FIREWALL-TC.my,CISCO-IMAGE-TC.my,CISCO-IPSEC-TC.my,CISCO-ST-TC.my,CISCO-VIDEO-TC.my,DIFFSERV-DSCP-TC,HCNUM-TC"), ModuleName(
-			"ModuleName", ""); // Use empty string for test cases. When
+	MIBDir("MibDir", "../standalone/data/mibs"),
+	BaseMibList("BaseMibList","RFC1065-SMI,RFC1213-MIB,SNMPv2-SMI,SNMPv2-MIB,IANAifType-MIB,IF-MIB,SNMP-FRAMEWORK-MIB,ENTITY-MIB,HOST-RESOURCES-MIB,CISCO-SMI,CISCO-ENTITY-VENDORTYPE-OID-MIB,CISCO-TC,CISCO-PRODUCTS-MIB,INET-ADDRESS-MIB,IP-MIB,CISCO-CEF-TC.my,CISCO-FIREWALL-TC.my,CISCO-IMAGE-TC.my,CISCO-IPSEC-TC.my,CISCO-ST-TC.my,CISCO-VIDEO-TC.my,DIFFSERV-DSCP-TC,HCNUM-TC"),
+	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
+	ModuleName("ModuleName", ""); // Use empty string for test cases. When
 								// installed the real name will be used.
 
 	private String fieldName = null;

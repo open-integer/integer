@@ -1,6 +1,7 @@
 package edu.harvard.integer.server;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.event.Event;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
@@ -31,6 +33,7 @@ import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
+import edu.harvard.integer.service.event.EventManagerInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
@@ -124,8 +127,13 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	 */
 	@Override
 	public List<Object> getEvents() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		EventManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.EventManager);
+		
+		List<Object> events = new ArrayList<Object>();
+		for (Event event : manager.getAllEvents()) {
+			events.add(event);
+		}
+		return events;
 	}
 
 	@Override
@@ -136,6 +144,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			ServiceElementAccessManagerInterface serviceElementService = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 			
 			System.out.println("Enter getTopLevelElements: serviceElementService: " + serviceElementService);
+			
 			serviceElements = serviceElementService.getTopLevelServiceElements();
 		} 
 		catch (Exception e) {

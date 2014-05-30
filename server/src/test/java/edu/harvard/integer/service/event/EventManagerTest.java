@@ -33,7 +33,7 @@
 
 package edu.harvard.integer.service.event;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.util.Date;
 
@@ -56,7 +56,6 @@ import edu.harvard.integer.common.discovery.DiscoveryStatusEnum;
 import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
 import edu.harvard.integer.common.event.Event;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.selection.SelectionManagerInterface;
 import edu.harvard.integer.service.selection.SelectionManagerTest;
 
 /**
@@ -79,7 +78,7 @@ public class EventManagerTest {
 
 	@Before
 	public void setUpLogger() {
-		org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
+	//	org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
 	}
 
 	@Test

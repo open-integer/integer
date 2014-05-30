@@ -76,7 +76,7 @@ public class TechnologyDAO extends BaseDAO {
 		Technology technology = (Technology) entity;
 		
 		if (technology.getParentId() != null) {
-			ServiceElement parent = findById(technology.getParentId());
+			Technology parent = findById(technology.getParentId());
 			if (parent != null)
 				parent.setHasChildren(true);
 			update(parent);
@@ -112,5 +112,13 @@ public class TechnologyDAO extends BaseDAO {
 
 	public Technology[] findByParentId(ID parentId) throws IntegerException {
 		return findByIDField(parentId, "parentId", Technology.class);
+	}
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	public Technology findByName(String name) {
+		return findByStringField(name, "name", Technology.class);
 	}
 }

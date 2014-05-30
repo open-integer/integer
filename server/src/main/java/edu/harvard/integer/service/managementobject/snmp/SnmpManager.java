@@ -144,6 +144,7 @@ public class SnmpManager extends BaseManager implements SnmpManagerLocalInterfac
 		}
 	}
 
+	
 	@Override
 	public MIBImportResult importProductMib(String vendor, MIBImportInfo mibImport)
 			throws IntegerException {
@@ -224,6 +225,19 @@ public class SnmpManager extends BaseManager implements SnmpManagerLocalInterfac
 		}
 
 		return mibs;
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#getImportedMibByName(java.lang.String)
+	 */
+	@Override
+	public MIBInfo getMIBInfoByName(String string)
+			throws IntegerException {
+		MIBInfoDAO mibInfoDAO = persistenceManager.getMIBInfoDAO();
+
+		MIBInfo mibInfo = mibInfoDAO.findByName(string);
+		return mibInfo;
 	}
 
 	@Override

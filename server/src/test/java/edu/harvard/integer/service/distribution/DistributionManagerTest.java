@@ -35,11 +35,9 @@ package edu.harvard.integer.service.distribution;
 
 import static org.junit.Assert.fail;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -47,6 +45,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -61,8 +60,8 @@ import edu.harvard.integer.service.BaseServiceInterface;
 public class DistributionManagerTest {
 	
 
-	@Inject
-	private Logger logger;
+	//@Inject
+	private Logger logger= LoggerFactory.getLogger(DistributionManagerTest.class);
 //
 //	  @Resource(name="&entityManagerFactory")
 //	  private LocalContainerEntityManagerFactoryBean entityManagerFactory;
@@ -79,7 +78,7 @@ public class DistributionManagerTest {
 	@Before
 	public void initializeLogger() {
 		//BasicConfigurator.configure();
-		org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
+	//	org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
 	}
 
 

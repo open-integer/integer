@@ -125,6 +125,16 @@ public class TechnologyManager extends BaseManager implements TechnologyManagerL
 		return dao.findById(service);
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getTechnologyByName(java.lang.String)
+	 */
+	@Override
+	public Technology getTechnologyByName(String name) throws IntegerException {
+		TechnologyDAO dao = persistenceManager.getTechnologyDAO();
+		Technology technology = dao.findByName(name);
+		return technology;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getAllTechnologies()
@@ -134,6 +144,17 @@ public class TechnologyManager extends BaseManager implements TechnologyManagerL
 		TechnologyDAO dao = persistenceManager.getTechnologyDAO();
 		
 		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getTopLevelTechnology()
+	 */
+	@Override
+	public Technology[] getTopLevelTechnology() throws IntegerException {
+		TechnologyDAO dao = persistenceManager.getTechnologyDAO();
+		
+		return dao.findTopLevel();
 	}
 	
 	/*

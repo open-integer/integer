@@ -1,0 +1,146 @@
+- hardware:
+    - container
+    - stack
+    - chassis
+    - backplane
+    - spine
+    - module (linecard, fpc, etc.)
+    - routing engine (or supervisor board)
+    - feature card (crypto, ssl, extra processing, etc.)
+    - port
+    - optic
+    - fan
+    - power supply
+    - sensor
+    - cpu
+    - pcmcia card
+    - disk
+    - raid array
+    - raid controller
+    - (placeholder - many other types)
+- software:
+    - overall operating system
+    - per-card operating system
+- physical connectivity:
+    - ethernet physical layer:
+        - 1000base-T
+        - 10GBASE-SR
+        - (placeholder - many other types)
+    - 802.11 wireless LAN (Wi-Fi)
+    - 802.16 wireless MAN (WiMAX)
+    - (placeholder - many fiber-related technologies including connector types, patch panels, DWDM equipment...)
+- data link protocols:
+    - Ethernet 
+    - PPP
+    - PPTP
+- traffic encryption protocols:
+    - IPSEC:
+        - AH
+        - ESP
+        - SA
+- packet-switched networking:
+    - Frame Relay
+    - ATM
+    - MPLS
+- tunneling:
+    - Cisco GRE (Generic Routing Encapsulation, virtual point-to-point links)
+    - mGRE (multipoint GRE)
+    - IP-VPN (based on PPP and IPSEC)
+    - MPLS VPN tunnels:
+        - PW/point-to-point (pseudowire)
+        - VPLS (Virtual Private LAN Service)
+        - VPRN (Virtual Private Routed Network)
+- neighbor discovery:
+    - CDP (Cisco Discovery Protocol)
+    - LLDP (Link-layer Discovery Protocol)
+    - LLDP-MED (Link-layer Discovery Protocol Media Endpoint Discovery)
+    - NDP (IPv6 Neighbor Discovery Protocol)
+    - FDP (Foundry Discovery Protocol)
+    - EDP (Extreme Discovery Protocol)
+    - LLTD (Microsoft Link-layer Topology Discovery protocol)
+- link bonding:
+    - host-to-host bonded link schemes:
+        - Cisco EtherChannel
+        - Juniper Aggregated Ethernet (ae)
+        - Avaya Multi-Link Trunking (several variants)
+        - Linux Bonding driver
+        - Linux Team driver
+        - LBFO (Microsoft Load Balancing & Failover)
+    - link bonding types:
+        - static single-sided configuration (host-only):
+            - active-backup
+            - broadcast
+            - adaptive transmit
+            - adaptive transmit and receive
+        - static dual-sided configuration:
+            - round-robin
+            - xor
+        - dynamic protocols:
+           - lacp
+           - pagp
+    - proprietary multi-chassis bonding schemes (switch-side proprietary, host-side LACP):
+       - Juniper Multi-Chassis Link Aggregation (Alcatel-Lucent)
+       - Brocade Multi-Chassis Trunking
+       - Arista Multi-Chassis Link Aggregation
+       - Cisco Virtual Port Channel (vPC)
+       - Force10 Virtual Link Trunking
+- VLANs (Virtual Local Area Networks):
+    - VLAN tagging protocols:
+        - 802.1q vlan trunking
+        - Cisco ISL (or IEEE 802.10)
+        - LANE (LAN emulation)
+    - VLAN registration protocols:
+        - Cisco VTP (VLAN Trunking Protocol)
+        - MVRP (Multiple VLAN Registration Protocol, part of MRP (IEEE 802.1ak))
+    - VLAN trunk negotiation protocols:
+        - Cisco DTP (Dynamic Trunking Protocol)
+    - Spanning-tree protocol versions and alternatives:
+        - standards-based spanning-tree versions
+            - IEEE STP (802.1d)
+            - RSTP (802.1w, 802.1d-2004)
+            - MSTP (Multiple Spanning Tree Protocol) (802.1s, 802.1q-2005)
+        - vendor-proprietary spanning-tree implementations:
+            - Cisco PVST
+            - Cisco PVST+
+            - Cisco RPVST
+            - Cisco MISTP
+            - Extreme EAPS
+    - Spanning-tree replacement protocols:
+        - SPB (Shortest Path Bridging)
+        - TRILL (Transparent Interconnection of Lots of Links)
+- switching:
+    - ethernet switching:
+        - CAM table
+- routing:
+    - routing table:
+        - dynamic routes (protocol-generated)
+        - static routes
+        - directly-connected routes
+        - locally-generated routes
+- network layer protocols:
+    - IPv4
+    - IPv6
+    - CLNS
+- IP routing protocols:
+    - interior gateway protocols:
+        - link-state:
+            - OSPFv2 (IPv4)
+            - OSPFv3 (IPv6)
+            - IS-IS
+        - distance vector:
+            - RIP
+            - RIPv2
+            - IGRP
+            - EIGRP
+    - exterior gateway protocols:
+        - BGP
+            - iBGP
+            - EBGP
+- IP multicast protocols (protocols for delivery of multicast services):
+    - IGMP
+    - PIM (protocol independent multicast)
+    - DVMRP (distance vector multicast routing protocol)
+    - MOSPF
+    - MBGP
+    - GMRP
+    - MLD

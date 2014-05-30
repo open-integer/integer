@@ -31,56 +31,24 @@
  *      
  */
 
-package edu.harvard.integer.common;
+package edu.harvard.integer.service.yaml;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
  *
  */
-public class TestUtil {
+public interface YamlManagerInterface extends BaseManagerInterface {
 
 	/**
+	 * Read in the yaml in the passed in string. 
+	 * Create a Technology instance for every technology found. If the 
+	 * technology already exists then update with new children.
 	 * 
+	 * @param content
+	 * @return Status of the load. 
 	 */
-	public TestUtil() {
+	String loadTechnologyTree(String content);
 
-	}
-
-	public static List<ID> createIdList(int numToCreate, Class<?> clazz, String name) {
-		List<ID> ids = new ArrayList<ID>();
-		for (int i = 0; i < 10; i++) 
-			ids.add(new ID(Long.valueOf(i), name + i, new IDType(clazz.getName())));
-
-		return ids;
-	}
-	
-	public static Archive<?> createTestArchive(String warName) {
-		return ShrinkWrap
-				.create(WebArchive.class, warName)
-				.addPackages(true, "edu.harvard.integer")
-				.addPackages(true, "net.percederberg")
-				.addPackages(true, "org.apache.commons")
-				.addPackages(true, "org.snmp4j")
-				.addPackages(true, "uk.co.westhawk.snmp")
-				.addPackages(true, "org.jboss")
-				.addPackages(true, "org.wildfly")
-				.addPackages(true, "org.xnio")
-				.addPackages(true, "org.slf4j.logger")
-				.addPackages(true, "org/jasypt")
-				.addPackages(true, "com.fasterxml.jackson")
-				.addPackages(true, "org.yaml")
-				.addAsResource("META-INF/test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				// Deploy our test data source
-				.addAsWebInfResource("test-ds.xml");
-	}
 }

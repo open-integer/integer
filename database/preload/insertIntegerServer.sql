@@ -12,6 +12,6 @@ use Config;
 -- 
 INSERT INTO `IntegerServer` (`identifier`, `classType`, `name`, `lastStarted`, `port`, `address`, `serverId`)
 VALUES
-        (1, 'edu.harvard.integer.common.distribution.IntegerServer', NULL, NULL, 80, '127.0.0.1', 1)
+        (1, 'edu.harvard.integer.common.distribution.IntegerServer', NULL, NULL, 80, '127.0.0.1', 1),
 	(2, 'edu.harvard.integer.common.distribution.IntegerServer', NULL, NULL, 80, '127.0.0.1', 2);
 

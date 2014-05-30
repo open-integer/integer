@@ -135,4 +135,21 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 	 */
 	Mechanism getMechanismById(ID mechanismId) throws IntegerException;
 
+	/**
+	 * Return the list of top level technologies. 
+	 * 
+	 * @return
+	 * @throws IntegerException
+	 */
+	Technology[] getTopLevelTechnology() throws IntegerException;
+
+	/**
+	 * Find the Technology with the given name. 
+	 * 
+	 * @param name. Name of the topology objec to get.
+	 * 
+	 * @return Technology object with the given name.
+	 */
+	Technology getTechnologyByName(String name) throws IntegerException;
+
 }

@@ -79,7 +79,7 @@ public class SelectionManagerTest {
 
 	@Before
 	public void setUpLogger() {
-		org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
+		//org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
 	}
 
 	@Test

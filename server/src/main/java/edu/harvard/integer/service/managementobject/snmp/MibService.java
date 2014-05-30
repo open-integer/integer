@@ -151,6 +151,53 @@ public class MibService extends BaseService {
 			}
 			
 		}
+		
+		try {
+			loadDefaultProductsMib();
+		} catch (IntegerException e) {
+			logger.info("Error loading product mibs! " + e.toString());
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	private void loadDefaultProductsMib() throws IntegerException {
+		
+		IntegerProperties props = IntegerProperties.getInstance();
+		
+		String mibNameProp = props.getProperty(StringPropertyNames.BaseMibList);
+		if (mibNameProp == null) {
+			logger.error("Unable to load mibs. " + StringPropertyNames.BaseMibList.getFieldName() + " Is not set!!");
+			return;
+		}
+		
+		String mibNames[] = mibNameProp.split(",");
+		
+		String mibDirPath = null;
+		
+		mibDirPath = props.getProperty(StringPropertyNames.MIBDir) + "/";
+		
+		for (String string : mibNames) {
+			MIBInfo mibInfo = snmpManager.getMIBInfoByName(string);
+			if (mibInfo == null) {
+				logger.info("Product mib " + string + " already loaded");
+				continue;
+			}
+			
+			File file = new File(mibDirPath + string);
+			if (!file.exists()) {
+				logger.error("Unable to load " + file.getAbsolutePath() + " File not found!");
+				continue;
+			}
+			
+			MIBImportInfo importInfo = new MIBImportInfo();
+			importInfo.setFileName(string);
+			importInfo.setMib(readInMIB(file));
+
+			snmpManager.importProductMib(string, importInfo);
+		}
+				
 	}
 	
 	private String readInMIB(File file) {

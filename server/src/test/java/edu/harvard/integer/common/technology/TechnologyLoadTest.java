@@ -33,12 +33,109 @@
 
 package edu.harvard.integer.common.technology;
 
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+import javax.inject.Inject;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
+
+import edu.harvard.integer.common.TestUtil;
+import edu.harvard.integer.service.yaml.YamlManagerInterface;
+
 
 /**
  * @author David Taylor
  *
  */
+@RunWith(Arquillian.class)
 public class TechnologyLoadTest {
+	
+	private Logger logger = LoggerFactory.getLogger(TechnologyLoadTest.class);
+
+	@Inject
+	private YamlManagerInterface yamlManager;
+	
+	@Before
+	public void initializeLogger() {
+	
+		//org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
+	}
+	
+	@Deployment
+	public static Archive<?> createTestArchive() {
+		return TestUtil
+				.createTestArchive("SelectionManagerTest.war");
+	}
+
+	@Test
+	public void readTechnologyTree() {
+		File techTree = new File("../config/technology/technology-tree.yaml");
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(techTree.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading MIB: " + e.getMessage());
+		}
+		
+		Yaml yaml = new Yaml();
+		
+		Object load = yaml.load(content);
+		logger.info("YAML Object is " + load.getClass().getName());
+		
+		parseObject("", load);
+		
+		logger.info("Technology read in: " + yaml.dump(load));
+		
+		yamlManager.loadTechnologyTree(content);
+	}
+	
+	
+	private void parseArrayList(String indent,ArrayList<Object> list) {
+		for (Object value : list) {
+			//logger.info("Item " + value + " class " + value.getClass().getName());
+			parseObject(indent, value);
+		}	
+	}
+		
+	private void parseHashMap(String indent,LinkedHashMap<String, Object> map) {
+		for (String key : map.keySet()) {
+			Object value = map.get(key);
+			
+			logger.info(indent + "Key " + key);
+			parseObject(indent, value);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void parseObject(String indent, Object value) {
+		if (value instanceof ArrayList)
+			parseArrayList(indent + "  ", (ArrayList<Object>) value);
+		else if (value instanceof LinkedHashMap) 
+			parseHashMap(indent + "  ", (LinkedHashMap<String, Object>) value);
+		else if (value instanceof String)
+			logger.info(indent + "String " + value);
+		else
+			logger.error("Unknown Value type " + value.getClass().getName() + " " + value);
+	}
+	
+	
 //
 //
 //	@Test

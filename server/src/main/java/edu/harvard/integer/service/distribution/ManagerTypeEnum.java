@@ -62,6 +62,9 @@ import edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface;
 import edu.harvard.integer.service.topology.device.ServiceElememtAccessManager;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface;
+import edu.harvard.integer.service.yaml.YamlManager;
+import edu.harvard.integer.service.yaml.YamlManagerLocalInterface;
+import edu.harvard.integer.service.yaml.YamlManagerRemoteInterface;
 
 
 /**
@@ -92,7 +95,8 @@ public enum ManagerTypeEnum implements DistributedManagerInterface {
     
     TechnologyManager(TechnologyManager.class, TechnologyManagerLocalInterface.class, TechnologyManagerRemoteInterface.class),
     DiscoveryManager(DiscoveryManager.class, DiscoveryManagerLocalInterface.class, DiscoveryManagerRemoteInterface.class),
-    EventManager(EventManager.class, EventManagerLocalInterface.class, EventManagerRemoteInterface.class);
+    EventManager(EventManager.class, EventManagerLocalInterface.class, EventManagerRemoteInterface.class),
+    YamlManager(YamlManager.class, YamlManagerLocalInterface.class, YamlManagerRemoteInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
 	Class<? extends BaseManagerInterface> remoteIntfClazz;

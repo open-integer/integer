@@ -115,4 +115,11 @@ public interface SnmpManagerInterface extends BaseManagerInterface {
 	 */
 	MIBImportResult importProductMib(String vendor, MIBImportInfo mibImport)
 			throws IntegerException;
+
+	/**
+	 * @param string
+	 * @return
+	 * @throws IntegerException
+	 */
+	MIBInfo getMIBInfoByName(String string) throws IntegerException;
 }
