@@ -17,6 +17,7 @@
     - disk
     - raid array
     - raid controller
+    - (placeholder - many other types)
 - software:
     - overall operating system
     - per-card operating system
@@ -24,7 +25,7 @@
     - ethernet physical layer:
         - 1000base-T
         - 10GBASE-SR
-        - (many other types)
+        - (placeholder - many other types)
     - 802.11 wireless LAN (Wi-Fi)
     - 802.16 wireless MAN (WiMAX)
     - (placeholder - many fiber-related technologies including connector types, patch panels, DWDM equipment...)
