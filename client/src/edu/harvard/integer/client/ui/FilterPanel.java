@@ -39,16 +39,16 @@ import edu.harvard.integer.common.topology.CriticalityEnum;
  */
 public class FilterPanel extends StackLayoutPanel {
 
-	private Filter filter;
 	/**
 	 * Instantiates a new filter panel.
 	 *
 	 * @param unit the unit
 	 */
-	public FilterPanel(Filter filter) {
-		super(Unit.EM);
-		this.filter = filter;
-		
+	public FilterPanel() {
+		super(Unit.EM);	
+	}
+	
+	public void update(Filter filter) {
 		add(createTechnologyFilterPanel(filter.getTechnologies()), "Technology", 3);
 		add(getProviderFilterPanel(filter), "Provider", 3);
 		add(createCriticalityFilterPanel(filter), "Criticality", 3);

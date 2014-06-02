@@ -28,6 +28,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -56,7 +57,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		super(SPLITTER_SIZE);
 		
 		final DeviceMap deviceMap = new DeviceMap();
-		deviceMap.demo(10);
+		//deviceMap.demo(10);
 
 		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
@@ -141,11 +142,26 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
 		eastPanel.add(eventView, DockPanel.SOUTH);
 		
-		FilterPanel filterPanel = new FilterPanel(getDemoFilter());
+		final FilterPanel filterPanel = new FilterPanel();
 		addWest(filterPanel, WESTPANEL_WIDTH);
 		setWidgetToggleDisplayAllowed(filterPanel, true);
 		
 		add(eastPanel);
+		
+		MainClient.integerService.getBlankSelection(new AsyncCallback<Selection>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Selection result) {
+				filterPanel.update(result.getFilters().get(0));			
+			}
+			
+		});
 		
 	}
 	

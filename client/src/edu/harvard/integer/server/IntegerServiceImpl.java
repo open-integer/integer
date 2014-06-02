@@ -1,7 +1,6 @@
 package edu.harvard.integer.server;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.event.Event;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
@@ -27,15 +27,13 @@ import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.Subnet;
-import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.DiscoveryManagerInterface;
-import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.distribution.ServiceTypeEnum;
 import edu.harvard.integer.service.event.EventManagerInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.selection.SelectionManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 // TODO: Auto-generated Javadoc
@@ -46,9 +44,7 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
 public class IntegerServiceImpl extends RemoteServiceServlet implements
 		IntegerService {
 	
-	/**
-	 * Serial Version UID
-	 */
+	/** Serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
 	/* (non-Javadoc)
@@ -136,6 +132,9 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		return events;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getTopLevelElements()
+	 */
 	@Override
 	public ServiceElement[] getTopLevelElements() throws Exception {
 		ServiceElement[] serviceElements;
@@ -154,6 +153,9 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	}
 
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getServiceElementByParentId(edu.harvard.integer.common.ID)
+	 */
 	@Override
 	public ServiceElement[] getServiceElementByParentId(ID id) throws Exception {
 		ServiceElement[] serviceElements = null;
@@ -259,6 +261,9 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getDeviceDetails(edu.harvard.integer.common.ID)
+	 */
 	@Override
 	public DeviceDetails getDeviceDetails(ID id) throws Exception {
 		DeviceDetails deviceDetails = null;
@@ -273,5 +278,23 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		}
 
 		return deviceDetails;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getBlankSelection()
+	 */
+	@Override
+	public Selection getBlankSelection() throws Exception {
+		Selection selection = null;
+		
+		try {
+			SelectionManagerInterface selectionService = DistributionManager.getManager(ManagerTypeEnum.SelectionManager);
+			selection = selectionService.getBlankSelection();
+		}
+		catch (IntegerException e) {
+			e.printStackTrace();
+		}
+		
+		return selection;
 	}
 }
