@@ -166,7 +166,7 @@ public class MibService extends BaseService {
 		
 		IntegerProperties props = IntegerProperties.getInstance();
 		
-		String mibNameProp = props.getProperty(StringPropertyNames.BaseMibList);
+		String mibNameProp = props.getProperty(StringPropertyNames.ProductsMib);
 		if (mibNameProp == null) {
 			logger.error("Unable to load mibs. " + StringPropertyNames.BaseMibList.getFieldName() + " Is not set!!");
 			return;
