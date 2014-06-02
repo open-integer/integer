@@ -5,18 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.CellTree;
-import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -32,7 +28,6 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
-import edu.harvard.integer.client.widget.CheckboxHeader;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.Filter;
