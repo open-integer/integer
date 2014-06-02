@@ -9,6 +9,11 @@ import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
+
 /**
  * The Class TechnologyDatabase.
  */
@@ -55,12 +60,9 @@ public class TechnologyDatabase {
 				return item == null ? null : item.getId();
 			}
 		};
-
-		/** The next id. */
-		private static int nextId = 0;
 		
 		/** The id. */
-		private final int id;
+		private int id;
 
 		/** The name. */
 		private String name;
@@ -74,29 +76,10 @@ public class TechnologyDatabase {
 		 * @param category the category
 		 * @param name the name
 		 */
-		public TechItem(Category category, String name) {
-			this.id = nextId;
-			nextId++;
+		public TechItem(int id, Category category, String name) {
+			setId(id);
 			setCategory(category);
 			setName(name);
-		}
-
-		/**
-		 * Gets the next id.
-		 *
-		 * @return the next id
-		 */
-		public static int getNextId() {
-			return nextId;
-		}
-
-		/**
-		 * Sets the next id.
-		 *
-		 * @param nextId the new next id
-		 */
-		public static void setNextId(int nextId) {
-			TechItem.nextId = nextId;
 		}
 
 		/**
@@ -106,6 +89,10 @@ public class TechnologyDatabase {
 		 */
 		public int getId() {
 			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
 		}
 
 		/**
@@ -208,25 +195,23 @@ public class TechnologyDatabase {
 	/**
 	 * The provider that holds the list of contacts in the database.
 	 */
-	private ListDataProvider<TechItem> dataProvider = new ListDataProvider<TechItem>();
+	private static ListDataProvider<TechItem> dataProvider = new ListDataProvider<TechItem>();
 
 	/** The categories. */
-	private final Category[] categories;
+	//private final Category[] categories;
 
 	/**
 	 * Construct a new contact database.
 	 */
 	private TechnologyDatabase() {
 		// Initialize the categories.
-		DatabaseConstants constants = GWT.create(DatabaseConstants.class);
-		String[] catNames = constants.technologyDatabaseCategories();
-		categories = new Category[catNames.length];
-		for (int i = 0; i < catNames.length; i++) {
-			categories[i] = new Category(catNames[i]);
-		}
+//		DatabaseConstants constants = GWT.create(DatabaseConstants.class);
+//		String[] catNames = constants.technologyDatabaseCategories();
+//		categories = new Category[catNames.length];
+//		for (int i = 0; i < catNames.length; i++) {
+//			categories[i] = new Category(catNames[i]);
+//		}
 
-		// Generate initial data.
-		generateTechnologyItems();
 	}
 
 	/**
@@ -257,20 +242,20 @@ public class TechnologyDatabase {
 	 * Generate the specified number of contacts and add them to the data
 	 * provider.
 	 */
-	public void generateTechnologyItems() {
+	public static void generateTechnologyItems(ID parentNode, List<FilterNode> techNodeList) {
 		List<TechItem> list = dataProvider.getList();
-
-		list.add(createTechItem("Load Balancers", "Round Robin"));
-		list.add(createTechItem("Load Balancers", "Dynamic Ratio"));
-		list.add(createTechItem("Load Balancers", "Fastest"));
-		list.add(createTechItem("Load Balancers", "Least"));
-
-		list.add(createTechItem("Routers", "BGP"));
-		list.add(createTechItem("Routers", "OSPF"));
-
-		list.add(createTechItem("Servers", "FMS"));
-		list.add(createTechItem("Servers", "DNS"));
+		
+		for (FilterNode node : techNodeList) {
+			list.add(createTechItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
+			if (node.getChildren() != null)
+				generateTechnologyItems(node.getItemId(), node.getChildren());
+		}
 	}
+	
+	public static void clear() {
+		dataProvider.getList().clear();
+	}
+	
 
 	/**
 	 * Creates the tech item.
@@ -279,10 +264,10 @@ public class TechnologyDatabase {
 	 * @param itemName the item name
 	 * @return the tech item
 	 */
-	private TechItem createTechItem(String catName, String itemName) {
+	private static TechItem createTechItem(long id, String catName, String itemName) {
 		Category category = new Category(catName);
-		TechItem contact = new TechItem(category, itemName);
-		return contact;
+		TechItem techItem = new TechItem((int)id, category, itemName);
+		return techItem;
 	}
 
 	/**
@@ -299,9 +284,9 @@ public class TechnologyDatabase {
 	 * 
 	 * @return the categories in the database
 	 */
-	public Category[] queryCategories() {
-		return categories;
-	}
+//	public Category[] queryCategories() {
+//		return categories;
+//	}
 
 	/**
 	 * Query all techItems for the specified category.
@@ -312,11 +297,17 @@ public class TechnologyDatabase {
 	 */
 	public List<TechItem> queryTechItemsByCategory(Category category) {
 		List<TechItem> matches = new ArrayList<TechItem>();
-		for (TechItem contact : dataProvider.getList()) {
-			if (contact.getCategory().getDisplayName().equals(category.getDisplayName())) {
-				matches.add(contact);
+		for (TechItem item : dataProvider.getList()) {
+			if (item.getCategory().getDisplayName().equals(category.getDisplayName())) {
+				matches.add(item);
 			}
 		}
+		return matches;
+	}
+	
+	public List<TechItem> queryAllCategory() {
+		List<TechItem> matches = new ArrayList<TechItem>();
+		
 		return matches;
 	}
 

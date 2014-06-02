@@ -5,13 +5,18 @@ import java.util.Collections;
 import java.util.List;
 
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.CellTree;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -27,8 +32,11 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
+import edu.harvard.integer.client.widget.CheckboxHeader;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**
@@ -36,6 +44,7 @@ import edu.harvard.integer.common.topology.CriticalityEnum;
  */
 public class FilterPanel extends StackLayoutPanel {
 
+	private Filter filter;
 	/**
 	 * Instantiates a new filter panel.
 	 *
@@ -43,8 +52,9 @@ public class FilterPanel extends StackLayoutPanel {
 	 */
 	public FilterPanel(Filter filter) {
 		super(Unit.EM);
+		this.filter = filter;
 		
-		add(createTechnologyFilterPanel(filter), "Technology", 3);
+		add(createTechnologyFilterPanel(filter.getTechnologies()), "Technology", 3);
 		add(getProviderFilterPanel(filter), "Provider", 3);
 		add(createCriticalityFilterPanel(filter), "Criticality", 3);
 		add(createLocationFilterPanel(filter), "Location", 3);
@@ -63,34 +73,29 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the widget
 	 */
-	private Widget createTechnologyFilterPanel(Filter filter) {
+	private Widget createTechnologyFilterPanel(List<FilterNode> list) {
 		if (technologyFilterPanel != null)
 			return technologyFilterPanel;
+		
+		
+		ID rootId = new ID(1L, "Technology", new IDType("Technology"));
+		TechnologyDatabase.get().clear();
+		TechnologyDatabase.get().generateTechnologyItems(rootId, list);
 		
 		final MultiSelectionModel<TechItem> selectionModel = new MultiSelectionModel<TechItem>(
 				TechnologyDatabase.TechItem.KEY_PROVIDER);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
-						StringBuilder sb = new StringBuilder();
-						boolean first = true;
-						List<TechItem> selected = new ArrayList<TechItem>(
-								selectionModel.getSelectedSet());
+						List<TechItem> selected = new ArrayList<TechItem>(selectionModel.getSelectedSet());
 						Collections.sort(selected);
-						for (TechItem value : selected) {
-							if (first) {
-								first = false;
-							} else {
-								sb.append(", ");
-							}
-							sb.append(value.getName());
-						}
+						
 					}
 				});
 
 		CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
 		
-		technologyCellTree = new CellTree(new TechnologyTreeViewModel(selectionModel), null, res);
+		technologyCellTree = new CellTree(new TechnologyTreeViewModel(selectionModel, list), null, res);
 		
 		technologyCellTree.setAnimationEnabled(true);
 		
@@ -159,8 +164,8 @@ public class FilterPanel extends StackLayoutPanel {
 	private Widget getOrganizationFilterPanel(Filter filter) {
 		VerticalPanel filtersPanel = new VerticalPanel();
 		filtersPanel.setSpacing(4);
-//		List<ID> ids = filter.getOrginizations();
-//		for (ID id : ids) {
+		List<FilterNode> ids = filter.getOrginizations();
+//		for (FilterNode id : ids) {
 //			filtersPanel.add(new CheckBox(id.getName()));
 //		}
 		
@@ -239,12 +244,36 @@ public class FilterPanel extends StackLayoutPanel {
 	 *
 	 * @return the absolute panel
 	 */
+	CellTable providerTable = new CellTable();
 	private Widget getProviderFilterPanel(Filter filter) {
+		// Add the first column:
+	    /*TextColumn<String> column = new TextColumn<String>() {
+	        @Override
+	        public String getValue(final String object) {
+	            return object;
+	        }
+	    };
+	    providerTable.addColumn(column, SafeHtmlUtils.fromSafeConstant("Provider Name"));
+
+	    // the checkbox column for selecting the lease
+	    Column<String, Boolean> checkColumn = new Column<String, Boolean>(
+	            new CheckboxCell(true, false)) {
+	        @Override
+	        public Boolean getValue(final String object) {
+	            return selectionModel.isSelected(object);
+	        }
+	    };
+
+	    CheckboxHeader selectAll = new CheckboxHeader();
+	    selectAll.setSelectAllHandler(new SelectHandler());
+	    providerTable.addColumn(checkColumn, selectAll);*/
+	    
 		VerticalPanel filtersPanel = new VerticalPanel();
 		filtersPanel.setSpacing(4);
 		List<ID> ids = filter.getProviders();
 		for (ID id : ids) {
-			filtersPanel.add(new CheckBox(id.getName()));
+			CheckBox checkbox = new CheckBox(id.getName());
+			filtersPanel.add(checkbox);
 		}
 		
 		return new SimplePanel(filtersPanel);
