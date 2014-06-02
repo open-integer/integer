@@ -1,0 +1,137 @@
+---
+
+# management definition for interfaces
+# by Loren Jan Wilson, 2014-06-02
+
+managementGroups:
+    - name: generic-ifmib-global
+      description:
+          The generic global interface-related information, accessed via SNMP
+          using IF-MIB.
+      accessMethod:
+          protocol: SNMP
+          mib: IF-MIB
+          table: null
+          index: null
+      managementObjects:
+          - name: ifNumber
+            uri: ifNumber
+            unique: 1
+
+          - name: ifTableLastChange
+            uri: ifTableLastChange
+
+    - name: generic-ifmib-iftable
+      description: >
+          The generic interface information, accessed via SNMP using IF-MIB,
+          not including the extension table.
+      accessMethod:
+          protocol: SNMP
+          mib: IF-MIB
+          table: ifTable
+          index: [ ifIndex ]
+      managementObjects:
+          - name: ifIndex
+            uri: ifIndex
+            unique: 1
+
+          - name: ifDescr
+            uri: ifDescr
+
+          - name: ifType
+            uri: ifType
+
+          - name: ifMtu
+            uri: ifMtu
+
+          - name: ifSpeed
+            uri: ifSpeed
+
+          - name: ifPhysAddress
+            uri: ifPhysAddress
+
+          - name: ifAdminStatus
+            uri: ifAdminStatus
+
+          - name: ifOperStatus
+            uri: ifOperStatus
+
+          - name: ifLastChange
+            uri: ifLastChange
+
+          - name: ifInOctets
+            uri: ifInOctets
+
+          - name: ifInUcastPkts
+            uri: ifInUcastPkts
+
+          - name: ifInDiscards
+            uri: ifInDiscards
+
+          - name: ifInErrors
+            uri: ifInErrors
+
+          - name: ifInUnknownProtocols
+            uri: ifInUnknownProtocols
+
+          - name: ifOutOctets
+            uri: ifOutOctets
+
+          - name: ifOutUcastPkts
+            uri: ifOutUcastPkts
+
+          - name: ifOutDiscards
+            uri: ifOutDiscards
+
+          - name: ifOutErrors
+            uri: ifOutErrors
+
+    - name: generic-ifmib-extended
+      description: >
+          A generic interface that also supports the interface extension table,
+          including things like 64-bit counters, an ifName, etc.
+      accessMethod:
+          protocol: SNMP
+          mib: IF-MIB
+          table: ifTable
+          index: [ ifIndex ]
+      managementObjects:
+          - name: ifName
+            uri: ifName
+            unique: 1
+
+          - name: ifHCInOctets
+            uri: ifHCInOctets
+
+          - name: ifHCInUcastPkts
+            uri: ifHCInUcastPkts
+
+          - name: ifHCInMulticastPkts
+            uri: ifHCInMulticastPkts
+
+          - name: ifHCInBroadcastPkts
+            uri: ifHCInBroadcastPkts
+
+          - name: ifHCOutOctets
+            uri: ifHCOutOctets
+
+          - name: ifHCOutUcastPkts
+            uri: ifHCOutUcastPkts
+
+          - name: ifHCOutMulticastPkts
+            uri: ifHCOutMulticastPkts
+
+          - name: ifLinkUpDownTrapEnable
+            uri: ifLinkUpDownTrapEnable
+
+          - name: ifHighSpeed
+            uri: ifHighSpeed
+
+          - name: ifPromiscuousMode
+            uri: ifPromiscuousMode
+
+          - name: ifConnectorPresent
+            uri: ifConnectorPresent
+
+          - name: ifAlias
+            uri: ifAlias
