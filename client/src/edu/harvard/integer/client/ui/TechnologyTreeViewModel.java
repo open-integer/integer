@@ -7,10 +7,7 @@ import com.google.gwt.cell.client.CompositeCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.HasCell;
 import com.google.gwt.cell.client.SafeHtmlCell;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -20,47 +17,21 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import edu.harvard.integer.client.ui.TechnologyDatabase.Category;
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
+import edu.harvard.integer.common.selection.FilterNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TechnologyTreeViewModel.
  */
 public class TechnologyTreeViewModel implements TreeViewModel {
 
-	static interface Images extends ClientBundle {
-
-		/**
-		 * Contacts group.
-		 * 
-		 * @return the image resource
-		 */
-//		ImageResource loadBalancer();
-//		ImageResource router();
-//		ImageResource server();
-	}
-
 	/**
 	 * The cell used to render categories.
 	 */
 	private static class CategoryCell extends AbstractCell<Category> {
-
-//		/**
-//		 * The html of the image used for contacts.
-//		 */
-//		private final String imageHtml;
-//
-//		/**
-//		 * Instantiates a new category cell.
-//		 * 
-//		 * @param image
-//		 *            the image
-//		 */
-//		public CategoryCell(ImageResource image) {
-//			this.imageHtml = AbstractImagePrototype.create(image).getHTML();
-//		}
-
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -72,16 +43,10 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		@Override
 		public void render(Context context, Category value, SafeHtmlBuilder sb) {
 			if (value != null) {
-				//sb.appendHtmlConstant(imageHtml).appendEscaped(" ");
 				sb.appendEscaped(value.getDisplayName());
 			}
 		}
 	}
-
-	/**
-	 * The static images used in this model.
-	 */
-	private static Images images;
 
 	/** The category data provider. */
 	private final ListDataProvider<Category> categoryDataProvider;
@@ -96,25 +61,26 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	/** The selection model. */
 	private final SelectionModel<TechItem> selectionModel;
 
+	/** The filter node list. */
+	private List<FilterNode> filterNodeList;
+
 	/**
 	 * Instantiates a new technology tree view model.
-	 * 
-	 * @param selectionModel
-	 *            the selection model
+	 *
+	 * @param selectionModel            the selection model
+	 * @param filterNodeList the filter node list
 	 */
-	public TechnologyTreeViewModel(final SelectionModel<TechItem> selectionModel) {
+	public TechnologyTreeViewModel(final SelectionModel<TechItem> selectionModel, List<FilterNode> filterNodeList) {
 		this.selectionModel = selectionModel;
-		if (images == null) {
-			images = GWT.create(Images.class);
-		}
+		this.filterNodeList = filterNodeList;
 
 		// Create a data provider that provides categories.
 		categoryDataProvider = new ListDataProvider<Category>();
 		List<Category> categoryList = categoryDataProvider.getList();
 
-		categoryList.add(new Category("Load Balancers"));
-		categoryList.add(new Category("Routers"));
-		categoryList.add(new Category("Servers"));
+		for (FilterNode filterNode : filterNodeList) {
+			categoryList.add(new Category(filterNode.getItemId().getName()));
+		}
 
 		// Construct a composite cell for contacts that includes a checkbox.
 		List<HasCell<TechItem, ?>> hasCells = new ArrayList<HasCell<TechItem, ?>>();
@@ -188,14 +154,12 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 		if (value == null) {
 			// Return top level categories.
-			return new DefaultNodeInfo<Category>(categoryDataProvider,
-					new CategoryCell());
+			return new DefaultNodeInfo<Category>(categoryDataProvider, new CategoryCell());
 		} else if (value instanceof Category) {
 			// Return the first letters of each first name.
 			Category category = (Category) value;
 
-			List<TechItem> techItems = TechnologyDatabase.get()
-					.queryTechItemsByCategory(category);
+			List<TechItem> techItems = TechnologyDatabase.get().queryTechItemsByCategory(category);
 
 			ListDataProvider<TechItem> dataProvider = new ListDataProvider<TechItem>(
 					techItems, TechItem.KEY_PROVIDER);

@@ -27,6 +27,7 @@ import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -150,14 +151,65 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	private Filter getDemoFilter() {
 		Filter filter = new Filter();
-		List<ID> ids = new ArrayList<ID>();
-		ids.add(new ID(1L, "Load Balancers/Round Robin", new IDType("Technology")));
-		ids.add(new ID(2L, "Load Balancers/Dynamic Ratio", new IDType("Technology")));
-		ids.add(new ID(3L, "Load Balancers/Fastest", new IDType("Technology")));
-		ids.add(new ID(4L, "Load Balancers/Least", new IDType("Technology")));
-		ids.add(new ID(5L, "Routers/BGP", new IDType("Technology")));
-		ids.add(new ID(6L, "Routers/OSPF", new IDType("Technology")));
-	//	filter.setTechnologies(ids);
+		List<FilterNode> techNodeList = new ArrayList<FilterNode>();
+		FilterNode rootNode = new FilterNode();
+		rootNode.setItemId(new ID(1L, "Technology", new IDType("Technology")));
+		
+		FilterNode loadBalancerNode = new FilterNode();
+		loadBalancerNode.setItemId(new ID(2L, "Load Balancers", new IDType("Technology")));
+		List<FilterNode> loadBalancerNodeList = new ArrayList<FilterNode>();
+		loadBalancerNode.setChildren(loadBalancerNodeList);
+		
+		FilterNode routerNode = new FilterNode();
+		routerNode.setItemId(new ID(3L, "Routers", new IDType("Technology")));
+		List<FilterNode> routerNodeList = new ArrayList<FilterNode>();
+		routerNode.setChildren(routerNodeList);
+		
+		FilterNode serverNode = new FilterNode();
+		serverNode.setItemId(new ID(4L, "Servers", new IDType("Technology")));
+		List<FilterNode> serverNodeList = new ArrayList<FilterNode>();
+		serverNode.setChildren(serverNodeList);
+		
+		FilterNode robinNode = new FilterNode();
+		robinNode.setItemId(new ID(5L, "Round Robin", new IDType("Technology")));
+		
+		FilterNode ratioNode = new FilterNode();
+		ratioNode.setItemId(new ID(6L, "Dynamic Ratio", new IDType("Technology")));
+		
+		FilterNode fastestNode = new FilterNode();
+		fastestNode.setItemId(new ID(7L, "Fastest", new IDType("Technology")));
+		
+		FilterNode leastNode = new FilterNode();
+		leastNode.setItemId(new ID(8L, "Least", new IDType("Technology")));
+		
+		FilterNode bgpNode = new FilterNode();
+		bgpNode.setItemId(new ID(9L, "BGP", new IDType("Technology")));
+		
+		FilterNode ospfNode = new FilterNode();
+		ospfNode.setItemId(new ID(10L, "OSPF", new IDType("Technology")));
+		
+		FilterNode fmsNode = new FilterNode();
+		fmsNode.setItemId(new ID(11L, "FMS", new IDType("Technology")));
+		
+		FilterNode dnsNode = new FilterNode();
+		dnsNode.setItemId(new ID(12L, "DNS", new IDType("Technology")));
+		
+		loadBalancerNodeList.add(robinNode);
+		loadBalancerNodeList.add(ratioNode);
+		loadBalancerNodeList.add(fastestNode);
+		loadBalancerNodeList.add(leastNode);
+		
+		routerNodeList.add(bgpNode);
+		routerNodeList.add(ospfNode);
+		
+		serverNodeList.add(fmsNode);
+		serverNodeList.add(dnsNode);
+		
+		techNodeList.add(loadBalancerNode);
+		techNodeList.add(routerNode);
+		techNodeList.add(serverNode);
+		
+		filter.setTechnologies(techNodeList);
 		
 		List<ID> providerIds = new ArrayList<ID>();
 		providerIds.add(new ID(11L, "Cisco", new IDType("Technology")));
