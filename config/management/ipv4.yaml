@@ -1,0 +1,105 @@
+---
+
+# management definition for IPv4
+# by Loren Jan Wilson, 2014-05-30
+
+managementGroups:
+    # There are multiple versions of IP-MIB (and interim vendor MIBs, too), and
+    # figuring out which ones are supported in what combinations is not that
+    # straightforward. It's way more complicated for IPv6 than IPv4.  This type
+    # is the most generic 1994 version (most of which is deprecated). In the
+    # future, it may be augmented with a second type that attempts to get
+    # information from the newer 2006 tables for IPv4, but currently I can't
+    # find any device that puts IPv4 network information in the 2006 tables, so
+    # I'm postponing that work for now.
+
+    - name: generic-1994-ipv4-network
+      description: > 
+          Generic IPv4 address table in IP-MIB, circa 1994. Technically, much
+          of this was deprecated back in 2006, but everything I've looked at so
+          far uses at least some of the deprecated objects.
+      accessMethod:
+          protocol: SNMP
+          mib: IP-MIB
+          table: ipAdEntTable
+          index: [ ipAdEntAddr ]
+      managementObjects:
+          - name: ipAdEntAddr
+            uri: ipAdEntAddr
+            unique: 1
+
+          - name: ipAdEntIfIndex 
+            uri: ipAdEntIfIndex
+
+          - name: ipAdEntNetMask
+            uri: ipAdEntNetMask
+
+          - name: ipAdEntReasmMaxSize
+            uri: ipAdEntReasmMaxSize
+
+    - name: generic-1994-ipv4-global
+      description: > 
+          Generic IPv4 global objects in IP-MIB, circa 1994. Technically, much
+          of this was deprecated back in 2006, but everything I've looked at so
+          far uses at least some of the deprecated objects.
+      accessMethod:
+          protocol: SNMP
+          mib: IP-MIB
+          table: null
+          index: null
+      managementObjects:
+          - name: ipForwarding
+            uri: ipForwarding
+
+          - name: ipDefaultTTL
+            uri: ipDefaultTTL
+
+          - name: ipInReceives
+            uri: ipInReceives
+
+          - name: ipInHdrErrors
+            uri: ipInHdrErrors
+
+          - name: ipForwDatagrams
+            uri: ipForwDatagrams
+
+          - name: ipInUnknownProtos
+            uri: ipInUnknownProtos
+
+          - name: ipInDiscards
+            uri: ipInDiscards
+
+          - name: ipInDelivers
+            uri: ipInDelivers
+
+          - name: ipOutRequests
+            uri: ipOutRequests
+
+          - name: ipOutDiscards
+            uri: ipOutDiscards
+
+          - name: ipOutNoRoutes
+            uri: ipOutNoRoutes
+
+          - name: ipReasmTimeout
+            uri: ipReasmTimeout
+
+          - name: ipReasmReqds
+            uri: ipReasmReqds
+
+          - name: ipReasmOKs
+            uri: ipReasmOKs
+
+          - name: ipReasmFails
+            uri: ipReasmFails
+
+          - name: ipFragOKs
+            uri: ipFragOKs 
+
+          - name: ipFragFails
+            uri: ipFragFails
+
+          - name: ipFragCreates
+            uri: ipFragCreates
+
+...
