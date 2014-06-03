@@ -34,9 +34,14 @@ package edu.harvard.integer.service.discovery.snmp;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
+import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
+import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
@@ -53,12 +58,15 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
  */
 public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover {
 
+	/** The logger. */
+    private static Logger logger = LoggerFactory.getLogger(ContainmentServiceElementWorker.class);
+	
+	
 	/**
 	 * @throws IntegerException
 	 */
 	public ContainmentServiceElementWorker() throws IntegerException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -67,8 +75,70 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	@Override
 	public ServiceElement discover(SnmpContainment sc, DiscoverNode discNode )
 			throws IntegerException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		logger.info("In ContainmentServiceElementWorker discover ");
+		ElementEndPoint endPoint = discNode.getElementEndPoint();
+		
+		List<SnmpLevelOID> levelOids = sc.getSnmpLevels();
+		for (SnmpLevelOID levelOid : levelOids) {
+
+			SNMP doid = levelOid.getDescriminatorOID();
+			OID[] oids = new OID[1];
+	        oids[0] = new OID(doid.getOid());
+	        
+	        logger.info("get descriminator table " + doid.getOid());
+	        	        
+	        PDU pdu = new PDU();
+	        VariableBinding vb = new VariableBinding(new OID(doid.getOid()));
+	        pdu.add(vb);
+	        
+	        List<PDU> rpdu = SnmpService.instance().getAllEntryPduByNext(endPoint, pdu);
+	        logger.info("Number of row " + rpdu.size());
+	        
+	        
+	        List<TableEvent> deviceEvents = SnmpService.instance().getTablePdu( endPoint, oids);
+	        logger.info("Number of table event " + deviceEvents.size());
+	        
+	       
+			if (levelOid.getDisriminators() != null && levelOid.getDisriminators().size() > 1 ) {
+
+				for (SnmpServiceElementTypeDiscriminator discriminator : levelOid.getDisriminators()) {
+
+					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
+					for ( TableEvent te : tes ) {
+						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+						ServiceElement se =  createServiceElementFromType(discNode, set, te, discNode.getAccessElement());						
+						se = accessMgr.updateServiceElement(se);
+					}
+				}
+			}
+			else if ( levelOid.getDisriminators() != null && levelOid.getDisriminators().size() == 1 ) {
+				
+				SnmpServiceElementTypeDiscriminator discriminator = levelOid.getDisriminators().get(0);
+				if ( discriminator.getDiscriminatorValue() != null ) {
+					
+					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
+					for ( TableEvent te : tes ) {
+						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+						ServiceElement se =  createServiceElementFromType(discNode, set, te, discNode.getAccessElement());						
+						se = accessMgr.updateServiceElement(se);
+					}
+				}
+				else {
+					
+					ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+					logger.info("found this SET " + set.getCategory() + " " + set.getName());
+					
+					for ( TableEvent de : deviceEvents ) {
+						
+						ServiceElement se =  createServiceElementFromType(discNode, set, de, discNode.getAccessElement());
+						se = accessMgr.updateServiceElement(se);
+					}
+				}
+			}
+		}
+
+		return discNode.getAccessElement();
 	}
 
 	

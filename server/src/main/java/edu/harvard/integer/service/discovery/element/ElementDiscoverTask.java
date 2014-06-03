@@ -370,7 +370,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	    try {
 	    	 if ( discover != null ) {
 	 	    	
-	 	    	discover.findUIDForTopServiceElement(set, se, discoverNode.getElementEndPoint());
+	 	    	discover.findUIDForServiceElement(set, se, discoverNode.getElementEndPoint());
 	 	    	discover.discoverServiceElementAttribute(discoverNode.getElementEndPoint(), se, set, "0");
 	 	    }
 	    }

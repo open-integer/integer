@@ -752,6 +752,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	    /**
 	     * Discover more detail for that service element.
 	     */
+		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
 	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, tblInstMap );
 	    
 	    /**
