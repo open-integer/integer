@@ -53,6 +53,7 @@ import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.DiscoveryStatusEnum;
 import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
 import edu.harvard.integer.common.event.EventTypeEnum;
+import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.properties.IntegerProperties;
@@ -265,7 +266,7 @@ public class DiscoveryService extends BaseService implements
 	 * @param args
 	 */
 	@Override
-	public void discoveryError(DiscoveryId id,  NetworkErrorCodes errorCode, DisplayableInterface[] args) {
+	public void discoveryError(DiscoveryId id,  ErrorCodeInterface errorCode, DisplayableInterface[] args) {
 		logger.error("Error during discovery " + id + " Error "  + errorCode);
 		
 	}
@@ -290,7 +291,12 @@ public class DiscoveryService extends BaseService implements
 		
 		RunningDiscovery runningDiscovery = runningDiscoveries.get(id);
 		if ( runningDiscovery != null ) {
+			
+			System.out.println("Call Discovery " + id.toString());
 			runningDiscovery.stopDiscovery();	
+		}
+		else {
+			System.out.println("Null RunningDiscovery " + id.getServerId() );
 		}
 	}
 
@@ -300,5 +306,17 @@ public class DiscoveryService extends BaseService implements
 		
 		return dao.findAll();
 	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#discoveryServiceElementNoResponse(edu.harvard.integer.common.topology.ServiceElement, java.lang.String)
+	 */
+	@Override
+	public void discoveryServiceElementNoResponse(ServiceElement se,
+			String ipAddress) {
+		
+		logger.info("No response on Service Element " + se.getName() + " on IP " + ipAddress);
+		
+	}
+
 	
 }

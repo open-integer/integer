@@ -54,7 +54,10 @@ public class ElementEndPoint {
 	 */
 	final private Authentication  auth; 
 	
+	private volatile boolean blocking = false;
 	
+	
+
 	/**
 	 * Instantiates a new element end point. The ip, port and authentication is required.
 	 * For some of access with no require for authentication, NoAuthentication will be used.
@@ -115,4 +118,17 @@ public class ElementEndPoint {
 		return sb.toString();		
 	}
 	
+	
+
+	public boolean isBlocking() {
+		return blocking;
+	}
+
+
+	public void setBlocking(boolean blocking) {
+		this.blocking = blocking;
+	}
+
+
+
 }

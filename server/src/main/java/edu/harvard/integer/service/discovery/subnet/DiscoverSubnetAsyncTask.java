@@ -55,8 +55,6 @@ import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
-import edu.harvard.integer.service.BaseServiceInterface;
-import edu.harvard.integer.service.discovery.DiscoveryManager;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
@@ -92,6 +90,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 
 	/** If it is true, done with discovery. */
 	private boolean doneDiscovery;
+
 	
 
 	
@@ -231,6 +230,8 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
         	while ( range.hasNext() ) {
         		
     			if ( netDisc.isStopDiscovery() ) {
+    				
+    				logger.info("Discover being stop " );
     				break;
     			}
     			
@@ -247,8 +248,20 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     			SnmpService.instance().getAsyncPdu(dn.getElementEndPoint(), pdu, this, ip);
     		}
         }
+        catch ( IntegerException ie ) {
+        
+             if ( ie.getErrorCode() instanceof NetworkErrorCodes ) {
+				
+				NetworkErrorCodes nec = (NetworkErrorCodes) ie.getErrorCode();
+				if ( nec == NetworkErrorCodes.StopByRequest ) {
+					logger.info("Stop discovery by request. " + netDisc.getDiscoverId().toString());
+					return null;
+				}
+			}
+        }        
         catch ( Exception e ) {
         	e.printStackTrace();
+        	throw e;
         }
 		return range;
 	}
@@ -299,7 +312,14 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 							SnmpService.instance().getAsyncPdu(dn.getElementEndPoint(), pdu, this, dn.getIpAddress());
 							return;							
 						} 
-						catch (IntegerException e1) {}						
+						catch (IntegerException e1) 
+						{
+							NetworkErrorCodes nec = (NetworkErrorCodes) e1.getErrorCode();
+							if ( nec == NetworkErrorCodes.StopByRequest ) {
+								logger.info("Stop discovery by request. " + netDisc.getDiscoverId().toString());
+								return;
+							}
+						}						
 					}
 				}
 			}
@@ -323,9 +343,23 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		} 
 		catch (IntegerException e) {
 			logger.info("Exception on element discover task " + e.getMessage());
-		}		
-			
+		}	
 	}
+	
+	
+	/**
+	 * Issue stop request to the discover node.
+	 * 
+	 */
+	public void stopDiscover() {
+		
+		logger.info("Call stop discover on discover subnet task "  + discoverMap.size() );
+		for ( DiscoverNode node : discoverMap.values())
+		{
+			node.stopDiscover();
+		}
+	}
+	
 	
 	
 	/**

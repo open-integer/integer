@@ -35,7 +35,6 @@ package edu.harvard.integer.service.discovery;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
@@ -44,14 +43,16 @@ import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.common.discovery.DiscoveryId;
+import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 
 /**
@@ -166,7 +167,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					discFuture.add(v);
 					
 				} catch (IntegerException e) {
-					// TODO Auto-generated catch block
+					
+					logger.equals("Error on submit subnet discover...  " + e.toString() );
 					e.printStackTrace();
 				} 
 			}
@@ -224,7 +226,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			logger.error("Error saveing ServiceElement " + discoverNode.getAccessElement());
 		}
 		
-		removeIpaddressFromSubnet(discoverNode.getIpAddress(), subnetId);
+		removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
 	}
 	
 	
@@ -234,7 +236,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 * @param errorCode the error code.
 	 * @param msg the associated message.
 	 */
-	public void errorOccur( NetworkErrorCodes errorCode, String msg ) {
+	public void discoverErrorOccur( ErrorCodeInterface errorCode, String msg ) {
 		try {
 			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryError(discoverId, errorCode, null);
 		} catch (IntegerException e) {
@@ -245,9 +247,33 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	}
 	
 	
+	
+	/**
+	 * This method being called when there is no response for a IP address during discover.
+	 * If on the database there is a service element is associated with this IP address.  It should issue
+	 * a no response message.
+	 * 
+	 * @param ipAddress
+	 * @param subnetId
+	 */
 	public void ipAddressNoResponse( String ipAddress, String subnetId ) {
 		
-		removeIpaddressFromSubnet(ipAddress, subnetId);
+		logger.debug("No response for this IP " + ipAddress + " for this subnet " + subnetId );
+		try {
+			ServiceElementAccessManagerInterface access = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+			ServiceElement se =  access.getServiceElementByIpAddress(ipAddress);
+			if ( se != null ) {
+				DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+				dsif.discoveryServiceElementNoResponse(se, ipAddress);
+			}
+						
+		} catch (IntegerException e) {
+		
+			e.printStackTrace();
+			logger.error("Unable to call Service Manager to mark no response on a service element !! " + e.toString());
+		}
+		
+		removeIpAddressFromSubnet(ipAddress, subnetId, false);
 	}
 	
 	
@@ -265,11 +291,12 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 
 
 	/**
+	 * Remove IP Address discovery from subnet.  
 	 * 
 	 * @param ip
 	 * @param subnetid
 	 */
-	private void removeIpaddressFromSubnet( String ip, String subnetid ) {
+	private void removeIpAddressFromSubnet( String ip, String subnetid, boolean elmComplete ) {
 		
 		if ( subnetid != null ) {
 			DiscoverSubnetAsyncTask<ElementAccess> subTask = subnetTasks.get(subnetid);
@@ -279,13 +306,16 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				if ( subTask.discoveryNodeCount() == 0 ) {
 					
 					subnetTasks.remove(subnetid);
-					try {
-						DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
-						dsif.discoveryComplete(discoverId);
-					} catch (IntegerException e) {
 					
-						e.printStackTrace();
-						logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
+					if ( elmComplete ) {
+						try {
+							DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+							dsif.discoveryComplete(discoverId);
+						} catch (IntegerException e) {
+						
+							e.printStackTrace();
+							logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
+						}
 					}
 					logger.debug("Discovered subnet **** " + subnetid);
 				}
@@ -309,8 +339,14 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.NetworkDiscoveryBase#stopDiscovery()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void stopDiscovery() {		
+	public void stopDiscovery() {
+		
+		for ( DiscoverSubnetAsyncTask<ElementAccess> subTask : subnetTasks.values() ) {
+			
+			subTask.stopDiscover();
+		}
 		stopDiscovery = true;
 		
 	}
@@ -331,10 +367,6 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	public ConcurrentHashMap<String, Boolean> getDiscoveredIndicationMap() {
 		return discoveredIndicationMap;
 	}
-
-
-
-
 
 	
 }

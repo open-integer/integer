@@ -55,6 +55,7 @@ import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDescriminatorIntegerValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
+import edu.harvard.integer.common.discovery.VendorDiscoveryTemplate;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
@@ -66,6 +67,7 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
+import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -82,7 +84,7 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
  *
  * @author dchan
  */
-public abstract class SnmpServiceElementDiscover  {
+public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase {
 
 	/** The logger. */
     private static Logger logger = LoggerFactory.getLogger(SnmpServiceElementDiscover.class);
@@ -444,7 +446,13 @@ public abstract class SnmpServiceElementDiscover  {
 	
 	
 	/**
-	 * Creates the service element from service element type.
+	 * Creates the service element from service element type.  Currently it retrieves the following 
+	 * information if provided for a service element:
+	 * 
+	 * The default name, unique identifier and attributes.
+	 * 
+	 * However different categories service element type, they may contain special attributes only
+	 * applied to that service element type such as software version, hardware version etc.
 	 *
 	 * @param discNode the disc node
 	 * @param set the set
@@ -455,7 +463,7 @@ public abstract class SnmpServiceElementDiscover  {
 	 */
 	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
 			TableEvent te, ServiceElement parentElm) throws IntegerException {
-
+		
 		ServiceElement se = new ServiceElement();
 		se.setUpdated(new Date());
 		
@@ -477,9 +485,7 @@ public abstract class SnmpServiceElementDiscover  {
 			
 			OID o = new OID(nameAttr.getOid());
 			o.append(te.getIndex());
-			
-			logger.info("set value " + o.toString());
-			
+						
 			pdu.add(new VariableBinding(o));
 			PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
 			se.setName(rpdu.get(0).getVariable().toString());
@@ -531,6 +537,8 @@ public abstract class SnmpServiceElementDiscover  {
 			}
 		}
 		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, te.getIndex().toString());
+		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
+		
 		return se;
 	}
 	
@@ -543,7 +551,7 @@ public abstract class SnmpServiceElementDiscover  {
 	 * @param ept
 	 * @throws IntegerException
 	 */
-	public void findUIDForTopServiceElement( ServiceElementType set, ServiceElement se, ElementEndPoint ept ) throws IntegerException {
+	public void findUIDForServiceElement( ServiceElementType set, ServiceElement se, ElementEndPoint ept ) throws IntegerException {
 		
        if ( set.getUniqueIdentifierCapabilities() != null ) {
 			
@@ -679,7 +687,50 @@ public abstract class SnmpServiceElementDiscover  {
     	return macIps;
     }
 	
-	
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#scanElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.common.topology.ServiceElement)
+	 */
+	@Override
+	public void scanElement(ElementEndPoint endEpt, ServiceElement element)
+			throws IntegerException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#checkReachable(edu.harvard.integer.agent.serviceelement.ElementEndPoint)
+	 */
+	@Override
+	public String checkReachable(ElementEndPoint endEpt)
+			throws IntegerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoveryBase#stopDiscovery()
+	 */
+	@Override
+	public void stopDiscovery() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.element.ElementDiscoveryBase#discoverElement(edu.harvard.integer.common.discovery.VendorDiscoveryTemplate, edu.harvard.integer.service.discovery.subnet.DiscoverNode)
+	 */
+	@Override
+	public void discoverElement(
+			VendorDiscoveryTemplate<ServiceElementManagementObject> template,
+			DiscoverNode disNode) throws IntegerException {
+				
+	}
 
 
 	/**

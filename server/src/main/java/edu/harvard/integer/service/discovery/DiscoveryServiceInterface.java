@@ -41,6 +41,7 @@ import javax.ejb.Remote;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
+import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.DiscoveryRule;
@@ -80,8 +81,18 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * @param errorCode
 	 * @param args
 	 */
-	void discoveryError(DiscoveryId id, NetworkErrorCodes errorCode,
+	void discoveryError(DiscoveryId id, ErrorCodeInterface errorCode,
 			DisplayableInterface[] args);
+	
+	
+	/**
+	 * 
+	 * @param se
+	 * @param ipAddress
+	 */
+	public void discoveryServiceElementNoResponse( ServiceElement se, String ipAddress );
+	
+	
 
 	/**
 	 * Save ServiceElement
