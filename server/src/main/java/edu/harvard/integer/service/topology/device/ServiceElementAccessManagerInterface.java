@@ -83,6 +83,14 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 	 */
 	ServiceElement[] getServiceElementByParentId(ID parentId)
 			throws IntegerException;
+	
+	
+	/**
+	 * Get a service element given by an IP Address which associates with the service element.
+	 */
+	ServiceElement getServiceElementByIpAddress( String ipAddress ) throws IntegerException;
+	
+	
 
 	/**
 	 * Delete the ServiceElements with the given ID's

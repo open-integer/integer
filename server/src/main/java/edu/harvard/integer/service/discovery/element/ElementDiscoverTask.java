@@ -36,7 +36,6 @@ package edu.harvard.integer.service.discovery.element;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +58,7 @@ import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -129,265 +129,271 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	 * @see java.util.concurrent.Callable#call()
 	 */
 	@Override
-	public DiscoverNode call() throws Exception {
+	public DiscoverNode call()  {
 		
-        discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-        capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
-        accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-		
-	    if ( sysInfo == null ) {
-	    	
-	    	PDU pdu = new PDU();
-			pdu.addAll(netDiscover.getTopLevelVBs());
+		try {
+			discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+	        capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+	        accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 			
-			PDU rpdu = SnmpService.instance().getPdu(discoverNode.getElementEndPoint(), pdu);
-			sysInfo = new SnmpSysInfo(rpdu);					
-	    }
-	    OID sysId = new OID(sysInfo.getSysObjectID());
-	    SnmpVendorDiscoveryTemplate template = null;
-	    
-	    try {
-	    	 VendorIdentifier identify = discMgr.getVendorIdentifier(sysId.toString());
-	    	 if ( identify != null ) {
-	    		 template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(identify.getID());
-	    	 }
-	         
-	    }
-	    catch (Exception e ) {
-	    	
-	    	logger.info("********************************* Cannot find vendor information " + sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
-	    }
-	    
-	    logger.info( "Call check template ");
-	    /**
-	     * It is possible that no template being create for that SysId yet.
-	     */
-	    if ( template == null ) {
-	    	template = new SnmpVendorDiscoveryTemplate();
-			VendorIdentifier vendorIdentifier = discMgr.getVendorIdentifier(sysId.toDottedString());
-			if (vendorIdentifier != null)
-				template.setVendorId(vendorIdentifier.getID());
-			else {
-				/**
-				 * No such vendorIdentifier exist. Create one.  Later on this vendor identifier should be configured to 
-				 * associated with the real vendor name.
-				 */
-				vendorIdentifier = new VendorIdentifier();
+		    if ( sysInfo == null ) {
+		    	
+		    	PDU pdu = new PDU();
+				pdu.addAll(netDiscover.getTopLevelVBs());
 				
-				int[] oida = sysId.getValue();
-				vendorIdentifier.setName(sysId.toString());
-				vendorIdentifier.setVendorSubtypeId(sysId.toString());
-				vendorIdentifier.setVendorSubtypeName(sysId.toString());
-				
-				if ( oida.length < CommonSnmpOids.vendorSysIdIndex ) {
-					
-					vendorIdentifier.setVendorOid(sysId.toString());
-					vendorIdentifier.setIdentifier(100000L);
-				}
+				PDU rpdu = SnmpService.instance().getPdu(discoverNode.getElementEndPoint(), pdu);
+				sysInfo = new SnmpSysInfo(rpdu);					
+		    }
+		    OID sysId = new OID(sysInfo.getSysObjectID());
+		    SnmpVendorDiscoveryTemplate template = null;
+		    
+		    try {
+		    	 VendorIdentifier identify = discMgr.getVendorIdentifier(sysId.toString());
+		    	 if ( identify != null ) {
+		    		 template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(identify.getID());
+		    	 }
+		    }
+		    catch (Exception e ) {
+		    	
+		    	/**
+		    	 * That is OK not finding vendor id.
+		    	 */
+		    	logger.info("********************************* Cannot find vendor information " + sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
+		    }
+		    
+		    logger.info( "Call check template ");
+		    /**
+		     * It is possible that no template being create for that SysId yet.
+		     */
+		    if ( template == null ) {
+		    	template = new SnmpVendorDiscoveryTemplate();
+				VendorIdentifier vendorIdentifier = discMgr.getVendorIdentifier(sysId.toDottedString());
+				if (vendorIdentifier != null)
+					template.setVendorId(vendorIdentifier.getID());
 				else {
+					/**
+					 * No such vendorIdentifier exist. Create one.  Later on this vendor identifier should be configured to 
+					 * associated with the real vendor name.
+					 */
+					vendorIdentifier = new VendorIdentifier();
 					
-					vendorIdentifier.setIdentifier(sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
-					int[] sysOida = new int[CommonSnmpOids.vendorSysIdIndex]; 
+					int[] oida = sysId.getValue();
+					vendorIdentifier.setName(sysId.toString());
+					vendorIdentifier.setVendorSubtypeId(sysId.toString());
+					vendorIdentifier.setVendorSubtypeName(sysId.toString());
 					
-					for ( int i=0; i<CommonSnmpOids.vendorSysIdIndex; i++ ) {
-						sysOida[i] = oida[i];
+					if ( oida.length < CommonSnmpOids.vendorSysIdIndex ) {
+						
+						vendorIdentifier.setVendorOid(sysId.toString());
+						vendorIdentifier.setIdentifier(100000L);
 					}
-					OID o = new OID(sysOida);
-					vendorIdentifier.setVendorOid(o.toString());
-					vendorIdentifier = discMgr.updateVendorIdentifier(vendorIdentifier);
-				}
-				
-				template.setVendorId(vendorIdentifier.getID());
-				logger.error("Unable to find vendor identifier for " + sysId.toDottedString());
-				
-				
-			}
-			
-	    	template.setDescription(sysInfo.getSysDescr());
-	    	template = discMgr.updateSnmpVendorDiscoveryTemplate(template);
-	    }
-	    
-	    String firmwareVer = null;
-	    String model = null;
-	    String softwareVer = null;
-	    	    
-	    logger.info( "Call check check firmware. ");
-	    
-	    DiscoveryParseString dps = template.getParseString();
-	    if ( dps != null ) {
-	    	firmwareVer = dps.parseElement(DiscoveryParseElementTypeEnum.FirmwareVersion, sysInfo.getSysDescr());
-	    	model = dps.parseElement(DiscoveryParseElementTypeEnum.Model, sysInfo.getSysDescr());
-	    	softwareVer = dps.parseElement(DiscoveryParseElementTypeEnum.SoftwareVersion, sysInfo.getSysDescr());
-	    }
-	    List<VariableBinding> vbs = new ArrayList<>();
-	    if ( firmwareVer == null && template.getFirmware() != null) {
-	    	
-	    	VariableBinding vb = null;
-	    	if ( template.getFirmware().getScalarVB() ) {
-	    		vb = new VariableBinding(new OID(template.getFirmware().getOid() + ".0"));
-				
-	    	}
-	    	else {
-	    		vb = new VariableBinding(new OID(template.getFirmware().getOid()));
-	    	}
-	    	vbs.add(vb);
-	    }
-	    if ( model == null && template.getModel() != null ) {
-	    	VariableBinding vb = null;
-	    	if ( template.getModel().getScalarVB() ) {
-	    		vb = new VariableBinding(new OID(template.getModel().getOid() + ".0"));
-				
-	    	}
-	    	else {
-	    		vb = new VariableBinding(new OID(template.getModel().getOid()));
-	    	}
-	    	vbs.add(vb);
-	    }
-	    
-	    if ( softwareVer == null && template.getSoftwareRevision() != null ) {
-	    	VariableBinding vb = null;
-	    	if ( template.getSoftwareRevision().getScalarVB() ) {
-	    		vb = new VariableBinding(new OID(template.getSoftwareRevision().getOid() + ".0"));
-				
-	    	}
-	    	else {
-	    		vb = new VariableBinding(new OID(template.getSoftwareRevision().getOid()));
-	    	}
-	    	vbs.add(vb);
-	    }
-	    if ( vbs.size() > 0 ) {
-	    	PDU pdu = new PDU();
-			pdu.addAll(vbs);
-			
-			PDU rpdu = SnmpService.instance().getPdu(discoverNode.getElementEndPoint(), pdu);
-			for ( VariableBinding vb : rpdu.getVariableBindings() ) {
-				
-				if ( template.getFirmware() != null && vb.getOid().startsWith(new OID(template.getFirmware().getOid()))) {
-				
-					firmwareVer = vb.toString();
-				}
-				else if ( template.getSoftwareRevision() != null && vb.getOid().startsWith(new OID(template.getSoftwareRevision().getOid())) ) {
+					else {
+						
+						vendorIdentifier.setIdentifier(sysId.getUnsigned(CommonSnmpOids.vendorSysIdIndex));
+						int[] sysOida = new int[CommonSnmpOids.vendorSysIdIndex]; 
+						
+						for ( int i=0; i<CommonSnmpOids.vendorSysIdIndex; i++ ) {
+							sysOida[i] = oida[i];
+						}
+						OID o = new OID(sysOida);
+						vendorIdentifier.setVendorOid(o.toString());
+						vendorIdentifier = discMgr.updateVendorIdentifier(vendorIdentifier);
+					}
 					
-					softwareVer = vb.toString();
+					template.setVendorId(vendorIdentifier.getID());
+					logger.error("Unable to find vendor identifier for " + sysId.toDottedString());
+					
+					
 				}
-				else if ( template.getModel() != null && vb.getOid().startsWith(new OID(template.getModel().getOid()))  ) {
-					model = vb.toString();
+				
+		    	template.setDescription(sysInfo.getSysDescr());
+		    	template = discMgr.updateSnmpVendorDiscoveryTemplate(template);
+		    }
+		    
+		    String firmwareVer = null;
+		    String model = null;
+		    String softwareVer = null;
+		    	    
+		    logger.info( "Call check check firmware. ");
+		    
+		    DiscoveryParseString dps = template.getParseString();
+		    if ( dps != null ) {
+		    	firmwareVer = dps.parseElement(DiscoveryParseElementTypeEnum.FirmwareVersion, sysInfo.getSysDescr());
+		    	model = dps.parseElement(DiscoveryParseElementTypeEnum.Model, sysInfo.getSysDescr());
+		    	softwareVer = dps.parseElement(DiscoveryParseElementTypeEnum.SoftwareVersion, sysInfo.getSysDescr());
+		    }
+		    List<VariableBinding> vbs = new ArrayList<>();
+		    if ( firmwareVer == null && template.getFirmware() != null) {
+		    	
+		    	VariableBinding vb = null;
+		    	if ( template.getFirmware().getScalarVB() ) {
+		    		vb = new VariableBinding(new OID(template.getFirmware().getOid() + ".0"));
+					
+		    	}
+		    	else {
+		    		vb = new VariableBinding(new OID(template.getFirmware().getOid()));
+		    	}
+		    	vbs.add(vb);
+		    }
+		    if ( model == null && template.getModel() != null ) {
+		    	VariableBinding vb = null;
+		    	if ( template.getModel().getScalarVB() ) {
+		    		vb = new VariableBinding(new OID(template.getModel().getOid() + ".0"));
+					
+		    	}
+		    	else {
+		    		vb = new VariableBinding(new OID(template.getModel().getOid()));
+		    	}
+		    	vbs.add(vb);
+		    }
+		    
+		    if ( softwareVer == null && template.getSoftwareRevision() != null ) {
+		    	VariableBinding vb = null;
+		    	if ( template.getSoftwareRevision().getScalarVB() ) {
+		    		vb = new VariableBinding(new OID(template.getSoftwareRevision().getOid() + ".0"));
+					
+		    	}
+		    	else {
+		    		vb = new VariableBinding(new OID(template.getSoftwareRevision().getOid()));
+		    	}
+		    	vbs.add(vb);
+		    }
+		    if ( vbs.size() > 0 ) {
+		    	PDU pdu = new PDU();
+				pdu.addAll(vbs);
+				
+				PDU rpdu = SnmpService.instance().getPdu(discoverNode.getElementEndPoint(), pdu);
+				for ( VariableBinding vb : rpdu.getVariableBindings() ) {
+					
+					if ( template.getFirmware() != null && vb.getOid().startsWith(new OID(template.getFirmware().getOid()))) {
+					
+						firmwareVer = vb.toString();
+					}
+					else if ( template.getSoftwareRevision() != null && vb.getOid().startsWith(new OID(template.getSoftwareRevision().getOid())) ) {
+						
+						softwareVer = vb.toString();
+					}
+					else if ( template.getModel() != null && vb.getOid().startsWith(new OID(template.getModel().getOid()))  ) {
+						model = vb.toString();
+					}
 				}
-			}
-	    }
-	    
-	    if ( model == null ) {
-	    	if ( sysId.size() >=  CommonSnmpOids.vendorSysIdIndex ) {
-	    		model = defineUnknownVendor(sysId.toString()); 
-	    	}
-	    	else {
-	    		model = defineUnknownVendor(sysId.toString());
-	    	}
-	    }
-	    
-	    VendorContainmentSelector vs = new VendorContainmentSelector();
-	    vs.setFirmware(firmwareVer);
-	    vs.setModel(model);
-	    vs.setSoftwareVersion(softwareVer);
-	    vs.setVendor(defineUnknownVendor(sysId.toString()));
-	    
-	    ServiceElementType set = null;
-	    SnmpContainment sc = null;
-	    
-	    try {
-	    	sc = discMgr.getSnmpContainment(vs);
-	    }
-	    catch ( Exception e ) {
-	        logger.info("************************  No vendor containment selector configured.  " + sysId.get(CommonSnmpOids.vendorSysIdIndex));
-	    }
-	    
-	    if ( sc != null ) {
-		    set =  discMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
-		    discoverNode.setTopServiceElementType(set);
-	    }
-	    
-	    if ( sc == null ) {
-	    	
-			SnmpContainmentType containmentType = checkContainmentType(discoverNode.getElementEndPoint());  
-			
-	    	set = new ServiceElementType();
-			set.setVendor(defineUnknownVendor(sysId.toString()));
-			set.setModel(checkContainmentType(discoverNode.getElementEndPoint()).name());
-			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
-			
-			ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, containmentType);
-			try {
+		    }
+		    
+		    if ( model == null ) {
+		    	if ( sysId.size() >=  CommonSnmpOids.vendorSysIdIndex ) {
+		    		model = defineUnknownVendor(sysId.toString()); 
+		    	}
+		    	else {
+		    		model = defineUnknownVendor(sysId.toString());
+		    	}
+		    }
+		    
+		    VendorContainmentSelector vs = new VendorContainmentSelector();
+		    vs.setFirmware(firmwareVer);
+		    vs.setModel(model);
+		    vs.setSoftwareVersion(softwareVer);
+		    vs.setVendor(defineUnknownVendor(sysId.toString()));
+		    
+		    ServiceElementType set = null;
+		    SnmpContainment sc = null;		    
+		    sc = discMgr.getSnmpContainment(vs);
+		    
+		    if ( sc != null ) {
+			    set =  discMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
+			    discoverNode.setTopServiceElementType(set);
+		    }
+		    
+		    if ( sc == null ) {
+		    	
+				SnmpContainmentType containmentType = checkContainmentType(discoverNode.getElementEndPoint());  
+				
+		    	set = new ServiceElementType();
+				set.setVendor(defineUnknownVendor(sysId.toString()));
+				set.setModel(checkContainmentType(discoverNode.getElementEndPoint()).name());
+				set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
+				
+				ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, containmentType);
+				
 				set = capMgr.updateServiceElementType(set);
 				discoverNode.setTopServiceElementType(set);
-			} catch (IntegerException e) {
-				e.printStackTrace();
-			}
-			
-			sc = ContainmentGenerator.generator(set, containmentType);	 
 				
-			try {
+				sc = ContainmentGenerator.generator(set, containmentType);
+				
 				SnmpContainment updateSnmpContainment = capMgr.updateSnmpContainment(sc);
 				logger.info("Created SnmpContainment " + updateSnmpContainment.getID());
 				
-			} catch (IntegerException e) {
-				e.printStackTrace();
+		    }
+		    
+		    List<ID> cids = set.getUniqueIdentifierCapabilities();
+		    List<String>  identifyDefs = new ArrayList<>();
+		    if ( cids != null ) {
+		    	
+		    	for ( ID cid : cids ) {
+		    		
+		    		List<ServiceElementManagementObject> serviceElmentObjs = capMgr.getManagemntObjectsForCapability(cid);
+		    		for ( ServiceElementManagementObject s : serviceElmentObjs ) {
+		    			identifyDefs.add(s.getName());
+		    		}
+		    	}
+		    }
+		    else {
+		    	/**
+		    	 * If it is empty, use IP address for now.
+		    	 */
+		    	identifyDefs.add(NetworkDiscovery.IPIDENTIFY);	    	
+		    }
+		    discoverNode.setIdentifyDefs(identifyDefs);
+		    SnmpServiceElementDiscover discover = DiscoverWorkerFactory.getSnmpServiceElementWorker(sc.getContainmentType());
+		    
+		    /**
+		     * Get uniqueIdentifier to determine if the service element being discovered.
+		     */
+		    ServiceElement se = new ServiceElement();
+		    se.setServiceElementTypeId(set.getID());
+		    
+		    se.setDescription(sysInfo.getSysDescr());
+		    se.setName(sysInfo.getSysName());
+		    se.setUpdated(new Date());
+		    
+		    logger.info("call update service element " + se.getName());
+		 
+		     if ( discover != null ) {
+		 	    	
+		 	     discover.findUIDForServiceElement(set, se, discoverNode.getElementEndPoint());
+		 	     discover.discoverServiceElementAttribute(discoverNode.getElementEndPoint(), se, set, "0");
+		 	}
+		  
+		    logger.info("call update service element " + se.getName());
+		    se = accessMgr.updateServiceElement(se);
+		    
+		    discoverNode.setAccessElement(se);
+		    if ( discover != null ) {
+		    	
+		    	discover.discover(sc, discoverNode);
+		    }
+		    return discoverNode;
+		}
+		catch ( IntegerException e ) {
+		
+			boolean skipErrorReport = false;
+			logger.info("Exception during discovery.  "+ e.getMessage() );
+			if ( e.getErrorCode() instanceof NetworkErrorCodes ) {
+				
+				NetworkErrorCodes nec = (NetworkErrorCodes) e.getErrorCode();
+				if ( nec == NetworkErrorCodes.StopByRequest ) {
+					skipErrorReport = true;
+				}
 			}
-	    }
-	    
-	    List<ID> cids = set.getUniqueIdentifierCapabilities();
-	    List<String>  identifyDefs = new ArrayList<>();
-	    if ( cids != null ) {
-	    	
-	    	for ( ID cid : cids ) {
-	    		
-	    		List<ServiceElementManagementObject> serviceElmentObjs = capMgr.getManagemntObjectsForCapability(cid);
-	    		for ( ServiceElementManagementObject s : serviceElmentObjs ) {
-	    			identifyDefs.add(s.getName());
-	    		}
-	    	}
-	    }
-	    else {
-	    	/**
-	    	 * If it is empty, use IP address for now.
-	    	 */
-	    	identifyDefs.add(NetworkDiscovery.IPIDENTIFY);	    	
-	    }
-	    discoverNode.setIdentifyDefs(identifyDefs);
-	    SnmpServiceElementDiscover discover = DiscoverWorkerFactory.getSnmpServiceElementWorker(sc.getContainmentType());
-	    
-	    /**
-	     * Get uniqueIdentifier to determine if the service element being discovered.
-	     */
-	    ServiceElement se = new ServiceElement();
-	    se.setServiceElementTypeId(set.getID());
-	    
-	    se.setDescription(sysInfo.getSysDescr());
-	    se.setName(sysInfo.getSysName());
-	    se.setUpdated(new Date());
-	    
-	    logger.info("call update service element " + se.getName());
-	    
-	    try {
-	    	 if ( discover != null ) {
-	 	    	
-	 	    	discover.findUIDForServiceElement(set, se, discoverNode.getElementEndPoint());
-	 	    	discover.discoverServiceElementAttribute(discoverNode.getElementEndPoint(), se, set, "0");
-	 	    }
-	    }
-	    catch ( Exception ee ) {
-	    
-	    	ee.printStackTrace();
-	    }
-	    logger.info("call update service element " + se.getName());
-	    se = accessMgr.updateServiceElement(se);
-	    
-	    discoverNode.setAccessElement(se);
-	    if ( discover != null ) {
-	    	
-	    	discover.discover(sc, discoverNode);
-	    }
-	    netDiscover.discoveredElement(discoverNode, discoverNode.getSubnetId());
-		return discoverNode;
+			if ( !skipErrorReport ) {
+				netDiscover.discoverErrorOccur(e.getErrorCode(), e.getMessage() + " Discover Node:" + discoverNode.getIpAddress() );
+				
+			}
+			
+		}
+		finally {
+			netDiscover.discoveredElement(discoverNode, discoverNode.getSubnetId());
+		}
+		return null;
 	}
 
 

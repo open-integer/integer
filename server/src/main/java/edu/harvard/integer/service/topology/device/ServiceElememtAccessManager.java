@@ -202,4 +202,15 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		
 		return deviceDetails;
 	}
+	
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementByIpAddress(java.lang.String)
+	 */
+	@Override
+	public ServiceElement getServiceElementByIpAddress(String ipAddress)
+			throws IntegerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

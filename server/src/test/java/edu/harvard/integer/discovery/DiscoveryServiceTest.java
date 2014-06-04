@@ -38,6 +38,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -52,6 +53,7 @@ import org.junit.runner.RunWith;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.TestUtil;
+import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
@@ -75,11 +77,13 @@ public class DiscoveryServiceTest {
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return TestUtil.createTestArchive("DiscoverAuthOrderTest.war");
+		return TestUtil.createTestArchive("DiscoveryServiceTest.war");
 	}
 	
 	@Test
 	public void startDiscovery() {
+		
+		System.out.println("Start discovery test.");
 		
 		IpTopologySeed seed = new IpTopologySeed();
 		Subnet subnet = new Subnet();
@@ -110,7 +114,53 @@ public class DiscoveryServiceTest {
 		
 		try {
 			discoverService.startDiscovery(rule);
-		} catch (IntegerException e) {
+		} 
+		catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void startAndStopDiscovery() throws InterruptedException {
+		
+		System.out.println("Start and stop discovery test.");
+		
+		IpTopologySeed seed = new IpTopologySeed();
+		Subnet subnet = new Subnet();
+		Address address = new Address();
+		address.setAddress("10.240.127.0");
+		subnet.setAddress(new Address( "10.240.127.0" ));
+		subnet.setMask(new Address("255.255.255.0"));
+		
+		seed.setSubnet(subnet);
+		seed.setRadius(Integer.valueOf(0));
+		
+		List<Credential> credentials = new ArrayList<Credential>();
+		
+		SnmpV2cCredentail credential = new SnmpV2cCredentail();
+		credential.setReadCommunity("integerrw");
+		credential.setWriteCommunity("integerrw");;
+		
+		credentials.add(credential);
+		seed.setCredentials(credentials);
+		
+		List<IpTopologySeed> topologySeeds = new ArrayList<IpTopologySeed>();
+		topologySeeds.add(seed);
+		DiscoveryRule rule = new DiscoveryRule();
+		
+		rule.setTopologySeeds(topologySeeds);
+		rule.setDiscoveryType(DiscoveryTypeEnum.ServiceElement);
+		rule.setCreated(new Date());
+		
+		try {
+			DiscoveryId did =  discoverService.startDiscovery(rule);
+			discoverService.stopDiscovery(did);
+			TimeUnit.MILLISECONDS.sleep(2000);
+			
+		} 
+		catch (IntegerException e) {
 			
 			e.printStackTrace();
 			fail(e.toString());

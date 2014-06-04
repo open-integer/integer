@@ -80,7 +80,15 @@ public class DiscoverNode extends ElementAccess {
 		 * This stage is used to indicate the node is done with discover.
 		 * Any other stages can jump to this stage
 		 */
-		DoneScan
+		DoneScan,
+		
+		/**
+		 * This stage is used to indicate the node is stop by request.  It is a final stage
+		 * which means it cannot change to other stage after it reach Stop stage.
+		 * 
+		 * Upon receiving the stop request, it should be no more new request to devices.
+		 */
+		Stop
 	}
 	
 	
@@ -88,7 +96,7 @@ public class DiscoverNode extends ElementAccess {
 	/**
 	 * Used to indicate what discover stage on this node.
 	 */
-	private DiscoverStageE stage = DiscoverStageE.ReachableScan;
+	private volatile DiscoverStageE stage = DiscoverStageE.ReachableScan;
 
 	private boolean reachable = false;
 
@@ -170,6 +178,10 @@ public class DiscoverNode extends ElementAccess {
 	 * @param stage the new stage
 	 */
 	public void setStage(DiscoverStageE stage) {
+		
+		if ( stage == DiscoverStageE.Stop ) {
+			return;
+		}
 		this.stage = stage;
 	}
 
@@ -331,4 +343,14 @@ public class DiscoverNode extends ElementAccess {
 	}
 
 
+	/**
+	 * Store the stop stage and set element end point to blocking.
+	 */
+	public void stopDiscover() {
+		
+		if ( getElementEndPoint() != null ) {
+			getElementEndPoint().setBlocking(true);
+		}
+		stage = DiscoverStageE.Stop;
+	}
 }

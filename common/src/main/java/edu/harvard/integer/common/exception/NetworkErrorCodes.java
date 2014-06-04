@@ -63,7 +63,8 @@ public enum NetworkErrorCodes implements ErrorCodeInterface {
 	/** No Authentication */
 	NoAuthentication("NoAuthentication"),
 	
-	
+	/** Stop By Request */
+	StopByRequest("StopByRequest"),	
 	;
 	
 

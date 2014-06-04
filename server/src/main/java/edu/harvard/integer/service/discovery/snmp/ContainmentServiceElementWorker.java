@@ -144,7 +144,7 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	
 	/**
-	 * 
+	 * Discover service element based on containment relationship.
 	 * 
 	 * @param discNode
 	 * @param levelOid

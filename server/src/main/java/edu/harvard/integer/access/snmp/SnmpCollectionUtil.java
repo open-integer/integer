@@ -73,8 +73,15 @@ public class SnmpCollectionUtil {
 	 *
 	 * @param endPoint the end point
 	 * @return the abstract target
+	 * @throws IntegerException 
 	 */
-	public static AbstractTarget createTarget( ElementEndPoint endPoint, boolean isRead ) {
+	public static AbstractTarget createTarget( ElementEndPoint endPoint, boolean isRead ) throws IntegerException {
+		
+		if ( endPoint.isBlocking() ) {
+			
+			NetworkErrorCodes ner = NetworkErrorCodes.StopByRequest;
+			throw new IntegerException(null, ner);
+		}
 		
 		if ( endPoint.getAuth() instanceof CommunityAuth ) {
 			
