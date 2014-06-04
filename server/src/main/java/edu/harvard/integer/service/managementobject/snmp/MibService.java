@@ -52,6 +52,7 @@ import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.BaseService;
+import edu.harvard.integer.util.FileUtil;
 
 
 /**
@@ -124,7 +125,7 @@ public class MibService extends BaseService {
 			}
 			
 			importInfo.setFileName(string);
-			importInfo.setMib(readInMIB(file));
+			importInfo.setMib(FileUtil.readInMIB(file));
 
 			boolean mibLoaded = false;
 			if (loadedMibs != null) {
@@ -158,6 +159,9 @@ public class MibService extends BaseService {
 			logger.info("Error loading product mibs! " + e.toString());
 			e.printStackTrace();
 			
+		} catch (Throwable e) {
+			logger.info("Error loading product mibs! " + e.toString());
+			e.printStackTrace();
 		}
 		
 	}
@@ -193,26 +197,11 @@ public class MibService extends BaseService {
 			
 			MIBImportInfo importInfo = new MIBImportInfo();
 			importInfo.setFileName(string);
-			importInfo.setMib(readInMIB(file));
+			importInfo.setMib(FileUtil.readInMIB(file));
 
 			snmpManager.importProductMib(string, importInfo);
 		}
 				
-	}
-	
-	private String readInMIB(File file) {
-		
-		String content = null;
-		try {
-			content = new String(Files.readAllBytes(file.toPath()));
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail("Error loading MIB: " + e.getMessage());
-		}
-		
-		return content;
 	}
 	
 }

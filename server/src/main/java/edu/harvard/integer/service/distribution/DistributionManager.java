@@ -325,6 +325,33 @@ public class DistributionManager {
 		return null;
 	}
 
+	/**
+	 * Is the manager running on the localhost?
+	 * 
+	 * @param managerType
+	 * @return
+	 * @throws IntegerException
+	 */
+	public static boolean isLocalManager(ManagerTypeEnum managerType ) throws IntegerException {
+		if (managers == null) {
+			logger.error("Managers list not loaded!!");
+			return false;
+		}
+		
+		for (DistributedManager manager : managers) {
+			if (manager.getManagerType().equals(managerType.name()))
+				return isLocalHost(manager.getServerId());
+		}
+	
+		System.out.println("Manager not found for " + managerType + " Types " + managers);
+		for (DistributedManager manager : managers) {
+			System.out.println("Manager " + manager);
+		}
+		logger.error("Manager not found for " + managerType);
+		
+		return false;
+	}
+	
 	public static <T extends BaseManagerInterface> T getManager(Long serverId,
 			ManagerTypeEnum managerType) throws IntegerException {
 		

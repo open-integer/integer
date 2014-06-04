@@ -31,36 +31,14 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.persistence;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
- * 
+ *
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	BaseMibList("BaseMibList","RFC1065-SMI,RFC1155-SMI,RFC-1212,RFC1213-MIB,SNMPv2-SMI,SNMPv2-MIB.my,IANAifType-MIB,IF-MIB.my,SNMP-FRAMEWORK-MIB.my,ENTITY-MIB,HOST-RESOURCES-MIB.my,CISCO-SMI.my,CISCO-ENTITY-VENDORTYPE-OID-MIB.my,CISCO-TC.my,CISCO-PRODUCTS-MIB.my,INET-ADDRESS-MIB.my,IP-MIB,CISCO-CEF-TC.my,CISCO-FIREWALL-TC.my,CISCO-IMAGE-TC.my,CISCO-IPSEC-TC.my,CISCO-ST-TC.my,CISCO-VIDEO-TC.my,DIFFSERV-DSCP-TC.my,HCNUM-TC.my"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
-
-	private String fieldName = null;
-	private String defaultValue = null;
-
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
-	}
-
-	public String getFieldName() {
-		return fieldName;
-	}
-
-	public String getDefaultValue() {
-		return defaultValue;
-	}
+public enum PersistenceStepStatusEnum {
+	NotLoaded,
+	Loaded,
+	LoadeWithErrors;
 }

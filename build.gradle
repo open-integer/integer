@@ -11,7 +11,6 @@ dependencies {
 	deploy project(':common')
 	deploy project(':server')
 	deploy project(path: ':client', configuration: 'archives')
-	
 }
 
 ear {
@@ -32,6 +31,15 @@ task deployServer(dependsOn: 'build') << {
 		from "build/libs/" + ear.archiveName
 		into "$System.env.JBOSS_HOME" + '/standalone/deployments'
 
-	}
+	}	
 }
 
+
+task deployWildfly() << {
+	println "Deploy Configuration to " +  "$System.env.JBOSS_HOME/"
+	
+	copy {
+		from "config"
+		into "$System.env.JBOSS_HOME" + '/standalone/data/yaml'
+	}
+}

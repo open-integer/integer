@@ -31,36 +31,63 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.yaml;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
  * 
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	BaseMibList("BaseMibList","RFC1065-SMI,RFC1155-SMI,RFC-1212,RFC1213-MIB,SNMPv2-SMI,SNMPv2-MIB.my,IANAifType-MIB,IF-MIB.my,SNMP-FRAMEWORK-MIB.my,ENTITY-MIB,HOST-RESOURCES-MIB.my,CISCO-SMI.my,CISCO-ENTITY-VENDORTYPE-OID-MIB.my,CISCO-TC.my,CISCO-PRODUCTS-MIB.my,INET-ADDRESS-MIB.my,IP-MIB,CISCO-CEF-TC.my,CISCO-FIREWALL-TC.my,CISCO-IMAGE-TC.my,CISCO-IPSEC-TC.my,CISCO-ST-TC.my,CISCO-VIDEO-TC.my,DIFFSERV-DSCP-TC.my,HCNUM-TC.my"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
+public class YamlCapability {
 
-	private String fieldName = null;
-	private String defaultValue = null;
+	private String name = null;
 
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
+	private String description = null;
+
+	private String type = null;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
 
-	public String getFieldName() {
-		return fieldName;
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getDefaultValue() {
-		return defaultValue;
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
 	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
 }
