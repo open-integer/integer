@@ -35,34 +35,39 @@ package edu.harvard.integer.service.yaml;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.technology.Technology;
+import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 @Stateless
-public class YamlManager extends BaseManager implements YamlManagerLocalInterface, YamlManagerRemoteInterface {
+public class YamlManager extends BaseManager implements
+		YamlManagerLocalInterface, YamlManagerRemoteInterface {
 
 	@Inject
 	private Logger logger;
 
 	@Inject
 	private TechnologyManagerInterface technologyManager;
-	
+
 	/**
 	 * @param managerType
 	 */
@@ -72,110 +77,220 @@ public class YamlManager extends BaseManager implements YamlManagerLocalInterfac
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.yaml.YamlManagerInterface#loadTechnologyTree(java.lang.String)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.yaml.YamlManagerInterface#loadTechnologyTree
+	 * (java.lang.String)
 	 */
 	@Override
-	public String loadTechnologyTree(String content) {
-		
-		Yaml yaml = new Yaml();
-		
-		Object load = yaml.load(content);
+	public String loadTechnologyTree(String content) throws IntegerException {
+
+		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(YamlTechnology.class, getClass().getClassLoader()));
+		//Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
+
+		YamlTechnology load = null;
+
+		try {
+			load = (YamlTechnology) yaml.load(content);
+		} catch (Throwable e) {
+			logger.error("Unexpected error reading in YAML! " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
+		}
+
 		logger.info("YAML Object is " + load.getClass().getName());
-		
+
 		try {
 			Technology[] root = technologyManager.getTopLevelTechnology();
-			
-			ID rootId = null;
-			
+
+			Technology rootTech = null;
 			if (root == null || root.length == 0) {
-				Technology rootTech = new Technology();
+				rootTech = new Technology();
 				rootTech.setName("root");
 				rootTech = technologyManager.updateTechnology(rootTech);
-				rootId = rootTech.getID();
-			} else // Take first root. There should be only one!
-				rootId = root[0].getID();
-				
-			parseObject(rootId, "", load);
-			
+
+			} else {// Take first root. There should be only one!
+
+				rootTech = root[0];
+			}
+
+			parseTechnologyTree(rootTech, load.getTechnologies());
+
 		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
+			logger.error("Error reading in YAML file! " + e.toString()
+					+ " Conent " + content);
+			e.printStackTrace();
+			throw e;
+		} catch (Throwable e) {
+			logger.error("Unexpected Error reading in YAML file! "
+					+ e.toString() + " Conent " + content);
 			e.printStackTrace();
 		}
-		
-		
-		
+
 		return "Success";
 	}
-	
 
-	private void parseArrayList(ID parentId, String indent, ArrayList<Object> list) throws IntegerException {
-		for (Object value : list) {
-			//logger.info("Item " + value + " class " + value.getClass().getName());
-			parseObject(parentId, indent, value);
-		}	
-	}
-		
-	private void parseHashMap(ID parentId, String indent,LinkedHashMap<String, Object> map) throws IntegerException {
-		for (String key : map.keySet()) {
-			Object value = map.get(key);
-			
-			logger.info(indent + "Key " + key);
-			
-			if (key.contains("placeholder"))
-				continue;
-			
-			Technology technology = technologyManager.getTechnologyByName(key);
+	/**
+	 * @param technology
+	 * @param list
+	 * @throws IntegerException
+	 */
+	private void parseTechnologyTree(Technology parentTechnology,
+			List<YamlTechnology> list) throws IntegerException {
+
+		for (YamlTechnology node : list) {
+			Technology technology = technologyManager.getTechnologyByName(node
+					.getName());
 			if (technology == null) {
-				technology = createTechnology(key, parentId);
+				technology = new Technology();
+				technology.setName(node.getName());
 			}
-			parentId = technology.getID();
-			
+
+			technology.setParentId(parentTechnology.getID());
+			technology.setDescription(node.getDescription());
+			technology = technologyManager.updateTechnology(technology);
+
+			if (node.getTechnologies() != null)
+				parseTechnologyTree(technology, node.getTechnologies());
+
+		}
+
+	}
+
+	private void parseArrayList(ID parentId, String indent,
+			ArrayList<Object> list) throws IntegerException {
+		for (Object value : list) {
+			// logger.info("Item " + value + " class " +
+			// value.getClass().getName());
 			parseObject(parentId, indent, value);
 		}
 	}
-	
+
+	private void parseHashMap(ID parentId, String indent,
+			LinkedHashMap<String, Object> map) throws IntegerException {
+		for (String key : map.keySet()) {
+			Object value = map.get(key);
+
+			logger.info(indent + "Key " + key);
+
+			if (key.contains("placeholder"))
+				continue;
+
+			Technology technology = technologyManager.getTechnologyByName(key);
+			if (technology == null) {
+				technology = createTechnology(key, indent, parentId);
+			}
+			parentId = technology.getID();
+
+			parseObject(parentId, indent, value);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
-	private void parseObject(ID parentId, String indent, Object value) throws IntegerException {
+	private void parseObject(ID parentId, String indent, Object value)
+			throws IntegerException {
 		if (value instanceof ArrayList)
 			parseArrayList(parentId, indent + "  ", (ArrayList<Object>) value);
-		else if (value instanceof LinkedHashMap) 
-			parseHashMap(parentId, indent + "  ", (LinkedHashMap<String, Object>) value);
+		else if (value instanceof LinkedHashMap)
+			parseHashMap(parentId, indent + "  ",
+					(LinkedHashMap<String, Object>) value);
 		else if (value instanceof String) {
 			logger.info(indent + "String " + value);
-			createTechnology((String) value, parentId);
+			createTechnology((String) value, indent, parentId);
 		} else
-			logger.error("Unknown Value type " + value.getClass().getName() + " " + value);
+			logger.error("Unknown Value type " + value.getClass().getName()
+					+ " " + value);
 	}
-	
-	private Technology createTechnology(String name, ID parentId) throws IntegerException {
+
+	private Technology createTechnology(String name, String indent, ID parentId)
+			throws IntegerException {
 
 		if (name.contains("placeholder"))
 			return null;
-		
-		Technology technology = new Technology();
+
+		Technology technology = technologyManager.getTechnologyByName(name);
+		if (technology == null)
+			technology = new Technology();
+
 		int indexOf = name.indexOf('(');
 		if (indexOf > 0) {
 			technology.setName(name.substring(0, name.indexOf('(') - 1));
-			
+
 			int endIndex = name.lastIndexOf(')');
 			if (endIndex < indexOf)
 				endIndex = name.length();
-			
-			technology.setDescription(name.substring(name.indexOf('(') + 1, endIndex));
+
+			technology.setDescription(name.substring(name.indexOf('(') + 1,
+					endIndex));
 		} else {
 			technology.setDescription(name);
 			technology.setName(name);
 		}
-		
-		logger.info("Create Technology " + technology.getName() + "(" + technology.getName().length() + ")"
-				+ "== " + technology.getDescription() + "(" + technology.getDescription().length() + ")");
-		
+
+		logger.info("Create Technology " + technology.getName() + "("
+				+ technology.getName().length() + ")" + "== "
+				+ technology.getDescription() + "("
+				+ technology.getDescription().length() + ")");
+
 		technology.setParentId(parentId);
-		
+
+		StringBuffer b = new StringBuffer();
+		b.append('\n');
+		b.append(indent).append("- name: ").append(technology.getName())
+				.append('\n');
+		b.append(indent).append("  description: ")
+				.append(technology.getDescription()).append('\n');
+		b.append(indent).append("  parent: ")
+				.append(technology.getParentId().getName()).append('\n');
+
+		logger.info(b.toString());
+
 		technology = technologyManager.updateTechnology(technology);
-		
+
 		return technology;
 	}
-	
-	
+
+	@Override
+	public void loadTechnology(String content) throws IntegerException {
+		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
+
+		YamlTechnology load = null;
+
+		try {
+			load = (YamlTechnology) yaml.load(content);
+		} catch (Throwable e) {
+			logger.error("Unexpected error reading in YAML! " + e.toString()
+					+ " File " + content);
+		}
+
+		logger.info("YAML Object is " + load.getClass().getName());
+
+		try {
+			Technology[] root = technologyManager.getTopLevelTechnology();
+
+			Technology rootTech = null;
+			if (root == null || root.length == 0) {
+				rootTech = new Technology();
+				rootTech.setName("root");
+				rootTech = technologyManager.updateTechnology(rootTech);
+
+			} else {// Take first root. There should be only one!
+
+				rootTech = root[0];
+			}
+
+		
+
+		} catch (IntegerException e) {
+			logger.error("Error reading in YAML file! " + e.toString()
+					+ " Conent " + content);
+			e.printStackTrace();
+		} catch (Throwable e) {
+			logger.error("Unexpected Error reading in YAML file! "
+					+ e.toString() + " Conent " + content);
+			e.printStackTrace();
+		}
+
+	}
+
 }

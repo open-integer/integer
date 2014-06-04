@@ -31,32 +31,34 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.util;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author David Taylor
  *
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
+public class FileUtil {
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
-	/**
-	 * Read in the yaml in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists then update with new children.
-	 * 
-	 * @param content
-	 * @return Status of the load. 
-	 * @throws IntegerException 
-	 */
-	String loadTechnologyTree(String content) throws IntegerException;
+	public static String readInMIB(File file) {
+		
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(file.toPath()));
 
-	/**
-	 * @param data
-	 * @throws IntegerException 
-	 */
-	void loadTechnology(String data) throws IntegerException;
-
+		} catch (IOException e) {
+			logger.error("Error reading in " + file + " Error " + e.toString());
+			e.printStackTrace();
+		
+		} 
+		
+		return content;
+	}
 }

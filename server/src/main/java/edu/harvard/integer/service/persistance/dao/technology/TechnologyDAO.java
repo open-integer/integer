@@ -47,7 +47,6 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.technology.Technology;
-import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -119,6 +118,6 @@ public class TechnologyDAO extends BaseDAO {
 	 * @return
 	 */
 	public Technology findByName(String name) {
-		return findByStringField(name, "name", Technology.class);
+		return findByStringFieldIngnoreCase(name, "name", Technology.class);
 	}
 }

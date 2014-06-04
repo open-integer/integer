@@ -31,32 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.service.persistance.dao.persistance;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.persistence.DataPreLoadFile;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
+public class DataPreLoadFileDAO extends BaseDAO {
 
 	/**
-	 * Read in the yaml in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists then update with new children.
-	 * 
-	 * @param content
-	 * @return Status of the load. 
-	 * @throws IntegerException 
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	String loadTechnologyTree(String content) throws IntegerException;
-
-	/**
-	 * @param data
-	 * @throws IntegerException 
-	 */
-	void loadTechnology(String data) throws IntegerException;
+	public DataPreLoadFileDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, DataPreLoadFile.class);
+		
+	}
 
 }
