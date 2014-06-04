@@ -43,6 +43,7 @@ import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -52,8 +53,11 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 import edu.harvard.integer.common.TestUtil;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 
 
@@ -72,7 +76,7 @@ public class TechnologyLoadTest {
 	@Before
 	public void initializeLogger() {
 	
-		//org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
+		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
 	}
 	
 	@Deployment
@@ -82,8 +86,8 @@ public class TechnologyLoadTest {
 	}
 
 	@Test
-	public void readTechnologyTree() {
-		File techTree = new File("../config/technology/technology-tree.yaml");
+	public void readTechnologyTree1() throws IntegerException {
+		File techTree = new File("../config/technology/TechnologyTree.yaml");
 		String content = null;
 		try {
 			content = new String(Files.readAllBytes(techTree.toPath()));
@@ -94,12 +98,9 @@ public class TechnologyLoadTest {
 			fail("Error loading MIB: " + e.getMessage());
 		}
 		
-		Yaml yaml = new Yaml();
-		
+		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
+
 		Object load = yaml.load(content);
-		logger.info("YAML Object is " + load.getClass().getName());
-		
-		parseObject("", load);
 		
 		logger.info("Technology read in: " + yaml.dump(load));
 		
@@ -138,29 +139,29 @@ public class TechnologyLoadTest {
 	
 //
 //
-//	@Test
-//	public void readCDPTechnology() {
-//		File mibFile = new File("../config/technology/cdp.yaml");
-//		
-//		String content = null;
-//		try {
-//			content = new String(Files.readAllBytes(mibFile.toPath()));
-//
-//		} catch (IOException e) {
-//
-//			e.printStackTrace();
-//			fail("Error loading MIB: " + e.getMessage());
-//		}
-//		
-//		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
-//		
-//		Object load = yaml.load(content);
-//		System.out.println("YAML Object is " + load.getClass().getName());
-////		System.out.println("YAML: " + load.toString());
-//		
-//		System.out.println("Technology read in: " + yaml.dump(load));
-//	}
-//	
+	@Test
+	public void readCDPTechnology() {
+		File mibFile = new File("../config/technology/cdp.yaml");
+		
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(mibFile.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading MIB: " + e.getMessage());
+		}
+		
+		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
+		
+		Object load = yaml.load(content);
+		System.out.println("YAML Object is " + load.getClass().getName());
+//		System.out.println("YAML: " + load.toString());
+		
+		System.out.println("Technology read in: " + yaml.dump(load));
+	}
+	
 //	
 //	@Test
 //	public void readInterfaceTechnology() {

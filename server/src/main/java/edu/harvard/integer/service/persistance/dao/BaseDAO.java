@@ -184,6 +184,42 @@ public class BaseDAO {
 	 * @param clazz
 	 * @return
 	 */
+	protected <T extends BaseEntity> T findByStringFieldIngnoreCase(String fieldValue,
+			String fieldName, Class<T> clazz) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+
+		Root<T> from = query.from(clazz);
+		query.select(from);
+
+		ParameterExpression<String> oid = criteriaBuilder
+				.parameter(String.class);
+		
+		
+		query.select(from).where(
+				criteriaBuilder.equal(from.get(fieldName.toLowerCase()), criteriaBuilder.lower(oid)));
+
+		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, fieldValue);
+
+		List<T> resultList = typeQuery.getResultList();
+
+		if (resultList.size() > 0)
+			return resultList.get(0);
+		else
+			return null;
+	}
+	
+	/**
+	 * Find the entity in the database by the specified field.
+	 * 
+	 * @param fieldValue
+	 * @param fieldName
+	 * @param clazz
+	 * @return
+	 */
 	protected <T extends BaseEntity> T findByAddressField(Address fieldValue,
 			String fieldName, Class<T> clazz) {
 		CriteriaBuilder criteriaBuilder = getEntityManager()
@@ -218,6 +254,7 @@ public class BaseDAO {
 	 * @param clazz
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	protected <T extends BaseEntity> T[] findByLongField(Long fieldValue,
 			String fieldName, Class<T> clazz) {
 		CriteriaBuilder criteriaBuilder = getEntityManager()
@@ -370,7 +407,6 @@ public class BaseDAO {
 			throw new IntegerException(e, SystemErrorCodes.InvalidIDNoType);
 		}
 
-		@SuppressWarnings("unchecked")
 		T entity = (T) entityManger.find(clazz, id.getIdentifier());
 
 		return entity;

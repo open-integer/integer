@@ -48,6 +48,7 @@ import edu.harvard.integer.service.persistance.dao.managementobject.Applicabilit
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
+import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
 import edu.harvard.integer.service.persistance.dao.security.DirectUserLoginDAO;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
 import edu.harvard.integer.service.persistance.dao.selection.FilterNodeDAO;
@@ -298,5 +299,10 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	FilterNodeDAO getFilterNodeDAO();
+
+	/**
+	 * @return
+	 */
+	DataPreLoadFileDAO getDataPreLoadFileDAO();
 
 }

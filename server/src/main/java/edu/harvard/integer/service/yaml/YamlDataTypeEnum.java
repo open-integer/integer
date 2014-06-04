@@ -33,30 +33,11 @@
 
 package edu.harvard.integer.service.yaml;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
-
 /**
  * @author David Taylor
  *
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
-
-	/**
-	 * Read in the yaml in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists then update with new children.
-	 * 
-	 * @param content
-	 * @return Status of the load. 
-	 * @throws IntegerException 
-	 */
-	String loadTechnologyTree(String content) throws IntegerException;
-
-	/**
-	 * @param data
-	 * @throws IntegerException 
-	 */
-	void loadTechnology(String data) throws IntegerException;
-
+public enum YamlDataTypeEnum {
+	TechnologyTree,
+	Technologies;
 }
