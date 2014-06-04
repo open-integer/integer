@@ -49,15 +49,16 @@ public class ContaineeTreeView extends ScrollPanel {
 					@Override
 					public void onSuccess(ServiceElement[] serviceElements) {
 						if (serviceElements == null || serviceElements.length == 0) {
-							for (int i = 0; i < 30; i++) {
-								ServiceElement se = new ServiceElement();
-								se.setName("fake child - " + i + " (*)");
-								se.setDescription("This is a fake child " + i);
-								TreeItem item = new TreeItem();
-								item.setText(se.getName());
-								item.setUserObject(se);
-								treeItem.addItem(item);
-							}
+							return;
+//							for (int i = 0; i < 30; i++) {
+//								ServiceElement se = new ServiceElement();
+//								se.setName("fake child - " + i + " (*)");
+//								se.setDescription("This is a fake child " + i);
+//								TreeItem item = new TreeItem();
+//								item.setText(se.getName());
+//								item.setUserObject(se);
+//								treeItem.addItem(item);
+//							}
 						}
 						else
 							

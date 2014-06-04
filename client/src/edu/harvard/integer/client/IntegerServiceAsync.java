@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
@@ -83,10 +84,37 @@ public interface IntegerServiceAsync {
 	 */
 	void getServiceElementByParentId(ID id, AsyncCallback<ServiceElement[]> callback);
 
+	/**
+	 * Start discovery.
+	 *
+	 * @param callback the callback
+	 */
 	void startDiscovery(AsyncCallback<Void> callback);
 
+	/**
+	 * Start discovery.
+	 *
+	 * @param address the address
+	 * @param mask the mask
+	 * @param callback the callback
+	 */
 	void startDiscovery(String address, String mask, AsyncCallback<Void> callback);
 
+	/**
+	 * Gets the device details.
+	 *
+	 * @param id the id
+	 * @param callback the callback
+	 * @return the device details
+	 */
 	void getDeviceDetails(ID id, AsyncCallback<DeviceDetails> callback);
+
+	/**
+	 * Gets the blank selection.
+	 *
+	 * @param callback the callback
+	 * @return the blank selection
+	 */
+	void getBlankSelection(AsyncCallback<Selection> callback);
 
 }
