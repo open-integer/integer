@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
@@ -111,5 +112,7 @@ public interface IntegerService extends RemoteService {
 	 * @throws IntegerException
 	 */
 	void startDiscovery(String address, String mask) throws Exception;
+	
+	Selection getBlankSelection() throws Exception;
 
 }

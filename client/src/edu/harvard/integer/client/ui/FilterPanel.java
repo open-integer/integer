@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.CellTree;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -38,15 +39,19 @@ import edu.harvard.integer.common.topology.CriticalityEnum;
  * The Class FilterPanel.
  */
 public class FilterPanel extends StackLayoutPanel {
-
+	
 	private Filter filter;
+	
 	/**
 	 * Instantiates a new filter panel.
 	 *
 	 * @param unit the unit
 	 */
-	public FilterPanel(Filter filter) {
-		super(Unit.EM);
+	public FilterPanel() {
+		super(Unit.EM);	
+	}
+	
+	public void update(Filter filter) {
 		this.filter = filter;
 		
 		add(createTechnologyFilterPanel(filter.getTechnologies()), "Technology", 3);
@@ -85,6 +90,19 @@ public class FilterPanel extends StackLayoutPanel {
 						List<TechItem> selected = new ArrayList<TechItem>(selectionModel.getSelectedSet());
 						Collections.sort(selected);
 						
+						List<FilterNode> techList = new ArrayList<FilterNode>();
+						for (TechItem item : selected) {
+							FilterNode node = new FilterNode();
+							ID id = new ID((long)item.getId(), item.getName(), new IDType("Technology"));
+							node.setItemId(id);
+							techList.add(node);
+						}
+						
+						// get Filter
+						filter.setTechnologies(techList);
+						
+						// call API
+						Window.alert("Updating server ... under construction");
 					}
 				});
 

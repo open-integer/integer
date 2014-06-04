@@ -24,3 +24,4 @@ fi
 
 $mysqlCmd < $BASEDIR/../preload/insertCoreManager.sql
 $mysqlCmd < $BASEDIR/../preload/insertIntegerServer.sql
+$mysqlCmd < $BASEDIR/../preload/DataFilesToLoad.sql

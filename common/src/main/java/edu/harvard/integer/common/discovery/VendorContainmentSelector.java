@@ -94,13 +94,6 @@ public class VendorContainmentSelector extends BaseEntity {
 	 */
 	private String softwareVersion = null;
 
-	/**
-	 * If the vendor, model, firmware and software version do not map to a
-	 * specific VendorContainmentSelector then this value can be used to test
-	 * the device for existence of a value. If a value is returned then this
-	 * VendorContainmentSelector can be used to discover the device containment.
-	 */
-	private ServiceElementManagementObject testManagementObject = null;
 
 	/**
 	 * The idId of the instances of the hardware containment structure class
