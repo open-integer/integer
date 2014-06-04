@@ -48,7 +48,8 @@ import edu.harvard.integer.common.snmp.SNMP;
  * physical or virtual entity when the Entity MIB or other standard containment
  * model is not used.
  * 
- *<p> There will always be one (potentially) many
+ * <p>
+ * There will always be one (potentially) many
  * SnmpServiceElementTypeDiscrininator instances associated with an instance of
  * this object. The Discriminator instances take the value returned from the
  * contextOid to determine the service element type.
@@ -99,6 +100,14 @@ public class SnmpLevelOID extends BaseEntity {
 	 */
 	@OneToMany
 	private List<SnmpServiceElementTypeDiscriminator> disriminators = null;
+
+	/**
+	 * SnmpContainmentRelation definition to map the ServiceElement from this level to a
+	 * different ServiceElement. Ex. entAliasMappingTable. Maps the logical
+	 * components and physical components to and extrernal to the entity MIB
+	 * object. entAliasMappingIdentifier.33.0 = ifIndex.6
+	 */
+	private SnmpContainmentRelation relation = null;
 
 	/**
 	 * @return the contextOID
