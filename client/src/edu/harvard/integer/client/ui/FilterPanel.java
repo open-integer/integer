@@ -24,11 +24,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
+import edu.harvard.integer.client.widget.HvCheckListPanel;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.Filter;
@@ -41,6 +43,11 @@ import edu.harvard.integer.common.topology.CriticalityEnum;
 public class FilterPanel extends StackLayoutPanel {
 	
 	private Filter filter;
+	
+	private ListDataProvider<ID> providerProvider = new ListDataProvider<ID>();
+	private ListDataProvider<CriticalityEnum> criticalityProvider = new ListDataProvider<CriticalityEnum>();
+	private ListDataProvider<ID> locationProvider = new ListDataProvider<ID>();
+	private ListDataProvider<ID> serviceProvider = new ListDataProvider<ID>();
 	
 	/**
 	 * Instantiates a new filter panel.
@@ -55,10 +62,10 @@ public class FilterPanel extends StackLayoutPanel {
 		this.filter = filter;
 		
 		add(createTechnologyFilterPanel(filter.getTechnologies()), "Technology", 3);
-		add(getProviderFilterPanel(filter), "Provider", 3);
-		add(createCriticalityFilterPanel(filter), "Criticality", 3);
-		add(createLocationFilterPanel(filter), "Location", 3);
-		add(createServiceFilterPanel(filter), "Service", 3);
+		add(new HvCheckListPanel<ID>(providerProvider, filter.getProviders()), "Provider", 3);
+		add(new HvCheckListPanel<CriticalityEnum>(criticalityProvider, filter.getCriticalities()), "Criticality", 3);
+		add(new HvCheckListPanel<ID>(locationProvider, filter.getLocations()), "Location", 3);
+		add(new HvCheckListPanel<ID>(serviceProvider, filter.getServices()), "Service", 3);
 		add(getOrganizationFilterPanel(filter), "Organization", 3);
 	}
 
@@ -116,54 +123,6 @@ public class FilterPanel extends StackLayoutPanel {
 		technologyFilterPanel.add(technologyCellTree);
 		return technologyFilterPanel;
 
-	}
-	
-	/**
-	 * Creates the criticality filters item.
-	 *
-	 * @return the widget
-	 */
-	private Widget createCriticalityFilterPanel(Filter filter) {
-		VerticalPanel filtersPanel = new VerticalPanel();
-		filtersPanel.setSpacing(4);
-		List<CriticalityEnum> ids = filter.getCriticalities();
-		for (CriticalityEnum id : ids) {
-			filtersPanel.add(new CheckBox(id.name()));
-		}
-		
-		return new SimplePanel(filtersPanel);
-	}
-	
-	/**
-	 * Creates the location filters item.
-	 *
-	 * @return the widget
-	 */
-	private Widget createLocationFilterPanel(Filter filter) {
-		VerticalPanel filtersPanel = new VerticalPanel();
-		filtersPanel.setSpacing(4);
-		List<ID> ids = filter.getLocations();
-		for (ID id : ids) {
-			filtersPanel.add(new CheckBox(id.getName()));
-		}
-		
-		return new SimplePanel(filtersPanel);
-	}
-	
-	/**
-	 * Creates the service filters item.
-	 *
-	 * @return the widget
-	 */
-	private Widget createServiceFilterPanel(Filter filter) {
-		VerticalPanel filtersPanel = new VerticalPanel();
-		filtersPanel.setSpacing(4);
-		List<ID> ids = filter.getServices();
-		for (ID id : ids) {
-			filtersPanel.add(new CheckBox(id.getName()));
-		}
-		
-		return new SimplePanel(filtersPanel);
 	}
 	
 	/** The organization filter panel. */
@@ -232,371 +191,5 @@ public class FilterPanel extends StackLayoutPanel {
 	      return value.toString().length() > 20;
 	    }
 	  }
-
-	
-	/** The absolute panel. */
-	private AbsolutePanel absolutePanel;
-	
-	/** The cell tree. */
-	private CellTree cellTree;
-	
-	/** The btn add. */
-	private Button btnAdd;
-	
-	/** The btn remove. */
-	private Button btnRemove;
-	
-	/** The my tree model. */
-	private MyTreeModel myTreeModel;
-	
-	/** The selection model cell tree. */
-	private SingleSelectionModel<MyNode> selectionModelCellTree = null;
-
-	/**
-	 * Gets the absolute panel.
-	 *
-	 * @return the absolute panel
-	 */
-	CellTable providerTable = new CellTable();
-	private Widget getProviderFilterPanel(Filter filter) {
-		// Add the first column:
-	    /*TextColumn<String> column = new TextColumn<String>() {
-	        @Override
-	        public String getValue(final String object) {
-	            return object;
-	        }
-	    };
-	    providerTable.addColumn(column, SafeHtmlUtils.fromSafeConstant("Provider Name"));
-
-	    // the checkbox column for selecting the lease
-	    Column<String, Boolean> checkColumn = new Column<String, Boolean>(
-	            new CheckboxCell(true, false)) {
-	        @Override
-	        public Boolean getValue(final String object) {
-	            return selectionModel.isSelected(object);
-	        }
-	    };
-
-	    CheckboxHeader selectAll = new CheckboxHeader();
-	    selectAll.setSelectAllHandler(new SelectHandler());
-	    providerTable.addColumn(checkColumn, selectAll);*/
-	    
-		VerticalPanel filtersPanel = new VerticalPanel();
-		filtersPanel.setSpacing(4);
-		List<ID> ids = filter.getProviders();
-		for (ID id : ids) {
-			CheckBox checkbox = new CheckBox(id.getName());
-			filtersPanel.add(checkbox);
-		}
-		
-		return new SimplePanel(filtersPanel);
-	}
-	
-	/**
-	 * Gets the cell tree.
-	 *
-	 * @return the cell tree
-	 */
-	private CellTree getCellTree() {
-	    if (cellTree == null) {
-	      myTreeModel = new MyTreeModel();
-	      cellTree = new CellTree(myTreeModel, null);
-	      cellTree.setSize("285px", "401px");
-	    }
-	    return cellTree;
-	  }
-
-	  /**
-  	 * Gets the btn add.
-  	 *
-  	 * @return the btn add
-  	 */
-  	private Button getBtnAdd() {
-	    if (btnAdd == null) {
-	      btnAdd = new Button("Add");
-	      btnAdd.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				MyNode node =   selectionModelCellTree.getSelectedObject();
-		        if(node != null)
-		            myTreeModel.addNew(node, "Bla");
-			}
-	      });
-	    }
-	    return btnAdd;
-	  }
-
-	  /**
-  	 * Gets the btn remove.
-  	 *
-  	 * @return the btn remove
-  	 */
-  	private Button getBtnRemove() {
-	    if (btnRemove == null) {
-	      btnRemove = new Button("Remove");
-	      btnRemove.addClickHandler(new ClickHandler() {
-	        @Override
-	        public void onClick(ClickEvent event) {
-	          MyNode node = selectionModelCellTree.getSelectedObject();
-	          if(node != null)
-	            myTreeModel.remove(node);
-	        }
-	      });
-	    }
-	    return btnRemove;
-	  }
-
-	  /**
-  	 * The Class MyNode.
-  	 */
-  	public class MyNode {
-	    
-    	/** The name. */
-    	private String name;
-	    
-    	/** The childs. */
-    	private ArrayList<MyNode> childs; //nodes childrens
-	    
-    	/** The parent. */
-    	private MyNode parent; //track internal parent
-	    
-    	/** The cell. */
-    	private MyCell cell; //for refresh - reference to visual component
-
-	    /**
-    	 * Instantiates a new my node.
-    	 *
-    	 * @param name the name
-    	 */
-    	public MyNode(String name) {
-	      super();
-	      parent = null;
-	      this.name = name;
-	      childs = new ArrayList<MyNode>();
-	    }
-
-	    /**
-    	 * Adds the sub menu.
-    	 *
-    	 * @param m the m
-    	 */
-    	public void addSubMenu(MyNode m) {
-	      m.parent = this;
-	      childs.add(m);
-	    }
-
-	    /**
-    	 * Removes the menu.
-    	 *
-    	 * @param m the m
-    	 */
-    	public void removeMenu(MyNode m) {
-
-	      m.getParent().childs.remove(m);
-	    }
-
-	    /**
-    	 * Checks for childrens.
-    	 *
-    	 * @return true, if successful
-    	 */
-    	public boolean hasChildrens() {
-	      return childs.size()>0;
-	    }
-
-	    /**
-    	 * Gets the list.
-    	 *
-    	 * @return the list
-    	 */
-    	public ArrayList<MyNode> getList() {
-	      return childs;
-	    }
-
-	    /**
-    	 * Gets the parent.
-    	 *
-    	 * @return the parent
-    	 */
-    	public MyNode getParent() {
-	      return parent;
-	    }
-
-	    /**
-    	 * Sets the cell.
-    	 *
-    	 * @param cell the new cell
-    	 */
-    	public void setCell(MyCell cell) {
-	      this.cell = cell;
-	    }
-
-	    /**
-    	 * Refresh.
-    	 */
-    	public void refresh() {
-	      if(parent!=null) {
-	        parent.refresh();
-	      }
-	      if (cell!=null) {
-	        cell.refresh(); //refresh tree
-	      }
-	    }
-
-	    /**
-    	 * Gets the name.
-    	 *
-    	 * @return the name
-    	 */
-    	public String getName() {
-	      return name;
-	    }
-
-	    /**
-    	 * Sets the name.
-    	 *
-    	 * @param name the new name
-    	 */
-    	public void setName(String name) {
-	      this.name = name;
-	    }
-	  }
-
-	  /**
-  	 * The Class MyTreeModel.
-  	 */
-  	public class MyTreeModel implements TreeViewModel {
-	    
-    	/** The official root. */
-    	private MyNode officialRoot; //default not dynamic
-	    
-    	/** The student root. */
-    	private MyNode studentRoot; //default not dynamic
-	    
-    	/** The test root. */
-    	private MyNode testRoot; //default not dynamic
-	    
-    	/** The root. */
-    	private MyNode root;
-
-	    /**
-    	 * Gets the root.
-    	 *
-    	 * @return the root
-    	 */
-    	public MyNode getRoot() { // to set CellTree root
-	      return root;
-	    }
-
-	    /**
-    	 * Instantiates a new my tree model.
-    	 */
-    	public MyTreeModel() {
-	      selectionModelCellTree = new SingleSelectionModel<MyNode>();
-	      root = new MyNode("root");
-	      // Default items
-	      officialRoot = new MyNode("Cisco"); //some basic static data
-	      studentRoot = new MyNode("Lucent");
-	      testRoot = new MyNode("IBM");
-	      root.addSubMenu(officialRoot);
-	      root.addSubMenu(studentRoot);
-	      root.addSubMenu(testRoot);
-	    }
-
-	    //example of add add logic
-	    /**
-    	 * Adds the new.
-    	 *
-    	 * @param myparent the myparent
-    	 * @param name the name
-    	 */
-    	public void addNew(MyNode myparent, String name) {
-	      myparent.addSubMenu(new MyNode(name));
-	      myparent.refresh(); //HERE refresh tree
-	    }
-	    
-    	/**
-    	 * Removes the.
-    	 *
-    	 * @param objToRemove the obj to remove
-    	 */
-    	public void remove(MyNode objToRemove) {
-
-	      objToRemove.removeMenu(objToRemove);
-	      objToRemove.refresh();
-	    }
-
-	    /* (non-Javadoc)
-    	 * @see com.google.gwt.view.client.TreeViewModel#getNodeInfo(java.lang.Object)
-    	 */
-    	@Override
-	    public <T> NodeInfo<?> getNodeInfo(T value) {
-	      ListDataProvider<MyNode> dataProvider;
-	      MyNode myValue = null;
-	      if (value == null) { // root is not set
-	        dataProvider = new ListDataProvider<MyNode>(root.getList());
-	      } else {
-	        myValue = (MyNode) value;
-	        dataProvider = new ListDataProvider<MyNode>(myValue.getList());
-	      }
-	      MyCell cell = new MyCell(dataProvider); //HERE Add reference
-	      if (myValue != null)
-	        myValue.setCell(cell);
-	      return new DefaultNodeInfo<MyNode>(dataProvider, cell, selectionModelCellTree, null);
-	    }
-
-	    /* (non-Javadoc)
-    	 * @see com.google.gwt.view.client.TreeViewModel#isLeaf(java.lang.Object)
-    	 */
-    	@Override
-	    public boolean isLeaf(Object value) {
-	      if (value instanceof MyNode) {
-	        MyNode t = (MyNode) value;
-	        if (!t.hasChildrens())
-	          return true;
-	        return false;
-	      }
-	      return false;
-	    }
-	  }
-
-	  /**
-  	 * The Class MyCell.
-  	 */
-  	public class MyCell extends AbstractCell<MyNode> {
-	    
-    	/** The data provider. */
-    	ListDataProvider<MyNode> dataProvider; //for refresh
-
-	    /**
-    	 * Instantiates a new my cell.
-    	 *
-    	 * @param dataProvider the data provider
-    	 */
-    	public MyCell(ListDataProvider<MyNode> dataProvider) {
-	      super();
-	      this.dataProvider = dataProvider;
-	    }
-	    
-    	/**
-    	 * Refresh.
-    	 */
-    	public void refresh() {
-	      dataProvider.refresh();
-	    }
-
-	    /* (non-Javadoc)
-    	 * @see com.google.gwt.cell.client.AbstractCell#render(com.google.gwt.cell.client.Cell.Context, java.lang.Object, com.google.gwt.safehtml.shared.SafeHtmlBuilder)
-    	 */
-    	@Override
-	    public void render(Context context, MyNode value, SafeHtmlBuilder sb) {
-	      if (value == null) {
-	        return;
-	      }
-	      sb.appendEscaped(value.getName());
-	    }
-	  }
-
 
 }
