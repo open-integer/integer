@@ -306,6 +306,8 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return snmps;
 	}
 	
+	
+	
 	private List<SNMP> addOid(String oid, List<SNMP> snmps, SNMPDAO dao) {
 		SNMP snmp = dao.findByOid(oid);
 		if (snmp != null)
