@@ -141,7 +141,7 @@ public class TechnologyLoadTest {
 //
 	@Test
 	public void readCDPTechnology() {
-		File mibFile = new File("../config/technology/cdp.yaml");
+		File mibFile = new File("../config/cdp/technology.yaml");
 		
 		String content = null;
 		try {
@@ -160,6 +160,14 @@ public class TechnologyLoadTest {
 //		System.out.println("YAML: " + load.toString());
 		
 		System.out.println("Technology read in: " + yaml.dump(load));
+		
+
+		try {
+			yamlManager.loadTechnologyTree(content);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
 	}
 	
 //	

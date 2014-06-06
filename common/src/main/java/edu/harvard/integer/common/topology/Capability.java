@@ -44,6 +44,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -93,6 +94,8 @@ public class Capability extends BaseEntity {
 	@CollectionTable(name = "Capability_fcaps")
 	private List<FCAPSEnum> fcaps = null;
 
+
+	@Size(min=1, max=5000)
 	private String description = null;
 
 	/*
@@ -132,7 +135,7 @@ public class Capability extends BaseEntity {
 	 *            the description to set
 	 */
 	public void setDescription(String description) {
-		this.description = description;
+		this.description =  checkLentght(description, 5000);
 	}
 
 	/**

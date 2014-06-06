@@ -59,4 +59,13 @@ public class CapabilityDAO extends BaseDAO {
 		
 	}
 
+	/**
+	 * @param name
+	 */
+	public Capability findByName(String name) {
+		
+		return findByStringField(name, "name", Capability.class);
+		
+	}
+
 }

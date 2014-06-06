@@ -152,4 +152,10 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 	 */
 	Technology getTechnologyByName(String name) throws IntegerException;
 
+	/**
+	 * @param id
+	 * @param name
+	 */
+	Mechanism getMechanismByName(String name) throws IntegerException;
+
 }

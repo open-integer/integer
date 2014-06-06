@@ -1,0 +1,88 @@
+---
+
+# management definition for CDP
+# by Loren Jan Wilson, 2014-05-21
+
+managementGroups:
+    - name: cisco-cdp-global
+      description: Cisco enterprise CDP MIB, global variables.
+      accessMethod: 
+          protocol: SNMP
+          mib: CISCO-CDP-MIB
+          table: null
+          index: null
+          mapping: direct
+      managementObjects:
+          - name: cdpGlobalRun
+            uri: cdpGlobalRun
+            capability: cdp-global-run
+            unique: 1
+
+          - name: cdpGlobalDeviceId
+            uri: cdpGlobalDeviceId
+            capability: cdp-global-deviceId
+
+    - name: cisco-cdp-interface
+      description: Cisco enterprise CDP MIB, per-interface attributes.
+      accessMethod: 
+          protocol: SNMP
+          mib: CISCO-CDP-MIB
+          table: cdpInterfaceTable
+          index: [ cdpInterfaceIfIndex ]
+          mapping: direct
+      managementObjects:
+          - name: cdpInterfaceIfIndex
+            uri: cdpInterfaceIfIndex
+            capability: cdp-interface-index
+            unique: 1
+
+          - name: cdpInterfaceEnable
+            uri: cdpInterfaceEnable
+            capability: cdp-interface-enable
+
+          - name: cdpInterfaceName
+            uri: cdpInterfaceName
+            capability: cdp-interface-name
+
+    - name: cisco-cdp-cache
+      description: Cisco enterprise CDP MIB, device cache per interface.
+      accessMethod: 
+          protocol: SNMP
+          mib: CISCO-CDP-MIB
+          table: cdpCacheTable
+          index: [ cdpCacheIfIndex, cdpCacheDeviceIndex ]
+      managementObjects:
+          - name: cdpCacheIfIndex
+            uri: cdpCacheIfIndex
+            capability: cdp-cache-ifIndex
+            unique: 1
+
+          - name: cdpCacheDeviceIndex
+            uri: cdpCacheDeviceIndex
+            capability: cdp-cache-deviceIndex
+
+          - name: cdpCacheAddressType
+            uri: cdpCacheAddressType
+            capability: cdp-cache-addressType
+
+          - name: cdpCacheAddress
+            uri: cdpCacheAddress
+            capability: cdp-cache-address
+
+          - name: cdpCacheVersion
+            uri: cdpCacheVersion
+            capability: cdp-cache-version
+
+          - name: cdpCacheDeviceId
+            uri: cdpCacheDeviceId
+            capability: cdp-cache-deviceId
+
+          - name: cdpCacheDevicePort
+            uri: cdpCacheDevicePort
+            capability: cdp-cache-devicePort
+
+          - name: cdpCachePlatform
+            uri: cdpCachePlatform
+            capability: cdp-cache-platform
+
+...

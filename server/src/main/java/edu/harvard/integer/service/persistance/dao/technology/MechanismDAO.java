@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.persistance.dao.technology;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -44,6 +45,7 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
@@ -89,6 +91,15 @@ public class MechanismDAO extends BaseDAO {
 
 		
 		return resultList;
+	}
+
+	/**
+	 * @param technologyId
+	 * @param name
+	 * @return
+	 */
+	public Mechanism findByName(String name) {
+		return findByStringField(name, "name", Mechanism.class);		
 	}
 
 }

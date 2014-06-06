@@ -1,0 +1,70 @@
+---
+
+# management definition for physical hardware
+# by Loren Jan Wilson, 2014-05-21
+
+managementGroups:
+    - name: entity-physical
+      description: The physical table in the ENTITY-MIB.
+      accessMethod:
+          protocol: SNMP
+          mib: ENTITY-MIB
+          table: entPhysicalTable
+          index: [ entPhysicalIndex ]
+      managementObjects:
+          - name: entPhysicalIndex
+            uri: entPhysicalIndex
+            capability: physical-index
+            unique: 1
+
+          - name: entPhysicalDescr
+            uri: entPhysicalDescr
+            capability: physical-description
+
+          - name: entPhysicalVendorType
+            uri: entPhysicalVendorType
+            capability: physical-vendorType
+
+          - name: entPhysicalContainedIn
+            uri: entPhysicalContainedIn
+
+          - name: entPhysicalClass
+            uri: entPhysicalClass
+            capability: physical-name
+
+          - name: entPhysicalParentRelPos
+            uri: entPhysicalParentRelPos
+            capability: physical-relativePosition
+
+          - name: entPhysicalName
+            uri: entPhysicalName
+            capability: physical-name
+            
+          - name: entPhysicalHardwareRev
+            uri: entPhysicalHardwareRev
+            capability: physical-hardwareRevision
+
+          - name: entPhysicalFirmwareRev
+            uri: entPhysicalFirmwareRev
+            capability: physical-firmwareRevision
+
+          - name: entPhysicalSoftwareRev
+            uri: entPhysicalSoftwareRev
+            capability: physical-softwareRevision
+
+          - name: entPhysicalSerialNum
+            uri: entPhysicalSerialNum
+            capability: physical-serialNumber
+
+          - name: entPhysicalMfgName
+            uri: entPhysicalMfgName
+            capability: physical-vendor
+
+          - name: entPhysicalModelName
+            uri: entPhysicalModelName
+            capability: physical-model
+
+          - name: entPhysicalIsFRU
+            uri: entPhysicalIsFRU
+            capability: physical-fru
+

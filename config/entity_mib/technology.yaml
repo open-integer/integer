@@ -1,0 +1,153 @@
+---
+
+# technology definition for physical hardware
+# by Loren Jan Wilson, 2014-05-21
+
+# There are potentially many ways we can collect information about physical
+# hardware elements. This is designed around the things we can get by looking
+# at ENTITY-MIB, although we should also be able to collect similar info via
+# the Juniper Chassis MIB, for instance.
+#
+# Two pieces of data represented by ENTITY-MIB are being ignored here at this
+# time. One is the possibility for multiple-parenting relationships as
+# expressed by the entPhysicalContainsTable, which we don't look at. This means
+# we won't see, for example, both slots that a double-wide line card is plugged
+# into. Integer could definitely represent these relations but we don't
+# currently configure it to do so.
+#
+# The other thing we're ignoring at the moment is the entLogicalTable. So we
+# won't collect logical devices this way, only physical hardware components.
+# This also means that if a physical component is only connected to the ifTable
+# via the creation of logical devices, we won't see those relations.
+
+
+technologies:
+    - name: physical
+      provides: [ entity, hardware ]
+      description: > 
+          Discoverable hardware elements, including chassis, slots, linecards,
+          ports, optics, etc.
+      mechanisms:
+          - name: physical-hardware
+            description: >
+                One physical piece of hardware, of the most general type. Other
+                mechanism types will inherit this basic set of capabilities.
+            capabilities:
+                - name: physical-index
+                  description: > 
+                      A unique index for this hardware component, relative to
+                      other components in the same device.
+
+                - name: physical-description
+                  description: > 
+                      A text description of this hardware, irrespective of its
+                      particular role in this system. (Cisco doesn't implement
+                      this correctly, so there's going to be some role-specific
+                      information in these strings, such as "slot 3".)
+
+                - name: physical-vendorType
+                  description: > 
+                      This is an "autonomous type" that the vendor can use to
+                      indicate the vendor-specific hardware type of this
+                      physical component. In Cisco's case, it points to an
+                      enterprise OID in CISCO-ENTITY-VENDORTYPE-OID-MIB, e.g.
+                      "cevChassisCisco7604".
+
+                - name: physical-name
+                  description: > 
+                      A text description of this hardware and its system role.
+                      The intent here is that this name could be used for
+                      console commands where applicable (e.g. "Gi1/3").
+
+                - name: physical-class
+                  description: >
+                      The general hardware type as reported by the device.  For
+                      ENTITY-MIB, this is an integer pointing at a
+                      "physicalClass" data type. For JUNIPER-CHASSIS-MIB, there
+                      is something like this in the FRU table, although the set
+                      of possible types is different from the "physicalClass"
+                      data type in the ENTITY-MIB.
+
+                - name: physical-vendor
+                  description: > 
+                      The maker of this piece of hardware. Note: just because a
+                      string is not the same does not mean that the vendor is
+                      actually different... e.g. "Cisco Systems" vs. "Cisco"
+                      vs. "Cisco Systems, Inc.". I'm not sure how exactly we
+                      will provide a way for users to sanely search this
+                      field, but for now it is assumed that this value is
+                      exactly what the device reported and not transformed or
+                      normalized.
+
+                - name: physical-model
+                  description: Model name of this hardware.
+
+                - name: physical-serialNumber
+                  description: Serial number of this hardware.
+
+                - name: physical-hardwareRevision
+                  description: The hardware revision of this hardware.
+
+                - name: physical-firmwareRevision
+                  description: The firmware revision of this hardware.
+
+                - name: physical-softwareRevision
+                  description: > 
+                      The software revision running on this hardware. For a
+                      Cisco device, this will often just be equal to the
+                      running IOS version, but other vendors such as Brocade
+                      support more complex scenarios, such as local linecard
+                      software which must be upgraded separately from the
+                      device's general software.
+
+                - name: physical-parentIndex
+                  description: > 
+                      The physical-index for the part we're contained in,
+                      if applicable.
+
+                - name: physical-relativePosition
+                  description: > 
+                      The position of this part relative to other children of
+                      the same parent. (e.g. "1" for the first port on a given
+                      linecard, etc)
+
+                - name: physical-fru
+                  description: Is this part physically replaceable?
+
+          - name: physical-stack
+            parent: physical-hardware
+            description: > 
+                One switch stack. A switch like a Cisco 3750
+                is always considered to be stacked even if
+                there's only one switch in the "stack".
+
+          - name: physical-chassis
+            parent: physical-hardware
+            description: One physical chassis.
+
+          - name: physical-module
+            parent: physical-hardware
+            description: One physical module, such as a linecard.
+
+          - name: physical-port
+            parent: physical-hardware
+            description: One physical port.
+
+          - name: physical-container
+            parent: physical-hardware
+            description: One generic container, such as a card slot.
+
+          - name: physical-fan
+            parent: physical-hardware
+            description: One fan.
+
+          - name: physical-powerSupply
+            parent: physical-hardware
+            description: One power supply.
+
+          - name: physical-sensor
+            parent: physical-hardware
+            description: One sensor.
+
+...
+

@@ -194,6 +194,16 @@ public class TechnologyManager extends BaseManager implements TechnologyManagerL
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getMechanismByName(edu.harvard.integer.common.ID, java.lang.String)
+	 */
+	public Mechanism getMechanismByName(String name) throws IntegerException {
+		MechanismDAO dao = persistenceManager.getMechanismDAO();
+		
+		return dao.findByName(name);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see edu.harvard.integer.service.managementobject.
 	 * ManagementObjectCapabilityManagerInterface

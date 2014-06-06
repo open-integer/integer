@@ -49,7 +49,7 @@ public class YamlTechnology {
 
 	private List<String> provides = null;
 
-	private List<YamlMechanismType> mechanismTypes = null;
+	private List<YamlMechanismType> mechanisms = null;
 	
 	private List<YamlTechnology> technologies;
 
@@ -105,16 +105,16 @@ public class YamlTechnology {
 	/**
 	 * @return the mechanismTypes
 	 */
-	public List<YamlMechanismType> getMechanismTypes() {
-		return mechanismTypes;
+	public List<YamlMechanismType> getMechanisms() {
+		return mechanisms;
 	}
 
 	/**
 	 * @param mechanismTypes
 	 *            the mechanismTypes to set
 	 */
-	public void setMechanismTypes(List<YamlMechanismType> mechanismTypes) {
-		this.mechanismTypes = mechanismTypes;
+	public void setMechanisms(List<YamlMechanismType> mechanisms) {
+		this.mechanisms = mechanisms;
 	}
 
 	/**
