@@ -204,7 +204,7 @@ public class ServiceElementDAO extends BaseDAO {
 	 */
 	public ServiceElement[] findBySelection(Selection selection) {
 
-		return null;
+		return findTopLevelServiceElements();
 	}
 
 }

@@ -33,84 +33,22 @@
 
 package edu.harvard.integer.common.discovery;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.BaseEntity;
 
 /**
- * 
- * SnmpContainmentRelation definition to map the ServiceElement from this level to a different
- * ServiceElement. Ex. entAliasMappingTable. Maps the logical components and
- * physical components to and extrernal to the entity MIB object.
- * entAliasMappingIdentifier.33.0 = ifIndex.6
- * 
- * 
  * @author David Taylor
- * 
+ *
  */
-@Entity
-public class SnmpContainmentRelation extends SnmpRelationship {
-
+public class SnmpRelationship extends BaseEntity {
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
-	private SnmpLevelOID childTable = null;
-
-	@ManyToOne
-	private SNMPTable mappingTable = null;
-
-	@ManyToOne
-	private SNMP mappingOid = null;
-
-
-	/**
-	 * @return the childTable
-	 */
-	public SnmpLevelOID getChildTable() {
-		return childTable;
-	}
-
-	/**
-	 * @param childTable
-	 *            the childTable to set
-	 */
-	public void setChildTable(SnmpLevelOID childTable) {
-		this.childTable = childTable;
-	}
-
-	/**
-	 * @return the mappingTable
-	 */
-	public SNMPTable getMappingTable() {
-		return mappingTable;
-	}
-
-	/**
-	 * @param mappingTable
-	 *            the mappingTable to set
-	 */
-	public void setMappingTable(SNMPTable mappingTable) {
-		this.mappingTable = mappingTable;
-	}
-
-	/**
-	 * @return the mappingOid
-	 */
-	public SNMP getMappingOid() {
-		return mappingOid;
-	}
-
-	/**
-	 * @param mappingOid
-	 *            the mappingOid to set
-	 */
-	public void setMappingOid(SNMP mappingOid) {
-		this.mappingOid = mappingOid;
-	}
-
+	@Enumerated(EnumType.STRING)
+	private RelationMappingTypeEnum mappingType = null;
+	
 }

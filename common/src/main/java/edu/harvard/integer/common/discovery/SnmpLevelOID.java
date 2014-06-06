@@ -107,7 +107,7 @@ public class SnmpLevelOID extends BaseEntity {
 	 * components and physical components to and extrernal to the entity MIB
 	 * object. entAliasMappingIdentifier.33.0 = ifIndex.6
 	 */
-	private SnmpContainmentRelation relation = null;
+	private SnmpRelationship relationToParent = null;
 
 	/**
 	 * @return the contextOID
@@ -168,6 +168,20 @@ public class SnmpLevelOID extends BaseEntity {
 	public void setDisriminators(
 			List<SnmpServiceElementTypeDiscriminator> disriminators) {
 		this.disriminators = disriminators;
+	}
+
+	/**
+	 * @return the relationToParent
+	 */
+	public SnmpRelationship getRelationToParent() {
+		return relationToParent;
+	}
+
+	/**
+	 * @param relationToParent the relationToParent to set
+	 */
+	public void setRelationToParent(SnmpRelationship relationToParent) {
+		this.relationToParent = relationToParent;
 	}
 
 }

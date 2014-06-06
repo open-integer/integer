@@ -33,84 +33,57 @@
 
 package edu.harvard.integer.common.discovery;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPTable;
 
 /**
- * 
- * SnmpContainmentRelation definition to map the ServiceElement from this level to a different
- * ServiceElement. Ex. entAliasMappingTable. Maps the logical components and
- * physical components to and extrernal to the entity MIB object.
- * entAliasMappingIdentifier.33.0 = ifIndex.6
- * 
+ * This class holds the definition of a parent child relationship. This is used
+ * to map the child back to the parent.
  * 
  * @author David Taylor
  * 
  */
-@Entity
-public class SnmpContainmentRelation extends SnmpRelationship {
+public class SnmpParentChildRelationship extends SnmpRelationship {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
-	private SnmpLevelOID childTable = null;
+	/**
+	 * This is the OID to use match parent instance OID.
+	 */
+	private SNMP containmentOid = null;
 
-	@ManyToOne
-	private SNMPTable mappingTable = null;
-
-	@ManyToOne
-	private SNMP mappingOid = null;
-
+	private SNMP siblingOid = null;
 
 	/**
-	 * @return the childTable
+	 * @return the containmentOid
 	 */
-	public SnmpLevelOID getChildTable() {
-		return childTable;
+	public SNMP getContainmentOid() {
+		return containmentOid;
 	}
 
 	/**
-	 * @param childTable
-	 *            the childTable to set
+	 * @param containmentOid
+	 *            the containmentOid to set
 	 */
-	public void setChildTable(SnmpLevelOID childTable) {
-		this.childTable = childTable;
+	public void setContainmentOid(SNMP containmentOid) {
+		this.containmentOid = containmentOid;
 	}
 
 	/**
-	 * @return the mappingTable
+	 * @return the siblingOid
 	 */
-	public SNMPTable getMappingTable() {
-		return mappingTable;
+	public SNMP getSiblingOid() {
+		return siblingOid;
 	}
 
 	/**
-	 * @param mappingTable
-	 *            the mappingTable to set
+	 * @param siblingOid
+	 *            the siblingOid to set
 	 */
-	public void setMappingTable(SNMPTable mappingTable) {
-		this.mappingTable = mappingTable;
-	}
-
-	/**
-	 * @return the mappingOid
-	 */
-	public SNMP getMappingOid() {
-		return mappingOid;
-	}
-
-	/**
-	 * @param mappingOid
-	 *            the mappingOid to set
-	 */
-	public void setMappingOid(SNMP mappingOid) {
-		this.mappingOid = mappingOid;
+	public void setSiblingOid(SNMP siblingOid) {
+		this.siblingOid = siblingOid;
 	}
 
 }
