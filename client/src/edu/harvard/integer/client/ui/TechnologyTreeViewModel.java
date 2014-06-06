@@ -50,6 +50,8 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 
 	/** The category data provider. */
 	private final ListDataProvider<Category> categoryDataProvider;
+	
+	private ListDataProvider<TechItem> dataProvider;
 
 	/** The tech item cell. */
 	private final Cell<TechItem> techItemCell;
@@ -70,7 +72,8 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	 * @param selectionModel            the selection model
 	 * @param filterNodeList the filter node list
 	 */
-	public TechnologyTreeViewModel(final SelectionModel<TechItem> selectionModel, List<FilterNode> filterNodeList) {
+	public TechnologyTreeViewModel(ListDataProvider<TechItem> dataProvider, final SelectionModel<TechItem> selectionModel, List<FilterNode> filterNodeList) {
+		this.dataProvider = dataProvider;
 		this.selectionModel = selectionModel;
 		this.filterNodeList = filterNodeList;
 
@@ -159,7 +162,7 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 			// Return the first letters of each first name.
 			Category category = (Category) value;
 
-			List<TechItem> techItems = TechnologyDatabase.get().queryTechItemsByCategory(category);
+			List<TechItem> techItems = queryTechItemsByCategory(category);
 
 			ListDataProvider<TechItem> dataProvider = new ListDataProvider<TechItem>(
 					techItems, TechItem.KEY_PROVIDER);
@@ -170,6 +173,16 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		// Unhandled type.
 		String type = value.getClass().getName();
 		throw new IllegalArgumentException("Unsupported object type: " + type);
+	}
+	
+	public List<TechItem> queryTechItemsByCategory(Category category) {
+		List<TechItem> matches = new ArrayList<TechItem>();
+		for (TechItem item : dataProvider.getList()) {
+			if (item.getCategory().getDisplayName().equals(category.getDisplayName())) {
+				matches.add(item);
+			}
+		}
+		return matches;
 	}
 
 	/*

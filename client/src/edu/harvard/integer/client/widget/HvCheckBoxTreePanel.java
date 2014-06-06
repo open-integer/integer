@@ -14,7 +14,6 @@ import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 
-import edu.harvard.integer.client.ui.TechnologyDatabase;
 import edu.harvard.integer.client.ui.TechnologyTreeViewModel;
 import edu.harvard.integer.client.ui.TechnologyDatabase.Category;
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
@@ -22,31 +21,23 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.FilterNode;
 
-public class HvCheckBoxTreePanel<D> extends SimplePanel {
+public class HvCheckBoxTreePanel extends SimplePanel {
 	
-	ListDataProvider<TechItem> dataProvider;
+	private ListDataProvider<TechItem> dataProvider;
 	
-	public final ProvidesKey<D> KEY_PROVIDER = new ProvidesKey<D>() {
+	private final ProvidesKey<TechItem> KEY_PROVIDER = new ProvidesKey<TechItem>() {
 		@Override
-		public Object getKey(D d) {
-			Object key = null;
-			
-			if (d != null && d instanceof ID)
-				key = ((ID)d).getIdentifier();
-			else if (d != null && d instanceof Enum)
-				key = ((Enum<?>)d).name();
-			
-			return key;
+		public Object getKey(TechItem item) {
+			return item == null ? null : item.getId();
 		}
 	};
 
 	public HvCheckBoxTreePanel(ListDataProvider<TechItem> dataProvider, List<FilterNode> list) {
 		this.dataProvider = dataProvider;
 		ID rootId = new ID(1L, "Technology", new IDType("Technology"));
-		generateTechnologyItems(rootId, list);
+		generateProviderItems(rootId, list);
 		
-		final MultiSelectionModel<TechItem> selectionModel = new MultiSelectionModel<TechItem>(
-				TechnologyDatabase.TechItem.KEY_PROVIDER);
+		final MultiSelectionModel<TechItem> selectionModel = new MultiSelectionModel<TechItem>(KEY_PROVIDER);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
@@ -71,7 +62,7 @@ public class HvCheckBoxTreePanel<D> extends SimplePanel {
 
 		CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
 		
-		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(selectionModel, list), null, res);
+		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(dataProvider, selectionModel, list), null, res);
 		
 		cellTree.setAnimationEnabled(true);
 		
@@ -82,13 +73,13 @@ public class HvCheckBoxTreePanel<D> extends SimplePanel {
 		
 	}
 	
-	public void generateTechnologyItems(ID parentNode, List<FilterNode> techNodeList) {
+	public void generateProviderItems(ID parentNode, List<FilterNode> techNodeList) {
 		List<TechItem> list = dataProvider.getList();
 		
 		for (FilterNode node : techNodeList) {
 			list.add(createTechItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
 			if (node.getChildren() != null)
-				generateTechnologyItems(node.getItemId(), node.getChildren());
+				generateProviderItems(node.getItemId(), node.getChildren());
 		}
 	}
 	
