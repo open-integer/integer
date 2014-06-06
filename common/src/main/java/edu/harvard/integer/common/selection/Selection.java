@@ -41,7 +41,6 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -92,6 +91,10 @@ public class Selection extends BaseEntity {
 	@ManyToMany
 	private List<View> views = null;
 
+	public Selection() {
+		super();
+	}
+	
 	/**
 	 * @return the description
 	 */

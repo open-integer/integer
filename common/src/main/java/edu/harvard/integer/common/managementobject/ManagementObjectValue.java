@@ -70,7 +70,7 @@ public abstract class ManagementObjectValue<T> extends BaseEntity {
 	 * 
 	 */
 	public ManagementObjectValue() {
-
+		super();
 	}
 
 	/**

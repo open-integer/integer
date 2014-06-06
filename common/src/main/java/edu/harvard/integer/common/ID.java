@@ -53,7 +53,7 @@ public class ID implements IDInterface, Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected Long identifier = null;
+	private Long identifier = null;
 
 	@Size(min = 1, max = 50)
 	private String name = null;
