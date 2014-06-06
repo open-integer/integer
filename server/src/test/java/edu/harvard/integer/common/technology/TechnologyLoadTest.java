@@ -141,7 +141,7 @@ public class TechnologyLoadTest {
 //
 	@Test
 	public void readCDPTechnology() {
-		File mibFile = new File("../config/technology/cdp.yaml");
+		File mibFile = new File("../config/cdp/technology.yaml");
 		
 		String content = null;
 		try {
