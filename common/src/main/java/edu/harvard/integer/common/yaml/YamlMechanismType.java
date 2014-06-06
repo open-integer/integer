@@ -45,6 +45,9 @@ public class YamlMechanismType {
 
 	private String description = null;
 
+	
+	private String parent = null;
+
 	private List<String> index = null;
 
 	private List<YamlCapability> capabilities = null;
@@ -77,6 +80,21 @@ public class YamlMechanismType {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public String getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent
+	 *            the parent to set
+	 */
+	public void setParent(String parent) {
+		this.parent = parent;
 	}
 
 	/**

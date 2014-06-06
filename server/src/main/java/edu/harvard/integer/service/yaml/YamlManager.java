@@ -48,10 +48,18 @@ import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
+import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
+import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.yaml.YamlCapability;
+import edu.harvard.integer.common.yaml.YamlMechanismType;
 import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
 
 /**
@@ -67,7 +75,10 @@ public class YamlManager extends BaseManager implements
 
 	@Inject
 	private TechnologyManagerInterface technologyManager;
-
+	
+	@Inject
+	PersistenceManagerInterface persistanceManager;
+	
 	/**
 	 * @param managerType
 	 */
@@ -116,6 +127,11 @@ public class YamlManager extends BaseManager implements
 
 			parseTechnologyTree(rootTech, load.getTechnologies());
 
+			root = technologyManager.getTopLevelTechnology();
+			if (root != null) {
+				String dump = yaml.dump(root);
+				logger.info("Technology: " + dump);
+			}
 		} catch (IntegerException e) {
 			logger.error("Error reading in YAML file! " + e.toString()
 					+ " Conent " + content);
@@ -148,6 +164,8 @@ public class YamlManager extends BaseManager implements
 
 			technology.setParentId(parentTechnology.getID());
 			technology.setDescription(node.getDescription());
+			technology.setMechanisims(saveMechanisms(technology, node.getMechanisms()));
+			
 			technology = technologyManager.updateTechnology(technology);
 
 			if (node.getTechnologies() != null)
@@ -155,6 +173,70 @@ public class YamlManager extends BaseManager implements
 
 		}
 
+	}
+
+	/**
+	 * @param mechanismTypes
+	 * @throws IntegerException 
+	 */
+	private List<ID> saveMechanisms(Technology technology, List<YamlMechanismType> mechanismTypes) throws IntegerException {
+		
+		List<ID> ids = new ArrayList<ID>();
+		
+		if (mechanismTypes == null)
+			return ids;
+		
+		
+		for (YamlMechanismType mechanism : mechanismTypes) {
+			Mechanism dbMechanism = technologyManager.getMechanismByName(mechanism.getName());
+				
+			if (dbMechanism == null) {
+				dbMechanism = new Mechanism();
+				dbMechanism.setName(mechanism.getName());
+			}
+			
+			dbMechanism.setDescription(mechanism.getDescription());
+			
+			List<ID> capabilitiIds = saveCapabilites(mechanism.getCapabilities());
+			
+			dbMechanism.setCapabilities(capabilitiIds);
+			dbMechanism = technologyManager.updateMechanism(dbMechanism);
+			
+			ids.add(dbMechanism.getID());
+		}
+		
+		return ids;
+	}
+
+	/**
+	 * @param capabilities
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private List<ID> saveCapabilites(List<YamlCapability> capabilities) throws IntegerException {
+		
+		CapabilityDAO dao = persistanceManager.getCapabilityDAO();
+		
+		List<ID> ids = new ArrayList<ID>();
+		
+		if (capabilities == null)
+			return ids;
+		
+		for (YamlCapability yamlCapability : capabilities) {
+			Capability dbCapablity = dao.findByName(yamlCapability.getName());
+			if (dbCapablity == null) {
+				dbCapablity = new Capability();
+				dbCapablity.setName(yamlCapability.getName());
+			}
+			
+			dbCapablity.setDescription(yamlCapability.getDescription());
+			
+			dbCapablity = dao.update(dbCapablity);
+			
+			ids.add(dbCapablity.getID());
+		}
+		
+		return ids;
 	}
 
 	private void parseArrayList(ID parentId, String indent,

@@ -38,6 +38,7 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OrderColumn;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -58,6 +59,10 @@ public class Mechanism extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+
+	@Size(min=1, max=5000)
+	private String description = null;
+	
 	@ElementCollection
 	@OrderColumn(name = "idx")
 	private List<ID> capabilities;
@@ -75,6 +80,20 @@ public class Mechanism extends BaseEntity {
 	 */
 	public void setCapabilities(List<ID> capabilities) {
 		this.capabilities = capabilities;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = checkLentght(description, 5000);
 	}
 
 }

@@ -102,7 +102,7 @@ public class PersistenceService extends BaseService implements PersistenceServic
 			DataPreLoadFile[] perloads = dao.findAll();
 			
 			for (DataPreLoadFile dataPreLoadFile : perloads) {
-				if (dataPreLoadFile.getStatus() == null || PersistenceStepStatusEnum.NotLoaded.equals(dataPreLoadFile.getStatus())) {
+				if (dataPreLoadFile.getStatus() == null || !PersistenceStepStatusEnum.Loaded.equals(dataPreLoadFile.getStatus())) {
 					loadDataFile(dataPreLoadFile);
 					logger.info("Loaded " + dataPreLoadFile.getDataFile());
 				} else
@@ -124,9 +124,9 @@ public class PersistenceService extends BaseService implements PersistenceServic
 	private void loadDataFile(DataPreLoadFile dataPreLoadFile) throws IntegerException {
 		
 		switch(dataPreLoadFile.getFileType()) {
-		
-			
+
 		case TechnologyTreeYaml:
+		case TechnologyYaml:
 			loadTechnologyTreeYaml(dataPreLoadFile);
 			break;
 			

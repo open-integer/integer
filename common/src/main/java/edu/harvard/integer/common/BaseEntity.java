@@ -138,12 +138,7 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof ID))
-			return false;
-
-		ID other = (ID) obj;
+	public boolean equals(ID other) {
 
 		if (getIdentifier() != null)
 			return getIdentifier().equals(other.getIdentifier());
@@ -166,4 +161,21 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 		return getID().toString();
 	}
 
+	/**
+	 * This helper method is used to truncate a string to fit into the database
+	 * table.
+	 * 
+	 * @param description
+	 * @param i
+	 * @return
+	 */
+	protected String checkLentght(String description, int length) {
+
+		if (description != null && description.length() > length) {
+
+			return description.substring(0, length);
+		}
+
+		return description;
+	}
 }

@@ -43,6 +43,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OrderColumn;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -70,6 +71,7 @@ public class Technology extends BaseEntity {
 	/**
 	 * A short description of the ServiceTechnology
 	 */
+	@Size(min=1, max=5000)
 	private String description = null;
 
 
@@ -103,9 +105,8 @@ public class Technology extends BaseEntity {
 	 *            the description to set
 	 */
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = checkLentght(description, 5000);
 	}
-
 
 	/**
 	 * @return the parentId

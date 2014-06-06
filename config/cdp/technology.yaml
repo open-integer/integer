@@ -1,0 +1,78 @@
+---
+
+# technology definition for CDP
+# by Loren Jan Wilson, 2014-05-21
+
+technologies:
+    # CDP, the Cisco Discovery Protocol.
+    # 3 mechanism types: cdp-global, cdp-interface, cdp-cache (cache entry).
+    - name: cdp
+    #  provides: [ neighbor-discovery ]
+      parent: neighbor discovery
+      description: Cisco Discovery Protocol
+      mechanisms:
+          - name: cdp-global
+            description: CDP global information on this device.
+            capabilities:
+                - name: cdp-global-run
+                  description: Whether CDP is running on this device.
+                  type: admin
+
+                - name: cdp-global-deviceId
+                  description: The global device ID being advertised via CDP.
+        
+          - name: cdp-interface
+            index: [ cdp-interface-index ]
+            description: >
+                Each interface on the box that is capable of doing CDP has a
+                corresponding CDP interface service element (certain types of
+                physical interfaces only).
+            capabilities:
+                - name: cdp-interface-index
+                  description: >
+                      The ifIndex if there is one, or a unique value if there
+                      isn't, as in the case of 802.3 repeaters.
+
+                - name: cdp-interface-name
+                  description: The name of each interface as advertised by CDP.
+
+                - name: cdp-interface-enable
+                  description: Whether CDP is enabled on each interface.
+                  type: admin
+
+          - name: cdp-cache
+            index: [ cdp-cache-ifIndex, cdp-cache-deviceIndex ]
+            description: >
+                For every remote CDP neighbor on each interface, there is a
+                device entry in the local CDP cache.
+            capabilities:
+                - name: cdp-cache-ifIndex
+                  description: The ifIndex for the interface this cache entry is on.
+
+                - name: cdp-cache-deviceIndex
+                  description: > 
+                      There can be more than one device visible on an
+                      interface, so this is the index for this particular
+                      device.
+
+                - name: cdp-cache-addressType
+                  description: > 
+                      The type of address advertised by the remote device.
+                      (e.g. IP, IPv6, CLNS)
+
+                - name: cdp-cache-address
+                  description: The address advertised by the remote device.
+
+                - name: cdp-cache-version
+                  description: The OS version string advertised by the remote device.
+
+                - name: cdp-cache-deviceId
+                  description: The device ID of the remote device.
+
+                - name: cdp-cache-port
+                  description: The port on the remote device that we're connected to.
+
+                - name: cdp-cache-platform
+                  description: The remote device's hardware platform.
+
+...

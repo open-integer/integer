@@ -160,6 +160,14 @@ public class TechnologyLoadTest {
 //		System.out.println("YAML: " + load.toString());
 		
 		System.out.println("Technology read in: " + yaml.dump(load));
+		
+
+		try {
+			yamlManager.loadTechnologyTree(content);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
 	}
 	
 //	
