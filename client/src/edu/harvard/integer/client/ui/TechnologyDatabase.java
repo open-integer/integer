@@ -295,7 +295,7 @@ public class TechnologyDatabase {
 	 *            the category
 	 * @return the list of techItem in the category
 	 */
-	public List<TechItem> queryTechItemsByCategory(Category category) {
+	public List<TechItem> queryTechItemsByCategory(ListDataProvider<TechItem> dataProvider, Category category) {
 		List<TechItem> matches = new ArrayList<TechItem>();
 		for (TechItem item : dataProvider.getList()) {
 			if (item.getCategory().getDisplayName().equals(category.getDisplayName())) {
