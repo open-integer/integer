@@ -55,6 +55,12 @@ public class SnmpParentChildRelationship extends SnmpRelationship {
 	private SNMP containmentOid = null;
 
 	private SNMP siblingOid = null;
+	
+	private SNMP subTypeOid = null;
+	
+	private SNMP modelOid = null;
+	
+	private SNMP softwareVersionOid = null;
 
 	/**
 	 * @return the containmentOid
@@ -84,6 +90,48 @@ public class SnmpParentChildRelationship extends SnmpRelationship {
 	 */
 	public void setSiblingOid(SNMP siblingOid) {
 		this.siblingOid = siblingOid;
+	}
+
+	/**
+	 * @return the subTypeOid
+	 */
+	public SNMP getSubTypeOid() {
+		return subTypeOid;
+	}
+
+	/**
+	 * @param subTypeOid the subTypeOid to set
+	 */
+	public void setSubTypeOid(SNMP subTypeOid) {
+		this.subTypeOid = subTypeOid;
+	}
+
+	/**
+	 * @return the modelOid
+	 */
+	public SNMP getModelOid() {
+		return modelOid;
+	}
+
+	/**
+	 * @param modelOid the modelOid to set
+	 */
+	public void setModelOid(SNMP modelOid) {
+		this.modelOid = modelOid;
+	}
+
+	/**
+	 * @return the softwareVersionOid
+	 */
+	public SNMP getSoftwareVersionOid() {
+		return softwareVersionOid;
+	}
+
+	/**
+	 * @param softwareVersionOid the softwareVersionOid to set
+	 */
+	public void setSoftwareVersionOid(SNMP softwareVersionOid) {
+		this.softwareVersionOid = softwareVersionOid;
 	}
 
 }
