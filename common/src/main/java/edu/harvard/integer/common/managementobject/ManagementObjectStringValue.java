@@ -60,7 +60,7 @@ public class ManagementObjectStringValue extends ManagementObjectValue<String>
 	 * 
 	 */
 	public ManagementObjectStringValue() {
-
+		super();
 	}
 
 	/*

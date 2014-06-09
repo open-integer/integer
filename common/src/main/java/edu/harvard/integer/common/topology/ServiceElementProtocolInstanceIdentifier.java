@@ -64,7 +64,7 @@ public class ServiceElementProtocolInstanceIdentifier extends BaseEntity
 	private String value = null;
 
 	public ServiceElementProtocolInstanceIdentifier() {
-
+		super();
 	}
 
 	/**
@@ -81,20 +81,5 @@ public class ServiceElementProtocolInstanceIdentifier extends BaseEntity
 	public void setValue(String value) {
 		this.value = value;
 	}
-
-	// /**
-	// * @return the fcaps
-	// */
-	// public List<FCAPSEnum> getFcaps() {
-	// return fcaps;
-	// }
-	//
-	// /**
-	// * @param fcaps
-	// * the fcaps to set
-	// */
-	// public void setFcaps(List<FCAPSEnum> fcaps) {
-	// this.fcaps = fcaps;
-	// }
 
 }

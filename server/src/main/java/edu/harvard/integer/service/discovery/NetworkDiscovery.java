@@ -260,7 +260,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		
 		logger.debug("No response for this IP " + ipAddress + " for this subnet " + subnetId );
 		try {
-			ServiceElementAccessManagerInterface access = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+			ServiceElementAccessManagerInterface access = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 			ServiceElement se =  access.getServiceElementByIpAddress(ipAddress);
 			if ( se != null ) {
 				DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);

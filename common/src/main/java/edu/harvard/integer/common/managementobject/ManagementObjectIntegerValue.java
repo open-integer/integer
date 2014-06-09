@@ -60,7 +60,7 @@ public class ManagementObjectIntegerValue extends
 	 * 
 	 */
 	public ManagementObjectIntegerValue() {
-
+		super();
 	}
 
 	/*
