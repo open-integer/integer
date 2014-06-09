@@ -8,7 +8,6 @@ import com.emitrom.lienzo.client.core.shape.Line;
 import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.client.core.shape.Rectangle;
 import com.emitrom.lienzo.client.core.shape.Text;
-import com.emitrom.lienzo.shared.core.types.Color;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 
@@ -28,7 +27,7 @@ public class DragImageWidget extends WidgetLayer {
     /** The image height. */
     public static final int IMAGE_HEIGHT = 60;  
     
-    public static final Color BANNER_COLOR = new Color(28, 90, 128);
+    //public static final Color BANNER_COLOR = new Color(28, 90, 128);
       
     /**
      * Instantiates a new drag image widget.
@@ -142,7 +141,7 @@ public class DragImageWidget extends WidgetLayer {
         	else {
         		group.add(icon);
         		Text text = new Text(title, "Arial, sans-serif", 14);
-        		text.setX(10).setY(20).setStrokeColor(BANNER_COLOR).setFillColor(BANNER_COLOR);
+        		text.setX(10).setY(20); // .setStrokeColor(BANNER_COLOR).setFillColor(BANNER_COLOR);
         		group.add(text);
         	}
         }
