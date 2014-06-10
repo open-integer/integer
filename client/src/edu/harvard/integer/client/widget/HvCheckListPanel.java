@@ -38,6 +38,7 @@ public class HvCheckListPanel<D> extends SimplePanel {
 	public HvCheckListPanel(ListDataProvider<D> dataProvider, List<D> list) {
 		CellTable<D> cellTable = new CellTable<D>(KEY_PROVIDER);
 
+		if (list != null)
 		for (D id : list) {
 			dataProvider.getList().add(id);
 		}
