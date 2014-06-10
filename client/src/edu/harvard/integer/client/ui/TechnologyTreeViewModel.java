@@ -63,9 +63,6 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	/** The selection model. */
 	private final SelectionModel<TechItem> selectionModel;
 
-	/** The filter node list. */
-	private List<FilterNode> filterNodeList;
-
 	/**
 	 * Instantiates a new technology tree view model.
 	 *
@@ -75,7 +72,6 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	public TechnologyTreeViewModel(ListDataProvider<TechItem> dataProvider, final SelectionModel<TechItem> selectionModel, List<FilterNode> filterNodeList) {
 		this.dataProvider = dataProvider;
 		this.selectionModel = selectionModel;
-		this.filterNodeList = filterNodeList;
 
 		// Create a data provider that provides categories.
 		categoryDataProvider = new ListDataProvider<Category>();
@@ -158,15 +154,16 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		if (value == null) {
 			// Return top level categories.
 			return new DefaultNodeInfo<Category>(categoryDataProvider, new CategoryCell());
-		} else if (value instanceof Category) {
+		}
+		else if (value instanceof Category) {
 			// Return the first letters of each first name.
 			Category category = (Category) value;
 
 			List<TechItem> techItems = queryTechItemsByCategory(category);
 
-			ListDataProvider<TechItem> dataProvider = new ListDataProvider<TechItem>(
+			ListDataProvider<TechItem> technologyProvider = new ListDataProvider<TechItem>(
 					techItems, TechItem.KEY_PROVIDER);
-			return new DefaultNodeInfo<TechItem>(dataProvider, techItemCell,
+			return new DefaultNodeInfo<TechItem>(technologyProvider, techItemCell,
 					selectionModel, selectionManager, null);
 		}
 

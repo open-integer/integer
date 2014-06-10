@@ -33,9 +33,10 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 	};
 
 	public HvCheckBoxTreePanel(ListDataProvider<TechItem> dataProvider, List<FilterNode> list) {
+		FilterNode rootNode = list.get(0);
 		this.dataProvider = dataProvider;
-		ID rootId = new ID(1L, "Technology", new IDType("Technology"));
-		generateProviderItems(rootId, list);
+
+		generateProviderItems(rootNode.getItemId(), rootNode.getChildren());
 		
 		final MultiSelectionModel<TechItem> selectionModel = new MultiSelectionModel<TechItem>(KEY_PROVIDER);
 		selectionModel
@@ -62,11 +63,12 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 
 		CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
 		
-		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(dataProvider, selectionModel, list), null, res);
+		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(dataProvider, selectionModel, rootNode.getChildren()), null, res);
 		
 		cellTree.setAnimationEnabled(true);
 		
 		ScrollPanel scrollPanel = new ScrollPanel();
+		scrollPanel.setHeight("550px");
 		scrollPanel.add(cellTree);
 		
 		setWidget(scrollPanel);
@@ -78,7 +80,7 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 		
 		for (FilterNode node : techNodeList) {
 			list.add(createTechItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
-			if (node.getChildren() != null)
+			if (node.getChildren() != null && !node.getChildren().isEmpty())
 				generateProviderItems(node.getItemId(), node.getChildren());
 		}
 	}
