@@ -15,7 +15,7 @@ public class DeviceMap extends Layer {
 	
 	private int icon_row_total;
 	private int icon_col_total;
-	private int icon_width;
+	private int icon_width = SystemSplitViewPanel.CONTENT_WIDTH / 5;
 	private int icon_height;
 	
 	private ServiceElement selectedElement;
@@ -46,7 +46,10 @@ public class DeviceMap extends Layer {
 	private void init_layout(int total) {
 		icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
 		icon_col_total = 2 * icon_row_total;
-		icon_width = SystemSplitViewPanel.CONTENT_WIDTH / (2 * icon_col_total);
+		
+		if (icon_col_total != 0)
+			icon_width = SystemSplitViewPanel.CONTENT_WIDTH / (2 * icon_col_total);
+		
 		icon_height = icon_width;
 	}
 
