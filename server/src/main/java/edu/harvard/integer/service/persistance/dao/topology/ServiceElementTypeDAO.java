@@ -99,4 +99,12 @@ public class ServiceElementTypeDAO extends BaseDAO {
 		
 	}
 
+	/**
+	 * @param name
+	 * @return
+	 */
+	public ServiceElementType findByName(String name) {
+		return findByStringField(name, "name", ServiceElementType.class);
+	}
+
 }

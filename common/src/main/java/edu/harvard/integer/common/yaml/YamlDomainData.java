@@ -31,35 +31,46 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.yaml;
+
+import java.util.List;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
  * 
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
+public class YamlDomainData {
+	private List<YamlTechnology> technologies = null;
+	private List<YamlServiceElementType> serviceElementTypes = null;
 
-	private String fieldName = null;
-	private String defaultValue = null;
-
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
+	/**
+	 * @return the technologies
+	 */
+	public List<YamlTechnology> getTechnologies() {
+		return technologies;
 	}
 
-	public String getFieldName() {
-		return fieldName;
+	/**
+	 * @param technologies
+	 *            the technologies to set
+	 */
+	public void setTechnologies(List<YamlTechnology> technologies) {
+		this.technologies = technologies;
 	}
 
-	public String getDefaultValue() {
-		return defaultValue;
+	/**
+	 * @return the serviceElementTypess
+	 */
+	public List<YamlServiceElementType> getServiceElementTypes() {
+		return serviceElementTypes;
 	}
+
+	/**
+	 * @param serviceElementTypess
+	 *            the serviceElementTypess to set
+	 */
+	public void setServiceElementTypes(List<YamlServiceElementType> serviceElements) {
+		this.serviceElementTypes = serviceElements;
+	}
+
 }

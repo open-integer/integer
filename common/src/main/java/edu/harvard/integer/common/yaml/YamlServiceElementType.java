@@ -31,35 +31,81 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.yaml;
+
+import java.util.List;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
  * 
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
+public class YamlServiceElementType {
 
-	private String fieldName = null;
-	private String defaultValue = null;
+	private String name = null;
+	private String description = null;
+	private YamlAccessMethod accessMethod = null;
 
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
+	private List<YamlManagementObject> managementObjects = null;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
 
-	public String getFieldName() {
-		return fieldName;
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getDefaultValue() {
-		return defaultValue;
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
 	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the accessMethod
+	 */
+	public YamlAccessMethod getAccessMethod() {
+		return accessMethod;
+	}
+
+	/**
+	 * @param accessMethod
+	 *            the accessMethod to set
+	 */
+	public void setAccessMethod(YamlAccessMethod accessMethod) {
+		this.accessMethod = accessMethod;
+	}
+
+	/**
+	 * @return the managementObjects
+	 */
+	public List<YamlManagementObject> getManagementObjects() {
+		return managementObjects;
+	}
+
+	/**
+	 * @param managementObjects
+	 *            the managementObjects to set
+	 */
+	public void setManagementObjects(
+			List<YamlManagementObject> managementObjects) {
+		this.managementObjects = managementObjects;
+	}
+
 }

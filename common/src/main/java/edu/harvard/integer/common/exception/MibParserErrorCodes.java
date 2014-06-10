@@ -31,35 +31,31 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.exception;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
- * 
+ *
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
+public enum MibParserErrorCodes implements ErrorCodeInterface {
+	MIBNotFound("MIB {0} not found!");
+	
+	private String errorCode = null;
 
-	private String fieldName = null;
-	private String defaultValue = null;
-
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
+	private MibParserErrorCodes(String errorCode) {
+		this.errorCode = errorCode;
 	}
 
-	public String getFieldName() {
-		return fieldName;
-	}
+	/*
+	 * /* (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
+	 */
+	@Override
+	public String getErrorCode() {
 
-	public String getDefaultValue() {
-		return defaultValue;
+		return errorCode;
 	}
+	
 }

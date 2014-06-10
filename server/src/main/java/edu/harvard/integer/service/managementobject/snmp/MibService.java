@@ -33,11 +33,7 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -95,63 +91,6 @@ public class MibService extends BaseService {
 			return;	
 		}
 		
-		String mibNameProp = props.getProperty(StringPropertyNames.BaseMibList);
-		if (mibNameProp == null) {
-			logger.error("Unable to load mibs. " + StringPropertyNames.BaseMibList.getFieldName() + " Is not set!!");
-			return;
-		}
-		
-		String mibNames[] = mibNameProp.split(",");
-		
-		String mibDirPath = null;
-		
-		mibDirPath = props.getProperty(StringPropertyNames.MIBDir) + "/";
-		
-		MIBInfo[] loadedMibs = null;
-		try {
-			loadedMibs = snmpManager.getImportedMibs();
-		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		for (String string : mibNames) {
-			
-			MIBImportInfo importInfo = new MIBImportInfo();
-			File file = new File(mibDirPath + string);
-			if (!file.exists()) {
-				logger.error("Unable to load " + file.getAbsolutePath() + " File not found!");
-				continue;
-			}
-			
-			importInfo.setFileName(string);
-			importInfo.setMib(FileUtil.readInMIB(file));
-
-			boolean mibLoaded = false;
-			if (loadedMibs != null) {
-				for (MIBInfo mibInfo : loadedMibs) {
-					if (mibInfo.getName().equals(string)) {
-						logger.info("MIB " + string + " already loaded!");
-						mibLoaded = true;
-						break;
-					}
-
-				}
-			}
-			
-			if (!mibLoaded) {
-				try {
-					snmpManager.importMib( new MIBImportInfo[] { importInfo });
-					logger.info("Loaded " + string);
-					
-				} catch (IntegerException e) {
-
-					e.printStackTrace();
-					logger.error("Error loading MIB " + string + " Error " + e.toString());
-				}
-			}
-			
-		}
 		
 		try {
 			loadDefaultProductsMib();
@@ -171,10 +110,6 @@ public class MibService extends BaseService {
 		IntegerProperties props = IntegerProperties.getInstance();
 		
 		String mibNameProp = props.getProperty(StringPropertyNames.ProductsMib);
-		if (mibNameProp == null) {
-			logger.error("Unable to load mibs. " + StringPropertyNames.BaseMibList.getFieldName() + " Is not set!!");
-			return;
-		}
 		
 		String mibNames[] = mibNameProp.split(",");
 		

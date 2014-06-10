@@ -39,6 +39,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -57,6 +58,8 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.type.displayable.SQLStatement;
+import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
  * @author David Taylor
@@ -133,7 +136,11 @@ public class BaseDAO {
 		} catch (EntityExistsException ee) {
 			throw new IntegerException(ee,
 					DatabaseErrorCodes.EntityAlreadyExists);
+		} catch (Throwable e) {
+			throw new IntegerException(e, DatabaseErrorCodes.ErrorSavingData, 
+					new DisplayableInterface[] { new SQLStatement("update " + entity.getID().toDebugString()) });
 		}
+		
 		return entity;
 	}
 

@@ -38,5 +38,5 @@ package edu.harvard.integer.common.persistence;
  *
  */
 public enum PreloadFileType {
-	TechnologyTreeYaml, TechnologyYaml, MIB;
+	TechnologyTreeYaml, TechnologyYaml, MIB, ServiceElementTypeYaml;
 }

@@ -95,17 +95,11 @@ task deployWildfly() << {
 		from "config"
 		into "$System.env.JBOSS_HOME" + '/standalone/data/yaml'
 	}
-//	copy {
-//		from "config/technology/*.yaml"
-//		into "$System.env.JBOSS_HOME" + '/standalone/data/yaml/technology'
-//	}
 }
 
-uploadArchives {
-	repositories {
-		flatDir {
-			dirs 'repos'
-		}
-	}
+
+task loadDefaultData(type:Exec) {
+	// on linux
+	commandLine '../database/bin/load_Core_server_config.sh', 'Core'
 }
 

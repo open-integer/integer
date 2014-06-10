@@ -31,35 +31,111 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.yaml;
+
+import java.util.List;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
  * 
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
+public class YamlAccessMethod {
 
-	private String fieldName = null;
-	private String defaultValue = null;
+	private YamlAccessMethodEnum accessMethod = null;
+	private String protocol = null;
+	private String mib = null;
+	private String table = null;
+	private List<String> index = null;
+	private String mapping = null;
 
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
+	/**
+	 * @return the accessMethod
+	 */
+	public YamlAccessMethodEnum getAccessMethod() {
+		return accessMethod;
 	}
 
-	public String getFieldName() {
-		return fieldName;
+	/**
+	 * @param accessMethod
+	 *            the accessMethod to set
+	 */
+	public void setAccessMethod(YamlAccessMethodEnum accessMethod) {
+		this.accessMethod = accessMethod;
 	}
 
-	public String getDefaultValue() {
-		return defaultValue;
+	/**
+	 * @return the protocol
+	 */
+	public String getProtocol() {
+		return protocol;
 	}
+
+	/**
+	 * @param protocol
+	 *            the protocol to set
+	 */
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
+	}
+
+	/**
+	 * @return the mib
+	 */
+	public String getMib() {
+		return mib;
+	}
+
+	/**
+	 * @param mib
+	 *            the mib to set
+	 */
+	public void setMib(String mib) {
+		this.mib = mib;
+	}
+
+	/**
+	 * @return the table
+	 */
+	public String getTable() {
+		return table;
+	}
+
+	/**
+	 * @param table
+	 *            the table to set
+	 */
+	public void setTable(String table) {
+		this.table = table;
+	}
+
+	/**
+	 * @return the index
+	 */
+	public List<String> getIndex() {
+		return index;
+	}
+
+	/**
+	 * @param index
+	 *            the index to set
+	 */
+	public void setIndex(List<String> index) {
+		this.index = index;
+	}
+
+	/**
+	 * @return the mapping
+	 */
+	public String getMapping() {
+		return mapping;
+	}
+
+	/**
+	 * @param mapping
+	 *            the mapping to set
+	 */
+	public void setMapping(String mapping) {
+		this.mapping = mapping;
+	}
+
 }

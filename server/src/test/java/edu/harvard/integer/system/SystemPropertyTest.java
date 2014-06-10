@@ -50,6 +50,7 @@ import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.IntegerPropertyNames;
+import edu.harvard.integer.common.properties.StringPropertyNames;
 
 /**
  * @author David Taylor
@@ -91,5 +92,5 @@ public class SystemPropertyTest {
 		
 		logger.info("Found ServerId " + intProperty);
 	}
-
+	
 }

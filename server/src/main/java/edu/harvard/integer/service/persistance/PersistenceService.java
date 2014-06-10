@@ -33,7 +33,9 @@
 package edu.harvard.integer.service.persistance;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
@@ -45,11 +47,15 @@ import javax.ws.rs.Path;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.MibParserErrorCodes;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.common.persistence.PersistenceStepStatusEnum;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
+import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.type.displayable.FilePathName;
+import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.server.IntegerApplication;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.distribution.DistributionManager;
@@ -130,12 +136,17 @@ public class PersistenceService extends BaseService implements PersistenceServic
 			loadTechnologyTreeYaml(dataPreLoadFile);
 			break;
 			
+		case ServiceElementTypeYaml:
+			loadServiceElementTypeYaml(dataPreLoadFile);
+			break;
+			
 		case MIB:
 			loadMib(dataPreLoadFile);
 			break;
 		}
 		
 	}
+
 
 
 	/**
@@ -148,12 +159,34 @@ public class PersistenceService extends BaseService implements PersistenceServic
 			return;
 		
 		MIBImportInfo mibFile = new MIBImportInfo();
+
+		IntegerProperties props = IntegerProperties.getInstance();
+		String dataDirPath = props.getProperty(StringPropertyNames.DATADir) + "/mibs";
+
+		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
+		if (! file.exists()) {
+			logger.error("Unable top open " + file.getAbsolutePath());
+			throw new IntegerException(null, MibParserErrorCodes.MIBNotFound, 
+					new DisplayableInterface[] { new FilePathName(file.getAbsolutePath()) });
+		}
+		
 		mibFile.setFileName(dataPreLoadFile.getDataFile());
 		mibFile.setName(dataPreLoadFile.getDataFile());
+		mibFile.setMib(FileUtil.readInMIB(file));
 		
 		SnmpManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
-		if (manager != null) 
-			manager.importMib(new MIBImportInfo[] { mibFile});
+		if (manager != null) {
+			MIBImportResult[] importMib = manager.importMib(new MIBImportInfo[] { mibFile });
+			for (MIBImportResult mibImportResult : importMib) {
+				if (mibImportResult.getErrors() == null ) {
+					dataPreLoadFile.setTimeLoaded(new Date());
+					dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+				} else
+					dataPreLoadFile.setErrorMessage(Arrays.toString(mibImportResult.getErrors()));
+			}
+			
+			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
+		}
 			
 	}
 
@@ -202,18 +235,17 @@ public class PersistenceService extends BaseService implements PersistenceServic
 	 * @param dataPreLoadFile
 	 * @throws IntegerException 
 	 */
-	private void loadTechnologyYaml(DataPreLoadFile dataPreLoadFile) throws IntegerException {
-		
+	private void loadServiceElementTypeYaml(DataPreLoadFile dataPreLoadFile) throws IntegerException {
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
 			return;
 		
 		IntegerProperties props = IntegerProperties.getInstance();
 		
-		String dataDirPath = props.getProperty(StringPropertyNames.DATADir) + "/";
+		String dataDirPath = props.getProperty(StringPropertyNames.DATADir) + "/yaml";
 		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
 		
 		if (!file.exists()) {
-			logger.error("YAML file " + dataPreLoadFile.getDataFile() + " NOT found ");
+			logger.error("YAML file " + file.getAbsolutePath() + " NOT found ");
 			dataPreLoadFile.setErrorMessage("File not found ");
 			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 			return;
@@ -223,20 +255,20 @@ public class PersistenceService extends BaseService implements PersistenceServic
 		
 		YamlManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.YamlManager);
 		if (manager != null) {
-			manager.loadTechnology(data);
+			try {
+				manager.loadServiceElementType(data);
+
+				dataPreLoadFile.setTimeLoaded(new Date());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+				
+			} catch (IntegerException e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			}
 		}
 		
-		dataPreLoadFile.setTimeLoaded(new Date());
-		dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
 		persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
-	}
-
-
-	/**
-	 * @param dataPreLoadFile
-	 */
-	private void loadSQL(DataPreLoadFile dataPreLoadFile) {
-		
 		
 	}
+
 }

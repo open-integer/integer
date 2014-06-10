@@ -42,24 +42,28 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.yaml.YamlCapability;
+import edu.harvard.integer.common.yaml.YamlDomainData;
+import edu.harvard.integer.common.yaml.YamlManagementObject;
 import edu.harvard.integer.common.yaml.YamlMechanismType;
+import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
 
 /**
@@ -97,7 +101,6 @@ public class YamlManager extends BaseManager implements
 	public String loadTechnologyTree(String content) throws IntegerException {
 
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(YamlTechnology.class, getClass().getClassLoader()));
-		//Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
 
 		YamlTechnology load = null;
 
@@ -332,47 +335,77 @@ public class YamlManager extends BaseManager implements
 		return technology;
 	}
 
-	@Override
-	public void loadTechnology(String content) throws IntegerException {
-		Yaml yaml = new Yaml(new Constructor(YamlTechnology.class));
 
-		YamlTechnology load = null;
+	@Override
+	public String loadServiceElementType(String content) throws IntegerException {
+		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(YamlDomainData.class, getClass().getClassLoader()));
+
+		YamlDomainData load = null;
 
 		try {
-			load = (YamlTechnology) yaml.load(content);
+			load = (YamlDomainData) yaml.load(content);
 		} catch (Throwable e) {
-			logger.error("Unexpected error reading in YAML! " + e.toString()
-					+ " File " + content);
+			logger.error("Unexpected error reading in YAML! " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
 		}
 
 		logger.info("YAML Object is " + load.getClass().getName());
 
-		try {
-			Technology[] root = technologyManager.getTopLevelTechnology();
-
-			Technology rootTech = null;
-			if (root == null || root.length == 0) {
-				rootTech = new Technology();
-				rootTech.setName("root");
-				rootTech = technologyManager.updateTechnology(rootTech);
-
-			} else {// Take first root. There should be only one!
-
-				rootTech = root[0];
-			}
-
+		ServiceElementTypeDAO serviceElementTypeDao = persistanceManager.getServiceElementTypeDAO();
 		
+		parseServiceElements(load.getServiceElementTypes(), serviceElementTypeDao);
 
-		} catch (IntegerException e) {
-			logger.error("Error reading in YAML file! " + e.toString()
-					+ " Conent " + content);
-			e.printStackTrace();
-		} catch (Throwable e) {
-			logger.error("Unexpected Error reading in YAML file! "
-					+ e.toString() + " Conent " + content);
-			e.printStackTrace();
-		}
-
+		return "Success";
 	}
 
+	/**
+	 * @param serviceElementTypes
+	 * @param serviceElementTypeDao
+	 * @throws IntegerException 
+	 */
+	private void parseServiceElements(
+			List<YamlServiceElementType> serviceElementTypes,
+			ServiceElementTypeDAO serviceElementTypeDao) throws IntegerException {
+		
+
+		for (YamlServiceElementType yamlServiceElementType : serviceElementTypes) {
+			ServiceElementType serviceElementType = serviceElementTypeDao.findByName(yamlServiceElementType.getName());
+			if (serviceElementType == null) {
+				serviceElementType = new ServiceElementType();
+				serviceElementType.setName(yamlServiceElementType.getName());
+				serviceElementType.setDescription(yamlServiceElementType.getDescription());
+			}
+			
+			List<ID> managementObjects = new ArrayList<ID>();
+			
+			for (YamlManagementObject yamlManagementObject : yamlServiceElementType.getManagementObjects()) {
+				SNMPDAO dao = persistanceManager.getSNMPDAO();
+				SNMP snmp = dao.findByName(yamlManagementObject.getName());
+				if (snmp == null) {
+					logger.error("No SNMP object found with name " + yamlManagementObject.getName());
+				} else {
+					CapabilityDAO capabilityDAO = persistanceManager.getCapabilityDAO();
+					Capability capability = capabilityDAO.findByName(yamlManagementObject.getCapability());
+					if (capability == null) {
+						logger.error("No Capability found with name " + yamlManagementObject.getCapability()
+								+ " ServiceElement " + yamlServiceElementType.getName());
+					} else {
+						snmp.setCapabilityId(capability.getID());
+						
+						snmp = dao.update(snmp);
+						
+						managementObjects.add(snmp.getID());
+						
+					}
+				}
+			}
+			
+			logger.info("Setting Attributes " + managementObjects + " On " + serviceElementType.getName());
+			serviceElementType.setAttributeIds(managementObjects);
+			serviceElementTypeDao.update(serviceElementType);
+			
+		}
+		
+	}
 }

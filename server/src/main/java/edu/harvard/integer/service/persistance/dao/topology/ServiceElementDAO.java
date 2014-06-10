@@ -51,6 +51,8 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
@@ -203,6 +205,16 @@ public class ServiceElementDAO extends BaseDAO {
 	 */
 	public ServiceElement[] findBySelection(Selection selection) {
 
+		if (selection.getFilters() == null)
+			return new ServiceElement[0];
+		
+		for (Filter filter : selection.getFilters() ) {
+			for (FilterNode filterNode : filter.getTechnologies()) {
+				if (filterNode.getSelected()) {
+					
+				}
+			}
+		}
 		return findTopLevelServiceElements();
 	}
 

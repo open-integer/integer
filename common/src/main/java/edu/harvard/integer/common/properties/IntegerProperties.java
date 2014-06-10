@@ -97,8 +97,9 @@ public class IntegerProperties {
 
 	private void loadSettings() throws IntegerException {
 		settings = new Properties();
+		InputStream resourceAsStream = null;
 		try {
-			InputStream resourceAsStream = Thread.currentThread()
+			resourceAsStream = Thread.currentThread()
 					.getContextClassLoader()
 					.getResourceAsStream(PROPERTIES_FILENAME);
 
@@ -112,13 +113,20 @@ public class IntegerProperties {
 
 			logger.info("Loaded properties " + settings.toString());
 
-			resourceAsStream.close();
 
 			lastLoaded = System.currentTimeMillis();
 
 			checkInterval = getIntProperty(IntegerPropertyNames.SystemPropertyCheckInterval);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (resourceAsStream != null)
+				try {
+					resourceAsStream.close();
+				} catch (IOException e) {
+					logger.error("Error closing property file " + PROPERTIES_FILENAME + " Error " + e.toString());
+					e.printStackTrace();
+				}
 		}
 	}
 

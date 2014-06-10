@@ -54,9 +54,10 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 	String loadTechnologyTree(String content) throws IntegerException;
 
 	/**
-	 * @param data
-	 * @throws IntegerException 
+	 * @param content
+	 * @return
+	 * @throws IntegerException
 	 */
-	void loadTechnology(String data) throws IntegerException;
+	String loadServiceElementType(String content) throws IntegerException;
 
 }

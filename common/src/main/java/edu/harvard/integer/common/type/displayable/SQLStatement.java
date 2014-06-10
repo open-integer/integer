@@ -31,35 +31,31 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.type.displayable;
+
+import java.util.Locale;
+
+import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
- * 
+ *
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
-
-	private String fieldName = null;
-	private String defaultValue = null;
-
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
+public class SQLStatement implements DisplayableInterface {
+	public String message = null;
+	
+	public SQLStatement(String message) {
+		this.message = message;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
+	 */
+	@Override
+	public String toDisplayString(Locale local) {
+		
+		return message;
 	}
 
-	public String getFieldName() {
-		return fieldName;
-	}
 
-	public String getDefaultValue() {
-		return defaultValue;
-	}
 }

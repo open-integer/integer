@@ -3,7 +3,7 @@
 # management definition for physical hardware
 # by Loren Jan Wilson, 2014-05-21
 
-managementGroups:
+serviceElementTypes:
     - name: entity-physical
       description: The physical table in the ENTITY-MIB.
       accessMethod:

@@ -3,7 +3,7 @@
 # management definition for CDP
 # by Loren Jan Wilson, 2014-05-21
 
-managementGroups:
+serviceElementTypes:
     - name: cisco-cdp-global
       description: Cisco enterprise CDP MIB, global variables.
       accessMethod: 

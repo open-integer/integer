@@ -31,35 +31,16 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.yaml;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
- * 
+ *
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
+public class YamlSnmpAccessMethod extends YamlAccessMethod {
 
-	private String fieldName = null;
-	private String defaultValue = null;
-
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
-	}
-
-	public String getFieldName() {
-		return fieldName;
-	}
-
-	public String getDefaultValue() {
-		return defaultValue;
-	}
+	
+	private String mibName = null;
+	private String tableName = null;
+	
 }

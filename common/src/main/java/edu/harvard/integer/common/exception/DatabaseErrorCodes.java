@@ -44,7 +44,8 @@ public enum DatabaseErrorCodes implements ErrorCodeInterface {
 	UnableToCreateCleanCopyInvocationTarge("Unable to create clean copy! Invocation Targe Exception"),
 	UnableToCreateCleanCopyIllegalArgument("Unable to create clean copy! Illegal Argument exception"),
 	UnableToCreateCleanCopySecurityException("Unable to create clean copy! Security Exception"),
-	UnableToCreateCleanCopy("Unable to create clean copy");
+	UnableToCreateCleanCopy("Unable to create clean copy"),
+	ErrorSavingData("Error saving data. SQL {0}");
 
 	private String errorCode = null;
 	

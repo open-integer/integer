@@ -31,35 +31,76 @@
  *      
  */
 
-package edu.harvard.integer.common.properties;
+package edu.harvard.integer.common.yaml;
 
 /**
- * Keys for the String properties in the system. The default value must be
- * specified for each key.
- * 
  * @author David Taylor
  * 
  */
-public enum StringPropertyNames {
-	DATADir("DATADir", "../standalone/data/"),
-	MIBDir("MibDir", "../standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
-	ModuleName("ModuleName", ""); // Use empty string for test cases. When
-								// installed the real name will be used.
+public class YamlManagementObject {
+	private String name = null;
+	private String uri = null;
+	private String capability = null;
+	private int unique = 0;
 
-	private String fieldName = null;
-	private String defaultValue = null;
-
-	private StringPropertyNames(String fieldName, String defaultValue) {
-		this.fieldName = fieldName;
-		this.defaultValue = defaultValue;
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
 
-	public String getFieldName() {
-		return fieldName;
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getDefaultValue() {
-		return defaultValue;
+	/**
+	 * @return the uri
+	 */
+	public String getUri() {
+		return uri;
 	}
+
+	/**
+	 * @param uri
+	 *            the uri to set
+	 */
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	/**
+	 * @return the capability
+	 */
+	public String getCapability() {
+		return capability;
+	}
+
+	/**
+	 * @param capability
+	 *            the capability to set
+	 */
+	public void setCapability(String capability) {
+		this.capability = capability;
+	}
+
+	/**
+	 * @return the unique
+	 */
+	public int getUnique() {
+		return unique;
+	}
+
+	/**
+	 * @param unique
+	 *            the unique to set
+	 */
+	public void setUnique(int unique) {
+		this.unique = unique;
+	}
+
 }
