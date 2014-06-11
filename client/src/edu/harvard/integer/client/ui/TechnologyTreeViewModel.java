@@ -16,6 +16,7 @@ import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import edu.harvard.integer.client.ui.TechnologyDatabase.Category;
+import edu.harvard.integer.client.ui.TechnologyDatabase.SubCategory;
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
 import edu.harvard.integer.common.selection.FilterNode;
 
@@ -47,11 +48,21 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 			}
 		}
 	}
+	
+	private static class SubCategoryCell extends AbstractCell<SubCategory> {
+
+	    @Override
+	    public void render(Context context, SubCategory value, SafeHtmlBuilder sb) {
+	      if (value != null) {
+	    	  sb.appendEscaped(value.getDisplayName());
+	      }
+	    }
+	  }
 
 	/** The category data provider. */
 	private final ListDataProvider<Category> categoryDataProvider;
-	
-	private ListDataProvider<TechItem> dataProvider;
+	private ListDataProvider<SubCategory> subCategoryProvider;
+	private ListDataProvider<TechItem> techItemProvider;
 
 	/** The tech item cell. */
 	private final Cell<TechItem> techItemCell;
@@ -65,12 +76,17 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 
 	/**
 	 * Instantiates a new technology tree view model.
+	 * @param subCategoryProvider 
 	 *
 	 * @param selectionModel            the selection model
 	 * @param filterNodeList the filter node list
 	 */
-	public TechnologyTreeViewModel(ListDataProvider<TechItem> dataProvider, final SelectionModel<TechItem> selectionModel, List<FilterNode> filterNodeList) {
-		this.dataProvider = dataProvider;
+	public TechnologyTreeViewModel(ListDataProvider<TechItem> techItemProvider, 
+			ListDataProvider<SubCategory> subCategoryProvider, 
+			final SelectionModel<TechItem> selectionModel, 
+			List<FilterNode> filterNodeList) {
+		this.techItemProvider = techItemProvider;
+		this.subCategoryProvider = subCategoryProvider;
 		this.selectionModel = selectionModel;
 
 		// Create a data provider that provides categories.
@@ -159,12 +175,26 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 			// Return the first letters of each first name.
 			Category category = (Category) value;
 
+			List<SubCategory> counts = querySubCategoryByCategory(category);
+			
+			if (!counts.isEmpty())
+				return new DefaultNodeInfo<SubCategory>(new ListDataProvider<SubCategory>(counts), new SubCategoryCell());
+			
 			List<TechItem> techItems = queryTechItemsByCategory(category);
+			ListDataProvider<TechItem> technologyProvider = new ListDataProvider<TechItem>(
+					techItems, TechItem.KEY_PROVIDER);
+			return new DefaultNodeInfo<TechItem>(technologyProvider, techItemCell,
+				selectionModel, selectionManager, null);
+		}
+		else if (value instanceof SubCategory) {
+			SubCategory subCategory = (SubCategory) value;
+
+			List<TechItem> techItems = queryTechItemsByCategory(subCategory);
 
 			ListDataProvider<TechItem> technologyProvider = new ListDataProvider<TechItem>(
 					techItems, TechItem.KEY_PROVIDER);
 			return new DefaultNodeInfo<TechItem>(technologyProvider, techItemCell,
-					selectionModel, selectionManager, null);
+				selectionModel, selectionManager, null);
 		}
 
 		// Unhandled type.
@@ -172,9 +202,19 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		throw new IllegalArgumentException("Unsupported object type: " + type);
 	}
 	
+	private List<SubCategory> querySubCategoryByCategory(Category category) {
+		List<SubCategory> matches = new ArrayList<SubCategory>();
+		for (SubCategory item : subCategoryProvider.getList()) {
+			if (item.getParentName().equals(category.getDisplayName())) {
+				matches.add(item);
+			}
+		}
+		return matches;
+	}
+
 	public List<TechItem> queryTechItemsByCategory(Category category) {
 		List<TechItem> matches = new ArrayList<TechItem>();
-		for (TechItem item : dataProvider.getList()) {
+		for (TechItem item : techItemProvider.getList()) {
 			if (item.getCategory().getDisplayName().equals(category.getDisplayName())) {
 				matches.add(item);
 			}

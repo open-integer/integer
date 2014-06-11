@@ -45,6 +45,27 @@ public class TechnologyDatabase {
 		}
 		
 	}
+	
+	public static class SubCategory extends Category {
+
+		private String parentName;
+		
+		public SubCategory(String parentName, String displayName) {
+			super(displayName);
+			this.parentName = parentName;
+		}
+
+		public String getParentName() {
+			return parentName;
+		}
+
+		public void setParentName(String parentName) {
+			this.parentName = parentName;
+		}
+		
+		
+		
+	}
 
 	/**
 	 * A specific technology item.
