@@ -36,11 +36,13 @@ package edu.harvard.integer.service.persistance.dao.snmp;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,26 +104,13 @@ public class SNMPDAO extends BaseDAO {
 	/**
 	 * @param name
 	 */
+	@SuppressWarnings("unchecked")
 	public List<SNMP> findByOidSubtree(String name) {
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-				.getCriteriaBuilder();
 
-		CriteriaQuery<SNMP> query = criteriaBuilder.createQuery(SNMP.class);
-
-		Root<SNMP> from = query.from(SNMP.class);
-
-		query.select(from);
+		Query createQuery = getEntityManager().createQuery("select snmp from ServiceElementManagementObject snmp where oid like :name");
+		createQuery.setParameter("name", name + ".%");
 		
-		ParameterExpression<String> oid = criteriaBuilder
-				.parameter(String.class);
-		
-		
-		query.where(criteriaBuilder.like(oid, ""));
-
-		TypedQuery<SNMP> typeQuery = getEntityManager().createQuery(query);
-		typeQuery.setParameter(oid, name + "%");
-
-		List<SNMP> resultList = typeQuery.getResultList();
+		List<SNMP> resultList = createQuery.getResultList();
 
 		if (resultList.size() > 0) {
 			if (getLogger().isDebugEnabled())

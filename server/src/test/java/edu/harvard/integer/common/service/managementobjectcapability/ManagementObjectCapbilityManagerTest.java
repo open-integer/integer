@@ -214,20 +214,30 @@ public class ManagementObjectCapbilityManagerTest {
 	public void findSNMPLike() {
 		String rootOid = "1.3.6.1.2.1.1";
 		
-		SNMP oid = getSNMP(rootOid + ".1", "sysName");
-		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
-		
-		oid = getSNMP(rootOid + ".2", "sysDescr");
-		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
-		
-		oid = getSNMP(rootOid + ".3", "sysUptime");
-		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
-		
+//		SNMP oid = getSNMP(rootOid + ".1", "sysName");
+//		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+//		
+//		oid = getSNMP(rootOid + ".2", "sysDescr");
+//		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+//		
+//		oid = getSNMP(rootOid + ".3", "sysUptime");
+//		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+//		
 		try {
 			List<SNMP> findByNameStartsWith = snmpManager.findByNameStartsWith(rootOid);
 			
-			if (findByNameStartsWith == null)
-				return;
+			if (findByNameStartsWith == null) {
+				SNMP oid = getSNMP(rootOid + ".1", "sysName");
+				logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+				
+				oid = getSNMP(rootOid + ".2", "sysDescr");
+				logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+				
+				oid = getSNMP(rootOid + ".3", "sysUptime");
+				logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+				findByNameStartsWith = snmpManager.findByNameStartsWith(rootOid);
+				
+			}
 			
 			assert(findByNameStartsWith != null);
 			
