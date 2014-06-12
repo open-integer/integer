@@ -127,7 +127,7 @@ task createSchema(dependsOn: test) << {
 		def outFile = new FileWriter("build/create_table.sql") 
 		outFile.write("use Config;\n\n")
 		sql.eachRow('show tables') { 
-			row -> sql.eachRow("show create table " + "${row.Tables_in_config}") { 
+			row -> sql.eachRow("show create table " + "${row.Tables_in_TestConfig}") { 
 				tbl -> 
 				outFile.write("drop table if exists ${tbl.Table};\n")
 				outFile.write("${tbl.'Create Table'};\n\n")
