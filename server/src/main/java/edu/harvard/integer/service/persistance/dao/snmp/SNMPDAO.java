@@ -109,14 +109,17 @@ public class SNMPDAO extends BaseDAO {
 		CriteriaQuery<SNMP> query = criteriaBuilder.createQuery(SNMP.class);
 
 		Root<SNMP> from = query.from(SNMP.class);
-		query.select(from);
 
+		query.select(from);
+		
 		ParameterExpression<String> oid = criteriaBuilder
 				.parameter(String.class);
-		query.select(from).where(criteriaBuilder.like(oid, name + "%"));
+		
+		
+		query.where(criteriaBuilder.like(oid, ""));
 
 		TypedQuery<SNMP> typeQuery = getEntityManager().createQuery(query);
-		typeQuery.setParameter(oid, name);
+		typeQuery.setParameter(oid, name + "%");
 
 		List<SNMP> resultList = typeQuery.getResultList();
 

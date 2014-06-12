@@ -49,6 +49,7 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.util.FileUtil;
+import edu.harvard.integer.util.Resource;
 
 
 /**
@@ -115,7 +116,7 @@ public class MibService extends BaseService {
 		
 		String mibDirPath = null;
 		
-		mibDirPath = props.getProperty(StringPropertyNames.MIBDir) + "/";
+		mibDirPath =  Resource.getWildflyHome() +  props.getProperty(StringPropertyNames.MIBDir) + "/";
 		
 		for (String string : mibNames) {
 			MIBInfo mibInfo = snmpManager.getMIBInfoByName(string);

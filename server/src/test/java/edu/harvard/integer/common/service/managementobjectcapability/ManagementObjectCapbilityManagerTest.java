@@ -208,7 +208,40 @@ public class ManagementObjectCapbilityManagerTest {
 
 		return oid;
 	}
+	
 
+	@Test
+	public void findSNMPLike() {
+		String rootOid = "1.3.6.1.2.1.1";
+		
+		SNMP oid = getSNMP(rootOid + ".1", "sysName");
+		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+		
+		oid = getSNMP(rootOid + ".2", "sysDescr");
+		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+		
+		oid = getSNMP(rootOid + ".3", "sysUptime");
+		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
+		
+		try {
+			List<SNMP> findByNameStartsWith = snmpManager.findByNameStartsWith(rootOid);
+			
+			if (findByNameStartsWith == null)
+				return;
+			
+			assert(findByNameStartsWith != null);
+			
+			logger.info("Found " + findByNameStartsWith.size() + " oids in subtree " + rootOid);
+			for (SNMP snmp : findByNameStartsWith) {
+				logger.info("SubTreeOid " + snmp.getName() + " - " + snmp.getOid());
+			}
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
 	@Test
 	public void loadManagementObjectsForCapability() {
 		Capability[] capabilites = findAllCapabilities();

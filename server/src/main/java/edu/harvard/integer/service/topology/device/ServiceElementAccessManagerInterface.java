@@ -68,9 +68,9 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 	/**
 	 * Get a list of the top level (Device) ServiceElements.
 	 * 
-	 * @return ServiceElement[] of the top level service elements that have been
-	 * discovered. 
-	 * @throws IntegerException
+	 *  @return ServiceElement[] of the top level service elements that have been
+	 * discovered. An empty list will be returned when there is no data in the database.
+	 * @throws IntegerException will be thrown if any error occurs while retrieving the data. 
 	 */
 	ServiceElement[] getTopLevelServiceElements() throws IntegerException;
 

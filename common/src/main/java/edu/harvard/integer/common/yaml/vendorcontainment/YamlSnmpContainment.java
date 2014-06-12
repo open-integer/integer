@@ -31,37 +31,65 @@
  *      
  */
 
-package edu.harvard.integer.util;
+package edu.harvard.integer.common.yaml.vendorcontainment;
 
-import java.io.File;
-
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.util.List;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public class Resource {
+public class YamlSnmpContainment {
 
-    @Produces
-    public Logger produceLog(InjectionPoint injectionPoint) {
-    
-    	return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
-    }
+	private String containmentType = null;
 
-    
-    /**
-     * Return the wildfly home directory. 
-     * @return File that is the wildfly (JBOSS_HOME) 
-     */
-    public static File getWildflyHome() {
-    	String jbossHome = System.getenv("JBOSS_HOME");
-    	
-    	return new File(jbossHome);
-    }
+	private List<YamlSnmpLevelOID> snmpLevels = null;
+
+	private YamlServiceElementType serviceElementType = null;
+
+	/**
+	 * @return the containmentType
+	 */
+	public String getContainmentType() {
+		return containmentType;
+	}
+
+	/**
+	 * @param containmentType
+	 *            the containmentType to set
+	 */
+	public void setContainmentType(String containmentType) {
+		this.containmentType = containmentType;
+	}
+
+	/**
+	 * @return the snmpLevels
+	 */
+	public List<YamlSnmpLevelOID> getSnmpLevels() {
+		return snmpLevels;
+	}
+
+	/**
+	 * @param snmpLevels
+	 *            the snmpLevels to set
+	 */
+	public void setSnmpLevels(List<YamlSnmpLevelOID> snmpLevels) {
+		this.snmpLevels = snmpLevels;
+	}
+
+	/**
+	 * @return the serviceElementType
+	 */
+	public YamlServiceElementType getServiceElementType() {
+		return serviceElementType;
+	}
+
+	/**
+	 * @param serviceElementType
+	 *            the serviceElementType to set
+	 */
+	public void setServiceElementType(YamlServiceElementType serviceElementType) {
+		this.serviceElementType = serviceElementType;
+	}
+
 }

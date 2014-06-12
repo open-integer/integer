@@ -60,6 +60,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlTechnology;
+import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 
 
@@ -218,4 +219,26 @@ public class TechnologyLoadTest {
 	}
 	
 
+	@Test
+	public void readVendorContainment() throws IntegerException {
+		File techTree = new File("../config/vendorcontianment/HostResourcesContainment.yaml");
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(techTree.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading YAML: " + e.getMessage());
+		}
+		
+		Yaml yaml = new Yaml(new Constructor(YamlVendorContainment.class));
+
+		Object load = yaml.load(content);
+		
+		logger.info("ServiceElement read in: " + yaml.dump(load));
+		
+		yamlManager.loadVendorDeployment(content);
+	}
+	
 }

@@ -181,6 +181,14 @@ public interface ServiceElementDiscoveryManagerInterface extends
 			throws IntegerException;
 
 	/**
+	 * @param selector
+	 * @return
+	 * @throws IntegerException
+	 */
+	VendorContainmentSelector[] getVendorContainmentSelector(
+			VendorContainmentSelector selector) throws IntegerException;
+
+	/**
 	 * @param id
 	 * @return
 	 * @throws IntegerException
@@ -198,5 +206,6 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return
 	 */
 	List<SNMP> getEntityMIBInfo();
+
 	
 }

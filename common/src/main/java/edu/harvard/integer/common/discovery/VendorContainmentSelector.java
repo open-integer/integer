@@ -41,7 +41,6 @@ import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 
 /**
  * 
