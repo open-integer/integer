@@ -14,6 +14,7 @@ import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 
+import edu.harvard.integer.client.ui.TechnologyDatabase.SubCategory;
 import edu.harvard.integer.client.ui.TechnologyTreeViewModel;
 import edu.harvard.integer.client.ui.TechnologyDatabase.Category;
 import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
@@ -23,7 +24,8 @@ import edu.harvard.integer.common.selection.FilterNode;
 
 public class HvCheckBoxTreePanel extends SimplePanel {
 	
-	private ListDataProvider<TechItem> dataProvider;
+	private ListDataProvider<TechItem> techItemProvider;
+	private ListDataProvider<SubCategory> subCategoryProvider;
 	
 	private final ProvidesKey<TechItem> KEY_PROVIDER = new ProvidesKey<TechItem>() {
 		@Override
@@ -32,9 +34,10 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 		}
 	};
 
-	public HvCheckBoxTreePanel(ListDataProvider<TechItem> dataProvider, List<FilterNode> list) {
+	public HvCheckBoxTreePanel(ListDataProvider<TechItem> techItemProvider, List<FilterNode> list) {
 		FilterNode rootNode = list.get(0);
-		this.dataProvider = dataProvider;
+		this.techItemProvider = techItemProvider;
+		subCategoryProvider = new ListDataProvider<SubCategory>();
 
 		generateProviderItems(rootNode.getItemId(), rootNode.getChildren());
 		
@@ -63,7 +66,7 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 
 		CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
 		
-		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(dataProvider, selectionModel, rootNode.getChildren()), null, res);
+		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(techItemProvider, subCategoryProvider, selectionModel, rootNode.getChildren()), null, res);
 		
 		cellTree.setAnimationEnabled(true);
 		
@@ -76,12 +79,16 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 	}
 	
 	public void generateProviderItems(ID parentNode, List<FilterNode> techNodeList) {
-		List<TechItem> list = dataProvider.getList();
+		List<TechItem> techItemList = techItemProvider.getList();
+		List<SubCategory> subCategoryList = subCategoryProvider.getList();
 		
 		for (FilterNode node : techNodeList) {
-			list.add(createTechItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
-			if (node.getChildren() != null && !node.getChildren().isEmpty())
+			if (node.getChildren() == null || node.getChildren().isEmpty())
+				techItemList.add(createTechItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
+			else {
+				subCategoryList.add(new SubCategory(parentNode.getName(), node.getItemId().getName()));
 				generateProviderItems(node.getItemId(), node.getChildren());
+			}
 		}
 	}
 	

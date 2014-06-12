@@ -33,12 +33,23 @@ public class FilterPanel extends StackLayoutPanel {
 	}
 	
 	public void update(Filter filter) {
-		add(new HvCheckBoxTreePanel(technologyProvider, filter.getTechnologies()), "Technology", 3);
-		add(new HvCheckListPanel<ID>(providerProvider, filter.getProviders()), "Provider", 3);
-		add(new HvCheckListPanel<CriticalityEnum>(criticalityProvider, filter.getCriticalities()), "Criticality", 3);
-		add(new HvCheckListPanel<ID>(locationProvider, filter.getLocations()), "Location", 3);
-		add(new HvCheckListPanel<ID>(serviceProvider, filter.getServices()), "Service", 3);
-		add(new HvCheckBoxTreePanel(organizationProvider, filter.getOrginizations()), "Organization", 3);
+		if (filter.getTechnologies() != null && !filter.getTechnologies().isEmpty())
+			add(new HvCheckBoxTreePanel(technologyProvider, filter.getTechnologies()), "Technology", 3);
+		
+		if (filter.getProviders() != null && !filter.getProviders().isEmpty())
+			add(new HvCheckListPanel<ID>(providerProvider, filter.getProviders()), "Provider", 3);
+		
+		if (filter.getCriticalities() != null && !filter.getCriticalities().isEmpty())
+			add(new HvCheckListPanel<CriticalityEnum>(criticalityProvider, filter.getCriticalities()), "Criticality", 3);
+		
+		if (filter.getLocations() != null && !filter.getLocations().isEmpty())
+			add(new HvCheckListPanel<ID>(locationProvider, filter.getLocations()), "Location", 3);
+		
+		if (filter.getServices() != null && !filter.getServices().isEmpty())
+			add(new HvCheckListPanel<ID>(serviceProvider, filter.getServices()), "Service", 3);
+		
+		if (filter.getOrginizations() != null && !filter.getOrginizations().isEmpty())
+			add(new HvCheckBoxTreePanel(organizationProvider, filter.getOrginizations()), "Organization", 3);
 	}
 
 }
