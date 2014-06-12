@@ -83,4 +83,27 @@ public class TestUtil {
 				// Deploy our test data source
 				.addAsWebInfResource("test-ds.xml");
 	}
+	
+	public static Archive<?> createTestMySqlArchive(String warName) {
+		return ShrinkWrap
+				.create(WebArchive.class, warName)
+				.addPackages(true, "edu.harvard.integer")
+				.addPackages(true, "net.percederberg")
+				.addPackages(true, "org.apache.commons")
+				.addPackages(true, "org.snmp4j")
+				.addPackages(true, "uk.co.westhawk.snmp")
+				.addPackages(true, "org.jboss")
+				.addPackages(true, "org.wildfly")
+				.addPackages(true, "org.xnio")
+				.addPackages(true, "org.slf4j.logger")
+				.addPackages(true, "org/jasypt")
+				.addPackages(true, "com.fasterxml.jackson")
+				.addPackages(true, "org.yaml")
+				.addAsResource("META-INF/test-persistence.xml",
+						"META-INF/persistence.xml")
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+				// Deploy our test data source
+				.addAsWebInfResource("test-mysql-ds.xml");
+	}
+	
 }

@@ -43,6 +43,7 @@ import java.util.Locale;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -50,6 +51,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.SQLQuery;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
@@ -60,6 +62,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
 import edu.harvard.integer.common.type.displayable.SQLStatement;
 import edu.harvard.integer.common.util.DisplayableInterface;
+import edu.harvard.integer.util.LoggerUtil;
 
 /**
  * @author David Taylor
@@ -641,9 +644,9 @@ public class BaseDAO {
 					f.invoke(toInstance, value);
 
 					if (logger.isDebugEnabled())
-						logger.debug(toInstance.getClass().getSimpleName() + " "
+						logger.debug(LoggerUtil.filterLog(toInstance.getClass().getSimpleName() + " "
 								+ ((BaseEntity) toInstance).getID() + " "
-								+ f.getName() + "(" + value + ")");
+								+ f.getName() + "(" + value + ")"));
 
 				} catch (NoSuchMethodException e) {
 					throw new IntegerException(
@@ -706,4 +709,5 @@ public class BaseDAO {
 		return copy;
 
 	}
+
 }
