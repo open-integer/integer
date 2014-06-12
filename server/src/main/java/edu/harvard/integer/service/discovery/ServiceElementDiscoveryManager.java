@@ -368,5 +368,17 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		
 		return types;
 	}
+	
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypesBySubtypeAndVendor(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public ServiceElementType[] getServiceElementTypesBySubtypeAndVendor(
+			String subtype, String vendorType) throws IntegerException {
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
