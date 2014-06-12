@@ -164,6 +164,16 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(String catetory, String vendorType)
 			throws IntegerException;
+	
+	
+	/**
+	 * Find the ServiceElements for the given vendorSubType and vendor. 
+	 * @return a list of ServiceElements that match the given subtype and vendor.
+	 * @throws IntegerException
+	 */
+	ServiceElementType[] getServiceElementTypesBySubtypeAndVendor(String subtype, String vendorType)
+			throws IntegerException;
+	
 
 	/**
 	 * @param selector
