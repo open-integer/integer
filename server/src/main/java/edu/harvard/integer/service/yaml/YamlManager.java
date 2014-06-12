@@ -57,9 +57,11 @@ import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
 import edu.harvard.integer.common.yaml.YamlMechanismType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
+import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
 import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
@@ -82,6 +84,9 @@ public class YamlManager extends BaseManager implements
 	
 	@Inject
 	PersistenceManagerInterface persistanceManager;
+	
+	@Inject
+	SnmpManagerInterface snmpManager;
 	
 	/**
 	 * @param managerType
@@ -358,6 +363,7 @@ public class YamlManager extends BaseManager implements
 
 		return "Success";
 	}
+	
 
 	/**
 	 * @param serviceElementTypes
@@ -370,42 +376,97 @@ public class YamlManager extends BaseManager implements
 		
 
 		for (YamlServiceElementType yamlServiceElementType : serviceElementTypes) {
-			ServiceElementType serviceElementType = serviceElementTypeDao.findByName(yamlServiceElementType.getName());
-			if (serviceElementType == null) {
-				serviceElementType = new ServiceElementType();
-				serviceElementType.setName(yamlServiceElementType.getName());
-				serviceElementType.setDescription(yamlServiceElementType.getDescription());
-			}
 			
-			List<ID> managementObjects = new ArrayList<ID>();
-			
-			for (YamlManagementObject yamlManagementObject : yamlServiceElementType.getManagementObjects()) {
-				SNMPDAO dao = persistanceManager.getSNMPDAO();
-				SNMP snmp = dao.findByName(yamlManagementObject.getName());
-				if (snmp == null) {
-					logger.error("No SNMP object found with name " + yamlManagementObject.getName());
-				} else {
-					CapabilityDAO capabilityDAO = persistanceManager.getCapabilityDAO();
-					Capability capability = capabilityDAO.findByName(yamlManagementObject.getCapability());
-					if (capability == null) {
-						logger.error("No Capability found with name " + yamlManagementObject.getCapability()
-								+ " ServiceElement " + yamlServiceElementType.getName());
-					} else {
-						snmp.setCapabilityId(capability.getID());
-						
-						snmp = dao.update(snmp);
-						
-						managementObjects.add(snmp.getID());
-						
+			List<YamlServiceElementTypeTranslate> typeTranslates =  yamlServiceElementType.getServiceElementTypeTranslates();
+			for ( YamlServiceElementTypeTranslate typeTranslate : typeTranslates ) {
+				
+				if ( typeTranslate.isBranchObject() ) {
+					
+					List<SNMP> snmps = snmpManager.findByNameStartsWith(typeTranslate.getUriOrName());
+					for ( SNMP snmpType : snmps ) {
+						logger.info("SNMP name " + snmpType.getName());
+						createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, snmpType.getName());
 					}
 				}
+				else {
+					createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, typeTranslate.getUriOrName());
+				}
+				
 			}
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param serviceElementTypeDao
+	 * @param typeTranslate
+	 * @param yamlServiceElementType
+	 * @throws IntegerException
+	 */
+	public void createServiceElementType( ServiceElementTypeDAO serviceElementTypeDao, 
+			                              YamlServiceElementTypeTranslate typeTranslate,
+			                              YamlServiceElementType yamlServiceElementType,
+			                              String setName ) throws IntegerException {
+		
+		ServiceElementType serviceElementType = serviceElementTypeDao.findByName(setName);
+		if (serviceElementType == null) {
 			
-			logger.info("Setting Attributes " + managementObjects + " On " + serviceElementType.getName());
-			serviceElementType.setAttributeIds(managementObjects);
-			serviceElementTypeDao.update(serviceElementType);
-			
+			serviceElementType = new ServiceElementType();
+			serviceElementType.setCategory(typeTranslate.getCategory());
+			serviceElementType.setName(setName);
+			serviceElementType.setDescription(yamlServiceElementType.getDescription());
 		}
 		
+		List<ID> managementObjects = new ArrayList<ID>();
+		for (YamlManagementObject yamlManagementObject : yamlServiceElementType.getManagementObjects()) {
+			
+		    if ( yamlManagementObject.getCategories() != null ) {
+		    	
+	            boolean match = false;	    	
+		    	String[] categories = yamlManagementObject.getCategories().split(":");	
+		        for ( String category : categories ) {
+		        	if ( category.equals(typeTranslate.getCategory() )) {
+		        		
+		        		match = true;
+		        		break;
+		        	}		        		
+		        }
+		        if ( !match ) {
+		        	continue;
+		        }
+		    }
+			
+			SNMPDAO dao = persistanceManager.getSNMPDAO();
+			SNMP snmp = dao.findByName(yamlManagementObject.getName());
+			if (snmp == null) {
+				logger.error("No SNMP object found with name " + yamlManagementObject.getName());
+			} 
+			else {
+				CapabilityDAO capabilityDAO = persistanceManager.getCapabilityDAO();
+				Capability capability = capabilityDAO.findByName(yamlManagementObject.getCapability());
+				if (capability == null) {
+					logger.error("No Capability found with name " + yamlManagementObject.getCapability()
+							+ " ServiceElement " + yamlServiceElementType.getName());
+				} 
+				else {
+					snmp.setCapabilityId(capability.getID());
+					snmp = dao.update(snmp);					
+					managementObjects.add(snmp.getID());					
+				}
+				if ( yamlManagementObject.getUnique() == 1 ) {
+					List<ID> ids = serviceElementType.getUniqueIdentifierCapabilities();
+					if ( ids == null ) {
+						serviceElementType.setUniqueIdentifierCapabilities(ids);
+					}					
+					ids.add(snmp.getID());
+				}
+			}
+		}
+		logger.info("Setting Attributes " + managementObjects + " On " + serviceElementType.getName());
+		serviceElementType.setAttributeIds(managementObjects);
+		serviceElementTypeDao.update(serviceElementType);
 	}
+	
 }
