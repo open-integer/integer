@@ -33,7 +33,7 @@
 
 package edu.harvard.integer.service.parser.mibparser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +54,6 @@ import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
 import edu.harvard.integer.server.parser.mibparser.MibParserFactory;
-import edu.harvard.integer.server.parser.mibparser.moduleloader.MibbleParser;
 
 /**
  * @author David Taylor

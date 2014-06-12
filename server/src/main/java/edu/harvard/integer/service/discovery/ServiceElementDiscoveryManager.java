@@ -209,6 +209,17 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getVendorContainmentSelector(edu.harvard.integer.common.discovery.VendorContainmentSelector)
+	 */
+	@Override
+	public VendorContainmentSelector[] getVendorContainmentSelector(VendorContainmentSelector selector) throws IntegerException {
+		VendorContainmentSelectorDAO dao = dbm
+				.getVendorContainmentSelectorDAO();
+
+		return dao.findBySelector(selector);
+	}
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#deleteVendorContianmentSelector(edu.harvard.integer.common.ID)
 	 */
 	@Override

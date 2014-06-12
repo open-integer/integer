@@ -56,6 +56,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
+import edu.harvard.integer.util.LoggerUtil;
 
 /**
  * @author David Taylor
@@ -269,7 +270,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 
 			return dbModule;
 		} catch (IntegerException e) {
-			logger.error("Error saveing SNMPModule " + result.getModule());
+			logger.error(LoggerUtil.filterLog("Error saveing SNMPModule " + result.getModule()));
 
 			throw e;
 		}
@@ -315,7 +316,7 @@ public class MibLoader implements MibLoaderLocalInterface {
 			logger.error("Error saveing SNMPModule " + snmpOid + " Error " + e.toString());
 
 			throw e;
-		}
+		} 
 
 		return snmpOid;
 	}

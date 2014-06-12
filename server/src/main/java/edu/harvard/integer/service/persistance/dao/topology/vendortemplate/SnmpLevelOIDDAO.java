@@ -33,13 +33,21 @@
 
 package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
@@ -54,7 +62,7 @@ public class SnmpLevelOIDDAO extends BaseDAO {
 	 * @param logger
 	 * @param clazz
 	 */
-	protected SnmpLevelOIDDAO(EntityManager entityManger, Logger logger) {
+	public SnmpLevelOIDDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, SnmpLevelOID.class);
 		
 	}
@@ -79,5 +87,32 @@ public class SnmpLevelOIDDAO extends BaseDAO {
 		super.preSave(entity);
 	}
 
+
+	public SnmpLevelOID findByContextOid(ServiceElementManagementObject contextOid) throws IntegerException {
+		
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<SnmpLevelOID> query = criteriaBuilder.createQuery(SnmpLevelOID.class);
+
+		Root<SnmpLevelOID> from = query.from(SnmpLevelOID.class);
+		query.select(from);
+
+		ParameterExpression<ServiceElementManagementObject> oid = criteriaBuilder
+				.parameter(ServiceElementManagementObject.class);
+		
+		query.select(from).where(
+				criteriaBuilder.equal(from.get("contextOID"), oid));
+
+		TypedQuery<SnmpLevelOID> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(oid, contextOid);
+
+		List<SnmpLevelOID> resultList = typeQuery.getResultList();
+
+		if (resultList.size() > 0)
+			return resultList.get(0);
+		else
+			return null;
+	}
 	
 }

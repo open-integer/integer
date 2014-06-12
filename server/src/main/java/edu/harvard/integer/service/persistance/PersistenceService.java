@@ -65,6 +65,7 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 import edu.harvard.integer.util.FileUtil;
+import edu.harvard.integer.util.Resource;
 /**
  * @author David Taylor
  *
@@ -161,7 +162,8 @@ public class PersistenceService extends BaseService implements PersistenceServic
 		MIBImportInfo mibFile = new MIBImportInfo();
 
 		IntegerProperties props = IntegerProperties.getInstance();
-		String dataDirPath = props.getProperty(StringPropertyNames.DATADir) + "/mibs";
+		String dataDirPath = Resource.getWildflyHome() +  
+				props.getProperty(StringPropertyNames.DATADir) + "/mibs";
 
 		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
 		if (! file.exists()) {
@@ -202,7 +204,7 @@ public class PersistenceService extends BaseService implements PersistenceServic
 		
 		IntegerProperties props = IntegerProperties.getInstance();
 		
-		String dataDirPath = props.getProperty(StringPropertyNames.DATADir) + "/yaml";
+		String dataDirPath =  Resource.getWildflyHome() +  props.getProperty(StringPropertyNames.DATADir) + "/yaml";
 		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
 		
 		if (!file.exists()) {
@@ -241,7 +243,7 @@ public class PersistenceService extends BaseService implements PersistenceServic
 		
 		IntegerProperties props = IntegerProperties.getInstance();
 		
-		String dataDirPath = props.getProperty(StringPropertyNames.DATADir) + "/yaml";
+		String dataDirPath =  Resource.getWildflyHome() +  props.getProperty(StringPropertyNames.DATADir) + "/yaml";
 		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
 		
 		if (!file.exists()) {

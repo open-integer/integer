@@ -43,13 +43,15 @@ import edu.harvard.integer.service.BaseManagerInterface;
 public interface YamlManagerInterface extends BaseManagerInterface {
 
 	/**
-	 * Read in the yaml in the passed in string. 
+	 * Read in the YAML in the passed in string. 
 	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists then update with new children.
+	 * technology already exists in the database then the technology 
+	 * will be update with new information found in the YAML. The YAML is
+	 * passed in as a string so the YAML file can be loaded from the GUI. 
 	 * 
-	 * @param content
+	 * @param content. YAML file passed in as a string. 
 	 * @return Status of the load. 
-	 * @throws IntegerException 
+	 * @throws IntegerException. 
 	 */
 	String loadTechnologyTree(String content) throws IntegerException;
 
@@ -59,5 +61,12 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	String loadServiceElementType(String content) throws IntegerException;
+
+	/**
+	 * @param content
+	 * @return
+	 * @throws IntegerException
+	 */
+	String loadVendorDeployment(String content) throws IntegerException;
 
 }

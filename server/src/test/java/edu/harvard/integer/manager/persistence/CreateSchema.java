@@ -31,37 +31,33 @@
  *      
  */
 
-package edu.harvard.integer.util;
+package edu.harvard.integer.manager.persistence;
 
-import java.io.File;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import edu.harvard.integer.common.TestUtil;
 
 /**
  * @author David Taylor
  *
  */
-public class Resource {
+@RunWith(Arquillian.class)
+public class CreateSchema {
 
-    @Produces
-    public Logger produceLog(InjectionPoint injectionPoint) {
-    
-    	return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
-    }
+	@Deployment
+	public static Archive<?> createTestArchive() {
+		return TestUtil.createTestMySqlArchive("CreateSchema.war");
+	}
+	
+	
+	@Test
+	public void test() {
+	
+		System.out.println("Success");
+	}
 
-    
-    /**
-     * Return the wildfly home directory. 
-     * @return File that is the wildfly (JBOSS_HOME) 
-     */
-    public static File getWildflyHome() {
-    	String jbossHome = System.getenv("JBOSS_HOME");
-    	
-    	return new File(jbossHome);
-    }
 }

@@ -42,6 +42,8 @@ import org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.harvard.integer.util.LoggerUtil;
+
 /**
  * @author David Taylor
  *
@@ -58,10 +60,10 @@ public class IntegerWildflyCasAuthFilter extends Cas20ProxyReceivingTicketValida
 			HttpServletResponse response, Assertion assertion) {
 		
 		AttributePrincipal principal = assertion.getPrincipal();
-		logger.info("========== User " + principal.getName() + "        ==================");
-		logger.info("== Request User " + request.getUserPrincipal() + " ==================");
-		logger.info("=== Remote User " + request.getRemoteUser() + "    ==================");
-		logger.info("=== Remote Host " + request.getRemoteHost() + "    ==================");
+		logger.info(LoggerUtil.filterLog("========== User " + principal.getName() + "        =================="));
+		logger.info(LoggerUtil.filterLog("== Request User " + request.getUserPrincipal() + " =================="));
+		logger.info(LoggerUtil.filterLog("=== Remote User " + request.getRemoteUser() + "    =================="));
+		logger.info(LoggerUtil.filterLog("=== Remote Host " + request.getRemoteHost() + "    =================="));
 
 		
 		super.onSuccessfulValidation(request, response, assertion);

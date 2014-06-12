@@ -74,9 +74,8 @@ public class SchemaGenerator {
 		SchemaExport export = new SchemaExport(cfg);
 		
 		export.setDelimiter(";");
-		
 		export.setOutputFile("build/create_" + dialect.name().toLowerCase() + ".sql");
-		export.execute(true, false, false, true);
+		export.execute(true, false, false, false);
 	}
 
 	/**

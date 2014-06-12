@@ -33,35 +33,35 @@
 
 package edu.harvard.integer.util;
 
-import java.io.File;
-
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 /**
+ * Utility methods to help with creating log messages.
+ * 
  * @author David Taylor
- *
+ * 
  */
-public class Resource {
+public class LoggerUtil {
 
-    @Produces
-    public Logger produceLog(InjectionPoint injectionPoint) {
-    
-    	return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
-    }
-
-    
-    /**
-     * Return the wildfly home directory. 
-     * @return File that is the wildfly (JBOSS_HOME) 
-     */
-    public static File getWildflyHome() {
-    	String jbossHome = System.getenv("JBOSS_HOME");
-    	
-    	return new File(jbossHome);
-    }
+	/**
+	 * Remove all CRLF chars from the log message.
+	 * 
+	 * CRLF Injection(1 flaw) Description Fix Required by Policy Veracode
+	 * Detailed Report prepared for Harvard University - Jun 11, 2014. The
+	 * acronym CRLF stands for "Carriage Return, Line Feed" and refers to the
+	 * sequence of characters used to denote the end of a line of text. CRLF
+	 * injection vulnerabilities occur when data enters an application from an
+	 * untrusted source and is not properly validated before being used. For
+	 * example, if an attacker is able to inject a CRLF into a log file, he
+	 * could append falsified log entries, thereby misleading administrators or
+	 * cover traces of the attack. If an attacker is able to inject CRLFs into
+	 * an HTTP response header, he can use this ability to carry out other
+	 * attacks such as cache poisoning. CRLF vulnerabilities primarily affect
+	 * data integrity.
+	 * 
+	 * 
+	 * @param message
+	 * @return
+	 */
+	public static String filterLog(String message) {
+		return message.replace("\n", "").replace("\r", "");
+	}
 }

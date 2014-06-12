@@ -31,37 +31,45 @@
  *      
  */
 
-package edu.harvard.integer.util;
-
-import java.io.File;
-
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+package edu.harvard.integer.common.yaml.vendorcontainment;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public class Resource {
+public class YamlSnmpServiceElementTypeDiscriminator {
+	private YamlServiceElementType serviceElementType = null;
 
-    @Produces
-    public Logger produceLog(InjectionPoint injectionPoint) {
-    
-    	return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
-    }
+	private String discriminatorValue = null;
 
-    
-    /**
-     * Return the wildfly home directory. 
-     * @return File that is the wildfly (JBOSS_HOME) 
-     */
-    public static File getWildflyHome() {
-    	String jbossHome = System.getenv("JBOSS_HOME");
-    	
-    	return new File(jbossHome);
-    }
+	/**
+	 * @return the serviceElementTypeId
+	 */
+	public YamlServiceElementType getServiceElementType() {
+		return serviceElementType;
+	}
+
+	/**
+	 * @param serviceElementTypeId
+	 *            the serviceElementTypeId to set
+	 */
+	public void setServiceElementType(YamlServiceElementType serviceElementType) {
+		this.serviceElementType = serviceElementType;
+	}
+
+	/**
+	 * @return the discriminatorValue
+	 */
+	public String getDiscriminatorValue() {
+		return discriminatorValue;
+	}
+
+	/**
+	 * @param discriminatorValue
+	 *            the discriminatorValue to set
+	 */
+	public void setDiscriminatorValue(String discriminatorValue) {
+		this.discriminatorValue = discriminatorValue;
+	}
+
 }

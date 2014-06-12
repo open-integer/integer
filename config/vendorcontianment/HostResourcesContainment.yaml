@@ -1,0 +1,75 @@
+
+model: cisco
+firmware: 
+softwareVersion: 12.2
+snmpContainment: 
+    containmentType: HostResourcesMib
+    snmpLevels:
+    - contextOID: hrDeviceEntry
+      name: HostResourcesMIbContainment
+      descriminatorOID: hrDeviceType
+      disriminators:
+      - serviceElementType:
+          name: CPU
+          fieldReplaceableUnit: false
+          description: 
+          defaultNameCabability: hrDeviceDescr
+          category: cpu
+          uniqueIdentifierCapabilities: [ hrDeviceIndex ]
+          attributes: [ hrDeviceDescr, hrDeviceID, hrProcessorFrwID, hrProcessorLoad ]
+        discriminatorValue: 1.3.6.1.2.1.25.3.1.3
+      - serviceElementType:
+          name: Printer
+          fieldReplaceableUnit: false
+          description: 
+          defaultNameCabability: hrDeviceDescr
+          category: printer
+          uniqueIdentifierCapabilities: [ hrDeviceIndex ]
+          attributes: [ hrDeviceDescr, hrDeviceID, hrPrinterDetectedErrorState, hrProcessorLoad ]
+        discriminatorValue: 1.3.6.1.2.1.25.3.1.5
+      - serviceElementType:
+          name: PortIf
+          fieldReplaceableUnit: false
+          description: 
+          defaultNameCabability: hrDeviceDescr
+          category: portIf
+          uniqueIdentifierCapabilities: [ hrDeviceIndex ]
+          attributes: [ hrDeviceDescr, hrDeviceID, hrNetworkIfIndex, hrProcessorLoad ]
+        discriminatorValue: 1.3.6.1.2.1.25.3.1.4
+      - serviceElementType:
+          name: Disk
+          fieldReplaceableUnit: false
+          description: 
+          defaultNameCabability: hrDeviceDescr
+          category: disk
+          uniqueIdentifierCapabilities: [ hrDeviceIndex ]
+          attributes: [ hrDeviceDescr, hrDeviceID,  hrDiskStorageAccess, hrDiskStorageMedia, hrDiskStorageRemoveble ]
+        discriminatorValue: 1.3.6.1.2.1.25.3.1.6
+      children:
+    - contextOID: hrSWInstalledEntry
+      name: HostMibSWInstalled
+      descriminatorOID: hrSWInstalledName
+      disriminators:
+      - serviceElementType:
+          name: Software
+          fieldReplaceableUnit: false
+          description: 
+          defaultNameCabability: hrSWInstalledName
+          category: software
+          uniqueIdentifierCapabilities: [ hrSWInstalledIndex ]
+          attributes: [ hrSWInstalledID, hrSWInstalledType, hrSWInstalledDate, hrSWInstalledIndex ]
+        discriminatorValue: 
+    - contextOID: hrStorageEntry
+      name: HostMibStorage
+      descriminatorOID: hrStorageDescr
+      disriminators:
+      - serviceElementType:
+          name: Storage
+          fieldReplaceableUnit: false
+          description: 
+          defaultNameCabability: hrStorageDescr
+          category: storage
+          uniqueIdentifierCapabilities: [ hrSWInstalledIndex ]
+          attributes: [ hrStorageAllocationUnits, hrStorageSize, hrStorageType, hrStorageDescr ]
+        discriminatorValue: 
+      
