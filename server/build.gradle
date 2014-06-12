@@ -28,6 +28,7 @@ repositories {
 }
 
 dependencies {
+
 	compile project(':common')
 
 	compile files("libs/grammatica-1.5.jar")
@@ -102,4 +103,40 @@ task loadDefaultData(type:Exec) {
 	// on linux
 	commandLine '../database/bin/load_Core_server_config.sh', 'Core'
 }
+
+configurations {
+	sql
+}
+dependencies {
+	sql 'mysql:mysql-connector-java:5.1.16'
+}
+
+
+URLClassLoader loader = GroovyObject.class.classLoader
+configurations.sql.each {File file ->
+	loader.addURL(file.toURI().toURL())
+}
+
+task createSchema(dependsOn: test) << {
+	configurations.sql {
+		println 'Connecting to database ...'
+		def sql = groovy.sql.Sql.newInstance('jdbc:mysql://localhost:3306/TestConfig', 'dbUser', 'dbPassword', 'com.mysql.jdbc.Driver' )
+		
+		println 'Querying database tables ...'
+		
+		def outFile = new FileWriter("build/create_table.sql") 
+		outFile.write("use Config;\n\n")
+		sql.eachRow('show tables') { 
+			row -> sql.eachRow("show create table " + "${row.Tables_in_config}") { 
+				tbl -> 
+				outFile.write("drop table if exists ${tbl.Table};\n")
+				outFile.write("${tbl.'Create Table'};\n\n")
+				
+				}
+			
+		}
+		outFile.close()
+	}
+}
+
 
