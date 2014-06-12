@@ -126,6 +126,8 @@ task createSchema(dependsOn: test) << {
 		
 		def outFile = new FileWriter("build/create_table.sql") 
 		outFile.write("use Config;\n\n")
+		
+		outFile.write("set FOREIGN_KEY_CHECKS=0;\n\n")
 		sql.eachRow('show tables') { 
 			row -> sql.eachRow("show create table " + "${row.Tables_in_TestConfig}") { 
 				tbl -> 
@@ -135,6 +137,7 @@ task createSchema(dependsOn: test) << {
 				}
 			
 		}
+		outFile.write("set FOREIGN_KEY_CHECKS=1;\n")
 		outFile.close()
 	}
 }
