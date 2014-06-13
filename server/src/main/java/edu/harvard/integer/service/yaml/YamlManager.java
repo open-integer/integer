@@ -490,7 +490,7 @@ public class YamlManager extends BaseManager implements
 	}
 	
 	@Override
-	public String loadVendorDeployment(String content) throws IntegerException {
+	public String loadVendorContainment(String content) throws IntegerException {
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(YamlVendorContainment.class, getClass().getClassLoader()));
 
 		YamlVendorContainment load = null;

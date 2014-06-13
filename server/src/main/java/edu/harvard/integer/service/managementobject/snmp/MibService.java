@@ -33,8 +33,6 @@
 
 package edu.harvard.integer.service.managementobject.snmp;
 
-import java.io.File;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -44,12 +42,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
-import edu.harvard.integer.common.properties.StringPropertyNames;
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.util.FileUtil;
-import edu.harvard.integer.util.Resource;
 
 
 /**
@@ -92,52 +85,6 @@ public class MibService extends BaseService {
 			return;	
 		}
 		
-		
-		try {
-			loadDefaultProductsMib();
-		} catch (IntegerException e) {
-			logger.info("Error loading product mibs! " + e.toString());
-			e.printStackTrace();
-			
-		} catch (Throwable e) {
-			logger.info("Error loading product mibs! " + e.toString());
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private void loadDefaultProductsMib() throws IntegerException {
-		
-		IntegerProperties props = IntegerProperties.getInstance();
-		
-		String mibNameProp = props.getProperty(StringPropertyNames.ProductsMib);
-		
-		String mibNames[] = mibNameProp.split(",");
-		
-		String mibDirPath = null;
-		
-		mibDirPath =  Resource.getWildflyHome() +  props.getProperty(StringPropertyNames.MIBDir) + "/";
-		
-		for (String string : mibNames) {
-			MIBInfo mibInfo = snmpManager.getMIBInfoByName(string);
-			if (mibInfo == null) {
-				logger.info("Product mib " + string + " already loaded");
-				continue;
-			}
-			
-			File file = new File(mibDirPath + string);
-			if (!file.exists()) {
-				logger.error("Unable to load " + file.getAbsolutePath() + " File not found!");
-				continue;
-			}
-			
-			MIBImportInfo importInfo = new MIBImportInfo();
-			importInfo.setFileName(string);
-			importInfo.setMib(FileUtil.readInMIB(file));
-
-			snmpManager.importProductMib(string, importInfo);
-		}
-				
 	}
 	
 }

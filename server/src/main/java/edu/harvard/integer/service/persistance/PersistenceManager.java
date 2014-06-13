@@ -39,6 +39,8 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
@@ -99,6 +101,16 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	private Logger logger;
 		
 
+	@Override
+	public DataPreLoadFile[] getAllPreloads() throws IntegerException {
+		return getDataPreLoadFileDAO().findAll();
+	}
+	
+	public void addDataPreLoadFile(DataPreLoadFile file) throws IntegerException {
+		getDataPreLoadFileDAO().update(file);
+	}
+	
+	
 	/**
 	 * @param managerType
 	 */

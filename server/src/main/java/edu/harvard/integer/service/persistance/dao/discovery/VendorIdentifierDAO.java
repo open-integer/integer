@@ -33,12 +33,16 @@
 
 package edu.harvard.integer.service.persistance.dao.discovery;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -63,5 +67,29 @@ public class VendorIdentifierDAO extends BaseDAO {
 	
 	public VendorIdentifier findByVendorSubtypeId(String identifier) throws IntegerException {
 		return findByStringField(identifier, "vendorSubtypeId", VendorIdentifier.class);
+	}
+	
+	/**
+	 * @param name
+	 */
+	@SuppressWarnings("unchecked")
+	public List<VendorIdentifier> findByOidSubtree(String name) {
+
+		Query createQuery = getEntityManager().createQuery("select vid from VendorIdentifier vid where vendorSubtypeId like :name");
+		createQuery.setParameter("name", name + ".%");
+		
+		List<VendorIdentifier> resultList = createQuery.getResultList();
+
+		if (resultList.size() > 0) {
+			if (getLogger().isDebugEnabled())
+				getLogger().debug(
+						"Found OID " + resultList.get(0).getIdentifier() + " "
+								+ resultList.get(0).getVendorSubtypeId() + " "
+								+ resultList.get(0).getName());
+
+			return resultList;
+		} else
+			return null;
+
 	}
 }

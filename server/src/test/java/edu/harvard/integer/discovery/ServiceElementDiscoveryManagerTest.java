@@ -35,6 +35,7 @@ package edu.harvard.integer.discovery;
 
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,8 @@ import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.service.managementobjectcapability.snmp.ImportMIBTest;
+import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -72,6 +75,7 @@ import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.util.FileUtil;
 
 /**
  * @author David Taylor
@@ -92,6 +96,7 @@ public class ServiceElementDiscoveryManagerTest {
 	
 	@Inject
 	private SnmpManagerInterface snmpMaager;
+	
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
@@ -259,6 +264,65 @@ public class ServiceElementDiscoveryManagerTest {
 			e.printStackTrace();
 			
 			fail("Error loading Vendor by ID! " + e.toString());
+		}
+	}
+	
+	
+	private void loadProductMib(String name) {
+
+		MIBImportInfo mibFile = new MIBImportInfo();
+		mibFile.setFileName(name);
+		mibFile.setName(mibFile.getFileName());
+		
+		File file = new File(ImportMIBTest.MibDir + name);
+		mibFile.setMib(FileUtil.readInMIB(file));
+
+		try {
+			snmpMaager.importProductMib("Cisco Entity", mibFile);
+		} catch (IntegerException e1) {
+			e1.printStackTrace();
+			fail("Error loading " + name + " Error " + e1.toString());
+		}
+	}
+	
+	private void loadMib(String name) {
+
+		MIBImportInfo mibFile = new MIBImportInfo();
+		mibFile.setFileName(name);
+		mibFile.setName(mibFile.getFileName());
+		
+		File file = new File(ImportMIBTest.MibDir + name);
+		mibFile.setMib(FileUtil.readInMIB(file));
+
+		try {
+			snmpMaager.importMib(new MIBImportInfo[] { mibFile} );
+		} catch (IntegerException e1) {
+			e1.printStackTrace();
+			fail("Error loading " + name + " Error " + e1.toString());
+		}
+	}
+	
+	@Test
+	public void getVendorIndentifierSubTree() {
+		
+		loadMib("SNMPv2-SMI");
+		loadProductMib("CISCO-SMI.my");
+		loadProductMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+		
+		String rootOid = "1.3.6.1.4.1.9.12.3.1.9";
+		try {
+
+			List<VendorIdentifier> vendorSubTree = serviceElementDiscoveryManger.findVendorSubTree(rootOid);
+			
+			assert(vendorSubTree != null);
+			
+			logger.info("Found " + vendorSubTree.size() + " VendorIdentifers in subtree of " + rootOid);
+			
+			assert(vendorSubTree.size() > 0);
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail("Error getting subtree of " + rootOid + " Error " + e.toString());
 		}
 	}
 	

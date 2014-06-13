@@ -238,7 +238,7 @@ public class TechnologyLoadTest {
 		
 		logger.info("ServiceElement read in: " + yaml.dump(load));
 		
-		yamlManager.loadVendorDeployment(content);
+		yamlManager.loadVendorContainment(content);
 	}
 	
 }

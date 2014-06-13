@@ -213,6 +213,5 @@ public class MibParserTest {
 				assert(e.getMessage() == null);
 			}
 
-
 	}
 }
