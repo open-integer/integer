@@ -60,7 +60,10 @@ public class YamlSnmpLevelOID {
 	 * logical components and physical components to and extrernal to the entity
 	 * MIB object. entAliasMappingIdentifier.33.0 = ifIndex.6
 	 */
-	private String relationToParent = null;
+	private YamlSnmpContainmentRelation containmentRelationship = null;
+	
+	private YamlSnmpParentChildRelationship parentChildRelationship = null;
+	
 
 	/**
 	 * @return the name
@@ -139,18 +142,31 @@ public class YamlSnmpLevelOID {
 	}
 
 	/**
-	 * @return the relationToParent
+	 * @return the containmentRelationship
 	 */
-	public String getRelationToParent() {
-		return relationToParent;
+	public YamlSnmpContainmentRelation getContainmentRelationship() {
+		return containmentRelationship;
 	}
 
 	/**
-	 * @param relationToParent
-	 *            the relationToParent to set
+	 * @param containmentRelationship the containmentRelationship to set
 	 */
-	public void setRelationToParent(String relationToParent) {
-		this.relationToParent = relationToParent;
+	public void setContainmentRelationship(YamlSnmpContainmentRelation containmentRelationship) {
+		this.containmentRelationship = containmentRelationship;
+	}
+
+	/**
+	 * @return the parentChildRelationship
+	 */
+	public YamlSnmpParentChildRelationship getParentChildRelationship() {
+		return parentChildRelationship;
+	}
+
+	/**
+	 * @param parentChildRelationship the parentChildRelationship to set
+	 */
+	public void setParentChildRelationship(YamlSnmpParentChildRelationship parentChildRelationship) {
+		this.parentChildRelationship = parentChildRelationship;
 	}
 
 }
