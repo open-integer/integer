@@ -268,7 +268,7 @@ public class ServiceElementDiscoveryManagerTest {
 	}
 	
 	
-	private void loadMib(String name) {
+	private void loadProductMib(String name) {
 
 		MIBImportInfo mibFile = new MIBImportInfo();
 		mibFile.setFileName(name);
@@ -280,7 +280,23 @@ public class ServiceElementDiscoveryManagerTest {
 		try {
 			snmpMaager.importProductMib("Cisco Entity", mibFile);
 		} catch (IntegerException e1) {
-			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail("Error loading " + name + " Error " + e1.toString());
+		}
+	}
+	
+	private void loadMib(String name) {
+
+		MIBImportInfo mibFile = new MIBImportInfo();
+		mibFile.setFileName(name);
+		mibFile.setName(mibFile.getFileName());
+		
+		File file = new File(ImportMIBTest.MibDir + name);
+		mibFile.setMib(FileUtil.readInMIB(file));
+
+		try {
+			snmpMaager.importMib(new MIBImportInfo[] { mibFile} );
+		} catch (IntegerException e1) {
 			e1.printStackTrace();
 			fail("Error loading " + name + " Error " + e1.toString());
 		}
@@ -289,8 +305,9 @@ public class ServiceElementDiscoveryManagerTest {
 	@Test
 	public void getVendorIndentifierSubTree() {
 		
-		loadMib("CISCO-SMI.my");
-		loadMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+		loadMib("SNMPv2-SMI");
+		loadProductMib("CISCO-SMI.my");
+		loadProductMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
 		
 		String rootOid = "1.3.6.1.4.1.9.12.3.1.9";
 		try {
