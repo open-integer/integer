@@ -34,7 +34,7 @@ public class FilterPanel extends StackLayoutPanel {
 	
 	public void update(Filter filter) {
 		if (filter.getTechnologies() != null && !filter.getTechnologies().isEmpty())
-			add(new HvCheckBoxTreePanel(technologyProvider, filter.getTechnologies()), "Technology", 3);
+			add(new HvCheckBoxTreePanel(technologyProvider, filter.getTechnologies()), "Service Technologies", 3);
 		
 		if (filter.getProviders() != null && !filter.getProviders().isEmpty())
 			add(new HvCheckListPanel<ID>(providerProvider, filter.getProviders()), "Provider", 3);
