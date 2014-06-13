@@ -56,7 +56,6 @@ import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SnmpDisplayStringTC;
 import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
@@ -391,26 +390,31 @@ public class YamlManager extends BaseManager implements
 			ServiceElementTypeDAO serviceElementTypeDao) throws IntegerException {
 		
 
+		SNMPDAO dao = persistanceManager.getSNMPDAO();
+		
 		for (YamlServiceElementType yamlServiceElementType : serviceElementTypes) {
 			
 			List<YamlServiceElementTypeTranslate> typeTranslates =  yamlServiceElementType.getServiceElementTypeTranslates();
 			for ( YamlServiceElementTypeTranslate typeTranslate : typeTranslates ) {
 				
-				if ( typeTranslate.isBranchObject() ) {
+				if ( typeTranslate.getMapping().equalsIgnoreCase("subObjIdentify")) {
 					
-					List<SNMP> snmps = snmpManager.findByNameStartsWith(typeTranslate.getNameHolder());
-					for ( SNMP snmpType : snmps ) {
-						logger.info("SNMP name " + snmpType.getName());
-						createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, snmpType.getName());
+					SNMP setType = dao.findByName(typeTranslate.getName());
+					if ( setType != null ) {
+						List<SNMP> snmps = snmpManager.findByNameStartsWith(setType.getOid());
+						for ( SNMP snmpType : snmps ) {
+							logger.info("SNMP name " + snmpType.getName());
+							createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, snmpType.getName());
+						}
 					}
 				}
 				else {
-					createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, typeTranslate.getNameHolder());
+					createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, typeTranslate.getName());
 				}
-				
 			}
 		}
 	}
+	
 	
 	
 	/**
@@ -441,7 +445,7 @@ public class YamlManager extends BaseManager implements
 		    if ( yamlManagementObject.getCategories() != null ) {
 		    	
 	            boolean match = false;	    	
-		    	String[] categories = yamlManagementObject.getCategories().split(":");	
+		    	List<String> categories = yamlManagementObject.getCategories();	
 		        for ( String category : categories ) {
 		        	if ( category.equals(typeTranslate.getCategory() )) {
 		        		
