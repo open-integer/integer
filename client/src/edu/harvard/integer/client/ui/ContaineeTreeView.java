@@ -38,8 +38,6 @@ public class ContaineeTreeView extends ScrollPanel {
 				final TreeItem treeItem = event.getSelectedItem();
 				
 				selectedServiceElement = (ServiceElement)treeItem.getUserObject();
-				SystemSplitViewPanel.detailsTabPanel.update(selectedServiceElement);
-				
 				selectedTimestamp = System.currentTimeMillis();
 				
 				MainClient.integerService.getServiceElementByParentId(selectedServiceElement.getID(), new AsyncCallback<ServiceElement[]>() {
@@ -50,11 +48,20 @@ public class ContaineeTreeView extends ScrollPanel {
 
 					@Override
 					public void onSuccess(ServiceElement[] serviceElements) {
-						SystemSplitViewPanel.containedSplitPanel.setWidgetHidden(SystemSplitViewPanel.detailsTabPanel, false);
-						
-						if (serviceElements == null || serviceElements.length == 0)
+						if (serviceElements == null || serviceElements.length == 0) {
 							return;
-
+//							for (int i = 0; i < 30; i++) {
+//								ServiceElement se = new ServiceElement();
+//								se.setName("fake child - " + i + " (*)");
+//								se.setDescription("This is a fake child " + i);
+//								TreeItem item = new TreeItem();
+//								item.setText(se.getName());
+//								item.setUserObject(se);
+//								treeItem.addItem(item);
+//							}
+						}
+						else
+							
 						for (ServiceElement se : serviceElements) {
 							TreeItem item = new TreeItem();
 							item.setText(se.getName());
