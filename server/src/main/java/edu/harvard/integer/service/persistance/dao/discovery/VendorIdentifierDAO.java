@@ -92,4 +92,13 @@ public class VendorIdentifierDAO extends BaseDAO {
 			return null;
 
 	}
+
+	/**
+	 * @param vendorSubTypeName
+	 * @return
+	 */
+	public VendorIdentifier findByVendorSubtypeName(String vendorSubTypeName) {
+		// TODO Auto-generated method stub
+		return findByStringField(vendorSubTypeName, "vendorSubtypeName", VendorIdentifier.class);
+	}
 }

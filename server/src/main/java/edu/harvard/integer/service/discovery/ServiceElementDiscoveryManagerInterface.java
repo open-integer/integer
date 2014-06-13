@@ -217,5 +217,15 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	List<VendorIdentifier> findVendorSubTree(String rootOid) throws IntegerException;
 
+	/**
+	 * Find the VendorIdentifier with the given subtype name. 
+	 * 
+	 * @param vendorSubTypeName
+	 * @return
+	 * @throws IntegerException
+	 */
+	VendorIdentifier getVenderIdentiferBySubTypeName(String vendorSubTypeName)
+			throws IntegerException;
+
 	
 }
