@@ -43,7 +43,6 @@ package edu.harvard.integer.common.properties;
 public enum StringPropertyNames {
 	DATADir("DATADir", "/standalone/data/"),
 	MIBDir("MibDir", "/standalone/data/mibs"),
-	ProductsMib("ProductsMib", "CISCO-PRODUCTS-MIB.my,NET-SNMP-TC"),
 	ModuleName("ModuleName", ""); // Use empty string for test cases. When
 								// installed the real name will be used.
 

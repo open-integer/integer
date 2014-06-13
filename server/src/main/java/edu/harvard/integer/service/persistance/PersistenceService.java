@@ -35,7 +35,6 @@ package edu.harvard.integer.service.persistance;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
@@ -47,230 +46,368 @@ import javax.ws.rs.Path;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.MibParserErrorCodes;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.common.persistence.PersistenceStepStatusEnum;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.common.type.displayable.FilePathName;
-import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.server.IntegerApplication;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.distribution.DistributionManager;
-import edu.harvard.integer.service.distribution.DistributionService;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 import edu.harvard.integer.util.FileUtil;
 import edu.harvard.integer.util.Resource;
+
 /**
  * @author David Taylor
- *
+ * 
  */
 @Singleton
 @Startup
 @Path("/Database")
-@DependsOn(value={ "DistributionService" } )
-public class PersistenceService extends BaseService implements PersistenceServiceInterface {
+@DependsOn(value = { "DistributionService" })
+public class PersistenceService extends BaseService implements
+		PersistenceServiceInterface {
 
 	@Inject
 	private Logger logger;
-	
+
 	@Inject
 	private PersistenceManagerInterface persistanceManager;
 
 	/**
-	 * All PersistenceService initialization occurs here. 
+	 * All PersistenceService initialization occurs here.
 	 */
 	@PostConstruct
 	public void init() {
 
 		logger.warn("PersistenceServices is startint");
-		
+
 		logger.debug("PersistenceService starting");
 
 		// Register the application for RESTfull interface
 		IntegerApplication.register(this);
 
 		loadPreloads();
-		
+
 	}
 
-	
 	private void loadPreloads() {
 		logger.info("Loading preload data files");
 
 		DataPreLoadFileDAO dao = persistanceManager.getDataPreLoadFileDAO();
-		
+
 		try {
 			DataPreLoadFile[] perloads = dao.findAll();
-			
+
 			for (DataPreLoadFile dataPreLoadFile : perloads) {
-				if (dataPreLoadFile.getStatus() == null || !PersistenceStepStatusEnum.Loaded.equals(dataPreLoadFile.getStatus())) {
+				if (dataPreLoadFile.getStatus() == null
+						|| !PersistenceStepStatusEnum.Loaded
+								.equals(dataPreLoadFile.getStatus())) {
 					loadDataFile(dataPreLoadFile);
 					logger.info("Loaded " + dataPreLoadFile.getDataFile());
 				} else
 					logger.info("Preload already loaded!" + dataPreLoadFile);
 			}
-			
+
 		} catch (IntegerException e) {
 			logger.error("Error loading preload table! " + e.toString());
-			
+
 			e.printStackTrace();
 		}
 	}
 
-
 	/**
 	 * @param dataPreLoadFile
-	 * @throws IntegerException 
+	 * @throws IntegerException
 	 */
-	private void loadDataFile(DataPreLoadFile dataPreLoadFile) throws IntegerException {
-		
-		switch(dataPreLoadFile.getFileType()) {
+	private void loadDataFile(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
+
+		switch (dataPreLoadFile.getFileType()) {
 
 		case TechnologyTreeYaml:
 		case TechnologyYaml:
 			loadTechnologyTreeYaml(dataPreLoadFile);
 			break;
-			
+
 		case ServiceElementTypeYaml:
 			loadServiceElementTypeYaml(dataPreLoadFile);
 			break;
-			
+
 		case MIB:
 			loadMib(dataPreLoadFile);
 			break;
+
+		case ProductMIB:
+			loadProductMib(dataPreLoadFile);
+			break;
+			
+		case VendorContainmentYaml:
+			loadVendorContainmentYaml(dataPreLoadFile);
+			break;
+			
+		default:
+			logger.error("Unknown data file type " + dataPreLoadFile.getFileType() + " Can not load!!");
 		}
-		
+
 	}
 
 
-
-	/**
-	 * @param dataPreLoadFile
-	 * @throws IntegerException 
-	 */
-	private void loadMib(DataPreLoadFile dataPreLoadFile) throws IntegerException {
-
-		if (!DistributionManager.isLocalManager(ManagerTypeEnum.SnmpManager))
-			return;
-		
-		MIBImportInfo mibFile = new MIBImportInfo();
+	private File getFile(DataPreLoadFile dataPreLoadFile) throws IntegerException {
 
 		IntegerProperties props = IntegerProperties.getInstance();
-		String dataDirPath = Resource.getWildflyHome() +  
-				props.getProperty(StringPropertyNames.DATADir) + "/mibs";
 
+		String dataDirPath = Resource.getWildflyHome()
+				+ props.getProperty(StringPropertyNames.DATADir) + "/" + 
+				dataPreLoadFile.getFileType().getDataSubDir();
 		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
-		if (! file.exists()) {
-			logger.error("Unable top open " + file.getAbsolutePath());
-			throw new IntegerException(null, MibParserErrorCodes.MIBNotFound, 
-					new DisplayableInterface[] { new FilePathName(file.getAbsolutePath()) });
+
+		if (!file.exists()) {
+			logger.error(dataPreLoadFile.getFileType() + " file " + file.getAbsolutePath() + " NOT found ");
+			dataPreLoadFile.setErrorMessage("File not found ");
+			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
+			return null;
 		}
 		
+		return file;
+	}
+	
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException
+	 */
+	private void loadProductMib(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
+		
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.SnmpManager))
+			return;
+
+		MIBImportInfo mibFile = new MIBImportInfo();
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			return;
+		}
+
 		mibFile.setFileName(dataPreLoadFile.getDataFile());
 		mibFile.setName(dataPreLoadFile.getDataFile());
 		mibFile.setMib(FileUtil.readInMIB(file));
-		
-		SnmpManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+
+		SnmpManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.SnmpManager);
 		if (manager != null) {
-			MIBImportResult[] importMib = manager.importMib(new MIBImportInfo[] { mibFile });
-			for (MIBImportResult mibImportResult : importMib) {
-				if (mibImportResult.getErrors() == null ) {
+
+			try {
+				MIBImportResult importMib = manager.importProductMib(
+						dataPreLoadFile.getName(), mibFile);
+
+				if (importMib.getErrors() == null) {
 					dataPreLoadFile.setTimeLoaded(new Date());
 					dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
-				} else
-					dataPreLoadFile.setErrorMessage(Arrays.toString(mibImportResult.getErrors()));
+				} else {
+					dataPreLoadFile.setErrorMessage(Arrays.toString(importMib
+							.getErrors()));
+
+					dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+				}
+				
+			} catch (Throwable e) {
+				logger.error("Error loading product MIB "
+						+ dataPreLoadFile.getName());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+				dataPreLoadFile.setErrorMessage(e.getMessage());
 			}
-			
+
 			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 		}
-			
-	}
 
+	}
 
 	/**
 	 * @param dataPreLoadFile
-	 * @throws IntegerException 
+	 * @throws IntegerException
 	 */
-	private void loadTechnologyTreeYaml(DataPreLoadFile dataPreLoadFile) throws IntegerException {
-		
-		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+	private void loadMib(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
+
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.SnmpManager))
 			return;
-		
-		IntegerProperties props = IntegerProperties.getInstance();
-		
-		String dataDirPath =  Resource.getWildflyHome() +  props.getProperty(StringPropertyNames.DATADir) + "/yaml";
-		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
-		
-		if (!file.exists()) {
-			logger.error("YAML file " + file.getAbsolutePath() + " NOT found ");
-			dataPreLoadFile.setErrorMessage("File not found ");
-			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
+
+		MIBImportInfo mibFile = new MIBImportInfo();
+
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
 			return;
 		}
-		
+
+		mibFile.setFileName(dataPreLoadFile.getDataFile());
+		mibFile.setName(dataPreLoadFile.getDataFile());
+		mibFile.setMib(FileUtil.readInMIB(file));
+
+		SnmpManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.SnmpManager);
+		if (manager != null) {
+
+			try {
+				MIBImportResult[] importMib = manager
+						.importMib(new MIBImportInfo[] { mibFile });
+				
+				if (importMib.length > 0) {
+					
+					dataPreLoadFile.setErrorMessage(null);
+					
+					if (importMib[0].getErrors() != null) {
+						for (String errorMessage : importMib[0].getErrors()) {
+							if (dataPreLoadFile.getErrorMessage() != null)
+								dataPreLoadFile.setErrorMessage(dataPreLoadFile.getErrorMessage() + errorMessage);
+							else
+								dataPreLoadFile.setErrorMessage(errorMessage);			
+
+							dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+						}
+					} else {
+						dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+						dataPreLoadFile.setTimeLoaded(new Date());
+					}
+				}
+					
+			} catch (Throwable e) {
+				logger.error("Error loading MIB " + dataPreLoadFile.getName() + e.toString());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+				dataPreLoadFile.setErrorMessage(e.getMessage());
+			}
+
+			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
+		}
+
+	}
+
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException
+	 */
+	private void loadTechnologyTreeYaml(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
+
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+			return;
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			return;
+		}
+
 		String data = FileUtil.readInMIB(file);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
 		
-		YamlManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.YamlManager);
 		if (manager != null) {
 			try {
 				manager.loadTechnologyTree(data);
 
 				dataPreLoadFile.setTimeLoaded(new Date());
 				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
-				
+
 			} catch (IntegerException e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
 				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
 				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
 			}
 		}
-		
+
 		persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 	}
 
 	/**
 	 * @param dataPreLoadFile
-	 * @throws IntegerException 
+	 * @throws IntegerException
 	 */
-	private void loadServiceElementTypeYaml(DataPreLoadFile dataPreLoadFile) throws IntegerException {
+	private void loadServiceElementTypeYaml(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
+		
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
 			return;
-		
-		IntegerProperties props = IntegerProperties.getInstance();
-		
-		String dataDirPath =  Resource.getWildflyHome() +  props.getProperty(StringPropertyNames.DATADir) + "/yaml";
-		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
-		
-		if (!file.exists()) {
-			logger.error("YAML file " + file.getAbsolutePath() + " NOT found ");
-			dataPreLoadFile.setErrorMessage("File not found ");
-			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
 			return;
 		}
 		
 		String data = FileUtil.readInMIB(file);
-		
-		YamlManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.YamlManager);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
 		if (manager != null) {
 			try {
 				manager.loadServiceElementType(data);
 
 				dataPreLoadFile.setTimeLoaded(new Date());
 				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
-				
+
 			} catch (IntegerException e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
 				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
 				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
 			}
 		}
-		
+
 		persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
+
+	}
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException
+	 */
+	private void loadVendorContainmentYaml(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
 		
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+			return;
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			return;
+		}
+		
+		String data = FileUtil.readInMIB(file);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
+		if (manager != null) {
+			try {
+				manager.loadVendorContainment(data);
+
+				dataPreLoadFile.setTimeLoaded(new Date());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+
+			} catch (IntegerException e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			}
+		}
+
+		persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
+
 	}
 
+	
 }

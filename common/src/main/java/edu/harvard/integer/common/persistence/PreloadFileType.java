@@ -33,10 +33,26 @@
 
 package edu.harvard.integer.common.persistence;
 
+
 /**
  * @author David Taylor
  *
  */
 public enum PreloadFileType {
-	TechnologyTreeYaml, TechnologyYaml, MIB, ServiceElementTypeYaml;
+	TechnologyTreeYaml("yaml"),
+	TechnologyYaml("yaml"),
+	ServiceElementTypeYaml("yaml"),
+	MIB("mibs"),
+	ProductMIB("mibs"),
+	VendorContainmentYaml("yaml");
+	
+	String dataSubDir = null;
+	
+	private PreloadFileType(String subDir) {
+		this.dataSubDir = subDir;
+	}
+	
+	public String getDataSubDir() {
+		return dataSubDir;
+	}
 }

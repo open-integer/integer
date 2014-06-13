@@ -46,9 +46,6 @@ import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -214,15 +211,6 @@ public class ManagementObjectCapbilityManagerTest {
 	public void findSNMPLike() {
 		String rootOid = "1.3.6.1.2.1.1";
 		
-//		SNMP oid = getSNMP(rootOid + ".1", "sysName");
-//		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
-//		
-//		oid = getSNMP(rootOid + ".2", "sysDescr");
-//		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
-//		
-//		oid = getSNMP(rootOid + ".3", "sysUptime");
-//		logger.info("Created OID " + oid.getID().toDebugString() + " " + oid.getOid());
-//		
 		try {
 			List<SNMP> findByNameStartsWith = snmpManager.findByNameStartsWith(rootOid);
 			

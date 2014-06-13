@@ -67,6 +67,6 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 	 * @return
 	 * @throws IntegerException
 	 */
-	String loadVendorDeployment(String content) throws IntegerException;
+	String loadVendorContainment(String content) throws IntegerException;
 
 }
