@@ -1,12 +1,10 @@
 package edu.harvard.integer.client.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MousePanMediator;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -14,9 +12,11 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -24,12 +24,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvIconButton;
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
-import edu.harvard.integer.common.selection.Filter;
-import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
-import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -42,6 +37,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public static SplitLayoutPanel westPanel = null;
 	public static DockPanel eastPanel = null;
 	public static SplitLayoutPanel eastSplitPanel = null;
+	public static SplitLayoutPanel containedSplitPanel= null;
+	public static ServiceElementDetailsTabPanel detailsTabPanel = null;
 	
 	public static final String title = "Device Children";
 	public static final String[] headers = {"Name", "Status", "Description"};
@@ -57,7 +54,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		super(SPLITTER_SIZE);
 		
 		final DeviceMap deviceMap = new DeviceMap();
-		//deviceMap.demo(10);
 
 		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
@@ -132,10 +128,20 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		eastSplitPanel.setSize("100%",  "500px");
 		
+		containedSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
+		
 		containeeTreeView = new ContaineeTreeView(title, headers);
-		eastSplitPanel.addEast(containeeTreeView, 300);
-		eastSplitPanel.setWidgetHidden(containeeTreeView, true);
-		eastSplitPanel.setWidgetToggleDisplayAllowed(containeeTreeView, true);
+		
+		detailsTabPanel = new ServiceElementDetailsTabPanel();
+	    
+	    containedSplitPanel.addSouth(detailsTabPanel, 300);
+	    containedSplitPanel.setWidgetHidden(detailsTabPanel, true);
+	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
+	    containedSplitPanel.add(containeeTreeView);
+		
+		eastSplitPanel.addEast(containedSplitPanel, 300);
+		eastSplitPanel.setWidgetHidden(containedSplitPanel, true);
+		eastSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
 		eastSplitPanel.add(networkPanel);
 		
 		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);
@@ -163,101 +169,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			
 		});
 		
-	}
-	
-	private Filter getDemoFilter() {
-		Filter filter = new Filter();
-		List<FilterNode> techNodeList = new ArrayList<FilterNode>();
-		FilterNode rootNode = new FilterNode();
-		rootNode.setItemId(new ID(1L, "Technology", new IDType("Technology")));
-		
-		FilterNode loadBalancerNode = new FilterNode();
-		loadBalancerNode.setItemId(new ID(2L, "Load Balancers", new IDType("Technology")));
-		List<FilterNode> loadBalancerNodeList = new ArrayList<FilterNode>();
-		loadBalancerNode.setChildren(loadBalancerNodeList);
-		
-		FilterNode routerNode = new FilterNode();
-		routerNode.setItemId(new ID(3L, "Routers", new IDType("Technology")));
-		List<FilterNode> routerNodeList = new ArrayList<FilterNode>();
-		routerNode.setChildren(routerNodeList);
-		
-		FilterNode serverNode = new FilterNode();
-		serverNode.setItemId(new ID(4L, "Servers", new IDType("Technology")));
-		List<FilterNode> serverNodeList = new ArrayList<FilterNode>();
-		serverNode.setChildren(serverNodeList);
-		
-		FilterNode robinNode = new FilterNode();
-		robinNode.setItemId(new ID(5L, "Round Robin", new IDType("Technology")));
-		
-		FilterNode ratioNode = new FilterNode();
-		ratioNode.setItemId(new ID(6L, "Dynamic Ratio", new IDType("Technology")));
-		
-		FilterNode fastestNode = new FilterNode();
-		fastestNode.setItemId(new ID(7L, "Fastest", new IDType("Technology")));
-		
-		FilterNode leastNode = new FilterNode();
-		leastNode.setItemId(new ID(8L, "Least", new IDType("Technology")));
-		
-		FilterNode bgpNode = new FilterNode();
-		bgpNode.setItemId(new ID(9L, "BGP", new IDType("Technology")));
-		
-		FilterNode ospfNode = new FilterNode();
-		ospfNode.setItemId(new ID(10L, "OSPF", new IDType("Technology")));
-		
-		FilterNode fmsNode = new FilterNode();
-		fmsNode.setItemId(new ID(11L, "FMS", new IDType("Technology")));
-		
-		FilterNode dnsNode = new FilterNode();
-		dnsNode.setItemId(new ID(12L, "DNS", new IDType("Technology")));
-		
-		loadBalancerNodeList.add(robinNode);
-		loadBalancerNodeList.add(ratioNode);
-		loadBalancerNodeList.add(fastestNode);
-		loadBalancerNodeList.add(leastNode);
-		
-		routerNodeList.add(bgpNode);
-		routerNodeList.add(ospfNode);
-		
-		serverNodeList.add(fmsNode);
-		serverNodeList.add(dnsNode);
-		
-		techNodeList.add(loadBalancerNode);
-		techNodeList.add(routerNode);
-		techNodeList.add(serverNode);
-		
-		filter.setTechnologies(techNodeList);
-		
-		List<ID> providerIds = new ArrayList<ID>();
-		providerIds.add(new ID(11L, "Cisco", new IDType("Technology")));
-		providerIds.add(new ID(12L, "Lucent", new IDType("Technology")));
-		providerIds.add(new ID(13L, "Juniper", new IDType("Technology")));
-		filter.setProviders(providerIds);
-		
-		List<CriticalityEnum> criticalities = new ArrayList<CriticalityEnum>();
-		for (CriticalityEnum e : CriticalityEnum.values()) {
-			criticalities.add(e);
-		}
-		filter.setCriticalities(criticalities );
-		
-		List<ID> locationIds = new ArrayList<ID>();
-		locationIds.add(new ID(31L, "Boston", new IDType("Technology")));
-		locationIds.add(new ID(32L, "Cambridge", new IDType("Technology")));
-		locationIds.add(new ID(33L, "New York", new IDType("Technology")));
-		filter.setLocations(locationIds);
-		
-		List<ID> serviceIds = new ArrayList<ID>();
-		serviceIds.add(new ID(41L, "Internet", new IDType("Technology")));
-		serviceIds.add(new ID(42L, "Video", new IDType("Technology")));
-		serviceIds.add(new ID(43L, "Wireless", new IDType("Technology")));
-		filter.setServices(serviceIds);
-		
-		List<ID> organizationIds = new ArrayList<ID>();
-		organizationIds.add(new ID(51L, "Harvard University", new IDType("Technology")));
-		organizationIds.add(new ID(52L, "Boston University", new IDType("Technology")));
-		organizationIds.add(new ID(53L, "Northeastern University", new IDType("Technology")));
-//		filter.setOrginizations(organizationIds);
-		
-		return filter;
 	}
 	
 	private VerticalPanel createNetworkTreePanel() {
@@ -372,7 +283,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	public static void showContaineeTreeView(final ServiceElement se) {
 		//containeeTreeView.updateTitle(se.getName());
-		eastSplitPanel.setWidgetHidden(containeeTreeView, false);
+		eastSplitPanel.setWidgetHidden(containedSplitPanel, false);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
@@ -383,25 +294,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onSuccess(ServiceElement[] serviceElements) {
-				/*if (serviceElements == null || serviceElements.length == 0) {
-					serviceElements = new ServiceElement[9];
-					for (int i = 0; i < serviceElements.length; i++) {
-						serviceElements[i] = new ServiceElement();
-						serviceElements[i].setName("fake-se" + (i+1));
-					}
-				}
-				*/
 				containeeTreeView.updateTree(se.getName(), serviceElements);
 			}
 		});
-		
-		ServiceElement[] serviceElements = new ServiceElement[39];
-		for (int i = 0; i < serviceElements.length; i++) {
-			serviceElements[i] = new ServiceElement();
-			serviceElements[i].setName("fake-se" + (i+1));
-		}
-	
-		containeeTreeView.updateTree(se.getName(), serviceElements);
-		
 	}
 }
