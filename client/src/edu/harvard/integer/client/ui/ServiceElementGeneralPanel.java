@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.common.ID;
@@ -72,7 +73,9 @@ public class ServiceElementGeneralPanel extends FormPanel {
 		formatter.setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_LEFT);
 		formatter.setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_MIDDLE);
 		
-		setWidget(grid);
+		ScrollPanel scrollPanel = new ScrollPanel(grid);
+		scrollPanel.setHeight("100%");
+		setWidget(scrollPanel);
 	}
 	
 	public void update (ServiceElement serviceElement) {
