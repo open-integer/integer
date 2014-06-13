@@ -207,5 +207,15 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	List<SNMP> getEntityMIBInfo();
 
+	/**
+	 * Find the VendorIdentifiers that are in the subtree specified by the rootOid.
+	 * 
+	 * @param rootOid
+	 * @return List of VendorIdentifier's that are in the given subTree.
+	 * 
+	 * @throws IntegerException
+	 */
+	List<VendorIdentifier> findVendorSubTree(String rootOid) throws IntegerException;
+
 	
 }

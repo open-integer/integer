@@ -37,6 +37,8 @@ package edu.harvard.integer.service.persistance;
 
 import javax.ejb.Local;
 
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
@@ -310,5 +312,11 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	SnmpLevelOIDDAO getSnmpLevelOIDDAO();
+
+	/**
+	 * @return
+	 * @throws IntegerException
+	 */
+	DataPreLoadFile[] getAllPreloads() throws IntegerException;
 
 }

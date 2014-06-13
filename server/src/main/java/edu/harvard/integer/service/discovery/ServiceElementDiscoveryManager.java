@@ -284,6 +284,15 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return count;
 	}
 	
+	@Override
+	public List<VendorIdentifier> findVendorSubTree(String name) throws IntegerException {
+		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
+		
+		List<VendorIdentifier> oids = dao.findByOidSubtree(name);
+		
+		return oids;
+	}
+
 	/*
 	 *  (non-Javadoc)
 	 * 
