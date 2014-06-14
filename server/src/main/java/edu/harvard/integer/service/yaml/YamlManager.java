@@ -53,6 +53,7 @@ import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
+import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -99,6 +100,9 @@ public class YamlManager extends BaseManager implements
 	
 	@Inject
 	PersistenceManagerInterface persistanceManager;
+	
+	@Inject
+	ServiceElementDiscoveryManagerInterface discoveryManager;
 	
 	@Inject
 	SnmpManagerInterface snmpManager;
@@ -395,21 +399,50 @@ public class YamlManager extends BaseManager implements
 		for (YamlServiceElementType yamlServiceElementType : serviceElementTypes) {
 			
 			List<YamlServiceElementTypeTranslate> typeTranslates =  yamlServiceElementType.getServiceElementTypeTranslates();
+			if ( typeTranslates == null ) {
+				logger.warn("Missing Service Element Type Translation " + yamlServiceElementType.getName() );
+				continue;
+			}
+			
 			for ( YamlServiceElementTypeTranslate typeTranslate : typeTranslates ) {
 				
 				if ( typeTranslate.getMapping().equalsIgnoreCase("subObjIdentify")) {
 					
-					SNMP setType = dao.findByName(typeTranslate.getName());
-					if ( setType != null ) {
-						List<SNMP> snmps = snmpManager.findByNameStartsWith(setType.getOid());
-						for ( SNMP snmpType : snmps ) {
-							logger.info("SNMP name " + snmpType.getName());
-							createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, snmpType.getName());
+					List<VendorIdentifier> vis = discoveryManager.findVendorSubTree(typeTranslate.getName());
+					if ( vis != null ) {
+						for ( VendorIdentifier vi : vis ) {
+							
+							ServiceElementType serviceElementType = serviceElementTypeDao.findByName(vi.getVendorSubtypeName());
+							if (serviceElementType == null) {
+								
+								serviceElementType = new ServiceElementType();
+								serviceElementType.setCategory(typeTranslate.getCategory());
+								serviceElementType.setName(vi.getVendorSubtypeName());
+								serviceElementType.setDescription(yamlServiceElementType.getDescription());
+								serviceElementType.setVendor(yamlServiceElementType.getVendor());
+								serviceElementType.setVendorSpecificSubType(vi.getVendorSubtypeName());
+							}
+							
+							updateServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, serviceElementType);
 						}
 					}
+					else {
+						logger.warn("Cannot find sub-tree " + typeTranslate.getName() );
+					}
+					
 				}
 				else {
-					createServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, typeTranslate.getName());
+					
+					ServiceElementType serviceElementType = serviceElementTypeDao.findByName(typeTranslate.getName());
+					if (serviceElementType == null) {
+						
+						serviceElementType = new ServiceElementType();
+						serviceElementType.setCategory(typeTranslate.getCategory());
+						serviceElementType.setName(typeTranslate.getName());
+						serviceElementType.setDescription(yamlServiceElementType.getDescription());
+						serviceElementType.setVendor(yamlServiceElementType.getVendor());
+					}
+					updateServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, serviceElementType);
 				}
 			}
 		}
@@ -425,19 +458,11 @@ public class YamlManager extends BaseManager implements
 	 * @param yamlServiceElementType
 	 * @throws IntegerException
 	 */
-	public void createServiceElementType( ServiceElementTypeDAO serviceElementTypeDao, 
+	public void updateServiceElementType( ServiceElementTypeDAO serviceElementTypeDao, 
 			                              YamlServiceElementTypeTranslate typeTranslate,
 			                              YamlServiceElementType yamlServiceElementType,
-			                              String setName ) throws IntegerException {
+			                              ServiceElementType serviceElementType ) throws IntegerException {
 		
-		ServiceElementType serviceElementType = serviceElementTypeDao.findByName(setName);
-		if (serviceElementType == null) {
-			
-			serviceElementType = new ServiceElementType();
-			serviceElementType.setCategory(typeTranslate.getCategory());
-			serviceElementType.setName(setName);
-			serviceElementType.setDescription(yamlServiceElementType.getDescription());
-		}
 		
 		List<ID> managementObjects = new ArrayList<ID>();
 		for (YamlManagementObject yamlManagementObject : yamlServiceElementType.getManagementObjects()) {
@@ -478,6 +503,7 @@ public class YamlManager extends BaseManager implements
 				if ( yamlManagementObject.getUnique() == 1 ) {
 					List<ID> ids = serviceElementType.getUniqueIdentifierCapabilities();
 					if ( ids == null ) {
+						ids = new ArrayList<>();
 						serviceElementType.setUniqueIdentifierCapabilities(ids);
 					}					
 					ids.add(snmp.getID());
