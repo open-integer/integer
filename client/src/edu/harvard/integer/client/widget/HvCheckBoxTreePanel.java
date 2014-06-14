@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTree;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.view.client.ListDataProvider;
@@ -55,12 +54,6 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 							node.setItemId(id);
 							techList.add(node);
 						}
-						
-						// get Filter
-						//filter.setTechnologies(techList);
-						
-						// call API
-						Window.alert("Updating server ... under construction");
 					}
 				});
 

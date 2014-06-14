@@ -94,7 +94,6 @@ public class ManagementObjectCapbilityManagerTest {
 	@Inject
 	SnmpManagerInterface snmpManager;
 
-//	@Inject
 	Logger logger = LoggerFactory.getLogger(ManagementObjectCapbilityManagerTest.class);
 
 	@Deployment

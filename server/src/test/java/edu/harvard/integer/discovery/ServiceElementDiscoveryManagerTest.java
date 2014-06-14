@@ -313,6 +313,13 @@ public class ServiceElementDiscoveryManagerTest {
 		try {
 
 			List<VendorIdentifier> vendorSubTree = serviceElementDiscoveryManger.findVendorSubTree(rootOid);
+			if (vendorSubTree == null) {
+				loadMib("SNMPv2-SMI");
+				loadProductMib("CISCO-SMI.my");
+				loadProductMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+				
+				vendorSubTree = serviceElementDiscoveryManger.findVendorSubTree(rootOid);
+			}
 			
 			assert(vendorSubTree != null);
 			
@@ -324,6 +331,29 @@ public class ServiceElementDiscoveryManagerTest {
 			e.printStackTrace();
 			fail("Error getting subtree of " + rootOid + " Error " + e.toString());
 		}
+	}
+	
+	
+	@Test
+	public void getVendorIdentifierBySubTypeName() {
+	
+		try {
+			VendorIdentifier vendorIdentifier = serviceElementDiscoveryManger.getVenderIdentiferBySubTypeName("cevModuleCommonCards");
+			if (vendorIdentifier == null) {
+				loadMib("SNMPv2-SMI");
+				loadProductMib("CISCO-SMI.my");
+				loadProductMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+				
+				vendorIdentifier = serviceElementDiscoveryManger.getVenderIdentiferBySubTypeName("cevModuleCommonCards");
+			}
+			
+			assert(vendorIdentifier != null);
+			
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@Test

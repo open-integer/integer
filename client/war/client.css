@@ -59,6 +59,15 @@ h4 {
     text-align: left;
 }
 
+.gwt-label { 
+    font-size: 1.0em;
+	font-family: arial;
+    font-weight: bold;
+    color: #1c5a80;
+    margin: 1px 1px 1px 1px;
+    text-align: left;
+}
+
 .toolbar {
 	background-color: CYAN;
 	color: #FFFFFF;
