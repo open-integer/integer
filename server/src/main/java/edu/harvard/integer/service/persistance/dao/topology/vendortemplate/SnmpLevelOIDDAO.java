@@ -84,6 +84,9 @@ public class SnmpLevelOIDDAO extends BaseDAO {
 		levelOID.setDisriminators(dao.update(levelOID.getDisriminators()));
 		levelOID.setChildren(update(levelOID.getChildren()));
 		
+		SnmpRelationshipDAO relationDao = new SnmpRelationshipDAO(getEntityManager(), getLogger());
+		levelOID.setRelationToParent(relationDao.update(levelOID.getRelationToParent()));
+		
 		super.preSave(entity);
 	}
 

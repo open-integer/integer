@@ -31,41 +31,30 @@
  *      
  */
 
-package edu.harvard.integer.common.discovery;
+package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.EntityManager;
 
-import edu.harvard.integer.common.BaseEntity;
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.discovery.SnmpRelationship;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-@Entity
-public class SnmpRelationship extends BaseEntity {
-	/**
-	 * Serial Version UID
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Enumerated(EnumType.STRING)
-	private RelationMappingTypeEnum mappingType = null;
+public class SnmpRelationshipDAO extends BaseDAO {
 
 	/**
-	 * @return the mappingType
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	public RelationMappingTypeEnum getMappingType() {
-		return mappingType;
-	}
+	public SnmpRelationshipDAO(EntityManager entityManger,
+			Logger logger) {
+		super(entityManger, logger, SnmpRelationship.class);
 
-	/**
-	 * @param mappingType
-	 *            the mappingType to set
-	 */
-	public void setMappingType(RelationMappingTypeEnum mappingType) {
-		this.mappingType = mappingType;
 	}
 
 }

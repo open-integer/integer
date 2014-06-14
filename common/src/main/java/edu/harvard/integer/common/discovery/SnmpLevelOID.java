@@ -107,6 +107,7 @@ public class SnmpLevelOID extends BaseEntity {
 	 * components and physical components to and extrernal to the entity MIB
 	 * object. entAliasMappingIdentifier.33.0 = ifIndex.6
 	 */
+	@ManyToOne
 	private SnmpRelationship relationToParent = null;
 
 	/**

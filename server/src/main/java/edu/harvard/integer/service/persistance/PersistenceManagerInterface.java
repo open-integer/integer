@@ -75,6 +75,7 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.Disco
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValueDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
@@ -318,5 +319,10 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	DataPreLoadFile[] getAllPreloads() throws IntegerException;
+
+	/**
+	 * @return
+	 */
+	SnmpRelationshipDAO getSnmpSnmpRelationshipDAO();
 
 }
