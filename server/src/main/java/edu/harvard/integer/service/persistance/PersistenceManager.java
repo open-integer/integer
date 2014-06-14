@@ -78,6 +78,7 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.Disco
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValueDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
@@ -330,6 +331,11 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public VendorIdentifierDAO getVendorIdentifierDAO() {
 		return new VendorIdentifierDAO(em, logger);
+	}
+	
+	@Override
+	public SnmpRelationshipDAO getSnmpSnmpRelationshipDAO() {
+		return new SnmpRelationshipDAO(em, logger);
 	}
 	
 	@Override

@@ -33,6 +33,9 @@
 
 package edu.harvard.integer.common.discovery;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 import edu.harvard.integer.common.snmp.SNMP;
 
 /**
@@ -42,6 +45,7 @@ import edu.harvard.integer.common.snmp.SNMP;
  * @author David Taylor
  * 
  */
+@Entity
 public class SnmpParentChildRelationship extends SnmpRelationship {
 
 	/**
@@ -52,19 +56,25 @@ public class SnmpParentChildRelationship extends SnmpRelationship {
 	/**
 	 * This is the OID to use match parent instance OID.
 	 */
+	@ManyToOne
 	private SNMP containmentOid = null;
 
+	@ManyToOne
 	private SNMP siblingOid = null;
 	
+	@ManyToOne
 	private SNMP subTypeOid = null;
 	
+	@ManyToOne
 	private SNMP modelOid = null;
 	
+	@ManyToOne
 	private SNMP softwareVersionOid = null;
 
 	/**
 	 * @return the containmentOid
 	 */
+	@ManyToOne
 	public SNMP getContainmentOid() {
 		return containmentOid;
 	}
