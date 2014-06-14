@@ -41,11 +41,31 @@ import java.util.List;
  */
 public class YamlServiceElementType {
 
+	private String vendor = null;
 	private String name = null;
 	private String description = null;
 	private YamlAccessMethod accessMethod = null;
 
 	private List<YamlManagementObject> managementObjects = null;
+ 	private List<YamlServiceElementTypeTranslate>  serviceElementTypeTranslates = null;
+	
+
+	public String getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
+	public List<YamlServiceElementTypeTranslate> getServiceElementTypeTranslates() {
+		return serviceElementTypeTranslates;
+	}
+
+	public void setServiceElementTypeTranslates(
+			List<YamlServiceElementTypeTranslate> serviceElementTypeTranslates) {
+		this.serviceElementTypeTranslates = serviceElementTypeTranslates;
+	}
 
 	/**
 	 * @return the name

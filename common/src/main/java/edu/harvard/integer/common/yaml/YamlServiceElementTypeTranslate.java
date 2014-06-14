@@ -30,33 +30,44 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.common.yaml;
 
 /**
  * @author dchan
  *
  */
-public enum CategoryTypeEnum {
+public class YamlServiceElementTypeTranslate {
 
-	container,
-	stack,
-	backplane,
-	chassis,
-	portIf,
-	other,
-	powerSupply,
-	fan,
-	sensor,
-	module,
-	port,
-	cpu,
-	printer,
-	disk,
-	software,
-	storage,
-	system,
-	cache,
-	ipv4,
-	ipv6,
-	topology
+	private String mapping;
+	private String category;
+	private String name = null;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
+	public String getCategory() {
+		return category;
+	}
+	
+	
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(String mapping) {
+		this.mapping = mapping;
+	}
+
+
+	
 }

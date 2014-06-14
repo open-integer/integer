@@ -6,17 +6,19 @@
 serviceElementTypes:
     - name: cisco-cdp-global
       description: Cisco enterprise CDP MIB, global variables.
+      vendor: cisco
       accessMethod: 
           protocol: SNMP
           mib: CISCO-CDP-MIB
-          table: null
           index: null
-          mapping: direct
+      serviceElementTypeTranslates:
+         - name: cpdGlobal
+           mapping: direct
+           category: system
       managementObjects:
           - name: cdpGlobalRun
             uri: cdpGlobalRun
             capability: cdp-global-run
-            unique: 1
 
           - name: cdpGlobalDeviceId
             uri: cdpGlobalDeviceId
@@ -24,17 +26,19 @@ serviceElementTypes:
 
     - name: cisco-cdp-interface
       description: Cisco enterprise CDP MIB, per-interface attributes.
+      vendor: cisco
       accessMethod: 
           protocol: SNMP
           mib: CISCO-CDP-MIB
-          table: cdpInterfaceTable
           index: [ cdpInterfaceIfIndex ]
-          mapping: direct
+      serviceElementTypeTranslates:
+         - name: cpdInterface
+           mapping: direct
+           category: portIf
       managementObjects:
           - name: cdpInterfaceIfIndex
             uri: cdpInterfaceIfIndex
             capability: cdp-interface-index
-            unique: 1
 
           - name: cdpInterfaceEnable
             uri: cdpInterfaceEnable
@@ -46,16 +50,19 @@ serviceElementTypes:
 
     - name: cisco-cdp-cache
       description: Cisco enterprise CDP MIB, device cache per interface.
+      vendor: cisco
       accessMethod: 
           protocol: SNMP
           mib: CISCO-CDP-MIB
-          table: cdpCacheTable
           index: [ cdpCacheIfIndex, cdpCacheDeviceIndex ]
+      serviceElementTypeTranslates:
+         - name: cdpCache
+           mapping: direct
+           category: cache
       managementObjects:
           - name: cdpCacheIfIndex
             uri: cdpCacheIfIndex
             capability: cdp-cache-ifIndex
-            unique: 1
 
           - name: cdpCacheDeviceIndex
             uri: cdpCacheDeviceIndex

@@ -1,0 +1,48 @@
+---
+
+# management definition for ifTable
+# by David Chan, 2014-06-12
+
+serviceElementTypes:
+    - name: interface
+      description: The service element based on ifTable
+      accessMethod:
+          protocol: SNMP
+          mib: IF-MIB
+          index: [ ifIndex ]
+      serviceElementTypeTranslates:
+         - name: interface
+           mapping: direct
+           category: interface
+              
+      managementObjects:
+          - name: ifDescr
+            uri: ifDescr
+            capability: interface-description
+
+          - name: ifType
+            uri: ifType
+            capability: interface-type
+
+          - name: ifMtu
+            uri: ifMtu
+            capability: interface-mtu
+            unit: octet
+
+          - name: ifSpeed
+            uri: ifSpeed
+            capability: interface-ifSpeed
+            unit: bit/second
+            
+          - name: ifPhysAddress
+            uri: ifPhysAddress
+            capability: interface-physAddress
+
+          - name: ifAdminStatus
+            uri: ifAdminStatus
+            capability: interface-adminStatus
+            
+          - name: ifOperStatus
+            uri: ifOperStatus
+            capability: interface-OperStatus
+

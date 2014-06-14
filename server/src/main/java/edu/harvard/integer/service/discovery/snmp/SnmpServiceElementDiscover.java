@@ -456,13 +456,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 *
 	 * @param discNode the disc node
 	 * @param set the set
-	 * @param te the te
+	 * @param te TableEvent contains 
 	 * @param parentElm the parent elm
 	 * @return the service element
 	 * @throws IntegerException the integer exception
 	 */
 	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
-			TableEvent te, ServiceElement parentElm) throws IntegerException {
+			                                            String instOid, ServiceElement parentElm) throws IntegerException {
 		
 		ServiceElement se = new ServiceElement();
 		se.setUpdated(new Date());
@@ -484,7 +484,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			PDU pdu = new PDU();
 			
 			OID o = new OID(nameAttr.getOid());
-			o.append(te.getIndex());
+			o.append(instOid);
 						
 			pdu.add(new VariableBinding(o));
 			PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
@@ -499,7 +499,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				
 				SNMP snmp = (SNMP) capMgr.getManagementObjectById(id);
 				OID o = new OID(snmp.getOid());
-				o.append(te.getIndex());
+				o.append(instOid);
 				
 				pdu.add(new VariableBinding(o));
 				rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
@@ -536,7 +536,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				}
 			}
 		}
-		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, te.getIndex().toString());
+		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, instOid);
 		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
 		
 		return se;

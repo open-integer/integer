@@ -1,0 +1,35 @@
+---
+
+# technology definition for interface
+# by David Chan, 2014-06-14
+
+technologies:
+    - name: interface
+      provides: [ interface ]
+      description: Discoverable interface elements. 
+      mechanisms:
+          - name: interface
+            description: Interface
+            capabilities:
+                - name: interface-description
+                  description: Description
+
+                - name: interface-type
+                  description: Type
+
+                - name: interface-mtu
+                  description: MTU
+
+                - name: interface-ifSpeed
+                  description: Interface speed
+
+                - name: interface-physAddress
+                  description: Physical address
+                  
+                - name: interface-adminStatus
+                  description:  Admin status
+
+                - name: interface-OperStatus
+                  description: Operation status
+...
+

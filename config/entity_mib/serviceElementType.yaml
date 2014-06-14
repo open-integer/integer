@@ -1,22 +1,53 @@
 ---
 
 # management definition for physical hardware
-# by Loren Jan Wilson, 2014-05-21
+# by David Chan, 2014-06-12
 
 serviceElementTypes:
     - name: entity-physical
-      description: The physical table in the ENTITY-MIB.
+      description: The physical service element types base on ENTITY-MIB.
       accessMethod:
           protocol: SNMP
           mib: ENTITY-MIB
-          table: entPhysicalTable
           index: [ entPhysicalIndex ]
+      vendor: cisco
+      serviceElementTypeTranslates:
+         - name: 1.3.6.1.4.1.9.12.3.1.3
+           mapping: subObjIdentify
+           category: chassis
+         - name: cevBackplane
+           mapping: subObjIdentify
+           category: backplane
+         - name: cevContainer
+           mapping: subObjIdentify
+           category: container
+         - name: cevPowerSupply
+           mapping: subObjIdentify
+           category: powerSupply
+         - name: cevFan
+           mapping: subObjIdentify
+           category: fan
+         - name: cevSensor
+           mapping: subObjIdentify
+           category: sensor
+         - name: cevModule
+           mapping: subObjIdentify
+           category: module
+         - name: cevPort
+           mapping: subObjIdentify
+           category: port
+         - name: cevStack
+           mapping: subObjIdentify
+           category: stack
+         - name: cevMidplane
+           mapping: subObjIdentify
+           category: midplane
+              
       managementObjects:
           - name: entPhysicalIndex
             uri: entPhysicalIndex
             capability: physical-index
-            unique: 1
-
+            
           - name: entPhysicalDescr
             uri: entPhysicalDescr
             capability: physical-description
@@ -24,9 +55,6 @@ serviceElementTypes:
           - name: entPhysicalVendorType
             uri: entPhysicalVendorType
             capability: physical-vendorType
-
-          - name: entPhysicalContainedIn
-            uri: entPhysicalContainedIn
 
           - name: entPhysicalClass
             uri: entPhysicalClass
@@ -43,18 +71,24 @@ serviceElementTypes:
           - name: entPhysicalHardwareRev
             uri: entPhysicalHardwareRev
             capability: physical-hardwareRevision
+            categories: [module chassis]
 
           - name: entPhysicalFirmwareRev
             uri: entPhysicalFirmwareRev
             capability: physical-firmwareRevision
+            categories: [module chassis]
+            specificAttribute: firmware
 
           - name: entPhysicalSoftwareRev
             uri: entPhysicalSoftwareRev
             capability: physical-softwareRevision
+            categories: [module chassis]
 
           - name: entPhysicalSerialNum
             uri: entPhysicalSerialNum
             capability: physical-serialNumber
+            categories: [module chassis]
+            unique: 1
 
           - name: entPhysicalMfgName
             uri: entPhysicalMfgName
@@ -63,6 +97,7 @@ serviceElementTypes:
           - name: entPhysicalModelName
             uri: entPhysicalModelName
             capability: physical-model
+            specificAttribute: model
 
           - name: entPhysicalIsFRU
             uri: entPhysicalIsFRU

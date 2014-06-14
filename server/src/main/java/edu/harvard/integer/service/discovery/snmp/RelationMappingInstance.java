@@ -30,33 +30,35 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.service.discovery.snmp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author dchan
  *
  */
-public enum CategoryTypeEnum {
+public class RelationMappingInstance {
 
-	container,
-	stack,
-	backplane,
-	chassis,
-	portIf,
-	other,
-	powerSupply,
-	fan,
-	sensor,
-	module,
-	port,
-	cpu,
-	printer,
-	disk,
-	software,
-	storage,
-	system,
-	cache,
-	ipv4,
-	ipv6,
-	topology
+	final private ParentIndexInstance parentIndex;
+	final private List<String>  childInstances = new ArrayList<>();
+	
+	public ParentIndexInstance getParentIndex() {
+		return parentIndex;
+	}
+
+	
+	public List<String> getChildInstances() {
+		return childInstances;
+	}
+
+	public RelationMappingInstance( ParentIndexInstance pi ) {		
+		this.parentIndex = pi;
+	}
+	
+	
+	public void addInstance( String instanceOid ) {
+		childInstances.add(instanceOid);
+	}
 }

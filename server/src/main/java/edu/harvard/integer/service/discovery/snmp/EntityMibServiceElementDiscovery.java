@@ -202,7 +202,6 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	}
 	
 	
-	
 	/**
 	 * Do a recursive discovery based on a physical entity row. 
 	 * Continue with each child of the row until there is no child contains for a row.
@@ -550,8 +549,8 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		   case fan:
 			   return CategoryTypeEnum.fan;
 			   
-		   case powertSupply:
-			   return CategoryTypeEnum.powertSupply;
+		   case powerSupply:
+			   return CategoryTypeEnum.powerSupply;
 			   
 		   case stack:
 			   return CategoryTypeEnum.stack;
@@ -583,7 +582,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		    case fan:
 		    case module:
 		    case port:
-		    case powertSupply:
+		    case powerSupply:
 		    case sensor:
 		    case cpu:
 		    	return e.name() + " " +relIndex;

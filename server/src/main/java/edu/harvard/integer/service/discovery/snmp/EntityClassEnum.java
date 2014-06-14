@@ -43,7 +43,7 @@ public enum EntityClassEnum {
 		chassis(3),
 		backplane(4),
 		container(5),
-		powertSupply(6),
+		powerSupply(6),
 		fan(7),
 		sensor(8),
 		module(9),

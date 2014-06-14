@@ -30,122 +30,104 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.service.discovery.snmp;
 
-package edu.harvard.integer.common.yaml;
+import org.snmp4j.smi.OID;
 
-import java.util.List;
+import edu.harvard.integer.common.discovery.SnmpLevelOID;
 
 /**
- * @author David Taylor
  * 
+ * The Class ParentIndexInstance is used for storing entry index information
+ * along with instance oid.
+ *
+ * @author dchan
  */
-public class YamlManagementObject {
+public class ParentIndexInstance {
+
+	/** The index position. */
+	final private int indexPosition;
 	
-	private String name = null;
-	private String uri = null;
-	private String capability = null;
-	private int unique = 0;
-	private String specificAttribute;
+	/** The index oid. */
+	final private String indexOid;
 	
-	private List<String> categories;
-	private String unit;
-	private String extension;
+	final private SnmpLevelOID snmpLevel;
 	
 
-	public String getExtension() {
-		return extension;
+	/** The instance oid. */
+	private String instanceOid;
+	
+	
+	/**
+	 * Instantiates a new parent index instance.
+	 *
+	 * @param indexP the index p
+	 * @param indexOid the index oid
+	 */
+	public ParentIndexInstance( int indexP, final String indexOid, SnmpLevelOID snmpLevel ) {
+		
+		this.snmpLevel = snmpLevel;
+		this.indexPosition = indexP;
+		this.indexOid = indexOid;
 	}
-
-	public void setExtension(String extension) {
-		this.extension = extension;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
+	
+	/**
+	 * Gets the instance oid.
+	 *
+	 * @return the instance oid
+	 */
+	public String getInstanceOid() {
+		return instanceOid;
 	}
 
 	/**
-	 * @return the name
+	 * Sets the instance oid.
+	 *
+	 * @param instanceOid the new instance oid
 	 */
-	public String getName() {
-		return name;
+	public void setInstanceOid(String instanceOid) {
+		this.instanceOid = instanceOid;
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * Gets the index position.
+	 *
+	 * @return the index position
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public int getIndexPosition() {
+		return indexPosition;
 	}
 
 	/**
-	 * @return the uri
+	 * Gets the index oid.
+	 *
+	 * @return the index oid
 	 */
-	public String getUri() {
-		return uri;
-	}
-
-	/**
-	 * @param uri
-	 *            the uri to set
-	 */
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
-
-	/**
-	 * @return the capability
-	 */
-	public String getCapability() {
-		return capability;
-	}
-
-	/**
-	 * @param capability
-	 *            the capability to set
-	 */
-	public void setCapability(String capability) {
-		this.capability = capability;
-	}
-
-	/**
-	 * @return the unique
-	 */
-	public int getUnique() {
-		return unique;
-	}
-
-	/**
-	 * @param unique
-	 *            the unique to set
-	 */
-	public void setUnique(int unique) {
-		this.unique = unique;
+	public String getIndexOid() {
+		return indexOid;
 	}
 
 	
-
-	public String getSpecificAttribute() {
-		return specificAttribute;
+	/**
+	 * Return the Table oid based on entry attribute oid.
+	 *
+	 * @return the table oid
+	 */
+	public String getTableOid() {
+		
+		OID o = new OID(indexOid);
+		
+		if ( o.get(o.size() - 2) == 1 ) {
+			
+			o.trim(2);
+			return o.toString();
+		}
+		return null;
 	}
+	
 
-	public void setSpecificAttribute(String specificAttribute) {
-		this.specificAttribute = specificAttribute;
+	public SnmpLevelOID getChildSnmpLevel() {
+		return snmpLevel;
 	}
-
-
-	public List<String> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<String> categories) {
-		this.categories = categories;
-	}
-
 
 }

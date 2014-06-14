@@ -70,13 +70,15 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	 * this interface. For example Cisco CLI, SNMP, SNMP-Private vendor, etc.
 	 */
 	private String namespace = null;
-
-
+	
 	/*
 	 * A short name that can be used by the human interface to identify this
 	 * management object.
 	 */
 	private String displayName = null;
+	
+	private String specificAttribute = null;
+
 
 	/**
 	 * The ID of the capability that this protocol specific management object supports.
@@ -150,6 +152,15 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	 */
 	public void setCapabilityId(ID capabilityId) {
 		this.capabilityId = capabilityId;
+	}
+	
+
+	public String getSpecificAttribute() {
+		return specificAttribute;
+	}
+
+	public void setSpecificAttribute(String specificAttribute) {
+		this.specificAttribute = specificAttribute;
 	}
 
 }

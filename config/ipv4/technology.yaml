@@ -1,0 +1,37 @@
+---
+
+# technology definition for ipV4
+# by David Chan, 2014-06-14
+
+technologies:
+    - name: ipv4
+      provides: [ ipv4Address ]
+      description: Discoverable ipv4 address.
+      mechanisms:
+          - name: IPv4Address
+            description: Ip Address for IPv4
+            capabilities:
+                - name: topoogy-ipv4Address
+                  description: Ipv4 Address
+
+                - name: topology-ipNetMask
+                  description: IP net mask
+
+                - name: topology-ipBraodcastAddress
+                  description: IP Broadcast Address
+
+                - name: topology-ipReasmMaxSize
+                  description: IP Reasm Max Size.
+
+          - name: IPtoPhyscial
+            description: Ip Address to physical address mapping
+            capabilities:
+                - name: ipv4-netToMediaPhysAddress
+                  description: Ipv4 net to media physical address
+
+                - name: ipv4-netToMediaNetAddress
+                  description: IP net media net address
+
+                - name: ipv4-netToMediaType
+                  description: IP media type
+...

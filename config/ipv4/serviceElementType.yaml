@@ -1,0 +1,63 @@
+---
+
+# Service Element Types for IPv4 Using in topology.
+# by David Chan, 2014-06-12
+
+serviceElementTypes:
+    - name: ipv4Address
+      description: The service element contains IPv4 address information.
+      accessMethod:
+          protocol: SNMP
+          mib: IP-MIB
+          index: [ ipAdEntAddr ]
+      serviceElementTypeTranslates:
+         - name: ipv4Address
+           mapping: direct
+           category: topology
+      managementObjects:
+          - name: ipAdEntAddr
+            uri: ipAdEntAddr
+            capability: topoogy-ipv4Address
+
+          - name: ipAdEntIfIndex
+            uri: ipAdEntIfIndex
+
+          - name: ipAdEntNetMask
+            uri: ipAdEntNetMask
+            capability: topology-ipNetMask
+
+          - name: ipAdEntBcastAddr
+            uri: ipAdEntBcastAddr
+            capability: topology-ipBraodcastAddress
+            
+          - name: ipAdEntReasmMaxSize
+            uri: ipAdEntReasmMaxSize
+            capability: topology-ipReasmMaxSize
+
+    - name: ipv4IpToPhysical
+      description: The service element contains IPv4 address to physical mapping.
+      accessMethod:
+        protocol: SNMP
+        mib: IP-MIB
+        index: [ ipNetToMediaIfIndex ]
+      serviceElementTypeTranslates:
+        - name: ipv4IpToPhysical
+          mapping: direct
+          category: ipv4
+
+      managementObjects:
+        - name: ipNetToMediaIfIndex
+          uri: ipNetToMediaIfIndex
+
+        - name: ipNetToMediaPhysAddress
+          uri: ipNetToMediaPhysAddress
+          capability: ipv4-netToMediaPhysAddress
+
+        - name: ipNetToMediaNetAddress
+          uri: ipNetToMediaNetAddress
+          capability: ipv4-netToMediaNetAddress
+
+        - name: ipNetToMediaType
+          uri: ipNetToMediaType
+          capability: ipv4-netToMediaType
+...

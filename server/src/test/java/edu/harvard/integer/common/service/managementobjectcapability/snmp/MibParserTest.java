@@ -61,6 +61,16 @@ public class MibParserTest {
 		
 	}
 
+	@Test
+	public void loadCiscoVendorTypeMib() {
+		
+		MIBImportResult result = importMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
+		
+		result.getObjectIdentifiers();
+		System.out.println("Got " + result.getObjectIdentifiers().size() + " OIDS");
+		
+	}
+	
 	
 	public MIBImportResult importMib(String mibName) {
 		
