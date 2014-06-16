@@ -69,7 +69,7 @@ public class SecurityService extends BaseService implements SecurityServiceInter
 	@Override
 	public ID getNextLoginId(UserLogin login) throws IntegerException {
 		
-		ID id = new ID(nextUserId++, login.getName(), new IDType(UserLogin.class));
+		ID id = new ID(nextUserId++, login.getName(), new IDType(UserLogin.class.getName()));
 		
 		return id;
 	}

@@ -494,7 +494,7 @@ public class ManagementObjectCapbilityManagerTest {
 		enumTc.setName("MyEnumTC");
 		
 		SNMP snmp = new SNMP();
-		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class)));
+		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class.getName())));
 		snmp.setDescription("A good description");
 		snmp.setDisplayName("Hi");
 		snmp.setTextualConvetion("EnumList");
@@ -517,7 +517,7 @@ public class ManagementObjectCapbilityManagerTest {
 		stringTC.setMaximumValue(255);
 		
 		SNMP snmp = new SNMP();
-		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class)));
+		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class.getName())));
 		snmp.setDescription("A good description");
 		snmp.setDisplayName("Hi");
 		snmp.setTextualConvetion("String");
@@ -538,7 +538,7 @@ public class ManagementObjectCapbilityManagerTest {
 		stringTC.setName("Integer Syntax");
 		
 		SNMP snmp = new SNMP();
-		snmp.setCapabilityId(new ID(Long.valueOf(2), "Name", new IDType(Capability.class)));
+		snmp.setCapabilityId(new ID(Long.valueOf(2), "Name", new IDType(Capability.class.getName())));
 		snmp.setDescription("A good description");
 		snmp.setDisplayName("Hi");
 		snmp.setTextualConvetion("Integer");
