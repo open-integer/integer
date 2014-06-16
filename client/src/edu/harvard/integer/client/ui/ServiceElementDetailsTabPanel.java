@@ -1,16 +1,20 @@
 package edu.harvard.integer.client.ui;
 
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 import edu.harvard.integer.client.widget.HvGridValuesPanel;
+import edu.harvard.integer.client.widget.HvTableViewPanel;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 public class ServiceElementDetailsTabPanel extends TabLayoutPanel {
 
+	final String[] headers = {"Name", "Description"};
+	
 	private ServiceElementGeneralPanel generalPanel = new ServiceElementGeneralPanel();
 	private HvGridValuesPanel attributeValuesPanel = new HvGridValuesPanel();
+	private HvTableViewPanel mechanismViewPanel;
+	private HvTableViewPanel capabilityViewPanel;
 	
 	public ServiceElementDetailsTabPanel() {
 		super(2.0, Unit.EM);
@@ -24,16 +28,18 @@ public class ServiceElementDetailsTabPanel extends TabLayoutPanel {
 	    add(attributeValuesPanel, "Attributes");
 	    
 	    // Mechanisms Tab
-	    HTML mechanismsText = new HTML("Mechanism list");
-	    add(mechanismsText, "Mechanisms");
+	    mechanismViewPanel = new HvTableViewPanel(null, headers);
+	    add(mechanismViewPanel, "Mechanisms");
 	    
 	    // Capabilities Tab
-	    HTML capabilitesText = new HTML("Capabilite list");
-	    add(capabilitesText, "Capabilites");
+		capabilityViewPanel = new HvTableViewPanel(null, headers);
+	    add(capabilityViewPanel, "Capabilites");
 	}
 
 	public void update(ServiceElement se) {
 		generalPanel.update(se);
 		attributeValuesPanel.update(se);
+		mechanismViewPanel.showIdList(se.getCapabilites());
+		capabilityViewPanel.showIdList(se.getCapabilites());
 	}
 }
