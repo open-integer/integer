@@ -65,13 +65,14 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long identifier = null;
 
+	
 	private IDType idType = null;
 
 	@Size(min = 1, max = 50)
 	private String name = null;
 
 	public BaseEntity() {
-		this.idType = new IDType(getClass().getName());
+		this.idType = new IDType(getClass());
 	}
 
 	/**

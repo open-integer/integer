@@ -261,7 +261,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 						 * Check for if there is one in the database already exist.  If it is use it.
 						 * Else create a serviceElementType associated with the current entity row. 
 						 */
-						ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(ce.name(), discNode.getTopServiceElementType().getVendor());
+						ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(ce, discNode.getTopServiceElementType().getVendor());
 						if ( sets != null && sets.length > 0 ) {
 							
 							for ( ServiceElementType tmpSet : sets ) {
@@ -380,7 +380,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 							 try {								 
 								 PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), p);
 								 
-								 ServiceElementType[] sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.portIf.name(), 
+								 ServiceElementType[] sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.portIf, 
 										                             discNode.getTopServiceElementType().getVendor() );
 								 
 								 String ifSubType = row.getEntPhysicalVendorType() + ":" + rpdu.get(0).getVariable().toInt();
@@ -399,7 +399,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								 ServiceElement ise = new ServiceElement();
 								 if ( iset == null ) {
 									 iset = new ServiceElementType();
-									 iset.setCategory(CategoryTypeEnum.portIf.name());
+									 iset.setCategory(CategoryTypeEnum.portIf);
 									 iset.setVendor(discNode.getTopServiceElementType().getVendor());
 									 iset.setVendorSpecificSubType(ifSubType);
 									 
@@ -672,7 +672,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	public ServiceElementType createServiceElementType( PhysEntityRow pr ) throws IntegerException {
 		
 		ServiceElementType set = new ServiceElementType();
-		set.setCategory(convertEntityClassType(pr.getEntityClass()).name());
+		set.setCategory(convertEntityClassType(pr.getEntityClass()));
 		set.setVendor(discNode.getTopServiceElementType().getVendor());
 		set.setVendorSpecificSubType(pr.getEntPhysicalVendorType());
 		set.setDescription(pr.getEntPhysicalDescr());

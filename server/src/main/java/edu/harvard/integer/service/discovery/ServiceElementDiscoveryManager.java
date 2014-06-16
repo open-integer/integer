@@ -52,6 +52,7 @@ import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -387,7 +388,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypesByCategoryAndVendor()
 	 */
 	@Override
-	public ServiceElementType[] getServiceElementTypesByCategoryAndVendor(String catetory, String vendorType) throws IntegerException {
+	public ServiceElementType[] getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum catetory, String vendorType) throws IntegerException {
 		
 		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
 		

@@ -37,7 +37,9 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 /**
- * This class encapsulates the type of object.
+ * This class encapsulates the type of object. This is part of the ID for an
+ * object. This is used to identify the type of object an ID represents. This
+ * also has the database table name the object is stored in.
  * 
  * @author David Taylor
  * 
@@ -51,23 +53,48 @@ public class IDType implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String classType = null;
+	private Class<? extends BaseEntity> classType = null;
 
+	private transient String tableName = null;
+
+	// Default constructor to make Hibernate happy.
 	public IDType() {
 		super();
 	}
-
-	public IDType(String class1) {
-		this.classType = class1;
+	
+	public IDType(Class<? extends BaseEntity> clazz) {
+		this.classType = clazz;
+		this.tableName = clazz.getSimpleName();
 	}
 
-	public String getClassType() {
+	public IDType(Class<? extends BaseEntity> clazz, String tableName) {
+		this.classType = clazz;
+		this.tableName = tableName;
+	}
+
+//	public String getClassName() {
+//		return classType.getName();
+//	}
+
+	public Class<? extends BaseEntity> getClassType() {
 		return classType;
 	}
 
-	public void setClassType(String classType) {
+	public void setClassType(Class<? extends BaseEntity> classType) {
 		this.classType = classType;
 	}
+	
+	/**
+	 * @return the tableName
+	 */
+	public String getTableName() {
+		return tableName;
+	}
+	
+	public void setTableName(String name) {
+		this.tableName = name;
+	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -77,7 +104,7 @@ public class IDType implements Serializable {
 	@Override
 	public String toString() {
 		if (classType != null)
-			return classType;
+			return classType.getName();
 		else
 			return "";
 	}

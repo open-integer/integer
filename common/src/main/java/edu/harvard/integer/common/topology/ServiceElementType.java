@@ -69,7 +69,8 @@ public class ServiceElementType extends BaseEntity {
 	 * Currents types that are supported are: Virtual Hardware Software Element
 	 * Software Application See RFCS 2287 and 2564
 	 */
-	private String category = null;
+	@Enumerated(EnumType.STRING)
+	private CategoryTypeEnum category = null;
 
 	private String firmware = null;
 
@@ -375,7 +376,7 @@ public class ServiceElementType extends BaseEntity {
 	/**
 	 * @return the category
 	 */
-	public String getCategory() {
+	public CategoryTypeEnum getCategory() {
 		return category;
 	}
 
@@ -383,7 +384,7 @@ public class ServiceElementType extends BaseEntity {
 	 * @param category
 	 *            the category to set
 	 */
-	public void setCategory(String category) {
+	public void setCategory(CategoryTypeEnum category) {
 		this.category = category;
 	}
 

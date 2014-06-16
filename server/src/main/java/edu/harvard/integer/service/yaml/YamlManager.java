@@ -63,6 +63,7 @@ import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.yaml.YamlCapability;
@@ -427,7 +428,7 @@ public class YamlManager extends BaseManager implements
 							if (serviceElementType == null) {
 								
 								serviceElementType = new ServiceElementType();
-								serviceElementType.setCategory(typeTranslate.getCategory());
+								serviceElementType.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
 								serviceElementType.setName(vi.getVendorSubtypeName());
 								serviceElementType.setDescription(yamlServiceElementType.getDescription());
 								serviceElementType.setVendor(yamlServiceElementType.getVendor());
@@ -448,7 +449,7 @@ public class YamlManager extends BaseManager implements
 					if (serviceElementType == null) {
 						
 						serviceElementType = new ServiceElementType();
-						serviceElementType.setCategory(typeTranslate.getCategory());
+						serviceElementType.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
 						serviceElementType.setName(typeTranslate.getName());
 						serviceElementType.setDescription(yamlServiceElementType.getDescription());
 						serviceElementType.setVendor(yamlServiceElementType.getVendor());
@@ -785,7 +786,7 @@ public class YamlManager extends BaseManager implements
 
 		dbSet.setDefaultNameCababilityId(getCapability(serviceElementType
 				.getDefaultNameCabability()));
-		dbSet.setCategory(serviceElementType.getCategory());
+		dbSet.setCategory(CategoryTypeEnum.valueOf(serviceElementType.getCategory()));
 		dbSet.setUniqueIdentifierCapabilities(createAttributeList(
 				serviceElementType.getUniqueIdentifierCapabilities(),
 				serviceElementType.getName()));

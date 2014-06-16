@@ -86,7 +86,7 @@ public class EventManagerTest {
 		DiscoveryCompleteEvent discoveryComplete = new DiscoveryCompleteEvent();
 		discoveryComplete.setDescription("My description");
 		discoveryComplete.setDiscoveryStatus(DiscoveryStatusEnum.Complete);
-		discoveryComplete.setEntityId(new ID(Long.valueOf(1), "Name", new IDType(DiscoveryCompleteEvent.class.getName())));
+		discoveryComplete.setEntityId(new ID(Long.valueOf(1), "Name", new IDType(DiscoveryCompleteEvent.class)));
 		discoveryComplete.setTime(new Date());
 		
 		try {

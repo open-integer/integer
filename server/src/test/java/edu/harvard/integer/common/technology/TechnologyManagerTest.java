@@ -72,8 +72,8 @@ public class TechnologyManagerTest {
 		service.setCreated(new Date());
 		service.setLastModified(new Date());
 		service.setDescription("Description of service");
-		service.setDependsOn(TestUtil.createIdList(5, ID.class, "dependentService"));
-		service.setTechnologies(TestUtil.createIdList(5, ID.class, "Technology"));
+		service.setDependsOn(TestUtil.createIdList(5, Service.class, "dependentService"));
+		service.setTechnologies(TestUtil.createIdList(5, Service.class, "Technology"));
 		
 		try {
 			technologyManager.updateService(service);
@@ -108,7 +108,7 @@ public class TechnologyManagerTest {
 		technology.setDescription("Descrption of technolgoy");
 		technology.setName("Technology");
 	
-		technology.setMechanisims(TestUtil.createIdList(5, ID.class, "Mechanism"));
+		technology.setMechanisims(TestUtil.createIdList(5, Mechanism.class, "Mechanism"));
 		
 		try {
 			technologyManager.updateTechnology(technology);
@@ -143,7 +143,7 @@ public class TechnologyManagerTest {
 		Mechanism mechanism = new Mechanism();
 		
 		mechanism.setName("Mechansim");
-		mechanism.setCapabilities(TestUtil.createIdList(5, ID.class, "Mechanism"));
+		mechanism.setCapabilities(TestUtil.createIdList(5, Mechanism.class, "Mechanism"));
 		
 		try {
 			technologyManager.updateMechanism(mechanism);

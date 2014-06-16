@@ -46,6 +46,7 @@ import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -162,7 +163,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return a list of ServiceElements that match the given category and vendor.
 	 * @throws IntegerException
 	 */
-	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(String catetory, String vendorType)
+	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum catetory, String vendorType)
 			throws IntegerException;
 	
 	

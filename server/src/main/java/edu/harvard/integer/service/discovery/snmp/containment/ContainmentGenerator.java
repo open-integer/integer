@@ -125,12 +125,12 @@ public class ContainmentGenerator {
 		levelOid.setDisriminators(discriminators);
 				
 		ServiceElementType setCpu = null;
-		ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.cpu.name(), serviceElmType.getVendor());
+		ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.cpu, serviceElmType.getVendor());
 		if ( sets == null || sets.length == 0 ) {
 			
 			setCpu = new ServiceElementType();
 			setCpu.setVendor(serviceElmType.getVendor());
-			setCpu.setCategory(CategoryTypeEnum.cpu.name());
+			setCpu.setCategory(CategoryTypeEnum.cpu);
 			setCpu.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			setDeviceTblComponentIdentify(setCpu, snmpMgr);
@@ -165,12 +165,12 @@ public class ContainmentGenerator {
 		discriminators.add(sstd);
 		
 		ServiceElementType setPrinter = null;
-		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.printer.name(), serviceElmType.getVendor());
+		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.printer, serviceElmType.getVendor());
 		if ( sets == null || sets.length == 0 ) {
 			
 			setPrinter = new ServiceElementType();
 			setPrinter.setVendor(serviceElmType.getVendor());
-			setPrinter.setCategory(CategoryTypeEnum.printer.name());
+			setPrinter.setCategory(CategoryTypeEnum.printer);
 			setPrinter.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			setDeviceTblComponentIdentify(setPrinter, snmpMgr);
@@ -204,12 +204,12 @@ public class ContainmentGenerator {
 		
 		
 		ServiceElementType setIf = null;
-		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.portIf.name(), serviceElmType.getVendor());
+		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.portIf, serviceElmType.getVendor());
 		if ( sets == null || sets.length == 0 ) {
 			
 			setIf = new ServiceElementType();
 			setIf.setVendor(serviceElmType.getVendor());
-			setIf.setCategory(CategoryTypeEnum.portIf.name());
+			setIf.setCategory(CategoryTypeEnum.portIf);
 			setIf.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			SNMP defName = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceDescr);
@@ -243,13 +243,13 @@ public class ContainmentGenerator {
 		
 		
 		ServiceElementType diskType = null;
-		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.disk.name(), serviceElmType.getVendor());
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.disk, serviceElmType.getVendor());
 		
 		if ( sets == null || sets.length == 0 ) {
 			
             diskType = new ServiceElementType();
 			diskType.setVendor(serviceElmType.getVendor());
-			diskType.setCategory(CategoryTypeEnum.disk.name());
+			diskType.setCategory(CategoryTypeEnum.disk);
 			diskType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			setDeviceTblComponentIdentify(diskType, snmpMgr);
@@ -299,13 +299,13 @@ public class ContainmentGenerator {
 		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledName);
 		levelOid.setDescriminatorOID(snmp);
 		
-		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.software.name(), serviceElmType.getVendor());
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.software, serviceElmType.getVendor());
 		ServiceElementType swType = null;
 		if ( sets == null || sets.length == 0 ) {
 			
 			swType = new ServiceElementType();
 			swType.setVendor(serviceElmType.getVendor());
-			swType.setCategory(CategoryTypeEnum.software.name());
+			swType.setCategory(CategoryTypeEnum.software);
 			swType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			List<ID> attributeIds = new ArrayList<>();
@@ -355,14 +355,14 @@ public class ContainmentGenerator {
 		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageDescr);
 		levelOid.setDescriminatorOID(snmp);
 		
-		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.storage.name(), serviceElmType.getVendor());
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.storage, serviceElmType.getVendor());
 		ServiceElementType storageType = null;
 		if ( sets == null || sets.length == 0 ) {
 			
 			storageType = new ServiceElementType();
 			storageType.setVendor(serviceElmType.getVendor());
 			
-			storageType.setCategory(CategoryTypeEnum.storage.name());
+			storageType.setCategory(CategoryTypeEnum.storage);
 			storageType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			List<ID> attributeIds = new ArrayList<>();
