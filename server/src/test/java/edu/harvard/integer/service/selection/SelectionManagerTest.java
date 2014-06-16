@@ -58,6 +58,8 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.common.technology.Service;
+import edu.harvard.integer.common.technology.Technology;
 
 /**
  * @author David Taylor
@@ -122,7 +124,7 @@ public class SelectionManagerTest {
 
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
-		filter.setServices(TestUtil.createIdList(5, ID.class, "Service"));
+		filter.setServices(TestUtil.createIdList(5, Service.class, "Service"));
 
 		filter.setTechnologies(getTechnologyTree());
 
@@ -145,16 +147,14 @@ public class SelectionManagerTest {
 
 		FilterNode root = new FilterNode();
 
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class)));
 		root.setChildren(getRoutersLevel1());
 
 		nodes.add(root);
 
 		root = new FilterNode();
 
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class)));
 		root.setChildren(getServersLevel1());
 		nodes.add(root);
 
@@ -165,18 +165,15 @@ public class SelectionManagerTest {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(Technology.class)));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(Technology.class)));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(Technology.class)));
 		nodes.add(root);
 
 		return nodes;
@@ -186,18 +183,15 @@ public class SelectionManagerTest {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(Technology.class)));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(Technology.class)));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Server3", new IDType(
-				"Technology")));
+		root.setItemId(new ID(Long.valueOf(3), "Server3", new IDType(Technology.class)));
 		nodes.add(root);
 
 		return nodes;

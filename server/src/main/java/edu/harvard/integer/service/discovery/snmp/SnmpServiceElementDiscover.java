@@ -470,8 +470,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		if ( discNode.getExistingSE() == null ) {
 			se.setCreated(new Date());
 		}
+		
 		se.setServiceElementTypeId(set.getID());
-        se.setDescription(set.getCategory());
+        se.setDescription(set.getCategory().name());
 		
 		if (parentElm != null) {
 			se.setParentId(parentElm.getID());

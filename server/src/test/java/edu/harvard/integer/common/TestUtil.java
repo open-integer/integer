@@ -54,10 +54,10 @@ public class TestUtil {
 
 	}
 
-	public static List<ID> createIdList(int numToCreate, Class<?> clazz, String name) {
+	public static List<ID> createIdList(int numToCreate, Class<? extends BaseEntity> clazz, String name) {
 		List<ID> ids = new ArrayList<ID>();
 		for (int i = 0; i < 10; i++) 
-			ids.add(new ID(Long.valueOf(i), name + i, new IDType(clazz.getName())));
+			ids.add(new ID(Long.valueOf(i), name + i, new IDType(clazz)));
 
 		return ids;
 	}

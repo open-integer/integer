@@ -44,6 +44,7 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -68,7 +69,7 @@ public class ServiceElementTypeDAO extends BaseDAO {
 	/**
 	 * @return
 	 */
-	public ServiceElementType[] findByCategoryAndVendor(String category, String vendor) {
+	public ServiceElementType[] findByCategoryAndVendor(CategoryTypeEnum category, String vendor) {
 
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
@@ -78,8 +79,8 @@ public class ServiceElementTypeDAO extends BaseDAO {
 		Root<ServiceElementType> from = query.from(ServiceElementType.class);
 		query.select(from);
 
-		ParameterExpression<String> categoryParam = criteriaBuilder
-				.parameter(String.class);
+		ParameterExpression<CategoryTypeEnum> categoryParam = criteriaBuilder
+				.parameter(CategoryTypeEnum.class);
 		
 		ParameterExpression<String> vendorParam = criteriaBuilder
 				.parameter(String.class);

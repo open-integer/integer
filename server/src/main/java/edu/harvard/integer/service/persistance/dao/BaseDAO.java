@@ -408,15 +408,8 @@ public class BaseDAO {
 	@SuppressWarnings("unchecked")
 	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
 
-		Class<? extends BaseEntity> clazz = null;
-		try {
-			clazz = (Class<? extends BaseEntity>) Class.forName(id.getIdType().getClassType());
-		} catch (ClassNotFoundException e) {
-			
-			e.printStackTrace();
-			throw new IntegerException(e, SystemErrorCodes.InvalidIDNoType);
-		}
-
+		Class<? extends BaseEntity> clazz = id.getIdType().getClassType();
+		
 		T entity = (T) entityManger.find(clazz, id.getIdentifier());
 
 		return entity;

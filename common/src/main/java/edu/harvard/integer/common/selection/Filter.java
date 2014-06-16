@@ -49,6 +49,7 @@ import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**
@@ -131,6 +132,13 @@ public class Filter extends BaseEntity {
 	@OrderColumn(name = "idx")
 	private List<FilterNode> technologies = null;
 
+	/**
+	 * The list of Categories to include in this filter.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")	
+	private List<CategoryTypeEnum> categories = null;
+	
 	/**
 	 * Providers selects for the filter.
 	 */
@@ -350,6 +358,20 @@ public class Filter extends BaseEntity {
 	 */
 	public void setLinkTechnologies(List<FilterNode> linkTechnologies) {
 		this.linkTechnologies = linkTechnologies;
+	}
+
+	/**
+	 * @return the categories
+	 */
+	public List<CategoryTypeEnum> getCategories() {
+		return categories;
+	}
+
+	/**
+	 * @param categories the categories to set
+	 */
+	public void setCategories(List<CategoryTypeEnum> categories) {
+		this.categories = categories;
 	}
 
 }

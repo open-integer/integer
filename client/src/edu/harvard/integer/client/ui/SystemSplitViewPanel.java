@@ -12,11 +12,9 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -139,7 +137,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
 	    containedSplitPanel.add(containeeTreeView);
 		
-		eastSplitPanel.addEast(containedSplitPanel, 300);
+		eastSplitPanel.addEast(containedSplitPanel, 500);
 		eastSplitPanel.setWidgetHidden(containedSplitPanel, true);
 		eastSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
 		eastSplitPanel.add(networkPanel);

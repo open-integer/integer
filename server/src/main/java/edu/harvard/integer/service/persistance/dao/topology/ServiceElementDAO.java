@@ -208,6 +208,8 @@ public class ServiceElementDAO extends BaseDAO {
 		if (selection.getFilters() == null)
 			return new ServiceElement[0];
 		
+		StringBuffer b = new StringBuffer();
+		
 		for (Filter filter : selection.getFilters() ) {
 			for (FilterNode filterNode : filter.getTechnologies()) {
 				if (filterNode.getSelected()) {

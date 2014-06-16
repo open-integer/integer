@@ -20,6 +20,7 @@ import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.FilterNode;
+import edu.harvard.integer.common.technology.Technology;
 
 public class HvCheckBoxTreePanel extends SimplePanel {
 	
@@ -50,7 +51,7 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 						List<FilterNode> techList = new ArrayList<FilterNode>();
 						for (TechItem item : selected) {
 							FilterNode node = new FilterNode();
-							ID id = new ID((long)item.getId(), item.getName(), new IDType("Technology"));
+							ID id = new ID((long)item.getId(), item.getName(), new IDType(Technology.class));
 							node.setItemId(id);
 							techList.add(node);
 						}

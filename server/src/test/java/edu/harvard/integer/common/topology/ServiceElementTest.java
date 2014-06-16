@@ -103,7 +103,7 @@ public class ServiceElementTest {
 		serviceElement.setValues(ids);
 
 		ManagementObjectIntegerValue intValue = new ManagementObjectIntegerValue();
-		intValue.setManagementObject(new ID(Long.valueOf(1), "MO name", new IDType(SNMP.class.getName())));
+		intValue.setManagementObject(new ID(Long.valueOf(1), "MO name", new IDType(SNMP.class)));
 		intValue.setValue(Integer.valueOf(2));
 		intValue.setName("MO name value");
 		List<ManagementObjectValue> values = new ArrayList<ManagementObjectValue>();

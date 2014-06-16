@@ -61,9 +61,9 @@ import edu.harvard.integer.common.managementobject.ManagementObjectValue;
  * A service element can be any function from an os manager in a vm environment to a high-level 
  * web service.  The idea is that services are defined independently of the physical systems on 
  * which they run.  For the system to work there must be a connection between the service and 
- * the physical world. Certainly not all services will run on all hardware.  For exmple you would 
+ * the physical world. Certainly not all services will run on all hardware.  For example you would 
  * not run Jboss on an ethernet switch. Note that this service element is that, not a service.  
- * This means that a service may have many service elements of the same kind working coooperatively
+ * This means that a service may have many service elements of the same kind working cooperatively
  * for load balancing, redundancy or other purposes on different pieces of hardware.  
  * In other cases as in the case of an OS instance/VM on a particular piece of hardware.
  * An example of a service element that exists on potentially many different systems is a 

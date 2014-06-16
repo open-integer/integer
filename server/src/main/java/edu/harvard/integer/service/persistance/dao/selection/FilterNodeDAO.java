@@ -41,6 +41,7 @@ import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
@@ -82,4 +83,59 @@ public class FilterNodeDAO extends BaseDAO {
 		super.preSave(entity);
 	}
 	
+	public StringBuffer getWhere(FilterNode filterNode,  StringBuffer b) throws IntegerException {
+		
+		if (filterNode.getSelected().booleanValue()) {
+			b = getWhereAll(filterNode, b);
+		} else {
+			if (filterNode.getChildren() != null) {
+				for (FilterNode childNode : filterNode.getChildren()) {
+					b = getWhere(childNode, b);
+				}
+			}
+				
+		}
+		
+		return b;
+	}
+	
+	public StringBuffer getWhereAll(FilterNode filterNode, StringBuffer b) throws IntegerException {
+		
+		b.append(getMyWhere(filterNode, b));
+		if (filterNode.getChildren() != null) {
+			for (FilterNode childNode : filterNode.getChildren()) {
+				b = getWhereAll(childNode, b);
+			}
+		}
+		
+		return b;
+	}
+	
+	private StringBuffer getMyWhere(FilterNode filterNode, StringBuffer b) throws IntegerException {
+		
+		if (b.length() > 1) 
+			b.append(",\n\t");
+		
+		b.append(getTableForID(filterNode.getItemId())).append(" ").append(getAlias(filterNode.getItemId()));
+		
+		return b;
+	}
+
+	/**
+	 * @param itemId
+	 * @return
+	 */
+	private String getAlias(ID itemId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @param itemId
+	 * @return
+	 */
+	private String getTableForID(ID itemId) {
+		
+		return null;
+	}
 }
