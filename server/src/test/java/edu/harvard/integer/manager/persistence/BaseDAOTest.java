@@ -121,18 +121,18 @@ public class BaseDAOTest {
 			
 	}
 
-	@Test
-	public void exportSchema() {
-		try {
-			SchemaGenerator generator = new SchemaGenerator("edu.harvard.integer");
-			generator.generate(SchemaGenerator.Dialect.MYSQL);
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			fail(e.toString());
-		}
-		
-	}
+//	@Test
+//	public void exportSchema() {
+//		try {
+//			SchemaGenerator generator = new SchemaGenerator("edu.harvard.integer");
+//			generator.generate(SchemaGenerator.Dialect.MYSQL);
+//			
+//		} catch (Exception e) {
+//			
+//			e.printStackTrace();
+//			fail(e.toString());
+//		}
+//		
+//	}
 
 }

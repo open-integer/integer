@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.TabLayoutPanel;
 import edu.harvard.integer.client.widget.HvGridValuesPanel;
 import edu.harvard.integer.client.widget.HvTableViewPanel;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 
 public class ServiceElementDetailsTabPanel extends TabLayoutPanel {
 
@@ -41,5 +42,9 @@ public class ServiceElementDetailsTabPanel extends TabLayoutPanel {
 		attributeValuesPanel.update(se);
 		mechanismViewPanel.showIdList(se.getCapabilites());
 		capabilityViewPanel.showIdList(se.getCapabilites());
+	}
+	
+	public void update(ServiceElementType serviceElementType) {
+		generalPanel.update(serviceElementType);
 	}
 }

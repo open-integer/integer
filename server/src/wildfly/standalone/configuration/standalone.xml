@@ -367,7 +367,7 @@
                 </process-id>
             </core-environment>
             <recovery-environment socket-binding="txn-recovery-environment" status-socket-binding="txn-status-manager"/>
-            <coordinator-environment default-timeout="300"/>
+            <coordinator-environment default-timeout="1200"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:undertow:1.0">
             <buffer-caches>

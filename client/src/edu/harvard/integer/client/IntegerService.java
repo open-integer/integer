@@ -13,6 +13,7 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -86,6 +87,13 @@ public interface IntegerService extends RemoteService {
 	 */
 	ServiceElement[] getServiceElementByParentId(ID id) throws Exception;
 	
+	/**
+	 * Gets the device details.
+	 *
+	 * @param id the id
+	 * @return the device details
+	 * @throws Exception the exception
+	 */
 	DeviceDetails getDeviceDetails(ID id) throws Exception;
 
 	/**
@@ -99,6 +107,8 @@ public interface IntegerService extends RemoteService {
 
 	/**
 	 * Start Discovery. This is only for testing the initial functionallity.
+	 *
+	 * @throws Exception the exception
 	 */
 	void startDiscovery() throws Exception;
 
@@ -106,13 +116,27 @@ public interface IntegerService extends RemoteService {
 	 * Discovery a subnet using all the defaults. This will discovery all the
 	 * nodes on the subnet. Only the given subnet will be discovered. (Radius ==
 	 * 0)
-	 * 
-	 * @param address
-	 * @param mask
-	 * @throws IntegerException
+	 *
+	 * @param address the address
+	 * @param mask the mask
+	 * @throws Exception the exception
 	 */
 	void startDiscovery(String address, String mask) throws Exception;
 	
+	/**
+	 * Gets the blank selection.
+	 *
+	 * @return the blank selection
+	 * @throws Exception the exception
+	 */
 	Selection getBlankSelection() throws Exception;
+	
+	/**
+	 * Gets the service element type by id.
+	 *
+	 * @return the service element type by id
+	 * @throws Exception the exception
+	 */
+	ServiceElementType getServiceElementTypeById(ID serviceElementTypeId) throws Exception;
 
 }

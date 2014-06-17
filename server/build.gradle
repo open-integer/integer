@@ -48,7 +48,8 @@ dependencies {
 	compile "com.fasterxml.jackson.core:jackson-annotations:${jaxsonVersion}"
 	compile "com.fasterxml.jackson.core:jackson-databind:${jaxsonVersion}"
 	compile "org.yaml:snakeyaml:1.13"
-
+	
+	
 	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${junitArquillianVersion}"
 	testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:${junitArquillianVersion}"
 	//testCompile "org.jboss.arquillian.protocol:arquillian-container-osgi:1.0.2"
@@ -125,6 +126,9 @@ task createSchema(dependsOn: test) << {
 		println 'Querying database tables ...'
 		
 		def outFile = new FileWriter("build/create_table.sql") 
+		outFile.write("-- Integer Config schema\n")
+		outFile.write("-- Created " + new Date() + "\n\n")
+		
 		outFile.write("use Config;\n\n")
 		
 		outFile.write("set FOREIGN_KEY_CHECKS=0;\n\n")
