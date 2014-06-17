@@ -228,6 +228,9 @@ public class SelectionManagerTest {
 	}
 
 	private void showFilterNode(String name, FilterNode node) {
+		if (node == null)
+			return;
+		
 		logger.info(name + " Node " + node.getName() + " ID "
 				+ node.getItemId().toDebugString());
 
