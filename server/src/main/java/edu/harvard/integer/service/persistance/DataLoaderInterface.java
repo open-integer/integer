@@ -30,34 +30,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.topology;
+
+package edu.harvard.integer.service.persistance;
+
+import javax.ejb.Local;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.persistence.DataPreLoadFile;
 
 /**
- * @author dchan
+ * @author David Taylor
  *
  */
-public enum CategoryTypeEnum {
+@Local
+public interface DataLoaderInterface {
 
-	container,
-	stack,
-	backplane,
-	chassis,
-	portIf,
-	other,
-	powerSupply,
-	fan,
-	sensor,
-	module,
-	port,
-	cpu,
-	printer,
-	disk,
-	software,
-	storage,
-	system,
-	cache,
-	ipv4,
-	ipv6,
-	topology,
-	interfaceType
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void loadDataFile(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException; 
 }
