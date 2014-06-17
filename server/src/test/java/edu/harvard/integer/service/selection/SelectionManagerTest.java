@@ -231,8 +231,9 @@ public class SelectionManagerTest {
 		if (node == null)
 			return;
 		
-		logger.info(name + " Node " + node.getName() + " ID "
-				+ node.getItemId().toDebugString());
+		if (node.getItemId() != null)
+			logger.info(name + " Node " + node.getName() + " ID "
+					+ node.getItemId().toDebugString());
 
 		if (node.getChildren() != null) {
 			for (FilterNode filterNode : node.getChildren()) {
