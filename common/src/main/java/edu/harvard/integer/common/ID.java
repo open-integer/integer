@@ -62,6 +62,7 @@ public class ID implements IDInterface, Serializable {
 
 	public ID() {
 		super();
+		idType = null;
 	}
 
 	/**

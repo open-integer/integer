@@ -58,5 +58,6 @@ public enum CategoryTypeEnum {
 	cache,
 	ipv4,
 	ipv6,
-	topology
+	topology,
+	interfaceType
 }

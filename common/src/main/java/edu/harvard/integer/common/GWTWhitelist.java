@@ -58,11 +58,11 @@ public class GWTWhitelist implements Serializable {
 	@SuppressWarnings("unused")
 	private ServiceElementManagementObject snmp = null;
 
-	@SuppressWarnings("unused")
-	private String classType = null;
+//	@SuppressWarnings("unused")
+//	private String classType = null;
 
-	@SuppressWarnings("unused")
-	private IDType idType = null;
+//	@SuppressWarnings("unused")
+//	private IDType idType = null;
 
 	private ServiceElement[] serviceElementList;
 

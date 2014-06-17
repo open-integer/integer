@@ -52,36 +52,32 @@ public class IDType implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private Class<? extends BaseEntity> classType = null;
+	
+	private String classType = null;
 
 	private transient String tableName = null;
 
-	// Default constructor to make Hibernate happy.
+	// Default constructor to make GWT happy.
 	public IDType() {
 		super();
 	}
 	
-	public IDType(Class<? extends BaseEntity> clazz) {
+	public IDType(String clazz) {
 		this.classType = clazz;
-		this.tableName = clazz.getSimpleName();
 	}
 
-	public IDType(Class<? extends BaseEntity> clazz, String tableName) {
+	public IDType(String clazz, String tableName) {
 		this.classType = clazz;
 		this.tableName = tableName;
 	}
 
-//	public String getClassName() {
-//		return classType.getName();
-//	}
-
-	public Class<? extends BaseEntity> getClassType() {
+	public String getClassType() {
+	
 		return classType;
 	}
-
-	public void setClassType(Class<? extends BaseEntity> classType) {
-		this.classType = classType;
+	
+	public void setClassType(String clazz) {
+		this.classType = clazz;
 	}
 	
 	/**
@@ -104,7 +100,7 @@ public class IDType implements Serializable {
 	@Override
 	public String toString() {
 		if (classType != null)
-			return classType.getName();
+			return classType;
 		else
 			return "";
 	}

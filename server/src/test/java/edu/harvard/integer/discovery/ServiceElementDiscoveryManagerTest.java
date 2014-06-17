@@ -171,7 +171,7 @@ public class ServiceElementDiscoveryManagerTest {
 		}
 		
 		SnmpVendorDiscoveryTemplate template = new SnmpVendorDiscoveryTemplate();
-		IDType type = new IDType(VendorIdentifier.class);
+		IDType type = new IDType(VendorIdentifier.class.getName());
 		ID vendorId = new ID(Long.valueOf(9), "Cisco", type);
 		template.setVendorId(vendorId);
 		try {
@@ -400,7 +400,7 @@ public class ServiceElementDiscoveryManagerTest {
 	@Test
 	public void createVendorContainmentSelector() {
 		VendorContainmentSelector vendorContainmentSelector = new VendorContainmentSelector();
-		vendorContainmentSelector.setContainmentId(new ID(Long.valueOf(1), "SnmpContainment", new IDType(SnmpContainment.class)));
+		vendorContainmentSelector.setContainmentId(new ID(Long.valueOf(1), "SnmpContainment", new IDType(SnmpContainment.class.getName())));
 		vendorContainmentSelector.setFirmware("Firmware");
 		vendorContainmentSelector.setModel("Model");
 		vendorContainmentSelector.setSoftwareVersion("12.32A");
@@ -444,7 +444,7 @@ public class ServiceElementDiscoveryManagerTest {
 		SnmpContainment snmpContainment = new SnmpContainment();
 		snmpContainment.setContainmentType(SnmpContainmentType.EntityMib);
 		snmpContainment.setName("MyContainment");
-		snmpContainment.setServiceElementTypeId(new ID(Long.valueOf(2), "ServiceElementType", new IDType(ServiceElementType.class)));
+		snmpContainment.setServiceElementTypeId(new ID(Long.valueOf(2), "ServiceElementType", new IDType(ServiceElementType.class.getName())));
 		
 		SnmpLevelOID snmpLevelOid = new SnmpLevelOID();
 		snmpLevelOid.setName("My level oid");
@@ -483,7 +483,7 @@ public class ServiceElementDiscoveryManagerTest {
 	private SnmpServiceElementTypeDiscriminator createSETDiscriminator(int value) {
 		SnmpServiceElementTypeDiscriminator serviceElementTypeDescriminator = new SnmpServiceElementTypeDiscriminator();
 		
-		ID serviceElementTypeId = new ID(Long.valueOf(value), "SET", new IDType(ServiceElementType.class));
+		ID serviceElementTypeId = new ID(Long.valueOf(value), "SET", new IDType(ServiceElementType.class.getName()));
 		serviceElementTypeDescriminator.setServiceElementTypeId(serviceElementTypeId);
 		SnmpServiceElementTypeDescriminatorIntegerValue descriminatorValue = new SnmpServiceElementTypeDescriminatorIntegerValue();
 		descriminatorValue.setValue(Integer.valueOf(value));

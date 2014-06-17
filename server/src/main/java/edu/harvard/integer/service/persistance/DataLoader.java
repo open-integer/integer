@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,18 +30,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+
 package edu.harvard.integer.service.persistance;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.DependsOn;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import javax.ws.rs.Path;
 
 import org.slf4j.Logger;
 
@@ -52,85 +51,34 @@ import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.server.IntegerApplication;
-import edu.harvard.integer.service.BaseService;
+import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 import edu.harvard.integer.util.FileUtil;
 import edu.harvard.integer.util.Resource;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-@Singleton
-@Startup
-@Path("/Database")
-@DependsOn(value = { "DistributionService" })
-public class PersistenceService extends BaseService implements
-		PersistenceServiceInterface {
+@Stateless
+public class DataLoader implements DataLoaderInterface {
 
 	@Inject
 	private Logger logger;
-
+	
 	@Inject
 	private PersistenceManagerInterface persistanceManager;
-
-	@Inject DataLoaderInterface dataLoader;
 	
-	/**
-	 * All PersistenceService initialization occurs here.
-	 */
-	@PostConstruct
-	public void init() {
-
-		logger.warn("PersistenceServices is startint");
-
-		logger.debug("PersistenceService starting");
-
-		// Register the application for RESTfull interface
-		IntegerApplication.register(this);
-
-		loadPreloads();
-
-	}
-
-	private void loadPreloads() {
-		logger.info("Loading preload data files");
-
-		DataPreLoadFileDAO dao = persistanceManager.getDataPreLoadFileDAO();
-
-		try {
-			DataPreLoadFile[] perloads = dao.findAll();
-
-			for (DataPreLoadFile dataPreLoadFile : perloads) {
-				if (dataPreLoadFile.getStatus() == null
-						|| !PersistenceStepStatusEnum.Loaded
-								.equals(dataPreLoadFile.getStatus())) {
-					//loadDataFile(dataPreLoadFile);
-					
-					dataLoader.loadDataFile(dataPreLoadFile);
-					
-					logger.info("Loaded " + dataPreLoadFile.getDataFile());
-				} else
-					logger.info("Preload already loaded!" + dataPreLoadFile);
-			}
-
-		} catch (IntegerException e) {
-			logger.error("Error loading preload table! " + e.toString());
-
-			e.printStackTrace();
-		}
-	}
-
 	/**
 	 * @param dataPreLoadFile
 	 * @throws IntegerException
 	 */
-	private void loadDataFile(DataPreLoadFile dataPreLoadFile)
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void loadDataFile(DataPreLoadFile dataPreLoadFile)
 			throws IntegerException {
 
 		switch (dataPreLoadFile.getFileType()) {
@@ -414,5 +362,4 @@ public class PersistenceService extends BaseService implements
 
 	}
 
-	
 }

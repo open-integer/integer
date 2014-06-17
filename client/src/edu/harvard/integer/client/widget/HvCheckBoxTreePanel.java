@@ -51,7 +51,7 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 						List<FilterNode> techList = new ArrayList<FilterNode>();
 						for (TechItem item : selected) {
 							FilterNode node = new FilterNode();
-							ID id = new ID((long)item.getId(), item.getName(), new IDType(Technology.class));
+							ID id = new ID((long)item.getId(), item.getName(), new IDType(Technology.class.getName()));
 							node.setItemId(id);
 							techList.add(node);
 						}

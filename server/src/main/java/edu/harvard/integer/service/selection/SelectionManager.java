@@ -129,14 +129,14 @@ public class SelectionManager extends BaseManager implements SelectionManagerLoc
 
 		FilterNode root = new FilterNode();
 
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class)));
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class.getName())));
 		root.setChildren(getRoutersLevel1());
 
 		nodes.add(root);
 
 		root = new FilterNode();
 
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class)));
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class.getName())));
 		root.setChildren(getServersLevel1());
 		nodes.add(root);
 
@@ -148,11 +148,11 @@ public class SelectionManager extends BaseManager implements SelectionManagerLoc
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(Technology.class)));
+		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(Technology.class)));
+		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
@@ -166,15 +166,15 @@ public class SelectionManager extends BaseManager implements SelectionManagerLoc
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(Technology.class)));
+		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(Technology.class)));
+		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(Technology.class)));
+		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(Technology.class.getName())));
 		nodes.add(root);
 
 		return nodes;

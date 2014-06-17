@@ -31,46 +31,23 @@
  *      
  */
 
-package edu.harvard.integer.service.security;
+package edu.harvard.integer.service.persistance;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.inject.Inject;
+import javax.ejb.Local;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.security.UserLogin;
-import edu.harvard.integer.service.BaseService;
+import edu.harvard.integer.common.persistence.DataPreLoadFile;
 
 /**
  * @author David Taylor
  *
  */
-@Singleton
-@Startup
-public class SecurityService extends BaseService implements SecurityServiceInterface {
-	
-	@Inject
-	private Logger logger;
-	
-	private long nextUserId = 0;
-	
-	@PostConstruct
-	public void init() {
-		logger.info("Create SecurityService");;
-		
-		nextUserId = 1;
-	}
-	
-	@Override
-	public ID getNextLoginId(UserLogin login) throws IntegerException {
-		
-		ID id = new ID(nextUserId++, login.getName(), new IDType(UserLogin.class.getName()));
-		
-		return id;
-	}
+@Local
+public interface DataLoaderInterface {
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void loadDataFile(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException; 
 }
