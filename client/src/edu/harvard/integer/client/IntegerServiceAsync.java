@@ -15,6 +15,7 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -116,5 +117,14 @@ public interface IntegerServiceAsync {
 	 * @return the blank selection
 	 */
 	void getBlankSelection(AsyncCallback<Selection> callback);
+
+	/**
+	 * Gets the service element type by id.
+	 *
+	 * @param serviceElementTypeId the service element type id
+	 * @param callback the callback
+	 * @return the service element type by id
+	 */
+	void getServiceElementTypeById(ID serviceElementTypeId, AsyncCallback<ServiceElementType> callback);
 
 }

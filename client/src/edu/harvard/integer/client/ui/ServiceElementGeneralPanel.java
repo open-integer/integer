@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 
 /**
  * This class represents a form panel for importing MIB file.
@@ -35,13 +36,14 @@ public class ServiceElementGeneralPanel extends FormPanel {
 	private TextBox createdTextBox = new TextBox();
 	private TextBox updatedTextBox = new TextBox();
 	private TextBox commentTextBox = new TextBox();
+	private TextBox categoryTextBox = new TextBox();
 	
 	public ServiceElementGeneralPanel() {
 		setEncoding(FormPanel.ENCODING_MULTIPART);
 		setMethod(FormPanel.METHOD_POST);
 
 		// Create a grid panel to hold all of the form widgets.
-		grid = new Grid(8, 2);
+		grid = new Grid(9, 2);
 		grid.setWidget(0, 0, new Label("Name"));
 		grid.setWidget(0, 1, nameTextBox);
 
@@ -65,6 +67,9 @@ public class ServiceElementGeneralPanel extends FormPanel {
 		
 		grid.setWidget(7, 0, new Label("Comment"));
 		grid.setWidget(7, 1, commentTextBox);
+		
+		grid.setWidget(8, 0, new Label("Category"));
+		grid.setWidget(8, 1, categoryTextBox);
 
 		grid.getCellFormatter().setWidth(0, 0, "180px");
 		grid.getCellFormatter().setWidth(0, 1, "250px");
@@ -78,7 +83,7 @@ public class ServiceElementGeneralPanel extends FormPanel {
 		setWidget(scrollPanel);
 	}
 	
-	public void update (ServiceElement serviceElement) {
+	public void update(ServiceElement serviceElement) {
 		nameTextBox.setText(serviceElement.getName());
 		descTextBox.setText(serviceElement.getDescription());
 		
@@ -104,5 +109,11 @@ public class ServiceElementGeneralPanel extends FormPanel {
 		if (comment != null)
 			commentTextBox.setText(comment);
 
+	}
+	
+	public void update(ServiceElementType serviceElementType) {
+		String category = serviceElementType.getCategory().name();
+		if (category != null)
+			categoryTextBox.setText(category);
 	}
 }
