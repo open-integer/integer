@@ -5,6 +5,7 @@ package edu.harvard.integer.client.ui;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 
 /**
  * The Class CapabilityView.
@@ -63,6 +65,22 @@ public class ContaineeTreeView extends ScrollPanel {
 							item.setUserObject(se);
 							treeItem.addItem(item);
 						}
+						
+						MainClient.integerService.getServiceElementTypeById(
+								selectedServiceElement.getServiceElementTypeId(), 
+								new AsyncCallback<ServiceElementType>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+									}
+
+									@Override
+									public void onSuccess(
+											ServiceElementType serviceElementType) {
+										SystemSplitViewPanel.detailsTabPanel.update(serviceElementType);
+									}
+									
+								});
 					}
 				});
 			}

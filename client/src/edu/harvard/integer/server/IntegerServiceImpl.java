@@ -26,8 +26,10 @@ import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Subnet;
 import edu.harvard.integer.service.discovery.DiscoveryManagerInterface;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.event.EventManagerInterface;
@@ -296,5 +298,23 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		}
 		
 		return selection;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getServiceElementTypeById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ServiceElementType getServiceElementTypeById(ID serviceElementTypeId) throws Exception {
+		ServiceElementType serviceElementType = null;
+		
+		try {
+			ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+			serviceElementType = discMgr.getServiceElementTypeById(serviceElementTypeId);
+		}
+		catch (IntegerException e) {
+			e.printStackTrace();
+		}
+		
+		return serviceElementType;
 	}
 }
