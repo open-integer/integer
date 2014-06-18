@@ -4,7 +4,6 @@ import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MousePanMediator;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -73,7 +72,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
-        setSize("100%", MainClient.WINDOW_HEIGHT+"px");
+        setSize("100%", "100%");
 		
 		FilterView filterView = createFilterView();
 		westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
@@ -147,6 +146,9 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.add(eventView, DockPanel.SOUTH);
 		
 		final FilterPanel filterPanel = new FilterPanel();
+		//filterPanel.setHeight("100%");
+		filterPanel.setSize("100%", "100%");
+		
 		addWest(filterPanel, WESTPANEL_WIDTH);
 		setWidgetToggleDisplayAllowed(filterPanel, true);
 		

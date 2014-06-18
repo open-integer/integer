@@ -68,6 +68,17 @@ h4 {
     text-align: left;
 }
 
+.titlePanel { 
+	background-color: #68228B;
+	height: 28px;
+    font-size: 1.0em;
+	font-family: arial;
+    font-weight: bold;
+    color: white;
+    margin: 0px;
+    padding: 5px;
+}
+
 .toolbar {
 	background-color: CYAN;
 	color: #FFFFFF;
