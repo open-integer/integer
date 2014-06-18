@@ -63,6 +63,7 @@ import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover;
@@ -308,8 +309,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				SnmpContainmentType containmentType = checkContainmentType(discoverNode.getElementEndPoint());  
 				
 		    	set = new ServiceElementType();
-				set.setVendor(defineUnknownVendor(sysId.toString()));
-				set.setModel(checkContainmentType(discoverNode.getElementEndPoint()).name());
+		    	set.addSignatureValue(SignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()));
+		    	set.addSignatureValue(SignatureTypeEnum.Model , checkContainmentType(discoverNode.getElementEndPoint()).name());
 				set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 				
 				ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, containmentType);

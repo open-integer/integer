@@ -39,11 +39,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -51,7 +49,6 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.SQLQuery;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
@@ -59,7 +56,6 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.SystemErrorCodes;
 import edu.harvard.integer.common.type.displayable.SQLStatement;
 import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.util.LoggerUtil;
@@ -132,7 +128,8 @@ public class BaseDAO {
 			else if (!getEntityManager().contains(entity))
 				getEntityManager().merge(entity);
 
-			getLogger().info(
+			if (getLogger().isDebugEnabled())
+				getLogger().debug(
 					"Added " + entity.getName() + " ID: "
 							+ entity.getIdentifier());
 

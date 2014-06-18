@@ -58,6 +58,8 @@ import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.Signature;
+import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
@@ -400,7 +402,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								 if ( iset == null ) {
 									 iset = new ServiceElementType();
 									 iset.setCategory(CategoryTypeEnum.portIf);
-									 iset.setVendor(discNode.getTopServiceElementType().getVendor());
+									 iset.addSignatureValue(SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
 									 iset.setVendorSpecificSubType(ifSubType);
 									 
 									 List<ID> attributes = new ArrayList<>();
@@ -673,12 +675,14 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		
 		ServiceElementType set = new ServiceElementType();
 		set.setCategory(convertEntityClassType(pr.getEntityClass()));
-		set.setVendor(discNode.getTopServiceElementType().getVendor());
+		
 		set.setVendorSpecificSubType(pr.getEntPhysicalVendorType());
 		set.setDescription(pr.getEntPhysicalDescr());
-		set.setFirmware(pr.getEntPhysicalFirmwareRev());
-		set.setSoftware(pr.getEntPhysicalSoftwareRev());		
-		set.setModel(pr.getEntPhysicalModelName());
+		
+		set.addSignatureValue(SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
+		set.addSignatureValue(SignatureTypeEnum.Firmware, pr.getEntPhysicalFirmwareRev());
+		set.addSignatureValue(SignatureTypeEnum.SoftwareVersion, pr.getEntPhysicalSoftwareRev());
+		set.addSignatureValue(SignatureTypeEnum.Model, pr.getEntPhysicalModelName());
 		
 		logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& create an service element type " + pr.getEntPhysicalVendorType());
 		

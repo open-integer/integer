@@ -37,6 +37,7 @@ package edu.harvard.integer.common.topology;
  *
  * Every service element can be only one type.
  */
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -48,6 +49,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -72,25 +74,24 @@ public class ServiceElementType extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private CategoryTypeEnum category = null;
 
-	private String firmware = null;
-
-	private String model = null;
-
-	private String vendor = null;
-	
-	private String software;
-
+	/**
+	 * A signature is used to identify a specific service element type. It may
+	 * take several Signature instances to accurately identify an SET.
+	 * 
+	 */
+	@OneToMany
+	private List<Signature> signatures = null;
 
 	/**
 	 * A specific set of options installed.
 	 */
 	private String featureSet = null;
 
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> capabilityIds = null;
 
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> childServiceElementTypes;
 
@@ -124,7 +125,7 @@ public class ServiceElementType extends BaseEntity {
 	 * A list of the Capabilities used to uniquely identify the service element
 	 * type.
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> uniqueIdentifierCapabilities = null;
 
@@ -132,7 +133,7 @@ public class ServiceElementType extends BaseEntity {
 	 * A listing of default attributes that the discovery system will collect.
 	 * This list can be modified by the system administrator.
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> attributeIds = null;
 
@@ -158,13 +159,6 @@ public class ServiceElementType extends BaseEntity {
 	private PhysicalLogicalEnum physicalLocal = null;
 
 	/**
-	 * For some systems, the discovery service will be able to retrieve the
-	 * hardware revision for some service elements. This indicates the
-	 * capability that holds this information for a ServiceElementType.
-	 */
-	private String hardwareRev = null;
-
-	/**
 	 * Some vendors assign specific sub types to the broad categories of things
 	 * found in the category attribute. The vendorSpecificSubType points to the
 	 * capability for an instance of a ServiceElementType that can retrieve this
@@ -176,7 +170,7 @@ public class ServiceElementType extends BaseEntity {
 	/**
 	 * List of Applicability objects associated with this service element type.
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> applicabilities = null;
 
@@ -190,51 +184,6 @@ public class ServiceElementType extends BaseEntity {
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "snmpOverrideType")),
 			@AttributeOverride(name = "name", column = @Column(name = "snmpOverrideName")) })
 	private ID snmpOverride = null;
-
-	/**
-	 * @return the firmware
-	 */
-	public String getFirmware() {
-		return firmware;
-	}
-
-	/**
-	 * @param firmware
-	 *            the firmware to set
-	 */
-	public void setFirmware(String firmware) {
-		this.firmware = firmware;
-	}
-
-	/**
-	 * @return the model
-	 */
-	public String getModel() {
-		return model;
-	}
-
-	/**
-	 * @param model
-	 *            the model to set
-	 */
-	public void setModel(String model) {
-		this.model = model;
-	}
-
-	/**
-	 * @return the vendor
-	 */
-	public String getVendor() {
-		return vendor;
-	}
-
-	/**
-	 * @param vendor
-	 *            the vendor to set
-	 */
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
 
 	/**
 	 * @return the featureSet
@@ -264,6 +213,87 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	public void setCapabilityIds(List<ID> capabilityIds) {
 		this.capabilityIds = capabilityIds;
+	}
+
+	/**
+	 * @return the signatures
+	 */
+	public List<Signature> getSignatures() {
+		return signatures;
+	}
+
+	/**
+	 * @param signatures
+	 *            the signatures to set
+	 */
+	public void setSignatures(List<Signature> signatures) {
+		this.signatures = signatures;
+	}
+
+	/**
+	 * Find the value for Vendor in the Signature list. If the vendor is not
+	 * found then return null.
+	 * 
+	 * @return vendor for this signature.
+	 */
+	public String getVendor() {
+		return getSignatureForType(SignatureTypeEnum.Vendor);
+	}
+
+	public String getModel() {
+		return getSignatureForType(SignatureTypeEnum.Model);
+	}
+
+	public String getSoftware() {
+		return getSignatureForType(SignatureTypeEnum.SoftwareVersion);
+	}
+
+	public String getFirmware() {
+		return getSignatureForType(SignatureTypeEnum.Firmware);
+	}
+
+	private String getSignatureForType(SignatureTypeEnum type) {
+		for (Signature signature : signatures) {
+			if (type.equals(signature.getSignatureType())) {
+				if (signature.getValueOperators() != null
+						&& signature.getValueOperators().size() > 0)
+					return signature.getValueOperators().get(0).getValue();
+			}
+
+		}
+
+		return null;
+	}
+
+	public void addSignatureValue(SignatureTypeEnum signatureType, String value) {
+		if (signatures == null)
+			signatures = new ArrayList<Signature>();
+
+		for (Signature signature : signatures) {
+			if (signatureType.equals(signature.getSignatureType())) {
+				if (signature.getValueOperators() != null) {
+
+					if (signature.getValueOperators().size() > 0)
+						signature.getValueOperators().get(0).setValue(value);
+					else {
+						SignatureValueOperator valueOperator = new SignatureValueOperator();
+						valueOperator.setValue(value);
+						valueOperator.setOperator(ValueOpertorEnum.Equal);
+						signature.getValueOperators().add(valueOperator);
+					}
+				} else {
+
+					SignatureValueOperator valueOperator = new SignatureValueOperator();
+					valueOperator.setValue(value);
+					valueOperator.setOperator(ValueOpertorEnum.Equal);
+					signature.getValueOperators().add(valueOperator);
+
+					List<SignatureValueOperator> values = new ArrayList<SignatureValueOperator>();
+					values.add(valueOperator);
+					signature.setValueOperators(values);
+				}
+			}
+		}
 	}
 
 	/**
@@ -434,21 +464,6 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	/**
-	 * @return the hardwareRev
-	 */
-	public String getHardwareRev() {
-		return hardwareRev;
-	}
-
-	/**
-	 * @param hardwareRev
-	 *            the hardwareRev to set
-	 */
-	public void setHardwareRev(String hardwareRev) {
-		this.hardwareRev = hardwareRev;
-	}
-
-	/**
 	 * @return the vendorSpecificSubType
 	 */
 	public String getVendorSpecificSubType() {
@@ -476,14 +491,6 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	public void setSnmpOverride(ID snmpOverride) {
 		this.snmpOverride = snmpOverride;
-	}
-
-	public String getSoftware() {
-		return software;
-	}
-
-	public void setSoftware(String software) {
-		this.software = software;
 	}
 
 }

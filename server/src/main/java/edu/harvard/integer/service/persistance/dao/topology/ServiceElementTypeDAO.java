@@ -33,19 +33,25 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.Signature;
+import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -73,21 +79,49 @@ public class ServiceElementTypeDAO extends BaseDAO {
 
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
-
+//
+//		StringBuffer b = new StringBuffer();
+//		
+//		b.append("select svcEleType "); 
+//		b.append("from ServiceElementType svcEleType ");
+//		b.append("join ServiceElementType_Signature sets on (sets.ServiceElementType_identifier = svcEleType.identifier) ");
+//		b.append("join Signature s on (s.identifier = sets.signatures_identifier) ");
+//		b.append("join Signature_SignatureValueOperator sssvo on (sssvo.Signature_identifier = s.identifier) ");
+//		b.append("join SignatureValueOperator svo on (svo.identifier = sssvo.valueOperators_identifier ) ");
+//		b.append("and svo.value = '").append(vendor).append("'");
+//		
+//		Query query = getEntityManager().createQuery(b.toString());
+//		
+//		List resultList = query.getResultList();
+//		
+//		List<ServiceElementType> serviceElments = new ArrayList<ServiceElementType>();
+//		for (Object object : resultList) {
+//			if (object instanceof ServiceElementType)
+//				serviceElments.add((ServiceElementType) object);
+//		}
+//		
+//		return (ServiceElementType[]) serviceElments
+//				.toArray(new ServiceElementType[serviceElments.size()]);
+//		
+		
 		CriteriaQuery<ServiceElementType> query = criteriaBuilder.createQuery(ServiceElementType.class);
 
 		Root<ServiceElementType> from = query.from(ServiceElementType.class);
 		query.select(from);
 
+		Join<ServiceElementType, Signature> signatures = from.join("signatures");
+		Join<Selection, SignatureValueOperator> values = signatures.join("valueOperators");
+		
 		ParameterExpression<CategoryTypeEnum> categoryParam = criteriaBuilder
 				.parameter(CategoryTypeEnum.class);
 		
 		ParameterExpression<String> vendorParam = criteriaBuilder
 				.parameter(String.class);
 		
+		
 		query.select(from).where(criteriaBuilder.and(
 				criteriaBuilder.equal(from.get("category"), categoryParam),
-				criteriaBuilder.equal(from.get("vendor"), vendorParam)));
+				criteriaBuilder.equal(values.get("value"), vendorParam)));
 
 		TypedQuery<ServiceElementType> typeQuery = getEntityManager().createQuery(query);
 		typeQuery.setParameter(categoryParam, category);

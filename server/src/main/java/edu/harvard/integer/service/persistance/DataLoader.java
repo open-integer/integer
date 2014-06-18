@@ -36,6 +36,7 @@ package edu.harvard.integer.service.persistance;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -51,8 +52,6 @@ import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
-import edu.harvard.integer.service.BaseManager;
-import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
@@ -77,7 +76,6 @@ public class DataLoader implements DataLoaderInterface {
 	 * @param dataPreLoadFile
 	 * @throws IntegerException
 	 */
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void loadDataFile(DataPreLoadFile dataPreLoadFile)
 			throws IntegerException {
 

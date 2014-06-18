@@ -38,6 +38,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -66,6 +68,7 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.yaml.YamlCapability;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
@@ -416,27 +419,15 @@ public class YamlManager extends BaseManager implements
 				continue;
 			}
 			
+			ServiceElementType exemplarSet = getServiceElementType(serviceElementTypeDao, yamlServiceElementType);
+			
 			for ( YamlServiceElementTypeTranslate typeTranslate : typeTranslates ) {
 				
 				if ( typeTranslate.getMapping().equalsIgnoreCase("subObjIdentify")) {
 					
 					List<VendorIdentifier> vis = discoveryManager.findVendorSubTree(typeTranslate.getName());
 					if ( vis != null ) {
-						for ( VendorIdentifier vi : vis ) {
-							
-							ServiceElementType serviceElementType = serviceElementTypeDao.findByName(vi.getVendorSubtypeName());
-							if (serviceElementType == null) {
-								
-								serviceElementType = new ServiceElementType();
-								serviceElementType.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
-								serviceElementType.setName(vi.getVendorSubtypeName());
-								serviceElementType.setDescription(yamlServiceElementType.getDescription());
-								serviceElementType.setVendor(yamlServiceElementType.getVendor());
-								serviceElementType.setVendorSpecificSubType(vi.getVendorSubtypeName());
-							}
-							
-							updateServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, serviceElementType);
-						}
+						saveVendorSubTree(vis, serviceElementTypeDao, typeTranslate, exemplarSet, yamlServiceElementType);
 					}
 					else {
 						logger.warn("Cannot find sub-tree " + typeTranslate.getName() );
@@ -452,17 +443,42 @@ public class YamlManager extends BaseManager implements
 						serviceElementType.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
 						serviceElementType.setName(typeTranslate.getName());
 						serviceElementType.setDescription(yamlServiceElementType.getDescription());
-						serviceElementType.setVendor(yamlServiceElementType.getVendor());
+						serviceElementType.addSignatureValue(SignatureTypeEnum.Vendor, yamlServiceElementType.getVendor());
 
-					    updateServiceElementType(serviceElementTypeDao, typeTranslate, yamlServiceElementType, serviceElementType);
+						serviceElementType.setAttributeIds(exemplarSet.getAttributeIds());
+						serviceElementType.setUniqueIdentifierCapabilities(exemplarSet.getUniqueIdentifierCapabilities());
+						
+						serviceElementTypeDao.update(serviceElementType);
+					 
 				    }
 			   }
 		   }
 		}
 	}
 	
-	
-	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	private void saveVendorSubTree(List<VendorIdentifier> vis, ServiceElementTypeDAO serviceElementTypeDao,
+			 YamlServiceElementTypeTranslate typeTranslate, ServiceElementType exemplarSet,
+			 YamlServiceElementType yamlServiceElementType) throws IntegerException{
+		for ( VendorIdentifier vi : vis ) {
+			
+			ServiceElementType serviceElementType = serviceElementTypeDao.findByName(vi.getVendorSubtypeName());
+			if (serviceElementType == null) {
+				
+				serviceElementType = new ServiceElementType();
+				serviceElementType.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
+				serviceElementType.setName(vi.getVendorSubtypeName());
+				serviceElementType.setDescription(yamlServiceElementType.getDescription());
+				serviceElementType.addSignatureValue(SignatureTypeEnum.Vendor, yamlServiceElementType.getVendor());
+				serviceElementType.setVendorSpecificSubType(vi.getVendorSubtypeName());
+			}
+			
+			serviceElementType.setAttributeIds(exemplarSet.getAttributeIds());
+			serviceElementType.setUniqueIdentifierCapabilities(exemplarSet.getUniqueIdentifierCapabilities());
+			
+			serviceElementTypeDao.update(serviceElementType);
+		}
+	}
 	/**
 	 * 
 	 * 
@@ -471,30 +487,13 @@ public class YamlManager extends BaseManager implements
 	 * @param yamlServiceElementType
 	 * @throws IntegerException
 	 */
-	public void updateServiceElementType( ServiceElementTypeDAO serviceElementTypeDao, 
-			                              YamlServiceElementTypeTranslate typeTranslate,
-			                              YamlServiceElementType yamlServiceElementType,
-			                              ServiceElementType serviceElementType ) throws IntegerException {
+	public ServiceElementType getServiceElementType( ServiceElementTypeDAO serviceElementTypeDao, 
+			                              YamlServiceElementType yamlServiceElementType) throws IntegerException {
 		
+		ServiceElementType serviceElementType = new ServiceElementType();
 		
 		List<ID> managementObjects = new ArrayList<ID>();
 		for (YamlManagementObject yamlManagementObject : yamlServiceElementType.getManagementObjects()) {
-			
-		    if ( yamlManagementObject.getCategories() != null ) {
-		    	
-	            boolean match = false;	    	
-		    	List<String> categories = yamlManagementObject.getCategories();	
-		        for ( String category : categories ) {
-		        	if ( category.equals(typeTranslate.getCategory() )) {
-		        		
-		        		match = true;
-		        		break;
-		        	}		        		
-		        }
-		        if ( !match ) {
-		        	continue;
-		        }
-		    }
 			
 			SNMPDAO dao = persistanceManager.getSNMPDAO();
 			SNMP snmp = dao.findByName(yamlManagementObject.getName());
@@ -525,9 +524,12 @@ public class YamlManager extends BaseManager implements
 		}
 		logger.info("Setting Attributes " + managementObjects + " On " + serviceElementType.getName());
 		serviceElementType.setAttributeIds(managementObjects);
-		serviceElementTypeDao.update(serviceElementType);
+		//serviceElementTypeDao.update(serviceElementType);
+		
+		return serviceElementType;
 	}
-
+	
+	
 	@Override
 	public String loadVendorContainment(String content) throws IntegerException {
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
