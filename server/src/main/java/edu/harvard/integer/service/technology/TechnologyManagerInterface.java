@@ -44,6 +44,12 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * The TechnologyManagerInterface is the API to the business service technology
+ * hierarchy. This interface has all methods to add/delete/modify/query the
+ * objects in the technology hierarchy from the business service down the the
+ * mechanism. The Capabilities are accessed via the
+ * ManagementObjectCapablityManager.
+ * 
  * @author David Taylor
  * 
  */
@@ -61,6 +67,7 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * Get the service identified by the given ID
+	 * 
 	 * @param service
 	 * @return Service for the given ID
 	 * @throws IntegerException
@@ -69,14 +76,16 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * Get all the services that are in the database.
+	 * 
 	 * @return List of Services found in the database.
 	 * @throws IntegerException
 	 */
 	Service[] getAllServices() throws IntegerException;
 
 	/**
-	 * Update the technology in the database. The identifier will be set when the
-	 * service is returned.
+	 * Update the technology in the database. The identifier will be set when
+	 * the service is returned.
+	 * 
 	 * @param technology
 	 * @return
 	 * @throws IntegerException
@@ -85,6 +94,7 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * Get the technology for the given ID
+	 * 
 	 * @param service
 	 * @return Technology for the given ID
 	 * @throws IntegerException
@@ -100,7 +110,7 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 	Technology[] getAllTechnologies() throws IntegerException;
 
 	/**
-	 * Update the Mechanism in the database. 
+	 * Update the Mechanism in the database.
 	 * 
 	 * @param mechanism
 	 * @return Mechanism with the identifier filled in.
@@ -136,7 +146,7 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 	Mechanism getMechanismById(ID mechanismId) throws IntegerException;
 
 	/**
-	 * Return the list of top level technologies. 
+	 * Return the list of top level technologies.
 	 * 
 	 * @return
 	 * @throws IntegerException
@@ -144,9 +154,10 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 	Technology[] getTopLevelTechnology() throws IntegerException;
 
 	/**
-	 * Find the Technology with the given name. 
+	 * Find the Technology with the given name.
 	 * 
-	 * @param name. Name of the topology objec to get.
+	 * @param name
+	 *            . Name of the topology objec to get.
 	 * 
 	 * @return Technology object with the given name.
 	 */

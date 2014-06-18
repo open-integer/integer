@@ -77,6 +77,7 @@ import edu.harvard.integer.common.topology.FCAPSEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
@@ -350,9 +351,9 @@ public class ManagementObjectCapbilityManagerTest {
 	public void createServiceElementType() {
 		ServiceElementType type = new ServiceElementType();
 		type.setFeatureSet("CoolFeature");
-		type.setVendor("Cisco");
-		type.setModel("7604");
-		type.setFirmware("Firmware");
+		type.addSignatureValue(SignatureTypeEnum.Vendor, "Cisco");
+		type.addSignatureValue(SignatureTypeEnum.Model, "7604");
+		type.addSignatureValue(SignatureTypeEnum.Firmware, "Firmware");
 		type.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 
 		type.setApplicabilities(TestUtil.createIdList(10, Applicability.class,

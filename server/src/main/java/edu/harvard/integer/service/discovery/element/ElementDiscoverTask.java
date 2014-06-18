@@ -54,6 +54,7 @@ import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
@@ -63,6 +64,7 @@ import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover;
@@ -298,8 +300,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    SnmpContainment sc = null;		    
 		    sc = discMgr.getSnmpContainment(vs);
 		    
-		    if ( sc != null ) {
-			    set =  discMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
+		    if ( sc != null && sc instanceof SnmpServiceElementTypeContainment) {
+			    set =  discMgr.getServiceElementTypeById(((SnmpServiceElementTypeContainment) sc).getServiceElementTypeId());
 			    discoverNode.setTopServiceElementType(set);
 		    }
 		    
@@ -308,8 +310,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				SnmpContainmentType containmentType = checkContainmentType(discoverNode.getElementEndPoint());  
 				
 		    	set = new ServiceElementType();
-				set.setVendor(defineUnknownVendor(sysId.toString()));
-				set.setModel(checkContainmentType(discoverNode.getElementEndPoint()).name());
+		    	set.addSignatureValue(SignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()));
+		    	set.addSignatureValue(SignatureTypeEnum.Model , checkContainmentType(discoverNode.getElementEndPoint()).name());
 				set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 				
 				ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, containmentType);

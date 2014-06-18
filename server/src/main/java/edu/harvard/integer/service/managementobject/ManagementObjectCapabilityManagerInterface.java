@@ -48,48 +48,59 @@ import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * The ManagementObjectCapablityManager is used to add/delete/modify the
+ * Capabilities and management objects.
+ * 
  * @author David Taylor
- *
+ * 
  */
-public interface ManagementObjectCapabilityManagerInterface extends BaseManagerInterface {
+public interface ManagementObjectCapabilityManagerInterface extends
+		BaseManagerInterface {
 
 	/**
-	 * Add/define a new capability for the system.
+	 * Add/define a new capability for the system. After the capability has been
+	 * saved the capability can be added to a mechanism.
 	 * 
 	 * @param capability
 	 *            . New capability to add.
 	 * @return Capability. The newly created Capability. This will have the
 	 *         identifier filled in.
 	 */
-	public abstract Capability addCapability(Capability capability);
+	public Capability addCapability(Capability capability);
 
 	/**
-	 * Associates a capability with one or more management objects.
+	 * Associates a capability with one or more management objects. The given
+	 * list of management objects will be attached to the capability. Then the
+	 * capability will be saved into the database.
 	 * 
 	 * @param capability
 	 * @param managementObjects
-	 * @return capability. The updated capability.
-	 * @throws IntegerException 
+	 * @return capability. The updated capability with the given list of
+	 *         management objects associated.
+	 * @throws IntegerException
 	 */
-	public abstract Capability addManagementObjectsToCapability(
-			Capability capability,
-			List<ServiceElementManagementObject> managementObjects) throws IntegerException;
+	public Capability addManagementObjectsToCapability(Capability capability,
+			List<ServiceElementManagementObject> managementObjects)
+			throws IntegerException;
 
 	/**
 	 * Retrieves access methods that have been configured to support a specific
 	 * capability.
 	 * 
-	 * @return
+	 * @return List<AccessMethod> that are valid for the given capability.
 	 */
-	public abstract List<AccessMethod> getAccessMethods(Capability capability);
+	public List<AccessMethod> getAccessMethods(Capability capability);
 
 	/**
 	 * Retrieves access methods that have been configured to support a specific
-	 * capability.
+	 * capability. List<AccessMethod> that are valid for the given capability.
+	 * This returns the same values as the public List<AccessMethod>
+	 * getAccessMethods(Capability capability); The difference is the ID that
+	 * specifies a capability instead of the object.
 	 * 
-	 * @return
+	 * @return List<AccessMethod> that are valid for the given capability.
 	 */
-	public abstract List<AccessMethod> getAccessMethods(ID capabilityId);
+	public List<AccessMethod> getAccessMethods(ID capabilityId);
 
 	/**
 	 * Retrieves the specific management objects that have been associated with
@@ -102,22 +113,26 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * @return List<ServiceElementManagementObject>. Management Objects for the
 	 *         given capability.
 	 */
-	public abstract List<ServiceElementManagementObject> getAssociatedServiceElementManagementObjects(
+	public List<ServiceElementManagementObject> getAssociatedServiceElementManagementObjects(
 			Capability capability);
 
 	/**
 	 * Capabilities may be returned for each mechanism.
 	 * 
 	 * @return List<Capability>. Capabilities for this mechanism.
-	 * @throws IntegerException 
+	 * @throws IntegerException
 	 */
-	public abstract List<Capability> getCapabilities() throws IntegerException;
-
+	public List<Capability> getCapabilities() throws IntegerException;
 
 	/**
-	 * @param ID. The ID of capability that the management objects are for.
+	 * Get the list of ServiceElementManagementObjects that implement the
+	 * capability identified by the capability id.
+	 * 
+	 * @param ID
+	 *            . The ID of capability that the management objects are for.
 	 */
-	public List<ServiceElementManagementObject> getManagemntObjectsForCapability(ID id) throws IntegerException;
+	public List<ServiceElementManagementObject> getManagemntObjectsForCapability(
+			ID id) throws IntegerException;
 
 	/**
 	 * @param serviceElementType
@@ -148,8 +163,8 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 			throws IntegerException;
 
 	/**
-	 * Update or save the SnmpContainment. The returned SnmpContainment
-	 * will have the identifier filled in.
+	 * Update or save the SnmpContainment. The returned SnmpContainment will
+	 * have the identifier filled in.
 	 * 
 	 * @param snmpContainment
 	 * @return
@@ -170,7 +185,7 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	 * find the SnmpContainment with the given ID
 	 * 
 	 * @param id
-	 * @return SnmpContainment 
+	 * @return SnmpContainment
 	 * @throws IntegerException
 	 */
 	SnmpContainment getSnmpContainmentById(ID id) throws IntegerException;
@@ -232,7 +247,7 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 	void deleteSnmpServiceElementTypeOverride(ID id) throws IntegerException;
 
 	/**
-	 * Get the ServiceElementManagementObject for the given ID.
+	 * Delete the ServiceElementManagementObject that is identified by the ID.
 	 * 
 	 * @param id
 	 * @return ServiceElementManagementObject identified by the ID.
@@ -242,9 +257,12 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 			throws IntegerException;
 
 	/**
-	 * Update the management object. The identifier will be set on the returned object
+	 * Update the management object. The identifier will be set on the returned
+	 * object
+	 * 
 	 * @param managementObject
-	 * @return ManagementObject with the identifier set if this is a new instance.
+	 * @return ManagementObject with the identifier set if this is a new
+	 *         instance.
 	 * @throws IntegerException
 	 */
 	ServiceElementManagementObject updateManagementObject(
@@ -253,6 +271,7 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 
 	/**
 	 * Delete the ServiceElementManagementObject that is identified by the ID.
+	 * 
 	 * @param id
 	 * @throws IntegerException
 	 */
@@ -269,7 +288,9 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 			throws IntegerException;
 
 	/**
-	 * Update the management object value specified. The Identifier will be valid after this call.
+	 * Update the management object value specified. The Identifier will be
+	 * valid after this call.
+	 * 
 	 * @param managementObjectValue
 	 * @return
 	 * @throws IntegerException
@@ -280,6 +301,7 @@ public interface ManagementObjectCapabilityManagerInterface extends BaseManagerI
 
 	/**
 	 * Load the management object value specified by the given ID.
+	 * 
 	 * @param ids
 	 * @return
 	 * @throws IntegerException

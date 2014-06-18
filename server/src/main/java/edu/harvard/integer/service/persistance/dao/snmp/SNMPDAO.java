@@ -37,12 +37,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +48,10 @@ import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.SnmpSyntaxDAO;
 
 /**
- * @author David Taylor All add, delete, modify, findXXX methods for the SNMP
+ * All add, delete, modify, findXXX methods for the SNMP
  *         object are done in this class.
+ *         
+ * @author David Taylor 
  */
 public class SNMPDAO extends BaseDAO {
 

@@ -44,6 +44,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -51,6 +52,7 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -76,7 +78,7 @@ public class ContainmentGenerator {
 
 		    default: {
 		    
-		    	SnmpContainment sc = new SnmpContainment();
+		    	SnmpServiceElementTypeContainment sc = new SnmpServiceElementTypeContainment();
 				sc.setContainmentType(type);
 				sc.setServiceElementTypeId(serviceElementType.getID());
 				sc.setName("AutoDiscoverContainment");
@@ -102,7 +104,7 @@ public class ContainmentGenerator {
 		ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
 		ManagementObjectCapabilityManagerInterface  capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
 		
-		SnmpContainment sc = new SnmpContainment();
+		SnmpServiceElementTypeContainment sc = new SnmpServiceElementTypeContainment();
 		sc.setContainmentType(SnmpContainmentType.HostResourcesMib);		
 		sc.setServiceElementTypeId(serviceElmType.getID());
 		sc.setName("HostResourcesMIbContainment");
@@ -129,7 +131,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			setCpu = new ServiceElementType();
-			setCpu.setVendor(serviceElmType.getVendor());
+			setCpu.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			setCpu.setCategory(CategoryTypeEnum.cpu);
 			setCpu.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -169,7 +171,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			setPrinter = new ServiceElementType();
-			setPrinter.setVendor(serviceElmType.getVendor());
+			setPrinter.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			setPrinter.setCategory(CategoryTypeEnum.printer);
 			setPrinter.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -208,7 +210,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			setIf = new ServiceElementType();
-			setIf.setVendor(serviceElmType.getVendor());
+			setIf.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			setIf.setCategory(CategoryTypeEnum.portIf);
 			setIf.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -248,7 +250,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
             diskType = new ServiceElementType();
-			diskType.setVendor(serviceElmType.getVendor());
+			diskType.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			diskType.setCategory(CategoryTypeEnum.disk);
 			diskType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -304,7 +306,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			swType = new ServiceElementType();
-			swType.setVendor(serviceElmType.getVendor());
+			swType.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			swType.setCategory(CategoryTypeEnum.software);
 			swType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -360,7 +362,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			storageType = new ServiceElementType();
-			storageType.setVendor(serviceElmType.getVendor());
+			storageType.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			
 			storageType.setCategory(CategoryTypeEnum.storage);
 			storageType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);

@@ -355,7 +355,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	public ServiceElementType getServiceElementTypeById(ID serviceElementTypeId) throws IntegerException {
 		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
 		
-		return dao.findById(serviceElementTypeId);
+		return (ServiceElementType) dao.createCleanCopy(dao.findById(serviceElementTypeId));
 	}
 	
 	/* (non-Javadoc)

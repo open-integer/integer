@@ -87,6 +87,22 @@ import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 
 /**
+ * The PersistenceManager is used to get the DAO that will be used to hide the
+ * interaction with the database. All objects saved in the database extend
+ * BaseEntity. All DAO's extend BaseDAO. The BaseDAO is contains all the common
+ * access to the database as well as the all calls to the database. All access
+ * to the database is done in a DAO.
+ * 
+ * Ex. 
+ * @Inject
+ * PersistenceManagerInterface persistenceManager;
+ *
+ * UserDAO dao = persistenceManager.getUserDAO();
+ * user = dao.update(user); // Update one user. 
+ * 	                        // NOTE: the database ID is valid after this call.
+ * 
+ * User[] users = dao.findAll(); // Get a list of all users in the system.
+ * 
  * @author David Taylor
  * 
  */
@@ -95,27 +111,27 @@ import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 public interface PersistenceManagerInterface extends BaseManagerInterface {
 
 	/**
-	 * @return
+	 * @return DAO for the SNMPModule.
 	 */
 	SNMPModuleDAO getSNMPModuleDAO();
 
 	/**
-	 * @return
+	 * @return DAO for the SNMP object
 	 */
 	SNMPDAO getSNMPDAO();
 
 	/**
-	 * @return
+	 * @return DAO for The SNMPIndex
 	 */
 	SNMPIndexDAO getSNMPIndexDAO();
 
 	/**
-	 * @return
+	 * @return DAO for MIBInfo
 	 */
 	MIBInfoDAO getMIBInfoDAO();
 
 	/**
-	 * @return
+	 * @return DAO for User.
 	 */
 	UserDAO getUserDAO();
 

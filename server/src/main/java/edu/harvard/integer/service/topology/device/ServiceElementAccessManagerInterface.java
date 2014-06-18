@@ -41,15 +41,31 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * The ServiceElementAccesManagerInterface contains all the methods to access
+ * the ServiceElements. All requests to get/modify the ServiceElements are done
+ * through this manager. The database queries for the ServiceElement are
+ * contained in the ServiceElementDAO. The ServiceElementAccessManager is
+ * obtained by calling the DistributionManager. The returned reference may
+ * actually run on a different server. The caller will use the manager as if it
+ * was executing on the local server.
+ * 
+ * Ex. ServiceElementAccessManagerInterface manager =
+ * DistributionManager.getManager
+ * (DistributedManager.ServiceElementAccessManager);
+ * 
+ * Selection seletion = // create selection ServiceElement[] serviceElements =
+ * manager.getTopLevelServiceElementsBySeletion(selection);
+ * 
  * @author David Taylor
- *
+ * 
  */
-public interface ServiceElementAccessManagerInterface extends BaseManagerInterface {
+public interface ServiceElementAccessManagerInterface extends
+		BaseManagerInterface {
 
 	/**
-	 * Add or update a service element. If the service element does not exist in the database. Then 
-	 * a new service element will be created. If the service element exists in then the service element
-	 * will be updated.
+	 * Add or update a service element. If the service element does not exist in
+	 * the database. Then a new service element will be created. If the service
+	 * element exists in then the service element will be updated.
 	 * 
 	 * @param serviceElement
 	 * @return Updated ServiceElement
@@ -60,7 +76,8 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 
 	/**
 	 * Get the list of all service elements.
-	 * @return ServiceElement[] of all ServiceElements 
+	 * 
+	 * @return ServiceElement[] of all ServiceElements
 	 * @throws IntegerException
 	 */
 	ServiceElement[] getAllServiceElements() throws IntegerException;
@@ -68,14 +85,19 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 	/**
 	 * Get a list of the top level (Device) ServiceElements.
 	 * 
-	 *  @return ServiceElement[] of the top level service elements that have been
-	 * discovered. An empty list will be returned when there is no data in the database.
-	 * @throws IntegerException will be thrown if any error occurs while retrieving the data. 
+	 * @return ServiceElement[] of the top level service elements that have been
+	 *         discovered. An empty list will be returned when there is no data
+	 *         in the database.
+	 * @throws IntegerException
+	 *             will be thrown if any error occurs while retrieving the data.
 	 */
 	ServiceElement[] getTopLevelServiceElements() throws IntegerException;
 
 	/**
-	 * Find the ServiceElements that have the given parent ID.
+	 * Find the ServiceElements that have the given parent ID. This is the list
+	 * of service elements that are children of the parent service element. Ex A
+	 * port service element would have one or more child interface service
+	 * elements.
 	 * 
 	 * @param parentId
 	 * @return
@@ -83,14 +105,13 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 	 */
 	ServiceElement[] getServiceElementByParentId(ID parentId)
 			throws IntegerException;
-	
-	
+
 	/**
-	 * Get a service element given by an IP Address which associates with the service element.
+	 * Get a service element given by an IP Address which associates with the
+	 * service element.
 	 */
-	ServiceElement getServiceElementByIpAddress( String ipAddress ) throws IntegerException;
-	
-	
+	ServiceElement getServiceElementByIpAddress(String ipAddress)
+			throws IntegerException;
 
 	/**
 	 * Delete the ServiceElements with the given ID's
@@ -100,19 +121,25 @@ public interface ServiceElementAccessManagerInterface extends BaseManagerInterfa
 	 */
 	void deleteServiceElememts(ID[] ids) throws IntegerException;
 
-	public DeviceDetails getDeviceDetails(ID serviceElementId) throws IntegerException;
+	public DeviceDetails getDeviceDetails(ID serviceElementId)
+			throws IntegerException;
 
 	/**
-	 * Return all top level service elements that match the given selection. 
+	 * Return all top level service elements that match the given selection.
+	 * 
 	 * @param selection
-	 * @return
+	 *            . The Selection contains a list of Filers and Views that is
+	 *            used to "Select" the ServiceElemenmts.
+	 * 
+	 * @return List of ServiceElements that match the selection.
 	 * @throws IntegerException
 	 */
 	ServiceElement[] getTopLevelServiceElementBySelection(Selection selection)
 			throws IntegerException;
 
 	/**
-	 * Return all top level service elements that match the given selection id. 
+	 * Return all top level service elements that match the given selection id.
+	 * 
 	 * @param selection
 	 * @return
 	 * @throws IntegerException

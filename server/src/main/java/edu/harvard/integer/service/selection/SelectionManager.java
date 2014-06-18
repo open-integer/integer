@@ -34,6 +34,7 @@
 package edu.harvard.integer.service.selection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,8 @@ import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Layer;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.technology.Technology;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
+import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -64,95 +67,116 @@ import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
  *         modify and show selections
  */
 @Stateless
-public class SelectionManager extends BaseManager implements SelectionManagerLocalInterface, SelectionManagerRemoteInterface {
+public class SelectionManager extends BaseManager implements
+		SelectionManagerLocalInterface, SelectionManagerRemoteInterface {
 
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
-	
+
 	public SelectionManager() {
 		super(ManagerTypeEnum.SelectionManager);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#updateSelection(edu.harvard.integer.common.selection.Selection)
+	 * 
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#
+	 * updateSelection(edu.harvard.integer.common.selection.Selection)
 	 */
 	@Override
-	public Selection updateSelection(Selection selection) throws IntegerException {
+	public Selection updateSelection(Selection selection)
+			throws IntegerException {
 		SelectionDAO selectionDAO = persistenceManager.getSelectionDAO();
-		
+
 		return selectionDAO.update(selection);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getBlankSelection()
+	 * 
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#
+	 * getBlankSelection()
 	 */
 	@Override
 	public Selection getBlankSelection() throws IntegerException {
 		TechnologyDAO dao = persistenceManager.getTechnologyDAO();
 		Technology[] technologies = dao.findTopLevel();
-		
+
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
-		
+		List<FilterNode> routing = new ArrayList<FilterNode>();
+
 		// TODO: remove once real data is available.
-		if (technologies == null || technologies.length == 0) {
-			nodes.addAll(getTechnologyTree());
-		} 
-		
+		// if (technologies == null || technologies.length == 0) {
+		// nodes.addAll(getTechnologyTree());
+		// }
+
 		for (Technology technology : technologies) {
+
 			FilterNode node = new FilterNode();
 			node.setItemId(technology.getID());
 			node.setName(technology.getName());
-			
+
 			node.setChildren(findChildren(dao, technology.getID()));
-			
-			nodes.add(node);
+
+			if ("hardware".equals(technology.getName())
+					|| "software".equals(technology.getName())
+					|| "physical connectivity".equals(technology.getName())
+					|| "data link protocols".equals(technology.getName()))
+
+				nodes.add(node);
+			else
+				routing.add(node);
 		}
-		
+
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
 		filter.setTechnologies(nodes);
+
+		filter.setCategories(Arrays.asList(CategoryTypeEnum.values()));
+		filter.setCriticalities(Arrays.asList(CriticalityEnum.values()));
+		filter.setLinkTechnologies(routing);
 		
 		List<Filter> filters = new ArrayList<Filter>();
 		filters.add(filter);
-		
+
 		Selection selection = new Selection();
 		selection.setFilters(filters);
-		
+
 		return selection;
 	}
-	
 
 	private List<FilterNode> getTechnologyTree() {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 
 		FilterNode root = new FilterNode();
 
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class.getName())));
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
+				Technology.class.getName())));
 		root.setChildren(getRoutersLevel1());
 
 		nodes.add(root);
 
 		root = new FilterNode();
 
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(Technology.class.getName())));
+		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
+				Technology.class.getName())));
 		root.setChildren(getServersLevel1());
 		nodes.add(root);
 
 		return nodes;
 	}
-	
 
 	private List<FilterNode> getServersLevel1() {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(Technology.class.getName())));
+		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(
+				Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(Technology.class.getName())));
+		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(
+				Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
@@ -160,127 +184,151 @@ public class SelectionManager extends BaseManager implements SelectionManagerLoc
 
 		return nodes;
 	}
-
 
 	private List<FilterNode> getRoutersLevel1() {
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 
 		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(Technology.class.getName())));
+		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(
+				Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(Technology.class.getName())));
+		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(
+				Technology.class.getName())));
 		nodes.add(root);
 
 		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(Technology.class.getName())));
+		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(
+				Technology.class.getName())));
 		nodes.add(root);
 
 		return nodes;
 	}
-	
-	
-	private List<FilterNode> findChildren(TechnologyDAO dao, ID parentId) throws IntegerException {
+
+	private List<FilterNode> findChildren(TechnologyDAO dao, ID parentId)
+			throws IntegerException {
 		Technology[] children = dao.findByParentId(parentId);
-		
+
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 		for (Technology technology : children) {
 			FilterNode node = new FilterNode();
 			node.setItemId(technology.getID());
 			node.setName(technology.getName());
 			node.setChildren(findChildren(dao, technology.getID()));
-			
+
 			nodes.add(node);
 		}
-		
+
 		return nodes;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getAllSeletions()
+	 * 
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#
+	 * getAllSeletions()
 	 */
 	@Override
 	public Selection[] getAllSeletions() throws IntegerException {
 		SelectionDAO selectionDAO = persistenceManager.getSelectionDAO();
-		
+
 		return selectionDAO.findAll();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getSelectionById(edu.harvard.integer.common.ID)
+	 * 
+	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#
+	 * getSelectionById(edu.harvard.integer.common.ID)
 	 */
 	@Override
 	public Selection getSelectionById(ID selectionId) throws IntegerException {
 		SelectionDAO selectionDAO = persistenceManager.getSelectionDAO();
-		
+
 		return selectionDAO.findById(selectionId);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#updateFilter(edu.harvard.integer.common.selection.Filter)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.selection.SelectionManagerInterface#updateFilter
+	 * (edu.harvard.integer.common.selection.Filter)
 	 */
 	@Override
 	public Filter updateFilter(Filter filter) throws IntegerException {
 		FilterDAO dao = persistenceManager.getFilterDAO();
-		
+
 		return dao.update(filter);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getAllFilters()
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.selection.SelectionManagerInterface#getAllFilters
+	 * ()
 	 */
 	@Override
 	public Filter[] getAllFilters() throws IntegerException {
 		FilterDAO dao = persistenceManager.getFilterDAO();
-		
+
 		return dao.findAll();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getFilterById(edu.harvard.integer.common.ID)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.selection.SelectionManagerInterface#getFilterById
+	 * (edu.harvard.integer.common.ID)
 	 */
 	@Override
 	public Filter getFilterById(ID filterId) throws IntegerException {
 		FilterDAO dao = persistenceManager.getFilterDAO();
-		
+
 		return dao.findById(filterId);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#updateLayer(edu.harvard.integer.common.selection.Layer)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.selection.SelectionManagerInterface#updateLayer
+	 * (edu.harvard.integer.common.selection.Layer)
 	 */
 	@Override
 	public Layer updateLayer(Layer layer) throws IntegerException {
 		LayerDAO dao = persistenceManager.getLayerDAO();
-		
+
 		return dao.update(layer);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getAllLayers()
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.selection.SelectionManagerInterface#getAllLayers
+	 * ()
 	 */
 	@Override
 	public Layer[] getAllLayers() throws IntegerException {
 		LayerDAO dao = persistenceManager.getLayerDAO();
 		return dao.findAll();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.selection.SelectionManagerInterface#getLayerById(edu.harvard.integer.common.ID)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.selection.SelectionManagerInterface#getLayerById
+	 * (edu.harvard.integer.common.ID)
 	 */
 	@Override
 	public Layer getLayerById(ID layerId) throws IntegerException {
 		LayerDAO dao = persistenceManager.getLayerDAO();
-		
+
 		return dao.findById(layerId);
 	}
 }

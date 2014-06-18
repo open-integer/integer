@@ -93,7 +93,7 @@ public class PersistenceService extends BaseService implements
 
 		// Register the application for RESTfull interface
 		IntegerApplication.register(this);
-
+		
 		loadPreloads();
 
 	}

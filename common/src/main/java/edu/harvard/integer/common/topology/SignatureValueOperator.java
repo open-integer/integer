@@ -31,98 +31,61 @@
  *      
  */
 
-package edu.harvard.integer.common.yaml.vendorcontainment;
+package edu.harvard.integer.common.topology;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * Hold the operator and value signature attribute. 
+ * 
  * @author David Taylor
  * 
  */
-public class YamlSnmpContainment {
+@Entity
+public class SignatureValueOperator extends BaseEntity {
 
-	private String containmentType = null;
-
-	private List<YamlSnmpLevelOID> snmpLevels = null;
-
-	private YamlServiceElementType serviceElementType = null;
-
-	private String sysOidValue = null;
-	
-	private String contextOID = null;
-	
 	/**
-	 * @return the containmentType
+	 * Serial Version UID
 	 */
-	public String getContainmentType() {
-		return containmentType;
+	private static final long serialVersionUID = 1L;
+
+	@Enumerated(EnumType.STRING)
+	private ValueOpertorEnum operator = null;
+
+	private String value = null;
+
+	/**
+	 * @return the operator
+	 */
+	public ValueOpertorEnum getOperator() {
+		return operator;
 	}
 
 	/**
-	 * @param containmentType
-	 *            the containmentType to set
+	 * @param operator
+	 *            the operator to set
 	 */
-	public void setContainmentType(String containmentType) {
-		this.containmentType = containmentType;
+	public void setOperator(ValueOpertorEnum operator) {
+		this.operator = operator;
 	}
 
 	/**
-	 * @return the snmpLevels
+	 * @return the value
 	 */
-	public List<YamlSnmpLevelOID> getSnmpLevels() {
-		return snmpLevels;
+	public String getValue() {
+		return value;
 	}
 
 	/**
-	 * @param snmpLevels
-	 *            the snmpLevels to set
+	 * @param value
+	 *            the value to set
 	 */
-	public void setSnmpLevels(List<YamlSnmpLevelOID> snmpLevels) {
-		this.snmpLevels = snmpLevels;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	/**
-	 * @return the serviceElementType
-	 */
-	public YamlServiceElementType getServiceElementType() {
-		return serviceElementType;
-	}
-
-	/**
-	 * @param serviceElementType
-	 *            the serviceElementType to set
-	 */
-	public void setServiceElementType(YamlServiceElementType serviceElementType) {
-		this.serviceElementType = serviceElementType;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getSysOidValue() {
-		return this.sysOidValue;
-	}
-
-	/**
-	 * @param sysOidValue the sysOidValue to set
-	 */
-	public void setSysOidValue(String sysOidValue) {
-		this.sysOidValue = sysOidValue;
-	}
-
-	/**
-	 * @return the contextOID
-	 */
-	public String getContextOID() {
-		return contextOID;
-	}
-
-	/**
-	 * @param contextOID the contextOID to set
-	 */
-	public void setContextOID(String contextOID) {
-		this.contextOID = contextOID;
-	}
-
-	
 }

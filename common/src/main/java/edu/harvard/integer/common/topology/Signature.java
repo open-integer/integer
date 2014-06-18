@@ -31,93 +31,95 @@
  *      
  */
 
-package edu.harvard.integer.common.discovery;
+package edu.harvard.integer.common.topology;
 
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.snmp.SNMP;
 
 /**
+ * A signature is used to identify a specific service element type. It may take
+ * several Signature instances to accurately identify an SET.
  * 
- * The SnmpContainment object tells the system the SNMP model to follow to
- * discover the service elements that are contained within an instance of the
- * device identified by the SnmpVendorContainmentSelector that pointed to the
- * SnmpContainment instance.
- * 
- * <p>The reason for having many of these (potentially) for an SnmpContainment
- * instance is that some vendors may have discontinuous tables that represent
- * the containment hierarchy.
+ * Some common instances will have the name of vendor, model, firmware,
+ * softwareVersion, featureSet, hardware revision.
  * 
  * @author David Taylor
  * 
- * 
  */
 @Entity
-@DiscriminatorColumn(columnDefinition="varchar(250)")
-public abstract class SnmpContainment extends BaseEntity {
+public class Signature extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * The containment type defines how the discovery program will use the data
-	 * in instances of this class. If the containment type is Entity MIB, then
-	 * it uses the OID structure of the Entity MIB to determine the containment
-	 * of the ServiceElementTypes from the vendor(s) in the associated
-	 * SnmpVendorDiscoveryTemplate
-	 * 
-	 * If the containment type is hierarchical then there will be a list of top
-	 * level SnmpLevelOID instances in the snmpLevelOidList attribute.
-	 */
-	@Enumerated(EnumType.STRING)
-	private SnmpContainmentType containmentType = null;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "semoId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "semoType")),
+			@AttributeOverride(name = "name", column = @Column(name = "semoName")) })
+	private ID semoId = null;
 
 	@OneToMany
-	private List<SnmpLevelOID> snmpLevels = null;
+	private List<SignatureValueOperator> valueOperators = null;
 
+	@Enumerated(EnumType.STRING)
+	private SignatureTypeEnum signatureType = null;
+	
 	/**
-	 * @return the containmentType
+	 * @return the semoId
 	 */
-	public SnmpContainmentType getContainmentType() {
-		return containmentType;
+	public ID getSemoId() {
+		return semoId;
 	}
 
 	/**
-	 * @param containmentType
-	 *            the containmentType to set
+	 * @param semoId
+	 *            the semoId to set
 	 */
-	public void setContainmentType(SnmpContainmentType containmentType) {
-		this.containmentType = containmentType;
+	public void setSemoId(ID semoId) {
+		this.semoId = semoId;
 	}
 
 	/**
-	 * @return the snmpLevels
+	 * @return the valueOperators
 	 */
-	public List<SnmpLevelOID> getSnmpLevels() {
-		return snmpLevels;
+	public List<SignatureValueOperator> getValueOperators() {
+		return valueOperators;
 	}
 
 	/**
-	 * @param snmpLevels
-	 *            the snmpLevels to set
+	 * @param valueOperators
+	 *            the valueOperators to set
 	 */
-	public void setSnmpLevels(List<SnmpLevelOID> snmpLevels) {
-		this.snmpLevels = snmpLevels;
+	public void setValueOperators(List<SignatureValueOperator> valueOperators) {
+		this.valueOperators = valueOperators;
+	}
+
+	/**
+	 * @return the signatureType
+	 */
+	public SignatureTypeEnum getSignatureType() {
+		return signatureType;
+	}
+
+	/**
+	 * @param signatureType the signatureType to set
+	 */
+	public void setSignatureType(SignatureTypeEnum signatureType) {
+		this.signatureType = signatureType;
 	}
 
 }

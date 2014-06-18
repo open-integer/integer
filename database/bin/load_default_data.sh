@@ -20,3 +20,4 @@ fi
 
 
 $mysqlCmd < $BASEDIR/../preload/vendor_identifier.sql
+$mysqlCmd < $BASEDIR/../preload/CreateIndex.sql
