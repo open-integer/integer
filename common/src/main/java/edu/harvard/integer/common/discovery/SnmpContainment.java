@@ -38,14 +38,17 @@ import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.snmp.SNMP;
 
 /**
  * 
@@ -63,7 +66,8 @@ import edu.harvard.integer.common.ID;
  * 
  */
 @Entity
-public class SnmpContainment extends BaseEntity {
+@DiscriminatorColumn(columnDefinition="varchar(250)")
+public abstract class SnmpContainment extends BaseEntity {
 
 	/**
 	 * Serial Version UID
@@ -85,17 +89,6 @@ public class SnmpContainment extends BaseEntity {
 
 	@OneToMany
 	private List<SnmpLevelOID> snmpLevels = null;
-
-	/**
-	 * This is the service element type that matches this
-	 * SnmpVendorContainmentSelector.
-	 */
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
-			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
-	private ID serviceElementTypeId = null;
 
 	/**
 	 * @return the containmentType
@@ -127,18 +120,4 @@ public class SnmpContainment extends BaseEntity {
 		this.snmpLevels = snmpLevels;
 	}
 
-	/**
-	 * @return the serviceElementTypeId
-	 */
-	public ID getServiceElementTypeId() {
-		return serviceElementTypeId;
-	}
-
-	/**
-	 * @param serviceElementTypeId
-	 *            the serviceElementTypeId to set
-	 */
-	public void setServiceElementTypeId(ID serviceElementTypeId) {
-		this.serviceElementTypeId = serviceElementTypeId;
-	}
 }

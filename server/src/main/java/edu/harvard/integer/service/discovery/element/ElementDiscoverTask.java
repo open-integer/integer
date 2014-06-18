@@ -54,6 +54,7 @@ import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
@@ -299,8 +300,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    SnmpContainment sc = null;		    
 		    sc = discMgr.getSnmpContainment(vs);
 		    
-		    if ( sc != null ) {
-			    set =  discMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
+		    if ( sc != null && sc instanceof SnmpServiceElementTypeContainment) {
+			    set =  discMgr.getServiceElementTypeById(((SnmpServiceElementTypeContainment) sc).getServiceElementTypeId());
 			    discoverNode.setTopServiceElementType(set);
 		    }
 		    

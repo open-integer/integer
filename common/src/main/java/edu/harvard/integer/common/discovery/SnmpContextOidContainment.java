@@ -31,98 +31,43 @@
  *      
  */
 
-package edu.harvard.integer.common.yaml.vendorcontainment;
+package edu.harvard.integer.common.discovery;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+import edu.harvard.integer.common.snmp.SNMP;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-public class YamlSnmpContainment {
-
-	private String containmentType = null;
-
-	private List<YamlSnmpLevelOID> snmpLevels = null;
-
-	private YamlServiceElementType serviceElementType = null;
-
-	private String sysOidValue = null;
-	
-	private String contextOID = null;
-	
-	/**
-	 * @return the containmentType
-	 */
-	public String getContainmentType() {
-		return containmentType;
-	}
+@Entity
+public class SnmpContextOidContainment extends SnmpContainment {
 
 	/**
-	 * @param containmentType
-	 *            the containmentType to set
+	 * Serial Version UID
 	 */
-	public void setContainmentType(String containmentType) {
-		this.containmentType = containmentType;
-	}
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @return the snmpLevels
+	 * 
 	 */
-	public List<YamlSnmpLevelOID> getSnmpLevels() {
-		return snmpLevels;
-	}
-
-	/**
-	 * @param snmpLevels
-	 *            the snmpLevels to set
-	 */
-	public void setSnmpLevels(List<YamlSnmpLevelOID> snmpLevels) {
-		this.snmpLevels = snmpLevels;
-	}
-
-	/**
-	 * @return the serviceElementType
-	 */
-	public YamlServiceElementType getServiceElementType() {
-		return serviceElementType;
-	}
-
-	/**
-	 * @param serviceElementType
-	 *            the serviceElementType to set
-	 */
-	public void setServiceElementType(YamlServiceElementType serviceElementType) {
-		this.serviceElementType = serviceElementType;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getSysOidValue() {
-		return this.sysOidValue;
-	}
-
-	/**
-	 * @param sysOidValue the sysOidValue to set
-	 */
-	public void setSysOidValue(String sysOidValue) {
-		this.sysOidValue = sysOidValue;
-	}
+	@ManyToOne
+	private SNMP contextOID = null;
 
 	/**
 	 * @return the contextOID
 	 */
-	public String getContextOID() {
+	public SNMP getContextOID() {
 		return contextOID;
 	}
 
 	/**
 	 * @param contextOID the contextOID to set
 	 */
-	public void setContextOID(String contextOID) {
+	public void setContextOID(SNMP contextOID) {
 		this.contextOID = contextOID;
 	}
-
 	
 }

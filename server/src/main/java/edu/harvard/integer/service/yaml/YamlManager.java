@@ -46,16 +46,20 @@ import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 
+import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.common.discovery.SnmpContextOidContainment;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpRelationship;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
+import edu.harvard.integer.common.discovery.SnmpSySOidContainment;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -583,9 +587,10 @@ public class YamlManager extends BaseManager implements
 
 		SnmpContainment snmpContainment = discoveryManager
 				.getSnmpContainment(selector);
+		
 
 		if (snmpContainment == null) {
-			snmpContainment = new SnmpContainment();
+			snmpContainment = new SnmpServiceElementTypeContainment();
 			snmpContainment.setName(load.getVendor() + ":"
 					+ load.getSoftwareVersion() + ":" + load.getModel() + ":"
 					+ load.getFirmware());
@@ -597,9 +602,20 @@ public class YamlManager extends BaseManager implements
 		snmpContainment.setSnmpLevels(createSnmpLevelOIDs(load
 				.getSnmpContainment().getSnmpLevels(), snmpContainment
 				.getSnmpLevels()));
-		snmpContainment.setServiceElementTypeId(createServiceElement(load
+		
+		if (snmpContainment instanceof SnmpServiceElementTypeContainment)
+			((SnmpServiceElementTypeContainment) snmpContainment).setServiceElementTypeId(createServiceElement(load
 				.getSnmpContainment().getServiceElementType()));
-
+		else if (snmpContainment instanceof SnmpSySOidContainment) 
+			((SnmpSySOidContainment) snmpContainment).setSysOid(load.getSnmpContainment().getSysOidValue());
+		else if (snmpContainment instanceof SnmpContextOidContainment) 
+			((SnmpContextOidContainment) snmpContainment).setContextOID(getSnmpOid(load.getSnmpContainment().getContextOID()));
+		else
+			logger.error("SnmpContainment type not valid! Must have ServiceElmentType, SysOid, or ContextOID!! "
+					+ " Type " + load.getVendor() + ":"
+					+ load.getSoftwareVersion() + ":" + load.getModel() + ":"
+					+ load.getFirmware());
+			
 		discoveryManager.updateVendorContainmentSelector(selector);
 
 	}
