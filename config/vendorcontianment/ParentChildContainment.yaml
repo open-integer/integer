@@ -1,0 +1,37 @@
+---
+
+# Containment for recursive parent child and sibling relationship. One of the pattern MIB for this
+# containment applied is Entity MIB.
+# Created by David Chan, 2014-07-17
+
+snmpContainments:
+
+    snmpContainment:
+      containmentType: EntityMib
+      sysVendor: cisco
+
+      snmpLevels:
+        - name: entityParentChild
+          contextOID: entPhysicalTable
+          parentChildRelationship:
+             containmentOid: entPhysicalContainedIn
+             siblingOid: entPhysicalParentRelPos
+             subTypeOid: entPhysicalVendorType
+             modelOid: entPhysicalModelName
+             softwareVersionOid: entPhysicalSoftwareRev
+ 
+    snmpContainment:
+      containmentType: SnmpContainmintList
+      category: port 
+      contaxOid: entPhysicalTable
+
+      snmpLevels:
+         - name: portInterfaceMapping
+           contextOID: entPhysicalTable
+           containmentRelationship:
+             mappingTable: entAliasMappingTable
+             mappingOid: entAliasMappingIdentifier
+             snmpLevel:
+                serviceElementType:
+                  name: interface
+                         
