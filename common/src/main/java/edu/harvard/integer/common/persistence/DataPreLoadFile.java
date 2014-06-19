@@ -69,6 +69,8 @@ public class DataPreLoadFile extends BaseEntity {
 	private PersistenceStepStatusEnum status = null;
 	
 	private String errorMessage = null;
+	
+	private Long timeToLoad = null;
 
 	/**
 	 * @return the timeLoaded
@@ -141,6 +143,20 @@ public class DataPreLoadFile extends BaseEntity {
 	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	/**
+	 * @return the timeToLoad
+	 */
+	public Long getTimeToLoad() {
+		return timeToLoad;
+	}
+
+	/**
+	 * @param timeToLoad the timeToLoad to set
+	 */
+	public void setTimeToLoad(Long timeToLoad) {
+		this.timeToLoad = timeToLoad;
 	}
 
 }

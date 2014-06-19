@@ -64,7 +64,8 @@ public class YamlSnmpLevelOID {
 	
 	private YamlSnmpParentChildRelationship parentChildRelationship = null;
 	
-
+	private String category = null;
+	
 	/**
 	 * @return the name
 	 */
@@ -167,6 +168,20 @@ public class YamlSnmpLevelOID {
 	 */
 	public void setParentChildRelationship(YamlSnmpParentChildRelationship parentChildRelationship) {
 		this.parentChildRelationship = parentChildRelationship;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

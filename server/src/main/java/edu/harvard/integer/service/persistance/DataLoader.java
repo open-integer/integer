@@ -236,7 +236,6 @@ public class DataLoader implements DataLoaderInterface {
 				dataPreLoadFile.setErrorMessage(e.getMessage());
 			}
 
-			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 		}
 
 	}
@@ -278,7 +277,6 @@ public class DataLoader implements DataLoaderInterface {
 			}
 		}
 
-		persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 	}
 
 	/**
@@ -317,7 +315,6 @@ public class DataLoader implements DataLoaderInterface {
 			}
 		}
 
-		persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 
 	}
 	/**
@@ -355,8 +352,6 @@ public class DataLoader implements DataLoaderInterface {
 				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
 			}
 		}
-
-		persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 
 	}
 

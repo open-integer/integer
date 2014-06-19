@@ -114,9 +114,15 @@ public interface ServiceElementAccessManagerInterface extends
 			throws IntegerException;
 
 	/**
-	 * Delete the ServiceElements with the given ID's
+	 * Delete the ServiceElements with the given ID's. The delete of the service
+	 * element will also delete all child service elements of that service
+	 * element.
 	 * 
-	 * @param ids
+	 * Ex. A ServiceElement for a port that has child ServiceElement for an
+	 * interface would also delete the ServiceElement for the interface.
+	 * 
+	 * @param ids of the ServiceElements to delete. 
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteServiceElememts(ID[] ids) throws IntegerException;

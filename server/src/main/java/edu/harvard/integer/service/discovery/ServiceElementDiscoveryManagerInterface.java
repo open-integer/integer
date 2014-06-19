@@ -235,7 +235,20 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return
 	 * @throws IntegerException
 	 */
-	VendorIdentifier getVenderIdentiferBySubTypeName(String vendorSubTypeName)
+	public VendorIdentifier getVenderIdentiferBySubTypeName(String vendorSubTypeName)
+			throws IntegerException;
+
+	/**
+	 * Update the SnmpContainment in the database. If this is called with a new unsaved 
+	 * instance then a new entry will be added to the SnmpContainment table and the
+	 * identifier will be set on the SnmpContainment object that is returned.
+	 * 
+	 * @param snmpContainment. Object to save
+	 * @return saved SnmpContainmet object.
+	 * 
+	 * @throws IntegerException
+	 */
+	public SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment)
 			throws IntegerException;
 
 	

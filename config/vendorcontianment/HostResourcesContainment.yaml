@@ -1,7 +1,9 @@
 
-model: cisco
+vendor: 
+model: 
 firmware: 
-softwareVersion: 12.2
+softwareVersion: 
+
 snmpContainment: 
     containmentType: HostResourcesMib
     snmpLevels:

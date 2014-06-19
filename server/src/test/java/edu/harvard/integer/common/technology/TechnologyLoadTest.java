@@ -241,4 +241,25 @@ public class TechnologyLoadTest {
 		yamlManager.loadVendorContainment(content);
 	}
 	
+	@Test
+	public void readVendorParentChildContainment() throws IntegerException {
+		File techTree = new File("../config/vendorcontianment/ParentChildContainment.yaml");
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(techTree.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading YAML: " + e.getMessage());
+		}
+		
+		Yaml yaml = new Yaml(new Constructor(YamlVendorContainment.class));
+
+		Object load = yaml.load(content);
+		
+		logger.info("ServiceElement read in: " + yaml.dump(load));
+		
+		yamlManager.loadVendorContainment(content);
+	}
 }

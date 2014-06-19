@@ -44,7 +44,6 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
-import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -78,7 +77,7 @@ public class ContainmentGenerator {
 
 		    default: {
 		    
-		    	SnmpServiceElementTypeContainment sc = new SnmpServiceElementTypeContainment();
+		    	SnmpContainment sc = new SnmpContainment();
 				sc.setContainmentType(type);
 				sc.setServiceElementTypeId(serviceElementType.getID());
 				sc.setName("AutoDiscoverContainment");
@@ -104,7 +103,7 @@ public class ContainmentGenerator {
 		ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
 		ManagementObjectCapabilityManagerInterface  capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
 		
-		SnmpServiceElementTypeContainment sc = new SnmpServiceElementTypeContainment();
+		SnmpContainment sc = new SnmpContainment();
 		sc.setContainmentType(SnmpContainmentType.HostResourcesMib);		
 		sc.setServiceElementTypeId(serviceElmType.getID());
 		sc.setName("HostResourcesMIbContainment");

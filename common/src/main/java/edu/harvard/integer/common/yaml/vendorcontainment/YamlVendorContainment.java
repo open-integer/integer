@@ -38,6 +38,7 @@ package edu.harvard.integer.common.yaml.vendorcontainment;
  *
  */
 public class YamlVendorContainment {
+	
 	private String vendor = null;
 
 	/**

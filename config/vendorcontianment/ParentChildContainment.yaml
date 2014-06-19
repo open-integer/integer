@@ -4,15 +4,13 @@
 # containment applied is Entity MIB.
 # Created by David Chan, 2014-07-17
 
-snmpContainments:
-
-    snmpContainment:
+vendor: cisco
+snmpContainment:
       containmentType: EntityMib
-      sysVendor: cisco
 
       snmpLevels:
         - name: entityParentChild
-          contextOID: entPhysicalTable
+          contextOID: entPhysicalEntry
           parentChildRelationship:
              containmentOid: entPhysicalContainedIn
              siblingOid: entPhysicalParentRelPos
@@ -20,18 +18,13 @@ snmpContainments:
              modelOid: entPhysicalModelName
              softwareVersionOid: entPhysicalSoftwareRev
  
-    snmpContainment:
-      containmentType: SnmpContainmintList
-      category: port 
-      contaxOid: entPhysicalTable
-
-      snmpLevels:
-         - name: portInterfaceMapping
-           contextOID: entPhysicalTable
-           containmentRelationship:
-             mappingTable: entAliasMappingTable
-             mappingOid: entAliasMappingIdentifier
-             snmpLevel:
-                serviceElementType:
+        - name: portInterfaceMapping
+          category: port
+          contextOID: entPhysicalEntry
+          containmentRelationship:
+            mappingTable: entAliasMappingEntry
+            mappingOid: entAliasMappingIdentifier
+          disriminators:
+             - serviceElementType:
                   name: interface
                          
