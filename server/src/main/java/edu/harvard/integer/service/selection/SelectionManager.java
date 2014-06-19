@@ -106,26 +106,22 @@ public class SelectionManager extends BaseManager implements
 		List<FilterNode> routing = new ArrayList<FilterNode>();
 
 		// TODO: remove once real data is available.
-		// if (technologies == null || technologies.length == 0) {
-		// nodes.addAll(getTechnologyTree());
-		// }
+//		 if (technologies == null || technologies.length == 0) {
+//		 nodes.addAll(getTechnologyTree());
+//		 }
 
-		for (Technology technology : technologies) {
+		if (technologies != null && technologies.length > 0)
+		for (FilterNode filterNode : findChildren(dao, technologies[0].getID())) {
 
-			FilterNode node = new FilterNode();
-			node.setItemId(technology.getID());
-			node.setName(technology.getName());
 
-			node.setChildren(findChildren(dao, technology.getID()));
+			if ("hardware".equals(filterNode.getName())
+					|| "software".equals(filterNode.getName())
+					|| "physical connectivity".equals(filterNode.getName())
+					|| "data link protocols".equals(filterNode.getName()))
 
-			if ("hardware".equals(technology.getName())
-					|| "software".equals(technology.getName())
-					|| "physical connectivity".equals(technology.getName())
-					|| "data link protocols".equals(technology.getName()))
-
-				nodes.add(node);
+				nodes.add(filterNode);
 			else
-				routing.add(node);
+				routing.add(filterNode);
 		}
 
 		Filter filter = new Filter();

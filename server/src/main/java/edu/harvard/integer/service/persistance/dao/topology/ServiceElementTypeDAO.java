@@ -47,6 +47,8 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -72,6 +74,35 @@ public class ServiceElementTypeDAO extends BaseDAO {
 		
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	 */
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+		
+		if (!(entity instanceof ServiceElementType)) {
+			getLogger().error("Entity should be a ServiceElementType! Is " + entity.getClass());
+			return;
+		}
+		
+		ServiceElementType serviceElementType = (ServiceElementType) entity;
+		if (serviceElementType.getSignatures() != null) {
+			SignatureDAO dao = new SignatureDAO(getEntityManager(), getLogger());
+			
+			List<Signature> dbSignatures = new ArrayList<Signature>();
+			for (Signature signature : serviceElementType.getSignatures()) {
+				dbSignatures.add(dao.update(signature));
+			}
+			
+			serviceElementType.setSignatures(dbSignatures);
+		}
+				
+		super.preSave(entity);
+	}
+
+
 	/**
 	 * @return
 	 */
@@ -79,30 +110,6 @@ public class ServiceElementTypeDAO extends BaseDAO {
 
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
-//
-//		StringBuffer b = new StringBuffer();
-//		
-//		b.append("select svcEleType "); 
-//		b.append("from ServiceElementType svcEleType ");
-//		b.append("join ServiceElementType_Signature sets on (sets.ServiceElementType_identifier = svcEleType.identifier) ");
-//		b.append("join Signature s on (s.identifier = sets.signatures_identifier) ");
-//		b.append("join Signature_SignatureValueOperator sssvo on (sssvo.Signature_identifier = s.identifier) ");
-//		b.append("join SignatureValueOperator svo on (svo.identifier = sssvo.valueOperators_identifier ) ");
-//		b.append("and svo.value = '").append(vendor).append("'");
-//		
-//		Query query = getEntityManager().createQuery(b.toString());
-//		
-//		List resultList = query.getResultList();
-//		
-//		List<ServiceElementType> serviceElments = new ArrayList<ServiceElementType>();
-//		for (Object object : resultList) {
-//			if (object instanceof ServiceElementType)
-//				serviceElments.add((ServiceElementType) object);
-//		}
-//		
-//		return (ServiceElementType[]) serviceElments
-//				.toArray(new ServiceElementType[serviceElments.size()]);
-//		
 		
 		CriteriaQuery<ServiceElementType> query = criteriaBuilder.createQuery(ServiceElementType.class);
 
