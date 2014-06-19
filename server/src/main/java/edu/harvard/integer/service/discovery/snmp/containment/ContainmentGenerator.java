@@ -42,11 +42,14 @@ import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
+import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
+import edu.harvard.integer.common.discovery.SnmpSySOidContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
@@ -75,6 +78,11 @@ public class ContainmentGenerator {
 		    case HostResourcesMib:
 			
 			   return hostMibGenerator(serviceElementType);
+			   
+		    case EntityMib:
+		    {
+		    	return entityMibGenerator(serviceElementType);
+		    }
 
 		    default: {
 		    
@@ -86,6 +94,49 @@ public class ContainmentGenerator {
 				return sc;
 		    }
 		}
+	}
+	
+	
+	/**
+	 * Generate relationship based on entity MIB.
+	 *
+	 * @param serviceElmType
+	 * @return
+	 * @throws IntegerException
+	 */
+	public static SnmpContainment  entityMibGenerator( ServiceElementType serviceElmType ) throws IntegerException {
+		
+		SnmpManagerInterface snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+		
+		SnmpSySOidContainment sc = new SnmpSySOidContainment();
+		sc.setContainmentType(SnmpContainmentType.EntityMib);
+		
+		List<SnmpLevelOID> levelOids = new ArrayList<>();
+		sc.setSnmpLevels(levelOids);
+		
+		SnmpLevelOID levelOid = new SnmpLevelOID();
+		levelOids.add(levelOid);
+		
+		levelOid.setName("EntityMibLevel");
+		SNMP snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.entPhysicalEntry);
+		
+		levelOid.setContextOID(snmp);		
+		SnmpParentChildRelationship relation = new SnmpParentChildRelationship();
+		relation.setRecursive(true);
+		
+		snmp = snmpMgr.getSNMPByName("entPhysicalContainedIn");
+		relation.setContainmentOid(snmp);		
+
+		snmp = snmpMgr.getSNMPByName("entPhysicalVendorType");
+        relation.setSubTypeOid(snmp);
+        
+        snmp = snmpMgr.getSNMPByName("entPhysicalParentRelPos");
+        relation.setSiblingOid(snmp);
+        
+        
+        levelOid.setRelationToParent(relation);
+        		
+		return sc;
 	}
 	
 	
