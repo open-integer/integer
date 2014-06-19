@@ -45,4 +45,5 @@ VALUES
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CDP ServiceElementType', 'cdp/serviceElementType.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),  
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'EntityMib Technology', 'entity_mib/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'EntityMib ServiceElementType', 'entity_mib/serviceElementType.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),
-	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/HostResourcesContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL);
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/HostResourcesContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/ParentChildContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL);

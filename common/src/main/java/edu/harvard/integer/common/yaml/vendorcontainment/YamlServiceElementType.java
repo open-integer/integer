@@ -48,7 +48,7 @@ public class YamlServiceElementType {
 	private String category = null;
 	private List<String> uniqueIdentifierCapabilities = null;
 	private List<String> attributes = null;
-
+	
 	/**
 	 * @return the name
 	 */

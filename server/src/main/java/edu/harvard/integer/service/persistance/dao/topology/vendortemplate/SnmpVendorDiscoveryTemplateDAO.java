@@ -81,9 +81,12 @@ public class SnmpVendorDiscoveryTemplateDAO extends BaseDAO {
 	 * @throws IntegerException 
 	 */
 	public SnmpVendorDiscoveryTemplate findByVendor(ID vendor) throws IntegerException {
-		SnmpVendorDiscoveryTemplate snmpVendorDiscoveryTemplate = findById(vendor);
+		SnmpVendorDiscoveryTemplate[] snmpVendorDiscoveryTemplates = findByIDField(vendor, "vendorId", SnmpVendorDiscoveryTemplate.class);
 		
-		return snmpVendorDiscoveryTemplate;
+		if (snmpVendorDiscoveryTemplates != null && snmpVendorDiscoveryTemplates.length > 0)
+			return snmpVendorDiscoveryTemplates[0];
+		else 
+			return null;
 	}
 
 	

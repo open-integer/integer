@@ -59,7 +59,6 @@ import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
-import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDescriminatorIntegerValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
@@ -443,7 +442,7 @@ public class ServiceElementDiscoveryManagerTest {
 	
 	@Test
 	public void createSnmpContainment() {
-		SnmpServiceElementTypeContainment snmpContainment = new SnmpServiceElementTypeContainment();
+		SnmpContainment snmpContainment = new SnmpContainment();
 		snmpContainment.setContainmentType(SnmpContainmentType.EntityMib);
 		snmpContainment.setName("MyContainment");
 		snmpContainment.setServiceElementTypeId(new ID(Long.valueOf(2), "ServiceElementType", new IDType(ServiceElementType.class.getName())));

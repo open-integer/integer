@@ -38,7 +38,8 @@ package edu.harvard.integer.common.exception;
  *
  */
 public enum YamlParserErrrorCodes implements ErrorCodeInterface {
-	ParsingError("Error parsing YAML file");
+	ParsingError("Error parsing YAML file"),
+	ContextOidNotFound("Context OID not found! Unable to create SnmpLevelOID");
 
 	private String errorCode = null;
 

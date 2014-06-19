@@ -45,23 +45,21 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
+import org.yaml.snakeyaml.error.YAMLException;
 
-import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
-import edu.harvard.integer.common.discovery.SnmpContextOidContainment;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpRelationship;
-import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
-import edu.harvard.integer.common.discovery.SnmpSySOidContainment;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
+import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -578,6 +576,7 @@ public class YamlManager extends BaseManager implements
 		selector.setVendor(load.getVendor());
 		VendorContainmentSelector[] vendorContainmentSelectors = discoveryManager
 				.getVendorContainmentSelector(selector);
+		
 		if (vendorContainmentSelectors == null
 				|| vendorContainmentSelectors.length == 0) {
 			selector = discoveryManager
@@ -588,9 +587,8 @@ public class YamlManager extends BaseManager implements
 		SnmpContainment snmpContainment = discoveryManager
 				.getSnmpContainment(selector);
 		
-
 		if (snmpContainment == null) {
-			snmpContainment = new SnmpServiceElementTypeContainment();
+			snmpContainment = new SnmpContainment();
 			snmpContainment.setName(load.getVendor() + ":"
 					+ load.getSoftwareVersion() + ":" + load.getModel() + ":"
 					+ load.getFirmware());
@@ -599,23 +597,17 @@ public class YamlManager extends BaseManager implements
 		SnmpContainmentType contanmentType = SnmpContainmentType.valueOf(load
 				.getSnmpContainment().getContainmentType());
 		snmpContainment.setContainmentType(contanmentType);
+		
 		snmpContainment.setSnmpLevels(createSnmpLevelOIDs(load
 				.getSnmpContainment().getSnmpLevels(), snmpContainment
 				.getSnmpLevels()));
 		
-		if (snmpContainment instanceof SnmpServiceElementTypeContainment)
-			((SnmpServiceElementTypeContainment) snmpContainment).setServiceElementTypeId(createServiceElement(load
+		snmpContainment.setServiceElementTypeId(createServiceElement(load
 				.getSnmpContainment().getServiceElementType()));
-		else if (snmpContainment instanceof SnmpSySOidContainment) 
-			((SnmpSySOidContainment) snmpContainment).setSysOid(load.getSnmpContainment().getSysOidValue());
-		else if (snmpContainment instanceof SnmpContextOidContainment) 
-			((SnmpContextOidContainment) snmpContainment).setContextOID(getSnmpOid(load.getSnmpContainment().getContextOID()));
-		else
-			logger.error("SnmpContainment type not valid! Must have ServiceElmentType, SysOid, or ContextOID!! "
-					+ " Type " + load.getVendor() + ":"
-					+ load.getSoftwareVersion() + ":" + load.getModel() + ":"
-					+ load.getFirmware());
-			
+		
+		snmpContainment = discoveryManager.updateSnmpContainment(snmpContainment);
+		selector.setContainmentId(snmpContainment.getID());
+		
 		discoveryManager.updateVendorContainmentSelector(selector);
 
 	}
@@ -634,7 +626,8 @@ public class YamlManager extends BaseManager implements
 			if (snmp == null) {
 				logger.error("OID not found for " + levelOid.getContextOID()
 						+ " Unable to create SnmpLevelOID!");
-				continue;
+				
+				throw new IntegerException(null, YamlParserErrrorCodes.ContextOidNotFound);
 			}
 
 			SnmpLevelOID dbLevelOid = findSnmpLevelOID(
@@ -668,6 +661,15 @@ public class YamlManager extends BaseManager implements
 				dbLevelOid.setChildren(createSnmpLevelOIDs(
 						levelOid.getChildren(), topLevels));
 
+			if (levelOid.getCategory() != null) {
+				try {
+					dbLevelOid.setCategory(CategoryTypeEnum.valueOf(levelOid.getCategory()));
+				} catch (IllegalArgumentException e) {
+					logger.error("Unable to create category from " + levelOid.getCategory());
+					throw e;
+				}
+			}
+			
 			dbLevelOid = levelDao.update(dbLevelOid);
 
 			dbLevels.add(dbLevelOid);
@@ -747,6 +749,9 @@ public class YamlManager extends BaseManager implements
 			List<SnmpServiceElementTypeDiscriminator> list)
 			throws IntegerException {
 
+		if (disriminators == null) 
+			return null;
+		
 		if (list == null)
 			list = new ArrayList<SnmpServiceElementTypeDiscriminator>();
 
@@ -792,10 +797,11 @@ public class YamlManager extends BaseManager implements
 		dbSet.setAttributeIds(createAttributeList(
 				serviceElementType.getAttributes(),
 				serviceElementType.getName()));
-		if (serviceElementType.getFieldReplaceableUnit()
-				.equalsIgnoreCase("Yes")
+		if (serviceElementType.getFieldReplaceableUnit() != null && 
+				(serviceElementType.getFieldReplaceableUnit()
+						.equalsIgnoreCase("Yes")
 				|| serviceElementType.getFieldReplaceableUnit()
-						.equalsIgnoreCase("true"))
+						.equalsIgnoreCase("true")))
 			dbSet.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 		else
 			dbSet.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
@@ -804,7 +810,9 @@ public class YamlManager extends BaseManager implements
 
 		dbSet.setDefaultNameCababilityId(getCapability(serviceElementType
 				.getDefaultNameCabability()));
-		dbSet.setCategory(CategoryTypeEnum.valueOf(serviceElementType.getCategory()));
+		if (serviceElementType.getCategory() != null)
+			dbSet.setCategory(CategoryTypeEnum.valueOf(serviceElementType.getCategory()));
+		
 		dbSet.setUniqueIdentifierCapabilities(createAttributeList(
 				serviceElementType.getUniqueIdentifierCapabilities(),
 				serviceElementType.getName()));
@@ -840,6 +848,9 @@ public class YamlManager extends BaseManager implements
 			String serviceElementName) throws IntegerException {
 		List<ID> ids = new ArrayList<ID>();
 
+		if (attributes == null)
+			return ids;
+		
 		for (String string : attributes) {
 			SNMP oid = getSnmpOid(string);
 			if (oid != null)

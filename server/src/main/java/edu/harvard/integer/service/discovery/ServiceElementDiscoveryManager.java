@@ -44,6 +44,7 @@ import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.SnmpContainment;
@@ -243,6 +244,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		VendorContainmentSelector[] containmentSelectors = dao
 				.findBySelector(selector);
+		
 		if (containmentSelectors == null || containmentSelectors.length == 0)
 			return null;
 
@@ -256,6 +258,45 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 				.getContainmentId());
 	}
 
+	public SnmpContainment[] getSnmpContainments(VendorContainmentSelector selector)
+			throws IntegerException {
+		VendorContainmentSelectorDAO dao = dbm
+				.getVendorContainmentSelectorDAO();
+
+		VendorContainmentSelector[] containmentSelectors = dao
+				.findBySelector(selector);
+		
+		if (containmentSelectors == null || containmentSelectors.length == 0)
+			return null;
+
+		if (logger.isDebugEnabled())
+			logger.debug("Found VendorContainmentSelector "
+					+ containmentSelectors[0].getID());
+
+		SnmpContainmentDAO snmpContainmentDAO = dbm.getSnmpContainmentDAO();
+
+		List<SnmpContainment> snmpContainments = new ArrayList<SnmpContainment>();
+		for (VendorContainmentSelector vendorContainmentSelector : containmentSelectors) {
+			SnmpContainment snmpContainment = snmpContainmentDAO.findById(vendorContainmentSelector.getContainmentId());
+			if (snmpContainment != null)
+				snmpContainments.add(snmpContainment);
+		}
+		
+		return (SnmpContainment[]) snmpContainments
+				.toArray(new SnmpContainment[snmpContainments.size()]);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#updataSnmpContainment(edu.harvard.integer.common.discovery.SnmpContainment)
+	 */
+	@Override
+	public SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment) throws IntegerException {
+		SnmpContainmentDAO dao = dbm.getSnmpContainmentDAO();
+		
+		return dao.update(snmpContainment);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

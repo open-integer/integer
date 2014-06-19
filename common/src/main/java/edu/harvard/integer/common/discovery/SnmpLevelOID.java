@@ -41,6 +41,7 @@ import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
 
 /**
  * 
@@ -110,6 +111,12 @@ public class SnmpLevelOID extends BaseEntity {
 	@ManyToOne
 	private SnmpRelationship relationToParent = null;
 
+	/**
+	 * Category that this SnmpLevelOID is valid for. This will
+	 * be null when not needed or not valid.
+	 */
+	private CategoryTypeEnum category = null;
+	
 	/**
 	 * @return the contextOID
 	 */
@@ -183,6 +190,20 @@ public class SnmpLevelOID extends BaseEntity {
 	 */
 	public void setRelationToParent(SnmpRelationship relationToParent) {
 		this.relationToParent = relationToParent;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public CategoryTypeEnum getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(CategoryTypeEnum category) {
+		this.category = category;
 	}
 
 }
