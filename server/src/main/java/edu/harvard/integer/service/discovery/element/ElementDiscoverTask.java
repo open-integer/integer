@@ -150,10 +150,19 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    SnmpVendorDiscoveryTemplate template = null;
 		    
 		    try {
-		    	 VendorIdentifier identify = discMgr.getVendorIdentifier(sysId.toString());
-		    	 if ( identify != null ) {
+		    	
+		    	/*
+		    	 * Trim OID so that it only contains vendor part.
+		    	 */
+		    			
+		    	int extra = sysId.size() - 7;
+		    	if ( extra > 0 ) {
+		    		sysId.trim(extra);
+		    	}
+		    	VendorIdentifier identify = discMgr.getVendorIdentifier(sysId.toString());
+		    	if ( identify != null ) {
 		    		 template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(identify.getID());
-		    	 }
+		    	}
 		    }
 		    catch (Exception e ) {
 		    	
@@ -289,7 +298,6 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    		model = defineUnknownVendor(sysId.toString());
 		    	}
 		    }
-		    
 		    VendorContainmentSelector vs = new VendorContainmentSelector();
 		    vs.setFirmware(firmwareVer);
 		    vs.setModel(model);
@@ -297,8 +305,9 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    vs.setVendor(defineUnknownVendor(sysId.toString()));
 		    
 		    ServiceElementType set = null;
-		    SnmpContainment sc = null;		    
-		    sc = discMgr.getSnmpContainment(vs);
+		    SnmpContainment sc = null;	
+		    
+		    sc = discMgr.getSnmpContainment(vs); 
 		    
 		    if ( sc != null && sc instanceof SnmpServiceElementTypeContainment) {
 			    set =  discMgr.getServiceElementTypeById(((SnmpServiceElementTypeContainment) sc).getServiceElementTypeId());
@@ -388,9 +397,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 			}
 			if ( !skipErrorReport ) {
 				netDiscover.discoverErrorOccur(e.getErrorCode(), e.getMessage() + " Discover Node:" + discoverNode.getIpAddress() );
-				
 			}
-			
 		}
 		finally {
 			netDiscover.discoveredElement(discoverNode, discoverNode.getSubnetId());
