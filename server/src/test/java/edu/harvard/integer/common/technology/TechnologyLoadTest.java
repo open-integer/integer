@@ -57,6 +57,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlTechnology;
@@ -238,7 +239,14 @@ public class TechnologyLoadTest {
 		
 		logger.info("ServiceElement read in: " + yaml.dump(load));
 		
-		yamlManager.loadVendorContainment(content);
+		try {
+			yamlManager.loadVendorContainment(content);
+		} catch (IntegerException e) {
+			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
+				logger.warn("OID not found! HostResourcesContinment not read!!");
+			else
+				fail(e.toString());
+		}
 	}
 	
 	@Test
@@ -260,6 +268,13 @@ public class TechnologyLoadTest {
 		
 		logger.info("ServiceElement read in: " + yaml.dump(load));
 		
-		yamlManager.loadVendorContainment(content);
+		try {
+			yamlManager.loadVendorContainment(content);
+		} catch (IntegerException e) {
+			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
+				logger.warn("OID not found! ParentChildContainment not read!!");
+			else
+				fail(e.toString());
+		}
 	}
 }
