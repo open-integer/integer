@@ -72,6 +72,8 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.persistance.dao.topology.SignatureDAO;
+import edu.harvard.integer.service.persistance.dao.topology.SignatureValueOperatorDAO;
 import edu.harvard.integer.service.persistance.dao.topology.SnmpServiceElementTypeOverrideDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
@@ -426,5 +428,15 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	@Override
 	public DataPreLoadFileDAO getDataPreLoadFileDAO() {
 		return new DataPreLoadFileDAO(em, logger);
+	}
+	
+	@Override
+	public SignatureDAO getSignatureDAO() {
+		return new SignatureDAO(em, logger);
+	}
+	
+	@Override
+	public SignatureValueOperatorDAO getSignatureValueOperatorDAO() {
+		return new SignatureValueOperatorDAO(em, logger);
 	}
 }
