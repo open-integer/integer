@@ -72,7 +72,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
-        setSize("100%", "100%");
+        setSize("100%", MainClient.WINDOW_HEIGHT+"px");
 		
 		FilterView filterView = createFilterView();
 		westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
