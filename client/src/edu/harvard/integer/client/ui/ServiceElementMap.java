@@ -100,7 +100,7 @@ public class ServiceElementMap extends Layer {
         		}
         		
         	};
-        	HvServiceElementWidget icon = new HvServiceElementWidget(picture, device, mouseClickHandler);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, device, mouseClickHandler);
         	icon.draw(x, y);
         	
         	if (col < icon_col_total)
