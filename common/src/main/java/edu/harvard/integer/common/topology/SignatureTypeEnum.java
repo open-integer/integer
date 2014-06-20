@@ -45,5 +45,6 @@ public enum SignatureTypeEnum {
 	SoftwareVersion,
 	HardwareVersion,
 	Firmware,
+	VendorSubType,
 	Other;
 }

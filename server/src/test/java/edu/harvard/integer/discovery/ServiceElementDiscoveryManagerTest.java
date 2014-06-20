@@ -100,6 +100,11 @@ public class ServiceElementDiscoveryManagerTest {
 	@Inject
 	private SnmpManagerInterface snmpMaager;
 
+	
+
+	private String vendor = "Cisco";
+	private String vendorSubType = "CiscoSubType";
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return TestUtil
@@ -381,7 +386,11 @@ public class ServiceElementDiscoveryManagerTest {
 
 		ServiceElementType type = new ServiceElementType();
 		type.setCategory(CategoryTypeEnum.port);
-		type.addSignatureValue(null, SignatureTypeEnum.Vendor, "Cisco");
+		type.addSignatureValue(null, SignatureTypeEnum.Vendor, vendor);
+		
+		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vendorSubType);
+		
+		type.setVendorSpecificSubType(vendorSubType);
 
 		try {
 			managementObjectCapabilityManager.updateServiceElementType(type);
@@ -418,6 +427,38 @@ public class ServiceElementDiscoveryManagerTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
+	}
+	
+	@Test
+	public void findServiceElementTypeByVendorAndVendorSubType() {
+		
+		ServiceElementType[] serviceElementTypes = null;
+		
+		try {
+			serviceElementTypes = serviceElementDiscoveryManger.getServiceElementTypesBySubtypeAndVendor(vendorSubType, vendor);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		if (serviceElementTypes == null || serviceElementTypes.length == 0) {
+			
+			createServiceElementType();
+
+			try {
+				serviceElementTypes = serviceElementDiscoveryManger.getServiceElementTypesBySubtypeAndVendor(vendorSubType, vendor);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+				fail(e.toString());
+			}	
+		}
+		
+		assert(serviceElementTypes != null);
+		assert(serviceElementTypes.length > 0);
+		
+		logger.info("Found " + serviceElementTypes.length + " ServiceElementTypes for Vendor " + vendor
+				+ " and Subtype " + vendorSubType);
+		
 	}
 
 	@Test

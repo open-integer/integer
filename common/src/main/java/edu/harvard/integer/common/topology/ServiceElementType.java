@@ -282,11 +282,12 @@ public class ServiceElementType extends BaseEntity {
 							foundValue = true;
 							break;
 						}
-						
-						if (!foundValue) {
-							signature.getValueOperators().add(createEuqualValueOperator(value));
-						}
 					}
+					
+					if (!foundValue) {
+						signature.getValueOperators().add(createEuqualValueOperator(value));
+					}
+
 				} else {
 
 					List<SignatureValueOperator> values = new ArrayList<SignatureValueOperator>();

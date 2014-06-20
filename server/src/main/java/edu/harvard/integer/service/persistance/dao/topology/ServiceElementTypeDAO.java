@@ -92,6 +92,7 @@ public class ServiceElementTypeDAO extends BaseDAO {
 			SignatureDAO dao = new SignatureDAO(getEntityManager(), getLogger());
 			
 			List<Signature> dbSignatures = new ArrayList<Signature>();
+			
 			for (Signature signature : serviceElementType.getSignatures()) {
 				dbSignatures.add(dao.update(signature));
 			}
@@ -157,9 +158,39 @@ public class ServiceElementTypeDAO extends BaseDAO {
 	 */
 	public ServiceElementType[] findBySubTypeAndVendor(String subtype,
 			String vendorType) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
 		
+		CriteriaQuery<ServiceElementType> query = criteriaBuilder.createQuery(ServiceElementType.class);
+
+		Root<ServiceElementType> from = query.from(ServiceElementType.class);
+		query.select(from);
+
+		Join<ServiceElementType, Signature> signatures = from.join("signatures");
+		Join<Selection, SignatureValueOperator> values = signatures.join("valueOperators");
 		
-		return null;
+		Join<ServiceElementType, Signature> subTypeSignature = from.join("signatures");
+		Join<Selection, SignatureValueOperator> subTypeValue = subTypeSignature.join("valueOperators");
+		
+		ParameterExpression<String> vendorSubTypeParam = criteriaBuilder
+				.parameter(String.class);
+		
+		ParameterExpression<String> vendorParam = criteriaBuilder
+				.parameter(String.class);
+
+		
+		query.select(from).where(criteriaBuilder.and(
+				criteriaBuilder.equal(subTypeValue.get("value"), vendorSubTypeParam),
+				criteriaBuilder.equal(values.get("value"), vendorParam)));
+
+		TypedQuery<ServiceElementType> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(vendorSubTypeParam, subtype);
+		typeQuery.setParameter(vendorParam, vendorType);
+
+		List<ServiceElementType> resultList = typeQuery.getResultList();
+
+		return (ServiceElementType[]) resultList
+				.toArray(new ServiceElementType[resultList.size()]);
 	}
 
 }
