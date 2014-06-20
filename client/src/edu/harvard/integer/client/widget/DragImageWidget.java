@@ -12,6 +12,7 @@ import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.client.ui.HvServiceElementWidget;
 import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
 import edu.harvard.integer.common.topology.ServiceElement;

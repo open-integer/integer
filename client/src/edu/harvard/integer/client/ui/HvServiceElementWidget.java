@@ -1,4 +1,4 @@
-package edu.harvard.integer.client.widget;
+package edu.harvard.integer.client.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +26,9 @@ import com.emitrom.lienzo.client.core.types.Shadow;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
 
-import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
+import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElement;
 

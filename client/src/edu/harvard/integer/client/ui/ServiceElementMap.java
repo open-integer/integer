@@ -6,7 +6,6 @@ import com.emitrom.lienzo.client.core.shape.Layer;
 import com.emitrom.lienzo.client.core.shape.Picture;
 
 import edu.harvard.integer.client.resources.Resources;
-import edu.harvard.integer.client.widget.HvServiceElementWidget;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
