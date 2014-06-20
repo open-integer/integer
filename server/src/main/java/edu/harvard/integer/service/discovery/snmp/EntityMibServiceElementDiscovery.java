@@ -401,7 +401,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								 if ( iset == null ) {
 									 iset = new ServiceElementType();
 									 iset.setCategory(CategoryTypeEnum.portIf);
-									 iset.addSignatureValue(SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
+									 iset.addSignatureValue(null, SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
 									 iset.setVendorSpecificSubType(ifSubType);
 									 
 									 List<ID> attributes = new ArrayList<>();
@@ -678,10 +678,10 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		set.setVendorSpecificSubType(pr.getEntPhysicalVendorType());
 		set.setDescription(pr.getEntPhysicalDescr());
 		
-		set.addSignatureValue(SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
-		set.addSignatureValue(SignatureTypeEnum.Firmware, pr.getEntPhysicalFirmwareRev());
-		set.addSignatureValue(SignatureTypeEnum.SoftwareVersion, pr.getEntPhysicalSoftwareRev());
-		set.addSignatureValue(SignatureTypeEnum.Model, pr.getEntPhysicalModelName());
+		set.addSignatureValue(null, SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
+		set.addSignatureValue(null, SignatureTypeEnum.Firmware, pr.getEntPhysicalFirmwareRev());
+		set.addSignatureValue(null, SignatureTypeEnum.SoftwareVersion, pr.getEntPhysicalSoftwareRev());
+		set.addSignatureValue(null, SignatureTypeEnum.Model, pr.getEntPhysicalModelName());
 		
 		logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& create an service element type " + pr.getEntPhysicalVendorType());
 		

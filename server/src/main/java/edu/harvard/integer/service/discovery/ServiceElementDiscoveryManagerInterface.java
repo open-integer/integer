@@ -168,7 +168,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	
 	
 	/**
-	 * Find the ServiceElements for the given vendorSubType and vendor. 
+	 * Find the ServiceElementTypes for the given vendorSubType and vendor. 
 	 * @return a list of ServiceElements that match the given subtype and vendor.
 	 * @throws IntegerException
 	 */

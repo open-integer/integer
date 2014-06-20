@@ -319,8 +319,9 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				SnmpContainmentType containmentType = checkContainmentType(discoverNode.getElementEndPoint());  
 				
 		    	set = new ServiceElementType();
-		    	set.addSignatureValue(SignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()));
-		    	set.addSignatureValue(SignatureTypeEnum.Model , model);
+		    	set.addSignatureValue(null, SignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()));
+		    	set.addSignatureValue(null, SignatureTypeEnum.Model , checkContainmentType(discoverNode.getElementEndPoint()).name());
+		    	
 				set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 				
 				ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, containmentType);

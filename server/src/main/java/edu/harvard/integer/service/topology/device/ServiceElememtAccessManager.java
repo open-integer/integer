@@ -120,12 +120,16 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 		
 		ServiceElement[] topLevel = serviceElementDAO.findTopLevelServiceElements();
 		
+		
 		for (int i = 0; i < topLevel.length; i++) {
 			logger.info("Top level Service element " + topLevel[i].getID());
 			
 			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
 				
 		}
+		
+		
+		
 		return topLevel;
 	}
 	
