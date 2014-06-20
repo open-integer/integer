@@ -33,7 +33,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The HvServiceElementIconWidget class represents a Service Element Widget object displaying on the screen.
+ * The ServiceElementWidget class represents a Service Element Widget object displaying on the screen.
  * This is a subclass class extended from com.emitrom.lienzo.client.core.shape.Group.
  * It includes element icon image, multiple lines and text label so that they can be moved around together by mouse
  * 
