@@ -149,4 +149,17 @@ public class ServiceElementTypeDAO extends BaseDAO {
 		return findByStringField(name, "name", ServiceElementType.class);
 	}
 
+
+	/**
+	 * @param subtype
+	 * @param vendorType
+	 * @return
+	 */
+	public ServiceElementType[] findBySubTypeAndVendor(String subtype,
+			String vendorType) {
+		
+		
+		return null;
+	}
+
 }

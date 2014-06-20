@@ -69,10 +69,12 @@ import edu.harvard.integer.common.service.managementobjectcapability.snmp.Import
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
+import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
+import edu.harvard.integer.service.discovery.snmp.containment.ContainmentGenerator;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
@@ -81,34 +83,33 @@ import edu.harvard.integer.util.FileUtil;
 
 /**
  * @author David Taylor
- *
+ * 
  */
 @RunWith(Arquillian.class)
 public class ServiceElementDiscoveryManagerTest {
 
-
 	@Inject
 	private Logger logger;
-	
-	@Inject 
+
+	@Inject
 	private ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManger;
-	
+
 	@Inject
 	private ManagementObjectCapabilityManagerInterface managementObjectCapabilityManager;
-	
+
 	@Inject
 	private SnmpManagerInterface snmpMaager;
-	
-	
+
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return TestUtil.createTestArchive("ServiceElementDiscoveryManagerTest.war");
+		return TestUtil
+				.createTestArchive("ServiceElementDiscoveryManagerTest.war");
 	}
-	
+
 	@Before
 	public void initializeLogger() {
-		//BasicConfigurator.configure();
-		//org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
+		// BasicConfigurator.configure();
+		// org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
 	}
 
 	private SNMP createOid(String name, String oidString) {
@@ -116,166 +117,178 @@ public class ServiceElementDiscoveryManagerTest {
 		oid.setName(name);
 		oid.setDisplayName(name);
 		oid.setOid(oidString);
-		
+
 		return oid;
 	}
-	
+
 	@Test
 	public void getTopLevelPolls() {
-		
+
 		System.out.println("GetToplLevelPolls");
-		
-		List<SNMP> topLevelPolls = serviceElementDiscoveryManger.getToplLevelOIDs();
-		
-		assert(topLevelPolls != null);
-		
+
+		List<SNMP> topLevelPolls = serviceElementDiscoveryManger
+				.getToplLevelOIDs();
+
+		assert (topLevelPolls != null);
+
 		if (topLevelPolls.size() == 0) {
 			// Running with H2 db. so need to create the data.
 
 			try {
-				snmpMaager.updateSNMP(createOid("sysName", CommonSnmpOids.sysName));
-				snmpMaager.updateSNMP(createOid("sysDescr", CommonSnmpOids.sysDescr));
-				snmpMaager.updateSNMP(createOid("sysLocation", CommonSnmpOids.sysLocation));
-				snmpMaager.updateSNMP(createOid("sysObjectID", CommonSnmpOids.sysObjectID));
-				
-				topLevelPolls = serviceElementDiscoveryManger.getToplLevelOIDs();
-				
+				snmpMaager.updateSNMP(createOid("sysName",
+						CommonSnmpOids.sysName));
+				snmpMaager.updateSNMP(createOid("sysDescr",
+						CommonSnmpOids.sysDescr));
+				snmpMaager.updateSNMP(createOid("sysLocation",
+						CommonSnmpOids.sysLocation));
+				snmpMaager.updateSNMP(createOid("sysObjectID",
+						CommonSnmpOids.sysObjectID));
+
+				topLevelPolls = serviceElementDiscoveryManger
+						.getToplLevelOIDs();
+
 			} catch (IntegerException e) {
-				
+
 				e.printStackTrace();
 				fail(e.toString());
 			}
-			
+
 		}
-		
-		assert(topLevelPolls.size() > 0);
-		
+
+		assert (topLevelPolls.size() > 0);
+
 		for (ServiceElementManagementObject serviceElementManagementObject : topLevelPolls) {
-			
-			logger.info("Got " + serviceElementManagementObject.getName() + " " 
+
+			logger.info("Got " + serviceElementManagementObject.getName() + " "
 					+ serviceElementManagementObject.getDisplayName());
 		}
-		
+
 	}
-	
-	
+
 	@Test
 	public void createSnmpVendorDiscoveryTemplate() {
-		
+
 		SnmpManagerInterface snmpManager = null;
 		try {
-			snmpManager = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+			snmpManager = DistributionManager
+					.getManager(ManagerTypeEnum.SnmpManager);
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
-		
+
 		SnmpVendorDiscoveryTemplate template = new SnmpVendorDiscoveryTemplate();
 		IDType type = new IDType(VendorIdentifier.class.getName());
 		ID vendorId = new ID(Long.valueOf(9), "Cisco", type);
 		template.setVendorId(vendorId);
 		try {
 			logger.info("Manager is " + snmpManager);
-			assert(snmpManager != null);
-			
+			assert (snmpManager != null);
+
 			template.setModel(snmpManager.getSNMPByOid(CommonSnmpOids.sysDescr));
-			template.setFirmware(snmpManager.getSNMPByOid(CommonSnmpOids.sysDescr));
-			template.setSoftwareRevision(snmpManager.getSNMPByOid(CommonSnmpOids.sysDescr));
-			
+			template.setFirmware(snmpManager
+					.getSNMPByOid(CommonSnmpOids.sysDescr));
+			template.setSoftwareRevision(snmpManager
+					.getSNMPByOid(CommonSnmpOids.sysDescr));
+
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
-		
+
 		template.setDescription("Cisco Snmp Vendor template");
 		DiscoveryParseString parseString = new DiscoveryParseString();
 		parseString.setName("Cisco SysDescr parse string");
-		
+
 		List<DiscoveryParseElement> elements = new ArrayList<DiscoveryParseElement>();
-		
+
 		DiscoveryParseElement element = new DiscoveryParseElement();
 		element.setParseElementType(DiscoveryParseElementTypeEnum.FirmwareVersion);
 		element.setParseElement("Cisco IOS Software,");
 		element.setName("Firmware");
 		elements.add(element);
-		
+
 		element = new DiscoveryParseElement();
 		element.setParseElementType(DiscoveryParseElementTypeEnum.SoftwareVersion);
 		element.setParseElement(", Version");
 		element.setName("Software");
 		elements.add(element);
-		
+
 		parseString.setParseStrings(elements);
 		template.setParseString(parseString);
-		
+
 		try {
-			template = serviceElementDiscoveryManger.updateSnmpVendorDiscoveryTemplate(template);
-			
+			template = serviceElementDiscoveryManger
+					.updateSnmpVendorDiscoveryTemplate(template);
+
 			logger.info("Created SnmpVendorDiscoveryTemplate " + template);
-		} catch (IntegerException e) {
-		
-			e.printStackTrace();
-			fail(e.toString());
-		}
-	}
-	
-	public void loadAllSnmpVendorTemplates() {
-		try {
-			SnmpVendorDiscoveryTemplate[] templates = serviceElementDiscoveryManger.getAllSnmpVendorDiscoveryTemplates();
-			assert (templates != null);
-			assert (templates.length > 0);
-			
-			logger.info("Found " + templates.length + " SnmpVendorTempaltes");
-			
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
-			
 			fail(e.toString());
 		}
 	}
-	
+
+	public void loadAllSnmpVendorTemplates() {
+		try {
+			SnmpVendorDiscoveryTemplate[] templates = serviceElementDiscoveryManger
+					.getAllSnmpVendorDiscoveryTemplates();
+			assert (templates != null);
+			assert (templates.length > 0);
+
+			logger.info("Found " + templates.length + " SnmpVendorTempaltes");
+
+		} catch (IntegerException e) {
+
+			e.printStackTrace();
+
+			fail(e.toString());
+		}
+	}
+
 	@Test
 	public void getVendorByID() {
-		
+
 		String vendorId = new String("9");
-		
+
 		try {
-			VendorIdentifier vendorIdentifier = serviceElementDiscoveryManger.getVendorIdentifier(vendorId);
+			VendorIdentifier vendorIdentifier = serviceElementDiscoveryManger
+					.getVendorIdentifier(vendorId);
 			if (vendorIdentifier == null) {
 
 				vendorIdentifier = new VendorIdentifier();
 				vendorIdentifier.setVendorOid(vendorId);
 				vendorIdentifier.setName("Cisco");
-				
-				serviceElementDiscoveryManger.updateVendorIdentifier(vendorIdentifier);
-				
-				vendorIdentifier = serviceElementDiscoveryManger.getVendorIdentifier(vendorId);
-			
-				
+
+				serviceElementDiscoveryManger
+						.updateVendorIdentifier(vendorIdentifier);
+
+				vendorIdentifier = serviceElementDiscoveryManger
+						.getVendorIdentifier(vendorId);
+
 			}
-			
+
 			assert (vendorIdentifier != null);
-			
-			logger.info("Found vendor " + vendorIdentifier.getName() + " for vendorId " + vendorId);
-			
+
+			logger.info("Found vendor " + vendorIdentifier.getName()
+					+ " for vendorId " + vendorId);
+
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
-			
+
 			fail("Error loading Vendor by ID! " + e.toString());
 		}
 	}
-	
-	
+
 	private void loadProductMib(String name) {
 
 		MIBImportInfo mibFile = new MIBImportInfo();
 		mibFile.setFileName(name);
 		mibFile.setName(mibFile.getFileName());
-		
+
 		File file = new File(ImportMIBTest.MibDir + name);
 		mibFile.setMib(FileUtil.readInMIB(file));
 
@@ -286,250 +299,375 @@ public class ServiceElementDiscoveryManagerTest {
 			fail("Error loading " + name + " Error " + e1.toString());
 		}
 	}
-	
+
 	private void loadMib(String name) {
 
 		MIBImportInfo mibFile = new MIBImportInfo();
 		mibFile.setFileName(name);
 		mibFile.setName(mibFile.getFileName());
-		
+
 		File file = new File(ImportMIBTest.MibDir + name);
 		mibFile.setMib(FileUtil.readInMIB(file));
 
 		try {
-			snmpMaager.importMib(new MIBImportInfo[] { mibFile} );
+			snmpMaager.importMib(new MIBImportInfo[] { mibFile });
 		} catch (IntegerException e1) {
 			e1.printStackTrace();
 			fail("Error loading " + name + " Error " + e1.toString());
 		}
 	}
-	
+
 	@Test
 	public void getVendorIndentifierSubTree() {
-		
+
 		loadMib("SNMPv2-SMI");
 		loadProductMib("CISCO-SMI.my");
 		loadProductMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
-		
+
 		String rootOid = "1.3.6.1.4.1.9.12.3.1.9";
 		try {
 
-			List<VendorIdentifier> vendorSubTree = serviceElementDiscoveryManger.findVendorSubTree(rootOid);
+			List<VendorIdentifier> vendorSubTree = serviceElementDiscoveryManger
+					.findVendorSubTree(rootOid);
 			if (vendorSubTree == null) {
 				loadMib("SNMPv2-SMI");
 				loadProductMib("CISCO-SMI.my");
 				loadProductMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
-				
-				vendorSubTree = serviceElementDiscoveryManger.findVendorSubTree(rootOid);
+
+				vendorSubTree = serviceElementDiscoveryManger
+						.findVendorSubTree(rootOid);
 			}
-			
-			assert(vendorSubTree != null);
-			
-			logger.info("Found " + vendorSubTree.size() + " VendorIdentifers in subtree of " + rootOid);
-			
-			assert(vendorSubTree.size() > 0);
-			
+
+			assert (vendorSubTree != null);
+
+			logger.info("Found " + vendorSubTree.size()
+					+ " VendorIdentifers in subtree of " + rootOid);
+
+			assert (vendorSubTree.size() > 0);
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
-			fail("Error getting subtree of " + rootOid + " Error " + e.toString());
+			fail("Error getting subtree of " + rootOid + " Error "
+					+ e.toString());
 		}
 	}
-	
-	
+
 	@Test
 	public void getVendorIdentifierBySubTypeName() {
-	
+
 		try {
-			VendorIdentifier vendorIdentifier = serviceElementDiscoveryManger.getVenderIdentiferBySubTypeName("cevModuleCommonCards");
+			VendorIdentifier vendorIdentifier = serviceElementDiscoveryManger
+					.getVenderIdentiferBySubTypeName("cevModuleCommonCards");
 			if (vendorIdentifier == null) {
 				loadMib("SNMPv2-SMI");
 				loadProductMib("CISCO-SMI.my");
 				loadProductMib("CISCO-ENTITY-VENDORTYPE-OID-MIB.my");
-				
-				vendorIdentifier = serviceElementDiscoveryManger.getVenderIdentiferBySubTypeName("cevModuleCommonCards");
+
+				vendorIdentifier = serviceElementDiscoveryManger
+						.getVenderIdentiferBySubTypeName("cevModuleCommonCards");
 			}
-			
-			assert(vendorIdentifier != null);
-			
+
+			assert (vendorIdentifier != null);
+
 		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	@Test
 	public void createServiceElementType() {
-		
+
 		ServiceElementType type = new ServiceElementType();
 		type.setCategory(CategoryTypeEnum.port);
-		type.addSignatureValue(SignatureTypeEnum.Vendor, "Cisco");
-	
+		type.addSignatureValue(null, SignatureTypeEnum.Vendor, "Cisco");
+
 		try {
 			managementObjectCapabilityManager.updateServiceElementType(type);
-		
+
 		} catch (IntegerException e) {
-	
+
 			e.printStackTrace();
 			fail(e.toString());
 		}
-		
+
 	}
-	
+
 	@Test
 	public void getServiceElementByCategoryAndVendor() {
 		try {
-			
+
 			createServiceElementType();
-			
-			assert(serviceElementDiscoveryManger != null);
-			
-			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.port, "Cisco");
-			
-			assert(serviceElementTypes != null);
-	//		assert(serviceElementTypes.length > 0);
-			
-			logger.info("Found " + serviceElementTypes.length + " ServiceElementTypes for category 'Port' and Vendor 'Cisco'");
-			
+
+			assert (serviceElementDiscoveryManger != null);
+
+			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger
+					.getServiceElementTypesByCategoryAndVendor(
+							CategoryTypeEnum.port, "Cisco");
+
+			assert (serviceElementTypes != null);
+			assert (serviceElementTypes.length > 0);
+
+			logger.info("Found "
+					+ serviceElementTypes.length
+					+ " ServiceElementTypes for category 'Port' and Vendor 'Cisco'");
+
 		} catch (IntegerException e) {
-	
+
 			e.printStackTrace();
 			fail(e.toString());
 		}
 	}
-	
+
 	@Test
 	public void createVendorContainmentSelector() {
 		VendorContainmentSelector vendorContainmentSelector = new VendorContainmentSelector();
-		vendorContainmentSelector.setContainmentId(new ID(Long.valueOf(1), "SnmpContainment", new IDType(SnmpContainment.class.getName())));
+		vendorContainmentSelector
+				.setContainmentId(new ID(Long.valueOf(1), "SnmpContainment",
+						new IDType(SnmpContainment.class.getName())));
 		vendorContainmentSelector.setFirmware("Firmware");
 		vendorContainmentSelector.setModel("Model");
 		vendorContainmentSelector.setSoftwareVersion("12.32A");
-		vendorContainmentSelector.setVendor("Vendor");;
-		
+		vendorContainmentSelector.setVendor("Vendor");
+		;
+
 		try {
-			serviceElementDiscoveryManger.getSnmpContainment(vendorContainmentSelector);
+			serviceElementDiscoveryManger
+					.getSnmpContainment(vendorContainmentSelector);
 		} catch (IntegerException e) {
-		
+
 			e.printStackTrace();
 			fail(e.toString());
 		}
-		
+
 	}
-	
-	
+
 	public void getAllVendorContainmentSelectors() {
 		try {
-			VendorContainmentSelector[] selectors = serviceElementDiscoveryManger.getAllVendorContainmentSelectors();
+			VendorContainmentSelector[] selectors = serviceElementDiscoveryManger
+					.getAllVendorContainmentSelectors();
 			if (selectors == null || selectors.length == 0) {
 				createVendorContainmentSelector();
-				selectors = serviceElementDiscoveryManger.getAllVendorContainmentSelectors();
+				selectors = serviceElementDiscoveryManger
+						.getAllVendorContainmentSelectors();
 			}
-			
-			assert(selectors != null);
-			
-			logger.info("Found " + selectors.length + " VendorContianmentSelectors");
-			
-			assert(selectors.length > 0);
-			
+
+			assert (selectors != null);
+
+			logger.info("Found " + selectors.length
+					+ " VendorContianmentSelectors");
+
+			assert (selectors.length > 0);
+
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
 			fail(e.toString());
 		}
 	}
-	
-	
+
+	@Test
+	public void getVendorContainmentSelector() {
+		
+		String firmwareVer = "Firmware1";
+		String model = "ModelT";
+		String softwareVer = "2.1";
+		String sysId = "Vendor1";
+		
+		VendorContainmentSelector vs = new VendorContainmentSelector();
+		vs.setFirmware(firmwareVer);
+		vs.setModel(model.trim());
+		vs.setSoftwareVersion(softwareVer);
+		vs.setVendor(sysId);
+
+		ServiceElementType set = null;
+		SnmpContainment sc = null;
+
+		try {
+			sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+		if (sc != null && sc instanceof SnmpContainment) {
+			try {
+				set = serviceElementDiscoveryManger.getServiceElementTypeById(sc
+						.getServiceElementTypeId());
+			} catch (IntegerException e) {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+		//	discoverNode.setTopServiceElementType(set);
+		}
+
+		if (sc == null) {
+
+			SnmpContainmentType containmentType = SnmpContainmentType.EntityMib;
+
+			set = new ServiceElementType();
+			set.addSignatureValue(null, SignatureTypeEnum.Vendor,sysId);
+			set.addSignatureValue(null, SignatureTypeEnum.Model, model);
+			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
+
+//			ContainmentGenerator.setUpTopServiceElementProperty(
+//					discoverNode.getElementEndPoint(), set, containmentType);
+
+			try {
+				set = managementObjectCapabilityManager.updateServiceElementType(set);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+		//	discoverNode.setTopServiceElementType(set);
+
+			try {
+				sc = ContainmentGenerator.generator(set, containmentType);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+			SnmpContainment updateSnmpContainment = null;
+			try {
+				updateSnmpContainment = managementObjectCapabilityManager
+						.updateSnmpContainment(sc);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+
+			VendorContainmentSelector vendorContainmentSelector = new VendorContainmentSelector();
+			vendorContainmentSelector.setContainmentId(updateSnmpContainment
+					.getID());
+			vendorContainmentSelector.setFirmware(firmwareVer);
+			vendorContainmentSelector.setModel(model);
+			vendorContainmentSelector.setSoftwareVersion(softwareVer);
+			vendorContainmentSelector.setVendor(sysId.toString());
+
+			try {
+				serviceElementDiscoveryManger.updateVendorContainmentSelector(vendorContainmentSelector);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+				fail(e.toString());
+			}
+
+			logger.info("Created SnmpContainment "
+					+ updateSnmpContainment.getID());
+
+		}
+
+		try {
+			sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
+			assert(sc != null);
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+
 	@Test
 	public void createSnmpContainment() {
 		SnmpContainment snmpContainment = new SnmpContainment();
 		snmpContainment.setContainmentType(SnmpContainmentType.EntityMib);
 		snmpContainment.setName("MyContainment");
-		snmpContainment.setServiceElementTypeId(new ID(Long.valueOf(2), "ServiceElementType", new IDType(ServiceElementType.class.getName())));
-		
+		snmpContainment.setServiceElementTypeId(new ID(Long.valueOf(2),
+				"ServiceElementType", new IDType(ServiceElementType.class
+						.getName())));
+
 		SnmpLevelOID snmpLevelOid = new SnmpLevelOID();
 		snmpLevelOid.setName("My level oid");
-		
+
 		SNMP contextOID = new SNMP();
 		contextOID.setOid(CommonSnmpOids.sysName);
 		contextOID.setName("sysName");
 		snmpLevelOid.setContextOID(contextOID);
-		
+
 		SNMP descriminatorOID = new SNMP();
 		descriminatorOID.setOid(CommonSnmpOids.sysObjectID);
 		descriminatorOID.setName("SysObjectID");
 		snmpLevelOid.setDescriminatorOID(descriminatorOID);
-		
-		
+
 		List<SnmpServiceElementTypeDiscriminator> descriminators = new ArrayList<SnmpServiceElementTypeDiscriminator>();
 		for (int i = 0; i < 10; i++)
 			descriminators.add(createSETDiscriminator(i));
-		
+
 		snmpLevelOid.setDisriminators(descriminators);
-		
+
 		List<SnmpLevelOID> list = new ArrayList<SnmpLevelOID>();
 		list.add(snmpLevelOid);
 		snmpContainment.setSnmpLevels(list);
-		
+
 		try {
-			SnmpContainment updateSnmpContainment = managementObjectCapabilityManager.updateSnmpContainment(snmpContainment);
-			logger.info("Created SnmpContainment " + updateSnmpContainment.getID());
-			
+			SnmpContainment updateSnmpContainment = managementObjectCapabilityManager
+					.updateSnmpContainment(snmpContainment);
+			logger.info("Created SnmpContainment "
+					+ updateSnmpContainment.getID());
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
 	}
-	
+
 	private SnmpServiceElementTypeDiscriminator createSETDiscriminator(int value) {
 		SnmpServiceElementTypeDiscriminator serviceElementTypeDescriminator = new SnmpServiceElementTypeDiscriminator();
-		
-		ID serviceElementTypeId = new ID(Long.valueOf(value), "SET", new IDType(ServiceElementType.class.getName()));
-		serviceElementTypeDescriminator.setServiceElementTypeId(serviceElementTypeId);
+
+		ID serviceElementTypeId = new ID(Long.valueOf(value), "SET",
+				new IDType(ServiceElementType.class.getName()));
+		serviceElementTypeDescriminator
+				.setServiceElementTypeId(serviceElementTypeId);
 		SnmpServiceElementTypeDescriminatorIntegerValue descriminatorValue = new SnmpServiceElementTypeDescriminatorIntegerValue();
 		descriminatorValue.setValue(Integer.valueOf(value));
-		serviceElementTypeDescriminator.setDiscriminatorValue(descriminatorValue);
-		
+		serviceElementTypeDescriminator
+				.setDiscriminatorValue(descriminatorValue);
+
 		return serviceElementTypeDescriminator;
 	}
-	
+
 	@Test
 	public void getSnmpContainment() {
 		createSnmpContainment();
-		
-		try {
-			 SnmpContainment[] containments = managementObjectCapabilityManager.getAllSnmpContainments();
 
-			 assert(containments != null);
-			 assert(containments.length > 0);
-				
-			logger.info("Found " + containments.length + " SnmpContainments"); 
-			
+		try {
+			SnmpContainment[] containments = managementObjectCapabilityManager
+					.getAllSnmpContainments();
+
+			assert (containments != null);
+			assert (containments.length > 0);
+
+			logger.info("Found " + containments.length + " SnmpContainments");
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
 	}
-	
+
 	@Test
 	public void getSnmpContainmentById() {
 		createSnmpContainment();
-		
+
 		try {
-			 SnmpContainment[] containments = managementObjectCapabilityManager.getAllSnmpContainments();
-			 if (containments != null)
-				 logger.info("Found " + containments.length + " SnmpContainments"); 
-			
-			assert(containments != null);
-			assert(containments.length > 0);
-			
+			SnmpContainment[] containments = managementObjectCapabilityManager
+					.getAllSnmpContainments();
+			if (containments != null)
+				logger.info("Found " + containments.length
+						+ " SnmpContainments");
+
+			assert (containments != null);
+			assert (containments.length > 0);
+
 			for (SnmpContainment snmpContainment : containments) {
-				SnmpContainment snmpContainmentById = managementObjectCapabilityManager.getSnmpContainmentById(snmpContainment.getID());
-				assert(snmpContainmentById != null);
-				
-				logger.info("found SnmpContainment " + snmpContainmentById.getID());
+				SnmpContainment snmpContainmentById = managementObjectCapabilityManager
+						.getSnmpContainmentById(snmpContainment.getID());
+				assert (snmpContainmentById != null);
+
+				logger.info("found SnmpContainment "
+						+ snmpContainmentById.getID());
 			}
-			
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());

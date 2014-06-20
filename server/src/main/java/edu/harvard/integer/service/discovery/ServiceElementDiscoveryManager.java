@@ -446,8 +446,11 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	public ServiceElementType[] getServiceElementTypesBySubtypeAndVendor(
 			String subtype, String vendorType) throws IntegerException {
 		
-		// TODO Auto-generated method stub
-		return null;
+		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
+		
+		ServiceElementType[] types = dao.findBySubTypeAndVendor(subtype, vendorType);
+		
+		return types;
 	}
 
 }

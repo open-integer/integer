@@ -351,9 +351,9 @@ public class ManagementObjectCapbilityManagerTest {
 	public void createServiceElementType() {
 		ServiceElementType type = new ServiceElementType();
 		type.setFeatureSet("CoolFeature");
-		type.addSignatureValue(SignatureTypeEnum.Vendor, "Cisco");
-		type.addSignatureValue(SignatureTypeEnum.Model, "7604");
-		type.addSignatureValue(SignatureTypeEnum.Firmware, "Firmware");
+		type.addSignatureValue(null, SignatureTypeEnum.Vendor, "Cisco");
+		type.addSignatureValue(null, SignatureTypeEnum.Model, "7604");
+		type.addSignatureValue(null, SignatureTypeEnum.Firmware, "Firmware");
 		type.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 
 		type.setApplicabilities(TestUtil.createIdList(10, Applicability.class,

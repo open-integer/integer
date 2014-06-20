@@ -130,7 +130,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			setCpu = new ServiceElementType();
-			setCpu.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
+			setCpu.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			setCpu.setCategory(CategoryTypeEnum.cpu);
 			setCpu.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -170,7 +170,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			setPrinter = new ServiceElementType();
-			setPrinter.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
+			setPrinter.addSignatureValue(null,SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			setPrinter.setCategory(CategoryTypeEnum.printer);
 			setPrinter.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -209,7 +209,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			setIf = new ServiceElementType();
-			setIf.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
+			setIf.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			setIf.setCategory(CategoryTypeEnum.portIf);
 			setIf.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -249,7 +249,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
             diskType = new ServiceElementType();
-			diskType.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
+			diskType.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			diskType.setCategory(CategoryTypeEnum.disk);
 			diskType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -305,7 +305,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			swType = new ServiceElementType();
-			swType.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
+			swType.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			swType.setCategory(CategoryTypeEnum.software);
 			swType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
@@ -361,7 +361,7 @@ public class ContainmentGenerator {
 		if ( sets == null || sets.length == 0 ) {
 			
 			storageType = new ServiceElementType();
-			storageType.addSignatureValue(SignatureTypeEnum.Vendor, serviceElmType.getVendor());
+			storageType.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			
 			storageType.setCategory(CategoryTypeEnum.storage);
 			storageType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
