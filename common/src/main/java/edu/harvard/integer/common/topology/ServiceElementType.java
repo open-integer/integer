@@ -266,11 +266,18 @@ public class ServiceElementType extends BaseEntity {
 	}
 
 	public void addSignatureValue(SignatureTypeEnum signatureType, String value) {
+		
+		if ( value != null ) {
+			value = value.trim();
+		}
 		if (signatures == null)
 			signatures = new ArrayList<Signature>();
 
+		boolean foundSig = false;		
 		for (Signature signature : signatures) {
 			if (signatureType.equals(signature.getSignatureType())) {
+				
+				foundSig = true;
 				if (signature.getValueOperators() != null) {
 
 					if (signature.getValueOperators().size() > 0)
@@ -293,6 +300,21 @@ public class ServiceElementType extends BaseEntity {
 					signature.setValueOperators(values);
 				}
 			}
+		}
+		
+		if ( !foundSig ) {
+			
+			Signature signature = new Signature();
+			signatures.add(signature);
+			
+			signature.setSignatureType(signatureType);
+			SignatureValueOperator valueOperator = new SignatureValueOperator();
+			valueOperator.setValue(value);
+			valueOperator.setOperator(ValueOpertorEnum.Equal);
+			
+			List<SignatureValueOperator> values = new ArrayList<SignatureValueOperator>();
+			values.add(valueOperator);
+			signature.setValueOperators(values);
 		}
 	}
 
