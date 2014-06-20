@@ -50,15 +50,19 @@ import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.common.discovery.SnmpLevelOID;
+import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -230,6 +234,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    if ( dps != null ) {
 		    	firmwareVer = dps.parseElement(DiscoveryParseElementTypeEnum.FirmwareVersion, sysInfo.getSysDescr());
 		    	model = dps.parseElement(DiscoveryParseElementTypeEnum.Model, sysInfo.getSysDescr());
+		    	model = model.trim();
+		    	
 		    	softwareVer = dps.parseElement(DiscoveryParseElementTypeEnum.SoftwareVersion, sysInfo.getSysDescr());
 		    }
 		    List<VariableBinding> vbs = new ArrayList<>();
@@ -256,7 +262,6 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    	}
 		    	vbs.add(vb);
 		    }
-		    
 		    if ( softwareVer == null && template.getSoftwareRevision() != null ) {
 		    	VariableBinding vb = null;
 		    	if ( template.getSoftwareRevision().getScalarVB() ) {
@@ -290,16 +295,12 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    }
 		    
 		    if ( model == null ) {
-		    	if ( sysId.size() >=  CommonSnmpOids.vendorSysIdIndex ) {
-		    		model = defineUnknownVendor(sysId.toString()); 
-		    	}
-		    	else {
-		    		model = defineUnknownVendor(sysId.toString());
-		    	}
+		    	
+		    	model = defineUnknownProduct(sysInfo.getSysObjectID()); 
 		    }
 		    VendorContainmentSelector vs = new VendorContainmentSelector();
 		    vs.setFirmware(firmwareVer);
-		    vs.setModel(model);
+		    vs.setModel(model.trim());
 		    vs.setSoftwareVersion(softwareVer);
 		    vs.setVendor(defineUnknownVendor(sysId.toString()));
 		    
@@ -319,7 +320,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				
 		    	set = new ServiceElementType();
 		    	set.addSignatureValue(SignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()));
-		    	set.addSignatureValue(SignatureTypeEnum.Model , checkContainmentType(discoverNode.getElementEndPoint()).name());
+		    	set.addSignatureValue(SignatureTypeEnum.Model , model);
 				set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 				
 				ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, containmentType);
@@ -328,8 +329,16 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				discoverNode.setTopServiceElementType(set);
 				
 				sc = ContainmentGenerator.generator(set, containmentType);
-				
 				SnmpContainment updateSnmpContainment = capMgr.updateSnmpContainment(sc);
+				
+				VendorContainmentSelector vendorContainmentSelector = new VendorContainmentSelector();
+				vendorContainmentSelector.setContainmentId(updateSnmpContainment.getID());
+				vendorContainmentSelector.setFirmware(firmwareVer);
+				vendorContainmentSelector.setModel(model);
+				vendorContainmentSelector.setSoftwareVersion(softwareVer);
+				vendorContainmentSelector.setVendor(sysId.toString());
+				
+				discMgr.updateVendorContainmentSelector(vendorContainmentSelector);			
 				logger.info("Created SnmpContainment " + updateSnmpContainment.getID());
 				
 		    }
@@ -457,11 +466,26 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		
 		VendorIdentifier vendorIdent = discMgr.getVendorIdentifier(vendorOid);
 		if ( vendorIdent != null ) {
-			return vendorIdent.getName();
+			return vendorIdent.getName().toString();
 		}
 		
 		return "Undefine:" + vendorOid;
 	}
+	
+    public String defineUnknownProduct( String vendorOid ) throws IntegerException {
+		
+		VendorIdentifier vendorIdent = discMgr.getVendorIdentifier(vendorOid);
+		if ( vendorIdent != null ) {
+			
+			if ( vendorIdent.getVendorSubtypeName() != null ) {
+				return vendorIdent.getVendorSubtypeName() ;
+			}
+			return vendorIdent.getName().toString();
+		}
+		
+		return "Undefine:" + vendorOid;
+	}
+	
 	
 }
 	    
