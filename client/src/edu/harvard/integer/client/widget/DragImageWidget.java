@@ -79,7 +79,7 @@ public class DragImageWidget extends WidgetLayer {
 
         int i = 0;
         
-        List<HvMapIconWidget> iconList = new ArrayList<HvMapIconWidget>();
+        List<HvServiceElementWidget> iconList = new ArrayList<HvServiceElementWidget>();
         
         for (int row = 0; row < 2; row++) {
         	int x1 = 0;
@@ -92,8 +92,8 @@ public class DragImageWidget extends WidgetLayer {
 	        	int y = row * IMAGE_HEIGHT*2 + 30;
 	        	ServiceElement serviceElement = new ServiceElement();
 	        	serviceElement.setName("192.168.1."+i++);
-	        	HvMapIconWidget icon = new HvMapIconWidget(picture, serviceElement, null);
-	        	HvMapIconWidget last_icon = null;
+	        	HvServiceElementWidget icon = new HvServiceElementWidget(picture, serviceElement, null);
+	        	HvServiceElementWidget last_icon = null;
 	        	
 	        	if (col > 0) {
 	        		last_icon = iconList.get(iconList.size()-1);
@@ -135,7 +135,7 @@ public class DragImageWidget extends WidgetLayer {
         }
         
         // add icons on top
-        for (HvMapIconWidget icon : iconList) {
+        for (HvServiceElementWidget icon : iconList) {
         	if (group == null)
             	add(icon);
         	else {

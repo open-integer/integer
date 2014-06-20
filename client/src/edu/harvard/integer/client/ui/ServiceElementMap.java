@@ -6,43 +6,66 @@ import com.emitrom.lienzo.client.core.shape.Layer;
 import com.emitrom.lienzo.client.core.shape.Picture;
 
 import edu.harvard.integer.client.resources.Resources;
-import edu.harvard.integer.client.widget.HvMapIconWidget;
+import edu.harvard.integer.client.widget.HvServiceElementWidget;
 import edu.harvard.integer.common.topology.ServiceElement;
 
-public class DeviceMap extends Layer {
+/**
+ * The Class ServiceElementMap represents a map object of Integer.
+ * This is a subclass class extended from com.emitrom.lienzo.client.core.shape.Layer.
+ * It is able to display any number of service element by calculating the individual widget size.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
+ */
+public class ServiceElementMap extends Layer {
+	
+	/** The Constant OFFSET_X. */
 	public static final int OFFSET_X = 30;
+	
+	/** The Constant OFFSET_Y. */
 	public static final int OFFSET_Y = 30;
 	
+	/** The icon_row_total. */
 	private int icon_row_total;
+	
+	/** The icon_col_total. */
 	private int icon_col_total;
+	
+	/** The icon_width. */
 	private int icon_width = SystemSplitViewPanel.CONTENT_WIDTH / 5;
+	
+	/** The icon_height. */
 	private int icon_height;
 	
+	/** The selected element. */
 	private ServiceElement selectedElement;
+	
+	/** The selected timestamp. */
 	private long selectedTimestamp;
 	
-	public DeviceMap() {
-		//super(width, height);
-		//demo();
-	}
-
-	public void demo(int total) {
-		ServiceElement[] serviceElements = new ServiceElement[total];
-		for (int i = 0; i < total; i++) {
-			serviceElements[i] = new ServiceElement();
-			serviceElements[i].setName("cisco."+i);
-		}
-		update(serviceElements);
-	}
-
+	/**
+	 * Gets the selected element.
+	 *
+	 * @return the selected element
+	 */
 	public ServiceElement getSelectedElement() {
 		return selectedElement;
 	}
 	
+	/**
+	 * Gets the selected timestamp.
+	 *
+	 * @return the selected timestamp
+	 */
 	public long getSelectedTimestamp() {
 		return selectedTimestamp;
 	}
 
+	/**
+	 * Init_layout.
+	 *
+	 * @param total the total
+	 */
 	private void init_layout(int total) {
 		icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
 		icon_col_total = 2 * icon_row_total;
@@ -53,6 +76,11 @@ public class DeviceMap extends Layer {
 		icon_height = icon_width;
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param result the result
+	 */
 	public void update(ServiceElement[] result) {
 		removeAll();
 		init_layout(result.length);
@@ -73,7 +101,7 @@ public class DeviceMap extends Layer {
         		}
         		
         	};
-        	HvMapIconWidget icon = new HvMapIconWidget(picture, device, mouseClickHandler);
+        	HvServiceElementWidget icon = new HvServiceElementWidget(picture, device, mouseClickHandler);
         	icon.draw(x, y);
         	
         	if (col < icon_col_total)
@@ -85,7 +113,5 @@ public class DeviceMap extends Layer {
         	add(icon);
 		}
 	}
-	
-	
 
 }
