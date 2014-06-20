@@ -29,6 +29,7 @@ import com.emitrom.lienzo.shared.core.types.TextAlign;
 import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 public class HvMapIconWidget extends Group implements NodeMouseClickHandler, NodeDragStartHandler, NodeDragMoveHandler, NodeDragEndHandler {
@@ -53,7 +54,9 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 		setDraggable(true);
 		setListening(true);
 
-		final HvMapIconPopup popup = new HvMapIconPopup(serviceElement.getName(), "Ok", "Cambridge");
+		ID locationId = serviceElement.getPrimaryLocation();
+		String location = locationId != null ? locationId.getName() : "";
+		final HvMapIconPopup popup = new HvMapIconPopup(serviceElement.getName(), serviceElement.getConfiguredState(), location);
 		clippedImageWidth = (int)picture.getClippedImageDestinationWidth();
 		clippedImageHeight = (int)picture.getClippedImageDestinationHeight();
 		fontSize = (int) Math.ceil(clippedImageWidth * 2 / 9);
@@ -64,7 +67,7 @@ public class HvMapIconWidget extends Group implements NodeMouseClickHandler, Nod
 			@Override
 			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
 				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX();
-				int y = 100 - clippedImageHeight/2 + event.getY(); // sum of topBanner and topMenu height - clippedImageHeight/2;
+				int y = 100 + event.getY();
 				popup.setPopupPosition(x, y);
 				popup.show();
 			}  
