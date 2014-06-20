@@ -41,17 +41,17 @@ import org.slf4j.LoggerFactory;
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.RelationMappingTypeEnum;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
-import edu.harvard.integer.common.discovery.SnmpServiceElementTypeContainment;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
-import edu.harvard.integer.common.discovery.SnmpSySOidContainment;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -61,6 +61,7 @@ import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
  * @author dchan
@@ -86,7 +87,7 @@ public class ContainmentGenerator {
 
 		    default: {
 		    
-		    	SnmpServiceElementTypeContainment sc = new SnmpServiceElementTypeContainment();
+		    	SnmpContainment sc = new SnmpContainment();
 				sc.setContainmentType(type);
 				sc.setServiceElementTypeId(serviceElementType.getID());
 				sc.setName("AutoDiscoverContainment");
@@ -108,7 +109,7 @@ public class ContainmentGenerator {
 		
 		SnmpManagerInterface snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
 		
-		SnmpSySOidContainment sc = new SnmpSySOidContainment();
+		SnmpContainment sc = new SnmpContainment();		
 		sc.setContainmentType(SnmpContainmentType.EntityMib);
 		
 		List<SnmpLevelOID> levelOids = new ArrayList<>();
@@ -133,9 +134,39 @@ public class ContainmentGenerator {
         snmp = snmpMgr.getSNMPByName("entPhysicalParentRelPos");
         relation.setSiblingOid(snmp);
         
-        
         levelOid.setRelationToParent(relation);
-        		
+        
+        levelOid = new SnmpLevelOID();
+		levelOids.add(levelOid);
+		
+		levelOid.setName("MappingLevel");
+        snmp = snmpMgr.getSNMPByName("ifEntry");
+		levelOid.setContextOID(snmp);
+		levelOid.setCategory(CategoryTypeEnum.port);
+		
+		SnmpContainmentRelation sRelation = new SnmpContainmentRelation();
+		SNMPTable snmpTbl = (SNMPTable) snmpMgr.getSNMPByName("entAliasMappingEntry");		
+		sRelation.setMappingTable(snmpTbl);
+		sRelation.setMappingType(RelationMappingTypeEnum.FullOid);
+		
+		levelOid.setRelationToParent(sRelation);
+		
+		snmp = snmpMgr.getSNMPByName("entAliasMappingIdentifier");
+		sRelation.setMappingOid(snmp);
+		
+		if ( levelOid.getDisriminators() == null ) {
+		
+			List<SnmpServiceElementTypeDiscriminator> discList = new ArrayList<>();
+			levelOid.setDisriminators(discList);
+		}
+		
+		ServiceElementDiscoveryManagerInterface discMgr =  DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+		ServiceElementType set = discMgr.getServiceElementTypeByName("interface");
+		
+		SnmpServiceElementTypeDiscriminator std = new SnmpServiceElementTypeDiscriminator();
+		std.setServiceElementTypeId(set.getID());
+		
+		levelOid.getDisriminators().add(std);
 		return sc;
 	}
 	
@@ -155,7 +186,7 @@ public class ContainmentGenerator {
 		ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
 		ManagementObjectCapabilityManagerInterface  capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
 		
-		SnmpServiceElementTypeContainment sc = new SnmpServiceElementTypeContainment();
+		SnmpContainment sc = new SnmpContainment();
 		sc.setContainmentType(SnmpContainmentType.HostResourcesMib);		
 		sc.setServiceElementTypeId(serviceElmType.getID());
 		sc.setName("HostResourcesMIbContainment");
