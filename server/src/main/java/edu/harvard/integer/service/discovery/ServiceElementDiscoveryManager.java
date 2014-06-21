@@ -307,7 +307,9 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	public VendorIdentifier getVendorIdentifier(String vendorOid) throws IntegerException {
 		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
 		
-		if (countDots(vendorOid) <= 6)
+		OID o = new OID(vendorOid);
+		
+		if (o.size() <= 6)
 			return dao.findByVendorOid(vendorOid);
 		else
 			return dao.findByVendorSubtypeId(vendorOid);
@@ -451,6 +453,17 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		ServiceElementType[] types = dao.findBySubTypeAndVendor(subtype, vendorType);
 		
 		return types;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypeByName(java.lang.String)
+	 */
+	@Override
+	public ServiceElementType getServiceElementTypeByName(String name)
+			throws IntegerException {
+		
+		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
+        return dao.findByName(name);
 	}
 
 }
