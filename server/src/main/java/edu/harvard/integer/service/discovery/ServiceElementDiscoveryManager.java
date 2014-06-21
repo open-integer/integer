@@ -319,7 +319,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		
 		return dao.findByVendorSubtypeName(vendorSubTypeName);
 	}
-	
+
 	private int countDots(String oidString) {
 		int count = 0;
 		int offset = 0;
@@ -342,6 +342,15 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return oids;
 	}
 
+	@Override
+	public List<VendorIdentifier> findVendorNameSubTree(String name) throws IntegerException {
+		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
+		
+		List<VendorIdentifier> oids = dao.findByNameSubtree(name);
+		
+		return oids;
+	}
+	
 	/*
 	 *  (non-Javadoc)
 	 * 

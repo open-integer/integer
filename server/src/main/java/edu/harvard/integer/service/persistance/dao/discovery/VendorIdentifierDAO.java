@@ -92,6 +92,30 @@ public class VendorIdentifierDAO extends BaseDAO {
 			return null;
 
 	}
+	
+	/**
+	 * @param name
+	 */
+	@SuppressWarnings("unchecked")
+	public List<VendorIdentifier> findByNameSubtree(String name) {
+
+		Query createQuery = getEntityManager().createQuery("select vid from VendorIdentifier vid where vendorSubtypeName like :name");
+		createQuery.setParameter("name", name + "%");
+		
+		List<VendorIdentifier> resultList = createQuery.getResultList();
+
+		if (resultList.size() > 0) {
+			if (getLogger().isDebugEnabled())
+				getLogger().debug(
+						"Found OID " + resultList.get(0).getIdentifier() + " "
+								+ resultList.get(0).getVendorSubtypeId() + " "
+								+ resultList.get(0).getName());
+
+			return resultList;
+		} else
+			return null;
+
+	}
 
 	/**
 	 * @param vendorSubTypeName
