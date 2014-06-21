@@ -148,6 +148,16 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	ServiceElementType getServiceElementTypeById(ID serviceElementTypeId)
 			throws IntegerException;
+	
+	/**
+	 * Find the service element type by name.
+	 * 
+	 * @param serviceElementTypeId
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElementType getServiceElementTypeByName(String name)
+			throws IntegerException;
 
 	/**
 	 * @param id
