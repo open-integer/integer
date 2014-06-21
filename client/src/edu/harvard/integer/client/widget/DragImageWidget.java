@@ -12,6 +12,7 @@ import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.client.ui.ServiceElementWidget;
 import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -79,7 +80,7 @@ public class DragImageWidget extends WidgetLayer {
 
         int i = 0;
         
-        List<HvMapIconWidget> iconList = new ArrayList<HvMapIconWidget>();
+        List<ServiceElementWidget> iconList = new ArrayList<ServiceElementWidget>();
         
         for (int row = 0; row < 2; row++) {
         	int x1 = 0;
@@ -92,8 +93,8 @@ public class DragImageWidget extends WidgetLayer {
 	        	int y = row * IMAGE_HEIGHT*2 + 30;
 	        	ServiceElement serviceElement = new ServiceElement();
 	        	serviceElement.setName("192.168.1."+i++);
-	        	HvMapIconWidget icon = new HvMapIconWidget(picture, serviceElement, null);
-	        	HvMapIconWidget last_icon = null;
+	        	ServiceElementWidget icon = new ServiceElementWidget(picture, serviceElement, null);
+	        	ServiceElementWidget last_icon = null;
 	        	
 	        	if (col > 0) {
 	        		last_icon = iconList.get(iconList.size()-1);
@@ -135,7 +136,7 @@ public class DragImageWidget extends WidgetLayer {
         }
         
         // add icons on top
-        for (HvMapIconWidget icon : iconList) {
+        for (ServiceElementWidget icon : iconList) {
         	if (group == null)
             	add(icon);
         	else {

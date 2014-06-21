@@ -12,7 +12,7 @@ serviceElementTypes:
           index: [ entPhysicalIndex ]
       vendor: cisco
       serviceElementTypeTranslates:
-         - name: 1.3.6.1.4.1.9.12.3.1.3
+         - name: cevChassis 
            mapping: subObjIdentify
            category: chassis
          - name: cevBackplane

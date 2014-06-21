@@ -6,17 +6,11 @@ import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.Tree;
-import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
@@ -25,32 +19,66 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 
+/**
+ * The Class SystemSplitViewPanel represents a split panel object of System
+ * This is a subclass class extended from com.google.gwt.user.client.ui.SplitLayoutPanel
+ * It contains filterPanel at west side and eastPanel at east side
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
+ */
 public class SystemSplitViewPanel extends SplitLayoutPanel {
+	
+	/** The Constant SPLITTER_SIZE. */
 	public static final int SPLITTER_SIZE = 4;
+	
+	/** The Constant CONTENT_WIDTH. */
 	public static final int CONTENT_WIDTH = 1200;
+	
+	/** The Constant CONTENT_HEIGHT. */
 	public static final int CONTENT_HEIGHT = 600;
+	
+	/** The Constant WESTPANEL_WIDTH. */
 	public static final int WESTPANEL_WIDTH = 250;
 	
-	public static SplitLayoutPanel westPanel = null;
+	//public static SplitLayoutPanel westPanel = null;
+	/** The east panel. */
 	public static DockPanel eastPanel = null;
+	
+	/** The east split panel. */
 	public static SplitLayoutPanel eastSplitPanel = null;
+	
+	/** The contained split panel. */
 	public static SplitLayoutPanel containedSplitPanel= null;
+	
+	/** The details tab panel. */
 	public static ServiceElementDetailsTabPanel detailsTabPanel = null;
 	
+	/** The Constant title. */
 	public static final String title = "Device Children";
+	
+	/** The Constant headers. */
 	public static final String[] headers = {"Name", "Status", "Description"};
+	
+	/** The containee tree view. */
 	public static ContaineeTreeView containeeTreeView = null;
 	
+	/** The details button. */
 	public static HvIconButton detailsButton = new HvIconButton("Summary");
 
+	/** The selected element. */
 	public static ServiceElement selectedElement;
 
+	/** The network panel. */
 	private LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH, CONTENT_HEIGHT);
 
+	/**
+	 * Instantiates a new system split view panel.
+	 */
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
 		
-		final DeviceMap deviceMap = new DeviceMap();
+		final ServiceElementMap deviceMap = new ServiceElementMap();
 
 		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
 
@@ -74,11 +102,11 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         
         setSize("100%", MainClient.WINDOW_HEIGHT+"px");
 		
-		FilterView filterView = createFilterView();
-		westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		westPanel.addSouth(filterView, 200);
-		westPanel.add(createNetworkTreePanel());
-		westPanel.setWidgetToggleDisplayAllowed(filterView, true);
+//		FilterView filterView = createFilterView();
+//		westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
+//		westPanel.addSouth(filterView, 200);
+//		westPanel.add(createNetworkTreePanel());
+//		westPanel.setWidgetToggleDisplayAllowed(filterView, true);
 
 		EventView eventView = createEventView();
 		
@@ -170,76 +198,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		});
 		
 	}
+
 	
-	private VerticalPanel createNetworkTreePanel() {
-		VerticalPanel treePanel = new VerticalPanel();
-		Tree staticTree = createStaticTree();
-	    staticTree.setAnimationEnabled(true);
-	    staticTree.ensureDebugId("cwTree-staticTree");
-	    ScrollPanel staticTreeWrapper = new ScrollPanel(staticTree);
-	    staticTreeWrapper.ensureDebugId("cwTree-staticTree-Wrapper");
-	    staticTreeWrapper.setSize("250px", "500px");
-	    
-	    treePanel.add(staticTree);
-	    
-	    return treePanel;
-	}
-	
-	private Tree createStaticTree() {
-	    // Create the tree
-	    String[] networks = {"Cambridge Campus", "Allston Campus", "Longwood Medical", };
-	    String[] subnetworks = {"192.168.1.", "192.168.2.", "192.168.3.", };
-	    
-	    Tree tree = new Tree();
-	    tree.setAnimationEnabled(true);
-	    TreeItem root = new TreeItem();
-	    root.setText("Physical Network");
-
-	    final TreeItem deviceNode = root.addTextItem("Discovered Devices");
-	    SelectionHandler<TreeItem> handler = new SelectionHandler<TreeItem>() {
-			@Override
-			public void onSelection(SelectionEvent<TreeItem> event) {
-				if(event.getSelectedItem() == deviceNode) {
-					
-		            networkPanel.removeAll();
-
-		            final DeviceMap deviceMap = new DeviceMap();
-		            deviceMap.demo(100);
-		            
-		            networkPanel.add(deviceMap);
-		            networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-		            
-		            MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Failed to receive Devices from Integer");
-						}
-
-						@Override
-						public void onSuccess(ServiceElement[] result) {
-							deviceMap.update(result);
-						}
-					});
-		        }
-			}
-	    	
-	    };
-		tree.addSelectionHandler(handler);
-	    
-	    int i = 1;
-	    for (String network : networks) {
-		    TreeItem cambridgeNet = root.addTextItem(network);
-		    for (String subnet : subnetworks) {
-		    	cambridgeNet.addTextItem(subnet+i++);
-			}
-	    }
-
-	    root.setState(true);
-	    tree.addItem(root);
-	    return tree;
-	}
-	
+	/**
+	 * Creates the filter view.
+	 *
+	 * @return the filter view
+	 */
 	private FilterView createFilterView() {
 		String title = "Layer 3 Topology";
 		String subTitle = "State - Campus Wide";
@@ -259,6 +224,11 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		return filterView;
 	}
 	
+	/**
+	 * Creates the event view.
+	 *
+	 * @return the event view
+	 */
 	private EventView createEventView() {
 		String title = "Events";
 		final String[] headers = {"Type", "Severity", "Start Time", "Status", "Description"};
@@ -277,10 +247,20 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		return eventView;
 	}
 
+	/**
+	 * Enablecontainee tree view.
+	 *
+	 * @param enable the enable
+	 */
 	public static void enablecontaineeTreeView(boolean enable) {
 		eastSplitPanel.setWidgetHidden(containeeTreeView, !enable);
 	}
 	
+	/**
+	 * Show containee tree view.
+	 *
+	 * @param se the se
+	 */
 	public static void showContaineeTreeView(final ServiceElement se) {
 		//containeeTreeView.updateTitle(se.getName());
 		eastSplitPanel.setWidgetHidden(containedSplitPanel, false);

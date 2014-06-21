@@ -35,11 +35,11 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 	};
 
 	public HvCheckBoxTreePanel(ListDataProvider<TechItem> techItemProvider, List<FilterNode> list) {
-		FilterNode rootNode = list.get(0);
 		this.techItemProvider = techItemProvider;
 		subCategoryProvider = new ListDataProvider<SubCategory>();
 
-		generateProviderItems(rootNode.getItemId(), rootNode.getChildren());
+		ID rootId = new ID(1L, "Technology", new IDType(Technology.class.getName()));
+		generateProviderItems(rootId, list);
 		
 		final MultiSelectionModel<TechItem> selectionModel = new MultiSelectionModel<TechItem>(KEY_PROVIDER);
 		selectionModel
@@ -60,7 +60,7 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 
 		CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
 		
-		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(techItemProvider, subCategoryProvider, selectionModel, rootNode.getChildren()), null, res);
+		CellTree cellTree = new CellTree(new TechnologyTreeViewModel(techItemProvider, subCategoryProvider, selectionModel, list), null, res);
 		
 		cellTree.setAnimationEnabled(true);
 		

@@ -426,9 +426,11 @@ public class YamlManager extends BaseManager implements
 				ServiceElementType exemplarSet = getServiceElementType(serviceElementTypeDao, yamlServiceElementType, 
 						typeTranslate.getName());
 					
+				exemplarSet.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
+				
 				if ( typeTranslate.getMapping().equalsIgnoreCase("subObjIdentify")) {
 					
-					List<VendorIdentifier> vis = discoveryManager.findVendorSubTree(typeTranslate.getName());
+					List<VendorIdentifier> vis = discoveryManager.findVendorNameSubTree(typeTranslate.getName());
 					if ( vis != null ) {
 						saveVendorSubTree(vis, serviceElementTypeDao, typeTranslate, exemplarSet, yamlServiceElementType);
 					}
@@ -483,31 +485,6 @@ public class YamlManager extends BaseManager implements
 			
 			if (!foundSubType)
 				exemplarSet.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vi.getVendorSubtypeName());
-//			
-//			ServiceElementType[] types = serviceElementTypeDao.findBySubTypeAndVendor(vi.getVendorSubtypeName(), 
-//					yamlServiceElementType.getVendor());
-//			
-//			if (types != null && types.length > 0)
-//				continue; // Already have this one.
-//			
-//			ServiceElementType serviceElementType = serviceElementTypeDao.findByName(typeTranslate.getName());
-//			if (serviceElementType == null) {
-//
-//				serviceElementType = new ServiceElementType();
-//				serviceElementType.setName(typeTranslate.getName());
-//				serviceElementType.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
-//
-//				serviceElementType.setDescription(yamlServiceElementType.getDescription());
-//				serviceElementType.addSignatureValue(null, SignatureTypeEnum.Vendor, yamlServiceElementType.getVendor());
-//				serviceElementType.setVendorSpecificSubType(vi.getVendorSubtypeName());
-//			}
-//
-//			serviceElementType.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vi.getVendorSubtypeName());
-//
-//			serviceElementType.setAttributeIds(exemplarSet.getAttributeIds());
-//			serviceElementType.setUniqueIdentifierCapabilities(exemplarSet.getUniqueIdentifierCapabilities());
-//
-//			serviceElementTypeDao.update(serviceElementType);
 		
 		}
 		
