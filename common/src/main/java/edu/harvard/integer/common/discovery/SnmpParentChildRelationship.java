@@ -70,6 +70,15 @@ public class SnmpParentChildRelationship extends SnmpRelationship {
 	
 	@ManyToOne
 	private SNMP softwareVersionOid = null;
+	
+	@ManyToOne
+	private SNMP categoryOid = null;
+	
+	/**
+	 * If recursive, it will go down from the root to leaf node.
+	 */
+	private Boolean recursive = true;
+
 
 	/**
 	 * @return the containmentOid
@@ -142,6 +151,24 @@ public class SnmpParentChildRelationship extends SnmpRelationship {
 	 */
 	public void setSoftwareVersionOid(SNMP softwareVersionOid) {
 		this.softwareVersionOid = softwareVersionOid;
+	}
+	
+
+	public Boolean getRecursive() {
+		return recursive;
+	}
+
+	public void setRecursive(Boolean recursive) {
+		this.recursive = recursive;
+	}
+	
+	
+	public SNMP getCategoryOid() {
+		return categoryOid;
+	}
+
+	public void setCategoryOid(SNMP categoryOid) {
+		this.categoryOid = categoryOid;
 	}
 
 }

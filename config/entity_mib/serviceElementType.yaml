@@ -44,10 +44,6 @@ serviceElementTypes:
            category: midplane
               
       managementObjects:
-          - name: entPhysicalIndex
-            uri: entPhysicalIndex
-            capability: physical-index
-            
           - name: entPhysicalDescr
             uri: entPhysicalDescr
             capability: physical-description

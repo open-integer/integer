@@ -309,7 +309,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		
 		OID o = new OID(vendorOid);
 		
-		if (o.size() <= 6)
+		if (o.size() <= 7)
 			return dao.findByVendorOid(vendorOid);
 		else
 			return dao.findByVendorSubtypeId(vendorOid);

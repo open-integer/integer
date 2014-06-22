@@ -37,6 +37,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.discovery.snmp.ContainmentServiceElementWorker;
 import edu.harvard.integer.service.discovery.snmp.EntityMibServiceElementDiscovery;
 import edu.harvard.integer.service.discovery.snmp.HostMibServiceElementDiscovery;
+import edu.harvard.integer.service.discovery.snmp.ParentChildServiceElementDiscovery;
 import edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover;
 
 /**
@@ -47,14 +48,10 @@ public class DiscoverWorkerFactory {
 
 	public static SnmpServiceElementDiscover getSnmpServiceElementWorker( SnmpContainmentType sct ) throws IntegerException {
 		
-		if ( sct == null ) {
-			return null;
-		}
-		
 		switch ( sct ) {
 	    
         case EntityMib:        	
-        	return new EntityMibServiceElementDiscovery();
+        	return new ParentChildServiceElementDiscovery();
        	 
         case HostResourcesMib:        	
         	return new HostMibServiceElementDiscovery();

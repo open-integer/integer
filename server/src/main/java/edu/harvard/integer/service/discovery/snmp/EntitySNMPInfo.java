@@ -34,6 +34,7 @@ package edu.harvard.integer.service.discovery.snmp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.snmp4j.smi.OID;
 
@@ -96,8 +97,6 @@ public class EntitySNMPInfo {
 		for ( int i=0; i<entityColumns.size(); i++ ) {
 			
 			SNMP snmp = (SNMP) entityColumns.get(i);
-			
-			System.out.println("Add OID ************************************************************** " + snmp.getOid());
 			columnOids[i] = new OID(snmp.getOid());
 		}		
 	}

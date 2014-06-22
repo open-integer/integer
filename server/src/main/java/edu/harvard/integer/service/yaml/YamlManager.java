@@ -36,6 +36,7 @@ package edu.harvard.integer.service.yaml;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -47,6 +48,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.RelationMappingTypeEnum;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
@@ -638,7 +640,6 @@ public class YamlManager extends BaseManager implements
 		SNMPDAO snmpDao = persistanceManager.getSNMPDAO();
 
 		List<SnmpLevelOID> dbLevels = new ArrayList<SnmpLevelOID>();
-
 		for (YamlSnmpLevelOID levelOid : yamlSnmpLevelOids) {
 			SNMP snmp = snmpDao.findByName(levelOid.getContextOID());
 			if (snmp == null) {
@@ -654,8 +655,7 @@ public class YamlManager extends BaseManager implements
 			if (dbLevelOid == null) {
 				dbLevelOid = new SnmpLevelOID();
 				dbLevelOid.setContextOID(getSnmpOid(levelOid.getContextOID()));
-			}
-
+			}			
 			dbLevelOid.setDescriminatorOID(getSnmpOid(levelOid
 					.getDescriminatorOID()));
 			dbLevelOid
@@ -663,18 +663,23 @@ public class YamlManager extends BaseManager implements
 							levelOid.getDisriminators(),
 							dbLevelOid.getDisriminators()));
 
-			SnmpRelationship contianmentRelationship = createContainmentRelation(
-					levelOid.getContainmentRelationship(),
-					dbLevelOid.getRelationToParent(), topLevels);
-
-			if (contianmentRelationship != null)
-				dbLevelOid.setRelationToParent(contianmentRelationship);
-			else {
-				dbLevelOid.setRelationToParent(createParentChildRelationship(
-						levelOid.getParentChildRelationship(),
-						dbLevelOid.getRelationToParent()));
+			if ( levelOid.getContainmentRelationship() != null ) {
+				SnmpRelationship contianmentRelationship = createContainmentRelation(
+						levelOid.getContainmentRelationship(),
+						dbLevelOid.getRelationToParent(), topLevels);
+				
+				dbLevelOid.setRelationToParent(contianmentRelationship);				
 			}
-
+			else if ( levelOid.getParentChildRelationship() != null ) {
+				
+				SnmpRelationship parentChildRelationship = createParentChildRelationship(
+						                                   levelOid.getParentChildRelationship(),
+						                                   dbLevelOid.getRelationToParent());
+				dbLevelOid.setRelationToParent(parentChildRelationship);
+			}	
+			else {
+				
+			}
 			if (levelOid.getChildren() != null)
 				dbLevelOid.setChildren(createSnmpLevelOIDs(
 						levelOid.getChildren(), topLevels));
@@ -689,7 +694,6 @@ public class YamlManager extends BaseManager implements
 			}
 			
 			dbLevelOid = levelDao.update(dbLevelOid);
-
 			dbLevels.add(dbLevelOid);
 		}
 
@@ -723,6 +727,11 @@ public class YamlManager extends BaseManager implements
 		
 		parentChildRelation.setSubTypeOid(getSnmpOid(yamlParentChildRelation.getSubTypeOid()));
 		
+		if ( yamlParentChildRelation.getMappingType() != null ) {
+			
+			parentChildRelation.setMappingType(RelationMappingTypeEnum.valueOf(yamlParentChildRelation.getMappingType()));
+		}
+		
 		return parentChildRelation;
 	}
 
@@ -751,8 +760,12 @@ public class YamlManager extends BaseManager implements
 		if (yamlSnmpRelationship.getChildTable() != null) {
 			SnmpLevelOID childSnmpLevel = findSnmpLevelOID(yamlSnmpRelationship.getChildTable(), levels);
 			containmentRelation.setChildTable(childSnmpLevel);
-		}
+		}	
 		
+		if ( yamlSnmpRelationship.getMappingType() != null ) {
+			
+			containmentRelation.setMappingType(RelationMappingTypeEnum.valueOf(yamlSnmpRelationship.getMappingType()));
+		}
 		return containmentRelation;
 	}
 

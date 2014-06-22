@@ -34,6 +34,7 @@ package edu.harvard.integer.service.discovery.snmp;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,7 @@ import org.snmp4j.util.TableEvent;
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.access.snmp.MacIPInfo;
+import edu.harvard.integer.access.snmp.ParentChildMappingIndex;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
@@ -102,8 +104,18 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	/** The capability manager. */
 	protected ManagementObjectCapabilityManagerInterface capMgr;
 	
+	/** 
+	 * The mapping table use to store pairs of parent index and child index.
+	 * This table is really for performance purpose.  In a lot of cases,
+	 * retrieve all the parent and child index in once from the device in the beginning
+	 * to save a lot of trips to device later on.  The key can be context OID or any other
+	 * string. 
+	 */
+	private Map<String, List<ParentChildMappingIndex>> indexMappingTbl = new HashMap<String, List<ParentChildMappingIndex>>();
 	
 	
+
+
 	/**
 	 * Instantiates a new snmp service element discover.
 	 *
@@ -357,6 +369,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			
 		}
 	}
+	
+	
+	
 	
 	
 	
@@ -733,6 +748,22 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				
 	}
 
+
+
+	public void addIndexMapping( String key, List<ParentChildMappingIndex> indexMappingTbl) {
+		
+		this.indexMappingTbl.put(key, indexMappingTbl);
+	}
+
+	public List<ParentChildMappingIndex>  getIndexMapping( String key ) {
+		
+		if ( indexMappingTbl == null ) {
+			return null;
+		}
+		
+		return indexMappingTbl.get(key);
+	}
+	
 
 	/**
 	 * Discover.

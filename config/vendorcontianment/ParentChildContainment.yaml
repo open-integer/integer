@@ -28,3 +28,22 @@ snmpContainment:
              - serviceElementType:
                   name: interface
                          
+        - name: interfaceIpAddress
+          category: portIf
+          contextOID: ipAddrEntry
+          containmentRelationship:
+            mappingTable: ipAddrEntry
+            mappingOid: ipAdEntIfIndex
+            mappingType: InstanceOnly
+          disriminators:
+             - serviceElementType:
+                  name: ipv4Address
+
+        - name: interfaceMapping
+          category: portIf
+          contextOID: ipNetToMediaEntry
+          disriminators:
+             - serviceElementType:
+                  name: ipv4IpToPhysical
+
+         

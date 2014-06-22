@@ -35,9 +35,6 @@ package edu.harvard.integer.common.yaml.vendorcontainment;
 
 import javax.persistence.ManyToOne;
 
-import edu.harvard.integer.common.discovery.SnmpLevelOID;
-import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPTable;
 
 /**
  * @author David Taylor
@@ -52,6 +49,17 @@ public class YamlSnmpContainmentRelation extends YamlSnmpRelationship {
 
 	@ManyToOne
 	private String mappingOid = null;
+	
+	private String mappingType;
+
+	
+	public String getMappingType() {
+		return mappingType;
+	}
+
+	public void setMappingType(String mappingType) {
+		this.mappingType = mappingType;
+	}
 
 	/**
 	 * @return the childTable

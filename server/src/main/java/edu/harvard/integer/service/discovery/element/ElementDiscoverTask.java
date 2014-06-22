@@ -299,9 +299,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    	model = defineUnknownProduct(sysInfo.getSysObjectID()); 
 		    }
 		    VendorContainmentSelector vs = new VendorContainmentSelector();
-		    vs.setFirmware(firmwareVer);
 		    vs.setModel(model.trim());
-		    vs.setSoftwareVersion(softwareVer);
 		    vs.setVendor(defineUnknownVendor(sysId.toString()));
 		    
 		    ServiceElementType set = null;
@@ -320,7 +318,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				
 		    	set = new ServiceElementType();
 		    	set.addSignatureValue(null, SignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()));
-		    	set.addSignatureValue(null, SignatureTypeEnum.Model , checkContainmentType(discoverNode.getElementEndPoint()).name());
+		    	set.addSignatureValue(null, SignatureTypeEnum.Model , model);
 		    	
 				set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 				
@@ -374,6 +372,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    se.setDescription(sysInfo.getSysDescr());
 		    se.setName(sysInfo.getSysName());
 		    se.setUpdated(new Date());
+		    se.setCreated(new Date());
 		    
 		    logger.info("call update service element " + se.getName());
 		 

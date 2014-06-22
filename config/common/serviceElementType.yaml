@@ -13,7 +13,7 @@ serviceElementTypes:
       serviceElementTypeTranslates:
          - name: interface
            mapping: direct
-           category: interfaceType
+           category: portIf
               
       managementObjects:
           - name: ifDescr

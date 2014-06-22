@@ -48,7 +48,7 @@ snmpContainment:
           attributes: [ hrDeviceDescr, hrDeviceID,  hrDiskStorageAccess, hrDiskStorageMedia, hrDiskStorageRemoveble ]
         discriminatorValue: 1.3.6.1.2.1.25.3.1.6
       parentChildRelationship:
-        mappingType: Full
+        mappingType: FullOid
         containmentOid: hrDeviceEntry
         siblingOid: hrStorageDescr
         subTypeOid:

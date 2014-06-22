@@ -265,59 +265,62 @@ public class ServiceElementType extends BaseEntity {
 		return null;
 	}
 
-	public void addSignatureValue(SignatureTypeEnum signatureType, String value) {
-		
-		if ( value != null ) {
-			value = value.trim();
-		}
+
+	public void addSignatureValue(ID semoId, SignatureTypeEnum signatureType, String value) {
 		if (signatures == null)
 			signatures = new ArrayList<Signature>();
 
-		boolean foundSig = false;		
+		boolean addedIt = false;
 		for (Signature signature : signatures) {
+		
 			if (signatureType.equals(signature.getSignatureType())) {
-				
-				foundSig = true;
-				if (signature.getValueOperators() != null) {
 
-					if (signature.getValueOperators().size() > 0)
-						signature.getValueOperators().get(0).setValue(value);
-					else {
-						SignatureValueOperator valueOperator = new SignatureValueOperator();
-						valueOperator.setValue(value);
-						valueOperator.setOperator(ValueOpertorEnum.Equal);
-						signature.getValueOperators().add(valueOperator);
+				addedIt = true;
+				if (signature.getValueOperators() != null) {
+					boolean foundValue = false;
+					for (SignatureValueOperator valueOperator : signature.getValueOperators()) {
+						if (valueOperator.getValue().equals(value)) {
+							foundValue = true;
+							break;
+						}
 					}
+					
+					if (!foundValue) {
+						signature.getValueOperators().add(createEuqualValueOperator(value));
+					}
+
 				} else {
 
-					SignatureValueOperator valueOperator = new SignatureValueOperator();
-					valueOperator.setValue(value);
-					valueOperator.setOperator(ValueOpertorEnum.Equal);
-					signature.getValueOperators().add(valueOperator);
-
 					List<SignatureValueOperator> values = new ArrayList<SignatureValueOperator>();
-					values.add(valueOperator);
+					values.add(createEuqualValueOperator(value));
 					signature.setValueOperators(values);
 				}
 			}
 		}
 		
-		if ( !foundSig ) {
-			
+		if (!addedIt ) {
 			Signature signature = new Signature();
-			signatures.add(signature);
-			
 			signature.setSignatureType(signatureType);
-			SignatureValueOperator valueOperator = new SignatureValueOperator();
-			valueOperator.setValue(value);
-			valueOperator.setOperator(ValueOpertorEnum.Equal);
+			signature.setSemoId(semoId);
 			
 			List<SignatureValueOperator> values = new ArrayList<SignatureValueOperator>();
-			values.add(valueOperator);
+			values.add(createEuqualValueOperator(value));
 			signature.setValueOperators(values);
+			
+			signature.setValueOperators(values);
+			
+			signatures.add(signature);
 		}
 	}
 
+	private SignatureValueOperator createEuqualValueOperator(String value) {
+		SignatureValueOperator valueOperator = new SignatureValueOperator();
+		valueOperator.setValue(value);
+		valueOperator.setOperator(ValueOpertorEnum.Equal);
+		
+		return valueOperator;
+	}
+	
 	/**
 	 * @return the childServiceElementTypes
 	 */

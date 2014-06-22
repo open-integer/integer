@@ -284,7 +284,11 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		 */
 		((Snmp)event.getSource()).cancel(event.getRequest(), this);
 	
-		DiscoverNode dn = discoverMap.get((String) event.getUserObject());		
+		DiscoverNode dn = discoverMap.get((String) event.getUserObject());	
+		if ( dn.getIpAddress().equals("10.240.127.121") ) {
+			System.out.println("Stop in here. ");
+		}
+		
 		try {
 			SnmpService.assertPDU(event);
 		} 
@@ -333,6 +337,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		/**
 		 * At this point the scan ip is reachable.  Create a element discover task for detail discovery.
 		 */
+		
 		dn.setStage(DiscoverStageE.DetailScan);
 		PDU response = event.getResponse();
 		ElementDiscoverTask<E> elmTask = null;

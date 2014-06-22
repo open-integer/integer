@@ -59,6 +59,5 @@ public enum CategoryTypeEnum {
 	ipv4,
 	ipv6,
 	topology,
-	interfaceType,
 	midplane
 }

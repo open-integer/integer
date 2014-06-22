@@ -32,6 +32,7 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
+import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
@@ -105,6 +106,50 @@ public class PhysEntityRow {
     	
     }
 	
+	
+   public PhysEntityRow( PDU pdu, String index ) {
+    	
+    	VariableBinding[] vbs =  pdu.toArray();
+    	for ( VariableBinding vb : vbs ) {
+    		
+    		if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalClass) ) ) {
+    			entityClass = EntityClassEnum.valueOf(vb.getVariable().toInt());
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalContainedIn))) {
+    			entPhysicalContainedIn = vb.getVariable().toInt();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalDescr)) ) {
+    			entPhysicalDescr = vb.getVariable().toString();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalFirmwareRev)) ) {
+    			entPhysicalFirmwareRev = vb.getVariable().toString();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalHardwareRev)) ) {
+    			entPhysicalHardwareRev = vb.getVariable().toString();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalModelName)) ) {
+    			entPhysicalModelName = vb.getVariable().toString();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalName)) ) {
+    			entPhysicalName = vb.getVariable().toString();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalParentRelPos)) ) {
+    			entPhysicalParentRelPos = vb.getVariable().toInt();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalSoftwareRev)) ) {
+    			entPhysicalSoftwareRev = vb.getVariable().toString();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalVendorType)) ) {
+    			entPhysicalVendorType = vb.getVariable().toString();
+    		}
+    		else if ( vb.getOid().startsWith(new OID(CommonSnmpOids.entPhysicalSerialNum)) ) {
+    			entPhysicalSerialNum = vb.getVariable().toString();
+    		}
+    	}
+    	this.index = index;
+    	
+    }
+	 
 	
 	/**
 	 * Return value on a given oid.

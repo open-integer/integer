@@ -74,6 +74,7 @@ public class CommonSnmpOids {
     /**
      * Entity Group OIDs.  They are most likely used in physical topology on a device.
      */
+    public static final String entPhysicalEntry = "1.3.6.1.2.1.47.1.1.1.1";
     
     public static final String entPhysicalDescr = "1.3.6.1.2.1.47.1.1.1.1.2";
     
