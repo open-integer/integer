@@ -5,7 +5,6 @@ package edu.harvard.integer.client.ui;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -16,21 +15,25 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
 /**
- * The Class CapabilityView.
+ * The Class ContainedTreeView represents a contained tree view object of Integer.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.ScrollPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
-public class ContaineeTreeView extends ScrollPanel {
+public class ContainedTreeView extends ScrollPanel {
 	
 	private Tree tree = new Tree();
 	private ServiceElement selectedServiceElement;
 	private long selectedTimestamp;
 	
 	/**
-	 * Instantiates a new capability view.
+	 * Create a new ContainedTreeView.
 	 *
 	 * @param title the title
 	 * @param headers the headers
 	 */
-	public ContaineeTreeView(String title, String[] headers) {
+	public ContainedTreeView(String title, String[] headers) {
 		tree.setTitle(title);
 	    tree.setAnimationEnabled(true);
 		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -91,7 +94,7 @@ public class ContaineeTreeView extends ScrollPanel {
 	}
 
 	/**
-	 * Update.
+	 * Update method will refresh the contained tree view of the object by object's name and the list of service element objects.
 	 *
 	 * @param result the result
 	 */

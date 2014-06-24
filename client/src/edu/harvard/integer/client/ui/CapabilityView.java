@@ -6,7 +6,11 @@ import edu.harvard.integer.client.widget.HvTableViewPanel;
 import edu.harvard.integer.common.topology.Capability;
 
 /**
- * The Class CapabilityView.
+ * The Class CapabilityView represents a capability table view panel object of Integer.
+ * This is a subclass class extended from HvTableViewPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class CapabilityView extends HvTableViewPanel {
 	
@@ -21,7 +25,7 @@ public class CapabilityView extends HvTableViewPanel {
 	}
 
 	/**
-	 * Update.
+	 * Update method will refresh the capability view given by the list of Capability objects.
 	 *
 	 * @param result the result
 	 */

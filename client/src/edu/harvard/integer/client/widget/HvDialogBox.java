@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class HuitDialogBox.
  *
@@ -47,6 +48,14 @@ public class HvDialogBox extends DialogBox {
 		this(title, formPanel, false, false);
 	}
 	
+	/**
+	 * Instantiates a new hv dialog box.
+	 *
+	 * @param title the title
+	 * @param formPanel the form panel
+	 * @param autoHide the auto hide
+	 * @param modal the modal
+	 */
 	public HvDialogBox(String title, FormPanel formPanel, boolean autoHide, boolean modal) {
 		super(autoHide, modal);
 		this.formPanel = formPanel;
@@ -104,10 +113,20 @@ public class HvDialogBox extends DialogBox {
 		}
 	};
 	
+	/**
+	 * Enable ok button.
+	 *
+	 * @param enable the enable
+	 */
 	public void enableOkButton(boolean enable) {
 		okButton.setVisible(enable);
 	}
 	
+	/**
+	 * Enable close button.
+	 *
+	 * @param enable the enable
+	 */
 	public void enableCloseButton(boolean enable) {
 		closeButton.setVisible(enable);
 	}

@@ -10,15 +10,28 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.ServiceElement;
 
+/**
+ * The Class HvGridValuesPanel can be used for attribute value list displaying
+ */
 public class HvGridValuesPanel extends FormPanel{
+	
+	/** The grid. */
 	private Grid grid = new Grid(0, 2);
 	
+	/**
+	 * Instantiates a new hv grid values panel.
+	 */
 	public HvGridValuesPanel() {
 		ScrollPanel scrollPanel = new ScrollPanel(grid);
 		scrollPanel.setHeight("100%");
 		setWidget(scrollPanel);
 	}
 	
+	/**
+	 * Update attribute value with given service element
+	 *
+	 * @param se the se
+	 */
 	public void update(ServiceElement se) {
 		List<ManagementObjectValue> values = se.getAttributeValues();
 		int rows = values.size();

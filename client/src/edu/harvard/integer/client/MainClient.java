@@ -35,13 +35,23 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * This is the entry point classes define <code>onModuleLoad()</code> of Integer Web Client.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class MainClient implements EntryPoint {
+	
+	/** The Constant WINDOW_WIDTH. */
 	public static final int WINDOW_WIDTH = 1200;
+	
+	/** The Constant WINDOW_HEIGHT. */
 	public static final int WINDOW_HEIGHT = 800;
 	
+	/** The current widget. */
 	public static Widget currentWidget = null;
+	
+	/** The flex table. */
 	private HvFlexTable flexTable;
 
 	/**
@@ -107,6 +117,9 @@ public class MainClient implements EntryPoint {
 		
 	}
 	
+	/**
+	 * Creates the system page link.
+	 */
 	private void createSystemPageLink() {
 		Element element = (Element) Document.get().getElementById("home");
 		Anchor testAnchor = Anchor.wrap(element);
@@ -123,6 +136,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the view imported mibs link.
+	 */
 	private void createViewImportedMibsLink() {
 		Element element = (Element) Document.get().getElementById("mibs");
 		Anchor testAnchor = Anchor.wrap(element);
@@ -170,6 +186,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the view service element types link.
+	 */
 	private void createViewServiceElementTypesLink() {
 		Element element = (Element) Document.get().getElementById(
 				"serviceElementTypes");
@@ -200,6 +219,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the view capabilities link.
+	 */
 	private void createViewCapabilitiesLink() {
 		Element capElement = (Element) Document.get().getElementById("capabilities");
 		Anchor capAnchor = Anchor.wrap(capElement);
@@ -232,6 +254,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the add service element type link.
+	 */
 	private void createAddServiceElementTypeLink() {
 		Element serviceElementTypeElement = (Element) Document.get().getElementById(
 				"addServiceElementType");
@@ -250,6 +275,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the import mib link.
+	 */
 	private void createImportMibLink() {
 		Element importElement = (Element) Document.get().getElementById(
 				"importMib");
@@ -268,6 +296,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the adddd service element link.
+	 */
 	private void createAddddServiceElementLink() {
 		Element serviceElementElement = (Element) Document.get().getElementById(
 				"addServiceElement");
@@ -287,6 +318,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the add capability link.
+	 */
 	private void createAddCapabilityLink() {
 		Element capabilityElement = (Element) Document.get().getElementById(
 				"addCapability");
@@ -305,6 +339,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the add mechanism link.
+	 */
 	private void createAddMechanismLink() {
 		Element mechanismElement = (Element) Document.get().getElementById(
 				"addMechanism");
@@ -323,6 +360,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the add location link.
+	 */
 	private void createAddLocationLink() {
 		Element element = (Element) Document.get().getElementById(
 				"addLocation");
@@ -341,6 +381,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the add organization link.
+	 */
 	private void createAddOrganizationLink() {
 		Element element = (Element) Document.get().getElementById(
 				"addOrganization");
@@ -359,6 +402,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the add calendar policy link.
+	 */
 	private void createAddCalendarPolicyLink() {
 		Element element = (Element) Document.get().getElementById(
 				"addCalendar");
@@ -377,6 +423,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 
+	/**
+	 * Creates the add role link.
+	 */
 	private void createAddRoleLink() {
 		Element element = (Element) Document.get().getElementById(
 				"addRole");
@@ -395,6 +444,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the add contact link.
+	 */
 	private void createAddContactLink() {
 		Element element = (Element) Document.get().getElementById(
 				"addContact");
@@ -413,6 +465,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 
+	/**
+	 * Creates the add user link.
+	 */
 	private void createAddUserLink() {
 		Element element = (Element) Document.get().getElementById(
 				"addUser");
@@ -431,6 +486,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the start discovery link.
+	 */
 	private void createStartDiscoveryLink() {
 		Element element = (Element) Document.get().getElementById(
 				"startDiscovery");

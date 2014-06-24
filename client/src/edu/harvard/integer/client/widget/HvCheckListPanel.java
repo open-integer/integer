@@ -19,8 +19,14 @@ import com.google.gwt.view.client.SelectionModel;
 
 import edu.harvard.integer.common.ID;
 
+/**
+ * The Class HvCheckListPanel.
+ *
+ * @param <D> the generic type
+ */
 public class HvCheckListPanel<D> extends SimplePanel {
 	
+	/** The key provider. */
 	public final ProvidesKey<D> KEY_PROVIDER = new ProvidesKey<D>() {
 		@Override
 		public Object getKey(D d) {
@@ -35,6 +41,12 @@ public class HvCheckListPanel<D> extends SimplePanel {
 		}
 	};
 
+	/**
+	 * Instantiates a new hv check list panel.
+	 *
+	 * @param dataProvider the data provider
+	 * @param list the list
+	 */
 	public HvCheckListPanel(ListDataProvider<D> dataProvider, List<D> list) {
 		CellTable<D> cellTable = new CellTable<D>(KEY_PROVIDER);
 
@@ -63,6 +75,13 @@ public class HvCheckListPanel<D> extends SimplePanel {
 		setWidget(cellTable);
 	}
 	
+	/**
+	 * Inits the table columns.
+	 *
+	 * @param cellTable the cell table
+	 * @param selectionModel the selection model
+	 * @param sortHandler the sort handler
+	 */
 	private void initTableColumns(CellTable<D> cellTable, final SelectionModel<D> selectionModel,
 			ListHandler<D> sortHandler) {
 		// Checkbox column. This table will uses a checkbox column for selection.

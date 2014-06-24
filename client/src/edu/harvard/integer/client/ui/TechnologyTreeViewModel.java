@@ -23,9 +23,8 @@ import edu.harvard.integer.common.selection.FilterNode;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TechnologyTreeViewModel.
+ * The TechnologyTreeViewModel class is the model class for Technology CellTree.
  */
 public class TechnologyTreeViewModel implements TreeViewModel {
 
@@ -49,9 +48,15 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		}
 	}
 	
+	/**
+	 * The Class SubCategoryCell.
+	 */
 	private static class SubCategoryCell extends AbstractCell<SubCategory> {
 
-	    @Override
+	    /* (non-Javadoc)
+    	 * @see com.google.gwt.cell.client.AbstractCell#render(com.google.gwt.cell.client.Cell.Context, java.lang.Object, com.google.gwt.safehtml.shared.SafeHtmlBuilder)
+    	 */
+    	@Override
 	    public void render(Context context, SubCategory value, SafeHtmlBuilder sb) {
 	      if (value != null) {
 	    	  sb.appendEscaped(value.getDisplayName());
@@ -61,7 +66,11 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 
 	/** The category data provider. */
 	private final ListDataProvider<Category> categoryDataProvider;
+	
+	/** The sub category provider. */
 	private ListDataProvider<SubCategory> subCategoryProvider;
+	
+	/** The tech item provider. */
 	private ListDataProvider<TechItem> techItemProvider;
 
 	/** The tech item cell. */
@@ -76,8 +85,9 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 
 	/**
 	 * Instantiates a new technology tree view model.
-	 * @param subCategoryProvider 
 	 *
+	 * @param techItemProvider the tech item provider
+	 * @param subCategoryProvider the sub category provider
 	 * @param selectionModel            the selection model
 	 * @param filterNodeList the filter node list
 	 */
@@ -202,6 +212,12 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		throw new IllegalArgumentException("Unsupported object type: " + type);
 	}
 	
+	/**
+	 * Query sub category by category.
+	 *
+	 * @param category the category
+	 * @return the list
+	 */
 	private List<SubCategory> querySubCategoryByCategory(Category category) {
 		List<SubCategory> matches = new ArrayList<SubCategory>();
 		for (SubCategory item : subCategoryProvider.getList()) {
@@ -212,6 +228,12 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		return matches;
 	}
 
+	/**
+	 * Query tech items by category.
+	 *
+	 * @param category the category
+	 * @return the list
+	 */
 	public List<TechItem> queryTechItemsByCategory(Category category) {
 		List<TechItem> matches = new ArrayList<TechItem>();
 		for (TechItem item : techItemProvider.getList()) {

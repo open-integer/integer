@@ -14,6 +14,13 @@ import com.google.gwt.user.client.ui.TextBox;
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
 
+/**
+ * The Class DiscoveryRulePanel represents a panel to configure Discovery Rule of Integer.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FormPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
+ */
 public class DiscoveryRulePanel extends FormPanel {
 
 	private final IntegerServiceAsync integerService = GWT.create(IntegerService.class);

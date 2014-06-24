@@ -20,24 +20,50 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
 /**
- * This class represents a form panel for importing MIB file.
- *
- * @author jhuang
+ * The ServiceElementGeneralPanel class represents a panel to display general attributes of Service Element.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FormPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class ServiceElementGeneralPanel extends FormPanel {
 	
+	/** The date format. */
 	public static DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat("MMM-dd-yyyy HH:mm:ss z");
+	
+	/** The grid. */
 	private Grid grid;
+	
+	/** The name text box. */
 	private TextBox nameTextBox = new TextBox();
+	
+	/** The desc text box. */
 	private TextBox descTextBox = new TextBox();
+	
+	/** The location text box. */
 	private TextBox locationTextBox = new TextBox();
+	
+	/** The control id text box. */
 	private TextBox controlIdTextBox = new TextBox();
+	
+	/** The criticality text box. */
 	private TextBox criticalityTextBox = new TextBox();
+	
+	/** The created text box. */
 	private TextBox createdTextBox = new TextBox();
+	
+	/** The updated text box. */
 	private TextBox updatedTextBox = new TextBox();
+	
+	/** The comment text box. */
 	private TextBox commentTextBox = new TextBox();
+	
+	/** The category text box. */
 	private TextBox categoryTextBox = new TextBox();
 	
+	/**
+	 * Instantiates a new service element general panel.
+	 */
 	public ServiceElementGeneralPanel() {
 		setEncoding(FormPanel.ENCODING_MULTIPART);
 		setMethod(FormPanel.METHOD_POST);
@@ -83,6 +109,11 @@ public class ServiceElementGeneralPanel extends FormPanel {
 		setWidget(scrollPanel);
 	}
 	
+	/**
+	 * Update method will refresh the panel with the given ServiceElement object.
+	 *
+	 * @param serviceElement the service element
+	 */
 	public void update(ServiceElement serviceElement) {
 		nameTextBox.setText(serviceElement.getName());
 		descTextBox.setText(serviceElement.getDescription());
@@ -111,6 +142,11 @@ public class ServiceElementGeneralPanel extends FormPanel {
 
 	}
 	
+	/**
+	 * Update method will refresh the category atttribute with the given ServiceElementType object.
+	 *
+	 * @param serviceElementType the service element type
+	 */
 	public void update(ServiceElementType serviceElementType) {
 		String category = serviceElementType.getCategory().name();
 		if (category != null)
