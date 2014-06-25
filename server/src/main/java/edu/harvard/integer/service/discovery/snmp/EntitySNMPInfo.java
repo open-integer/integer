@@ -34,7 +34,6 @@ package edu.harvard.integer.service.discovery.snmp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.snmp4j.smi.OID;
 
@@ -47,7 +46,7 @@ import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 
 
 /**
- * The Class EntityInfo defines a singleton static object for Physical Entity MIB for
+ * The Class EntityInfo contains a singleton static object for Physical Entity MIB SEMO information.
  *
  * @author dchan
  */
