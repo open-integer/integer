@@ -4,7 +4,12 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.PopupPanel;
 
 /**
- * The Class HvMapIconPopup can be used for tooltip popup
+ * The Class HvMapIconPopup represents a PopupPanel showing name, status and location
+ * This is a subclass class extended from com.google.gwt.user.client.ui.PopupPanel.
+ * It includes 
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class HvMapIconPopup extends PopupPanel {
 
@@ -12,7 +17,7 @@ public class HvMapIconPopup extends PopupPanel {
 	private Grid g = new Grid(3, 2);
 	
 	/**
-	 * Instantiates a new hv map icon popup.
+	 * Creates a new HvMapIconPopup instance.
 	 *
 	 * @param name the name
 	 * @param status the status

@@ -11,7 +11,12 @@ import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Class HvGridValuesPanel can be used for attribute value list displaying
+ * The Class HvGridValuesPanel represents a panel showing the list of attribute value
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FormPanel.
+ * It includes 
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class HvGridValuesPanel extends FormPanel{
 	
@@ -19,7 +24,7 @@ public class HvGridValuesPanel extends FormPanel{
 	private Grid grid = new Grid(0, 2);
 	
 	/**
-	 * Instantiates a new hv grid values panel.
+	 * Creates a new HvGridValuesPanel instance.
 	 */
 	public HvGridValuesPanel() {
 		ScrollPanel scrollPanel = new ScrollPanel(grid);
@@ -28,7 +33,7 @@ public class HvGridValuesPanel extends FormPanel{
 	}
 	
 	/**
-	 * Update attribute value with given service element
+	 * Updates attribute value with given service element
 	 *
 	 * @param se the se
 	 */

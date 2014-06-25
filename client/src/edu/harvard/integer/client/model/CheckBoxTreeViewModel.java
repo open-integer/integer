@@ -22,6 +22,9 @@ import java.util.List;
 
 /**
  * The TechnologyTreeViewModel class is the model class for Technology CellTree.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class CheckBoxTreeViewModel implements TreeViewModel {
 

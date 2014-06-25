@@ -20,7 +20,13 @@ import com.google.gwt.view.client.SelectionModel;
 import edu.harvard.integer.common.ID;
 
 /**
- * The Class HvCheckListPanel.
+ * The Class HvCheckListPanel represents a panel showing a list of CheckBox.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.SimplePanel
+ * 
+ * It takes any generic data type for object represneted by CheckBox.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  *
  * @param <D> the generic type
  */
@@ -42,7 +48,7 @@ public class HvCheckListPanel<D> extends SimplePanel {
 	};
 
 	/**
-	 * Instantiates a new hv check list panel.
+	 * Creates a new HvCheckListPanel instance.
 	 *
 	 * @param dataProvider the data provider
 	 * @param list the list
@@ -76,7 +82,7 @@ public class HvCheckListPanel<D> extends SimplePanel {
 	}
 	
 	/**
-	 * Inits the table columns.
+	 * Initializes the table columns.
 	 *
 	 * @param cellTable the cell table
 	 * @param selectionModel the selection model

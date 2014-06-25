@@ -6,8 +6,14 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+// TODO: Auto-generated Javadoc
 /**
- * The Class HvFlexTable.
+ * The Class HvFlexTable represents a table with headers and scroll bar.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FlexTable.
+ * It includes 
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class HvFlexTable extends FlexTable {
 	
@@ -21,7 +27,7 @@ public class HvFlexTable extends FlexTable {
 	private ScrollPanel scrollPanel;
 
 	/**
-	 * Instantiates a new hv flex table.
+	 * Create a new HvFlexTable instance.
 	 *
 	 * @param headers the headers
 	 */
@@ -46,6 +52,9 @@ public class HvFlexTable extends FlexTable {
 		return scrollPanel;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.UIObject#setSize(java.lang.String, java.lang.String)
+	 */
 	public void setSize(String width, String height) {
 		scrollPanel.setSize(width, height);
 	}
@@ -79,7 +88,7 @@ public class HvFlexTable extends FlexTable {
 	}
 	
 	/**
-	 * Clean.
+	 * Clean up
 	 */
 	public void clean() {
 		removeAllRows();

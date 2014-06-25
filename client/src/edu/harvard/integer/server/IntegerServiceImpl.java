@@ -42,7 +42,6 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.selection.SelectionManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
-// TODO: Auto-generated Javadoc
 /**
  * The server side implementation of the RPC service.
  */

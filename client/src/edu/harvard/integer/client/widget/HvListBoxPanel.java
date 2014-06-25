@@ -7,7 +7,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * The Class HvListBoxPanel.
+ * The Class HvListBoxPanel represents a ListBox with "add", "delete", "up" and "down" options
+ * This is a subclass class extended from com.google.gwt.user.client.ui.ListBox.
+ * It includes 
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class HvListBoxPanel extends ListBox {
 
@@ -30,7 +35,7 @@ public class HvListBoxPanel extends ListBox {
 	private HvLittelSquareButton downButton = new HvLittelSquareButton("v");
 	
 	/**
-	 * Instantiates a new hv list box panel.
+	 * Creates a new HvListBoxPanel instance.
 	 */
 	public HvListBoxPanel() {
 		super();
@@ -38,7 +43,7 @@ public class HvListBoxPanel extends ListBox {
 	}
 	
 	/**
-	 * Instantiates a new hv list box panel.
+	 * Creates a new HvListBoxPanel instance.
 	 *
 	 * @param isMultipleSelect the is multiple select
 	 */
@@ -48,7 +53,7 @@ public class HvListBoxPanel extends ListBox {
 	}
 	
 	/**
-	 * Instantiates a new hv list box panel.
+	 * Creates a new HvListBoxPanel instance.
 	 *
 	 * @param element the element
 	 */
@@ -58,7 +63,7 @@ public class HvListBoxPanel extends ListBox {
 	}
 	
 	/**
-	 * Inits the.
+	 * Initializes the instance.
 	 */
 	private void init() {
 		upButton.setVisible(false);
