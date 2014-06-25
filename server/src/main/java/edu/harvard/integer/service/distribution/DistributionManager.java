@@ -55,10 +55,19 @@ import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
- * This class is used to lookup managers in the Integer system. The manager may be running on the local
- * server or on a remote server. The lookup of the manager is the same in both cases. 
+ * This class is used to lookup managers in the Integer system. The manager may
+ * be running on the local server or on a remote server. The lookup of the
+ * manager is the same in both cases.
+ * <p>
+ * Ex.
+ * <p>
+ * ServiceElementDiscoveryManager discoveryManager =
+ * DitributionManager.getManager
+ * (ManagerTypeEnum.ServiceElementDiscoveryManager);
  * 
- * <p>To lookup a manager on a specific server the serverId will need to be passed into the getManager() call. 
+ * <p>
+ * To lookup a manager on a specific server the serverId will need to be passed
+ * into the getManager() call.
  * 
  * @author David Taylor
  * 
@@ -88,6 +97,22 @@ public class DistributionManager {
 	 */
 	private static IntegerServer[] servers = null;
 
+	/**
+	 * This method is used to get a reference to a service. The service could be
+	 * running on this server or a remote service. The returned instance can be
+	 * used as if it was a local reference.
+	 * <p>
+	 * Ex:
+	 * <p>
+	 * DiscoveryService discoveryService =
+	 * DistributionManager.getService(ServiceTypeEnum.DiscoveryService)
+	 * 
+	 * @param type
+	 *            . ServiceTypeEnum of the service that is requested.
+	 * @return reference to a Service.
+	 * 
+	 * @throws IntegerException
+	 */
 	public static <T extends BaseServiceInterface> T getService(
 			ServiceTypeEnum type) throws IntegerException {
 
@@ -95,21 +120,21 @@ public class DistributionManager {
 				StringPropertyNames.ModuleName);
 		try {
 
-			// if (logger.isDebugEnabled())
-			logger.info("Lookup " + type + " module " + moduleName);
+			if (logger.isDebugEnabled())
+				logger.debug("Lookup " + type + " module " + moduleName);
 
 			String hostName = getHostNameForService(type);
-			
+
 			if (moduleName.length() > 1) {
 				if (isLocalhost(type))
-					return lookupLocalBean(hostName, getLocalServiceName(moduleName, type));
+					return lookupLocalBean(hostName,
+							getLocalServiceName(moduleName, type));
 				else
 					return lookupRemoteBean(getHostNameForService(type),
 							getRemoteServiceName(moduleName, type));
-				
+
 			} else
-				return lookupLocalBean("localhost",
-						getLocalServiceName(type));
+				return lookupLocalBean("localhost", getLocalServiceName(type));
 		} catch (IntegerException e) {
 			if (SystemErrorCodes.ManagerNotFound.equals(e.getErrorCode())) {
 				logger.error("Unable to find " + type + " with module "
@@ -121,6 +146,28 @@ public class DistributionManager {
 		}
 	}
 
+	/**
+	 * This call is used when there are multiple instances of the service
+	 * running in the integer system.
+	 * <p>
+	 * This method is used to get a reference to a service. The service could be
+	 * running on this server or a remote service. The returned instance can be
+	 * used as if it was a local reference.
+	 * 
+	 * <p>
+	 * Ex:
+	 * <p>
+	 * DiscoveryService discoveryService =
+	 * DistributionService.getService(ServiceTypeEnum.DiscoveryService)
+	 * 
+	 * @param ServiceId
+	 *            . The serverID that the service is running on.
+	 * @param type
+	 *            . ServiceTypeEnum of the service that is requested.
+	 * @return reference to a Service.
+	 * 
+	 * @throws IntegerException
+	 */
 	public static <T extends BaseServiceInterface> T getService(Long serverId,
 			ServiceTypeEnum type) throws IntegerException {
 
@@ -148,25 +195,40 @@ public class DistributionManager {
 		}
 	}
 
-	
+	/**
+	 * Used to find out if the server id specified is for this server instance
+	 * or a remote server.
+	 * 
+	 * @param serverId
+	 * @return true if the server ID is for this server instance.
+	 *         <p>
+	 *         False if this is not the server specified by the server id.
+	 * 
+	 */
 	private static boolean isLocalHost(Long serverId) {
 		try {
 			Long id = IntegerProperties.getInstance().getLongProperty(
 					LongPropertyNames.ServerId);
-			
+
 			if (id.equals(serverId))
 				return true;
 			else
 				return false;
-			
+
 		} catch (IntegerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return true;
 	}
-	
+
+	/**
+	 * Get the hostname the specified server is running on.
+	 * 
+	 * @param serverId
+	 * @return hostname of the server.
+	 */
 	public static String getHostName(Long serverId) {
 		for (IntegerServer server : servers) {
 			if (server.getServerId().equals(serverId)) {
@@ -183,8 +245,11 @@ public class DistributionManager {
 	}
 
 	/**
+	 * Get the hostname for the service specified by the server type enum.
+	 * 
 	 * @param type
-	 * @return
+	 *            . Service type to get the hostname for.
+	 * @return hostname of the server the service is running on.
 	 */
 	private static String getHostNameForService(ServiceTypeEnum type) {
 		if (services == null) {
@@ -203,6 +268,16 @@ public class DistributionManager {
 		return "localhost";
 	}
 
+	/**
+	 * Check to see if the service type is running on the localhost or a remote
+	 * host.
+	 * 
+	 * @param type
+	 *            . Service type to look up
+	 * @return true if the service is running on the localhost.
+	 *         <p>
+	 *         flase if the service is not running on the localhost.
+	 */
 	private static boolean isLocalhost(ServiceTypeEnum type) {
 		if (services == null) {
 			logger.error("Services list is empty! Has the server completed startup? Try loalhost");
@@ -218,7 +293,7 @@ public class DistributionManager {
 			e.printStackTrace();
 			return true;
 		}
-		
+
 		for (DistributedService service : services) {
 			if (service.getService().equals(type.name()))
 				return service.getServerId().equals(id);
@@ -229,8 +304,16 @@ public class DistributionManager {
 
 		return true;
 	}
-	
 
+	/**
+	 * Get the DistributedManager for the given ManagerTypeEnum. The distributed
+	 * manager is used to configure where a manager is running or state of where
+	 * the manager is running.
+	 * 
+	 * @param type
+	 *            . MangerTypeEnum for the manager that is requested.
+	 * @return DistrbutedManager for the manager type.
+	 */
 	public DistributedManager getDistributedManager(ManagerTypeEnum type) {
 		if (managers == null) {
 			logger.error("Manager list is empty! Has the server completed startup? Can not get "
@@ -249,6 +332,15 @@ public class DistributionManager {
 		return null;
 	}
 
+	/**
+	 * Get the DistributedManager for the given ManagerTypeEnum. The distributed
+	 * manager is used to configure where a manager is running or state of where
+	 * the manager is running.
+	 * 
+	 * @param type
+	 *            . MangerTypeEnum for the manager that is requested.
+	 * @return DistrbutedManager for the manager type.
+	 */
 	public DistributedService getDistributedService(ServiceTypeEnum type) {
 
 		if (services == null) {
@@ -268,6 +360,14 @@ public class DistributionManager {
 		return null;
 	}
 
+	/**
+	 * Get the local service name for the given service type enum. This is used
+	 * in the lookup of the service.
+	 * 
+	 * @param serviceType
+	 *            . ServiceTypeEnum of the service requested.
+	 * @return String lookup string for the service.
+	 */
 	private static String getLocalServiceName(ServiceTypeEnum serviceType) {
 		StringBuffer b = new StringBuffer();
 
@@ -279,6 +379,16 @@ public class DistributionManager {
 		return b.toString();
 	}
 
+	/**
+	 * Get the local service name for the given service type enum. This is used
+	 * in the lookup of the service.
+	 * 
+	 * @param module
+	 *            . Name of the module to lookup the service in.
+	 * @param serviceType
+	 *            . ServiceTypeEnum of the service requested.
+	 * @return String lookup string for the service.
+	 */
 	private static String getLocalServiceName(String module,
 			ServiceTypeEnum serviceType) {
 		StringBuffer b = new StringBuffer();
@@ -294,13 +404,24 @@ public class DistributionManager {
 		return b.toString();
 	}
 
+	/**
+	 * Get the name of the service when the service is running on a remote
+	 * server.
+	 * 
+	 * @param module
+	 *            . Name of the module to lookup the service in.
+	 * @param serviceType
+	 *            . ServiceTypeEnum for the service that is to be looked up.
+	 * 
+	 * @return service name of the service. This is used to lookup the service.
+	 */
 	private static String getRemoteServiceName(String module,
 			ServiceTypeEnum serviceType) {
 		StringBuffer b = new StringBuffer();
 
 		b.append("java:module/");
-//		b.append(module);
-//		b.append('/');
+		// b.append(module);
+		// b.append('/');
 
 		b.append(serviceType.getServiceClass().getSimpleName());
 		b.append("!");
@@ -309,6 +430,22 @@ public class DistributionManager {
 		return b.toString();
 	}
 
+	/**
+	 * This method is used to get a reference to a manager. The manager could be
+	 * running on this server or a remote server. The returned instance can be
+	 * used as if it was a local reference.
+	 * <p>
+	 * Ex:
+	 * <p>
+	 * DiscoveryManager discoveryManager =
+	 * DistributionManger.getManager(ManagerTypeEnum.DiscoveryManager)
+	 * 
+	 * @param type
+	 *            . ManagerTypeEnum of the manager that is requested.
+	 * @return reference to a manager.
+	 * 
+	 * @throws IntegerException
+	 */
 	public static <T extends BaseManagerInterface> T getManager(
 			ManagerTypeEnum managerType) throws IntegerException {
 
@@ -316,8 +453,9 @@ public class DistributionManager {
 			if (manager.getManagerType().equals(managerType.name()))
 				return getManager(manager.getServerId(), managerType);
 		}
-	
-		System.out.println("Manager not found for " + managerType + " Types " + managers);
+
+		System.out.println("Manager not found for " + managerType + " Types "
+				+ managers);
 		for (DistributedManager manager : managers) {
 			System.out.println("Manager " + manager);
 		}
@@ -332,29 +470,49 @@ public class DistributionManager {
 	 * @return
 	 * @throws IntegerException
 	 */
-	public static boolean isLocalManager(ManagerTypeEnum managerType ) throws IntegerException {
+	public static boolean isLocalManager(ManagerTypeEnum managerType)
+			throws IntegerException {
 		if (managers == null) {
 			logger.error("Managers list not loaded!!");
 			return false;
 		}
-		
+
 		for (DistributedManager manager : managers) {
 			if (manager.getManagerType().equals(managerType.name()))
 				return isLocalHost(manager.getServerId());
 		}
-	
-		System.out.println("Manager not found for " + managerType + " Types " + managers);
+
+		System.out.println("Manager not found for " + managerType + " Types "
+				+ managers);
 		for (DistributedManager manager : managers) {
 			System.out.println("Manager " + manager);
 		}
 		logger.error("Manager not found for " + managerType);
-		
+
 		return false;
 	}
-	
+
+	/**
+	 * Get a reference to a manager. This call is used when the caller knows where the 
+	 * manager is running and there is more than one instance of the manager running in 
+	 * the system. <p>
+	 * 
+	 * Ex:
+	 * <p>
+	 * Long serverId = CoreServerId;<p>
+	 * DiscoveryManager discoveryManager =
+	 * DistributionManger.getManager(serverid, ManagerTypeEnum.DiscoveryManager)
+	 * 
+	 * 
+	 * @param serverId. The server id of the server where the manager is running.
+	 * @param managerType. Manager type of the manager that is desired.
+	 * @return A reference to a manager.
+	 * 
+	 * @throws IntegerException
+	 */
 	public static <T extends BaseManagerInterface> T getManager(Long serverId,
 			ManagerTypeEnum managerType) throws IntegerException {
-		
+
 		String moduleName = IntegerProperties.getInstance().getProperty(
 				StringPropertyNames.ModuleName);
 
@@ -377,6 +535,13 @@ public class DistributionManager {
 		return null;
 	}
 
+	/**
+	 * Get the lookup name for this manager when running on the local server.
+	 * 
+	 * @param moduleName. Name of module that is to be looked up.
+	 * @param managerType. Manager to lookup.
+	 * @return lookup string to find this manager.
+	 */
 	private static String getLocalManagerName(String moduleName,
 			ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
@@ -390,12 +555,20 @@ public class DistributionManager {
 
 		return b.toString();
 	}
-	
+
+	/**
+	 * Get the remote lookup string to find the manager in the given module.
+	 * 
+	 * @param moduleName. Name of module that is to be looked up.
+	 * @param managerType. Manager to lookup.
+	 * @return lookup string to find this manager.
+	 * @return
+	 */
 	private static String getRemoteManagerName(String moduleName,
 			ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
-		//b.append("java:global/");
+		// b.append("java:global/");
 		b.append(moduleName);
 		b.append('/');
 		b.append(managerType.getBeanClass().getSimpleName());
@@ -404,8 +577,13 @@ public class DistributionManager {
 
 		return b.toString();
 	}
-	
-	
+
+	/**
+	 * Get the lookup name for this manager when running on the local server.
+	 * 
+	 * @param managerType. Manager to lookup.
+	 * @return lookup string to find this manager.
+	 */
 	private static String getLocalManagerName(ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
@@ -417,7 +595,14 @@ public class DistributionManager {
 		return b.toString();
 	}
 
-
+	/**
+	 * Lookup the manager in the local server. 
+	 * 
+	 * @param hostName. Name of the localhost.
+	 * @param managerName. Lookup string for the manager to be looked up.
+	 * @return manager. A reference to a manager
+	 * @throws IntegerException
+	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T lookupLocalBean(String hostName, String managerName)
 			throws IntegerException {
@@ -428,12 +613,11 @@ public class DistributionManager {
 			final Properties env = new Properties();
 			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 			env.put("jboss.naming.client.ejb.context", true);
-			
+
 			ctx = new InitialContext(env);
 
 			T manager = null;
 
-			
 			manager = (T) lookupBean(managerName, ctx);
 			if (manager == null) {
 
@@ -458,6 +642,14 @@ public class DistributionManager {
 
 	}
 	
+	/**
+	 * Lookup the manager in the remote server. 
+	 * 
+	 * @param hostName. Name of the remote host.
+	 * @param managerName. Lookup string for the manager to be looked up.
+	 * @return manager. A reference to a manager
+	 * @throws IntegerException
+	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T lookupRemoteBean(String hostName, String managerName)
 			throws IntegerException {
@@ -489,9 +681,9 @@ public class DistributionManager {
 						SystemErrorCodes.ManagerNotFound);
 			}
 
-			// if (logger.isDebugEnabled())
-			logger.info("Got bean " + managerName + " from host " + hostName
-					+ " with context " + env.toString());
+			if (logger.isDebugEnabled())
+				logger.debug("Got bean " + managerName + " from host " + hostName
+						+ " with context " + env.toString());
 
 			return manager;
 
@@ -507,6 +699,14 @@ public class DistributionManager {
 
 	}
 
+	/**
+	 * This method is used to lookup a bean (manager or service) in the given context.
+	 * This will be used for both managers and services the lookup is the same.
+	 *  
+	 * @param beanName. Name of the bean to lookup.
+	 * @param ctx. Context to lookup the bean in. 
+	 * @return bean. The bean will be either a manager or service. 
+	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T lookupBean(String managerName, InitialContext ctx) {
 		T manager = null;
@@ -534,13 +734,18 @@ public class DistributionManager {
 	}
 
 	/**
-	 * @return the managers
+	 * Return the list of managers that are known to the system. This is the complete
+	 * list of managers <b>NOT</b> just what is running on the local server.
+	 * 
+	 * @return list of the managers in the system.
 	 */
 	public static DistributedManager[] getManagers() {
 		return managers;
 	}
 
 	/**
+	 * Set the list of managers that are valid for the complete system <b>NOT</b>
+	 * just what is valid on the local server.
 	 * @param managers
 	 *            the managers to set
 	 */
@@ -549,21 +754,26 @@ public class DistributionManager {
 	}
 
 	/**
-	 * @return the services
+	 * Return the list of services that are known to the system. This is the complete
+	 * list of services <b>NOT</b> just what is running on the local server.
+	 * 
+	 * @return list of the managers in the system.
 	 */
 	public static DistributedService[] getServices() {
 		return services;
 	}
-
 	/**
+	 * Set the list of services that are valid for the complete system <b>NOT</b>
+	 * just what is valid on the local server.
 	 * @param services
-	 *            the services to set
+	 *            the managers to set
 	 */
 	public static void setServices(DistributedService[] distributedServers) {
 		services = distributedServers;
 	}
 
 	/**
+	 * Get the list of servers in the system.s
 	 * @return the servers
 	 */
 	public static IntegerServer[] getServers() {
@@ -571,6 +781,8 @@ public class DistributionManager {
 	}
 
 	/**
+	 * 
+	 * Set the list of servers in the system.s
 	 * @param servers
 	 *            the servers to set
 	 */

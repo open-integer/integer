@@ -41,7 +41,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.exception.IntegerException;
@@ -49,6 +48,7 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
+import edu.harvard.integer.util.LoggerUtil;
 
 /**
  * @author David Taylor
@@ -58,8 +58,6 @@ public class BaseDAOTest {
 
 	@Test
 	public void createCleanCopy() {
-		
-		Logger logger = LoggerFactory.getLogger(BaseDAOTest.class);
 		
 		MIBInfo mibInfo = new MIBInfo();
 		mibInfo.setName("Name");
@@ -121,18 +119,18 @@ public class BaseDAOTest {
 			
 	}
 
-//	@Test
-//	public void exportSchema() {
-//		try {
-//			SchemaGenerator generator = new SchemaGenerator("edu.harvard.integer");
-//			generator.generate(SchemaGenerator.Dialect.MYSQL);
-//			
-//		} catch (Exception e) {
-//			
-//			e.printStackTrace();
-//			fail(e.toString());
-//		}
-//		
-//	}
+	@Test
+	public void testCRLFCheck() {
+		String message = "Line with \nCarrage return";
+		System.out.println(message);
+		
+		System.out.println("Fixed Line " + LoggerUtil.filterLog(message));
+		
+		assert(message.indexOf('\n') > 0);
+		
+		assert(LoggerUtil.filterLog(message).indexOf('\n') == -1);
+		
+	}
+	
 
 }

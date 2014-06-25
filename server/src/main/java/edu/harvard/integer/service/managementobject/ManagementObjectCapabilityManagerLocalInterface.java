@@ -36,6 +36,8 @@ package edu.harvard.integer.service.managementobject;
 import javax.ejb.Local;
 
 /**
+ * @see ManagementObjectCapabilityManagerInterface
+ * 
  * @author David Taylor
  *
  */

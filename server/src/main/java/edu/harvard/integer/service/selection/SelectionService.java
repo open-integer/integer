@@ -43,31 +43,32 @@ import org.slf4j.Logger;
 import edu.harvard.integer.service.BaseService;
 
 /**
+ * 
+ * The selection service manages SelectionManagers that are used to construct
+ * views of data in the system and pass them on for UI rendering as appropriate.
+ * It interacts extensively with the Security, Topology and UserAndSystem
+ * Managers.
+ * <p>
+ * The views are user customizable consistent with security restrictions.
+ * <p>
+ * Multiple selection managers may be needed due to the distributed nature of
+ * Integer and to help scale as the number of concurrent users grows.
+ * 
  * @author David Taylor
  * 
- *         The selection service manages SelectionManagers that are used to
- *         construct views of data in the system and pass them on for UI
- *         rendering as appropriate. It interacts extensively with the Security,
- *         Topology and UserAndSystem Managers.
- * 
- *         The views are user customizable consistent with security
- *         restrictions.
- * 
- *         Multiple selection managers may be needed due to the distributed
- *         nature of Integer and to help scale as the number of concurrent users
- *         grows.
  */
 @Singleton
 @Startup
-public class SelectionService extends BaseService implements SelectionServiceInterface {
+public class SelectionService extends BaseService implements
+		SelectionServiceInterface {
 
 	@Inject
 	private Logger logger;
-	
+
 	@PostConstruct
 	public void init() {
 
 		logger.warn("SelectionService is starting");
-		
+
 	}
 }

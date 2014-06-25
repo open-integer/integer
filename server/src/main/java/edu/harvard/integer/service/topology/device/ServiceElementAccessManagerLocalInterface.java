@@ -36,6 +36,8 @@ package edu.harvard.integer.service.topology.device;
 import javax.ejb.Local;
 
 /**
+ * @see ServiceElementAccessManagerInterface
+ * 
  * @author David Taylor
  *
  */

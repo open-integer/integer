@@ -3,7 +3,6 @@
  */
 package edu.harvard.integer.client.ui;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -11,29 +10,21 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
-import edu.harvard.integer.client.IntegerService;
-import edu.harvard.integer.client.IntegerServiceAsync;
 import edu.harvard.integer.client.widget.HvListBoxPanel;
 
 /**
- * This class represents a form panel for importing MIB file.
- *
- * @author jhuang
+ * The Class MechanismPanel represents a panel to configure Mechanism object of Integer.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FormPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class MechanismPanel extends FormPanel {
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting
-	 * service.
-	 */
-	private final IntegerServiceAsync integerService = GWT
-			.create(IntegerService.class);
-
-	/**
-	 * Create a new MibImportPanel.
+	 * Create a new MechanismPanel.
 	 */
 	public MechanismPanel() {
 		// Because we're going to add a FileUpload widget, we'll need to set the

@@ -34,6 +34,8 @@
 package edu.harvard.integer.service.yaml;
 
 /**
+ * Enumeration of the YAML files that can be imported.
+ * 
  * @author David Taylor
  *
  */

@@ -34,9 +34,11 @@
 package edu.harvard.integer.service;
 
 /**
+ * 
+ * Base class for all services.
+ * 
  * @author David Taylor
  *
- * Base class for all services.
  */
 public class BaseService {
 

@@ -58,6 +58,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
+ * @see SnmpManagerInterface
  * 
  * @author David Taylor
  * 
@@ -144,7 +145,10 @@ public class SnmpManager extends BaseManager implements SnmpManagerLocalInterfac
 		}
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface#importProductMib(java.lang.String, edu.harvard.integer.common.snmp.MIBImportInfo)
+	 */
 	@Override
 	public MIBImportResult importProductMib(String vendor, MIBImportInfo mibImport)
 			throws IntegerException {

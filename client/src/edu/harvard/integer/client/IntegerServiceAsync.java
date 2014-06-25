@@ -17,7 +17,6 @@ import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
-// TODO: Auto-generated Javadoc
 /**
  * The async counterpart of <code>IntegerService</code>.
  */

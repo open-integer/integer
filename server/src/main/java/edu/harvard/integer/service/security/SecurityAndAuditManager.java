@@ -81,6 +81,10 @@ public class SecurityAndAuditManager implements
 	@Inject
 	private SecurityServiceInterface securityService;
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.security.SecurityAndAuditManagerInterface#updateAccessPolicy(edu.harvard.integer.common.user.AccessPolicy)
+	 */
 	@Override
 	public AccessPolicy updateAccessPolicy(AccessPolicy accessPolicy) throws IntegerException {
 		AccessPolicyDAO dao = persistenceManager.getAccessPolicyDAO();
@@ -93,6 +97,10 @@ public class SecurityAndAuditManager implements
 		return accessPolicy;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.security.SecurityAndAuditManagerInterface#deleteAccessPolicy(edu.harvard.integer.common.user.AccessPolicy)
+	 */
 	@Override
 	public void deleteAccessPolicy(AccessPolicy accessPolicy) throws IntegerException {
 		 AccessPolicyDAO dao = persistenceManager.getAccessPolicyDAO();
@@ -103,13 +111,10 @@ public class SecurityAndAuditManager implements
 		dao.delete(accessPolicy);
 	}
 	
-	@Override
-	public AccessPolicy[] findAccessPolicies(IntegerFilter filter) throws IntegerException {
-		AccessPolicyDAO dao = persistenceManager.getAccessPolicyDAO();
-		
-		return dao.findAll();
-	}
-	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.security.SecurityAndAuditManagerInterface#loginUser(edu.harvard.integer.common.security.UserLogin)
+	 */
 	@Override
 	public IntegerSession loginUser(UserLogin login) throws IntegerException {
 		
@@ -129,6 +134,10 @@ public class SecurityAndAuditManager implements
 		return session;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.security.SecurityAndAuditManagerInterface#addDirectUser(edu.harvard.integer.common.security.DirectUserLogin)
+	 */
 	@Override
 	public DirectUserLogin addDirectUser(DirectUserLogin user) throws IntegerException {
 		DirectUserLoginDAO dao = persistenceManager.getDirectUserLoginDAO();
@@ -138,6 +147,10 @@ public class SecurityAndAuditManager implements
 		return user;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.security.SecurityAndAuditManagerInterface#deleteDirectUser(edu.harvard.integer.common.security.DirectUserLogin)
+	 */
 	@Override
 	public void deleteDirectUser(DirectUserLogin user) throws IntegerException {
 		DirectUserLoginDAO dao = persistenceManager.getDirectUserLoginDAO();
@@ -145,6 +158,10 @@ public class SecurityAndAuditManager implements
 		dao.delete(user);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.security.SecurityAndAuditManagerInterface#getAllDirectUsers()
+	 */
 	@Override
 	public DirectUserLogin[] getAllDirectUsers() throws IntegerException {
 		DirectUserLoginDAO dao = persistenceManager.getDirectUserLoginDAO();

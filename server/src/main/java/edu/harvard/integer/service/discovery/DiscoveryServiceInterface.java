@@ -52,50 +52,74 @@ import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 
-
 /**
  * The Interface DiscoveryServiceInterface.
- *
+ * 
  * @author David Taylor
  */
 @Local
 public interface DiscoveryServiceInterface extends BaseServiceInterface {
 
 	/**
-	 * Start a discovery with the given DiscoveryRule.
+	 * Start a discovery with the given DiscoveryRule. The returned DiscoveryId
+	 * can be used as a handle to get status of the discovery as well as stop
+	 * the discovery.
 	 * 
 	 * @param rule
-	 * @return
+	 * @return DiscoveryId of the discovery process started by this
+	 *         DiscoveryRule
 	 * @throws IntegerException
 	 */
-	public DiscoveryId startDiscovery(DiscoveryRule rule) throws IntegerException;
-	
+	public DiscoveryId startDiscovery(DiscoveryRule rule)
+			throws IntegerException;
+
 	/**
+	 * This method is called by the discovery process to notify the
+	 * DiscoveryService that the discovery specified by the DiscoveryId has
+	 * complete. This is only to be called by the discovery manager.
+	 * 
 	 * @param dicoveryId
+	 *            . Id of the discovery process that has completed.
 	 * @throws IntegerException
 	 */
 	void discoveryComplete(DiscoveryId dicoveryId) throws IntegerException;
 
 	/**
+	 * This method is called by the discovery process to report an error that
+	 * occurred during discovery. The error will be logged by the discovery
+	 * service.
+	 * 
 	 * @param id
+	 *            . DiscoveryId of the instance of a discovery that had an
+	 *            error.
 	 * @param errorCode
+	 *            . Error code that describes the error.
 	 * @param args
+	 *            . Arguments to the error message.
+	 * 
 	 */
 	void discoveryError(DiscoveryId id, ErrorCodeInterface errorCode,
 			DisplayableInterface[] args);
-	
-	
-	/**
-	 * 
-	 * @param se
-	 * @param ipAddress
-	 */
-	public void discoveryServiceElementNoResponse( ServiceElement se, String ipAddress );
-	
-	
 
 	/**
-	 * Save ServiceElement
+	 * This method is called when a service element (device) does not respond
+	 * the query from the discovery process. The service element will then be
+	 * marked as not reachable and an event will be generated.
+	 * 
+	 * @param serviceElement
+	 *            . The service element that did not respond to the discovery
+	 *            process request.
+	 * @param ipAddress
+	 *            . Address that the discovery process used to query the device.
+	 */
+	public void discoveryServiceElementNoResponse(
+			ServiceElement serviceElement, String ipAddress);
+
+	/**
+	 * This is called from the discovery process when a service element
+	 * has been successfully discovered. This call will then save the
+	 * service element into the database.
+	 * 
 	 * @param accessElement
 	 */
 	void discoveredServiceElement(ServiceElement accessElement);
@@ -107,7 +131,6 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 */
 	void stopDiscovery(DiscoveryId id);
 
-
 	/**
 	 * Submit a ServiceElement Discovery task for execution.
 	 * 
@@ -117,7 +140,7 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 
 	/**
 	 * Submit a SubnetDiscovery task for execution.
-	 *  
+	 * 
 	 * @param task
 	 */
 	Future<Ipv4Range> submitSubnetDiscovery(DiscoverSubnetAsyncTask task);

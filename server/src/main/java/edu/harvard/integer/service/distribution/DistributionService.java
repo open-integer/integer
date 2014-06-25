@@ -62,6 +62,13 @@ import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServic
 import edu.harvard.integer.service.persistance.dao.distribtued.IntegerServerDAO;
 
 /**
+ * The distribution service is responsible for where all the services and managers
+ * are running as well as the state of each of the services, managers and servers 
+ * in the integer system. 
+ * <p>
+ * The distribution service will run on each server so that all services and managers
+ * on each server can find a local or remote manager or service.
+ * 
  * @author David Taylor
  * 
  */
@@ -83,6 +90,12 @@ public class DistributionService extends BaseService implements DistributionServ
 
 	}
 
+	/**
+	 * Called after the DistributionService has been created to do the 
+	 * Initialization of the Distribution service.
+	 * <p>
+	 * This is called by the container (wildfly)
+	 */
 	@PostConstruct
 	public void init() {
 		
@@ -122,13 +135,6 @@ public class DistributionService extends BaseService implements DistributionServ
 			logger.error("Error checking all managers! " + e.toString());
 			e.printStackTrace();
 		}
-////
-//		try {
-//			showAllServicess();
-//		} catch (IntegerException e) {
-//			logger.error("Error checking all services! " + e.toString());
-//			e.printStackTrace();
-//		}
 
 	}
 
@@ -186,16 +192,8 @@ public class DistributionService extends BaseService implements DistributionServ
 			b.append(message).append('\n');
 			logger.info(message);
 			
-			DistributedManager[] knownManagers = null;
-			if (integerServer.getServerId().equals(getServerID())) {
-				knownManagers = getManagers();
-			} else {
-				
-				StateManagerInterface manager = DistributionManager.getManager(integerServer.getServerId(), ManagerTypeEnum.StateManager);
-				knownManagers = manager.getConfiguredManagers();
-			}
 			
-			for (DistributedManager distributedManager : knownManagers) {
+			for (DistributedManager distributedManager : getManagers()) {
 				String managerMessage = "Manager " + distributedManager.getName() + " type " + distributedManager.getManagerType();
 				logger.info(managerMessage);
 				b.append("Manager " + distributedManager.getName() + " type " + distributedManager.getManagerType()).append('\n');
@@ -233,17 +231,6 @@ public class DistributionService extends BaseService implements DistributionServ
 		return b.toString();
 	}
 
-	@Path(value="/AllServices")
-	@GET
-	@Produces({ MediaType.TEXT_HTML })
-	@Override
-	public DistributedManager[] getKnownManagers() throws IntegerException {
-		DistributedManagerDAO distributedManagerDAO = persistenceManager
-				.getDistributedManagerDAO();
-		DistributedManager[] managers = distributedManagerDAO.findAll();
-		
-		return managers;
-	}
 
 	/**
 	 * @return

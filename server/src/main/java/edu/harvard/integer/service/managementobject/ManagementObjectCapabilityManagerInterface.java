@@ -135,28 +135,36 @@ public interface ManagementObjectCapabilityManagerInterface extends
 			ID id) throws IntegerException;
 
 	/**
-	 * @param serviceElementType
-	 * @return
+	 * Update the serviceElementType. The identifier will be set on the
+	 * instance returned
+	 * 
+	 * @param serviceElementType. The service element type to be saved
+	 * @return the saved service elemeent type that has been saved in
+	 * the database. The identifier is set on the object returned.
 	 * @throws IntegerException
 	 */
 	ServiceElementType updateServiceElementType(
 			ServiceElementType serviceElementType) throws IntegerException;
 
 	/**
-	 * @param serviceElementType
+	 * Delete the service element type.
+	 * @param serviceElementType The service element type to be deleted
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteServiceElementType(ServiceElementType serviceElementType)
 			throws IntegerException;
 
 	/**
-	 * @return
+	 * Get all the service element types that are in the database.
+	 * @return List of all service element types in the database.
 	 * @throws IntegerException
 	 */
 	ServiceElementType[] getAllServiceElementTypes() throws IntegerException;
 
 	/**
-	 * @param serviceElementTypeId
+	 * Delete the service element type.
+	 * @param ID of the serviceElementType to be deleted.
 	 * @throws IntegerException
 	 */
 	void deleteServiceElementType(ID serviceElementTypeId)
@@ -191,57 +199,67 @@ public interface ManagementObjectCapabilityManagerInterface extends
 	SnmpContainment getSnmpContainmentById(ID id) throws IntegerException;
 
 	/**
-	 * @param applicabilty
-	 * @return
+	 * Update/save the applicability object
+	 * 
+	 * @param applicabilty. The applicability object to be saved/updated
+	 * @return The updated applicability
 	 * @throws IntegerException
 	 */
 	Applicability updateApplicability(Applicability applicabilty)
 			throws IntegerException;
 
 	/**
-	 * @return
+	 * Get the list of all applicability objects in the database.
+	 * @return List of applicatablity objects found in the database.
 	 * @throws IntegerException
 	 */
 	Applicability[] getAllApplicabilities() throws IntegerException;
 
 	/**
-	 * @param id
-	 * @return
+	 * Get the Applicability object identified by the ID.
+	 * @param id of the applicability object to be retrieved from the database.
+	 * @return the Applicability object for the given ID.
 	 * @throws IntegerException
 	 */
 	Applicability getApplicabilityById(ID id) throws IntegerException;
 
 	/**
-	 * @param id
+	 * Delete the Applicability object identified by the ID.
+	 * @param id of the Applicability object to delete.
 	 * @throws IntegerException
 	 */
 	void deleteApplicability(ID id) throws IntegerException;
 
 	/**
-	 * @param override
-	 * @return
+	 * update the service element type overide object in the database.
+	 * @param override. SnmpServiceElementTypeOverride to be updated.
+	 * @return updated SnmpServiceElementTypeOverride
 	 * @throws IntegerException
 	 */
 	SnmpServiceElementTypeOverride updateSnmpServiceElementTypeOverride(
 			SnmpServiceElementTypeOverride override) throws IntegerException;
 
 	/**
-	 * @return
+	 * Get all the SnmpServiceElementTypeOverride in the database.
+	 * @return List of SnmpServiceElementTypeOverride found in the database.
 	 * @throws IntegerException
 	 */
 	SnmpServiceElementTypeOverride[] getAllSnmpServiceElementTypeOverride()
 			throws IntegerException;
 
 	/**
-	 * @param id
-	 * @return
+	 * Get SnmpServiceElementTypeOverride identified by the ID
+	 * @param id. ID of the SnmpServiceElementTypeOverride to get.
+	 * @return SnmpServiceElementTypeOverride 
 	 * @throws IntegerException
 	 */
 	SnmpServiceElementTypeOverride getSnmpServiceElementTypeOverrideById(ID id)
 			throws IntegerException;
 
 	/**
-	 * @param id
+	 * delete the SnmpServiceElementTypeOverride identified by the ID.
+	 * 
+	 * @param id of the SnmpServiceElementTypeOverride to delete
 	 * @throws IntegerException
 	 */
 	void deleteSnmpServiceElementTypeOverride(ID id) throws IntegerException;

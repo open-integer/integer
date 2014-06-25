@@ -53,6 +53,13 @@ import org.slf4j.LoggerFactory;
 import edu.harvard.integer.common.exception.IntegerException;
 
 /**
+ * Helper class to get information from the Wildfly JMX console. This 
+ * will create a connection to the JMX console and then execute a command.
+ * 
+ * Ex.
+ * Integer portNumber = JMXConsole.getWebServerPort();
+ * 
+ * 
  * @author David Taylor
  * 
  */
@@ -61,7 +68,7 @@ public class JMXConsole {
 	private static final Logger logger = LoggerFactory
 			.getLogger(JMXConsole.class);
 
-	public static Object getAttribute(String mbeanName, String attribute)
+	private static Object getAttribute(String mbeanName, String attribute)
 			throws IntegerException {
 
 		String host = "localhost";
@@ -72,7 +79,7 @@ public class JMXConsole {
 		try {
 			serviceURL = new JMXServiceURL(urlString);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			logger.error("Error getting " + attribute + " from " + mbeanName);
 			e.printStackTrace();
 		}
 
@@ -83,7 +90,7 @@ public class JMXConsole {
 
 			connection = jmxConnector.getMBeanServerConnection();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			logger.error("Error getting " + attribute + " from " + mbeanName);
 			e.printStackTrace();
 		}
 
@@ -91,7 +98,7 @@ public class JMXConsole {
 		try {
 			objName = new ObjectName(mbeanName);
 		} catch (MalformedObjectNameException e) {
-			// TODO Auto-generated catch block
+			logger.error("Error getting " + attribute + " from " + mbeanName);
 			e.printStackTrace();
 		}
 		
@@ -100,7 +107,7 @@ public class JMXConsole {
 			obj = connection.getAttribute(objName, attribute);
 		} catch (AttributeNotFoundException | InstanceNotFoundException
 				| MBeanException | ReflectionException | IOException e) {
-			// TODO Auto-generated catch block
+			logger.error("Error getting " + attribute + " from " + mbeanName);
 			e.printStackTrace();
 		}
 
@@ -112,14 +119,22 @@ public class JMXConsole {
 			if (jmxConnector != null)
 				jmxConnector.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			logger.error("Error getting " + attribute + " from " + mbeanName);
 			e.printStackTrace();
 		}
 		
 		return obj;
 
 	}
-	
+
+	/**
+	 * Get the web server port that the server
+	 * is listening on.
+	 * 
+	 * @return prot number the server is listening on.
+	 * 
+	 * @throws IntegerException
+	 */
 	public static Integer getWebServerPort() throws IntegerException {
 		return (Integer) getAttribute(
 				"jboss.ws:service=ServerConfig", "WebServicePort");

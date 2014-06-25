@@ -37,10 +37,16 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * 
+ * 
+ * The DAO is responsible for persisting the DataPreLoadFile. All
+ * queries will be done in this class. 
+ * 
  * @author David Taylor
  *
  */
@@ -56,4 +62,8 @@ public class DataPreLoadFileDAO extends BaseDAO {
 		
 	}
 
+	public int loadSQL(String sqlCmd) throws IntegerException {
+		
+		return executeUpdate(sqlCmd);
+	}
 }

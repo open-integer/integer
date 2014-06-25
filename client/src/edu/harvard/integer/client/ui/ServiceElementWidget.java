@@ -256,7 +256,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
 		if (clickHandler != null)
 			clickHandler.onNodeMouseClick(event);
-		SystemSplitViewPanel.showContaineeTreeView(serviceElement);
+		SystemSplitViewPanel.showContainedTreeView(serviceElement);
 		
 		setHighLighted(true); // highlighted whenever it gets clicked for now
 	}

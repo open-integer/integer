@@ -5,7 +5,11 @@ import java.util.List;
 import edu.harvard.integer.client.widget.HvTableViewPanel;
 
 /**
- * The Class CapabilityView.
+ * The Class EventView represents a event table view panel object of Integer.
+ * This is a subclass class extended from HvTableViewPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class EventView extends HvTableViewPanel {
 	
@@ -26,7 +30,7 @@ public class EventView extends HvTableViewPanel {
 	}
 
 	/**
-	 * Update.
+	 * Update method will refresh the event view with the given list of objects.
 	 *
 	 * @param result the result
 	 */

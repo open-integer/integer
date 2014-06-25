@@ -17,27 +17,49 @@ import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**
- * The Class FilterPanel.
+ * The Class FilterPanel represents a filter panel object of Integer.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.DockPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class FilterPanel extends DockPanel {
 	
+	/** The category provider. */
 	private ListDataProvider<CategoryTypeEnum> categoryProvider = new ListDataProvider<CategoryTypeEnum>();
+	
+	/** The technology provider. */
 	private ListDataProvider<TechItem> technologyProvider = new ListDataProvider<TechItem>();
+	
+	/** The provider provider. */
 	private ListDataProvider<ID> providerProvider = new ListDataProvider<ID>();
+	
+	/** The criticality provider. */
 	private ListDataProvider<CriticalityEnum> criticalityProvider = new ListDataProvider<CriticalityEnum>();
+	
+	/** The location provider. */
 	private ListDataProvider<ID> locationProvider = new ListDataProvider<ID>();
+	
+	/** The service provider. */
 	private ListDataProvider<ID> serviceProvider = new ListDataProvider<ID>();
+	
+	/** The organization provider. */
 	private ListDataProvider<TechItem> organizationProvider = new ListDataProvider<TechItem>();
 	
+	/** The title panel. */
 	private SimplePanel titlePanel = new SimplePanel();
+	
+	/** The selection panel. */
 	private StackLayoutPanel selectionPanel = new StackLayoutPanel(Unit.EM);
+	
+	/** The action panel. */
 	private SimplePanel actionPanel = new SimplePanel();
+	
+	/** The refresh button. */
 	private Button refreshButton = new Button("Refresh");
 	
 	/**
-	 * Instantiates a new filter panel.
-	 *
-	 * @param unit the unit
+	 * Create a new FilterPanel.
 	 */
 	public FilterPanel() {
 		titlePanel.add(new HTML("Narrow Your Selections"));
@@ -52,6 +74,12 @@ public class FilterPanel extends DockPanel {
 		add(actionPanel, DockPanel.SOUTH);
 	}
 	
+	
+	/**
+	 * Update method will refresh the filter panel with the given Filter object.
+	 *
+	 * @param filter the filter
+	 */
 	public void update(Filter filter) {
 		if (filter.getServices() != null && !filter.getServices().isEmpty())
 			selectionPanel.add(new HvCheckListPanel<ID>(serviceProvider, filter.getServices()), "Business Services", 3);

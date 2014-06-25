@@ -47,6 +47,9 @@ import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the SnmpVendorDiscoveryTemplate. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
  */

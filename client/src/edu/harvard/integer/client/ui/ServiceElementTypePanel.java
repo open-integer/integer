@@ -19,21 +19,15 @@ import edu.harvard.integer.client.IntegerServiceAsync;
 import edu.harvard.integer.client.widget.HvListBoxPanel;
 
 /**
- * This class represents a form panel for importing MIB file.
- *
- * @author jhuang
+ * The Class ServiceElementTypePanel represents a panel to configure ServiceElementType object of Integer.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FormPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class ServiceElementTypePanel extends FormPanel {
-
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting
-	 * service.
-	 */
-	private final IntegerServiceAsync integerService = GWT
-			.create(IntegerService.class);
-
-	/**
-	 * Create a new MibImportPanel.
+	 * Create a new ServiceElementTypePanel.
 	 */
 	public ServiceElementTypePanel() {
 		// Because we're going to add a FileUpload widget, we'll need to set the
@@ -110,11 +104,6 @@ public class ServiceElementTypePanel extends FormPanel {
 
 		addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
 			public void onSubmitComplete(SubmitCompleteEvent event) {
-
-				// When the form submission is successfully completed, this
-				// event is fired. Assuming the service returned a response of
-				// type text/html, we can get the result text here (see the
-				// FormPanel documentation for further explanation).
 				Window.alert(event.getResults());
 			}
 		});

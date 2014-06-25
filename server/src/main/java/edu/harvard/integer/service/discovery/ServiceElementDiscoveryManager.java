@@ -66,25 +66,27 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpV
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 
 /**
+ * The service element discovery manager is responsible for both initial
+ * discovery of network elements and subsequent passes over the same elements.
+ * It is not responsible for computing network topology though it collects
+ * information that is used by that service.
+ * 
+ * <p>
+ * The ServiceElementDiscoveryManager is started by the Service and there is one
+ * instance created for each subnet of the ServiceElementDiscoveryManager. When
+ * it is called the DiscoveryService strips out unneeded information and it only
+ * creates a ServiceElementDiscoverySeed. That will contain, the subnet, list of
+ * found hosts, and serviceElementTypeExclusions.
+ * 
+ * 
  * @author David Taylor
  * 
- *         The service element discovery manager is responsible for both initial
- *         discovery of network elements and subsequent passes over the same
- *         elements. It is not responsible for computing network topology though
- *         it collects information that is used by that service.
  * 
- * 
- *         The ServiceElementDiscoveryManager is started by the Service and
- *         there is one instance created for each subnet of the
- *         ServiceElementDiscoveryManager. When it is called the
- *         DiscoveryService strips out unneeded information and it only creates
- *         a ServiceElementDiscoverySeed. That will contain, the subnet, list of
- *         found hosts, and serviceElementTypeExclusions.
- *         
  */
 @Stateless
 public class ServiceElementDiscoveryManager extends BaseManager implements
-		ServiceElementDiscoveryManagerLocalInterface, ServiceElementDiscoveryManagerRemoteInterface {
+		ServiceElementDiscoveryManagerLocalInterface,
+		ServiceElementDiscoveryManagerRemoteInterface {
 
 	@Inject
 	private Logger logger;
@@ -97,11 +99,11 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 */
 	public ServiceElementDiscoveryManager() {
 		super(ManagerTypeEnum.ServiceElementDiscoveryManager);
-		
+
 	}
 
 	/**
-	 * Start a discovery of ServiceElements with the given Discovery seed. 
+	 * Start a discovery of ServiceElements with the given Discovery seed.
 	 * 
 	 * @param id
 	 * @param seed
@@ -109,24 +111,26 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 * @throws IntegerException
 	 */
 	@Override
-	public NetworkDiscovery startDiscovery(DiscoveryId id, IpDiscoverySeed seed) throws IntegerException {
-		
-		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
-	
-		List<SNMP> mgrObjects = getToplLevelOIDs();
-		for ( SNMP snmp : mgrObjects ) {
+	public NetworkDiscovery startDiscovery(DiscoveryId id, IpDiscoverySeed seed)
+			throws IntegerException {
 
-			VariableBinding vb = new VariableBinding(new OID(snmp.getOid() + ".0" ));
+		List<VariableBinding> vbs = new ArrayList<VariableBinding>();
+
+		List<SNMP> mgrObjects = getToplLevelOIDs();
+		for (SNMP snmp : mgrObjects) {
+
+			VariableBinding vb = new VariableBinding(new OID(snmp.getOid()
+					+ ".0"));
 			vbs.add(vb);
 		}
 		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
 		discovery.discoverNetwork();
-		
+
 		logger.info("Start ServiceElement discovery of " + seed.getSeedId());
-		
+
 		return discovery;
 	}
-	
+
 	@Override
 	public SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
 			ID vendorId) throws IntegerException {
@@ -136,7 +140,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		return dao.findByVendor(vendorId);
 	}
-	
+
 	@Override
 	public SnmpVendorDiscoveryTemplate getSnmpVendorDiscoveryTemplateByVendor(
 			Long vendor) throws IntegerException {
@@ -146,17 +150,17 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		return dao.findByVendor(vendor);
 	}
-	
+
 	@Override
-	public SnmpVendorDiscoveryTemplate updateSnmpVendorDiscoveryTemplate(SnmpVendorDiscoveryTemplate template) throws IntegerException {
-	
+	public SnmpVendorDiscoveryTemplate updateSnmpVendorDiscoveryTemplate(
+			SnmpVendorDiscoveryTemplate template) throws IntegerException {
+
 		SnmpVendorDiscoveryTemplateDAO dao = dbm
 				.getSnmpVendorDiscoveryTemplateDAO();
 
-		
 		return dao.update(template);
 	}
-	
+
 	/**
 	 * Return all the SnmpVendorTemplates in the system.
 	 * 
@@ -164,77 +168,104 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	 * @throws IntegerException
 	 */
 	@Override
-	public SnmpVendorDiscoveryTemplate[] getAllSnmpVendorDiscoveryTemplates() throws IntegerException {
+	public SnmpVendorDiscoveryTemplate[] getAllSnmpVendorDiscoveryTemplates()
+			throws IntegerException {
 		SnmpVendorDiscoveryTemplateDAO dao = dbm
 				.getSnmpVendorDiscoveryTemplateDAO();
 
 		return dao.findAll();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#updateVendorContainmentSelector(edu.harvard.integer.common.discovery.VendorContainmentSelector)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #updateVendorContainmentSelector(edu.harvard.integer.common.discovery.
+	 * VendorContainmentSelector)
 	 */
 	@Override
-	public VendorContainmentSelector updateVendorContainmentSelector(VendorContainmentSelector selector) throws IntegerException {
+	public VendorContainmentSelector updateVendorContainmentSelector(
+			VendorContainmentSelector selector) throws IntegerException {
 		VendorContainmentSelectorDAO dao = dbm
 				.getVendorContainmentSelectorDAO();
-		
+
 		selector = dao.update(selector);
-		
+
 		return selector;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getAllVendorContainmentSelectors()
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getAllVendorContainmentSelectors()
 	 */
 	@Override
-	public VendorContainmentSelector[] getAllVendorContainmentSelectors() throws IntegerException {
+	public VendorContainmentSelector[] getAllVendorContainmentSelectors()
+			throws IntegerException {
 		VendorContainmentSelectorDAO dao = dbm
 				.getVendorContainmentSelectorDAO();
-		
+
 		return dao.findAll();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getVendorContainmentSelectorById(edu.harvard.integer.common.ID)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getVendorContainmentSelectorById(edu.harvard.integer.common.ID)
 	 */
 	@Override
-	public VendorContainmentSelector getVendorContainmentSelectorById(ID id) throws IntegerException {
+	public VendorContainmentSelector getVendorContainmentSelectorById(ID id)
+			throws IntegerException {
 		VendorContainmentSelectorDAO dao = dbm
 				.getVendorContainmentSelectorDAO();
-		
+
 		return dao.findById(id);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getVendorContainmentSelector(edu.harvard.integer.common.discovery.VendorContainmentSelector)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getVendorContainmentSelector(edu.harvard.integer.common.discovery.
+	 * VendorContainmentSelector)
 	 */
 	@Override
-	public VendorContainmentSelector[] getVendorContainmentSelector(VendorContainmentSelector selector) throws IntegerException {
+	public VendorContainmentSelector[] getVendorContainmentSelector(
+			VendorContainmentSelector selector) throws IntegerException {
 		VendorContainmentSelectorDAO dao = dbm
 				.getVendorContainmentSelectorDAO();
 
 		return dao.findBySelector(selector);
 	}
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#deleteVendorContianmentSelector(edu.harvard.integer.common.ID)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #deleteVendorContianmentSelector(edu.harvard.integer.common.ID)
 	 */
 	@Override
 	public void deleteVendorContianmentSelector(ID id) throws IntegerException {
 		VendorContainmentSelectorDAO dao = dbm
 				.getVendorContainmentSelectorDAO();
-		
+
 		dao.delete(id);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getSnmpContainment(edu.harvard.integer.common.discovery.VendorContainmentSelector)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getSnmpContainment(edu.harvard.integer.common.discovery.
+	 * VendorContainmentSelector)
 	 */
 	@Override
 	public SnmpContainment getSnmpContainment(VendorContainmentSelector selector)
@@ -244,7 +275,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		VendorContainmentSelector[] containmentSelectors = dao
 				.findBySelector(selector);
-		
+
 		if (containmentSelectors == null || containmentSelectors.length == 0)
 			return null;
 
@@ -258,14 +289,14 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 				.getContainmentId());
 	}
 
-	public SnmpContainment[] getSnmpContainments(VendorContainmentSelector selector)
-			throws IntegerException {
+	public SnmpContainment[] getSnmpContainments(
+			VendorContainmentSelector selector) throws IntegerException {
 		VendorContainmentSelectorDAO dao = dbm
 				.getVendorContainmentSelectorDAO();
 
 		VendorContainmentSelector[] containmentSelectors = dao
 				.findBySelector(selector);
-		
+
 		if (containmentSelectors == null || containmentSelectors.length == 0)
 			return null;
 
@@ -277,48 +308,58 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		List<SnmpContainment> snmpContainments = new ArrayList<SnmpContainment>();
 		for (VendorContainmentSelector vendorContainmentSelector : containmentSelectors) {
-			SnmpContainment snmpContainment = snmpContainmentDAO.findById(vendorContainmentSelector.getContainmentId());
+			SnmpContainment snmpContainment = snmpContainmentDAO
+					.findById(vendorContainmentSelector.getContainmentId());
 			if (snmpContainment != null)
 				snmpContainments.add(snmpContainment);
 		}
-		
+
 		return (SnmpContainment[]) snmpContainments
 				.toArray(new SnmpContainment[snmpContainments.size()]);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#updataSnmpContainment(edu.harvard.integer.common.discovery.SnmpContainment)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #
+	 * updataSnmpContainment(edu.harvard.integer.common.discovery.SnmpContainment
+	 * )
 	 */
 	@Override
-	public SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment) throws IntegerException {
+	public SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment)
+			throws IntegerException {
 		SnmpContainmentDAO dao = dbm.getSnmpContainmentDAO();
-		
+
 		return dao.update(snmpContainment);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager#getSnmpVendorDiscoveryTemplateByVendor(String)
-	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager#
+	 * getSnmpVendorDiscoveryTemplateByVendor(String)
 	 */
 	@Override
-	public VendorIdentifier getVendorIdentifier(String vendorOid) throws IntegerException {
+	public VendorIdentifier getVendorIdentifier(String vendorOid)
+			throws IntegerException {
 		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
-		
+
 		OID o = new OID(vendorOid);
-		
+
 		if (o.size() <= 7)
 			return dao.findByVendorOid(vendorOid);
 		else
 			return dao.findByVendorSubtypeId(vendorOid);
 	}
-	
+
 	@Override
-	public VendorIdentifier getVenderIdentiferBySubTypeName(String vendorSubTypeName) throws IntegerException {
+	public VendorIdentifier getVenderIdentiferBySubTypeName(
+			String vendorSubTypeName) throws IntegerException {
 		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
-		
+
 		return dao.findByVendorSubtypeName(vendorSubTypeName);
 	}
 
@@ -326,68 +367,73 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		int count = 0;
 		int offset = 0;
 		offset = oidString.indexOf('.');
-		
+
 		while (offset > 0) {
 			offset = oidString.indexOf(offset + 1, '.');
 			count++;
 		}
-		
+
 		return count;
 	}
-	
+
 	@Override
-	public List<VendorIdentifier> findVendorSubTree(String name) throws IntegerException {
+	public List<VendorIdentifier> findVendorSubTree(String name)
+			throws IntegerException {
 		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
-		
+
 		List<VendorIdentifier> oids = dao.findByOidSubtree(name);
-		
+
 		return oids;
 	}
 
 	@Override
-	public List<VendorIdentifier> findVendorNameSubTree(String name) throws IntegerException {
+	public List<VendorIdentifier> findVendorNameSubTree(String name)
+			throws IntegerException {
 		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
-		
+
 		List<VendorIdentifier> oids = dao.findByNameSubtree(name);
-		
+
 		return oids;
 	}
-	
-	/*
-	 *  (non-Javadoc)
-	 * 
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager#updateVendorIdentifier(VendorIdentifier)
-	 * 
-	 */
-	@Override
-	public VendorIdentifier updateVendorIdentifier(VendorIdentifier vendorIdentifier) throws IntegerException {
-		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
-		
-		return dao.update(vendorIdentifier);
-	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getTopLevelPolls()
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager#
+	 * updateVendorIdentifier(VendorIdentifier)
+	 */
+	@Override
+	public VendorIdentifier updateVendorIdentifier(
+			VendorIdentifier vendorIdentifier) throws IntegerException {
+		VendorIdentifierDAO dao = dbm.getVendorIdentifierDAO();
+
+		return dao.update(vendorIdentifier);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getTopLevelPolls()
 	 */
 	@Override
 	public List<SNMP> getToplLevelOIDs() {
-		
+
 		SNMPDAO snmpdao = dbm.getSNMPDAO();
-		
+
 		List<SNMP> snmps = new ArrayList<>();
-		
+
 		snmps = addOid(CommonSnmpOids.sysContact, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.sysDescr, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.sysLocation, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.sysName, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.sysObjectID, snmps, snmpdao);
-		
+
 		return snmps;
 	}
-	
-	
-	
+
 	private List<SNMP> addOid(String oid, List<SNMP> snmps, SNMPDAO dao) {
 		SNMP snmp = dao.findByOid(oid);
 		if (snmp != null)
@@ -395,31 +441,40 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		else {
 			logger.error("OID " + oid + " not found!!");
 		}
-		
+
 		return snmps;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypeById(edu.harvard.integer.common.ID)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getServiceElementTypeById(edu.harvard.integer.common.ID)
 	 */
 	@Override
-	public ServiceElementType getServiceElementTypeById(ID serviceElementTypeId) throws IntegerException {
+	public ServiceElementType getServiceElementTypeById(ID serviceElementTypeId)
+			throws IntegerException {
 		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
-		
-		return (ServiceElementType) dao.createCleanCopy(dao.findById(serviceElementTypeId));
+
+		return (ServiceElementType) dao.createCleanCopy(dao
+				.findById(serviceElementTypeId));
 	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getEntityMIBCollumn()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getEntityMIBCollumn()
 	 */
 	@Override
-	public List<SNMP> getEntityMIBInfo() {
-		
-        SNMPDAO snmpdao = dbm.getSNMPDAO();
-		
+	public List<SNMP> getEntityPhysicalTableOIDs() {
+
+		SNMPDAO snmpdao = dbm.getSNMPDAO();
+
 		List<SNMP> snmps = new ArrayList<>();
-		
+
 		snmps = addOid(CommonSnmpOids.entPhysicalClass, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.entPhysicalContainedIn, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.entPhysicalDescr, snmps, snmpdao);
@@ -431,48 +486,63 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		snmps = addOid(CommonSnmpOids.entPhysicalSoftwareRev, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.entPhysicalSerialNum, snmps, snmpdao);
 		snmps = addOid(CommonSnmpOids.entPhysicalVendorType, snmps, snmpdao);
-		
+
 		return snmps;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypesByCategoryAndVendor()
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getServiceElementTypesByCategoryAndVendor()
 	 */
 	@Override
-	public ServiceElementType[] getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum catetory, String vendorType) throws IntegerException {
-		
+	public ServiceElementType[] getServiceElementTypesByCategoryAndVendor(
+			CategoryTypeEnum catetory, String vendorType)
+			throws IntegerException {
+
 		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
-		
-		ServiceElementType[] types = dao.findByCategoryAndVendor(catetory, vendorType);
-		
+
+		ServiceElementType[] types = dao.findByCategoryAndVendor(catetory,
+				vendorType);
+
 		return types;
 	}
-	
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypesBySubtypeAndVendor(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getServiceElementTypesBySubtypeAndVendor(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	public ServiceElementType[] getServiceElementTypesBySubtypeAndVendor(
 			String subtype, String vendorType) throws IntegerException {
-		
+
 		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
-		
-		ServiceElementType[] types = dao.findBySubTypeAndVendor(subtype, vendorType);
-		
+
+		ServiceElementType[] types = dao.findBySubTypeAndVendor(subtype,
+				vendorType);
+
 		return types;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementTypeByName(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface
+	 * #getServiceElementTypeByName(java.lang.String)
 	 */
 	@Override
 	public ServiceElementType getServiceElementTypeByName(String name)
 			throws IntegerException {
-		
+
 		ServiceElementTypeDAO dao = dbm.getServiceElementTypeDAO();
-        return dao.findByName(name);
+		return dao.findByName(name);
 	}
 
 }

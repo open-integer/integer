@@ -41,6 +41,9 @@ import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentif
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the ServiceElementProtocolInstanceIdentifier. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
  */

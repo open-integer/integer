@@ -34,6 +34,8 @@
 package edu.harvard.integer.service;
 
 /**
+ * Base Service interface that all services in the system must implement.
+ * 
  * @author David Taylor
  *
  */

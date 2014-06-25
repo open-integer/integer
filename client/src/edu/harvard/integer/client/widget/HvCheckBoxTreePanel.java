@@ -22,11 +22,18 @@ import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.technology.Technology;
 
+/**
+ * The Class HvCheckBoxTreePanel.
+ */
 public class HvCheckBoxTreePanel extends SimplePanel {
 	
+	/** The tech item provider. */
 	private ListDataProvider<TechItem> techItemProvider;
+	
+	/** The sub category provider. */
 	private ListDataProvider<SubCategory> subCategoryProvider;
 	
+	/** The key provider. */
 	private final ProvidesKey<TechItem> KEY_PROVIDER = new ProvidesKey<TechItem>() {
 		@Override
 		public Object getKey(TechItem item) {
@@ -34,6 +41,12 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 		}
 	};
 
+	/**
+	 * Instantiates a new hv check box tree panel.
+	 *
+	 * @param techItemProvider the tech item provider
+	 * @param list the list
+	 */
 	public HvCheckBoxTreePanel(ListDataProvider<TechItem> techItemProvider, List<FilterNode> list) {
 		this.techItemProvider = techItemProvider;
 		subCategoryProvider = new ListDataProvider<SubCategory>();
@@ -72,6 +85,12 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 		
 	}
 	
+	/**
+	 * Generate provider items.
+	 *
+	 * @param parentNode the parent node
+	 * @param techNodeList the tech node list
+	 */
 	public void generateProviderItems(ID parentNode, List<FilterNode> techNodeList) {
 		List<TechItem> techItemList = techItemProvider.getList();
 		List<SubCategory> subCategoryList = subCategoryProvider.getList();
@@ -86,6 +105,14 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 		}
 	}
 	
+	/**
+	 * Creates the tech item.
+	 *
+	 * @param id the id
+	 * @param catName the cat name
+	 * @param itemName the item name
+	 * @return the tech item
+	 */
 	private static TechItem createTechItem(long id, String catName, String itemName) {
 		Category category = new Category(catName);
 		TechItem techItem = new TechItem((int)id, category, itemName);

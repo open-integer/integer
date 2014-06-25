@@ -51,15 +51,19 @@ import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 
 /**
+ * @see ServiceElementAccessManagerInterface
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Stateless
-public class ServiceElememtAccessManager extends BaseManager implements ServiceElementAccessManagerLocalInterface, ServiceElementAccessManagerRemoteInterface {
-	
+public class ServiceElememtAccessManager extends BaseManager implements
+		ServiceElementAccessManagerLocalInterface,
+		ServiceElementAccessManagerRemoteInterface {
+
 	@Inject
 	private Logger logger;
-		
+
 	@Inject
 	private PersistenceManagerInterface dbm;
 
@@ -71,145 +75,175 @@ public class ServiceElememtAccessManager extends BaseManager implements ServiceE
 
 	}
 
-	/**
-	 * Add or update a service element. If the service element does not exist in the database. Then 
-	 * a new service element will be created. If the service element exists in then the service element
-	 * will be updated.
-	 * 
-	 */
-	@Override
-	public ServiceElement updateServiceElement(ServiceElement serviceElement) throws IntegerException {
-		
-		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
-		serviceElement = serviceElementDAO.update(serviceElement);
-		
-		if (logger.isDebugEnabled())
-			logger.debug("Save ServiceElement " + serviceElement);
-		
-		return serviceElement;
-	}
-	
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getAllServiceElements()
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#updateServiceElement(edu.harvard.integer.common.topology.ServiceElement)
+	 */
+	@Override
+	public ServiceElement updateServiceElement(ServiceElement serviceElement)
+			throws IntegerException {
+
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+
+		serviceElement = serviceElementDAO.update(serviceElement);
+
+		if (logger.isDebugEnabled())
+			logger.debug("Save ServiceElement " + serviceElement);
+
+		return serviceElement;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface#getAllServiceElements()
 	 */
 	@Override
 	public ServiceElement[] getAllServiceElements() throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
+
 		ServiceElement[] serviceElements = serviceElementDAO.findAll();
-		
+
 		return serviceElements;
 	}
-	
-	public ServiceElement getServiceElementByUninque(ID parentId, ManagementObjectValue value) throws IntegerException {
+
+	public ServiceElement getServiceElementByUninque(ID parentId,
+			ManagementObjectValue value) throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
+
 		return null;
-		//return serviceElementDAO.findByIdAndValue(parentId, value);
+		// return serviceElementDAO.findByIdAndValue(parentId, value);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getTopLevelServiceElements()
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface#getTopLevelServiceElements()
 	 */
 	@Override
-	public ServiceElement[] getTopLevelServiceElements() throws IntegerException {
+	public ServiceElement[] getTopLevelServiceElements()
+			throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
-		ServiceElement[] topLevel = serviceElementDAO.findTopLevelServiceElements();
-		
-		
+
+		ServiceElement[] topLevel = serviceElementDAO
+				.findTopLevelServiceElements();
+
 		for (int i = 0; i < topLevel.length; i++) {
 			logger.info("Top level Service element " + topLevel[i].getID());
-			
+
 			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
-				
+
 		}
-		
-		
-		
+
 		return topLevel;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementByParentId(edu.harvard.integer.common.ID)
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface
+	 * #getServiceElementByParentId(edu.harvard.integer.common.ID)
 	 */
 	@Override
-	public ServiceElement[] getServiceElementByParentId(ID parentId) throws IntegerException {
+	public ServiceElement[] getServiceElementByParentId(ID parentId)
+			throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
+
 		ServiceElement[] topLevel = serviceElementDAO.findByParentId(parentId);
 		for (int i = 0; i < topLevel.length; i++) {
-			
+
 			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
-			logger.info("Service element " + topLevel[i].getID() + " Parent " + parentId);	
+			logger.info("Service element " + topLevel[i].getID() + " Parent "
+					+ parentId);
 		}
 		return topLevel;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementBySelection(edu.harvard.integer.common.selection.Selection)
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface
+	 * #getServiceElementBySelection(edu.harvard
+	 * .integer.common.selection.Selection)
 	 */
 	@Override
-	public ServiceElement[] getTopLevelServiceElementBySelection(Selection selection) throws IntegerException {
+	public ServiceElement[] getTopLevelServiceElementBySelection(
+			Selection selection) throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
+
 		return serviceElementDAO.findBySelection(selection);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementBySelection(edu.harvard.integer.common.ID)
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface
+	 * #getServiceElementBySelection(edu.harvard.integer.common.ID)
 	 */
 	@Override
-	public ServiceElement[] getTopLevelServiceElementBySelection(ID selectionId) throws IntegerException {
+	public ServiceElement[] getTopLevelServiceElementBySelection(ID selectionId)
+			throws IntegerException {
 		SelectionDAO dao = dbm.getSelectionDAO();
 		Selection selection = dao.findById(selectionId);
-		
+
 		return getTopLevelServiceElementBySelection(selection);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#deleteServiceElememts(edu.harvard.integer.common.ID[])
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface
+	 * #deleteServiceElememts(edu.harvard.integer.common.ID[])
 	 */
 	@Override
 	public void deleteServiceElememts(ID[] ids) throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
+
 		serviceElementDAO.delete(ids);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getDeviceDetails(edu.harvard.integer.common.ID)
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface
+	 * #getDeviceDetails(edu.harvard.integer.common.ID)
 	 */
 	@Override
-	public DeviceDetails getDeviceDetails(ID serviceElementId) throws IntegerException {
+	public DeviceDetails getDeviceDetails(ID serviceElementId)
+			throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-		
-		ServiceElement serviceElement = serviceElementDAO.findById(serviceElementId);
-		
+
+		ServiceElement serviceElement = serviceElementDAO
+				.findById(serviceElementId);
+
 		DeviceDetails deviceDetails = new DeviceDetails();
 		deviceDetails.setServiceElementId(serviceElementId);
 		deviceDetails.setComment(serviceElement.getComment());
 		deviceDetails.setCreated(serviceElement.getCreated());
 		deviceDetails.setDescription(serviceElement.getDescription());
-		deviceDetails.setOperationalControlId(serviceElement.getOperationalControlId());
+		deviceDetails.setOperationalControlId(serviceElement
+				.getOperationalControlId());
 		deviceDetails.setPrimaryLocation(serviceElement.getPrimaryLocation());
-		deviceDetails.setServiceElementCriticality(serviceElement.getServiceElementCriticality());
+		deviceDetails.setServiceElementCriticality(serviceElement
+				.getServiceElementCriticality());
 		deviceDetails.setUpdated(serviceElement.getUpdated());
-		
+
 		return deviceDetails;
 	}
-	
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementByIpAddress(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.service.topology.device.
+	 * ServiceElementAccessManagerInterface
+	 * #getServiceElementByIpAddress(java.lang.String)
 	 */
 	@Override
 	public ServiceElement getServiceElementByIpAddress(String ipAddress)

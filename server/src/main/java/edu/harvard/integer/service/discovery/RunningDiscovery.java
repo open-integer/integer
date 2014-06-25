@@ -36,9 +36,11 @@ package edu.harvard.integer.service.discovery;
 import java.util.List;
 
 import edu.harvard.integer.common.discovery.DiscoveryId;
-import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
+ * This class is used by the DiscoveryService to keep track of what discoveries are
+ * currently running.
+ * 
  * @author David Taylor
  * 
  */

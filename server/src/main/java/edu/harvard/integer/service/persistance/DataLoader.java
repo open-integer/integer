@@ -36,11 +36,8 @@ package edu.harvard.integer.service.persistance;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -55,24 +52,31 @@ import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 import edu.harvard.integer.util.FileUtil;
 import edu.harvard.integer.util.Resource;
 
 /**
+ * This is a helper class to load the YAML data files. This is called from the
+ * PersistenceService on startup to load the YAML, SQL and MIBs
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Stateless
 public class DataLoader implements DataLoaderInterface {
 
 	@Inject
 	private Logger logger;
-	
+
 	@Inject
 	private PersistenceManagerInterface persistanceManager;
-	
+
 	/**
+	 * Load the data file. The data files loaded are YAML, MIB or SQL 
+	 * data types.
+	 * 
 	 * @param dataPreLoadFile
 	 * @throws IntegerException
 	 */
@@ -97,44 +101,81 @@ public class DataLoader implements DataLoaderInterface {
 		case ProductMIB:
 			loadProductMib(dataPreLoadFile);
 			break;
-			
+
 		case VendorContainmentYaml:
 			loadVendorContainmentYaml(dataPreLoadFile);
 			break;
-			
+
+		case SQL:
+			loadSQLData(dataPreLoadFile);
+			break;
+
 		default:
-			logger.error("Unknown data file type " + dataPreLoadFile.getFileType() + " Can not load!!");
+			logger.error("Unknown data file type "
+					+ dataPreLoadFile.getFileType() + " Can not load!!");
 		}
 
 	}
 
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException
+	 */
+	private void loadSQLData(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
 
-	private File getFile(DataPreLoadFile dataPreLoadFile) throws IntegerException {
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
+			return;
+		}
+
+		DataPreLoadFileDAO dao = persistanceManager.getDataPreLoadFileDAO();
+
+		String data = FileUtil.readInMIB(file);
+
+		String[] sqlCommands = data.split(";");
+
+		for (String sqlCmd : sqlCommands) {
+
+			if (sqlCmd.trim().length() > 1) {
+				logger.info("Execute SQL command " + sqlCmd);
+				dao.loadSQL(sqlCmd);
+			} else
+				logger.info("Skip blank line");
+		}
+
+	}
+
+	private File getFile(DataPreLoadFile dataPreLoadFile)
+			throws IntegerException {
 
 		IntegerProperties props = IntegerProperties.getInstance();
 
 		String dataDirPath = Resource.getWildflyHome()
-				+ props.getProperty(StringPropertyNames.DATADir) + "/" + 
-				dataPreLoadFile.getFileType().getDataSubDir();
+				+ props.getProperty(StringPropertyNames.DATADir) + "/"
+				+ dataPreLoadFile.getFileType().getDataSubDir();
 		File file = new File(dataDirPath + "/" + dataPreLoadFile.getDataFile());
 
 		if (!file.exists()) {
-			logger.error(dataPreLoadFile.getFileType() + " file " + file.getAbsolutePath() + " NOT found ");
+			logger.error(dataPreLoadFile.getFileType() + " file "
+					+ file.getAbsolutePath() + " NOT found ");
 			dataPreLoadFile.setErrorMessage("File not found ");
 			persistanceManager.getDataPreLoadFileDAO().update(dataPreLoadFile);
 			return null;
 		}
-		
+
 		return file;
 	}
-	
+
 	/**
 	 * @param dataPreLoadFile
 	 * @throws IntegerException
 	 */
 	private void loadProductMib(DataPreLoadFile dataPreLoadFile)
 			throws IntegerException {
-		
+
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.SnmpManager))
 			return;
 
@@ -142,7 +183,8 @@ public class DataLoader implements DataLoaderInterface {
 
 		File file = getFile(dataPreLoadFile);
 		if (file == null) {
-			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
 			return;
 		}
 
@@ -165,9 +207,10 @@ public class DataLoader implements DataLoaderInterface {
 					dataPreLoadFile.setErrorMessage(Arrays.toString(importMib
 							.getErrors()));
 
-					dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+					dataPreLoadFile
+							.setStatus(PersistenceStepStatusEnum.NotLoaded);
 				}
-				
+
 			} catch (Throwable e) {
 				logger.error("Error loading product MIB "
 						+ dataPreLoadFile.getName());
@@ -192,10 +235,10 @@ public class DataLoader implements DataLoaderInterface {
 
 		MIBImportInfo mibFile = new MIBImportInfo();
 
-
 		File file = getFile(dataPreLoadFile);
 		if (file == null) {
-			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
 			return;
 		}
 
@@ -210,28 +253,32 @@ public class DataLoader implements DataLoaderInterface {
 			try {
 				MIBImportResult[] importMib = manager
 						.importMib(new MIBImportInfo[] { mibFile });
-				
+
 				if (importMib.length > 0) {
-					
+
 					dataPreLoadFile.setErrorMessage(null);
-					
+
 					if (importMib[0].getErrors() != null) {
 						for (String errorMessage : importMib[0].getErrors()) {
 							if (dataPreLoadFile.getErrorMessage() != null)
-								dataPreLoadFile.setErrorMessage(dataPreLoadFile.getErrorMessage() + errorMessage);
+								dataPreLoadFile.setErrorMessage(dataPreLoadFile
+										.getErrorMessage() + errorMessage);
 							else
-								dataPreLoadFile.setErrorMessage(errorMessage);			
+								dataPreLoadFile.setErrorMessage(errorMessage);
 
-							dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+							dataPreLoadFile
+									.setStatus(PersistenceStepStatusEnum.NotLoaded);
 						}
 					} else {
-						dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+						dataPreLoadFile
+								.setStatus(PersistenceStepStatusEnum.Loaded);
 						dataPreLoadFile.setTimeLoaded(new Date());
 					}
 				}
-					
+
 			} catch (Throwable e) {
-				logger.error("Error loading MIB " + dataPreLoadFile.getName() + e.toString());
+				logger.error("Error loading MIB " + dataPreLoadFile.getName()
+						+ e.toString());
 				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
 				dataPreLoadFile.setErrorMessage(e.getMessage());
 			}
@@ -252,7 +299,8 @@ public class DataLoader implements DataLoaderInterface {
 
 		File file = getFile(dataPreLoadFile);
 		if (file == null) {
-			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
 			return;
 		}
 
@@ -260,7 +308,7 @@ public class DataLoader implements DataLoaderInterface {
 
 		YamlManagerInterface manager = DistributionManager
 				.getManager(ManagerTypeEnum.YamlManager);
-		
+
 		if (manager != null) {
 			try {
 				manager.loadTechnologyTree(data);
@@ -285,16 +333,17 @@ public class DataLoader implements DataLoaderInterface {
 	 */
 	private void loadServiceElementTypeYaml(DataPreLoadFile dataPreLoadFile)
 			throws IntegerException {
-		
+
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
 			return;
 
 		File file = getFile(dataPreLoadFile);
 		if (file == null) {
-			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
 			return;
 		}
-		
+
 		String data = FileUtil.readInMIB(file);
 
 		YamlManagerInterface manager = DistributionManager
@@ -315,24 +364,25 @@ public class DataLoader implements DataLoaderInterface {
 			}
 		}
 
-
 	}
+
 	/**
 	 * @param dataPreLoadFile
 	 * @throws IntegerException
 	 */
 	private void loadVendorContainmentYaml(DataPreLoadFile dataPreLoadFile)
 			throws IntegerException {
-		
+
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
 			return;
 
 		File file = getFile(dataPreLoadFile);
 		if (file == null) {
-			logger.error("Unable to get data file " + dataPreLoadFile.getDataFile());
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
 			return;
 		}
-		
+
 		String data = FileUtil.readInMIB(file);
 
 		YamlManagerInterface manager = DistributionManager

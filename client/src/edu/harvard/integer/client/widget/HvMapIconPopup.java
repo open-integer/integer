@@ -3,10 +3,21 @@ package edu.harvard.integer.client.widget;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.PopupPanel;
 
+/**
+ * The Class HvMapIconPopup can be used for tooltip popup
+ */
 public class HvMapIconPopup extends PopupPanel {
 
+	/** The g. */
 	private Grid g = new Grid(3, 2);
 	
+	/**
+	 * Instantiates a new hv map icon popup.
+	 *
+	 * @param name the name
+	 * @param status the status
+	 * @param location the location
+	 */
 	public HvMapIconPopup(String name, String status, String location) {
 		super(true);
 		

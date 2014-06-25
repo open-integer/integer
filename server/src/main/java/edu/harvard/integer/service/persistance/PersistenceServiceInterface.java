@@ -36,6 +36,10 @@ import edu.harvard.integer.service.BaseServiceInterface;
 
 
 /**
+ * The persistence service is started when the server starts. This will load any
+ * data that needs to be loaded. The data loaded is listed in the
+ * DataPreloadData table.
+ * 
  * @author David Taylor
  *
  */

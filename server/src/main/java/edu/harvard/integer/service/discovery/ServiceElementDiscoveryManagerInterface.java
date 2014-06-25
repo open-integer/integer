@@ -1,6 +1,3 @@
-
-
-
 /*
  *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
@@ -51,6 +48,18 @@ import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * The service element discovery manager is responsible for both initial
+ * discovery of network elements and subsequent passes over the same elements.
+ * It is not responsible for computing network topology though it collects
+ * information that is used by that service.
+ * 
+ * 
+ * The ServiceElementDiscoveryManager is started by the Service and there is one
+ * instance created for each subnet of the ServiceElementDiscoveryManager. When
+ * it is called the DiscoveryService strips out unneeded information and it only
+ * creates a ServiceElementDiscoverySeed. That will contain, the subnet, list of
+ * found hosts, and serviceElementTypeExclusions.
+ * 
  * @author David Taylor
  * 
  */
@@ -127,68 +136,94 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return
 	 * @throws IntegerException
 	 */
-	VendorIdentifier getVendorIdentifier(String vendorOid) throws IntegerException;
+	VendorIdentifier getVendorIdentifier(String vendorOid)
+			throws IntegerException;
 
 	/**
+	 * Update/save the given vendor identifier in the database. If the vendor
+	 * identifier does not exist then a new entery will be created in the
+	 * database. The identifier for this object will be valid in the vendor
+	 * identifier returned.
 	 * 
 	 * @param vendorId
-	 * @param name
-	 * @return
+	 *            . Object to be saved / updated in the database.
+	 * @return VendorIdentifier that has been saved in the database. The
+	 *         identifier is valid on the returned object.
+	 * 
 	 * @throws IntegerException
 	 */
 	VendorIdentifier updateVendorIdentifier(VendorIdentifier vendorIdentifier)
 			throws IntegerException;
 
 	/**
-	 * Find the service element type by the givne ID.
+	 * Find the service element type by the given ID.
 	 * 
 	 * @param serviceElementTypeId
-	 * @return
+	 * @return ServiceElment with the given ID or null if not found.
 	 * @throws IntegerException
 	 */
 	ServiceElementType getServiceElementTypeById(ID serviceElementTypeId)
 			throws IntegerException;
-	
+
 	/**
 	 * Find the service element type by name.
 	 * 
 	 * @param serviceElementTypeId
-	 * @return
+	 * @return ServiceElment with the given name or null if not found.
 	 * @throws IntegerException
 	 */
 	ServiceElementType getServiceElementTypeByName(String name)
 			throws IntegerException;
 
 	/**
+	 * This method is called by the DiscoveryService to start a discovery on the
+	 * devices described by the IpDiscoverySeed.
+	 * 
 	 * @param id
+	 *            . DiscoverId that identifies this discovery. This ID is to be
+	 *            used for calls to notify the DiscoveryService that the
+	 *            discovery has completed or for any error that occurs during
+	 *            the discovery.
+	 * 
 	 * @param seed
-	 * @return
+	 *            . IpDescoverySeed that describes the what the NetworkDiscovery
+	 *            process should do.
+	 * @return NetworkDiscovery worker that is running the discovery.
 	 * @throws IntegerException
 	 */
-	NetworkDiscovery startDiscovery(DiscoveryId id,
-			IpDiscoverySeed seed) throws IntegerException;
+	NetworkDiscovery startDiscovery(DiscoveryId id, IpDiscoverySeed seed)
+			throws IntegerException;
 
 	/**
-	 * Find the ServiceElements for the given category and vendor. 
-	 * @return a list of ServiceElements that match the given category and vendor.
+	 * Find the ServiceElements for the given category and vendor.
+	 * 
+	 * @return a list of ServiceElements that match the given category and
+	 *         vendor.
 	 * @throws IntegerException
 	 */
-	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum catetory, String vendorType)
+	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(
+			CategoryTypeEnum catetory, String vendorType)
 			throws IntegerException;
-	
-	
-	/**
-	 * Find the ServiceElementTypes for the given vendorSubType and vendor. 
-	 * @return a list of ServiceElements that match the given subtype and vendor.
-	 * @throws IntegerException
-	 */
-	ServiceElementType[] getServiceElementTypesBySubtypeAndVendor(String subtype, String vendorType)
-			throws IntegerException;
-	
 
 	/**
-	 * @param selector
-	 * @return
+	 * Find the ServiceElementTypes for the given vendorSubType and vendor.
+	 * 
+	 * @return a list of ServiceElements that match the given subtype and
+	 *         vendor.
+	 * @throws IntegerException
+	 */
+	ServiceElementType[] getServiceElementTypesBySubtypeAndVendor(
+			String subtype, String vendorType) throws IntegerException;
+
+	/**
+	 * Update or save the vendor containment selector. The object returned from
+	 * this call will have the identifier filled in.
+	 * 
+	 * @param vendorContainmentSelector
+	 *            . The VendorContainmentSelector that is to be saved in the
+	 *            database.
+	 * @return VendorContainmentSelector with the identifier filled in.
+	 * 
 	 * @throws IntegerException
 	 */
 	VendorContainmentSelector updateVendorContainmentSelector(
@@ -202,69 +237,94 @@ public interface ServiceElementDiscoveryManagerInterface extends
 			throws IntegerException;
 
 	/**
-	 * @param selector
-	 * @return
+	 * Get all the vendor containment selectors in the database that match the
+	 * values in the given vendor containment selector.
+	 * 
+	 * @param vendorContaimentSelector
+	 *            . This object has the values to use for selecting the
+	 *            VendorContainmentSelectors. This is the search criteria for
+	 *            the query.s
+	 * @return List of VendorContainmentSelectors that match the
 	 * @throws IntegerException
 	 */
 	VendorContainmentSelector[] getVendorContainmentSelector(
 			VendorContainmentSelector selector) throws IntegerException;
 
 	/**
+	 * Get the vendor containment selector from the database that is identified
+	 * by the given ID.
+	 * 
 	 * @param id
-	 * @return
+	 *            . ID of the vendor containment selector to return.
+	 * @return the VendorContainmentSelector or null if not found in the
+	 *         database.
+	 * 
 	 * @throws IntegerException
 	 */
 	VendorContainmentSelector getVendorContainmentSelectorById(ID id)
 			throws IntegerException;
 
 	/**
+	 * Delete the VendorContainmentSelector from the database that is specified
+	 * by the given ID.
+	 * 
 	 * @param id
+	 *            . ID of the VendorContainmentSelector to delete.
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteVendorContianmentSelector(ID id) throws IntegerException;
-	
-	/**
-	 * @return
-	 */
-	List<SNMP> getEntityMIBInfo();
 
 	/**
-	 * Find the VendorIdentifiers that are in the subtree specified by the rootOid.
+	 * Get the list of OIDs that are used to retrieve the Entity MIB Physical
+	 * table. 
+	 * 
+	 * @return List of SNMP OIDs used to discover the entityPhysicalTable.
+	 */
+	List<SNMP> getEntityPhysicalTableOIDs();
+
+	/**
+	 * Find the VendorIdentifiers that are in the subtree specified by the
+	 * rootOid.
 	 * 
 	 * @param rootOid
 	 * @return List of VendorIdentifier's that are in the given subTree.
 	 * 
 	 * @throws IntegerException
 	 */
-	List<VendorIdentifier> findVendorSubTree(String rootOid) throws IntegerException;
-
+	List<VendorIdentifier> findVendorSubTree(String rootOid)
+			throws IntegerException;
 
 	/**
-	 * Find the VendorIdentifiers that are in the subtree specified by the rootName.
+	 * Find the VendorIdentifiers that are in the subtree specified by the
+	 * rootName.
 	 * 
 	 * @param rootName
 	 * @return List of VendorIdentifier's that are in the given subTree.
 	 * 
 	 * @throws IntegerException
 	 */
-	List<VendorIdentifier> findVendorNameSubTree(String rootOid) throws IntegerException;
+	List<VendorIdentifier> findVendorNameSubTree(String rootOid)
+			throws IntegerException;
 
 	/**
-	 * Find the VendorIdentifier with the given subtype name. 
+	 * Find the VendorIdentifier with the given subtype name.
 	 * 
 	 * @param vendorSubTypeName
 	 * @return
 	 * @throws IntegerException
 	 */
-	public VendorIdentifier getVenderIdentiferBySubTypeName(String vendorSubTypeName)
-			throws IntegerException;
+	public VendorIdentifier getVenderIdentiferBySubTypeName(
+			String vendorSubTypeName) throws IntegerException;
 
 	/**
-	 * Update the SnmpContainment in the database. If this is called with a new unsaved 
-	 * instance then a new entry will be added to the SnmpContainment table and the
-	 * identifier will be set on the SnmpContainment object that is returned.
+	 * Update the SnmpContainment in the database. If this is called with a new
+	 * unsaved instance then a new entry will be added to the SnmpContainment
+	 * table and the identifier will be set on the SnmpContainment object that
+	 * is returned.
 	 * 
-	 * @param snmpContainment. Object to save
+	 * @param snmpContainment
+	 *            . Object to save
 	 * @return saved SnmpContainmet object.
 	 * 
 	 * @throws IntegerException
@@ -272,5 +332,4 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	public SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment)
 			throws IntegerException;
 
-	
 }

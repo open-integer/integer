@@ -43,7 +43,7 @@ package edu.harvard.integer.service.discovery;
  *         If that should fail a try with V3 and if that should fail try with
  *         v1.
  * 
- *         These following options would have to be specifcially enabled by the
+ *         These following options would have to be specifically enabled by the
  *         user.
  * 
  *         After this try ICMP and if ICMP is successful then SSH/CLI.

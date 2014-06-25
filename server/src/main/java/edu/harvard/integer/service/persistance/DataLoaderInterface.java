@@ -41,12 +41,22 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 
 /**
+ *  This is a helper class to load the YAML data files. This is called from the
+ * PersistenceService on startup to load the YAML, SQL and MIBs
+ * 
  * @author David Taylor
  *
  */
 @Local
 public interface DataLoaderInterface {
 
+	/**
+	 * Load the data file. The data files loaded are YAML, MIB or SQL 
+	 * data types.
+	 * 
+	 * @param dataPreLoadFile
+	 * @throws IntegerException
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void loadDataFile(DataPreLoadFile dataPreLoadFile)
 			throws IntegerException; 

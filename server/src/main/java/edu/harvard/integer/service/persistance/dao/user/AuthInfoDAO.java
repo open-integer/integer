@@ -41,6 +41,9 @@ import edu.harvard.integer.common.user.authentication.AuthInfo;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ *  The DAO is responsible for persisting the AuthInfo. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
  */

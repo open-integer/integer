@@ -7,17 +7,21 @@ import edu.harvard.integer.client.widget.HvTableViewPanel;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Class CapabilityView.
+ * The Class ContainedView represents a contained view object of Integer.
+ * This is a subclass class extended from HvTableViewPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
-public class ContaineeView extends HvTableViewPanel {
+public class ContainedView extends HvTableViewPanel {
 	
 	/**
-	 * Instantiates a new capability view.
+	 * Create a new ContainedView.
 	 *
 	 * @param title the title
 	 * @param headers the headers
 	 */
-	public ContaineeView(String title, String[] headers) {
+	public ContainedView(String title, String[] headers) {
 		super(title, headers);
 		addButton.setVisible(false);
 		
@@ -26,7 +30,7 @@ public class ContaineeView extends HvTableViewPanel {
 	}
 
 	/**
-	 * Update.
+	 * Update method will refresh the contained tree view of the object by object's name and the list of service element objects.
 	 *
 	 * @param result the result
 	 */

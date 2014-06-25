@@ -60,24 +60,8 @@ import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
 
 /**
- * The user contact and role manager controls addition, creation and modification of users and contacts in the system.
- *
- * It allows for automatic updates from external sources for many attributes found in Contact object.
- *
- * It also manages role definition and association with Access Policies. 
- *
- *
- * First, it allows users and contacts to be created in the system with, or to use and external IAM system for 
- * user authentication. A single user can be authenticated by only one source.
- *
- * Secondly, this system is used to manage credentials for each of the managed ServiceElements in the environment. 
- * In some cases, external systems (as with users) could be used like TACCAS+, though this is not a requirement.
- *
- * This service is also responsible for the assignment of roles to users such as administrator or user. Note that 
- * there is a facility to define different roles for the integrated management system and different devices since
- * not all users will have the same access to different devices. 
- */
-/**
+ * @see UserManagerInterface
+ *  
  * @author David Taylor
  * 
  */
@@ -172,7 +156,7 @@ public class UserManager implements UserManagerInterface {
 	public Contact updateContact(Contact contact) throws IntegerException {
 		ContactDAO dao = dbm.getContactDAO();
 		dao.update(contact);
-		
+
 		return contact;
 	}
 
@@ -191,7 +175,7 @@ public class UserManager implements UserManagerInterface {
 	@Override
 	public void deleteContact(Contact contact) throws IntegerException {
 		ContactDAO dao = dbm.getContactDAO();
-		
+
 		dao.delete(contact);
 	}
 
@@ -244,47 +228,51 @@ public class UserManager implements UserManagerInterface {
 
 		return organization;
 	}
-	
+
 	/**
 	 * Delete the Organization the ID identifies
+	 * 
 	 * @param id
 	 * @throws IntegerException
 	 */
 	@Override
 	public void deleteOrganization(ID id) throws IntegerException {
 		OrganizationDAO dao = dbm.getOrganizationDAO();
-		
+
 		dao.delete(id);
 	}
-	
+
 	/**
 	 * Delete the Organization
+	 * 
 	 * @param organization
 	 * @throws IntegerException
 	 */
 	@Override
-	public void deleteOrganization(Organization organization) throws IntegerException {
+	public void deleteOrganization(Organization organization)
+			throws IntegerException {
 		OrganizationDAO dao = dbm.getOrganizationDAO();
-		
+
 		dao.delete(organization);
 	}
-	
+
 	/**
-	 * Update the AccessPolicy. 
+	 * Update the AccessPolicy.
 	 * 
 	 * @param policy
 	 * @return
 	 * @throws IntegerException
 	 */
 	@Override
-	public AccessPolicy updateAccessPolicy(AccessPolicy policy) throws IntegerException {
+	public AccessPolicy updateAccessPolicy(AccessPolicy policy)
+			throws IntegerException {
 		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
-		
+
 		policy = dao.update(policy);
-		
-		return policy;	
+
+		return policy;
 	}
-	
+
 	/**
 	 * Delete the AccessPolicy the ID specifies.
 	 * 
@@ -296,7 +284,7 @@ public class UserManager implements UserManagerInterface {
 		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
 		dao.delete(id);
 	}
-	
+
 	/**
 	 * Delete the AccessPolicy.
 	 * 
@@ -308,9 +296,10 @@ public class UserManager implements UserManagerInterface {
 		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
 		dao.delete(policy);
 	}
-	
+
 	/**
 	 * Update the AuthInfo.
+	 * 
 	 * @param authInfo
 	 * @return
 	 * @throws IntegerException
@@ -318,12 +307,13 @@ public class UserManager implements UserManagerInterface {
 	@Override
 	public AuthInfo updateAuthInfo(AuthInfo authInfo) throws IntegerException {
 		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
-		
+
 		return dao.update(authInfo);
 	}
-	
+
 	/**
 	 * Delete the AuthInfo
+	 * 
 	 * @param id
 	 * @throws IntegerException
 	 */
@@ -331,9 +321,10 @@ public class UserManager implements UserManagerInterface {
 		AccessPolicyDAO dao = dbm.getAccessPolicyDAO();
 		dao.delete(id);
 	}
-	
+
 	/**
 	 * Update the location.
+	 * 
 	 * @param location
 	 * @return
 	 * @throws IntegerException
@@ -342,10 +333,10 @@ public class UserManager implements UserManagerInterface {
 	public Location updateLocation(Location location) throws IntegerException {
 		LocationDAO dao = dbm.getLocationDAO();
 		location = dao.update(location);
-		
+
 		return location;
 	}
-	
+
 	/**
 	 * Delete the Location.
 	 * 
@@ -357,7 +348,7 @@ public class UserManager implements UserManagerInterface {
 		LocationDAO dao = dbm.getLocationDAO();
 		dao.delete(id);
 	}
-	
+
 	/**
 	 * Update the Role.
 	 * 
@@ -367,13 +358,13 @@ public class UserManager implements UserManagerInterface {
 	 */
 	@Override
 	public Role updateRole(Role role) throws IntegerException {
-		
+
 		RoleDAO dao = dbm.getRoleDAO();
 		role = dao.update(role);
-		
+
 		return role;
 	}
-	
+
 	/**
 	 * Delete the Role specified by the ID.
 	 * 
@@ -384,5 +375,5 @@ public class UserManager implements UserManagerInterface {
 		RoleDAO dao = dbm.getRoleDAO();
 		dao.delete(id);
 	}
-	
+
 }

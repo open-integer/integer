@@ -42,10 +42,11 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the MIBInfo. All
+ * queries will be done in this class. 
+ * 
  * @author David Taylor
  * 
- * All add, delete, modify, findXXX methods for the MIBInfo object are done
- * in this class. 
  */
 public class MIBInfoDAO extends BaseDAO {
 

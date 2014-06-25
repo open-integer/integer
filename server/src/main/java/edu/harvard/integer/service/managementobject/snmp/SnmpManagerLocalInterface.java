@@ -36,6 +36,8 @@ package edu.harvard.integer.service.managementobject.snmp;
 import javax.ejb.Local;
 
 /**
+ * @see SnmpManagerInterface
+ * 
  * @author David Taylor
  *
  */

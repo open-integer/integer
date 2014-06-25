@@ -39,17 +39,31 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 
 /**
+ * Manager used to load a parsed MIB into the database.
+ * <p>
+ * NOTE: The is a helper manager to the MibService. This is always run locally
+ * to the MibService that is importing a MIB.
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Local
 public interface MibLoaderLocalInterface {
-	
+
+	/**
+	 * Load the parsed MIB into the system.
+	 * 
+	 * @param result. Parsed MIB.
+	 * 
+	 * @throws IntegerException
+	 */
 	public void load(MIBImportResult result) throws IntegerException;
 
 	/**
-	 * @param vendor
-	 * @param result
+	 * Load the parsed vendor product MIB into the database.
+	 * 
+	 * @param vendor. Vendor that is being imported. Ex cisco.
+	 * @param result. The parsed MIB.
 	 * @throws IntegerException
 	 */
 	void loadProductMib(String vendor, MIBImportResult result)

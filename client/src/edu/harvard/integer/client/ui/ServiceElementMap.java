@@ -61,7 +61,7 @@ public class ServiceElementMap extends Layer {
 	}
 
 	/**
-	 * Init_layout.
+	 * init_layout method calculates the icon size to be displayed based on the given number of items to be displayed
 	 *
 	 * @param total the total
 	 */
@@ -76,7 +76,7 @@ public class ServiceElementMap extends Layer {
 	}
 
 	/**
-	 * Update.
+	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
 	 * @param result the result
 	 */

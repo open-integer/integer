@@ -48,11 +48,13 @@ import edu.harvard.integer.service.BaseManagerInterface;
  * obtained by calling the DistributionManager. The returned reference may
  * actually run on a different server. The caller will use the manager as if it
  * was executing on the local server.
- * 
- * Ex. ServiceElementAccessManagerInterface manager =
+ * <p>
+ * Ex.
+ * <p>
+ *  ServiceElementAccessManagerInterface manager =
  * DistributionManager.getManager
  * (DistributedManager.ServiceElementAccessManager);
- * 
+ * <p>
  * Selection seletion = // create selection ServiceElement[] serviceElements =
  * manager.getTopLevelServiceElementsBySeletion(selection);
  * 
@@ -117,10 +119,10 @@ public interface ServiceElementAccessManagerInterface extends
 	 * Delete the ServiceElements with the given ID's. The delete of the service
 	 * element will also delete all child service elements of that service
 	 * element.
-	 * 
+	 * <p>
 	 * Ex. A ServiceElement for a port that has child ServiceElement for an
 	 * interface would also delete the ServiceElement for the interface.
-	 * 
+	 * <p>
 	 * @param ids of the ServiceElements to delete. 
 	 * 
 	 * @throws IntegerException

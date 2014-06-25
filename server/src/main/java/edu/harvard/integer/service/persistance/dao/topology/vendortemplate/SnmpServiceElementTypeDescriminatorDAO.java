@@ -41,9 +41,12 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
-import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 
 /**
+ * The DAO is responsible for persisting the SnmpServiceElementTypeDiscriminator. All
+ * queries will be done in this class. 
+ *
+ *
  * @author David Taylor
  *
  */

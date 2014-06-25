@@ -47,6 +47,10 @@ import edu.harvard.integer.common.security.UserLogin;
 import edu.harvard.integer.service.BaseService;
 
 /**
+ * The security service runs on the core server and keeps track of the
+ * users that have logged intothe system. Each new login will have a unique 
+ * ID that is used to identifier that login session.
+ * 
  * @author David Taylor
  *
  */

@@ -60,8 +60,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	/** The Constant headers. */
 	public static final String[] headers = {"Name", "Status", "Description"};
 	
-	/** The containee tree view. */
-	public static ContaineeTreeView containeeTreeView = null;
+	/** The contained tree view. */
+	public static ContainedTreeView containedTreeView = null;
 	
 	/** The details button. */
 	public static HvIconButton detailsButton = new HvIconButton("Summary");
@@ -122,10 +122,10 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (deviceMap.getSelectedTimestamp() > containeeTreeView.getSelectedTimestamp())
+				if (deviceMap.getSelectedTimestamp() > containedTreeView.getSelectedTimestamp())
 					selectedElement = deviceMap.getSelectedElement();
 				else
-					selectedElement = containeeTreeView.getSelectedServiceElement();
+					selectedElement = containedTreeView.getSelectedServiceElement();
 				
 				MainClient.integerService.getDeviceDetails(selectedElement.getID(), new AsyncCallback<DeviceDetails>() {
 
@@ -155,14 +155,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		
 		containedSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		
-		containeeTreeView = new ContaineeTreeView(title, headers);
+		containedTreeView = new ContainedTreeView(title, headers);
 		
 		detailsTabPanel = new ServiceElementDetailsTabPanel();
 	    
 	    containedSplitPanel.addSouth(detailsTabPanel, 300);
 	    containedSplitPanel.setWidgetHidden(detailsTabPanel, true);
 	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
-	    containedSplitPanel.add(containeeTreeView);
+	    containedSplitPanel.add(containedTreeView);
 		
 		eastSplitPanel.addEast(containedSplitPanel, 500);
 		eastSplitPanel.setWidgetHidden(containedSplitPanel, true);
@@ -248,20 +248,20 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	}
 
 	/**
-	 * Enablecontainee tree view.
+	 * Enablecontained tree view.
 	 *
 	 * @param enable the enable
 	 */
 	public static void enablecontaineeTreeView(boolean enable) {
-		eastSplitPanel.setWidgetHidden(containeeTreeView, !enable);
+		eastSplitPanel.setWidgetHidden(containedTreeView, !enable);
 	}
 	
 	/**
-	 * Show containee tree view.
+	 * Show contained tree view.
 	 *
 	 * @param se the se
 	 */
-	public static void showContaineeTreeView(final ServiceElement se) {
+	public static void showContainedTreeView(final ServiceElement se) {
 		//containeeTreeView.updateTitle(se.getName());
 		eastSplitPanel.setWidgetHidden(containedSplitPanel, false);
 		
@@ -274,7 +274,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onSuccess(ServiceElement[] serviceElements) {
-				containeeTreeView.updateTree(se.getName(), serviceElements);
+				containedTreeView.updateTree(se.getName(), serviceElements);
 			}
 		});
 	}

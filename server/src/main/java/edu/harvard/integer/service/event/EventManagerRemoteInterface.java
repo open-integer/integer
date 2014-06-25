@@ -36,6 +36,8 @@ package edu.harvard.integer.service.event;
 import javax.ejb.Remote;
 
 /**
+ * @see EventManagerInterface
+ * 
  * @author David Taylor
  *
  */

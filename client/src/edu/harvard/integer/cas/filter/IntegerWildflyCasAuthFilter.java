@@ -60,10 +60,10 @@ public class IntegerWildflyCasAuthFilter extends Cas20ProxyReceivingTicketValida
 			HttpServletResponse response, Assertion assertion) {
 		
 		AttributePrincipal principal = assertion.getPrincipal();
-		logger.info(LoggerUtil.filterLog("========== User " + principal.getName() + "        =================="));
-		logger.info(LoggerUtil.filterLog("== Request User " + request.getUserPrincipal() + " =================="));
-		logger.info(LoggerUtil.filterLog("=== Remote User " + request.getRemoteUser() + "    =================="));
-		logger.info(LoggerUtil.filterLog("=== Remote Host " + request.getRemoteHost() + "    =================="));
+		logger.info("========== User " + principal.getName() + "        ==================");
+		logger.info("== Request User " + request.getUserPrincipal() + " ==================");
+		logger.info("=== Remote User " + LoggerUtil.filterLog(request.getRemoteUser()) + "    ==================");
+		logger.info("=== Remote Host " + LoggerUtil.filterLog(request.getRemoteHost()) + "    ==================");
 
 		
 		super.onSuccessfulValidation(request, response, assertion);

@@ -36,6 +36,30 @@ package edu.harvard.integer.service.topology;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
+ * The DiscoveryService will start an instance of the TopologyManager based on
+ * DiscoveryRules. Even in the case of a rule that is not determining network
+ * topology, the TopologyManager is used to calculate the hosts to discover on a
+ * network.
+ * <p>
+ * When the topology information is required, the ToplogyManager uses the
+ * ServiceElementDiscoveryManager to collect required details for systems so
+ * that it knows what types of objects to retrieve from the network systems to
+ * get the topology data.
+ * <p>
+ * It is responsible for using data collected from the environment alone or in
+ * combination with user input, or exclusively with user input to create Path
+ * instances. These instances describe the connection information at different
+ * layers of the environment. In the same way that it collects topology data
+ * from service elements for Layer 2/3 topology, it also uses information
+ * obtainable from topology modifying service elements like firewalls, load
+ * balancers and site selectors to retrieve information about those functions so
+ * that the system can show how traffic is impacted by these topology modifiers.
+ * <p>
+ * Note that the TopologyManager can also be called by the DiscoveryService to
+ * integrate topologies across discovery seeds. This means that if, for example,
+ * to seeds ran that terminated with adjacencies not connected because of
+ * 'radius' restrictions, the topology manager could stitch them together
+ * afterwards.
  * @author David Taylor
  *
  */

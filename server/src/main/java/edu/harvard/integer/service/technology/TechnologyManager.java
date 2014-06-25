@@ -52,6 +52,8 @@ import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 
 /**
+ * @see TechnologyManagerInterface
+ * 
  * @author David Taylor
  *
  */

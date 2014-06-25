@@ -43,8 +43,11 @@ import edu.harvard.integer.common.security.UserLogin;
 import edu.harvard.integer.common.user.AccessPolicy;
 
 /**
+ * The security and audit manager is responsible for managing the users and
+ * access policy's in the system.
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Local
 public interface SecurityAndAuditManagerInterface {
@@ -52,45 +55,49 @@ public interface SecurityAndAuditManagerInterface {
 	public IntegerSession loginUser(UserLogin login) throws IntegerException;
 
 	/**
+	 * Update or save the AccessPolicy.
+	 * 
 	 * @param accessPolicy
-	 * @return
+	 *            that is to be updated or saved
+	 * @return AccessPolicy that has been saved in the database.
 	 * @throws IntegerException
 	 */
 	AccessPolicy updateAccessPolicy(AccessPolicy accessPolicy)
 			throws IntegerException;
 
 	/**
+	 * Delete the access policy.
+	 * 
 	 * @param accessPolicy
 	 * @throws IntegerException
 	 */
 	void deleteAccessPolicy(AccessPolicy accessPolicy) throws IntegerException;
 
 	/**
-	 * @param filter
-	 * @return
-	 * @throws IntegerException
-	 */
-	AccessPolicy[] findAccessPolicies(IntegerFilter filter)
-			throws IntegerException;
-
-	/**
+	 * Add a user that can login directly bypassing the CAS authentication.
+	 * 
 	 * @param user
-	 * @return
+	 *            . To be added.
+	 * @return The direct user.s
 	 * @throws IntegerException
 	 */
 	DirectUserLogin addDirectUser(DirectUserLogin user) throws IntegerException;
 
 	/**
-	 * @param user
+	 * Delete the direct user. After this call the user will no longer be able
+	 * to login to the server
+	 * 
+	 * @param user do delete/remove from the ability to login directly.
 	 * @throws IntegerException
 	 */
 	void deleteDirectUser(DirectUserLogin user) throws IntegerException;
 
 	/**
-	 * @return
+	 * Get a list of all direct login users.
+	 * @return List of DirectUserLogins.
+	 * 
 	 * @throws IntegerException
 	 */
 	DirectUserLogin[] getAllDirectUsers() throws IntegerException;
 
-	
 }

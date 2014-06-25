@@ -26,9 +26,11 @@ import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
 
 /**
- * This class represents a form panel for importing MIB file.
- *
- * @author jhuang
+ * This MIBImportPanel class represents a panel to import MIB file.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FormPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class MIBImportPanel extends FormPanel {
 

@@ -48,6 +48,9 @@ import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the Signature. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
  */

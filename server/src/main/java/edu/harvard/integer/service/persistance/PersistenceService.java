@@ -32,10 +32,6 @@
  */
 package edu.harvard.integer.service.persistance;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Date;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
@@ -48,21 +44,15 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.common.persistence.PersistenceStepStatusEnum;
-import edu.harvard.integer.common.properties.IntegerProperties;
-import edu.harvard.integer.common.properties.StringPropertyNames;
-import edu.harvard.integer.common.snmp.MIBImportInfo;
-import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.server.IntegerApplication;
 import edu.harvard.integer.service.BaseService;
-import edu.harvard.integer.service.distribution.DistributionManager;
-import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
-import edu.harvard.integer.service.yaml.YamlManagerInterface;
-import edu.harvard.integer.util.FileUtil;
-import edu.harvard.integer.util.Resource;
 
 /**
+ * The persistence service is started when the server starts. This will load any
+ * data that needs to be loaded. The data loaded is listed in the
+ * DataPreloadData table.
+ * 
  * @author David Taylor
  * 
  */
@@ -79,8 +69,9 @@ public class PersistenceService extends BaseService implements
 	@Inject
 	private PersistenceManagerInterface persistanceManager;
 
-	@Inject DataLoaderInterface dataLoader;
-	
+	@Inject
+	DataLoaderInterface dataLoader;
+
 	/**
 	 * All PersistenceService initialization occurs here.
 	 */
@@ -93,7 +84,7 @@ public class PersistenceService extends BaseService implements
 
 		// Register the application for RESTfull interface
 		IntegerApplication.register(this);
-		
+
 		loadPreloads();
 
 	}
@@ -110,21 +101,22 @@ public class PersistenceService extends BaseService implements
 				if (dataPreLoadFile.getStatus() == null
 						|| !PersistenceStepStatusEnum.Loaded
 								.equals(dataPreLoadFile.getStatus())) {
-					
+
 					long startTime = System.currentTimeMillis();
-					
+
 					dataLoader.loadDataFile(dataPreLoadFile);
-					
-					if (PersistenceStepStatusEnum.Loaded
-								.equals(dataPreLoadFile.getStatus())) {
+
+					if (PersistenceStepStatusEnum.Loaded.equals(dataPreLoadFile
+							.getStatus())) {
 						logger.info("Loaded " + dataPreLoadFile.getDataFile());
-						
-						dataPreLoadFile.setTimeToLoad(System.currentTimeMillis() - startTime);
+
+						dataPreLoadFile.setTimeToLoad(System
+								.currentTimeMillis() - startTime);
 						dataPreLoadFile.setErrorMessage(null);
 					}
-					
+
 					dao.update(dataPreLoadFile);
-					
+
 				} else
 					logger.info("Preload already loaded!" + dataPreLoadFile);
 			}
@@ -135,5 +127,5 @@ public class PersistenceService extends BaseService implements
 			e.printStackTrace();
 		}
 	}
-	
+
 }

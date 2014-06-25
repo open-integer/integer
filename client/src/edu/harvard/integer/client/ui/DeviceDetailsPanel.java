@@ -18,14 +18,19 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.DeviceDetails;
 
 /**
- * This class represents a form panel for importing MIB file.
- *
- * @author jhuang
+ * The Class DeviceDetailsPanel represents a panel to display DeviceDetails object of Integer.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.FormPanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class DeviceDetailsPanel extends FormPanel {
 	
 	public static DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat("MMM-dd-yyyy HH:mm:ss z");
 	
+	/**
+	 * Create a new DeviceDetailsPanel.
+	 */
 	public DeviceDetailsPanel(String name, DeviceDetails deviceDetails) {
 		setEncoding(FormPanel.ENCODING_MULTIPART);
 		setMethod(FormPanel.METHOD_POST);

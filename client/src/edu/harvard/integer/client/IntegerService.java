@@ -7,7 +7,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
@@ -15,7 +14,6 @@ import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
-// TODO: Auto-generated Javadoc
 /**
  * The client side stub for the RPC service.
  */

@@ -42,4 +42,9 @@ task deployWildfly() << {
 		from "config"
 		into "$System.env.JBOSS_HOME" + '/standalone/data/yaml'
 	}
+	
+	copy {
+		from "database/serverloads"
+		into "$System.env.JBOSS_HOME" + '/standalone/data/sql'
+	}
 }

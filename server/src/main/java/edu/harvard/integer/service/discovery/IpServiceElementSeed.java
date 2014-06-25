@@ -40,6 +40,10 @@ import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 
 /**
+ * This class holds the information needed to do a service element discovery.
+ * This is passed to the discovery process to define what to discover and how to
+ * discover the devices.
+ * 
  * @author David Taylor
  * 
  */
@@ -54,6 +58,33 @@ public class IpServiceElementSeed implements Serializable {
 	 * The subnet to discover.
 	 */
 	private DiscoverNet subnetToDiscover = null;
+
+	/**
+	 * A list of gateways to exclude.
+	 */
+	private ID[] gatewayExclusionList = null;
+
+	/**
+	 * This is the list of technologies used to discover elements in the net.
+	 * The default is using SNMP first (trying v2 with a community string
+	 * preference list first).
+	 * 
+	 * If that should fail a try with V3 and if that should fail try with v1.
+	 * 
+	 * These following options would have to be specifically enabled by the
+	 * user.
+	 * 
+	 * After this try ICMP and if ICMP is successful then SSH/CLI.
+	 * 
+	 * 
+	 * Puppet.
+	 */
+	private DiscoveryTechnology[] discoveryTechnologies = null;
+
+	/**
+	 * A listing of service element types to exclude in this discovery.
+	 */
+	private ServiceElementType[] serviceElementTypeExclusions = null;
 
 	/**
 	 * @return the subnetToDiscover
@@ -117,30 +148,4 @@ public class IpServiceElementSeed implements Serializable {
 		this.serviceElementTypeExclusions = serviceElementTypeExclusions;
 	}
 
-	/**
-	 * A list of gateways to exclude.
-	 */
-	private ID[] gatewayExclusionList = null;
-
-	/**
-	 * This is the list of technologies used to discover elements in the net.
-	 * The default is using SNMP first (trying v2 with a community string
-	 * preference list first).
-	 * 
-	 * If that should fail a try with V3 and if that should fail try with v1.
-	 * 
-	 * These following options would have to be specifcially enabled by the
-	 * user.
-	 * 
-	 * After this try ICMP and if ICMP is successful then SSH/CLI.
-	 * 
-	 * 
-	 * Puppet.
-	 */
-	private DiscoveryTechnology[] discoveryTechnologies = null;
-
-	/**
-	 * A listing of service element types to exclude in this discovery.
-	 */
-	private ServiceElementType[] serviceElementTypeExclusions = null;
 }

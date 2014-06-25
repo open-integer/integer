@@ -36,6 +36,9 @@ package edu.harvard.integer.service.managementobject;
 import javax.ejb.Remote;
 
 /**
+ * 
+ * @see ManagementObjectCapabilityManagerInterface
+ * 
  * @author David Taylor
  *
  */

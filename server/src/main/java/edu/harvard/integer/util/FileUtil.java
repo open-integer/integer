@@ -41,12 +41,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * File Util methods to help with manipulating files.
+ * 
  * @author David Taylor
  *
  */
 public class FileUtil {
 	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
+	/**
+	 * Read in the complete file. Create a string with the contents of the file.
+	 * 
+	 * @param file. File to read in.
+	 * @return Contents of the file.
+	 */
 	public static String readInMIB(File file) {
 		
 		String content = null;
