@@ -52,14 +52,6 @@ public interface IntegerInterface {
 	 * @return the top level polls for discovery. 
 	 * 
 	 */
-	public List<ServiceElementManagementObject>  getTopLevelPolls();
-	
-	/**
-	 * Gets the discovery template based on the list of top level poll results.
-	 *
-	 * @param pollResult the poll result
-	 * @return the discovery template
-	 */
-	public VendorDiscoveryTemplate<ServiceElementManagementObject>  getDiscoveryTemplate( List<PollResult> pollResult );
+	public List<ServiceElementManagementObject>  getTopLevelPolls();	
 	
 }

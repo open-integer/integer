@@ -67,8 +67,6 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 /**
  * The Class ContainmentServiceElementWorker for discover device which the relation between components are 
  * in containment relationship.  
- * 
- * 
  *
  * @author dchan
  */

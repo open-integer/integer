@@ -65,7 +65,6 @@ public class SNMPAliasMapping {
 	
 	private String mappingValue;
 	
-	private IndexEmbeddedEnum indexEmbedded;
 	
 
 	/**
@@ -116,17 +115,6 @@ public class SNMPAliasMapping {
 	public void setMappingValue(String mappingValue) {
 		this.mappingValue = mappingValue;
 	}
-
-
-	public IndexEmbeddedEnum getIndexEmbedded() {
-		return indexEmbedded;
-	}
-
-
-	public void setIndexEmbedded(IndexEmbeddedEnum indexEmbedded) {
-		this.indexEmbedded = indexEmbedded;
-	}
-
 
 
 }
