@@ -36,7 +36,6 @@ package edu.harvard.integer.service.yaml;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -98,6 +97,8 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpL
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
 
 /**
+ * @see YamlManagerInterface
+ * 
  * @author David Taylor
  * 
  */
@@ -113,13 +114,13 @@ public class YamlManager extends BaseManager implements
 
 	@Inject
 	PersistenceManagerInterface persistanceManager;
-	
+
 	@Inject
 	ServiceElementDiscoveryManagerInterface discoveryManager;
-	
+
 	@Inject
 	SnmpManagerInterface snmpManager;
-	
+
 	/**
 	 * @param managerType
 	 */
@@ -188,8 +189,15 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
+	 * Parse the Technology tree. This method is called recursively to process
+	 * all sub "TechnologyTree" elements. The current Technology is passed in so
+	 * that the child technology elements can be linked to the parent.
+	 * 
 	 * @param technology
+	 *            . The current Root of the Technology tree to parse.
 	 * @param list
+	 *            . YamlTechnology of the child technologies to be parsed.
+	 * 
 	 * @throws IntegerException
 	 */
 	private void parseTechnologyTree(Technology parentTechnology,
@@ -218,6 +226,10 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
+	 * Parse the Mechanisms for a technology. The mechanism is the lowest level
+	 * of the technology tree that does not have capabilities directly attached
+	 * to it.
+	 * 
 	 * @param mechanismTypes
 	 * @throws IntegerException
 	 */
@@ -253,8 +265,11 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
+	 * Save the Capabilities found.
+	 * 
 	 * @param capabilities
-	 * @return
+	 *            . YamlCapability list of capabilities to import.
+	 * @return List<ID>. IDs' of the imported capabilities.
 	 * @throws IntegerException
 	 */
 	private List<ID> saveCapabilites(List<YamlCapability> capabilities)
@@ -284,21 +299,43 @@ public class YamlManager extends BaseManager implements
 		return ids;
 	}
 
+	/**
+	 * Helper method to parse an array of objects.
+	 * 
+	 * @param parentId
+	 *            . Parent ID that all the objects in the list belong to.
+	 * @param indent
+	 *            . Used for prity printing the imported tree.
+	 * @param list
+	 * @throws IntegerException
+	 */
 	private void parseArrayList(ID parentId, String indent,
 			ArrayList<Object> list) throws IntegerException {
 		for (Object value : list) {
-			// logger.info("Item " + value + " class " +
-			// value.getClass().getName());
+			if (logger.isDebugEnabled())
+				logger.debug("Item " + value + " class "
+						+ value.getClass().getName());
 			parseObject(parentId, indent, value);
 		}
 	}
 
+	/**
+	 * Parse a hashmap of YAML objects.
+	 * 
+	 * @param parentId
+	 *            . Parent ID that all the objects in the hashmap belong to.
+	 * @param indent
+	 *            . Use for pretty print of the imported YAML.
+	 * @param map
+	 * @throws IntegerException
+	 */
 	private void parseHashMap(ID parentId, String indent,
 			LinkedHashMap<String, Object> map) throws IntegerException {
 		for (String key : map.keySet()) {
 			Object value = map.get(key);
 
-			logger.info(indent + "Key " + key);
+			if (logger.isDebugEnabled())
+				logger.debug(indent + "Key " + key);
 
 			if (key.contains("placeholder"))
 				continue;
@@ -313,6 +350,17 @@ public class YamlManager extends BaseManager implements
 		}
 	}
 
+	/**
+	 * Helper method to parse the give object from a YAML file.
+	 * 
+	 * @param parentId
+	 *            . ID of the parent object that this object belongs to.
+	 * @param indent
+	 *            . Used for pretty printing of the YAML import file.
+	 * @param value
+	 *            . Value to be parsed.
+	 * @throws IntegerException
+	 */
 	@SuppressWarnings("unchecked")
 	private void parseObject(ID parentId, String indent, Object value)
 			throws IntegerException {
@@ -329,6 +377,18 @@ public class YamlManager extends BaseManager implements
 					+ " " + value);
 	}
 
+	/**
+	 * Create a Technology with the given name and link to the parent ID.
+	 * 
+	 * @param name
+	 *            . Name of the technolgoy to create.
+	 * @param indent
+	 *            . Used to pretty print the imported YAML file.
+	 * @param parentId
+	 *            . Parent ID that this technology belongs to.
+	 * @return Create Technology
+	 * @throws IntegerException
+	 */
 	private Technology createTechnology(String name, String indent, ID parentId)
 			throws IntegerException {
 
@@ -377,6 +437,13 @@ public class YamlManager extends BaseManager implements
 		return technology;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.yaml.YamlManagerInterface#loadServiceElementType
+	 * (java.lang.String)
+	 */
 	@Override
 	public String loadServiceElementType(String content)
 			throws IntegerException {
@@ -403,155 +470,217 @@ public class YamlManager extends BaseManager implements
 
 		return "Success";
 	}
-	
 
 	/**
+	 * Parse the list of ServiceElementTypes. Create a ServiceElementType for
+	 * each service element type found in the YAML file.
+	 * 
 	 * @param serviceElementTypes
+	 *            . List of YamlServiceElementTypes to parse.
 	 * @param serviceElementTypeDao
+	 *            DAO to save the ServiceElementType
 	 * @throws IntegerException
 	 */
 	private void parseServiceElements(
 			List<YamlServiceElementType> serviceElementTypes,
 			ServiceElementTypeDAO serviceElementTypeDao)
 			throws IntegerException {
-		
+
 		for (YamlServiceElementType yamlServiceElementType : serviceElementTypes) {
-			
-			List<YamlServiceElementTypeTranslate> typeTranslates =  yamlServiceElementType.getServiceElementTypeTranslates();
-			if ( typeTranslates == null ) {
-				logger.warn("Missing Service Element Type Translation " + yamlServiceElementType.getName() );
+
+			List<YamlServiceElementTypeTranslate> typeTranslates = yamlServiceElementType
+					.getServiceElementTypeTranslates();
+			if (typeTranslates == null) {
+				logger.warn("Missing Service Element Type Translation "
+						+ yamlServiceElementType.getName());
 				continue;
 			}
-			
-			
-			for ( YamlServiceElementTypeTranslate typeTranslate : typeTranslates ) {
-				ServiceElementType exemplarSet = getServiceElementType(serviceElementTypeDao, yamlServiceElementType, 
-						typeTranslate.getName());
-					
-				exemplarSet.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
-				
-				if ( typeTranslate.getMapping().equalsIgnoreCase("subObjIdentify")) {
-					
-					List<VendorIdentifier> vis = discoveryManager.findVendorNameSubTree(typeTranslate.getName());
-					if ( vis != null ) {
-						saveVendorSubTree(vis, serviceElementTypeDao, typeTranslate, exemplarSet, yamlServiceElementType);
-					}
-					else {
-						logger.warn("Cannot find sub-tree " + typeTranslate.getName() );
-					}
-					
-				}
-				else {
-					
-					ServiceElementType serviceElementType = serviceElementTypeDao.findByName(typeTranslate.getName());
-					if (serviceElementType == null) {
-						
-						serviceElementType = new ServiceElementType();
-						serviceElementType.setCategory(CategoryTypeEnum.valueOf(typeTranslate.getCategory()));
-						serviceElementType.setName(typeTranslate.getName());
-						serviceElementType.setDescription(yamlServiceElementType.getDescription());
-						serviceElementType.addSignatureValue(null, SignatureTypeEnum.Vendor, yamlServiceElementType.getVendor());
 
-						serviceElementType.setAttributeIds(exemplarSet.getAttributeIds());
-						serviceElementType.setUniqueIdentifierCapabilities(exemplarSet.getUniqueIdentifierCapabilities());
-						
+			for (YamlServiceElementTypeTranslate typeTranslate : typeTranslates) {
+				ServiceElementType exemplarSet = getServiceElementType(
+						serviceElementTypeDao, yamlServiceElementType,
+						typeTranslate.getName());
+
+				exemplarSet.setCategory(CategoryTypeEnum.valueOf(typeTranslate
+						.getCategory()));
+
+				if (typeTranslate.getMapping().equalsIgnoreCase(
+						"subObjIdentify")) {
+
+					List<VendorIdentifier> vis = discoveryManager
+							.findVendorNameSubTree(typeTranslate.getName());
+					if (vis != null) {
+						saveVendorSubTree(vis, serviceElementTypeDao,
+								typeTranslate, exemplarSet,
+								yamlServiceElementType);
+					} else {
+						logger.warn("Cannot find sub-tree "
+								+ typeTranslate.getName());
+					}
+
+				} else {
+
+					ServiceElementType serviceElementType = serviceElementTypeDao
+							.findByName(typeTranslate.getName());
+					if (serviceElementType == null) {
+
+						serviceElementType = new ServiceElementType();
+						serviceElementType.setCategory(CategoryTypeEnum
+								.valueOf(typeTranslate.getCategory()));
+						serviceElementType.setName(typeTranslate.getName());
+						serviceElementType
+								.setDescription(yamlServiceElementType
+										.getDescription());
+						serviceElementType.addSignatureValue(null,
+								SignatureTypeEnum.Vendor,
+								yamlServiceElementType.getVendor());
+
+						serviceElementType.setAttributeIds(exemplarSet
+								.getAttributeIds());
+						serviceElementType
+								.setUniqueIdentifierCapabilities(exemplarSet
+										.getUniqueIdentifierCapabilities());
+
 						serviceElementTypeDao.update(serviceElementType);
-					 
-				    }
-			   }
-		   }
+
+					}
+				}
+			}
 		}
 	}
-	
+
+	/**
+	 * Save a vendor identifier sub tree.
+	 * 
+	 * @param vendorIdentifers
+	 *            . List of VendorIdentifers to save
+	 * @param serviceElementTypeDao
+	 *            . DAO to use for saving the ServiceElementTypes.
+	 * @param typeTranslate
+	 *            . Type of translation to do.
+	 * @param exemplarSet
+	 *            . Exemplar SeviceElementType to use for creation of new
+	 *            Service Element types.
+	 * @param yamlServiceElementType
+	 *            . YamlServiceElementType to use for creation of the service
+	 *            element type
+	 * @throws IntegerException
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	private void saveVendorSubTree(List<VendorIdentifier> vis, ServiceElementTypeDAO serviceElementTypeDao,
-			 YamlServiceElementTypeTranslate typeTranslate, ServiceElementType exemplarSet,
-			 YamlServiceElementType yamlServiceElementType) throws IntegerException{
-		
-		for ( VendorIdentifier vi : vis ) {
+	private void saveVendorSubTree(List<VendorIdentifier> vis,
+			ServiceElementTypeDAO serviceElementTypeDao,
+			YamlServiceElementTypeTranslate typeTranslate,
+			ServiceElementType exemplarSet,
+			YamlServiceElementType yamlServiceElementType)
+			throws IntegerException {
+
+		for (VendorIdentifier vi : vis) {
 			boolean foundSubType = false;
-			
+
 			for (Signature signature : exemplarSet.getSignatures()) {
-				
-				for (SignatureValueOperator value : signature.getValueOperators()) {
+
+				for (SignatureValueOperator value : signature
+						.getValueOperators()) {
 					if (value.getValue().equals(vi.getVendorSubtypeName())) {
 						foundSubType = true;
 						break;
 					}
-					
+
 					if (foundSubType)
 						break;
 				}
-				
+
 			}
-			
+
 			if (!foundSubType)
-				exemplarSet.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vi.getVendorSubtypeName());
-		
+				exemplarSet.addSignatureValue(null,
+						SignatureTypeEnum.VendorSubType,
+						vi.getVendorSubtypeName());
+
 		}
-		
+
 		serviceElementTypeDao.update(exemplarSet);
 	}
-	
-	
+
 	/**
-	 * 
+	 * Create a service element type for the YamlServiceElementType. First look
+	 * in the database for the service element type. If found then update the
+	 * database version.
 	 * 
 	 * @param serviceElementTypeDao
+	 *            . DAO to use to save the service element type.
 	 * @param typeTranslate
+	 *            . Type of translation to do.
 	 * @param yamlServiceElementType
+	 *            . YamlServiceElementType describing the service element type.
 	 * @throws IntegerException
 	 */
-	public ServiceElementType getServiceElementType( ServiceElementTypeDAO serviceElementTypeDao, 
-			                              YamlServiceElementType yamlServiceElementType,
-			                              String name) throws IntegerException {
-		
-		ServiceElementType serviceElementType = serviceElementTypeDao.findByName(name);
+	public ServiceElementType getServiceElementType(
+			ServiceElementTypeDAO serviceElementTypeDao,
+			YamlServiceElementType yamlServiceElementType, String name)
+			throws IntegerException {
+
+		ServiceElementType serviceElementType = serviceElementTypeDao
+				.findByName(name);
 		if (serviceElementType == null) {
 			serviceElementType = new ServiceElementType();
-		
+
 			serviceElementType.setName(name);
-			serviceElementType.addSignatureValue(null, SignatureTypeEnum.Vendor, yamlServiceElementType.getVendor());
+			serviceElementType.addSignatureValue(null,
+					SignatureTypeEnum.Vendor,
+					yamlServiceElementType.getVendor());
 		}
-		
+
 		List<ID> managementObjects = new ArrayList<ID>();
-		for (YamlManagementObject yamlManagementObject : yamlServiceElementType.getManagementObjects()) {
-			
+		for (YamlManagementObject yamlManagementObject : yamlServiceElementType
+				.getManagementObjects()) {
+
 			SNMPDAO dao = persistanceManager.getSNMPDAO();
 			SNMP snmp = dao.findByName(yamlManagementObject.getName());
 			if (snmp == null) {
-				logger.error("No SNMP object found with name " + yamlManagementObject.getName());
-			} 
-			else {
-				CapabilityDAO capabilityDAO = persistanceManager.getCapabilityDAO();
-				Capability capability = capabilityDAO.findByName(yamlManagementObject.getCapability());
+				logger.error("No SNMP object found with name "
+						+ yamlManagementObject.getName());
+			} else {
+				CapabilityDAO capabilityDAO = persistanceManager
+						.getCapabilityDAO();
+				Capability capability = capabilityDAO
+						.findByName(yamlManagementObject.getCapability());
 				if (capability == null) {
-					logger.error("No Capability found with name " + yamlManagementObject.getCapability()
-							+ " ServiceElement " + yamlServiceElementType.getName());
-				} 
-				else {
+					logger.error("No Capability found with name "
+							+ yamlManagementObject.getCapability()
+							+ " ServiceElement "
+							+ yamlServiceElementType.getName());
+				} else {
 					snmp.setCapabilityId(capability.getID());
-					snmp = dao.update(snmp);					
-					managementObjects.add(snmp.getID());					
+					snmp = dao.update(snmp);
+					managementObjects.add(snmp.getID());
 				}
-				if ( yamlManagementObject.getUnique() == 1 ) {
-					List<ID> ids = serviceElementType.getUniqueIdentifierCapabilities();
-					if ( ids == null ) {
+				if (yamlManagementObject.getUnique() == 1) {
+					List<ID> ids = serviceElementType
+							.getUniqueIdentifierCapabilities();
+					if (ids == null) {
 						ids = new ArrayList<>();
 						serviceElementType.setUniqueIdentifierCapabilities(ids);
-					}					
+					}
 					ids.add(snmp.getID());
 				}
 			}
 		}
-		logger.info("Setting Attributes " + managementObjects + " On " + serviceElementType.getName());
+		logger.info("Setting Attributes " + managementObjects + " On "
+				+ serviceElementType.getName());
 		serviceElementType.setAttributeIds(managementObjects);
-		//serviceElementTypeDao.update(serviceElementType);
-		
+		// serviceElementTypeDao.update(serviceElementType);
+
 		return serviceElementType;
 	}
-	
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.yaml.YamlManagerInterface#loadVendorContainment
+	 * (java.lang.String)
+	 */
 	@Override
 	public String loadVendorContainment(String content) throws IntegerException {
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
@@ -576,7 +705,11 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
+	 * Helper method to parse the vendor containment selector.
+	 * 
 	 * @param load
+	 *            . YamlVendorContainment that holds the data to create the
+	 *            VendorContainment for.
 	 * @throws IntegerException
 	 */
 	private void parseVendorDeployment(YamlVendorContainment load)
@@ -596,7 +729,7 @@ public class YamlManager extends BaseManager implements
 		selector.setVendor(load.getVendor());
 		VendorContainmentSelector[] vendorContainmentSelectors = discoveryManager
 				.getVendorContainmentSelector(selector);
-		
+
 		if (vendorContainmentSelectors == null
 				|| vendorContainmentSelectors.length == 0) {
 			selector = discoveryManager
@@ -606,7 +739,7 @@ public class YamlManager extends BaseManager implements
 
 		SnmpContainment snmpContainment = discoveryManager
 				.getSnmpContainment(selector);
-		
+
 		if (snmpContainment == null) {
 			snmpContainment = new SnmpContainment();
 			snmpContainment.setName(load.getVendor() + ":"
@@ -617,21 +750,30 @@ public class YamlManager extends BaseManager implements
 		SnmpContainmentType contanmentType = SnmpContainmentType.valueOf(load
 				.getSnmpContainment().getContainmentType());
 		snmpContainment.setContainmentType(contanmentType);
-		
+
 		snmpContainment.setSnmpLevels(createSnmpLevelOIDs(load
 				.getSnmpContainment().getSnmpLevels(), snmpContainment
 				.getSnmpLevels()));
-		
+
 		snmpContainment.setServiceElementTypeId(createServiceElement(load
 				.getSnmpContainment().getServiceElementType()));
-		
-		snmpContainment = discoveryManager.updateSnmpContainment(snmpContainment);
+
+		snmpContainment = discoveryManager
+				.updateSnmpContainment(snmpContainment);
 		selector.setContainmentId(snmpContainment.getID());
-		
+
 		discoveryManager.updateVendorContainmentSelector(selector);
 
 	}
 
+	/**
+	 * Helper method to create the SnmpLevelOID and child SnmpLevelOID's.
+	 * 
+	 * @param yamlSnmpLevelOids. Data to create the SnmpLevelOID from.
+	 * @param topLevels. List of all SnmpLevelOIDs created in this import. 
+	 * @return Saved SnmpLEvelOID's created.
+	 * @throws IntegerException
+	 */
 	private List<SnmpLevelOID> createSnmpLevelOIDs(
 			List<YamlSnmpLevelOID> yamlSnmpLevelOids,
 			List<SnmpLevelOID> topLevels) throws IntegerException {
@@ -645,8 +787,9 @@ public class YamlManager extends BaseManager implements
 			if (snmp == null) {
 				logger.error("OID not found for " + levelOid.getContextOID()
 						+ " Unable to create SnmpLevelOID!");
-				
-				throw new IntegerException(null, YamlParserErrrorCodes.ContextOidNotFound);
+
+				throw new IntegerException(null,
+						YamlParserErrrorCodes.ContextOidNotFound);
 			}
 
 			SnmpLevelOID dbLevelOid = findSnmpLevelOID(
@@ -655,7 +798,7 @@ public class YamlManager extends BaseManager implements
 			if (dbLevelOid == null) {
 				dbLevelOid = new SnmpLevelOID();
 				dbLevelOid.setContextOID(getSnmpOid(levelOid.getContextOID()));
-			}			
+			}
 			dbLevelOid.setDescriminatorOID(getSnmpOid(levelOid
 					.getDescriminatorOID()));
 			dbLevelOid
@@ -663,22 +806,20 @@ public class YamlManager extends BaseManager implements
 							levelOid.getDisriminators(),
 							dbLevelOid.getDisriminators()));
 
-			if ( levelOid.getContainmentRelationship() != null ) {
+			if (levelOid.getContainmentRelationship() != null) {
 				SnmpRelationship contianmentRelationship = createContainmentRelation(
 						levelOid.getContainmentRelationship(),
 						dbLevelOid.getRelationToParent(), topLevels);
-				
-				dbLevelOid.setRelationToParent(contianmentRelationship);				
-			}
-			else if ( levelOid.getParentChildRelationship() != null ) {
-				
+
+				dbLevelOid.setRelationToParent(contianmentRelationship);
+			} else if (levelOid.getParentChildRelationship() != null) {
+
 				SnmpRelationship parentChildRelationship = createParentChildRelationship(
-						                                   levelOid.getParentChildRelationship(),
-						                                   dbLevelOid.getRelationToParent());
+						levelOid.getParentChildRelationship(),
+						dbLevelOid.getRelationToParent());
 				dbLevelOid.setRelationToParent(parentChildRelationship);
-			}	
-			else {
-				
+			} else {
+
 			}
 			if (levelOid.getChildren() != null)
 				dbLevelOid.setChildren(createSnmpLevelOIDs(
@@ -686,13 +827,15 @@ public class YamlManager extends BaseManager implements
 
 			if (levelOid.getCategory() != null) {
 				try {
-					dbLevelOid.setCategory(CategoryTypeEnum.valueOf(levelOid.getCategory()));
+					dbLevelOid.setCategory(CategoryTypeEnum.valueOf(levelOid
+							.getCategory()));
 				} catch (IllegalArgumentException e) {
-					logger.error("Unable to create category from " + levelOid.getCategory());
+					logger.error("Unable to create category from "
+							+ levelOid.getCategory());
 					throw e;
 				}
 			}
-			
+
 			dbLevelOid = levelDao.update(dbLevelOid);
 			dbLevels.add(dbLevelOid);
 		}
@@ -701,9 +844,11 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
-	 * @param parentChildRelationship
-	 * @param relationToParent
-	 * @throws IntegerException 
+	 * Helper method to create a parent child relationship.
+	 * 
+	 * @param parentChildRelationship. Input data to create the parent child relationship from
+	 * @param relationToParent. existing SnmpRelation to update.
+	 * @throws IntegerException
 	 */
 	private SnmpRelationship createParentChildRelationship(
 			YamlSnmpParentChildRelationship yamlParentChildRelation,
@@ -711,68 +856,88 @@ public class YamlManager extends BaseManager implements
 
 		if (yamlParentChildRelation == null)
 			return relationToParent;
-	
-		if (relationToParent == null || !(relationToParent instanceof SnmpParentChildRelationship))
+
+		if (relationToParent == null
+				|| !(relationToParent instanceof SnmpParentChildRelationship))
 			relationToParent = new SnmpParentChildRelationship();
-		
+
 		SnmpParentChildRelationship parentChildRelation = (SnmpParentChildRelationship) relationToParent;
-		
-		parentChildRelation.setContainmentOid(getSnmpOid(yamlParentChildRelation.getContainmentOid()));
-		
-		parentChildRelation.setModelOid(getSnmpOid(yamlParentChildRelation.getModelOid()));
-		
-		parentChildRelation.setSiblingOid(getSnmpOid(yamlParentChildRelation.getSiblingOid()));
-		
-		parentChildRelation.setSoftwareVersionOid(getSnmpOid(yamlParentChildRelation.getSoftwareVersionOid()));
-		
-		parentChildRelation.setSubTypeOid(getSnmpOid(yamlParentChildRelation.getSubTypeOid()));
-		
-		if ( yamlParentChildRelation.getMappingType() != null ) {
-			
-			parentChildRelation.setMappingType(RelationMappingTypeEnum.valueOf(yamlParentChildRelation.getMappingType()));
+
+		parentChildRelation
+				.setContainmentOid(getSnmpOid(yamlParentChildRelation
+						.getContainmentOid()));
+
+		parentChildRelation.setModelOid(getSnmpOid(yamlParentChildRelation
+				.getModelOid()));
+
+		parentChildRelation.setSiblingOid(getSnmpOid(yamlParentChildRelation
+				.getSiblingOid()));
+
+		parentChildRelation
+				.setSoftwareVersionOid(getSnmpOid(yamlParentChildRelation
+						.getSoftwareVersionOid()));
+
+		parentChildRelation.setSubTypeOid(getSnmpOid(yamlParentChildRelation
+				.getSubTypeOid()));
+
+		if (yamlParentChildRelation.getMappingType() != null) {
+
+			parentChildRelation.setMappingType(RelationMappingTypeEnum
+					.valueOf(yamlParentChildRelation.getMappingType()));
 		}
-		
+
 		return parentChildRelation;
 	}
 
 	/**
-	 * @param yamlSnmpRelationship
-	 * @param relationToParent2
-	 * @return
-	 * @throws IntegerException 
+	 * Helper method to create the SnmpRelationship.
+	 * 
+	 * @param yamlSnmpRelationship. Input data
+	 * @param relationToParent. Existing SnmpRelationship. If not not it will be updated.
+	 * @return Created/updated SnmpRelationship.
+	 * 
+	 * @throws IntegerException
 	 */
 	private SnmpRelationship createContainmentRelation(
 			YamlSnmpContainmentRelation yamlSnmpRelationship,
-			SnmpRelationship dbRelationToParent, List<SnmpLevelOID> levels) throws IntegerException {
+			SnmpRelationship dbRelationToParent, List<SnmpLevelOID> levels)
+			throws IntegerException {
 
 		if (yamlSnmpRelationship == null)
 			return dbRelationToParent;
-		
-		if (dbRelationToParent == null || !(dbRelationToParent instanceof SnmpContainmentRelation))
+
+		if (dbRelationToParent == null
+				|| !(dbRelationToParent instanceof SnmpContainmentRelation))
 			dbRelationToParent = new SnmpContainmentRelation();
-		
+
 		SnmpContainmentRelation containmentRelation = (SnmpContainmentRelation) dbRelationToParent;
-		
-		containmentRelation.setMappingOid(getSnmpOid(yamlSnmpRelationship.getMappingOid()));
-		
-		containmentRelation.setMappingTable((SNMPTable) getSnmpOid(yamlSnmpRelationship.getChildTable()));
-		
+
+		containmentRelation.setMappingOid(getSnmpOid(yamlSnmpRelationship
+				.getMappingOid()));
+
+		containmentRelation
+				.setMappingTable((SNMPTable) getSnmpOid(yamlSnmpRelationship
+						.getChildTable()));
+
 		if (yamlSnmpRelationship.getChildTable() != null) {
-			SnmpLevelOID childSnmpLevel = findSnmpLevelOID(yamlSnmpRelationship.getChildTable(), levels);
+			SnmpLevelOID childSnmpLevel = findSnmpLevelOID(
+					yamlSnmpRelationship.getChildTable(), levels);
 			containmentRelation.setChildTable(childSnmpLevel);
-		}	
-		
-		if ( yamlSnmpRelationship.getMappingType() != null ) {
-			
-			containmentRelation.setMappingType(RelationMappingTypeEnum.valueOf(yamlSnmpRelationship.getMappingType()));
+		}
+
+		if (yamlSnmpRelationship.getMappingType() != null) {
+
+			containmentRelation.setMappingType(RelationMappingTypeEnum
+					.valueOf(yamlSnmpRelationship.getMappingType()));
 		}
 		return containmentRelation;
 	}
 
 	/**
-	 * @param disriminators
-	 * @param list
-	 * @return
+	 * Helper method to create SnmpServiceElementTypeDiscriminator
+	 * @param disriminators. Input data.
+	 * @param list. List of existing SnmpServiceElementTypeDiscriminator's
+	 * @return Created/updated SnmpServiceElementTypeDiscriminator's
 	 * @throws IntegerException
 	 */
 	private List<SnmpServiceElementTypeDiscriminator> createDiscriminatorList(
@@ -780,9 +945,9 @@ public class YamlManager extends BaseManager implements
 			List<SnmpServiceElementTypeDiscriminator> list)
 			throws IntegerException {
 
-		if (disriminators == null) 
+		if (disriminators == null)
 			return null;
-		
+
 		if (list == null)
 			list = new ArrayList<SnmpServiceElementTypeDiscriminator>();
 
@@ -805,8 +970,9 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
-	 * @param serviceElementType
-	 * @return
+	 * Helper method to create ServiceElement.
+	 * @param serviceElementType. Input data.
+	 * @return ID of the created ServiceElement
 	 * @throws IntegerException
 	 */
 	private ID createServiceElement(
@@ -828,11 +994,10 @@ public class YamlManager extends BaseManager implements
 		dbSet.setAttributeIds(createAttributeList(
 				serviceElementType.getAttributes(),
 				serviceElementType.getName()));
-		if (serviceElementType.getFieldReplaceableUnit() != null && 
-				(serviceElementType.getFieldReplaceableUnit()
-						.equalsIgnoreCase("Yes")
-				|| serviceElementType.getFieldReplaceableUnit()
-						.equalsIgnoreCase("true")))
+		if (serviceElementType.getFieldReplaceableUnit() != null
+				&& (serviceElementType.getFieldReplaceableUnit()
+						.equalsIgnoreCase("Yes") || serviceElementType
+						.getFieldReplaceableUnit().equalsIgnoreCase("true")))
 			dbSet.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 		else
 			dbSet.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
@@ -842,8 +1007,9 @@ public class YamlManager extends BaseManager implements
 		dbSet.setDefaultNameCababilityId(getCapability(serviceElementType
 				.getDefaultNameCabability()));
 		if (serviceElementType.getCategory() != null)
-			dbSet.setCategory(CategoryTypeEnum.valueOf(serviceElementType.getCategory()));
-		
+			dbSet.setCategory(CategoryTypeEnum.valueOf(serviceElementType
+					.getCategory()));
+
 		dbSet.setUniqueIdentifierCapabilities(createAttributeList(
 				serviceElementType.getUniqueIdentifierCapabilities(),
 				serviceElementType.getName()));
@@ -854,8 +1020,10 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
-	 * @param defaultNameCabability
-	 * @return
+	 * Get the capability with the given name from the database if one exists.
+	 * 
+	 * @param defaultNameCabability. Name of capability to get.
+	 * @return ID of capability found in the database or null if not found.
 	 */
 	private ID getCapability(String defaultNameCabability) {
 		CapabilityDAO dao = persistanceManager.getCapabilityDAO();
@@ -871,8 +1039,9 @@ public class YamlManager extends BaseManager implements
 	}
 
 	/**
-	 * @param attributes
-	 * @return
+	 * Helper method to create a list of attributes for a service element.
+	 * @param attributes. Input data.
+	 * @return List of ID's for the attributes (SNMP) created.
 	 * @throws IntegerException
 	 */
 	private List<ID> createAttributeList(List<String> attributes,
@@ -881,7 +1050,7 @@ public class YamlManager extends BaseManager implements
 
 		if (attributes == null)
 			return ids;
-		
+
 		for (String string : attributes) {
 			SNMP oid = getSnmpOid(string);
 			if (oid != null)
@@ -896,6 +1065,11 @@ public class YamlManager extends BaseManager implements
 		return ids;
 	}
 
+	/**
+	 * Helper method to create a SnmpServiceElementTypeDiscriminatorValue
+	 * @param yamlDiscriminator. input data.
+	 * @return Created SnmpServiceElementTypeDiscriminatorValue.
+	 */
 	private SnmpServiceElementTypeDiscriminatorValue<?> createDiscrimintatorValue(
 			YamlSnmpServiceElementTypeDiscriminator yamlDiscriminator) {
 		SnmpServiceElementTypeDiscriminatorStringValue stringValue = new SnmpServiceElementTypeDiscriminatorStringValue();
@@ -905,6 +1079,14 @@ public class YamlManager extends BaseManager implements
 		return stringValue;
 	}
 
+	/**
+	 * Helper method to find an existing SnmpServiceElementTypeDiscriminator 
+	 * in the database.
+	 * @param yamlDescriminator. Input data.
+	 * @param descrimintators. Input data.
+	 * @return List of SnmpServiceElementTypeDiscriminator's created or found in
+	 * the database.
+	 */
 	private SnmpServiceElementTypeDiscriminator findDiscriminator(
 			YamlSnmpServiceElementTypeDiscriminator yamlDescriminator,
 			List<SnmpServiceElementTypeDiscriminator> descrimintators) {
@@ -919,6 +1101,12 @@ public class YamlManager extends BaseManager implements
 		return null;
 	}
 
+	/**
+	 * Helper method to find a SnmpLeveleOID in the passed in list of SnmpLevelOID's
+	 * @param contextOidName. Name to find in the list.
+	 * @param levels. List of SnmpLevelOID's to look in.
+	 * @return SnmpLevelOID found in list or null if not found.
+	 */
 	private SnmpLevelOID findSnmpLevelOID(String contextOidName,
 			List<SnmpLevelOID> levels) {
 		if (levels == null)

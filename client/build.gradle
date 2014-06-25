@@ -95,7 +95,8 @@ task gwtc (dependsOn: classes, type: JavaExec) {
 
 	args = [
 		gwtModule,
-		'-war', gwtWarPath
+		'-war', gwtWarPath,
+		'-style',  'PRETTY'
 	]
 
 	maxHeapSize = '256M'
@@ -112,7 +113,8 @@ task devmode (dependsOn: classes, type: JavaExec) {
 			sourceSets.main.output.resourcesDir,    // Generated resources
 			sourceSets.main.output.classesDir,      // Generated classes
 			sourceSets.main.compileClasspath,       // Deps
-			configurations.compile
+			configurations.compile,
+			project(":common").sourceSets.main.java.srcDirs
 		]}
 
 	args = (gwtModule instanceof List)?gwtModule:[gwtModule]

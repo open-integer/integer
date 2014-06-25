@@ -41,7 +41,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Level;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;

@@ -36,6 +36,8 @@ package edu.harvard.integer.service.technology;
 import javax.ejb.Local;
 
 /**
+ * @see TechnologyManagerInterface
+ * 
  * @author David Taylor
  *
  */

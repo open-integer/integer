@@ -46,7 +46,12 @@ import edu.harvard.integer.service.topology.TopologyService;
 import edu.harvard.integer.service.topology.TopologyServiceInterface;
 
 
-/**
+/** 
+ * Enumeration describing each of the services.
+ * <p>
+ * This enumeration is used when asking the distribution serivce
+ * for an instance of of a services 
+ * 
  * @author David Taylor
  *
  */

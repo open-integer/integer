@@ -44,82 +44,101 @@ import javax.ws.rs.core.Application;
 
 import org.slf4j.Logger;
 
-
 /**
+ * This class is used to register the RESTfull call's to the server.
+ * This also defines the base context for all calls to the server
+ *  
  * @author David Taylor
- *
+ * 
  */
 @ApplicationPath("/Integer")
 public class IntegerApplication extends Application {
 
 	@Inject
 	private Logger logger;
-	
+
 	private Set<Object> singletons = new HashSet<Object>();
 	private Set<Class<?>> classes = new HashSet<Class<?>>();
-	
+
 	private static IntegerApplication me = null;
-	
+
 	public IntegerApplication() {
 	}
 
 	public static IntegerApplication getInstance() {
 		if (me != null)
 			return me;
-		
+
 		synchronized (IntegerApplication.class) {
 			if (me != null)
 				return me;
-			
+
 			me = new IntegerApplication();
 			return me;
 		}
 	}
-	
+
 	private Logger getLogger() {
 		return logger;
 	}
-	
+
+	/**
+	 * Get the index page for all calls to the server.
+	 * 
+	 * @return HTML string that can display a index page
+	 */
 	public String getIndexPage() {
 		StringBuffer b = new StringBuffer();
-		b.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">").append('\n');
+		b.append(
+				"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">")
+				.append('\n');
 		b.append("<html>").append('\n');
 		b.append("<head>").append('\n');
-		b.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">").append('\n');
+		b.append(
+				"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">")
+				.append('\n');
 		b.append("<title>NMS Services</title>").append('\n');
 		b.append("</head>").append('\n');
 		b.append("<body>").append('\n');
 
 		b.append("  <ul>").append('\n');
-		
+
 		for (Class<?> clazz : classes) {
-			
+
 			Path classPath = clazz.getAnnotation(Path.class);
 			Method[] methods = clazz.getMethods();
 			for (Method method : methods) {
 				Path fieldPath = method.getAnnotation(Path.class);
-				if  (fieldPath != null) {
-					
+				if (fieldPath != null) {
+
 					if (fieldPath.value().contains("index"))
 						continue;
-					
-					b.append("<li><a href=\".."); 
+
+					b.append("<li><a href=\"..");
 					b.append(classPath.value());
 					b.append(fieldPath.value()).append("\">");
 					b.append(fieldPath.value().substring(1));
 					b.append("</a></li>");
-					logger.info("Add Rest path " + clazz.getSimpleName() + "/" + fieldPath.toString());
+					logger.info("Add Rest path " + clazz.getSimpleName() + "/"
+							+ fieldPath.toString());
 				}
 			}
 		}
-		
+
 		b.append("  </ul>").append('\n');
 
 		b.append("</body>").append('\n');
 		b.append("</html>").append('\n');
 		return b.toString();
 	}
-	
+
+	/**
+	 * Register a manager with the Application. The manager will then
+	 * be registered in the index and be available for calls to its
+	 * restfull interfaces.
+	 * 
+	 * @param object
+	 */
 	public static void register(Object object) {
 		Path annotation = object.getClass().getAnnotation(Path.class);
 		if (annotation != null) {
@@ -127,33 +146,35 @@ public class IntegerApplication extends Application {
 			Method[] methods = object.getClass().getMethods();
 			for (Method method : methods) {
 				Path fieldPath = method.getAnnotation(Path.class);
-				if  (fieldPath != null) {
+				if (fieldPath != null) {
 					foundOne = true;
 					if (getInstance().getLogger() != null)
-						getInstance().getLogger().info("Add Rest path " + annotation.toString() + "/" + fieldPath.toString());
+						getInstance().getLogger().info(
+								"Add Rest path " + annotation.toString() + "/"
+										+ fieldPath.toString());
 					else
-						System.out.println("NULL LOGGER!!! Add Rest path " + annotation.toString() + "/" + fieldPath.toString());
+						System.out.println("NULL LOGGER!!! Add Rest path "
+								+ annotation.toString() + "/"
+								+ fieldPath.toString());
 				}
 			}
-			
+
 			if (foundOne == true) {
 				getInstance().singletons.add(object);
-				getInstance().classes.add(object.getClass());				
+				getInstance().classes.add(object.getClass());
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public Set<Class<?>> getClasses() {
-		return getInstance().classes; 
+		return getInstance().classes;
 	}
 
 	@Override
 	public Set<Object> getSingletons() {
-	    return getInstance().singletons;
+		return getInstance().singletons;
 	}
-	
-		
-}
 
+}

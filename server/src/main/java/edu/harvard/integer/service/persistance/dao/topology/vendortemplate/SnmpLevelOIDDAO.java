@@ -52,6 +52,9 @@ import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
+ *  The DAO is responsible for persisting the SnmpLevelOID. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
  */

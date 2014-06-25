@@ -43,11 +43,19 @@ import org.slf4j.LoggerFactory;
 
 
 /**
+ * Resources used by the system. The logger is "Injected" into the beans.
+ * 
  * @author David Taylor
  *
  */
 public class Resource {
 
+	/**
+	 * Logger that can be injected into a bean.
+	 * 
+	 * @param injectionPoint
+	 * @return
+	 */
     @Produces
     public Logger produceLog(InjectionPoint injectionPoint) {
     

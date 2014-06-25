@@ -46,86 +46,183 @@ import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.common.user.authentication.AuthInfo;
 
 /**
+ * * The user contact and role manager controls addition, creation and
+ * modification of users and contacts in the system.
+ * <p>
+ * It allows for automatic updates from external sources for many attributes
+ * found in Contact object.
+ * <p>
+ * It also manages role definition and association with Access Policies.
+ * <p>
+ * 
+ * First, it allows users and contacts to be created in the system with, or to
+ * use and external IAM system for user authentication. A single user can be
+ * authenticated by only one source.
+ * <p>
+ * Secondly, this system is used to manage credentials for each of the managed
+ * ServiceElements in the environment. In some cases, external systems (as with
+ * users) could be used like TACCAS+, though this is not a requirement.
+ * <p>
+ * This service is also responsible for the assignment of roles to users such as
+ * administrator or user. Note that there is a facility to define different
+ * roles for the integrated management system and different devices since not
+ * all users will have the same access to different devices.
+ * 
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Local
 public interface UserManagerInterface {
-	public User addUser(User user) throws IntegerException ;
-	public User modifyUser(User user) throws IntegerException;
-	public void deleteUser(User user) throws IntegerException;
-	public User[] getAllUsers() throws IntegerException;
-	
-	public String showUsers() throws IntegerException;
-
 	
 	/**
-	 * @param contact
-	 * @return
+	 * Add one user to the system. The user will be saved into the database. All
+	 * setup for the user will be done after the call completes.
+	 * 
+	 * TODO: add initialization steps once known what the initialization steps
+	 * are.
+	 * 
+	 * @param user
+	 * @return User. The newly created user.
+	 * @throws IntegerException
+	 */
+	public User addUser(User user) throws IntegerException;
+
+	/**
+	 * 
+	 * Modify the user.
+	 * 
+	 * @param user
+	 * @return User. The modified user.
+	 * @throws IntegerException
+	 */
+	public User modifyUser(User user) throws IntegerException;
+
+	/**
+	 * Delete the user. This will clean up any data associated with the user.
+	 * 
+	 * 
+	 * @param user
+	 * @throws IntegerException
+	 */
+
+	public void deleteUser(User user) throws IntegerException;
+
+	/**
+	 * Return a list of all users.
+	 * 
+	 * @return User[]. All users.
+	 * @throws IntegerException
+	 */
+	public User[] getAllUsers() throws IntegerException;
+
+	/**
+	 * Get a HTML String that can be used for display. 
+	 * @return HTML Sting of users in the system.s
+	 * @throws IntegerException
+	 */
+	public String showUsers() throws IntegerException;
+
+	/**
+	 * Update/save the Contact in the database
+	 * @param contact. Contact to save
+	 * @return Contact that has been saved.
 	 * @throws IntegerException
 	 */
 	Contact updateContact(Contact contact) throws IntegerException;
+
 	/**
-	 * @param contact
+	 * Delete the Contact
+	 * @param contact. Contact to deleted.
 	 * @throws IntegerException
 	 */
 	void deleteContact(Contact contact) throws IntegerException;
+
 	/**
-	 * @param organization
-	 * @return
+	 * Update/save the Organization in the database.
+	 * @param organization. Origanization to update.
+	 * 
+	 * @return Organization. The updated Organization.
 	 * @throws IntegerException
 	 */
 	Organization updateOrganization(Organization organization)
 			throws IntegerException;
+
 	/**
-	 * @param id
+	 * Delete the Organization with the given ID.
+	 * @param id. ID of the Organization to delete.
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteOrganization(ID id) throws IntegerException;
+
 	/**
-	 * @param organization
+	 * Delete the Organization.
+	 * @param organization. Organization to delete.
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteOrganization(Organization organization) throws IntegerException;
+
 	/**
-	 * @param policy
-	 * @return
+	 * Update the AccessPolicy in the database.
+	 * @param policy. AccessPolcy to be updated
+	 * @return AccessPolicy. The updated AccessPolicy.
 	 * @throws IntegerException
 	 */
 	AccessPolicy updateAccessPolicy(AccessPolicy policy)
 			throws IntegerException;
+
 	/**
-	 * @param id
+	 * Delete the AccessPolicy with the given ID.
+	 * @param id. ID of the AccessPolicy to delete.
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteAccessPolicy(ID id) throws IntegerException;
+
 	/**
-	 * @param policy
+	 * Delete the AccessPolicy.
+	 * @param policy. AccessPolicy to delete.
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteAccessPolicy(AccessPolicy policy) throws IntegerException;
+
 	/**
-	 * @param authInfo
-	 * @return
+	 * Update/save the AuthInfo in the database.
+	 * 
+	 * @param authInfo. AuthInfo to update.
+	 * @return AuthInfo. The updated AuthInfo
+	 * 
 	 * @throws IntegerException
 	 */
 	AuthInfo updateAuthInfo(AuthInfo authInfo) throws IntegerException;
+
 	/**
-	 * @param location
-	 * @return
+	 * Update/save the Location in the database.
+	 * @param location. Location to be updated.
+	 * @return Location. The update Location.
+	 * 
 	 * @throws IntegerException
 	 */
 	Location updateLocation(Location location) throws IntegerException;
+
 	/**
-	 * @param id
+	 * Delete the Location with the give ID.
+	 * 
+	 * @param id. ID of the Location to delete.
+	 * 
 	 * @throws IntegerException
 	 */
 	void deleteLocation(ID id) throws IntegerException;
+
 	/**
-	 * @param role
-	 * @return
+	 * Update/save the Role in the database.
+	 * @param role. Role to be updated.
+	 * @return Role. The updated Role
 	 * @throws IntegerException
 	 */
 	Role updateRole(Role role) throws IntegerException;
-	
+
 }

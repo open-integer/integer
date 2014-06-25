@@ -42,10 +42,12 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the VerndorIdneitier. All
+ * queries will be done in this class. 
+ * 
  * @author David Taylor
  *
  */

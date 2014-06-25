@@ -36,6 +36,8 @@ package edu.harvard.integer.service.distribution;
 import javax.ejb.Local;
 
 /**
+ * @see StateManagerInterface
+ * 
  * @author David Taylor
  *
  */

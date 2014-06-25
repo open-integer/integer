@@ -52,10 +52,10 @@ import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the SNMPModuleHistory. All
+ * queries will be done in this class. 
+ * 
  * @author David Taylor
- *
- * All add, delete, modify, findXXX methods for the SNMPModuleHistory object are done
- * in this class. 
  */
 public class SNMPModuleHistoryDAO extends BaseDAO {
 

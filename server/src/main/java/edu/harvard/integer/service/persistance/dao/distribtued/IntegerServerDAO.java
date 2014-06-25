@@ -43,6 +43,10 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * 
+ * The DAO is responsible for persisting the IntegerServer. All
+ * queries will be done in this class. 
+ * 
  * @author David Taylor
  *
  */

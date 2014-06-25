@@ -41,8 +41,11 @@ import edu.harvard.integer.common.user.Location;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the Location. All queries will be
+ * done in this class.
+ * 
  * @author David Taylor
- *
+ * 
  */
 public class LocationDAO extends BaseDAO {
 

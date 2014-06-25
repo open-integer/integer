@@ -36,6 +36,8 @@ package edu.harvard.integer.service.yaml;
 import javax.ejb.Local;
 
 /**
+ * @see YamlManagerInterface
+ * 
  * @author David Taylor
  *
  */

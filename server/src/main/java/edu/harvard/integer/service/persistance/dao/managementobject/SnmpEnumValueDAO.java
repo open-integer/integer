@@ -38,10 +38,13 @@ import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SnmpEnumValue;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * 
+ * The DAO is responsible for persisting the SNMP. All
+ * queries will be done in this class. 
+ * 
  * @author David Taylor
  *
  */

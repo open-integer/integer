@@ -60,11 +60,11 @@ import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 
 /**
+ * 
+ * @see SelectionManagerInterface
+ * 
  * @author David Taylor
  * 
- *         A selection manager handles individual requests from users of the
- *         Integer system (as in the case of reporting) to create, delete,
- *         modify and show selections
  */
 @Stateless
 public class SelectionManager extends BaseManager implements
@@ -106,23 +106,23 @@ public class SelectionManager extends BaseManager implements
 		List<FilterNode> routing = new ArrayList<FilterNode>();
 
 		// TODO: remove once real data is available.
-//		 if (technologies == null || technologies.length == 0) {
-//		 nodes.addAll(getTechnologyTree());
-//		 }
+		// if (technologies == null || technologies.length == 0) {
+		// nodes.addAll(getTechnologyTree());
+		// }
 
 		if (technologies != null && technologies.length > 0)
-		for (FilterNode filterNode : findChildren(dao, technologies[0].getID())) {
+			for (FilterNode filterNode : findChildren(dao,
+					technologies[0].getID())) {
 
+				if ("hardware".equals(filterNode.getName())
+						|| "software".equals(filterNode.getName())
+						|| "physical connectivity".equals(filterNode.getName())
+						|| "data link protocols".equals(filterNode.getName()))
 
-			if ("hardware".equals(filterNode.getName())
-					|| "software".equals(filterNode.getName())
-					|| "physical connectivity".equals(filterNode.getName())
-					|| "data link protocols".equals(filterNode.getName()))
-
-				nodes.add(filterNode);
-			else
-				routing.add(filterNode);
-		}
+					nodes.add(filterNode);
+				else
+					routing.add(filterNode);
+			}
 
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
@@ -131,7 +131,7 @@ public class SelectionManager extends BaseManager implements
 		filter.setCategories(Arrays.asList(CategoryTypeEnum.values()));
 		filter.setCriticalities(Arrays.asList(CriticalityEnum.values()));
 		filter.setLinkTechnologies(routing);
-		
+
 		List<Filter> filters = new ArrayList<Filter>();
 		filters.add(filter);
 

@@ -39,16 +39,26 @@ import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * The discovery manager is used to discover the network devices. This will be
+ * used to start an instance of discovery with a DiscoveryRule that descibes the
+ * parameters of the discovery.
+ * 
  * @author David Taylor
- *
+ * 
  */
 public interface DiscoveryManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * Start a discovery with the given discovery rule.
+	 * 
 	 * @param rule
-	 * @return
+	 *            . This Discovery Rule defines the scope and device types to
+	 *            discover
+	 *            
+	 * @return DiscoveryId that identifies this instance of a discovery.
+	 * 
 	 * @throws IntegerException
 	 */
-	public DiscoveryId startDiscovery(DiscoveryRule rule) throws IntegerException;
+	public DiscoveryId startDiscovery(DiscoveryRule rule)
+			throws IntegerException;
 }

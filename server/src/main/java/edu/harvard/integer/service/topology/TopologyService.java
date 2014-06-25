@@ -40,16 +40,19 @@ import javax.ejb.Startup;
 import edu.harvard.integer.service.BaseService;
 
 /**
+ * @see TopologyServiceInterface
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Singleton
 @Startup
-public class TopologyService extends BaseService implements TopologyServiceInterface {
+public class TopologyService extends BaseService implements
+		TopologyServiceInterface {
 
 	@Init
 	public void startService() {
-		
+
 	}
-	
+
 }

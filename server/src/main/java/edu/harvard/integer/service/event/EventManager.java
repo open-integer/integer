@@ -48,9 +48,7 @@ import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventD
 import edu.harvard.integer.service.persistance.dao.event.EventDAO;
 
 /**
- * The event manager is used to get/save/update the events created by the
- * services in Integer or external devices sending alerts to the Integer serv.er
- * 
+ * @see EventManagerInterface
  * @author David Taylor
  * 
  */

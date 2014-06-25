@@ -68,6 +68,11 @@ import edu.harvard.integer.service.yaml.YamlManagerRemoteInterface;
 
 
 /**
+ * Enumeration describing each of the managers.
+ * <p>
+ * This enumeration is used when asking the distribution manager
+ * for an instance of of a mangers 
+ * 
  * @author David Taylor
  *
  */

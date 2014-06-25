@@ -44,13 +44,11 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.service.BaseService;
 
-
 /**
+ * @see MibServiceInterface
+ * 
  * @author David Taylor
- * 
- * 
- *         Used to load the default set of MIB's into the database on startup.
- *         The list of MIB's is set in StringPropertyNames.MibList.
+ *  
  */
 @Singleton
 @Startup
@@ -58,33 +56,35 @@ public class MibService extends BaseService {
 
 	@Inject
 	Logger logger;
-	
+
 	@Inject
 	SnmpManagerInterface snmpManager;
-	
+
 	/**
 	 * 
 	 */
 	public MibService() {
-		
+
 	}
 
 	/**
-	 * Load the default set of MIB's. The list of MIB's can be changed by updating the StringPropertyNames.BaseMibList property.
+	 * Load the default set of MIB's. The list of MIB's can be changed by
+	 * updating the StringPropertyNames.BaseMibList property.
 	 */
 	@PostConstruct
 	public void initialize() {
-		
+
 		IntegerProperties props = null;
 		try {
 			props = IntegerProperties.getInstance();
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
-			logger.error("Error loading MIBS! Could not get MIB dir path " + e.toString());
-			return;	
+			logger.error("Error loading MIBS! Could not get MIB dir path "
+					+ e.toString());
+			return;
 		}
-		
+
 	}
-	
+
 }

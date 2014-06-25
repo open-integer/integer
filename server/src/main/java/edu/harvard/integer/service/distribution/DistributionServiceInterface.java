@@ -41,6 +41,13 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
+ * The distribution service is responsible for where all the services and managers
+ * are running as well as the state of each of the services, managers and servers 
+ * in the integer system. 
+ * <p>
+ * The distribution service will run on each server so that all services and managers
+ * on each server can find a local or remote manager or service.
+
  * @author David Taylor
  *
  */
@@ -48,19 +55,16 @@ import edu.harvard.integer.service.BaseServiceInterface;
 public interface DistributionServiceInterface extends BaseServiceInterface {
 
 	/**
-	 * @return
-	 * @throws IntegerException
-	 */
-	DistributedManager[] getKnownManagers() throws IntegerException;
-
-	/**
-	 * @return
+	 * Get the list of managers in the system.
+	 * @return List of DistributedManger's.
 	 * @throws IntegerException
 	 */
 	DistributedManager[] getManagers() throws IntegerException;
 
 	/**
-	 * @return
+	 * Get the list of services in the system.
+	 * @return List of DistribtuedService's 
+	 * 
 	 * @throws IntegerException
 	 */
 	DistributedService[] getServices() throws IntegerException;

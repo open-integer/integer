@@ -39,6 +39,11 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * 
+ * The event manager is used to get/save/update the events created by the
+ * services in Integer or external devices sending alerts to the Integer serv.er
+ * 
+ * 
  * @author David Taylor
  *
  */
@@ -53,7 +58,9 @@ public interface EventManagerInterface extends BaseManagerInterface {
 	Event[] getAllEvents() throws IntegerException;
 
 	/**
-	 * @return
+	 * Get a list of all discovery events.
+	 * @return List of DiscoveryEvents.
+	 * 
 	 * @throws IntegerException
 	 */
 	DiscoveryCompleteEvent[] getAllDiscoveryEvents() throws IntegerException;
@@ -61,7 +68,7 @@ public interface EventManagerInterface extends BaseManagerInterface {
 	/**
 	 * Save one event into the database. 
 	 * @param event
-	 * @return
+	 * @return the saved event. This will have the identifier set.
 	 * @throws IntegerException
 	 */
 	Event saveEvent(Event event) throws IntegerException;

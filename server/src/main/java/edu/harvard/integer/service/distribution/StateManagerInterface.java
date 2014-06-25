@@ -33,16 +33,17 @@
 
 package edu.harvard.integer.service.distribution;
 
-import edu.harvard.integer.common.distribution.DistributedManager;
-import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * 
+ * This manager is responsible for managing the state of each manager 
+ * in the system.
+ * 
  * @author David Taylor
  *
  */
 public interface StateManagerInterface extends BaseManagerInterface {
 
-	public DistributedManager[] getConfiguredManagers() throws IntegerException;
 	
 }

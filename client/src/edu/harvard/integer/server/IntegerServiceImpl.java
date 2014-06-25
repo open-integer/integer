@@ -15,12 +15,16 @@ import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.event.Event;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.Credential;
+import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
@@ -147,6 +151,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			System.out.println("Enter getTopLevelElements: serviceElementService: " + serviceElementService);
 			
 			serviceElements = serviceElementService.getTopLevelServiceElements();
+			
+			System.out.println("Return " + serviceElements.length + " Top level services elememts");
 		} 
 		catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -242,6 +248,12 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		credential.setWriteCommunity("integerrw");;
 		
 		credentials.add(credential);
+		
+		credential = new SnmpV2cCredentail();
+		credential.setReadCommunity("recorded/solaris-system");
+		credential.setWriteCommunity("integerrw");;
+		credentials.add(credential);
+		
 		seed.setCredentials(credentials);
 		
 		List<IpTopologySeed> topologySeeds = new ArrayList<IpTopologySeed>();
@@ -292,6 +304,29 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		try {
 			SelectionManagerInterface selectionService = DistributionManager.getManager(ManagerTypeEnum.SelectionManager);
 			selection = selectionService.getBlankSelection();
+			
+			StringBuffer b = new StringBuffer();
+			for (Filter filter : selection.getFilters()) {
+				
+				b.append("Technologies: \n");
+				for (FilterNode filterNode : filter.getTechnologies()) {
+					b.append("\tTechnology: ").append(filterNode.getName()).append('\n');
+				}
+				b.append("Link:\n");
+				for (FilterNode filterNode : filter.getLinkTechnologies()) {
+					b.append("\tTechnology: ").append(filterNode.getName()).append('\n');
+				}
+
+				b.append("Categories: \n");
+				for (CategoryTypeEnum category : filter.getCategories()) 
+					b.append("\tCategory: ").append(category).append('\n');
+				
+				b.append("Criticaliy\n");
+				for (CriticalityEnum criticatlity :  filter.getCriticalities() )
+					b.append("Criticatly: ").append(criticatlity).append('\n');
+			}
+			
+			System.out.println("Return Blank selection " + b.toString());
 		}
 		catch (IntegerException e) {
 			e.printStackTrace();

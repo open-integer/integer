@@ -1,3 +1,19 @@
+
+drop table if exists DataPreLoadFile;
+
+CREATE TABLE `DataPreLoadFile` (
+  `identifier` bigint(20) NOT NULL AUTO_INCREMENT,
+  `classType` varchar(255) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `dataFile` varchar(255) DEFAULT NULL,
+  `errorMessage` varchar(255) DEFAULT NULL,
+  `fileType` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `timeLoaded` datetime DEFAULT NULL,
+  `timeToLoad` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 INSERT INTO `DataPreLoadFile` (classType, `name`, `dataFile`, `fileType`, `status`, `timeLoaded`, `errorMessage`)
 VALUES
  	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'RFC1065-SMI', 'RFC1065-SMI', 'MIB', NULL, NULL, NULL),
@@ -46,4 +62,5 @@ VALUES
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'EntityMib Technology', 'entity_mib/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'EntityMib ServiceElementType', 'entity_mib/serviceElementType.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/HostResourcesContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
-	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/ParentChildContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL);
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/ParentChildContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Table Index', 'CreateIndex.sql', 'SQL', NULL, NULL, NULL);

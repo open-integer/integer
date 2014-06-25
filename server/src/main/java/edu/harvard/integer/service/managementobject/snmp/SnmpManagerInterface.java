@@ -44,6 +44,9 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * The SNMP Manager is responsible for importing MIB's into the system. Getting
+ * the import MIBs or SNMP OIDs from the database.
+ * 
  * @author David Taylor
  * 
  */
@@ -108,8 +111,10 @@ public interface SnmpManagerInterface extends BaseManagerInterface {
 	SNMP updateSNMP(SNMP oid) throws IntegerException;
 
 	/**
-	 * @param vendor
-	 * @param mibImport
+	 * Import a parsed Vendor product MIB.
+	 * 
+	 * @param vendor. The vendor the product MIB is for. Ex Cisco.
+	 * @param mibImport The imported mib
 	 * @return
 	 * @throws IntegerException
 	 */
@@ -117,8 +122,10 @@ public interface SnmpManagerInterface extends BaseManagerInterface {
 			throws IntegerException;
 
 	/**
-	 * @param string
-	 * @return
+	 * Get the information about an imported MIB.
+	 * 
+	 * @param string. The name of the MIB module this MIB contains.
+	 * @return. The MIBInfo for this MIB module.
 	 * @throws IntegerException
 	 */
 	MIBInfo getMIBInfoByName(String string) throws IntegerException;

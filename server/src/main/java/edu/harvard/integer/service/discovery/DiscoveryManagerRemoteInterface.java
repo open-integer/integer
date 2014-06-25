@@ -36,6 +36,10 @@ package edu.harvard.integer.service.discovery;
 import javax.ejb.Remote;
 
 /**
+ * Remote interface to the DiscoeryManager. This is the interface that is 
+ * returned to a caller when the caller is running on a seprate server from
+ * the server the caller is on. 
+ * 
  * @author David Taylor
  *
  */

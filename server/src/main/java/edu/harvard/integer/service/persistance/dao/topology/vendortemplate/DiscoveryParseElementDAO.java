@@ -41,6 +41,9 @@ import edu.harvard.integer.common.discovery.DiscoveryParseElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ *  The DAO is responsible for persisting the DiscoveryParseElement. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
  */

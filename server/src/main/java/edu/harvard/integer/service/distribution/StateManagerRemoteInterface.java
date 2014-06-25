@@ -36,6 +36,9 @@ package edu.harvard.integer.service.distribution;
 import javax.ejb.Remote;
 
 /**
+ * 
+ * @see StateManagerInterface
+ * 
  * @author David Taylor
  *
  */

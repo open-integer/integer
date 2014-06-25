@@ -63,9 +63,11 @@ import edu.harvard.integer.service.persistance.dao.topology.SnmpServiceElementTy
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 
 /**
+ * 
+ * @see ManagementObjectCapabilityManagerInterface
+ * 
  * @author David Taylor
  * 
- * Manages the associations of Capabilities with specific management objects.
  * 
  */
 @Stateless
@@ -87,6 +89,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#updateServiceElementType(edu.harvard.integer.common.topology.ServiceElementType)
+	 */
 	@Override
 	public ServiceElementType updateServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
@@ -105,6 +111,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return serviceElementType;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#deleteServiceElementType(edu.harvard.integer.common.topology.ServiceElementType)
+	 */
 	@Override
 	public void deleteServiceElementType(ServiceElementType serviceElementType) throws IntegerException {
 	
@@ -113,6 +123,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		dbm.getServiceElementTypeDAO().delete(serviceElementType);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#deleteServiceElementType(edu.harvard.integer.common.ID)
+	 */
 	@Override
 	public void deleteServiceElementType(ID serviceElementTypeId) throws IntegerException {
 		
@@ -121,7 +135,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		dbm.getServiceElementTypeDAO().delete(serviceElementTypeId);
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getAllServiceElementTypes()
+	 */
 	@Override
 	public ServiceElementType[] getAllServiceElementTypes() throws IntegerException {
 		
@@ -192,8 +209,9 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return dbCapability;
 	}
 
-	/**
-	 * @param ID. The ID of capability that the management objects are for.
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getManagemntObjectsForCapability(edu.harvard.integer.common.ID)
 	 */
 	public List<ServiceElementManagementObject> getManagemntObjectsForCapability(ID id) throws IntegerException {
 		
@@ -420,6 +438,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return managementObject;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#deleteManagementObject(edu.harvard.integer.common.ID)
+	 */
 	@Override
 	public void deleteManagementObject(ID id) throws IntegerException {
 		ServiceElementManagementObjectDAO dao = dbm.getServiceElementManagementObjectDAO();

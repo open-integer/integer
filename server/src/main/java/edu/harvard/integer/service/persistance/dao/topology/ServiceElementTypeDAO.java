@@ -56,10 +56,11 @@ import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ * The DAO is responsible for persisting the ServiceElementType. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
- * All add, delete, modify, findXXX methods for the ServiceElementType object are done
- * in this class. 
  */
 public class ServiceElementTypeDAO extends BaseDAO {
 

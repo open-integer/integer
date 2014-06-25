@@ -36,6 +36,8 @@ package edu.harvard.integer.service.event;
 import javax.ejb.Local;
 
 /**
+ * @see EventManagerInterface
+ * 
  * @author David Taylor
  *
  */

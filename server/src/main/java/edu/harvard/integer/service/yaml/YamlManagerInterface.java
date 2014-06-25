@@ -37,6 +37,8 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
+ * The YamlManager is used to import a YAML file. The current YAML file types
+ * supported are Technology Tree, VendorContianment and VendorIdentifier
  * @author David Taylor
  *
  */

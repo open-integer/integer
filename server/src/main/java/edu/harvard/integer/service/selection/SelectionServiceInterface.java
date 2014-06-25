@@ -36,6 +36,8 @@ package edu.harvard.integer.service.selection;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
+ * @see SelectionManager
+ * 
  * @author David Taylor
  *
  */

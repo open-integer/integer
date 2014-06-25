@@ -34,10 +34,10 @@
 package edu.harvard.integer.service;
 
 /**
+ * Interface that all managers must implement.
+ * 
  * @author David Taylor
  * 
- *         Interface that all managers must implement.
- *         
  */
 public interface BaseManagerInterface {
 

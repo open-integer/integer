@@ -36,6 +36,8 @@ package edu.harvard.integer.service.selection;
 import javax.ejb.Remote;
 
 /**
+ * @see SelectionManagerInterface
+ * 
  * @author David Taylor
  *
  */

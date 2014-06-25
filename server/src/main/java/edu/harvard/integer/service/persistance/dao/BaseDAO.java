@@ -61,10 +61,12 @@ import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.util.LoggerUtil;
 
 /**
+ * 
+ * Base object for all DAO classes. The common update, modify, delete, findByXXX
+ * methods will be defined here.
+ * 
  * @author David Taylor
  * 
- *         Base object for all DAO classes. The common update, modify, delete,
- *         findByXXX methods will be defined here.
  * 
  */
 public class BaseDAO {
@@ -118,7 +120,7 @@ public class BaseDAO {
 
 		if (entity == null)
 			return null;
-		
+
 		try {
 
 			preSave(entity);
@@ -130,17 +132,18 @@ public class BaseDAO {
 
 			if (getLogger().isDebugEnabled())
 				getLogger().debug(
-					"Added " + entity.getName() + " ID: "
-							+ entity.getIdentifier());
+						"Added " + entity.getName() + " ID: "
+								+ entity.getIdentifier());
 
 		} catch (EntityExistsException ee) {
 			throw new IntegerException(ee,
 					DatabaseErrorCodes.EntityAlreadyExists);
 		} catch (Throwable e) {
-			throw new IntegerException(e, DatabaseErrorCodes.ErrorSavingData, 
-					new DisplayableInterface[] { new SQLStatement("update " + entity.getID().toDebugString()) });
+			throw new IntegerException(e, DatabaseErrorCodes.ErrorSavingData,
+					new DisplayableInterface[] { new SQLStatement("update "
+							+ entity.getID().toDebugString()) });
 		}
-		
+
 		return entity;
 	}
 
@@ -182,7 +185,7 @@ public class BaseDAO {
 		else
 			return null;
 	}
-	
+
 	/**
 	 * Find the entity in the database by the specified field.
 	 * 
@@ -191,8 +194,8 @@ public class BaseDAO {
 	 * @param clazz
 	 * @return
 	 */
-	protected <T extends BaseEntity> T findByStringFieldIngnoreCase(String fieldValue,
-			String fieldName, Class<T> clazz) {
+	protected <T extends BaseEntity> T findByStringFieldIngnoreCase(
+			String fieldValue, String fieldName, Class<T> clazz) {
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
 
@@ -203,10 +206,10 @@ public class BaseDAO {
 
 		ParameterExpression<String> oid = criteriaBuilder
 				.parameter(String.class);
-		
-		
+
 		query.select(from).where(
-				criteriaBuilder.equal(from.get(fieldName.toLowerCase()), criteriaBuilder.lower(oid)));
+				criteriaBuilder.equal(from.get(fieldName.toLowerCase()),
+						criteriaBuilder.lower(oid)));
 
 		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
 		typeQuery.setParameter(oid, fieldValue);
@@ -218,7 +221,7 @@ public class BaseDAO {
 		else
 			return null;
 	}
-	
+
 	/**
 	 * Find the entity in the database by the specified field.
 	 * 
@@ -252,7 +255,7 @@ public class BaseDAO {
 		else
 			return null;
 	}
-	
+
 	/**
 	 * Find the entity in the database by the specified field.
 	 * 
@@ -272,8 +275,7 @@ public class BaseDAO {
 		Root<T> from = query.from(clazz);
 		query.select(from);
 
-		ParameterExpression<Long> oid = criteriaBuilder
-				.parameter(Long.class);
+		ParameterExpression<Long> oid = criteriaBuilder.parameter(Long.class);
 		query.select(from).where(
 				criteriaBuilder.equal(from.get(fieldName), oid));
 
@@ -281,7 +283,6 @@ public class BaseDAO {
 		typeQuery.setParameter(oid, fieldValue);
 
 		List<T> resultList = typeQuery.getResultList();
-
 
 		if (resultList != null) {
 			T[] objs = (T[]) Array.newInstance(clazz, resultList.size());
@@ -300,7 +301,7 @@ public class BaseDAO {
 
 			return objs;
 		}
-		
+
 		return null;
 	}
 
@@ -361,22 +362,21 @@ public class BaseDAO {
 		Root<T> from = query.from(clazz);
 		query.select(from);
 
-		ParameterExpression<ID> idParam = criteriaBuilder
-				.parameter(ID.class);
+		ParameterExpression<ID> idParam = criteriaBuilder.parameter(ID.class);
 		query.select(from).where(
 				criteriaBuilder.equal(from.get(fieldName), idParam));
 
 		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
 		typeQuery.setParameter(idParam, fieldValue);
 
-		
 		List<T> resultList = typeQuery.getResultList();
 
 		return resultList.toArray((T[]) Array.newInstance(clazz, 0));
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected <T extends BaseEntity> T[] findByNullField(String fieldName, Class<T> clazz) throws IntegerException {
+	protected <T extends BaseEntity> T[] findByNullField(String fieldName,
+			Class<T> clazz) throws IntegerException {
 
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
@@ -387,14 +387,14 @@ public class BaseDAO {
 		query.select(from);
 
 		query.select(from).where(criteriaBuilder.isNull(from.get(fieldName)));
-				
+
 		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
-		
+
 		List<T> resultList = typeQuery.getResultList();
-		
+
 		return (T[]) resultList.toArray((T[]) Array.newInstance(clazz, 0));
 	}
-	
+
 	/**
 	 * Find the given entity by the specified ID.
 	 * 
@@ -407,12 +407,14 @@ public class BaseDAO {
 
 		Class<? extends BaseEntity> clazz = null;
 		try {
-			clazz = (Class<? extends BaseEntity>) Class.forName(id.getIdType().getClassType());
+			clazz = (Class<? extends BaseEntity>) Class.forName(id.getIdType()
+					.getClassType());
 		} catch (ClassNotFoundException e) {
-			logger.error("Error creating class from " + id.getIdType().getClassType());
+			logger.error("Error creating class from "
+					+ id.getIdType().getClassType());
 			e.printStackTrace();
 		}
-		
+
 		T entity = (T) entityManger.find(clazz, id.getIdentifier());
 
 		return entity;
@@ -420,49 +422,54 @@ public class BaseDAO {
 
 	/**
 	 * Find a list of objects by the given list of identifiers.
+	 * 
 	 * @param ids
 	 * @param clazz
 	 * @return
 	 * @throws IntegerException
 	 */
 	@SuppressWarnings("unchecked")
-	protected <T extends BaseEntity> T[] findByIds(ID[] ids, Class<T> clazz) throws IntegerException {
+	protected <T extends BaseEntity> T[] findByIds(ID[] ids, Class<T> clazz)
+			throws IntegerException {
 
 		List<Long> identifers = new ArrayList<Long>();
 		for (ID id : ids) {
 			identifers.add(id.getIdentifier());
 		}
-		
+
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
 
 		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
 
 		Root<T> from = query.from(clazz);
-	
+
 		Predicate[] predicates = new Predicate[ids.length];
-		List<ParameterExpression<Long>> paramExpressions = new ArrayList<ParameterExpression<Long>>(); 
-		
+		List<ParameterExpression<Long>> paramExpressions = new ArrayList<ParameterExpression<Long>>();
+
 		for (int i = 0; i < ids.length; i++) {
-			ParameterExpression<Long> idParam = criteriaBuilder.parameter(Long.class);
+			ParameterExpression<Long> idParam = criteriaBuilder
+					.parameter(Long.class);
 			paramExpressions.add(idParam);
-			
+
 			criteriaBuilder.equal(from.get("identifier"), idParam);
-			 
-			predicates[i] = criteriaBuilder.equal(from.get("identifier"), idParam);
+
+			predicates[i] = criteriaBuilder.equal(from.get("identifier"),
+					idParam);
 		}
-		
+
 		query.select(from).where(criteriaBuilder.or(predicates));
-		
+
 		TypedQuery<T> typeQuery = getEntityManager().createQuery(query);
-		for (int i = 0; i < ids.length; i++) 
-			typeQuery.setParameter(paramExpressions.get(i), ids[i].getIdentifier());
-		
+		for (int i = 0; i < ids.length; i++)
+			typeQuery.setParameter(paramExpressions.get(i),
+					ids[i].getIdentifier());
+
 		List<T> resultList = typeQuery.getResultList();
 
 		return resultList.toArray((T[]) Array.newInstance(clazz, 0));
 	}
-	
+
 	/**
 	 * Update a list of entities of the type of this DAO. ex User
 	 * 
@@ -475,7 +482,7 @@ public class BaseDAO {
 
 		if (entities == null)
 			return null;
-		
+
 		for (T baseEntity : entities) {
 			update(baseEntity);
 		}
@@ -576,9 +583,8 @@ public class BaseDAO {
 					DatabaseErrorCodes.UnableToCreateCleanCopyIllegalAccess);
 		}
 
-		
 		Long identifier = null;
-		
+
 		if (originialInstance instanceof BaseEntity)
 			identifier = ((BaseEntity) originialInstance).getIdentifier();
 
@@ -609,8 +615,8 @@ public class BaseDAO {
 
 		// Don't want to overwrite the identifier.
 		Long identifier = null;
-		
-		if (toInstance instanceof BaseEntity) 
+
+		if (toInstance instanceof BaseEntity)
 			identifier = ((BaseEntity) toInstance).getIdentifier();
 
 		for (Method f : fromInstance.getClass().getMethods()) {
@@ -640,8 +646,11 @@ public class BaseDAO {
 					f.invoke(toInstance, value);
 
 					if (logger.isDebugEnabled())
-						logger.debug(LoggerUtil.filterLog(toInstance.getClass().getSimpleName() + " "
-								+ ((BaseEntity) toInstance).getID() + " "
+						logger.debug(LoggerUtil.filterLog(toInstance.getClass()
+								.getSimpleName()
+								+ " "
+								+ ((BaseEntity) toInstance).getID()
+								+ " "
 								+ f.getName() + "(" + value + ")"));
 
 				} catch (NoSuchMethodException e) {
@@ -676,8 +685,7 @@ public class BaseDAO {
 		return toInstance;
 	}
 
-	public <T extends Object> T[] copyArray(T[] values)
-			throws IntegerException {
+	public <T extends Object> T[] copyArray(T[] values) throws IntegerException {
 
 		if (values == null)
 			return values;
@@ -706,4 +714,17 @@ public class BaseDAO {
 
 	}
 
+	protected int executeUpdate(String sqlCmd) throws IntegerException {
+
+		try {
+			return getEntityManager().createNativeQuery(sqlCmd).executeUpdate();
+		} catch (Exception e) {
+			throw new IntegerException(e, DatabaseErrorCodes.ErrorExecutingSQL,
+					new DisplayableInterface[] { new SQLStatement(sqlCmd) });
+		}
+	}
+
+	public void createIndex() throws IntegerException {
+
+	}
 }

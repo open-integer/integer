@@ -38,10 +38,12 @@ import javax.ejb.Local;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 /**
+ *  
+ * Used to load the default set of MIB's into the database on startup. The list
+ * of MIB's is set in StringPropertyNames.MibList.
+ * 
  * @author David Taylor
  * 
- *         Used to load the default set of MIB's into the database on startup.
- *         The list of MIB's is set in StringPropertyNames.MibList.
  */
 @Local
 public interface MibServiceInterface extends BaseServiceInterface {

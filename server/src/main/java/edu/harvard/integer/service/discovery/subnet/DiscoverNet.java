@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.service.discovery.subnet;
 
+import java.io.Serializable;
+
 import org.apache.commons.net.util.SubnetUtils;
 
 /**
@@ -42,7 +44,12 @@ import org.apache.commons.net.util.SubnetUtils;
  *
  * @author dchan
  */
-public class DiscoverNet {
+public class DiscoverNet implements Serializable {
+
+	/**
+	 * Serial Version UID
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private SubnetUtils utils;
 	

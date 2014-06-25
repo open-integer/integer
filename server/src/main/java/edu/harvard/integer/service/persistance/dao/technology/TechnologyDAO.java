@@ -50,6 +50,9 @@ import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
+ *  The DAO is responsible for persisting the Technology. All
+ * queries will be done in this class. 
+ *
  * @author David Taylor
  *
  */

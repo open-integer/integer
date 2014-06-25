@@ -91,7 +91,7 @@ public class EntitySNMPInfo {
 	private EntitySNMPInfo() throws IntegerException {
 
 		ServiceElementDiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-		entityColumns = manager.getEntityMIBInfo();
+		entityColumns = manager.getEntityPhysicalTableOIDs();
 		
 		columnOids = new OID[entityColumns.size()];
 		for ( int i=0; i<entityColumns.size(); i++ ) {

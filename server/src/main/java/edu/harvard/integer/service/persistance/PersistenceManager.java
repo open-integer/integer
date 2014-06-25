@@ -90,47 +90,56 @@ import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
 import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
 import edu.harvard.integer.service.persistance.dao.user.RoleDAO;
 import edu.harvard.integer.service.persistance.dao.user.UserDAO;
+
 /**
+ * The PersistenceManager is responsible for creating DAO's. The DAO's returned
+ * may or may not be newly created. The DAO's should not store any local
+ * variables since the DAO can be reused.
+ * 
+ * Each DAO has its own get method. The method has the name of get<DAO name>.
+ * The DAOs all are named <ClassName>DAO. 
+ * 
  * @author David Taylor
  * 
  */
 @Stateless
-public class PersistenceManager extends BaseManager implements PersistenceManagerInterface {
-	
+public class PersistenceManager extends BaseManager implements
+		PersistenceManagerInterface {
+
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Inject
 	private Logger logger;
-		
 
 	@Override
 	public DataPreLoadFile[] getAllPreloads() throws IntegerException {
 		return getDataPreLoadFileDAO().findAll();
 	}
-	
-	public void addDataPreLoadFile(DataPreLoadFile file) throws IntegerException {
+
+	public void addDataPreLoadFile(DataPreLoadFile file)
+			throws IntegerException {
 		getDataPreLoadFileDAO().update(file);
 	}
-	
-	
+
 	/**
 	 * @param managerType
 	 */
 	public PersistenceManager() {
 		super(ManagerTypeEnum.PersistenceManager);
-		
+
 	}
+
 	/**
-	 * Get the SNMPModuleDAO. 
+	 * Get the SNMPModuleDAO.
 	 * 
-	 * @return SNMPModuleDAO. 
+	 * @return SNMPModuleDAO.
 	 */
 	@Override
 	public SNMPModuleDAO getSNMPModuleDAO() {
 		return new SNMPModuleDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the SNMPDAO.
 	 * 
@@ -140,7 +149,7 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	public SNMPDAO getSNMPDAO() {
 		return new SNMPDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the SNMPIndexDAO.
 	 * 
@@ -150,7 +159,7 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	public SNMPIndexDAO getSNMPIndexDAO() {
 		return new SNMPIndexDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the MIBInfoDAO.
 	 * 
@@ -160,7 +169,7 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	public MIBInfoDAO getMIBInfoDAO() {
 		return new MIBInfoDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the UserDAO
 	 * 
@@ -170,7 +179,7 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	public UserDAO getUserDAO() {
 		return new UserDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the ServiceElementTypeDAO
 	 * 
@@ -180,7 +189,7 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	public ServiceElementTypeDAO getServiceElementTypeDAO() {
 		return new ServiceElementTypeDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the CapabilityDAO
 	 * 
@@ -198,10 +207,10 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	 */
 	@Override
 	public SNMPModuleHistoryDAO getSNMPModuleHistoryDAO() {
-		
+
 		return new SNMPModuleHistoryDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the ServiceElementManagementObjectDAO
 	 * 
@@ -211,230 +220,239 @@ public class PersistenceManager extends BaseManager implements PersistenceManage
 	public ServiceElementManagementObjectDAO getServiceElementManagementObjectDAO() {
 		return new ServiceElementManagementObjectDAO(em, logger);
 	}
-	
+
 	/**
 	 * get the ServiceElementDAO
 	 * 
-	 * @return ServiceElementDAO. The DAO is initialized with the persistence manager and logger.
+	 * @return ServiceElementDAO. The DAO is initialized with the persistence
+	 *         manager and logger.
 	 */
 	@Override
 	public ServiceElementDAO getServiceElementDAO() {
 		return new ServiceElementDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the ServiceElementProtocolInstanceIdentifierDAO
 	 * 
-	 * @return ServiceElementProtocolInstanceIdentifierDAO. The DAO is initialized with the persistence manager and logger.
+	 * @return ServiceElementProtocolInstanceIdentifierDAO. The DAO is
+	 *         initialized with the persistence manager and logger.
 	 */
 	@Override
 	public ServiceElementProtocolInstanceIdentifierDAO getServiceElementProtocolInstanceIdentifierDAO() {
 		return new ServiceElementProtocolInstanceIdentifierDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the AccessPolicyDAO()
+	 * 
 	 * @return AccessPolicyDAO();
 	 */
 	@Override
 	public AccessPolicyDAO getAccessPolicyDAO() {
 		return new AccessPolicyDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the AuthInfoDAO
+	 * 
 	 * @return AuthInfoDAO
 	 */
 	@Override
 	public AuthInfoDAO getAuthInfoDAO() {
 		return new AuthInfoDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the LocationDAO
+	 * 
 	 * @return LocationDAO
 	 */
 	@Override
 	public LocationDAO getLocationDAO() {
 		return new LocationDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the RoleDAO
+	 * 
 	 * @return RoleDAO
 	 */
 	@Override
 	public RoleDAO getRoleDAO() {
 		return new RoleDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the OrganizationDAO
+	 * 
 	 * @return OrganizationDAO
 	 */
 	@Override
 	public OrganizationDAO getOrganizationDAO() {
 		return new OrganizationDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the ConcactDAO
+	 * 
 	 * @return ContactDAO
 	 */
 	@Override
 	public ContactDAO getContactDAO() {
 		return new ContactDAO(em, logger);
 	}
-	
+
 	/**
 	 * Get the MechanismDAO
+	 * 
 	 * @return
 	 */
 	@Override
 	public MechanismDAO getMechanismDAO() {
 		return new MechanismDAO(em, logger);
 	}
-	
+
 	@Override
 	public DirectUserLoginDAO getDirectUserLoginDAO() {
 		return new DirectUserLoginDAO(em, logger);
 	}
-	
+
 	@Override
 	public SnmpVendorDiscoveryTemplateDAO getSnmpVendorDiscoveryTemplateDAO() {
 		return new SnmpVendorDiscoveryTemplateDAO(em, logger);
 	}
-	
+
 	@Override
 	public VendorContainmentSelectorDAO getVendorContainmentSelectorDAO() {
 		return new VendorContainmentSelectorDAO(em, logger);
 	}
-	
+
 	@Override
 	public SnmpContainmentDAO getSnmpContainmentDAO() {
 		return new SnmpContainmentDAO(em, logger);
 	}
-	
+
 	@Override
 	public SnmpLevelOIDDAO getSnmpLevelOIDDAO() {
 		return new SnmpLevelOIDDAO(em, logger);
 	}
-	
+
 	@Override
 	public DiscoveryParseStringDAO getDiscoveryParseStringDAO() {
 		return new DiscoveryParseStringDAO(em, logger);
 	}
-	
+
 	@Override
 	public DiscoveryParseElementDAO getDiscoveryParseElementDAO() {
 		return new DiscoveryParseElementDAO(em, logger);
 	}
-	
+
 	@Override
 	public VendorIdentifierDAO getVendorIdentifierDAO() {
 		return new VendorIdentifierDAO(em, logger);
 	}
-	
+
 	@Override
 	public SnmpRelationshipDAO getSnmpSnmpRelationshipDAO() {
 		return new SnmpRelationshipDAO(em, logger);
 	}
-	
+
 	@Override
 	public ManagementObjectValueDAO getManagementObjectValueDAO() {
 		return new ManagementObjectValueDAO(em, logger);
 	}
-	
+
 	@Override
 	public SnmpServiceElementTypeDiscriminatorValueDAO getSnmpServiceElementTypeDiscriminatorValueDAO() {
 		return new SnmpServiceElementTypeDiscriminatorValueDAO(em, logger);
 	}
-	
+
 	@Override
 	public ApplicabilityDAO getApplicabilityDAO() {
 		return new ApplicabilityDAO(em, logger);
 	}
-	
+
 	@Override
 	public SnmpServiceElementTypeOverrideDAO getSnmpServiceElementTypeOverrideDAO() {
 		return new SnmpServiceElementTypeOverrideDAO(em, logger);
 	}
-	
+
 	@Override
 	public DistributedManagerDAO getDistributedManagerDAO() {
 		return new DistributedManagerDAO(em, logger);
 	}
-	
+
 	@Override
 	public DistributedServiceDAO getDistributedServiceDAO() {
 		return new DistributedServiceDAO(em, logger);
 	}
-	
+
 	@Override
 	public IntegerServerDAO getIntegerServerDAO() {
 		return new IntegerServerDAO(em, logger);
 	}
-	
+
 	@Override
 	public SnmpSyntaxDAO getTextualConventionDAO() {
 		return new SnmpSyntaxDAO(em, logger);
 	}
-	
+
 	@Override
 	public SelectionDAO getSelectionDAO() {
 		return new SelectionDAO(em, logger);
 	}
-	
+
 	@Override
 	public FilterDAO getFilterDAO() {
 		return new FilterDAO(em, logger);
 	}
-	
+
 	@Override
 	public ViewDAO getViewDAO() {
 		return new ViewDAO(em, logger);
 	}
-	
+
 	@Override
 	public LayerDAO getLayerDAO() {
 		return new LayerDAO(em, logger);
 	}
-	
+
 	@Override
 	public EventDAO getEventDAO() {
 		return new EventDAO(em, logger);
 	}
-	
+
 	@Override
 	public DiscoveryCompleteEventDAO getDiscoveryCompleteEventDAO() {
 		return new DiscoveryCompleteEventDAO(em, logger);
 	}
-	
+
 	@Override
 	public ServiceDAO getServiceDAO() {
 		return new ServiceDAO(em, logger);
 	}
-	
+
 	@Override
 	public TechnologyDAO getTechnologyDAO() {
 		return new TechnologyDAO(em, logger);
 	}
-	
+
 	@Override
 	public FilterNodeDAO getFilterNodeDAO() {
 		return new FilterNodeDAO(em, logger);
 	}
-	
+
 	@Override
 	public DataPreLoadFileDAO getDataPreLoadFileDAO() {
 		return new DataPreLoadFileDAO(em, logger);
 	}
-	
+
 	@Override
 	public SignatureDAO getSignatureDAO() {
 		return new SignatureDAO(em, logger);
 	}
-	
+
 	@Override
 	public SignatureValueOperatorDAO getSignatureValueOperatorDAO() {
 		return new SignatureValueOperatorDAO(em, logger);
