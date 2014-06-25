@@ -37,8 +37,7 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.TopoNetwork;
 
 /**
- * The Interface ElementDiscoverCB defines callback methods during discovery.
- * This interface can be applied to a subnet discover or discover a list network node.
+ * The Interface ElementDiscoverCB defines callback methods during discovery for each subnet.
  * 
  * Note the discover is also including a topology discover.
  * 
@@ -63,7 +62,7 @@ public interface ElementDiscoverCB <T extends ServiceElement> {
 	public void discoveredElement( T elm );
 	
 	/**
-	 * Use to notify for progress.
+	 * Use to notify for discovery progress.
 	 * @param msg
 	 */
 	public void progressNotification( String msg );

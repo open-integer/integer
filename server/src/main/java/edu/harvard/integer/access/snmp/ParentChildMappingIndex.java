@@ -35,34 +35,67 @@ package edu.harvard.integer.access.snmp;
 import edu.harvard.integer.common.discovery.RelationMappingTypeEnum;
 
 /**
- * @author dchan
+ * The Class ParentChildMappingIndex contains the instance OID information
+ * for parent and child containment relationship.
  *
+ * @author dchan
  */
 public class ParentChildMappingIndex {
 
+	/** The parent index. */
 	private final String parentIndex;
+	
+	/** The child index. */
 	private String childIndex;
+	
+	/** The mapping type. */
 	private final RelationMappingTypeEnum mappingType;
 	
 
+	/**
+	 * Instantiates a new parent child mapping index.
+	 *
+	 * @param parentIndex the parent index
+	 * @param type the type
+	 */
 	public ParentChildMappingIndex( String parentIndex, RelationMappingTypeEnum type ) {
 		
 		this.parentIndex = parentIndex;
 		this.mappingType = type;
 	}
 	
+	/**
+	 * Gets the child index.
+	 *
+	 * @return the child index
+	 */
 	public String getChildIndex() {
 		return childIndex;
 	}
 
+	/**
+	 * Sets the child index.
+	 *
+	 * @param childIndex the new child index
+	 */
 	public void setChildIndex(String childIndex) {
 		this.childIndex = childIndex;
 	}
 
+	/**
+	 * Gets the parent index.
+	 *
+	 * @return the parent index
+	 */
 	public String getParentIndex() {
 		return parentIndex;
 	}
 
+	/**
+	 * Gets the mapping type.
+	 *
+	 * @return the mapping type
+	 */
 	public RelationMappingTypeEnum getMappingType() {
 		return mappingType;
 	}

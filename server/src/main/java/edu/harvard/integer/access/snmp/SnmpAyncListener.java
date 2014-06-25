@@ -41,7 +41,7 @@ import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 
 /**
- * The listener interface for receiving snmpAync events.
+ * The listener interface for processing snmpAync events.
  * The class that is interested in processing a snmpAync
  * event implements this interface, and the object created
  * with that class is registered with a component using the
@@ -96,7 +96,7 @@ public abstract class SnmpAyncListener implements ResponseListener {
 	}
 	
 	/**
-	 * Application response. If error is not null, the response pdu is not valid.
+	 * Application response. the PDU contains valid data only when "error" is null
 	 *
 	 * @param pdu the pdu
 	 * @param error the error

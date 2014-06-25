@@ -1,4 +1,5 @@
 /*
+
  *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
@@ -57,10 +58,11 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
 
 /**
  * The Class NetworkDiscovery provides method for topology discovery. 
- * The first stage of the discovery is the service element discovery.
- * The second stage of the discovery is the topology discovery.
+ * The first stage of the discovery is the scanning subnet to find out any IP devices on subnet.
+ * The second stage of the discovery is the service element discovery.
+ * The third stage of the discovery is the topology discovery.
  * 
- *  The topology discovery is based L2, L3 and end host found in the first stage.
+ *  The topology discovery is based Layer2, Layer3 and end host found in the first stage.
  *  When the topology discovery is done, it should have connection information between IP nodes.
  * 
  * It manages 3 different pools for discovery.
@@ -80,21 +82,19 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
  	
 	
-	/** The l3 nodes. */
+	/** The layer3 nodes. */
 	private ConcurrentHashMap<String, DiscoverNode>  l3Nodes = new ConcurrentHashMap<>();
 	
-	/** The l2 nodes. */
+	/** The layer2 nodes. */
 	private ConcurrentHashMap<String, DiscoverNode> l2Nodes = new ConcurrentHashMap<>();
 	
-	/** The end nodes. */
+	/** The discover nodes. The key is the IPAddress on the discover node during discvoery.  */
 	private ConcurrentHashMap<String, DiscoverNode> endNodes = new ConcurrentHashMap<>();
 	
-	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask>  subnetTasks = new ConcurrentHashMap<>();
-	
 	/**
-     * Map to use to check if a device being discovered or not.
-     */
-    private ConcurrentHashMap<String, Boolean> discoveredIndicationMap = new ConcurrentHashMap<>();
+	 * Map to keep track of each subnet tasks
+	 */
+	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask>  subnetTasks = new ConcurrentHashMap<>();
     
 
 	/** The discover seed. */
@@ -133,7 +133,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	
 	
 	/**
-	 * Discover network. Each subnet has its own thread for discovery.
+	 * Discover network. Each subnet it will spawn a thread for discovery.
+	 * The subnet information is contained in each IpDiscoverySeed
 	 * @throws  
 	 */
 	@Override
@@ -213,7 +214,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 
 
 	/**
-	 * Discovered element. -- Be called after discovered each service element.
+	 * Discovered element. -- Be called after discovered each service element. It is used to 
+	 * indicate that discovery being finished.
 	 *
 	 * @param elm the discoverd element.
 	 */
@@ -280,7 +282,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	
 
 	/**
-	 * Checks if is stop discovery.
+	 * Checks if the discovery being stopped.
 	 *
 	 * @return true, if is stop discovery
 	 */
@@ -291,7 +293,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 
 
 	/**
-	 * Remove IP Address discovery from subnet.  
+	 * Remove IP Address discovery from subnet map. This method being called a IP device being done 
+	 * with discovery.  
 	 * 
 	 * @param ip
 	 * @param subnetid
@@ -299,6 +302,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	private void removeIpAddressFromSubnet( String ip, String subnetid, boolean elmComplete ) {
 		
 		if ( subnetid != null ) {
+			@SuppressWarnings("unchecked")
 			DiscoverSubnetAsyncTask<ElementAccess> subTask = subnetTasks.get(subnetid);
 			if ( subTask != null ) {
 				
@@ -352,21 +356,22 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	}
 
 
-
+	/**
+	 * Retrieve the top level of VB (Variable Bindings in System Group)
+	 * @return
+	 */
 	public List<VariableBinding> getTopLevelVBs() {
 		return topLevelVBs;
 	}
 
 
 
+	/*
+	 * Return the discovery id.
+	 */
 	public DiscoveryId getDiscoverId() {
 		return discoverId;
 	}
 
-   	
-	public ConcurrentHashMap<String, Boolean> getDiscoveredIndicationMap() {
-		return discoveredIndicationMap;
-	}
 
-	
 }

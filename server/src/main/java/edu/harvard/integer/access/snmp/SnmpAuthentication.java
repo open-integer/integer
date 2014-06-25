@@ -37,11 +37,18 @@ import org.snmp4j.mp.SnmpConstants;
 import edu.harvard.integer.access.Authentication;
 
 /**
- * @author dchan
+ * The Class SnmpAuthentication is the base class access control for SNMP access.
+ * It implements getProrityBySnmpVersion to defined discovery priority based on version.
  *
+ * @author dchan
  */
 public abstract class SnmpAuthentication implements Authentication, Comparable<SnmpAuthentication>{
 
+	/**
+	 * Gets the snmp version.
+	 *
+	 * @return the snmp version
+	 */
 	abstract public int getSnmpVersion();
 	
 	/**
@@ -50,27 +57,50 @@ public abstract class SnmpAuthentication implements Authentication, Comparable<S
 	private int timeOut = 5000;
 	
 	/**
-	 * SNMP try out.
+	 * SNMP try out count.
 	 */
 	private int tryCount = 1;
 	
 	
+	/**
+	 * Gets the time out.
+	 *
+	 * @return the time out
+	 */
 	public int getTimeOut() {
 		return timeOut;
 	}
 
+	/**
+	 * Sets the time out.
+	 *
+	 * @param timeOut the new time out
+	 */
 	public void setTimeOut(int timeOut) {
 		this.timeOut = timeOut;
 	}
 
+	/**
+	 * Gets the try count.
+	 *
+	 * @return the try count
+	 */
 	public int getTryCount() {
 		return tryCount;
 	}
 
+	/**
+	 * Sets the try count.
+	 *
+	 * @param tryCount the new try count
+	 */
 	public void setTryCount(int tryCount) {
 		this.tryCount = tryCount;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	@Override 
     public int compareTo(SnmpAuthentication o) {
 		
@@ -80,6 +110,14 @@ public abstract class SnmpAuthentication implements Authentication, Comparable<S
 		return p1 - p2;
     }
 	
+	
+	/**
+	 * Get priority based on snmp version. 
+	 * The highest priority is v2c, the sencond one is v3 and the third one it v1. 
+	 *
+	 * @param snmpVersion the snmp version
+	 * @return the prority by snmp version
+	 */
 	private int getProrityBySnmpVersion( int snmpVersion ) {
 		
 		switch (snmpVersion ) {

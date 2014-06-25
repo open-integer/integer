@@ -69,7 +69,7 @@ import edu.harvard.integer.common.util.DisplayableInterface;
 public class SnmpCollectionUtil {
  
 	/**
-	 * Creates the SNMP target used for SNMP4j.
+	 * Creates a SNMP4j target object.
 	 *
 	 * @param endPoint the end point
 	 * @return the abstract target
@@ -77,12 +77,18 @@ public class SnmpCollectionUtil {
 	 */
 	public static AbstractTarget createTarget( ElementEndPoint endPoint, boolean isRead ) throws IntegerException {
 		
+		/**
+		 * No target created when the access being blocked.
+		 */
 		if ( endPoint.isBlocking() ) {
 			
 			NetworkErrorCodes ner = NetworkErrorCodes.StopByRequest;
 			throw new IntegerException(null, ner);
 		}
 		
+		/**
+		 * If it is SNMPv2 and SNMPv1 access, create a CommunityTarget object.
+		 */
 		if ( endPoint.getAuth() instanceof CommunityAuth ) {
 			
 			CommunityTarget ct = createCommunityTarget((CommunityAuth) endPoint.getAuth(), 
@@ -93,6 +99,9 @@ public class SnmpCollectionUtil {
 		}
 		else if ( endPoint.getAuth() instanceof SnmpSecureAuth ) {
 			
+			/**
+			 * Create SecureTarget object if it is SNMPv3 access.
+			 */
 			SecureTarget st = createSecureTarget((SnmpSecureAuth) endPoint.getAuth(), endPoint.getIpAddress(), endPoint.getAccessPort());
 			st.setTimeout(((SnmpAuthentication)endPoint.getAuth()).getTimeOut());
 			st.setRetries(((SnmpAuthentication)endPoint.getAuth()).getTryCount());
@@ -103,7 +112,7 @@ public class SnmpCollectionUtil {
 	}
 	
 	/** 
-	 * Creates the community target.
+	 * Creates a community target which specified snmp version.
 	 *
 	 * @param access the access object containing community string information.
 	 * @param ip the ip of the element.
@@ -227,7 +236,7 @@ public class SnmpCollectionUtil {
  	
  	
  	/**
- 	 * Return readable oid from the SNMP table.
+ 	 * Return only readable OIDs from a SNMP table.
  	 * 
  	 * @param snmpTbl
  	 * @return
@@ -243,8 +252,6 @@ public class SnmpCollectionUtil {
  				oids.add(o);
  			}
  		}
- 		
- 		
  		return oids;
  	}
     

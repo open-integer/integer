@@ -44,8 +44,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 
 /**
  * 
- * The Class DiscoveryPolicy contains discovery configuration such as seed element
- * filters based on network etc.
+ * The Class DiscoveryPolicy contains discovery configuration for each subnet discovery.
  *
  * @author dchan
  */

@@ -40,8 +40,19 @@ package edu.harvard.integer.access.snmp;
  */
 public class MacIPInfo {
 
+	/*
+	 * Mac address.
+	 */
 	private final String macAddress;
+	
+	/**
+	 * IP address
+	 */
 	private final String ipAddress;
+	
+	/**
+	 * The interface index.
+	 */
 	private final int ifIndex;
 	
 	

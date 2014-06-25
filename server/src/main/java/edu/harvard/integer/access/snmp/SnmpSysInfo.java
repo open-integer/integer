@@ -36,26 +36,41 @@ import org.snmp4j.PDU;
 import org.snmp4j.smi.VariableBinding;
 
 /**
- * @author dchan
+ * The Class SnmpSysInfo contains the content of a SNMP system group information.
  *
+ * @author dchan
  */
 public class SnmpSysInfo {
 
+	/** The system description. */
 	private String sysDescr;
+	
+	/** The system object id. */
 	private String sysObjectID;
+	
+	/** The system contact. */
 	private String sysContact;
+	
+	/** The system name. */
 	private String sysName;
+	
+	/** The system location. */
 	private String sysLocation;
 	
+	/** The pdu which contains System group OID. */
 	private PDU pdu;
 	
 
+	/**
+	 * Instantiates a new snmp sys info.
+	 *
+	 * @param sysPdu the sys pdu
+	 */
 	public SnmpSysInfo( PDU sysPdu ) {
 		
 		for ( int i=0; i<sysPdu.size(); i++ ) {
-			VariableBinding vb = sysPdu.get(i);
-			System.out.println("VB OID *************************************************** " + vb.getOid().toString());
 			
+			VariableBinding vb = sysPdu.get(i);
 			if ( vb.getOid().toString().indexOf(CommonSnmpOids.sysContact) >= 0 ) {
 				sysContact = vb.getVariable().toString();
 			}
@@ -75,23 +90,57 @@ public class SnmpSysInfo {
 		this.pdu = sysPdu;
 	}
 	
+	/**
+	 * Gets the sys descr.
+	 *
+	 * @return the sys descr
+	 */
 	public String getSysDescr() {
 		return sysDescr;
 	}
+	
+	/**
+	 * Gets the sys object id.
+	 *
+	 * @return the sys object id
+	 */
 	public String getSysObjectID() {
 		return sysObjectID;
 	}
+	
+	/**
+	 * Gets the sys contact.
+	 *
+	 * @return the sys contact
+	 */
 	public String getSysContact() {
 		return sysContact;
 	}
+	
+	/**
+	 * Gets the sys name.
+	 *
+	 * @return the sys name
+	 */
 	public String getSysName() {
 		return sysName;
 	}
+	
+	/**
+	 * Gets the sys location.
+	 *
+	 * @return the sys location
+	 */
 	public String getSysLocation() {
 		return sysLocation;
 	}
 	
 	
+	/**
+	 * Gets the pdu.
+	 *
+	 * @return the pdu
+	 */
 	public PDU getPdu() {
 		return pdu;
 	}

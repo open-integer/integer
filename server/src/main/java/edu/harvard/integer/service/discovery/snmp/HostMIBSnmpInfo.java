@@ -32,9 +32,20 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
+import edu.harvard.integer.common.discovery.RelationMappingTypeEnum;
+import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
+import edu.harvard.integer.common.discovery.SnmpLevelOID;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.topology.CategoryTypeEnum;
+import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
@@ -45,75 +56,38 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
  */
 public class HostMIBSnmpInfo {
 
-	private static volatile HostMIBSnmpInfo hostSnmpInfo;
-	
-	private SNMPTable deviceTbl;
-	private SNMPTable processorTbl;
-	private SNMPTable networkTbl;
-	private SNMPTable diskTbl;
-	private SNMPTable swInstalledTbl;
-	private SNMPTable ifTbl;
-
-
-	/**
-	 * Gets the entity info instance.
-	 *
-	 * @return the entity info instance
-	 * @throws IntegerException the integer exception
-	 */
-	public static HostMIBSnmpInfo getInstance() throws IntegerException {
-
-		if (hostSnmpInfo == null) {
-			synchronized (HostMIBSnmpInfo.class) {
-				if (hostSnmpInfo == null) {
-					hostSnmpInfo = new HostMIBSnmpInfo();
-				}
-			}
-		}		
-		return hostSnmpInfo;
-	}
-	
-	
-	private HostMIBSnmpInfo() throws IntegerException {
+	public static SnmpContainmentRelation getContainmentRelationForPort() throws IntegerException {
 		
 		SnmpManagerInterface snmpMgr =  DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
-		deviceTbl = (SNMPTable) snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceEntry);
-		processorTbl = (SNMPTable) snmpMgr.getSNMPByOid(CommonSnmpOids.hrProcessorEntry);
-		networkTbl = (SNMPTable) snmpMgr.getSNMPByOid(CommonSnmpOids.hrNetworkEntry);
-		diskTbl = (SNMPTable) snmpMgr.getSNMPByOid(CommonSnmpOids.hrDiskStorageEntry);
-		swInstalledTbl = (SNMPTable) snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledEntry);
+		SnmpContainmentRelation relation = new SnmpContainmentRelation();
+		SnmpLevelOID levelOid = new SnmpLevelOID();
 		
-	}
-	
-	
-	public SNMPTable getDeviceTbl() {
-		return deviceTbl;
-	}
-
-
-	public SNMPTable getProcessorTbl() {
-		return processorTbl;
-	}
-
-
-	public SNMPTable getNetworkTbl() {
-		return networkTbl;
-	}
-
-
-	public SNMPTable getDiskTbl() {
-		return diskTbl;
-	}
-
-
-	public SNMPTable getSwInstalledTbl() {
-		return swInstalledTbl;
-	}
-
-
-	public SNMPAliasMapping getIfMapping() {
+		levelOid.setName("PortMappingLevel");
+        SNMP snmp = snmpMgr.getSNMPByName("ifEntry");
+		levelOid.setContextOID(snmp);
+		levelOid.setCategory(CategoryTypeEnum.port);
 		
-		SNMPAliasMapping mapping = new SNMPAliasMapping(deviceTbl, ifTbl, networkTbl);
-		return mapping;
+		if ( levelOid.getDisriminators() == null ) {
+			
+			List<SnmpServiceElementTypeDiscriminator> discList = new ArrayList<>();
+			levelOid.setDisriminators(discList);
+		}
+		
+		ServiceElementDiscoveryManagerInterface discMgr =  DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+		ServiceElementType set = discMgr.getServiceElementTypeByName("interface");
+		
+		SnmpServiceElementTypeDiscriminator std = new SnmpServiceElementTypeDiscriminator();
+		std.setServiceElementTypeId(set.getID());
+		
+		levelOid.getDisriminators().add(std);
+		SNMPTable networkTbl = (SNMPTable) snmpMgr.getSNMPByOid(CommonSnmpOids.hrNetworkEntry);
+		
+		relation.setMappingTable(networkTbl);
+		relation.setMappingType(RelationMappingTypeEnum.InstanceOnly);
+		
+		snmp = snmpMgr.getSNMPByName("hrNetworkIfIndex");
+		relation.setMappingOid(snmp);
+		
+	    return relation;
 	}
 }

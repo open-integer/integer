@@ -46,18 +46,21 @@ import org.snmp4j.util.TableEvent;
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
-import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
+ * The Class HostMibServiceElementDiscovery is used to discover host mib devices.
+ * The discovery is based on level containment structure within components.
+ * However the mapping from port to interface need to be more work.
+ *
  * @author dchan
- * 
  */
 public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 
@@ -70,7 +73,9 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 	private Map<Integer, String> ifIndexMap = new HashMap<Integer, String>();
 
 	/**
-	 * @throws IntegerException
+	 * Instantiates a new host mib service element discovery.
+	 *
+	 * @throws IntegerException the integer exception
 	 */
 	public HostMibServiceElementDiscovery() throws IntegerException {
 		super();
@@ -96,13 +101,9 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 		/*
 		 * Set up the if mapping table to create mapping for port if.
 		 */
-		SNMPAliasMapping aliasMapping = HostMIBSnmpInfo.getInstance().getIfMapping();
-
-		SNMPTable deviceTbl = aliasMapping.getOwnerTbl();
+		SnmpContainmentRelation relation = HostMIBSnmpInfo.getContainmentRelationForPort();
 		OID[] ifMap = new OID[1];
-		//ifMap[0] = new OID(deviceTbl.getTableOids().get(1).getOid());
-		
-		ifMap[0] = new OID("1.3.6.1.2.1.2.2.1.2");
+		ifMap[0] = new OID(relation.getMappingOid().getOid());
 		List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(endPoint, ifMap);
 
 		for (TableEvent te : tblEvents) {
@@ -112,6 +113,10 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 
 			ifIndexMap.put(deviceIndex, ifIndex);
 		}
+		
+		/**
+		 * Scan through each SnmpLevelOID to create sub-components.
+		 */
 		List<SnmpLevelOID> levelOids = sc.getSnmpLevels();
 		for (SnmpLevelOID levelOid : levelOids) {
 

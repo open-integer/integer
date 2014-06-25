@@ -61,6 +61,7 @@ import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
  * The Class SnmpService is an singleton class to provide SNMP communication service.
+ * 
  */
 final public class SnmpService
 {
@@ -71,7 +72,7 @@ final public class SnmpService
     /** The _snmp service used by Integer application */
     private static  SnmpService _snmpService;
     
-    /** The _snmp is SNMP4j object for SNMP communication. */
+    /** The _snmp is a SNMP4j object for SNMP communication. */
     private Snmp _snmp;
     
     
@@ -82,7 +83,8 @@ final public class SnmpService
      */
     private SnmpService() throws IOException
     {
-        TransportMapping transport = new DefaultUdpTransportMapping();
+        @SuppressWarnings("rawtypes")
+		TransportMapping transport = new DefaultUdpTransportMapping();
         _snmp = new Snmp(transport);
         _snmp.listen();
     }
@@ -114,7 +116,7 @@ final public class SnmpService
     
     
     /**
-     * Gets the pdu.
+     * Make a SNMP GET request.
      *
      * @param endPoint the end point
      * @param pdu the pdu
@@ -131,7 +133,7 @@ final public class SnmpService
     
     
     /**
-     * Gets pdu asynchrously.
+     * Make a SNMP get request asynchronously.
      *
      * @param endPoint the end point
      * @param pdu the pdu
@@ -148,13 +150,15 @@ final public class SnmpService
     }
     
     
+  
     /**
-     * Gets pdu asynchrously.
-     *
-     * @param endPoint the end point
-     * @param pdu the pdu
-     * @return the pdu
-     * @throws IntegerException the integer exception
+     * Make a SNMP get request asynchronously. Application can pass in a user object for later reference.
+     * 
+     * @param endPoint
+     * @param pdu
+     * @param listener
+     * @param userData
+     * @throws IntegerException
      */
     public void getAsyncPdu( ElementEndPoint endPoint, PDU pdu,
     		                ResponseListener listener, Object userData ) throws IntegerException
@@ -167,7 +171,7 @@ final public class SnmpService
     
     
     /**
-     * Send pdu.
+     * Send SNMP request to device.
      *
      * @param pdu the pdu
      * @param target the target
@@ -192,7 +196,7 @@ final public class SnmpService
     
     
     /**
-     * 
+     * Make a SNMP4j table event request.
      * 
      * @param endPoint
      * @param columns
@@ -222,6 +226,8 @@ final public class SnmpService
     
     
     /**
+     * This method is used to do SNMP response verification. Since SNMP request does not contains partial 
+     * success, if there is any error occurs, it will throws an exception.
      * 
      * @param response
      * @throws IntegerException
@@ -275,7 +281,7 @@ final public class SnmpService
     
     
     /**
-     * Send asynchronous PDU. The response is on "listener"
+     * Send asynchronous PDU. The response is on "listener" for the request.
      * 
      * @param pdu
      * @param target
@@ -334,7 +340,7 @@ final public class SnmpService
     
     
     /**
-     * Gets the all entry pdu by next.
+     * Gets the all entry pdu by SNMP getNext.
      *
      * @param endPoint the end point
      * @param pdu the pdu
@@ -365,7 +371,7 @@ final public class SnmpService
     
     
     /**
-     * Sets the pdu.
+     * Send SNMPSet request.
      *
      * @param endPoint the end point
      * @param pdu the pdu
@@ -384,7 +390,7 @@ final public class SnmpService
     
     
     /**
-     * Gets the bulk pdu.
+     * Make a SNMP  getBulk request..
      *
      * @param endPoint the end point
      * @param pdu the pdu
@@ -400,7 +406,7 @@ final public class SnmpService
     
     
     /**
-     * Gets the bulk pdu.
+     * Make a SNMP getBulk request.
      *
      * @param endPoint the end point
      * @param pdu the pdu

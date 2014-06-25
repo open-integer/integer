@@ -36,9 +36,6 @@ package edu.harvard.integer.service.discovery;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.snmp4j.smi.VariableBinding;
-
-import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 
 
@@ -50,11 +47,17 @@ import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 public interface NetworkDiscoveryBase {
 	
 	/**
+	 * Start network discovery.
+	 *  
 	 * @param seed
 	 * @param toplevelVarBinds
 	 * @param id
 	 */
 	public List<Future<Ipv4Range>> discoverNetwork();
+	
+	/**
+	 * Stop network discovery.
+	 */
 	public void stopDiscovery();
 	
 }

@@ -34,7 +34,7 @@ package edu.harvard.integer.access;
 
 
 /**
- * The Class NoAuthentication is used for accessing ip node without 
+ * The Class NoAuthentication is used for accessing IP nodes without 
  * any authentication needed.  For example ICMP would not need any authentication.
  *
  * @author dchan

@@ -50,19 +50,15 @@ import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
-import edu.harvard.integer.common.discovery.SnmpLevelOID;
-import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
-import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -81,7 +77,19 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
 
 
 /**
- * The Class ElementDiscoverTask is used to discover IP network node.
+ * The Class ElementDiscoverTask is used to discover an IP network node.
+ * The main method for this class is "call".  It is doing three major things:
+ * 
+ * Identify the correct SNMPContainment based on containment selector.
+ *    Integer pre-configured a set of containments and they are associated with vendor, model, software version.
+ *    From SNMP system group, we should be able to identify vendor and model and most likely software version.
+ *    All those information is used to identify the correct containment for the discovering node.    
+ *   
+ * Discover the top service element which its service element type is specified on containment.
+ * Discover the sub-service elements.
+ * 
+ * Integer IP node service element discovery is processing in a single thread. The output of the call is
+ * the IP node service element.
  *
  * @author dchan
  */
@@ -100,6 +108,9 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	private ServiceElementAccessManagerInterface accessMgr;
 	
 	
+	/*
+	 * Element discover task.
+	 */
     public ElementDiscoverTask( NetworkDiscovery netDisc, DiscoverNode node ) throws IntegerException {
 		
 		super(node.getElementEndPoint());
@@ -107,7 +118,9 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		init( netDisc, node, null );
 	}
 	
-	
+	/*
+	 * Element discover task.
+	 */
     public ElementDiscoverTask( NetworkDiscovery netDisc, 
     		                    DiscoverNode node, SnmpSysInfo sysInfo ) throws IntegerException {
 		
@@ -117,6 +130,14 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	}
     
     
+    /**
+     * No much going on in heren for now
+     * 
+     * @param netDisc
+     * @param node
+     * @param sysInfo
+     * @throws IntegerException
+     */
     private void init( NetworkDiscovery netDisc, 
                        DiscoverNode node, SnmpSysInfo sysInfo ) throws IntegerException {
     	
@@ -162,7 +183,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    	if ( extra > 0 ) {
 		    		sysId.trim(extra);
 		    	}
-		    	VendorIdentifier identify = discMgr.getVendorIdentifier(sysId.toString());
+		    	VendorIdentifier identify = discMgr.getVendorIdentifier(sysInfo.getSysObjectID());
 		    	if ( identify != null ) {
 		    		 template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(identify.getID());
 		    	}
@@ -181,9 +202,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		     */
 		    if ( template == null ) {
 		    	template = new SnmpVendorDiscoveryTemplate();
-				VendorIdentifier vendorIdentifier = discMgr.getVendorIdentifier(sysId.toDottedString());
-				if (vendorIdentifier != null)
+				VendorIdentifier vendorIdentifier = discMgr.getVendorIdentifier(sysInfo.getSysObjectID());
+				if (vendorIdentifier != null) {					
 					template.setVendorId(vendorIdentifier.getID());
+				}
 				else {
 					/**
 					 * No such vendorIdentifier exist. Create one.  Later on this vendor identifier should be configured to 
@@ -416,8 +438,9 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 
 	
 	/**
-	 * Check containment type of the device by make SNMP getNext to check
-	 * if certain MIB tables are supported.   
+	 * Check containment type of the device by make SNMP getNext request to check
+	 * if certain MIB tables are supported.  For example, if the physical entity table is supported,
+	 * the containment type is entity MIB.
 	 * 
 	 * @param ept
 	 * @return
@@ -462,6 +485,15 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	}
 	
 	
+	/**
+	 * Find the Vendor which is associated with a vendor oid.
+	 * For example: .1.3.6.1.4.1.9 is the Cisco specific OID.
+	 * the return of this call should return cisco.
+	 * 
+	 * @param vendorOid
+	 * @return
+	 * @throws IntegerException
+	 */
 	public String defineUnknownVendor( String vendorOid ) throws IntegerException {
 		
 		VendorIdentifier vendorIdent = discMgr.getVendorIdentifier(vendorOid);
@@ -472,6 +504,15 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		return "Undefine:" + vendorOid;
 	}
 	
+	
+	/**
+	 * Find the vendor product which contains in "vendorOid"
+	 * For example: .1.3.6.1.4.1.9.1.256 is point to a CISCO device.
+	 * 
+	 * @param vendorOid
+	 * @return
+	 * @throws IntegerException
+	 */
     public String defineUnknownProduct( String vendorOid ) throws IntegerException {
 		
 		VendorIdentifier vendorIdent = discMgr.getVendorIdentifier(vendorOid);

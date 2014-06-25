@@ -33,28 +33,54 @@
 package edu.harvard.integer.access;
 
 /**
- * @author dchan
+ * The Class Access contains access port and access authentication information.
  *
+ * @author dchan
  */
 public class Access {
 
+	/** The port. */
 	private int port;
+	
+	/** The auth. */
 	private Authentication auth;
 	
 
+	/**
+	 * Instantiates a new access.
+	 *
+	 * @param p the p
+	 * @param a the a
+	 */
 	public Access( int p, Authentication a ) {
 		 port = p;
 		 auth = a;
 	}
 	
+	/**
+	 * Gets the port.
+	 *
+	 * @return the port
+	 */
 	public int getPort() {
 		return port;
 	}
 
+	/**
+	 * Gets the auth.
+	 *
+	 * @return the auth
+	 */
 	public Authentication getAuth() {
 		return auth;
 	}
 
+	/**
+	 * Equal.
+	 *
+	 * @param a the a
+	 * @return true, if successful
+	 */
 	public boolean equal( Access a ) {
 		
 		if ( a.getAuth().isSame(getAuth()) && a.getPort() == getPort() ) {

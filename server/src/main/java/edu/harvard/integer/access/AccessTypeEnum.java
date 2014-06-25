@@ -33,7 +33,7 @@
 package edu.harvard.integer.access;
 
 /**
- * The Enum AccessTypeEnum defines access type in Integer.
+ * The Enum AccessTypeEnum defines access type to network node.
  *
  * @author dchan
  */

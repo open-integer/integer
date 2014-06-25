@@ -34,7 +34,7 @@ package edu.harvard.integer.access;
 
 
 /**
- * The Class AccessUtil contains static methods used to access ip nodes.
+ * The Class AccessUtil contains static methods used to access IP nodes.
  *
  * @author dchan
  */

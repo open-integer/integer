@@ -37,8 +37,7 @@ import java.util.concurrent.Callable;
 import edu.harvard.integer.access.ElementAccess;
 
 /**
- * The Class ElementAccessTask is an abstract class for element discovery, element full scan and
- * element pool scan.
+ * The Class ElementAccessTask is an abstract class for element discovery.
  *
  * @author dchan
  * @param <T> the generic type of ServiceElement.

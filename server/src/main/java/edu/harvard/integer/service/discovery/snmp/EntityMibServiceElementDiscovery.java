@@ -63,7 +63,9 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
  * The Class EntityMibServiceElementDiscovery discover service element using 
- * physical entity/.  
+ * physical entity,
+ * 
+ * This class will be deprecated soon.
  *
  * @author dchan
  */

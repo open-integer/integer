@@ -32,36 +32,78 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
+
 /**
- * @author dchan
+ * The Enum associates with entity physical MIB table class column.
  *
+ * @author dchan
  */
 public enum EntityClassEnum {
 		
+		/** The other. */
 		other(1),
+		
+		/** The unknown. */
 		unknown(2),
+		
+		/** The chassis. */
 		chassis(3),
+		
+		/** The backplane. */
 		backplane(4),
+		
+		/** The container. */
 		container(5),
+		
+		/** The power supply. */
 		powerSupply(6),
+		
+		/** The fan. */
 		fan(7),
+		
+		/** The sensor. */
 		sensor(8),
+		
+		/** The module. */
 		module(9),
+		
+		/** The port. */
 		port(10),
+		
+		/** The stack. */
 		stack(11),
+		
+		/** The cpu. */
 		cpu(12);
 		
+		/** The value. */
 		private final int value;
 
-	    private EntityClassEnum(int value) {
+	    /**
+    	 * Instantiates a new entity class enum.
+    	 *
+    	 * @param value the value
+    	 */
+    	private EntityClassEnum(int value) {
 	        this.value = value;
 	    }
 
-	    public int getValue() {
+	    /**
+    	 * Gets the value.
+    	 *
+    	 * @return the value
+    	 */
+    	public int getValue() {
 	        return value;
 	    }
 	    
-	    public static EntityClassEnum valueOf(int classi) {
+	    /**
+    	 * Value of.
+    	 *
+    	 * @param classi the classi
+    	 * @return the entity class enum
+    	 */
+    	public static EntityClassEnum valueOf(int classi) {
 	        for (EntityClassEnum ec : EntityClassEnum.values()) {
 	            if (ec.value == classi) return ec;
 	        } 

@@ -35,17 +35,24 @@ package edu.harvard.integer.service.discovery.element;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.discovery.snmp.ContainmentServiceElementWorker;
-import edu.harvard.integer.service.discovery.snmp.EntityMibServiceElementDiscovery;
 import edu.harvard.integer.service.discovery.snmp.HostMibServiceElementDiscovery;
 import edu.harvard.integer.service.discovery.snmp.ParentChildServiceElementDiscovery;
 import edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover;
 
 /**
- * @author dchan
+ * A factory class for creating DiscoverWorker objects based on SNMP containment type.
  *
+ * @author dchan
  */
 public class DiscoverWorkerFactory {
 
+	/**
+	 * Gets the snmp service element worker.
+	 *
+	 * @param sct the sct
+	 * @return the snmp service element worker
+	 * @throws IntegerException the integer exception
+	 */
 	public static SnmpServiceElementDiscover getSnmpServiceElementWorker( SnmpContainmentType sct ) throws IntegerException {
 		
 		switch ( sct ) {

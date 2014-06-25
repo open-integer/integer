@@ -377,9 +377,6 @@ public class ParentChildServiceElementDiscovery extends
 							        			}
 							        		}
 							        	}
-							        	
-							        	
-							        	
 							        	logger.info("Save service element " + relTypese.getName());
 							        }
 							        System.out.println("Number of index " + indexSnmps.size());

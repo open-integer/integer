@@ -63,9 +63,14 @@ import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentif
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
+
 /**
- * @author dchan
+ * The Class ContainmentServiceElementWorker for discover device which the relation between components are 
+ * in containment relationship.  
+ * 
+ * 
  *
+ * @author dchan
  */
 public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover {
 
@@ -82,7 +87,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
     
     
 	/**
-	 * @throws IntegerException
+	 * Instantiates a new containment service element worker.
+	 *
+	 * @throws IntegerException the integer exception
 	 */
 	public ContainmentServiceElementWorker() throws IntegerException {
 		super();
@@ -162,12 +169,12 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	/**
 	 * Discover service element based on containment relationship.
-	 * 
-	 * @param discNode
-	 * @param levelOid
-	 * @param set
-	 * @param parentSe
-	 * @throws IntegerException
+	 *
+	 * @param discNode the disc node
+	 * @param levelOid the level oid
+	 * @param parentSet the parent set
+	 * @param parentSe the parent se
+	 * @throws IntegerException the integer exception
 	 */
 	public void discoverByContainment( DiscoverNode discNode, SnmpLevelOID levelOid, 
 			                           ServiceElementType parentSet,
@@ -472,12 +479,11 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	/**
 	 * Retrieve instance oid associated with indexOID from a service element.
-	 * 
-	 * @param set
-	 * @param se
-	 * @param indexOid
-	 * @return
-	 * @throws IntegerException
+	 *
+	 * @param se the se
+	 * @param mappingIndex the mapping index
+	 * @return the mapping parent instance from se
+	 * @throws IntegerException the integer exception
 	 */
 	public String getMappingParentInstanceFromSE( ServiceElement se, int mappingIndex ) throws IntegerException {
 
@@ -493,11 +499,12 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	
 	/**
-	 * 
-	 * @param set
-	 * @param indexOid
-	 * @return
-	 * @throws IntegerException
+	 * Find mapping index in set.
+	 *
+	 * @param set the set
+	 * @param indexOid the index oid
+	 * @return the int
+	 * @throws IntegerException the integer exception
 	 */
 	private int findMappingIndexInSET( ServiceElementType set, String indexOid ) throws IntegerException {
 		
@@ -531,11 +538,13 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	/**
 	 *   
-	 * 
-	 * @param events
-	 * @param se
-	 * @param mapType
-	 * @return
+	 *
+	 * @param events the events
+	 * @param mappingStr the mapping str
+	 * @param se the se
+	 * @param set the set
+	 * @param mapType the map type
+	 * @return the children base on parent inst
 	 */
 	private List<TableEvent> getChildrenBaseOnParentInst( List<TableEvent> events, 
 			                                              String mappingStr,
@@ -575,10 +584,11 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	
 	/**
-	 * 
-	 * @param tes
-	 * @param pii
-	 * @return
+	 * Find parent in mapping table.
+	 *
+	 * @param tes the tes
+	 * @param pii the pii
+	 * @return the relation mapping instance
 	 */
 	private RelationMappingInstance findParentInMappingTable( List<TableEvent> tes, ParentIndexInstance pii ) {
 		
@@ -599,10 +609,11 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	
 	/**
-	 * 
-	 * @param vbs
-	 * @param attrOid
-	 * @return
+	 * Gets the column value.
+	 *
+	 * @param vbs the vbs
+	 * @param attrOid the attr oid
+	 * @return the column value
 	 */
 	public String getColumnValue( VariableBinding[] vbs, String attrOid ) {
 		
@@ -618,14 +629,19 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 	
 	
 	/**
-	 * 
-	 * @author dchan
+	 * The Class SEAndSETPair.
 	 *
+	 * @author dchan
 	 */
 	public class SEAndSETPair {
 		
+		/** The se. */
 		private ServiceElement se;
+		
+		/** The set. */
 		private ServiceElementType set;
+		
+		/** The snmp level. */
 		private SnmpLevelOID snmpLevel;
 	}
 	

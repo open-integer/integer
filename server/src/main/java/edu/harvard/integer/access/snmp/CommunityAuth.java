@@ -126,6 +126,12 @@ public class CommunityAuth extends SnmpAuthentication {
 	}
 	
 
+	/**
+	 * Get read or write community string.
+	 * 
+	 * @param isRead
+	 * @return
+	 */
 	public String getCommunity( boolean isRead ) {
 		
 		String community = null;

@@ -36,8 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Class AccessPort contains port to access ip node and the associated access type.
- * For example port 161 can apply to SNMPv1, SNMPv2s and SNMPv3.
+ * The Class AccessPort contains port to access IP devices and a associated access type.
  *
  * @author dchan
  */

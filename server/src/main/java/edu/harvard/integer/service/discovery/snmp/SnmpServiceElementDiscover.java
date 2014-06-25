@@ -49,7 +49,6 @@ import org.snmp4j.util.TableEvent;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
-import edu.harvard.integer.access.snmp.MacIPInfo;
 import edu.harvard.integer.access.snmp.ParentChildMappingIndex;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.ID;
@@ -78,11 +77,11 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
- * The Class SnmpServiceElementDiscover is the base class for all SNMP service element
- * discover classes.  It provides some basic methods used on SNMP service element discovery.
+ * The SnmpServiceElementDiscover is the base class for all SNMP service element
+ * discover.  It provides some basic methods used on SNMP service element discovery.
  * 
- * In order to kick off a discover for a service element this abstract method "discover"
- * is called. 
+ * In order to kick off a discover for a network SNMP device, it needs to call the abstract method "discover".
+ * The output of the method "discover" a service element associated with network SNMP device.
  *
  * @author dchan
  */
@@ -105,11 +104,11 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	protected ManagementObjectCapabilityManagerInterface capMgr;
 	
 	/** 
-	 * The mapping table use to store pairs of parent index and child index.
+	 * The mapping table is use to store pairs of parent index and child index.
 	 * This table is really for performance purpose.  In a lot of cases,
-	 * retrieve all the parent and child index in once from the device in the beginning
-	 * to save a lot of trips to device later on.  The key can be context OID or any other
-	 * string. 
+	 * retrieve all the parent and child index in one SNMP block request from a device and save it in cache
+	 * will reduce a lot of requests which each request may contain a small set of data.   
+	 * The key is a string and in general it is the ContextOID of a Service Element Type. 
 	 */
 	private Map<String, List<ParentChildMappingIndex>> indexMappingTbl = new HashMap<String, List<ParentChildMappingIndex>>();
 	
@@ -131,12 +130,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
     
 	/**
-	 * Discover service element attributes which defined on the service element type.
+	 * Discover service element attributes which their SEMO are defined in the associated service element type.
 	 *
 	 * @param ePoint for the device
-	 * @param se -- service element on which attributes be set.
+	 * @param se -- service element on which attributes be retrieved.
 	 * @param set the service element type for the service element
-	 * @param instOid the inst oid of the service element attributes.
+	 * @param instOid the instance OID of the service element attributes.
 	 * @throws IntegerException the integer exception
 	 */
 	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
@@ -150,6 +149,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			PDU pdu = new PDU();
 			List<VariableBinding> vbs = new ArrayList<>();
 			
+			/**
+			 * Walk through the attribute SEMO list to construct a PDU to retrieve data from a device
+			 */
 			List<ID>  attributeIds =  set.getAttributeIds();		
 			for ( ID id : attributeIds ) {
 				
@@ -190,6 +192,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					se.setValues(insts);
 				}
 				
+				/**
+				 * Store retrieved SEMO values in the Service Element.
+				 */
 			    for ( ID id : attributeIds ) {
 					
 					ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
@@ -233,7 +238,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     
 	/**
 	 * Discover service element attributes similar to another discover attributes method. 
-	 * However Passing in include a map contains instance oids for discovered MIB tables.
+	 * However Passing in includes a map contains instance oids for discovered MIB tables.
+	 * 
+	 * Note this method will be deprecated soon since sooner EntityMibServiceElementDiscovery will be deprecated also.
 	 *
 	 * @param ePoint for the device
 	 * @param se -- service element on which attributes be set.
@@ -376,7 +383,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 	
 	/**
-	 * This method get part of MIB oid from a variable binding oid which is an attribute of the table.
+	 * This method get table part of a MIB oid from a variable binding.
 	 *
 	 * @param vbOid the vb oid
 	 * @return the table oid from vb oid
@@ -414,7 +421,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 	
 	/**
-	 * Find table event row.
+	 * Find a table event row from a TableEvent list which its attribute oid matched with "attrOid" and
+	 * the value is matched with pass in "SnmpServiceElementTypeDiscriminatorValue".
 	 *
 	 * @param events the events
 	 * @param attrOid the attr oid
@@ -461,24 +469,23 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 	
 	/**
-	 * Creates the service element from service element type.  Currently it retrieves the following 
-	 * information if provided for a service element:
+	 * Discover a service element from a device.  The retrieving information is specified in the pass in
+	 * service element type of the service element:
 	 * 
 	 * The default name, unique identifier and attributes.
-	 * 
-	 * However different categories service element type, they may contain special attributes only
-	 * applied to that service element type such as software version, hardware version etc.
 	 *
-	 * @param discNode the disc node
-	 * @param set the set
-	 * @param te TableEvent contains 
-	 * @param parentElm the parent elm
+	 * @param discNode the discover node
+	 * @param set Service Element Type for the discovering Service Element.
+	 * @param parentSE the parent Service Element
 	 * @return the service element
 	 * @throws IntegerException the integer exception
 	 */
 	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
-			                                            String instOid, ServiceElement parentElm) throws IntegerException {
+			                                            String instOid, ServiceElement parentSe ) throws IntegerException {
 		
+		/**
+		 * Setting the general information to the Service Element.
+		 */
 		ServiceElement se = new ServiceElement();
 		se.setUpdated(new Date());
 		
@@ -489,10 +496,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		se.setServiceElementTypeId(set.getID());
         se.setDescription(set.getCategory().name());
 		
-		if (parentElm != null) {
-			se.setParentId(parentElm.getID());
+		if (parentSe != null) {
+			se.setParentId(parentSe.getID());
 		}
 
+		/**
+		 * Retrieve the name to identify the service element.
+		 */
 		SNMP nameAttr = null;
 		if (set.getDefaultNameCababilityId() != null) {
 
@@ -507,51 +517,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			se.setName(rpdu.get(0).getVariable().toString());
 		}
 		
-		if ( set.getUniqueIdentifierCapabilities() != null ) {
-			
-			PDU rpdu = null;
-			PDU pdu = new PDU();
-			for ( ID id : set.getUniqueIdentifierCapabilities() ) {
-				
-				SNMP snmp = (SNMP) capMgr.getManagementObjectById(id);
-				OID o = new OID(snmp.getOid());
-				o.append(instOid);
-				
-				pdu.add(new VariableBinding(o));
-				rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
-				
-				if ( rpdu != null ) {
-					
-					ManagementObjectValue<?> mov = null;
-					VariableBinding vb = findMatchVB(snmp, rpdu);
-					
-					if ( vb.getVariable() instanceof UnsignedInteger32 ||
-							vb.getVariable() instanceof Integer32 ) {
-						
-						ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
-						iv.setValue(vb.getVariable().toInt());
-						iv.setManagementObject(snmp.getID());
-						
-						mov = iv;
-					}
-					else {
-						ManagementObjectStringValue sv = new ManagementObjectStringValue();
-						sv.setValue(vb.getVariable().toString());
-						sv.setManagementObject(snmp.getID());
-						
-						mov = sv;						
-					}
-					mov = capMgr.updateManagementObjectValue(mov);
-					List<ID> uids = se.getUniqueIdentifierIds();
-					
-					if ( uids == null ) {
-						uids = new ArrayList<>();
-						se.setUniqueIdentifierIds(uids);
-					}
-					uids.add(mov.getID());
-				}
-			}
-		}
+		/**
+		 * Retrieve the attributes of the service element.
+		 */
 		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, instOid);
 		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
 		
@@ -560,7 +528,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 
 	/**
-	 * Find UID For Top Service Element.
+	 * Find UID For a Service Element.  The UID is specified on the Service Element Type Unique Identifier list.
 	 * 
 	 * @param set
 	 * @param se
@@ -649,7 +617,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 
 	/**
-	 * Find variable binding from snmp4j table event.
+	 * Find variable binding from snmp4j table event which its variable binding oid equal to "oid"
 	 *
 	 * @param te the te
 	 * @param oid the oid
@@ -670,7 +638,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 	
 	/**
-	 * Return mac address from IF table.
+	 * Return mac address from an if table.
 	 * 
 	 * @param ept
 	 * @return
@@ -697,14 +665,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 	
 	
-    public List<MacIPInfo>  getHostMacIPInfo( ElementEndPoint ept ) throws IntegerException {
-    	
-    	List<MacIPInfo>  macIps = new ArrayList<>();
-    	return macIps;
-    }
 	
 
-	/* (non-Javadoc)
+	/* 
+	 * This method is not yet implemented.  The purpose of this method is to do a light scan of a service element.
+	 * 
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.agent.serviceelement.discovery.ElementDiscoveryBase#scanElement(edu.harvard.integer.agent.serviceelement.ElementEndPoint, edu.harvard.integer.common.topology.ServiceElement)
 	 */
 	@Override
