@@ -40,25 +40,15 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
- * This interface layout the methods for discover IP based service element
- * which including SNMP elements and NON-SNMP elements.  For now discovery
- * for each ip element is synchronized calls.  It may changed in future.
+ * This interface layout methods for discover IP based service element
+ * which including SNMP elements and NON-SNMP elements.  Currently discovery
+ * for an IP element is synchronized call.  It may changed in future.
  * 
  * @author dchan
  *
  */
 public interface ElementDiscoveryBase {
 
-	/**
-	 * Discover element based on elementEndPoint and DevicePhisicalPattern.   
-	 * The outcome of this method should return the full physical layout of the node.
-	 *
-	 * @param endEpt the element endpoint which including IPAddress, port and access information.
-	 * @param topoPattern the topoPattern for discovery physical layout of the node.
-	 * @return the service element
-	 * @throws IntegerException the integer exception
-	 */
-//	public ServiceElement discoverElementNode( ElementEndPoint endEpt, DevicePhisicalPattern topoPattern  ) throws IntegerException;
 	
 	/**
 	 * Discover element with a given node service element templete. It is considering a full discovery,
