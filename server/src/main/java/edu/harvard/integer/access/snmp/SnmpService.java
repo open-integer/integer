@@ -61,6 +61,7 @@ import edu.harvard.integer.common.util.DisplayableInterface;
 
 /**
  * The Class SnmpService is an singleton class to provide SNMP communication service.
+ * It also contains methods for different type of SNMP requests.
  * 
  */
 final public class SnmpService

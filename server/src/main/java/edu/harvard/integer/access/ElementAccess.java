@@ -35,16 +35,16 @@ package edu.harvard.integer.access;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * The Class ElementAccess is ElementAccessTask "call" return object
- * using for discover or configuration a service element.
+ * The Class ElementAccess is abstract class using for accessing network devices.
+ * The inheritance class is used for discovery or configuration or stats retrievers.
  * 
- * It contains an associated service element to be processed in the task.
+ * It contains an associated Network device service element to be processed in the task.
  *
  * @author dchan
  */
 public abstract class ElementAccess {
 
-	/** The access element. */
+	/** The access service element. */
 	private ServiceElement accessElement;
 
 	/**

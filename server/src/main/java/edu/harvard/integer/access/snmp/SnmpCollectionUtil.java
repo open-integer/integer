@@ -62,7 +62,7 @@ import edu.harvard.integer.common.util.DisplayableInterface;
 
 
 /**
- * The Class SnmpCollectionUtil provides some static methods used for SNMP collections.
+ * The Class SnmpCollectionUtil provides some static methods used for SNMP requests.
  *
  * @author dchan
  */

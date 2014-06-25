@@ -37,14 +37,23 @@ import edu.harvard.integer.access.element.ElementAccessTask;
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
+
 /**
- * @author dchan
+ * The Class ElementScanTask provides method for scanning a IP node for status information.
  *
+ * @author dchan
  */
 public class ElementScanTask extends ElementAccessTask<ElementAccess> {
 
+	/** The discover node. */
 	private DiscoverNode discoverNode;
 	
+	/**
+	 * Instantiates a new element scan task.
+	 *
+	 * @param ept the ept
+	 * @param discoverNode the discover node
+	 */
 	public ElementScanTask( ElementEndPoint ept, DiscoverNode discoverNode ) {
 		
 		super(ept);

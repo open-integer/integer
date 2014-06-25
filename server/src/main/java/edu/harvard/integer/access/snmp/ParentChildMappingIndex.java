@@ -36,7 +36,7 @@ import edu.harvard.integer.common.discovery.RelationMappingTypeEnum;
 
 /**
  * The Class ParentChildMappingIndex contains the instance OID information
- * for parent and child containment relationship.
+ * which associated with parent service element instance OID and child service element OID.
  *
  * @author dchan
  */

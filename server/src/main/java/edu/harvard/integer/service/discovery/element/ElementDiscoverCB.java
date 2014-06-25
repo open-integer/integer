@@ -37,7 +37,13 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.TopoNetwork;
 
 /**
- * The Interface ElementDiscoverCB defines callback methods during discovery for each subnet.
+ * The Interface ElementDiscoverCB defines callback ot notification methods during discovery.
+ * 
+ * When a network device done with discovery, the "discoveredElement" will be called.
+ * When a subnet done with discovery, the "discoveredSubnet" will be called.
+ * When a current network discovery done with discovery, the "discoveredNetwork" will be called.
+ * When a topology being done with discovery, the "discoveredTopoNet" will be called.
+ * When an error occur during discovery, the "errorOccur" will be called.
  * 
  * Note the discover is also including a topology discover.
  * 

@@ -33,8 +33,7 @@
 package edu.harvard.integer.access.snmp;
 
 /**
- * The Class MacIPInfo contains MAC and IP address information of device.
- * The purpose of this device is used for storing host system MAC and IP information.
+ * The Class MacIPInfo contains MAC and IP address information of a port interface.
  *
  * @author dchan
  */

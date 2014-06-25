@@ -44,7 +44,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 
 /**
  * 
- * The Class DiscoveryPolicy contains discovery configuration for each subnet discovery.
+ * The Class DiscoveryPolicy contains discovery configuration for each subnet.
  *
  * @author dchan
  */

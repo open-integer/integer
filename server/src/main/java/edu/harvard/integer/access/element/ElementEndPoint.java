@@ -36,7 +36,8 @@ import edu.harvard.integer.access.Authentication;
 import edu.harvard.integer.access.snmp.CommunityAuth;
 
 /**
- * The Class ElementEndPoint contains information to access IP nodes.
+ * The Class ElementEndPoint contains information to access IP nodes such as
+ * port, user name and password.
  * 
  *
  * @author dchan
@@ -55,7 +56,7 @@ public class ElementEndPoint {
 	final private Authentication  auth; 
 	
 	/**
-	 * If "blocking" no further SNMP qccess is allowed.
+	 * If "blocking" no further access to the device is allowed.
 	 */
 	private volatile boolean blocking = false;
 	

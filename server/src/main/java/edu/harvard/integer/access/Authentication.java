@@ -33,7 +33,7 @@
 package edu.harvard.integer.access;
 
 /**
- * The Authentication an interface used for authentication to access topology node.
+ * The Authentication is an interface used for authentication to access topology node.
  *
  * @author dchan
  */

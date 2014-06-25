@@ -44,7 +44,7 @@ import edu.harvard.integer.access.ElementAccess;
  */
 public abstract class ElementAccessTask <T extends ElementAccess>implements Callable<T> {
 
-	/** The network node of the service element endpoint. */
+	/** The network node end point use to access the network device.. */
 	final private ElementEndPoint elmEpt;
 	
 

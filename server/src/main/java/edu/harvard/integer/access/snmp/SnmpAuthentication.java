@@ -37,7 +37,7 @@ import org.snmp4j.mp.SnmpConstants;
 import edu.harvard.integer.access.Authentication;
 
 /**
- * The Class SnmpAuthentication is the base class access control for SNMP access.
+ * The Class SnmpAuthentication is the base class for SNMP access control.
  * It implements getProrityBySnmpVersion to defined discovery priority based on version.
  *
  * @author dchan

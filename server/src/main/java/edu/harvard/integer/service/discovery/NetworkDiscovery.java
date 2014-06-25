@@ -57,7 +57,8 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
 
 
 /**
- * The Class NetworkDiscovery provides method for topology discovery. 
+ * The Class NetworkDiscovery provides method for IP node discovery or topology discovery. 
+ * 
  * The first stage of the discovery is the scanning subnet to find out any IP devices on subnet.
  * The second stage of the discovery is the service element discovery.
  * The third stage of the discovery is the topology discovery.
