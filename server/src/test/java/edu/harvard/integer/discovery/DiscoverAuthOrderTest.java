@@ -67,7 +67,6 @@ import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IntegerInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
-import edu.harvard.integer.service.discovery.PollResult;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.TopoNetwork;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverCB;
@@ -237,15 +236,6 @@ public class DiscoverAuthOrderTest implements IntegerInterface, ElementDiscoverC
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.IntegerInterface#getDiscoveryTemplate(java.util.List)
-	 */
-	@Override
-	public VendorDiscoveryTemplate<ServiceElementManagementObject> getDiscoveryTemplate(
-			List<PollResult> pollResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 	/* (non-Javadoc)
