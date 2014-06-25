@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
-import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
+import edu.harvard.integer.client.model.LeaveItem;
 import edu.harvard.integer.client.widget.HvCheckBoxTreePanel;
 import edu.harvard.integer.client.widget.HvCheckListPanel;
 import edu.harvard.integer.common.ID;
@@ -29,7 +29,7 @@ public class FilterPanel extends DockPanel {
 	private ListDataProvider<CategoryTypeEnum> categoryProvider = new ListDataProvider<CategoryTypeEnum>();
 	
 	/** The technology provider. */
-	private ListDataProvider<TechItem> technologyProvider = new ListDataProvider<TechItem>();
+	private ListDataProvider<LeaveItem> technologyProvider = new ListDataProvider<LeaveItem>();
 	
 	/** The provider provider. */
 	private ListDataProvider<ID> providerProvider = new ListDataProvider<ID>();
@@ -44,7 +44,7 @@ public class FilterPanel extends DockPanel {
 	private ListDataProvider<ID> serviceProvider = new ListDataProvider<ID>();
 	
 	/** The organization provider. */
-	private ListDataProvider<TechItem> organizationProvider = new ListDataProvider<TechItem>();
+	private ListDataProvider<LeaveItem> organizationProvider = new ListDataProvider<LeaveItem>();
 	
 	/** The title panel. */
 	private SimplePanel titlePanel = new SimplePanel();

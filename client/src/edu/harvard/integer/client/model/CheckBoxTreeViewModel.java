@@ -1,4 +1,4 @@
-package edu.harvard.integer.client.ui;
+package edu.harvard.integer.client.model;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;
@@ -15,9 +15,6 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
-import edu.harvard.integer.client.ui.TechnologyDatabase.Category;
-import edu.harvard.integer.client.ui.TechnologyDatabase.SubCategory;
-import edu.harvard.integer.client.ui.TechnologyDatabase.TechItem;
 import edu.harvard.integer.common.selection.FilterNode;
 
 import java.util.ArrayList;
@@ -26,12 +23,12 @@ import java.util.List;
 /**
  * The TechnologyTreeViewModel class is the model class for Technology CellTree.
  */
-public class TechnologyTreeViewModel implements TreeViewModel {
+public class CheckBoxTreeViewModel implements TreeViewModel {
 
 	/**
 	 * The cell used to render categories.
 	 */
-	private static class CategoryCell extends AbstractCell<Category> {
+	private static class RootNodeCell extends AbstractCell<RootNodeItem> {
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -41,7 +38,7 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 		 * com.google.gwt.safehtml.shared.SafeHtmlBuilder)
 		 */
 		@Override
-		public void render(Context context, Category value, SafeHtmlBuilder sb) {
+		public void render(Context context, RootNodeItem value, SafeHtmlBuilder sb) {
 			if (value != null) {
 				sb.appendEscaped(value.getDisplayName());
 			}
@@ -51,37 +48,37 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	/**
 	 * The Class SubCategoryCell.
 	 */
-	private static class SubCategoryCell extends AbstractCell<SubCategory> {
+	private static class ChildNodeCell extends AbstractCell<ChildNodeItem> {
 
 	    /* (non-Javadoc)
     	 * @see com.google.gwt.cell.client.AbstractCell#render(com.google.gwt.cell.client.Cell.Context, java.lang.Object, com.google.gwt.safehtml.shared.SafeHtmlBuilder)
     	 */
     	@Override
-	    public void render(Context context, SubCategory value, SafeHtmlBuilder sb) {
+	    public void render(Context context, ChildNodeItem value, SafeHtmlBuilder sb) {
 	      if (value != null) {
 	    	  sb.appendEscaped(value.getDisplayName());
 	      }
 	    }
 	  }
 
-	/** The category data provider. */
-	private final ListDataProvider<Category> categoryDataProvider;
+	/** The root-node provider. */
+	private final ListDataProvider<RootNodeItem> rootNodeProvider;
 	
-	/** The sub category provider. */
-	private ListDataProvider<SubCategory> subCategoryProvider;
+	/** The child-node provider. */
+	private ListDataProvider<ChildNodeItem> childNodeProvider;
 	
-	/** The tech item provider. */
-	private ListDataProvider<TechItem> techItemProvider;
+	/** The leave provider. */
+	private ListDataProvider<LeaveItem> leaveProvider;
 
-	/** The tech item cell. */
-	private final Cell<TechItem> techItemCell;
+	/** The leave item cell. */
+	private final Cell<LeaveItem> techItemCell;
 
 	/** The selection manager. */
-	private final DefaultSelectionEventManager<TechItem> selectionManager = DefaultSelectionEventManager
+	private final DefaultSelectionEventManager<LeaveItem> selectionManager = DefaultSelectionEventManager
 			.createCheckboxManager();
 
 	/** The selection model. */
-	private final SelectionModel<TechItem> selectionModel;
+	private final SelectionModel<LeaveItem> selectionModel;
 
 	/**
 	 * Instantiates a new technology tree view model.
@@ -91,25 +88,25 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	 * @param selectionModel            the selection model
 	 * @param filterNodeList the filter node list
 	 */
-	public TechnologyTreeViewModel(ListDataProvider<TechItem> techItemProvider, 
-			ListDataProvider<SubCategory> subCategoryProvider, 
-			final SelectionModel<TechItem> selectionModel, 
+	public CheckBoxTreeViewModel(ListDataProvider<LeaveItem> leaveProvider, 
+			ListDataProvider<ChildNodeItem> childNodeProvider, 
+			final SelectionModel<LeaveItem> selectionModel, 
 			List<FilterNode> filterNodeList) {
-		this.techItemProvider = techItemProvider;
-		this.subCategoryProvider = subCategoryProvider;
+		this.leaveProvider = leaveProvider;
+		this.childNodeProvider = childNodeProvider;
 		this.selectionModel = selectionModel;
 
 		// Create a data provider that provides categories.
-		categoryDataProvider = new ListDataProvider<Category>();
-		List<Category> categoryList = categoryDataProvider.getList();
+		rootNodeProvider = new ListDataProvider<RootNodeItem>();
+		List<RootNodeItem> rootNodeList = rootNodeProvider.getList();
 
 		for (FilterNode filterNode : filterNodeList) {
-			categoryList.add(new Category(filterNode.getItemId().getName()));
+			rootNodeList.add(new RootNodeItem(filterNode.getItemId().getName()));
 		}
 
 		// Construct a composite cell for contacts that includes a checkbox.
-		List<HasCell<TechItem, ?>> hasCells = new ArrayList<HasCell<TechItem, ?>>();
-		hasCells.add(new HasCell<TechItem, Boolean>() {
+		List<HasCell<LeaveItem, ?>> hasCells = new ArrayList<HasCell<LeaveItem, ?>>();
+		hasCells.add(new HasCell<LeaveItem, Boolean>() {
 
 			private CheckboxCell cell = new CheckboxCell(true, false);
 
@@ -117,15 +114,15 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 				return cell;
 			}
 
-			public FieldUpdater<TechItem, Boolean> getFieldUpdater() {
+			public FieldUpdater<LeaveItem, Boolean> getFieldUpdater() {
 				return null;
 			}
 
-			public Boolean getValue(TechItem object) {
+			public Boolean getValue(LeaveItem object) {
 				return selectionModel.isSelected(object);
 			}
 		});
-		hasCells.add(new HasCell<TechItem, SafeHtml>() {
+		hasCells.add(new HasCell<LeaveItem, SafeHtml>() {
 
 			private SafeHtmlCell cell = new SafeHtmlCell();
 
@@ -133,19 +130,19 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 				return cell;
 			}
 
-			public FieldUpdater<TechItem, SafeHtml> getFieldUpdater() {
+			public FieldUpdater<LeaveItem, SafeHtml> getFieldUpdater() {
 				return null;
 			}
 
-			public SafeHtml getValue(TechItem object) {
+			public SafeHtml getValue(LeaveItem object) {
 				return new SafeHtmlBuilder().appendEscaped(object.getName())
 						.toSafeHtml();
 			}
 		});
 
-		techItemCell = new CompositeCell<TechItem>(hasCells) {
+		techItemCell = new CompositeCell<LeaveItem>(hasCells) {
 			@Override
-			public void render(Context context, TechItem value,
+			public void render(Context context, LeaveItem value,
 					SafeHtmlBuilder sb) {
 				sb.appendHtmlConstant("<table><tbody><tr>");
 				super.render(context, value, sb);
@@ -160,8 +157,8 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 			}
 
 			@Override
-			protected <X> void render(Context context, TechItem value,
-					SafeHtmlBuilder sb, HasCell<TechItem, X> hasCell) {
+			protected <X> void render(Context context, LeaveItem value,
+					SafeHtmlBuilder sb, HasCell<LeaveItem, X> hasCell) {
 				Cell<X> cell = hasCell.getCell();
 				sb.appendHtmlConstant("<td>");
 				cell.render(context, hasCell.getValue(value), sb);
@@ -179,31 +176,31 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 		if (value == null) {
 			// Return top level categories.
-			return new DefaultNodeInfo<Category>(categoryDataProvider, new CategoryCell());
+			return new DefaultNodeInfo<RootNodeItem>(rootNodeProvider, new RootNodeCell());
 		}
-		else if (value instanceof Category) {
+		else if (value instanceof RootNodeItem) {
 			// Return the first letters of each first name.
-			Category category = (Category) value;
+			RootNodeItem category = (RootNodeItem) value;
 
-			List<SubCategory> counts = querySubCategoryByCategory(category);
+			List<ChildNodeItem> counts = querySubCategoryByCategory(category);
 			
 			if (!counts.isEmpty())
-				return new DefaultNodeInfo<SubCategory>(new ListDataProvider<SubCategory>(counts), new SubCategoryCell());
+				return new DefaultNodeInfo<ChildNodeItem>(new ListDataProvider<ChildNodeItem>(counts), new ChildNodeCell());
 			
-			List<TechItem> techItems = queryTechItemsByCategory(category);
-			ListDataProvider<TechItem> technologyProvider = new ListDataProvider<TechItem>(
-					techItems, TechItem.KEY_PROVIDER);
-			return new DefaultNodeInfo<TechItem>(technologyProvider, techItemCell,
+			List<LeaveItem> techItems = queryTechItemsByCategory(category);
+			ListDataProvider<LeaveItem> technologyProvider = new ListDataProvider<LeaveItem>(
+					techItems, LeaveItem.KEY_PROVIDER);
+			return new DefaultNodeInfo<LeaveItem>(technologyProvider, techItemCell,
 				selectionModel, selectionManager, null);
 		}
-		else if (value instanceof SubCategory) {
-			SubCategory subCategory = (SubCategory) value;
+		else if (value instanceof ChildNodeItem) {
+			ChildNodeItem subCategory = (ChildNodeItem) value;
 
-			List<TechItem> techItems = queryTechItemsByCategory(subCategory);
+			List<LeaveItem> techItems = queryTechItemsByCategory(subCategory);
 
-			ListDataProvider<TechItem> technologyProvider = new ListDataProvider<TechItem>(
-					techItems, TechItem.KEY_PROVIDER);
-			return new DefaultNodeInfo<TechItem>(technologyProvider, techItemCell,
+			ListDataProvider<LeaveItem> technologyProvider = new ListDataProvider<LeaveItem>(
+					techItems, LeaveItem.KEY_PROVIDER);
+			return new DefaultNodeInfo<LeaveItem>(technologyProvider, techItemCell,
 				selectionModel, selectionManager, null);
 		}
 
@@ -218,9 +215,9 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	 * @param category the category
 	 * @return the list
 	 */
-	private List<SubCategory> querySubCategoryByCategory(Category category) {
-		List<SubCategory> matches = new ArrayList<SubCategory>();
-		for (SubCategory item : subCategoryProvider.getList()) {
+	private List<ChildNodeItem> querySubCategoryByCategory(RootNodeItem category) {
+		List<ChildNodeItem> matches = new ArrayList<ChildNodeItem>();
+		for (ChildNodeItem item : childNodeProvider.getList()) {
 			if (item.getParentName().equals(category.getDisplayName())) {
 				matches.add(item);
 			}
@@ -234,9 +231,9 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	 * @param category the category
 	 * @return the list
 	 */
-	public List<TechItem> queryTechItemsByCategory(Category category) {
-		List<TechItem> matches = new ArrayList<TechItem>();
-		for (TechItem item : techItemProvider.getList()) {
+	public List<LeaveItem> queryTechItemsByCategory(RootNodeItem category) {
+		List<LeaveItem> matches = new ArrayList<LeaveItem>();
+		for (LeaveItem item : leaveProvider.getList()) {
 			if (item.getCategory().getDisplayName().equals(category.getDisplayName())) {
 				matches.add(item);
 			}
@@ -250,7 +247,7 @@ public class TechnologyTreeViewModel implements TreeViewModel {
 	 * @see com.google.gwt.view.client.TreeViewModel#isLeaf(java.lang.Object)
 	 */
 	public boolean isLeaf(Object value) {
-		return value instanceof TechItem;
+		return value instanceof LeaveItem;
 	}
 
 }
