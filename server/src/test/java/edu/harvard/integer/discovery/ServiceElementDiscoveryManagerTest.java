@@ -99,7 +99,6 @@ public class ServiceElementDiscoveryManagerTest {
 
 	@Inject
 	private SnmpManagerInterface snmpMaager;
-
 	
 
 	private String vendor = "Cisco";
@@ -404,6 +403,28 @@ public class ServiceElementDiscoveryManagerTest {
 	}
 
 	@Test
+	public void createInterfaceServiceElementType() {
+		ServiceElementType type = new ServiceElementType();
+		type.setName("interface");
+		type.setCategory(CategoryTypeEnum.portIf);
+		type.addSignatureValue(null, SignatureTypeEnum.Vendor, vendor);
+		
+		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vendorSubType);
+		
+		type.setVendorSpecificSubType(vendorSubType);
+
+		try {
+			managementObjectCapabilityManager.updateServiceElementType(type);
+
+		} catch (IntegerException e) {
+
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+	}
+
+	@Test
 	public void getServiceElementByCategoryAndVendor() {
 		try {
 
@@ -510,6 +531,8 @@ public class ServiceElementDiscoveryManagerTest {
 
 	@Test
 	public void getVendorContainmentSelector() {
+		
+		createInterfaceServiceElementType();
 		
 		String firmwareVer = "Firmware1";
 		String model = "ModelT";
