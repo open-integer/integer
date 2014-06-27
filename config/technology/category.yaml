@@ -1,4 +1,5 @@
-#Root is category
+#This is the default Integer Category-tree. It is possible to change this, but it may have
+#unexpected side effects.
 name: category-tree
 description: category-tree
 parent: root
@@ -7,6 +8,10 @@ categories:
         description: system
         parent: category-tree
         categories:
+        - name: Virtual
+          description: virtual
+          parent: system
+          
         - name: Physical
           description: physical
           parent: system
@@ -29,7 +34,7 @@ categories:
                   
             - name: Networking
               description:  networking
-              parent: physical
+              parents: [physical, virtual]
               categories:
                 - name: Router
                   description:  router
@@ -57,7 +62,7 @@ categories:
                   
             - name: Servers
               description:  servers
-              parent: physical
+              parents: [physical, virtual]
               categories:
                 - name: General Purpose
                   description:  general purpose
@@ -85,82 +90,75 @@ categories:
                   
                 - name: Application
                   description:  application
-                  parent: servers
-                  
-
-
-      - 
-        - name: stack
-          description: stack
-          parent: hardware
-
-        - name: chassis
-          description: chassis
-          parent: hardware
-
-        - name: backplane
-          description: backplane
-          parent: hardware
-
-        - name: spine
-          description: spine
-          parent: hardware
-
-        - name: module
-          description: linecard, fpc, etc.
-          parent: hardware
-
-        - name: routing engine
-          description: or supervisor board
-          parent: hardware
-
-        - name: feature card
-          description: crypto, ssl, extra processing, etc.
-          parent: hardware
-
-        - name: port
-          description: port
-          parent: hardware
-
-        - name: optic
-          description: optic
-          parent: hardware
-
-        - name: fan
-          description: fan
-          parent: hardware
-
-        - name: power supply
-          description: power supply
-          parent: hardware
-
-        - name: sensor
-          description: sensor
-          parent: hardware
-
-        - name: cpu
-          description: cpu
-          parent: hardware
-
-        - name: pcmcia card
-          description: pcmcia card
-          parent: hardware
-
-        - name: disk
-          description: disk
-          parent: hardware
-
-        - name: raid array
-          description: raid array
-          parent: hardware
-
-        - name: raid controller
-          description: raid controller
-          parent: hardware
+                  parent: servers         
+                   
+            - name: Common System Components
+              description:  common system components
+              parents: [networking, servers]
+              categories:
+                - name: chassis
+                  description: chassis
+                  parent: common system components
+        
+                - name: backplane
+                  description: backplane
+                  parent: common system components
+               
+                - name: module
+                  description: linecard, fpc, etc.
+                  parent: common system components
+        
+                - name: routing engine
+                  description: or supervisor board
+                  parent: common system components
+        
+                - name: feature card
+                  description: crypto, ssl, extra processing, etc.
+                  parent: common system components
+        
+                - name: port
+                  description: port
+                  parent: common system components
+        
+                - name: optic
+                  description: optic
+                  parent: common system components
+        
+                - name: fan
+                  description: fan
+                  parent: common system components
+        
+                - name: power supply
+                  description: power supply
+                  parent: common system components
+        
+                - name: sensor
+                  description: sensor
+                  parent: common system components
+        
+                - name: cpu
+                  description: cpu
+                  parent: common system components
+        
+                - name: pcmcia card
+                  description: pcmcia card
+                  parent: common system components
+        
+                - name: disk
+                  description: disk
+                  parent: common system components
+        
+                - name: raid array
+                  description: raid array
+                  parent: hardware
+        
+                - name: raid controller
+                  description: raid controller
+                  parent: hardware
 
       - name: software
         description: software
-        parent: technology-tree
+        parent: category-tree
         technologies:
         - name: overall operating system
           description: overall operating system
@@ -172,7 +170,7 @@ categories:
 
       - name: physical connectivity
         description: physical connectivity
-        parent: technology-tree
+        parent: category-tree
         technologies:
           - name: ethernet physical layer
             description: ethernet physical layer
@@ -196,7 +194,7 @@ categories:
 
       - name: data link protocols
         description: data link protocols
-        parent: technology-tree
+        parent: category-tree
         technologies:
         - name: Ethernet
           description: Ethernet
@@ -212,7 +210,7 @@ categories:
 
       - name: traffic encryption protocols
         description: traffic encryption protocols
-        parent: technology-tree
+        parent: category-tree
         technologies:
           - name: IPSEC
             description: IPSEC
@@ -232,7 +230,7 @@ categories:
 
       - name: packet-switched networking
         description: packet-switched networking
-        parent: technology-tree
+        parent: category-tree
         technologies:
         - name: Frame Relay
           description: Frame Relay
@@ -248,7 +246,7 @@ categories:
 
       - name: tunneling
         description: tunneling
-        parent: technology-tree
+        parent: category-tree
         technologies:
         - name: Cisco GRE
           description: Generic Routing Encapsulation, virtual point-to-point links
@@ -280,7 +278,7 @@ categories:
 
       - name: neighbor discovery
         description: neighbor discovery
-        parent: technology-tree
+        parent: category-tree
         technologies:
         - name: CDP
           description: Cisco Discovery Protocol
@@ -312,7 +310,7 @@ categories:
 
       - name: link bonding
         description: link bonding
-        parent: technology-tree
+        parent: category-tree
         technologies:
           - name: host-to-host bonded link schemes
             description: host-to-host bonded link schemes
@@ -416,7 +414,7 @@ categories:
 
       - name: VLANs
         description: Virtual Local Area Networks
-        parent: technology-tree
+        parent: category-tree
         technologies:
           - name: VLAN tagging protocols
             description: VLAN tagging protocols
@@ -500,7 +498,7 @@ categories:
 
       - name: switching
         description: switching
-        parent: technology-tree
+        parent: category-tree
         technologies:
           - name: ethernet switching
             description: ethernet switching
@@ -512,7 +510,7 @@ categories:
 
       - name: routing
         description: routing
-        parent: technology-tree
+        parent: category-tree
         technologies:
           - name: routing table
             description: routing table
@@ -536,7 +534,7 @@ categories:
 
       - name: network layer protocols
         description: network layer protocols
-        parent: technology-tree
+        parent: category-tree
         technologies:
         - name: IPv4
           description: IPv4
@@ -552,7 +550,7 @@ categories:
 
       - name: IP routing protocols
         description: IP routing protocols
-        parent: technology-tree
+        parent: category-tree
         technologies:
           - name: interior gateway protocols
             description: interior gateway protocols
@@ -604,7 +602,7 @@ categories:
 
       - name: IP multicast protocols
         description: protocols for delivery of multicast services
-        parent: technology-tree
+        parent: category-tree
         technologies:
         - name: IGMP
           description: IGMP
