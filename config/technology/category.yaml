@@ -1,16 +1,67 @@
 #Root is category
-name: technology-tree
-description: technology-tree
+name: category-tree
+description: category-tree
 parent: root
-technologies:
-      - name: hardware
-        description: hardware
-        parent: technology-tree
-        technologies:
-        - name: container
-          description: container
-          parent: hardware
+categories:
+      - name: System
+        description: system
+        parent: category-tree
+        categories:
+        - name: Physical
+          description: physical
+          parent: system
+          categories:
+            - name: Passive
+              description:  passive
+              parent: physical
+              categories:
+                - name: Rack
+                  description:  rack
+                  parent: passive
+            
+                - name: Switch Panel
+                  description:  switch panel
+                  parent: passive
+                  
+                - name: Fiber
+                  description: fiber
+                  parent: passive
+                  
+            - name: Networking
+              description:  networking
+              parent: physical
+              categories:
+                - name: Router
+                  description:  router
+                  parent: networking
+                  
+                - name: Switch
+                  description:  switch
+                  parent: networking
+                  
+                - name: Switch/Router
+                  description:  switch/router
+                  parent: networking
+                  
+                - name: Firewall
+                  description:  firewall
+                  parent: networking
+                  
+                - name: NAT
+                  description:  nat
+                  parent: networking
+                  
+                - name: Load Balancer
+                  description:  load balancer
+                  parent: networking
+                  
+                - name: 
+                  description:  switch
+                  parent: networking
+              categories:  
+        
 
+      - 
         - name: stack
           description: stack
           parent: hardware
