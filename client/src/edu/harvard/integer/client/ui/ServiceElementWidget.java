@@ -99,8 +99,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
             
 			@Override
 			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
-				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX();
-				int y = 100 + event.getY();
+				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
+				int y = 100 + event.getY() - 15;
 				popup.setPopupPosition(x, y);
 				popup.show();
 			}  
