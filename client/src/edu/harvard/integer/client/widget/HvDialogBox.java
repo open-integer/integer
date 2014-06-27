@@ -12,11 +12,15 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class HuitDialogBox.
- *
- * @author jhuang
+ * The Class HuitDialogBox represents a dialog box for generic use.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.DialogBox.
+ * It includes the following panels:
+ *     a formPanel - content panel
+ *     a buttonPanel - action button panel including leftButtonPanel and rightButtonPanel
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class HvDialogBox extends DialogBox {
 	
@@ -39,7 +43,7 @@ public class HvDialogBox extends DialogBox {
 	private Button okButton = new Button("OK");
 
 	/**
-	 * Instantiates a new huit dialog box.
+	 * Creates a new HvDialogBox instance.
 	 *
 	 * @param title the title
 	 * @param formPanel the form panel
@@ -49,7 +53,7 @@ public class HvDialogBox extends DialogBox {
 	}
 	
 	/**
-	 * Instantiates a new hv dialog box.
+	 * Creates a new HvDialogBox instance.
 	 *
 	 * @param title the title
 	 * @param formPanel the form panel

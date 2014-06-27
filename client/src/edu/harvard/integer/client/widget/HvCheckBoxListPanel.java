@@ -7,7 +7,11 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 
 /**
- * The Class HvCheckBoxListPanel.
+ * The Class HvCheckBoxListPanel represents a panel showing a list of CheckBox.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.Grid.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class HvCheckBoxListPanel extends Grid {
 	
@@ -27,7 +31,7 @@ public class HvCheckBoxListPanel extends Grid {
 	private int curColumn = -1;
 	
 	/**
-	 * Instantiates a new hv check box list panel.
+	 * Instantiates a new HvCheckBoxListPanel.
 	 *
 	 * @param row the row
 	 * @param col the col

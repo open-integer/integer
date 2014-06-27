@@ -65,12 +65,18 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
-import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
- * @author dchan
+ * The Class ParentChildServiceElementDiscovery is used to discover IP nodes which their
+ * component structure in parent and child containment relationship presenting in SnmpParentChildRelationship
+ * class. One of the example is devices using Entity MIB to layout components.
+ * In this type of structure, the parent and child relationship for all components is contained in a column of
+ * an SNMP table. To discover all the components and the containment relationship between them, this class provide
+ * a recursive method to discover each layer of components.
+ * 
  *
+ * @author dchan
  */
 public class ParentChildServiceElementDiscovery extends
 		SnmpServiceElementDiscover {
@@ -81,23 +87,26 @@ public class ParentChildServiceElementDiscovery extends
 	/** The discovery node. */
 	private DiscoverNode discNode;
 	
+	/** The containment class which the child context OID and which SNMP object holds the relation. */
 	private SnmpContainment containment;
 	
 	/** The top entity. */
 	private ParentChildRelationNode topEntity;
 	
-	/** The phyical entity row map. The key is the parent index.  The value is a list physical rows which contains by the
-	 * parent
+	/** The map to hold each physical entity row. The key is the parent index.  The value is a list physical rows which contains by the
+	 * parent which index is the "key"
 	 */
 	private Map<String, List<ParentChildRelationNode>>  physRowMap; 
 	
-	/** The elm map uses to keep track of entity element discovered so far */
+	/**  The element map uses to keep track of entity element discovered so far. */
 	private Map<String, EntityElement> elmMap; 
 	
 	
 	
 	/**
-	 * @throws IntegerException
+	 * Instantiates a new parent child service element discovery.
+	 *
+	 * @throws IntegerException the integer exception
 	 */
 	public ParentChildServiceElementDiscovery() throws IntegerException {
 		super();
@@ -118,6 +127,10 @@ public class ParentChildServiceElementDiscovery extends
 			
 			if ( snmpLevel.getRelationToParent() instanceof SnmpParentChildRelationship ) {
 				
+				/** 
+				 * Retrieve all rows in a MIB table which contains the parent and child relation in once
+				 * to save network requests and store them into the map.
+				 */
 				SnmpParentChildRelationship relation = (SnmpParentChildRelationship) snmpLevel.getRelationToParent();
 				int count = 4;
 				if ( relation.getCategoryOid() == null ) {
@@ -149,12 +162,17 @@ public class ParentChildServiceElementDiscovery extends
 					}					
 					physRows.add(pnode);	
 				}
+				
+				/**
+				 * Call this method to discover components on each level.
+				 */
 				recursiveDiscovery(topEntity);
 			}
 			else {
-				//
-				//
-				//
+				/**
+				 *  For the time being, we do for an example for the case that beside the ParentChildRelationsip, on the same sublevel
+				 *  it contains other SnmpLevelOID need to be discovered.  However it cannot rule out this kind of possibility.
+				 */
 			}
 		}		
 		return discNode.getAccessElement();
@@ -166,8 +184,7 @@ public class ParentChildServiceElementDiscovery extends
 	 * Continue with each child of the row until there is no child contains for a row.
 	 *
 	 * @param row the row
-	 * @param levelOid the level oid
-	 * @throws IntegerException 
+	 * @throws IntegerException the integer exception
 	 */
 	private void recursiveDiscovery( ParentChildRelationNode row ) throws IntegerException {
 		
@@ -225,9 +242,23 @@ public class ParentChildServiceElementDiscovery extends
 				 */
 				elmMap.put(row.getIndex(), ee);
 				
+				/**
+				 * Scan through the top SnmpLevel list for this containment to find out if it contains
+				 * any relation which is based on category and contextOID.  If it exists, continue to discover 
+				 * the subcomponents related to the service element.
+				 * 
+				 * Example, port defined on EntityMIB has the SnmpContainmentRelation with interface.
+				 * To discover interfaces which associated with a port, the containment should have a SnmpContainmentRelation
+				 * to specify this relationship.
+				 * 
+				 * Note the current code is only handle the SnmpContainmentRelation.  Since this class is for general,
+				 * it should handle more relation other than SnmpContainmentRelation.
+				 * 
+				 */
 				for ( SnmpLevelOID levelOid : containment.getSnmpLevels() ) {
 					
 					if ( levelOid.getCategory() != null && levelOid.getCategory() == set.getCategory()  ) {
+						
 						
 						if ( levelOid.getRelationToParent() != null ) {
 							
@@ -319,8 +350,6 @@ public class ParentChildServiceElementDiscovery extends
 							        		else {
 							        			relTypese.setName(relType.getCategory().name() + " " + po.toString());
 							        		}
-							        		
-							        		System.out.println("ParentIndex " + pIndex + " " + rIndex);
 							        	}
 							        	
 							        	relTypese = accessMgr.updateServiceElement(relTypese);
@@ -331,10 +360,14 @@ public class ParentChildServiceElementDiscovery extends
 							        			if ( subLevel.getRelationToParent() == null ) {
 							        				
 							        				SNMPTable snmpTbl = (SNMPTable) subLevel.getContextOID();
-							        				System.out.println("Table name " + snmpTbl.getName());
 							        			}
 							        		}
-							        	}							        	
+							        	}					
+							        	/**
+							        	 * The following related to interface and ipAddr is temporary.  
+							        	 * Some how I cannot get the containment from yaml which contains that containment relationship.
+							        	 * It needs to debug later.
+							        	 */
 							        	if ( relType.getCategory() == CategoryTypeEnum.portIf ) {
 							        		SNMPTable snmpTbl = (SNMPTable) snmpMgr.getSNMPByName("ipAddrEntry");
 							        		SNMP ifAttr = snmpMgr.getSNMPByName("ipAdEntIfIndex");
@@ -405,6 +438,13 @@ public class ParentChildServiceElementDiscovery extends
 	}
 	
 	
+	/**
+	 * Signature match.  Need to add the implemenation later.
+	 *
+	 * @param rpdu the rpdu
+	 * @param sets the sets
+	 * @return the service element type
+	 */
 	private ServiceElementType signatureMatch( PDU rpdu, ServiceElementType[] sets ) {
 		
 		return sets[0];
@@ -465,9 +505,9 @@ public class ParentChildServiceElementDiscovery extends
 	/**
 	 * Create service element type from a physical entity row.
 	 *
-	 * @param pr the pr
+	 * @param row the row
 	 * @return the service element type
-	 * @throws IntegerException 
+	 * @throws IntegerException the integer exception
 	 */
 	public ServiceElementType createServiceElementType( ParentChildRelationNode row ) throws IntegerException {
 		
@@ -523,11 +563,11 @@ public class ParentChildServiceElementDiscovery extends
 	 * This method search for ParentChildMappingIndex from a list for which the "parentIndex" contains
 	 * lookingInst in "indexPosition".  It is working well when indexPosition is 0.  Or each index instance 
 	 * size is equal to 1. Other case we need to implement later.
-	 * 
-	 * @param mappingIndexList
-	 * @param lookingInst
-	 * @param indexPosition
-	 * @return
+	 *
+	 * @param mappingIndexList the mapping index list
+	 * @param lookingInst the looking inst
+	 * @param indexPosition the index position
+	 * @return the parent child mapping index
 	 */
 	private ParentChildMappingIndex findMappingIndex(  List<ParentChildMappingIndex> mappingIndexList,
 			                                                       String lookingInst, int indexPosition ) {
@@ -571,7 +611,7 @@ public class ParentChildServiceElementDiscovery extends
 	
 	
 	/**
-	 * Convert entity class type.
+	 * Convert entity class type to Integer category.
 	 *
 	 * @param e the e
 	 * @return the category type enum

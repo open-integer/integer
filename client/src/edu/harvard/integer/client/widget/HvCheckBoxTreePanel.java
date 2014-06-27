@@ -14,16 +14,20 @@ import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 
 import edu.harvard.integer.client.model.CheckBoxTreeViewModel;
-import edu.harvard.integer.client.model.RootNodeItem;
 import edu.harvard.integer.client.model.ChildNodeItem;
 import edu.harvard.integer.client.model.LeaveItem;
+import edu.harvard.integer.client.model.RootNodeItem;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.technology.Technology;
 
 /**
- * The Class HvCheckBoxTreePanel.
+ * The Class HvCheckBoxTreePanel represents a panel showing a list of CheckBox in tree.
+ * This is a subclass class extended from com.google.gwt.user.client.ui.SimplePanel.
+ * 
+ * @author  Joel Huang
+ * @version 1.0, May 2014
  */
 public class HvCheckBoxTreePanel extends SimplePanel {
 	
@@ -42,7 +46,7 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 	};
 
 	/**
-	 * Instantiates a new hv check box tree panel.
+	 * Creates a new HvCheckBoxTreePanel instance.
 	 *
 	 * @param techItemProvider the tech item provider
 	 * @param list the list
@@ -89,15 +93,15 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 	 * Generate provider items.
 	 *
 	 * @param parentNode the parent node
-	 * @param techNodeList the tech node list
+	 * @param childNodeList the child node list
 	 */
-	public void generateProviderItems(ID parentNode, List<FilterNode> techNodeList) {
+	public void generateProviderItems(ID parentNode, List<FilterNode> childNodeList) {
 		List<LeaveItem> techItemList = techItemProvider.getList();
 		List<ChildNodeItem> subCategoryList = subCategoryProvider.getList();
 		
-		for (FilterNode node : techNodeList) {
+		for (FilterNode node : childNodeList) {
 			if (node.getChildren() == null || node.getChildren().isEmpty())
-				techItemList.add(createTechItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
+				techItemList.add(createLeaveItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
 			else {
 				subCategoryList.add(new ChildNodeItem(parentNode.getName(), node.getItemId().getName()));
 				generateProviderItems(node.getItemId(), node.getChildren());
@@ -106,17 +110,17 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 	}
 	
 	/**
-	 * Creates the tech item.
+	 * Creates the leave item.
 	 *
 	 * @param id the id
-	 * @param catName the cat name
-	 * @param itemName the item name
+	 * @param parentNodeName the cat name
+	 * @param leaveName the item name
 	 * @return the tech item
 	 */
-	private static LeaveItem createTechItem(long id, String catName, String itemName) {
-		RootNodeItem category = new RootNodeItem(catName);
-		LeaveItem techItem = new LeaveItem((int)id, category, itemName);
-		return techItem;
+	private static LeaveItem createLeaveItem(long id, String parentNodeName, String leaveName) {
+		RootNodeItem parentNode = new RootNodeItem(parentNodeName);
+		LeaveItem leaveItem = new LeaveItem((int)id, parentNode, leaveName);
+		return leaveItem;
 	}
 	
 }
