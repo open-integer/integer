@@ -55,11 +55,39 @@ categories:
                   description:  load balancer
                   parent: networking
                   
-                - name: 
-                  description:  switch
-                  parent: networking
-              categories:  
-        
+            - name: Servers
+              description:  servers
+              parent: physical
+              categories:
+                - name: General Purpose
+                  description:  general purpose
+                  parent: servers
+                  
+                - name: Web
+                  description:  web
+                  parent: servers
+                  
+                - name: Database
+                  description:  web
+                  parent: servers
+                  
+                - name: LDAP
+                  description:  LDAP
+                  parent: servers               
+                  
+                - name: File
+                  description:  file
+                  parent: servers
+       
+                - name: Storage
+                  description:  storage
+                  parent: servers
+                  
+                - name: Application
+                  description:  application
+                  parent: servers
+                  
+
 
       - 
         - name: stack
