@@ -32,69 +32,101 @@ categories:
                   description: fiber
                   parent: passive
                   
-            - name: Networking
-              description:  networking
+            - name: Network Element Categories
+              description:  Network Element Categories
               parents: [physical, virtual]
               categories:
                 - name: Router
                   description:  router
-                  parent: networking
+                  parent: network element categories
                   
                 - name: Switch
                   description:  switch
-                  parent: networking
+                  parent: network element categories
                   
                 - name: Switch/Router
                   description:  switch/router
-                  parent: networking
+                  parent: network element categories
                   
                 - name: Firewall
                   description:  firewall
-                  parent: networking
+                  parent: network element categories
                   
                 - name: NAT
                   description:  nat
-                  parent: networking
+                  parent: network element categories
                   
                 - name: Load Balancer
                   description:  load balancer
-                  parent: networking
+                  parent: network element categories
+            
+                - name: Network Element Specific Components
+                  description: network element specific components
+                  parent: network element categories
+                  categories:       
+                    - name: module
+                      description: linecard, fpc, etc.
+                      parent: network element specific components
+            
+                    - name: routing engine
+                      description: routing engine
+                      parent: network element specific components
+                      
+                    - name: Supervisor Board
+                      description: supervisor board
+                      parent: network element specific components  
+            
+                    - name: feature card
+                      description: crypto, ssl, extra processing, etc.
+                      parent: network element spefic components
                   
-            - name: Servers
-              description:  servers
+            - name: Server Categories
+              description:  server categories
               parents: [physical, virtual]
               categories:
                 - name: General Purpose
                   description:  general purpose
-                  parent: servers
+                  parent: server categories
                   
                 - name: Web
                   description:  web
-                  parent: servers
+                  parent: server categories
                   
                 - name: Database
                   description:  web
-                  parent: servers
+                  parent: server categories
                   
                 - name: LDAP
                   description:  LDAP
-                  parent: servers               
+                  parent: server categories               
                   
                 - name: File
                   description:  file
-                  parent: servers
+                  parent: server categories
        
                 - name: Storage
                   description:  storage
-                  parent: servers
+                  parent: server categories
                   
                 - name: Application
                   description:  application
-                  parent: servers         
-                   
+                  parent: server categories
+              
+                - name: Server Specific Components
+                  description: server specific components
+                  parent: server categories
+                  categories:       
+                  - name: raid array
+                    description: raid array
+                    parent: hardware
+          
+                  - name: raid controller
+                    description: raid controller
+                    parent: hardware
+                     
             - name: Common System Components
               description:  common system components
-              parents: [networking, servers]
+              parents: [network element categories, server categories]
               categories:
                 - name: chassis
                   description: chassis
@@ -104,16 +136,8 @@ categories:
                   description: backplane
                   parent: common system components
                
-                - name: module
-                  description: linecard, fpc, etc.
-                  parent: common system components
-        
-                - name: routing engine
-                  description: or supervisor board
-                  parent: common system components
-        
-                - name: feature card
-                  description: crypto, ssl, extra processing, etc.
+                - name: Memory
+                  description: memory
                   parent: common system components
         
                 - name: port
@@ -147,15 +171,7 @@ categories:
                 - name: disk
                   description: disk
                   parent: common system components
-        
-                - name: raid array
-                  description: raid array
-                  parent: hardware
-        
-                - name: raid controller
-                  description: raid controller
-                  parent: hardware
-
+ 
       - name: software
         description: software
         parent: category-tree
@@ -167,468 +183,28 @@ categories:
         - name: per-card operating system
           description: per-card operating system
           parent: software
-
-      - name: physical connectivity
-        description: physical connectivity
+        
+        - name: Middleware/Application Server
+          description: middleware/application server
+          parent: software
+          
+        - name: Database
+          description: database
+          parent: software
+          
+        - name: File Service
+          description: file service
+          parent: software
+          
+        - name: Network
+          description: network
+          parent: software
+          
+        - name: Other Undefined
+          description: other undefined
+          parent: software
+            
+      - name: Inter Device Links
+        description: inter device links
         parent: category-tree
-        technologies:
-          - name: ethernet physical layer
-            description: ethernet physical layer
-            parent: physical connectivity
-            technologies:
-              - name: 1000base-T
-                description: 1000base-T
-                parent: ethernet physical layer
-  
-              - name: 10GBASE-SR
-                description: 10GBASE-SR
-                parent: ethernet physical layer
-
-          - name: 802.11 wireless LAN
-            description: Wi-Fi
-            parent: physical connectivity
-  
-          - name: 802.16 wireless MAN
-            description: WiMAX
-            parent: physical connectivity
-
-      - name: data link protocols
-        description: data link protocols
-        parent: category-tree
-        technologies:
-        - name: Ethernet
-          description: Ethernet
-          parent: data link protocols
-
-        - name: PPP
-          description: PPP
-          parent: data link protocols
-
-        - name: PPTP
-          description: PPTP
-          parent: data link protocols
-
-      - name: traffic encryption protocols
-        description: traffic encryption protocols
-        parent: category-tree
-        technologies:
-          - name: IPSEC
-            description: IPSEC
-            parent: traffic encryption protocols
-            technologies:
-            - name: AH
-              description: AH
-              parent: IPSEC
-
-            - name: ESP
-              description: ESP
-              parent: IPSEC
-
-            - name: SA
-              description: SA
-              parent: IPSEC
-
-      - name: packet-switched networking
-        description: packet-switched networking
-        parent: category-tree
-        technologies:
-        - name: Frame Relay
-          description: Frame Relay
-          parent: packet-switched networking
-
-        - name: ATM
-          description: ATM
-          parent: packet-switched networking
-
-        - name: MPLS
-          description: MPLS
-          parent: packet-switched networking
-
-      - name: tunneling
-        description: tunneling
-        parent: category-tree
-        technologies:
-        - name: Cisco GRE
-          description: Generic Routing Encapsulation, virtual point-to-point links
-          parent: tunneling
-
-        - name: mGRE
-          description: multipoint GRE
-          parent: tunneling
-
-        - name: IP-VPN
-          description: based on PPP and IPSEC
-          parent: tunneling
-          technologies:
-          - name: MPLS VPN tunnels
-            description: MPLS VPN tunnels
-            parent: tunneling
-            technologies:
-            - name: PW/point-to-point
-              description: pseudowire
-              parent: MPLS VPN tunnels
-
-            - name: VPLS
-              description: Virtual Private LAN Service
-              parent: MPLS VPN tunnels
-
-            - name: VPRN
-              description: Virtual Private Routed Network
-              parent: MPLS VPN tunnels
-
-      - name: neighbor discovery
-        description: neighbor discovery
-        parent: category-tree
-        technologies:
-        - name: CDP
-          description: Cisco Discovery Protocol
-          parent: neighbor discovery
-
-        - name: LLDP
-          description: Link-layer Discovery Protocol
-          parent: neighbor discovery
-
-        - name: LLDP-MED
-          description: Link-layer Discovery Protocol Media Endpoint Discovery
-          parent: neighbor discovery
-
-        - name: NDP
-          description: IPv6 Neighbor Discovery Protocol
-          parent: neighbor discovery
-
-        - name: FDP
-          description: Foundry Discovery Protocol
-          parent: neighbor discovery
-
-        - name: EDP
-          description: Extreme Discovery Protocol
-          parent: neighbor discovery
-
-        - name: LLTD
-          description: Microsoft Link-layer Topology Discovery protocol
-          parent: neighbor discovery
-
-      - name: link bonding
-        description: link bonding
-        parent: category-tree
-        technologies:
-          - name: host-to-host bonded link schemes
-            description: host-to-host bonded link schemes
-            parent: link bonding
-            technologies:
-            - name: Cisco EtherChannel
-              description: Cisco EtherChannel
-              parent: host-to-host bonded link schemes
-
-            - name: Juniper Aggregated Ethernet
-              description: ae
-              parent: host-to-host bonded link schemes
-
-            - name: Avaya Multi-Link Trunking
-              description: several variants
-              parent: host-to-host bonded link schemes
-
-            - name: Linux Bonding driver
-              description: Linux Bonding driver
-              parent: host-to-host bonded link schemes
-
-            - name: Linux Team driver
-              description: Linux Team driver
-              parent: host-to-host bonded link schemes
-
-            - name: LBFO
-              description: Microsoft Load Balancing & Failover
-              parent: host-to-host bonded link schemes
-
-          - name: link bonding types
-            description: link bonding types
-            parent: link bonding
-            technologies:
-              - name: static single-sided configuration
-                description: host-only
-                parent: link bonding types
-                technologies:
-                - name: active-backup
-                  description: active-backup
-                  parent: static single-sided configuration
-
-                - name: broadcast
-                  description: broadcast
-                  parent: static single-sided configuration
-
-                - name: adaptive transmit
-                  description: adaptive transmit
-                  parent: static single-sided configuration
-
-                - name: adaptive transmit and receive
-                  description: adaptive transmit and receive
-                  parent: static single-sided configuration
-
-              - name: static dual-sided configuration
-                description: static dual-sided configuration
-                parent: link bonding types
-                technologies:
-                - name: round-robin
-                  description: round-robin
-                  parent: static dual-sided configuration
-
-                - name: xor
-                  description: xor
-                  parent: static dual-sided configuration
-
-              - name: dynamic protocols
-                description: dynamic protocols
-                parent: link bonding types
-                technologies:
-                - name: lacp
-                  description: lacp
-                  parent: dynamic protocols
-
-                - name: pagp
-                  description: pagp
-                  parent: dynamic protocols
-
-          - name: proprietary multi-chassis bonding schemes
-            description: switch-side proprietary, host-side LACP
-            parent: link bonding
-            technologies:
-            - name: Juniper Multi-Chassis Link Aggregation
-              description: Alcatel-Lucent
-              parent: proprietary multi-chassis bonding schemes
-
-            - name: Brocade Multi-Chassis Trunking
-              description: Brocade Multi-Chassis Trunking
-              parent: proprietary multi-chassis bonding schemes
-
-            - name: Arista Multi-Chassis Link Aggregation
-              description: Arista Multi-Chassis Link Aggregation
-              parent: proprietary multi-chassis bonding schemes
-
-            - name: Cisco Virtual Port Channel
-              description: vPC
-              parent: proprietary multi-chassis bonding schemes
-
-            - name: Force10 Virtual Link Trunking
-              description: Force10 Virtual Link Trunking
-              parent: proprietary multi-chassis bonding schemes
-
-      - name: VLANs
-        description: Virtual Local Area Networks
-        parent: category-tree
-        technologies:
-          - name: VLAN tagging protocols
-            description: VLAN tagging protocols
-            parent: VLANs
-            technologies:
-            - name: 802.1q vlan trunking
-              description: 802.1q vlan trunking
-              parent: VLAN tagging protocols
-
-            - name: Cisco ISL
-              description: or IEEE 802.10
-              parent: VLAN tagging protocols
-
-            - name: LANE
-              description: LAN emulation
-              parent: VLAN tagging protocols
-
-          - name: VLAN registration protocols
-            description: VLAN registration protocols
-            parent: VLANs
-            technologies:
-            - name: Cisco VTP
-              description: VLAN Trunking Protocol
-              parent: VLAN registration protocols
-
-            - name: MVRP
-              description: Multiple VLAN Registration Protocol, part of MRP (IEEE 802.1ak)
-              parent: VLAN registration protocols
-
-          - name: VLAN trunk negotiation protocols
-            description: VLAN trunk negotiation protocols
-            parent: VLANs
-            technologies:
-            - name: Cisco DTP
-              description: Dynamic Trunking Protocol
-              parent: VLAN trunk negotiation protocols
-
-          - name: Spanning-tree protocol versions and alternatives
-            description: Spanning-tree protocol versions and alternatives
-            parent: VLANs
-            technologies:
-            - name: standards-based spanning-tree versions - IEEE STP
-              description: 802.1d) - RSTP (802.1w, 802.1d-2004) - MSTP (Multiple Spanning Tree Protocol) (802.1s, 802.1q-2005
-              parent: Spanning-tree protocol versions and alternatives
-              technologies:
-              - name: vendor-proprietary spanning-tree implementations
-                description: vendor-proprietary spanning-tree implementations
-                parent: Spanning-tree protocol versions and alternatives
-                technologies:
-                - name: Cisco PVST
-                  description: Cisco PVST
-                  parent: vendor-proprietary spanning-tree implementations
-
-                - name: Cisco PVST+
-                  description: Cisco PVST+
-                  parent: vendor-proprietary spanning-tree implementations
-
-                - name: Cisco RPVST
-                  description: Cisco RPVST
-                  parent: vendor-proprietary spanning-tree implementations
-
-                - name: Cisco MISTP
-                  description: Cisco MISTP
-                  parent: vendor-proprietary spanning-tree implementations
-
-                - name: Extreme EAPS
-                  description: Extreme EAPS
-                  parent: vendor-proprietary spanning-tree implementations
-
-          - name: Spanning-tree replacement protocols
-            description: Spanning-tree replacement protocols
-            parent: VLANs
-            technologies:
-            - name: SPB
-              description: Shortest Path Bridging
-              parent: Spanning-tree replacement protocols
-
-            - name: TRILL
-              description: Transparent Interconnection of Lots of Links
-              parent: Spanning-tree replacement protocols
-
-      - name: switching
-        description: switching
-        parent: category-tree
-        technologies:
-          - name: ethernet switching
-            description: ethernet switching
-            parent: switching
-            technologies:
-            - name: CAM table
-              description: CAM table
-              parent: ethernet switching
-
-      - name: routing
-        description: routing
-        parent: category-tree
-        technologies:
-          - name: routing table
-            description: routing table
-            parent: routing
-            technologies:
-            - name: dynamic routes
-              description: protocol-generated
-              parent: routing table
-
-            - name: static routes
-              description: static routes
-              parent: routing table
-
-            - name: directly-connected routes
-              description: directly-connected routes
-              parent: routing table
-
-            - name: locally-generated routes
-              description: locally-generated routes
-              parent: routing table
-
-      - name: network layer protocols
-        description: network layer protocols
-        parent: category-tree
-        technologies:
-        - name: IPv4
-          description: IPv4
-          parent: network layer protocols
-
-        - name: IPv6
-          description: IPv6
-          parent: network layer protocols
-
-        - name: CLNS
-          description: CLNS
-          parent: network layer protocols
-
-      - name: IP routing protocols
-        description: IP routing protocols
-        parent: category-tree
-        technologies:
-          - name: interior gateway protocols
-            description: interior gateway protocols
-            parent: IP routing protocols
-            technologies:
-              - name: link-state
-                description: link-state
-                parent: interior gateway protocols
-                technologies:
-                - name: OSPFv2
-                  description: IPv4
-                  parent: link-state
-
-                - name: OSPFv3
-                  description: IPv6
-                  parent: link-state
-
-                - name: IS-IS
-                  description: IS-IS
-                  parent: link-state
-
-              - name: distance vector
-                description: distance vector
-                parent: interior gateway protocols
-                technologies:
-                - name: RIP
-                  description: RIP
-                  parent: distance vector
-
-                - name: RIPv2
-                  description: RIPv2
-                  parent: distance vector
-
-                - name: IGRP
-                  description: IGRP
-                  parent: distance vector
-
-                - name: EIGRP
-                  description: EIGRP
-                  parent: distance vector
-
-          - name: exterior gateway protocols
-            description: exterior gateway protocols
-            parent: IP routing protocols
-            technologies:
-            - name: BGP - iBGP - EBGP
-              description: BGP - iBGP - EBGP
-              parent: exterior gateway protocols
-
-      - name: IP multicast protocols
-        description: protocols for delivery of multicast services
-        parent: category-tree
-        technologies:
-        - name: IGMP
-          description: IGMP
-          parent: IP multicast protocols
-
-        - name: PIM
-          description: protocol independent multicast
-          parent: IP multicast protocols
-
-        - name: DVMRP
-          description: distance vector multicast routing protocol
-          parent: IP multicast protocols
-
-        - name: MOSPF
-          description: MOSPF
-          parent: IP multicast protocols
-
-        - name: MBGP
-          description: MBGP
-          parent: IP multicast protocols
-
-        - name: GMRP
-          description: GMRP
-          parent: IP multicast protocols
-
-        - name: MLD
-          description: MLD
-          parent: IP multicast protocols
-
+        
