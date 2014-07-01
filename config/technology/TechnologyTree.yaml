@@ -16,6 +16,8 @@ technologies:
             - name: Ethernet Physical Layer
               description: ethernet physical layer
               parent: physical connectivity
+              discovery: [ service element type ]
+              layer:  1
               technologies:
                 - name: 1000base-T
                   description: 1000base-T
@@ -27,15 +29,20 @@ technologies:
   
             - name: 802.11 wireless LAN
               description: Wi-Fi
+              discovery: [ service element type ]
+              layer:  2
               parent: physical connectivity
     
             - name: 802.16 wireless MAN
               description: WiMAX
+              discovery: [ service element type ]
+              layer:  2
               parent: physical connectivity
 
             - name: Link Layer Protocols
               descritpion:  link layer protocols
               parent: networking
+              layer:  2
               technologies:
                 - name: Data Link Protocols
                   description: data link protocols
@@ -53,11 +60,13 @@ technologies:
                     description: PPTP
                     parent: data link protocols
 
-#Discovery Protocols are not interfaces.
+#Discovery Protocols are not interfaces, but the link bonding does create interfaces.
 
                 - name: Neighbor Discovery
                   description: neighbor discovery
                   parent: link layer protocols
+                  discovery:  [ topology ]
+                  layer:  2.5
                   technologies:
                   - name: CDP
                     description: Cisco Discovery Protocol
@@ -90,6 +99,8 @@ technologies:
                 - name: Link Bonding
                   description: link bonding
                   parent: link layer protocols
+                  discovery:  [ service element type ]
+                  layer:  2
                   technologies:
                     - name: Host-to-host bonded link schemes
                       description: host-to-host bonded link schemes
@@ -118,10 +129,12 @@ technologies:
                       - name: Microsoft load balancing and failover
                         description: microsoft load balancing and failover
                         parent: host-to-host bonded link schemes
-          
+                        
+#They remain at layer 2.5          
                     - name: link bonding types
                       description: link bonding types
                       parent: link layer protocols
+                      layer: 2.5
                       technologies:
                         - name: static single-sided configuration
                           description: host-only
@@ -169,6 +182,7 @@ technologies:
           
                     - name: Proprietary Multi-chassis Bonding Schemes
                       description: switch-side proprietary, host-side LACP
+                      layer: 2.5
                       parent: link bonding
                       technologies:
                       - name: Juniper Multi-Chassis Link Aggregation
@@ -200,6 +214,8 @@ technologies:
             - name: VLAN tagging protocols
               description: VLAN tagging protocols
               parent: VLANs
+              discovery:  [ service element type, topology ]
+              layer:  2
               technologies:
               - name: 802.1q vlan trunking
                 description: 802.1q vlan trunking
@@ -212,10 +228,13 @@ technologies:
               - name: LANE
                 description: LAN emulation
                 parent: VLAN tagging protocols
-  
+ 
+#Items below are not used for service element type identification or topology 
             - name: VLAN Registration Protocols
               description: VLAN registration protocols
               parent: VLANs
+              layer:  2.5
+              discovery: [ none ]
               technologies:
               - name: Cisco VTP
                 description: VLAN Trunking Protocol
@@ -224,10 +243,13 @@ technologies:
               - name: MVRP
                 description: Multiple VLAN Registration Protocol, part of MRP (IEEE 802.1ak)
                 parent: VLAN registration protocols
-  
+
+#Assume items below revert to the parent, VLANs which should be layer 2, not used for discovery.  
+
             - name: VLAN trunk negotiation protocols
               description: VLAN trunk negotiation protocols
               parent: VLANs
+              discovery: [ none ]
               technologies:
               - name: Cisco DTP
                 description: Dynamic Trunking Protocol
@@ -236,6 +258,8 @@ technologies:
             - name: Spanning-tree protocol versions and alternatives
               description: Spanning-tree protocol versions and alternatives
               parent: VLANs
+              discovery:  [ topology ]
+              layer:  2
               technologies:
               - name: standards-based spanning-tree versions - IEEE STP
                 description: 802.1d) - RSTP (802.1w, 802.1d-2004) - MSTP (Multiple Spanning Tree Protocol) (802.1s, 802.1q-2005
@@ -303,6 +327,8 @@ technologies:
       - name: packet-switched networking
         description: packet-switched networking
         parent: networking
+        discovery:  [ service element type, topology]
+        layer:  2.5
         technologies:
         - name: Frame Relay
           description: Frame Relay
@@ -319,6 +345,7 @@ technologies:
       - name: tunneling
         description: tunneling
         parent: technology-tree
+        layer: 2.5
         technologies:
         - name: Cisco GRE
           description: Generic Routing Encapsulation, virtual point-to-point links
@@ -357,6 +384,7 @@ technologies:
           - name: Ethernet Switching
             description: ethernet switching
             parent: switching
+            layer: 2
             technologies:
             - name: CAM table
               description: CAM table
@@ -367,6 +395,7 @@ technologies:
       - name: Network Layer Protocols
         description: network layer protocols
         parent: networking
+        layer: 3
         technologies:
         - name: IPv4
           description: IPv4
@@ -380,89 +409,166 @@ technologies:
           description: CLNS
           parent: network layer protocols
 
-      - name: IP routing protocols
-        description: IP routing protocols
-        parent: networking
+#Routing related technologies and service element types 
+
+      - name: Routing
+        description: routing
+        parent: technology-tree
         technologies:
-          - name: Interior Gateway Protocols
-            description: interior gateway protocols
-            parent: IP routing protocols
+          - name: Routing Table
+            description: routing table
+            discovery: [ service element type, topology ]
+            layer:  3
+            parent: routing
             technologies:
-              - name: Link-State
-                description: link-state
-                parent: interior gateway protocols
+            - name: dynamic routes
+              description: protocol-generated
+              parent: routing table
+              technologies:
+              - name: Interior Gateway Protocols
+                description: interior gateway protocols
+                parent: routing table
                 technologies:
-                - name: OSPFv2
-                  description: IPv4
-                  parent: link-state
-
-                - name: OSPFv3
-                  description: IPv6
-                  parent: link-state
-
-                - name: IS-IS
-                  description: IS-IS
-                  parent: link-state
-
-              - name: Distance Vector
-                description: distance vector
-                parent: interior gateway protocols
+                  - name: Link-State
+                    description: link-state
+                    parent: interior gateway protocols
+                    technologies:
+                    - name: OSPFv2
+                      description: IPv4
+                      parent: link-state
+    
+                    - name: OSPFv3
+                      description: IPv6
+                      parent: link-state
+    
+                    - name: IS-IS
+                      description: IS-IS
+                      parent: link-state
+    
+                  - name: Distance Vector
+                    description: distance vector
+                    parent: interior gateway protocols
+                    technologies:
+                    - name: RIP
+                      description: RIP
+                      parent: distance vector
+    
+                    - name: RIPv2
+                      description: RIPv2
+                      parent: distance vector
+    
+                    - name: IGRP
+                      description: IGRP
+                      parent: distance vector
+    
+                    - name: EIGRP
+                      description: EIGRP
+                      parent: distance vector
+    
+              - name: Exterior Gateway Protocols
+                description: exterior gateway protocols
+                parent: IP routing protocols
                 technologies:
-                - name: RIP
-                  description: RIP
-                  parent: distance vector
+                - name: BGP - iBGP - EBGP
+                  description: BGP - iBGP - EBGP
+                  parent: exterior gateway protocols
 
-                - name: RIPv2
-                  description: RIPv2
-                  parent: distance vector
+              - name: IP Multicast Protocols
+                description: protocols for delivery of multicast services
+                parent: routing table
+                technologies:
+                - name: IGMP
+                  description: IGMP
+                  parent: IP multicast protocols
+        
+                - name: PIM
+                  description: protocol independent multicast
+                  parent: IP multicast protocols
+        
+                - name: DVMRP
+                  description: distance vector multicast routing protocol
+                  parent: IP multicast protocols
+        
+                - name: MOSPF
+                  description: MOSPF
+                  parent: IP multicast protocols
+        
+                - name: MBGP
+                  description: MBGP
+                  parent: IP multicast protocols
+        
+                - name: GMRP
+                  description: GMRP
+                  parent: IP multicast protocols
+        
+                - name: MLD
+                  description: MLD
+                  parent: IP multicast protocols
 
-                - name: IGRP
-                  description: IGRP
-                  parent: distance vector
+            - name: static routes
+              description: static routes
+              discovery: [ service element type, topology ]
+              layer:  3
+              parent: routing table
 
-                - name: EIGRP
-                  description: EIGRP
-                  parent: distance vector
+            - name: directly-connected routes
+              description: directly-connected routes
+              discovery: [ service element type, topology ]
+              layer:  3
+              parent: routing table
 
-          - name: Exterior Gateway Protocols
-            description: exterior gateway protocols
-            parent: IP routing protocols
-            technologies:
-            - name: BGP - iBGP - EBGP
-              description: BGP - iBGP - EBGP
-              parent: exterior gateway protocols
+            - name: locally-generated routes
+              description: locally-generated routes
+              discovery: [ service element type, topology ]
+              layer:  3
+              parent: routing table
 
-#Not treated as interfaces.
-
-      - name: IP Multicast Protocols
-        description: protocols for delivery of multicast services
-        parent: networking
+      - name: Servers
+        description:  servers
+        parent: technology-tree
         technologies:
-        - name: IGMP
-          description: IGMP
-          parent: IP multicast protocols
+        - name: Operating System
+          description: operating system
+          parent: servers
+          technologies:
+            - name: Unix
+              description: unix
+              parent: operating system
 
-        - name: PIM
-          description: protocol independent multicast
-          parent: IP multicast protocols
+            - name: Microsoft
+              description: microsoft
+              parent: operating system            
+          
+        - name: Middleware
+          description: middleware
+          parent: servers
+          
+        - name: Web
+          description: web
+          parent: servers
+          
+        - name: File Services
+          description: file services
+          parent: servers
+          
+        - name: Network Infrastructure
+          description: network infrastructure
+          parent: servers
+          technologies:
+            - name: DNS
+              description: dns
+              parent: network infrastructure
 
-        - name: DVMRP
-          description: distance vector multicast routing protocol
-          parent: IP multicast protocols
-
-        - name: MOSPF
-          description: MOSPF
-          parent: IP multicast protocols
-
-        - name: MBGP
-          description: MBGP
-          parent: IP multicast protocols
-
-        - name: GMRP
-          description: GMRP
-          parent: IP multicast protocols
-
-        - name: MLD
-          description: MLD
-          parent: IP multicast protocols
-
+        - name: Other Undefined
+          description: other undefined
+          parent: servers              
+          
+      - name: Virtualization
+        description:  virtualization
+        parent: technology-tree
+  
+      - name: Storage
+        description:  storage
+        parent: technology-tree
+        
+        
