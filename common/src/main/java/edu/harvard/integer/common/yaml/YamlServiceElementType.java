@@ -44,6 +44,13 @@ public class YamlServiceElementType {
 	private String vendor = null;
 	private String name = null;
 	private String description = null;
+	
+	/**
+	 * Extend Servce Element Type.
+	 */
+	private String extendServiceElementType;
+	
+
 	private YamlAccessMethod accessMethod = null;
 
 	private List<YamlManagementObject> managementObjects = null;
@@ -126,6 +133,15 @@ public class YamlServiceElementType {
 	public void setManagementObjects(
 			List<YamlManagementObject> managementObjects) {
 		this.managementObjects = managementObjects;
+	}
+	
+
+	public String getExtendServiceElementType() {
+		return extendServiceElementType;
+	}
+
+	public void setExtendServiceElementType(String extendServiceElementType) {
+		this.extendServiceElementType = extendServiceElementType;
 	}
 
 }

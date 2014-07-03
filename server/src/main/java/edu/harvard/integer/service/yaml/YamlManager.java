@@ -620,8 +620,7 @@ public class YamlManager extends BaseManager implements
 			YamlServiceElementType yamlServiceElementType, String name)
 			throws IntegerException {
 
-		ServiceElementType serviceElementType = serviceElementTypeDao
-				.findByName(name);
+		ServiceElementType serviceElementType = serviceElementTypeDao.findByName(name);
 		if (serviceElementType == null) {
 			serviceElementType = new ServiceElementType();
 
@@ -632,6 +631,41 @@ public class YamlManager extends BaseManager implements
 		}
 
 		List<ID> managementObjects = new ArrayList<ID>();
+		if ( yamlServiceElementType.getExtendServiceElementType() != null ) {
+			
+			ServiceElementType extendSet = serviceElementTypeDao.findByName(yamlServiceElementType.getExtendServiceElementType());
+			if ( extendSet != null ) {
+				
+				List<ID> extendUniqueIds = extendSet.getUniqueIdentifierCapabilities();
+				List<ID> snmpIds = extendSet.getAttributeIds();
+				
+				SNMPDAO dao = persistanceManager.getSNMPDAO();
+				for ( ID id : snmpIds ) {
+				
+					SNMP snmp = dao.findById(id);
+					managementObjects.add(snmp.getID());
+					
+					boolean isUid = false;
+					if ( extendUniqueIds != null ) {
+						for ( ID uid : extendUniqueIds ) {
+							
+							if ( id.getIdentifier() == uid.getIdentifier() ) {
+								isUid = true;
+							}
+						}
+					}
+					if ( isUid ) {
+						List<ID> uniqueIds = serviceElementType.getUniqueIdentifierCapabilities();
+						if (uniqueIds == null) {
+							uniqueIds = new ArrayList<>();
+							serviceElementType.setUniqueIdentifierCapabilities(uniqueIds);
+						}
+						uniqueIds.add(id);
+					}
+				}			
+			}
+		}
+		
 		for (YamlManagementObject yamlManagementObject : yamlServiceElementType
 				.getManagementObjects()) {
 
