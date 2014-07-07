@@ -24,9 +24,30 @@ serviceElementTypes:
             uri: cdpGlobalDeviceId
             capability: cdp-global-deviceId
 
+          - name: cdpGlobalMessageInterval
+            uri: cdpGlobalMessageInterval
+            capability: cdp-global-cdpGlobalMessageInterval
+
+          - name: cdpGlobalHoldTime
+            uri: cdpGlobalHoldTime
+            capability: cdp-global-cdpGlobalHoldTime
+
+          - name: cdpGlobalLastChange
+            uri: cdpGlobalLastChange
+            capability: cdp-global-cdpGlobalLastChange
+
+          - name: cdpGlobalDeviceIdFormatCpb
+            uri: cdpGlobalDeviceIdFormatCpb
+            capability: cdp-global-cdpGlobalDeviceIdFormatCpb
+
+          - name: cdpGlobalDeviceIdFormat
+            uri: cdpGlobalDeviceIdFormat
+            capability: cdp-global-cdpGlobalDeviceIdFormat
+
     - name: cisco-cdp-interface
       description: Cisco enterprise CDP MIB, per-interface attributes.
       vendor: cisco
+      extendServiceElementType: interface
       accessMethod: 
           protocol: SNMP
           mib: CISCO-CDP-MIB
@@ -36,10 +57,6 @@ serviceElementTypes:
            mapping: direct
            category: portIf
       managementObjects:
-          - name: cdpInterfaceIfIndex
-            uri: cdpInterfaceIfIndex
-            capability: cdp-interface-index
-
           - name: cdpInterfaceEnable
             uri: cdpInterfaceEnable
             capability: cdp-interface-enable
@@ -47,6 +64,18 @@ serviceElementTypes:
           - name: cdpInterfaceName
             uri: cdpInterfaceName
             capability: cdp-interface-name
+
+          - name: cdpInterfaceMessageInterval
+            uri: cdpInterfaceMessageInterval
+            capability: cdp-interface-cdpInterfaceMessageInterval
+
+          - name: cdpInterfaceExtendedTrust
+            uri: cdpInterfaceExtendedTrust
+            capability: cdp-interface-cdpInterfaceExtendedTrust
+
+          - name: cdpInterfaceCosForUntrustedPort
+            uri: cdpInterfaceCosForUntrustedPort
+            capability: cdp-interface-cdpInterfaceCosForUntrustedPort
 
     - name: cisco-cdp-cache
       description: Cisco enterprise CDP MIB, device cache per interface.
@@ -60,14 +89,6 @@ serviceElementTypes:
            mapping: direct
            category: cache
       managementObjects:
-          - name: cdpCacheIfIndex
-            uri: cdpCacheIfIndex
-            capability: cdp-cache-ifIndex
-
-          - name: cdpCacheDeviceIndex
-            uri: cdpCacheDeviceIndex
-            capability: cdp-cache-deviceIndex
-
           - name: cdpCacheAddressType
             uri: cdpCacheAddressType
             capability: cdp-cache-addressType
