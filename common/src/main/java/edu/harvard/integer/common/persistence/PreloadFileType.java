@@ -45,6 +45,7 @@ public enum PreloadFileType {
 	MIB("mibs"),
 	ProductMIB("mibs"),
 	VendorContainmentYaml("yaml"),
+	CategoryYaml("yaml"),
 	SQL("sql");
 	
 	String dataSubDir = null;

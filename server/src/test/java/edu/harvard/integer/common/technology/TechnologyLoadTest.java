@@ -59,8 +59,8 @@ import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.yaml.YamlDomainData;
-import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlTechnology;
+import edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 
@@ -91,7 +91,7 @@ public class TechnologyLoadTest {
 
 	@Test
 	public void readTechnologyTree() throws IntegerException {
-		File techTree = new File("../config/technology/TechnologyTree.yaml");
+		File techTree = new File("../config/technology/TechnologyTree.yaml.new");
 		String content = null;
 		try {
 			content = new String(Files.readAllBytes(techTree.toPath()));
@@ -250,7 +250,7 @@ public class TechnologyLoadTest {
 	}
 	
 	@Test
-	public void readVendorParentChildContainment() throws IntegerException {
+	public void readVendorParentChildContainment() {
 		File techTree = new File("../config/vendorcontianment/ParentChildContainment.yaml");
 		String content = null;
 		try {
@@ -270,6 +270,36 @@ public class TechnologyLoadTest {
 		
 		try {
 			yamlManager.loadVendorContainment(content);
+		} catch (IntegerException e) {
+			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
+				logger.warn("OID not found! ParentChildContainment not read!!");
+			else
+				fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void readCategories() {
+
+		File techTree = new File("../config/technology/category.yaml");
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(techTree.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading YAML: " + e.getMessage());
+		}
+		
+		Yaml yaml = new Yaml(new Constructor(YamlCategory.class));
+
+		Object load = yaml.load(content);
+		
+		logger.info("Category read in: " + yaml.dump(load));
+		
+		try {
+			yamlManager.loadCategory(content);
 		} catch (IntegerException e) {
 			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
 				logger.warn("OID not found! ParentChildContainment not read!!");

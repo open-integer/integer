@@ -31,45 +31,61 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.common.topology;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
+import java.util.List;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.OrderColumn;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
- * The YamlManager is used to import a YAML file. The current YAML file types
- * supported are Technology Tree, VendorContianment and VendorIdentifier
  * @author David Taylor
  *
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
+@Entity
+public class Category extends BaseEntity {
 
 	/**
-	 * Read in the YAML in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists in the database then the technology 
-	 * will be update with new information found in the YAML. The YAML is
-	 * passed in as a string so the YAML file can be loaded from the GUI. 
-	 * 
-	 * @param content. YAML file passed in as a string. 
-	 * @return Status of the load. 
-	 * @throws IntegerException. 
+	 * Serial Version UID
 	 */
-	String loadTechnologyTree(String content) throws IntegerException;
+	private static final long serialVersionUID = 1L;
+
+	private String description = null;
+	
+	@ElementCollection
+	@OrderColumn(name="idx")
+	private List<ID> childIds = null;
 
 	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
+	 * @return the description
 	 */
-	String loadServiceElementType(String content) throws IntegerException;
+	public String getDescription() {
+		return description;
+	}
 
 	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
+	 * @param description the description to set
 	 */
-	String loadVendorContainment(String content) throws IntegerException;
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-	public String loadCategory(String content) throws IntegerException;
+	/**
+	 * @return the childIds
+	 */
+	public List<ID> getChildIds() {
+		return childIds;
+	}
+
+	/**
+	 * @param childIds the childIds to set
+	 */
+	public void setChildIds(List<ID> childIds) {
+		this.childIds = childIds;
+	}
+
 }

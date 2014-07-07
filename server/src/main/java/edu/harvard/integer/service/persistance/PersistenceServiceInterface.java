@@ -1,4 +1,5 @@
 /*
+
  *  Copyright (c) 2013 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
@@ -46,5 +47,10 @@ import edu.harvard.integer.service.BaseServiceInterface;
 
 public interface PersistenceServiceInterface extends BaseServiceInterface {
 	public void init();
+
+	/**
+	 * @return
+	 */
+	String showPreloads();
 	
 }

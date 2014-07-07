@@ -77,16 +77,9 @@ public class UserManager implements UserManagerInterface {
 
 	}
 
-	/**
-	 * Add one user to the system. The user will be saved into the database. All
-	 * setup for the user will be done after the call completes.
-	 * 
-	 * TODO: add initialization steps once known what the initialization steps
-	 * are.
-	 * 
-	 * @param user
-	 * @return User. The newly created user.
-	 * @throws IntegerException
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.user.UserManagerInterface#addUser(edu.harvard.integer.common.user.User)
 	 */
 	@Override
 	public User addUser(User user) throws IntegerException {
@@ -97,13 +90,9 @@ public class UserManager implements UserManagerInterface {
 		return user;
 	}
 
-	/**
-	 * 
-	 * Modify the user.
-	 * 
-	 * @param user
-	 * @return User. The modified user.
-	 * @throws IntegerException
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.user.UserManagerInterface#modifyUser(edu.harvard.integer.common.user.User)
 	 */
 	@Override
 	public User modifyUser(User user) throws IntegerException {
@@ -116,12 +105,9 @@ public class UserManager implements UserManagerInterface {
 		return user;
 	}
 
-	/**
-	 * Delete the user. This will clean up any data associated with the user.
-	 * 
-	 * 
-	 * @param user
-	 * @throws IntegerException
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.user.UserManagerInterface#deleteUser(edu.harvard.integer.common.user.User)
 	 */
 	@Override
 	public void deleteUser(User user) throws IntegerException {
@@ -131,11 +117,9 @@ public class UserManager implements UserManagerInterface {
 		userDAO.delete(user);
 	}
 
-	/**
-	 * Return a list of all users.
-	 * 
-	 * @return User[]. All users.
-	 * @throws IntegerException
+	/*
+	 * 	(non-Javadoc)
+	 * @see edu.harvard.integer.service.user.UserManagerInterface#getAllUsers()
 	 */
 	@Override
 	public User[] getAllUsers() throws IntegerException {

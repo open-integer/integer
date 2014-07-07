@@ -175,7 +175,7 @@ categories:
       - name: software
         description: software
         parent: category-tree
-        technologies:
+        categories:
         - name: overall operating system
           description: overall operating system
           parent: software

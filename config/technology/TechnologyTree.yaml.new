@@ -40,7 +40,7 @@ technologies:
               parent: physical connectivity
 
             - name: Link Layer Protocols
-              descritpion:  link layer protocols
+              description:  link layer protocols
               parent: networking
               layer:  2
               technologies:

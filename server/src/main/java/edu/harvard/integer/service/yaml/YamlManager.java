@@ -67,6 +67,7 @@ import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -94,6 +95,7 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
@@ -1202,76 +1204,16 @@ public class YamlManager extends BaseManager implements
 		logger.info("YAML Object is " + load.getClass().getName());
 
 		HashMap<String, YamlCategory> categories = new HashMap<String, YamlCategory>();
+		HashMap<String, Category> dbCategories = new HashMap<String, Category>();
 		
-		parseCategory(load, "", categories);
+		YamlCategoryParser parser = new YamlCategoryParser(categories, dbCategories, persistanceManager.getCategoryDAO());
+		
+		parser.parseCategory(load);
 
-		printCategories(load, "", categories);
+		parser.printCategories(load, "");
 		
 		return "Success";
 
 	}
 
-	/**
-	 * @param load
-	 * @param string
-	 * @param categories
-	 */
-	private void printCategories(YamlCategory load, String indent,
-			HashMap<String, YamlCategory> categories) {
-		
-		StringBuffer b = new StringBuffer();
-		
-		b.append(indent).append("Name: ").append(load.getName()).append('\n');
-		b.append(indent).append("Description: ").append(load.getDescription()).append('\n');
-
-		System.out.println(b.toString());
-		
-		if (load.getCategories() != null) {
-			for (YamlCategory child : load.getCategories()) {
-				printCategories(child, indent + "    ", categories);
-			}
-		}
-		
-		
-	}
-
-	/**
-	 * @param category
-	 * @param categories 
-	 */
-	private void parseCategory(YamlCategory category, String indent, HashMap<String,YamlCategory> categories) {
-		StringBuffer b = new StringBuffer();
-		
-		categories.put(category.getName(), category);
-		
-		b.append(indent).append("Name: ").append(category.getName()).append('\n');
-		b.append(indent).append("Description: ").append(category.getDescription()).append('\n');
-		
-		System.out.println(b.toString());
-		
-		if (category.getCategories() != null) {
-			for (YamlCategory child : category.getCategories()) {
-				
-				// pass layer and discovery down to child categories if not set on the child
-				if (category.getLayer() != null && child.getLayer() == null)
-					child.setLayer(category.getLayer());
-				
-				if (category.getDiscovery() != null && child.getDiscovery() == null)
-					child.setDiscovery(category.getDiscovery());
-				
-				parseCategory(child, indent + "    ", categories);
-			}
-		}
-		
-		if (category.getParents() != null) {
-			for (String parent : category.getParents()) {
-				YamlCategory parentCategory = categories.get(parent);
-				if (parentCategory != null) {
-					
-					parentCategory.getCategories().add(category);
-				}
-			}
-		}
-
-	}
 }

@@ -31,35 +31,30 @@
  *      
  */
 
-package edu.harvard.integer.common.yaml;
+package edu.harvard.integer.common.yaml.vendorcontainment;
 
 import java.util.List;
 
 /**
+ * 
  * @author David Taylor
  * 
  */
-public class YamlTechnology {
-	
+public class YamlCategory {
+
 	private String name = null;
-	
-	private String parent = null;
 
 	private String description = null;
-
-	private List<String> provides = null;
-
-	private List<YamlMechanismType> mechanisms = null;
 	
-	private List<YamlTechnology> technologies;
+	private String parent = null;
+	
+	private List<String> parents = null;
+
+	private List<YamlCategory> categories = null;
 
 	private List<String> discovery = null;
 	
 	private String layer = null;
-	
-	public YamlTechnology() {
-		
-	}
 	
 	/**
 	 * @return the name
@@ -92,33 +87,33 @@ public class YamlTechnology {
 	}
 
 	/**
-	 * @return the provides
+	 * @return the parents
 	 */
-	public List<String> getProvides() {
-		return provides;
+	public List<String> getParents() {
+		return parents;
 	}
 
 	/**
-	 * @param provides
-	 *            the provides to set
+	 * @param parents
+	 *            the parents to set
 	 */
-	public void setProvides(List<String> provides) {
-		this.provides = provides;
+	public void setParents(List<String> parents) {
+		this.parents = parents;
 	}
 
 	/**
-	 * @return the mechanismTypes
+	 * @return the categories
 	 */
-	public List<YamlMechanismType> getMechanisms() {
-		return mechanisms;
+	public List<YamlCategory> getCategories() {
+		return categories;
 	}
 
 	/**
-	 * @param mechanismTypes
-	 *            the mechanismTypes to set
+	 * @param categories
+	 *            the categories to set
 	 */
-	public void setMechanisms(List<YamlMechanismType> mechanisms) {
-		this.mechanisms = mechanisms;
+	public void setCategories(List<YamlCategory> categories) {
+		this.categories = categories;
 	}
 
 	/**
@@ -133,20 +128,6 @@ public class YamlTechnology {
 	 */
 	public void setParent(String parent) {
 		this.parent = parent;
-	}
-
-	/**
-	 * @return the technologies
-	 */
-	public List<YamlTechnology> getTechnologies() {
-		return technologies;
-	}
-
-	/**
-	 * @param technologies the technologies to set
-	 */
-	public void setTechnologies(List<YamlTechnology> technologies) {
-		this.technologies = technologies;
 	}
 
 	/**

@@ -90,6 +90,10 @@ public class DataLoader implements DataLoaderInterface {
 			loadTechnologyTreeYaml(dataPreLoadFile);
 			break;
 
+		case CategoryYaml:
+			loadCategoryYaml(dataPreLoadFile);
+			break;
+			
 		case ServiceElementTypeYaml:
 			loadServiceElementTypeYaml(dataPreLoadFile);
 			break;
@@ -116,6 +120,7 @@ public class DataLoader implements DataLoaderInterface {
 		}
 
 	}
+
 
 	/**
 	 * @param dataPreLoadFile
@@ -145,6 +150,8 @@ public class DataLoader implements DataLoaderInterface {
 			} else
 				logger.info("Skip blank line");
 		}
+		
+		dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
 
 	}
 
@@ -403,6 +410,45 @@ public class DataLoader implements DataLoaderInterface {
 			}
 		}
 
+	}
+
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException 
+	 */
+	private void loadCategoryYaml(DataPreLoadFile dataPreLoadFile) throws IntegerException {
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+			return;
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
+			return;
+		}
+
+		String data = FileUtil.readInMIB(file);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
+		
+		if (manager != null) {
+			try {
+				manager.loadCategory(data);
+
+				dataPreLoadFile.setTimeLoaded(new Date());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+
+			} catch (IntegerException e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			}
+		}
+
+		
 	}
 
 }

@@ -63,6 +63,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
 import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
+import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
@@ -350,5 +351,10 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	SignatureValueOperatorDAO getSignatureValueOperatorDAO();
+
+	/**
+	 * @return
+	 */
+	CategoryDAO getCategoryDAO();
 
 }
