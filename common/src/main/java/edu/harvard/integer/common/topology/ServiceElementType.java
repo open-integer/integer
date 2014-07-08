@@ -49,6 +49,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
@@ -71,8 +72,8 @@ public class ServiceElementType extends BaseEntity {
 	 * Currents types that are supported are: Virtual Hardware Software Element
 	 * Software Application See RFCS 2287 and 2564
 	 */
-	@Enumerated(EnumType.STRING)
-	private CategoryTypeEnum category = null;
+	@ManyToOne
+	private Category category = null;
 
 	/**
 	 * A signature is used to identify a specific service element type. It may
@@ -431,7 +432,7 @@ public class ServiceElementType extends BaseEntity {
 	/**
 	 * @return the category
 	 */
-	public CategoryTypeEnum getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
@@ -439,7 +440,7 @@ public class ServiceElementType extends BaseEntity {
 	 * @param category
 	 *            the category to set
 	 */
-	public void setCategory(CategoryTypeEnum category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

@@ -55,6 +55,8 @@ import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
+import edu.harvard.integer.common.distribution.DistributedManager;
+import edu.harvard.integer.common.distribution.DistributedService;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
@@ -65,7 +67,11 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
+import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 
 /**
  * The Class ParentChildServiceElementDiscovery is used to discover IP nodes which their
@@ -257,7 +263,7 @@ public class ParentChildServiceElementDiscovery extends
 				 */
 				for ( SnmpLevelOID levelOid : containment.getSnmpLevels() ) {
 					
-					if ( levelOid.getCategory() != null && levelOid.getCategory() == set.getCategory()  ) {
+					if ( levelOid.getCategory() != null && levelOid.getCategory().getID().equals(set.getCategory().getID())  ) {
 						
 						
 						if ( levelOid.getRelationToParent() != null ) {
@@ -345,10 +351,10 @@ public class ParentChildServiceElementDiscovery extends
 							        			int[] diffi = new int[diffs];
 							        			
 							        			OID o = new OID(diffi);
-							        			relTypese.setName(relType.getCategory().name() + " " + o.toString());
+							        			relTypese.setName(relType.getCategory().getName() + " " + o.toString());
 							        		}
 							        		else {
-							        			relTypese.setName(relType.getCategory().name() + " " + po.toString());
+							        			relTypese.setName(relType.getCategory().getName() + " " + po.toString());
 							        		}
 							        	}
 							        	
@@ -368,7 +374,7 @@ public class ParentChildServiceElementDiscovery extends
 							        	 * Some how I cannot get the containment from yaml which contains that containment relationship.
 							        	 * It needs to debug later.
 							        	 */
-							        	if ( relType.getCategory() == CategoryTypeEnum.portIf ) {
+							        	if ( relType.getCategory().getName().equals(CategoryTypeEnum.portIf.getName()) ) {
 							        		SNMPTable snmpTbl = (SNMPTable) snmpMgr.getSNMPByName("ipAddrEntry");
 							        		SNMP ifAttr = snmpMgr.getSNMPByName("ipAdEntIfIndex");
 							        		
@@ -400,9 +406,9 @@ public class ParentChildServiceElementDiscovery extends
 							        				ServiceElementType addrSet = discMgr.getServiceElementTypeByName("ipv4Address");
 							        				ServiceElement addrSe =  createServiceElementFromType(discNode, addrSet, p.getChildIndex(), relTypese);
 							        				if ( addrSe.getName() == null ) {
-							        					addrSe.setName(addrSet.getCategory().name() + " " + p.getChildIndex());
+							        					addrSe.setName(addrSet.getCategory().getName() + " " + p.getChildIndex());
 							        				}
-                                                    if ( addrSet.getCategory() == CategoryTypeEnum.topology ) {
+                                                    if ( addrSet.getCategory().getName().equals( CategoryTypeEnum.topology.getName()) ) {
 							        					addrSe.setNetworkLayer(NetworkLayer.Layer3);
 							        				} 
 							        				addrSe = accessMgr.updateServiceElement(addrSe);
@@ -478,13 +484,13 @@ public class ParentChildServiceElementDiscovery extends
 			se.setParentId(parentEE.serviceElement.getID());
 		}
 		
-		String seName = set.getCategory().name() + " " + row.getSiblingValue();
+		String seName = set.getCategory().getName() + " " + row.getSiblingValue();
 		if ( row.getSiblingValue() == -1 ) {
-			seName = set.getCategory().name();
+			seName = set.getCategory().getName();
 		}
 		
 		se.setName(seName);
-		logger.info("Create Element <" + se.getName() + "> " + " entityClass:" + set.getCategory().name() 
+		logger.info("Create Element <" + se.getName() + "> " + " entityClass:" + set.getCategory().getName() 
 				         + " Index:" + row.getIndex() + " VendorType:" + row.getSubTypeValue() );
 		
 	    se.setServiceElementTypeId(set.getID());
@@ -524,7 +530,8 @@ public class ParentChildServiceElementDiscovery extends
 		PhysEntityRow pr = new PhysEntityRow(rpdu, row.getIndex());
 		
 		ServiceElementType set = new ServiceElementType();
-		set.setCategory(convertEntityClassType(pr.getEntityClass()));
+		ManagementObjectCapabilityManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+		set.setCategory(manager.getCategoryByName(pr.getEntityClass().name()));
 		
 		set.setVendorSpecificSubType(pr.getEntPhysicalVendorType());
 		set.setDescription(pr.getEntPhysicalDescr());
@@ -610,50 +617,51 @@ public class ParentChildServiceElementDiscovery extends
 	
 	
 	
-	/**
-	 * Convert entity class type to Integer category.
-	 *
-	 * @param e the e
-	 * @return the category type enum
-	 */
-	public static CategoryTypeEnum convertEntityClassType( EntityClassEnum e ) {
-		
-		switch (e) {
-		
-		   case backplane:
-			   return CategoryTypeEnum.backplane;
-			
-		   case  chassis: 
-			   return CategoryTypeEnum.chassis;
-			   
-		   case cpu:
-			   return CategoryTypeEnum.cpu;
-			   
-		   case module:
-			   return CategoryTypeEnum.module;
-			   
-		   case port:
-			   return CategoryTypeEnum.port;
-				 
-		   case sensor:
-			   return CategoryTypeEnum.sensor;
-			   
-		   case fan:
-			   return CategoryTypeEnum.fan;
-			   
-		   case powerSupply:
-			   return CategoryTypeEnum.powerSupply;
-			   
-		   case stack:
-			   return CategoryTypeEnum.stack;
-
-		    default:
-			   break;
-		}
-		return CategoryTypeEnum.other;
-	}
-	
-	
+//	/**
+//	 * Convert entity class type to Integer category.
+//	 *
+//	 * @param e the e
+//	 * @return the category type enum
+//	 */
+//	public static CategoryTypeEnum convertEntityClassType( EntityClassEnum e ) {
+//		
+//		
+//		switch (e) {
+//		
+//		   case backplane:
+//			   return CategoryTypeEnum.backplane;
+//			
+//		   case  chassis: 
+//			   return CategoryTypeEnum.chassis;
+//			   
+//		   case cpu:
+//			   return CategoryTypeEnum.cpu;
+//			   
+//		   case module:
+//			   return CategoryTypeEnum.module;
+//			   
+//		   case port:
+//			   return CategoryTypeEnum.port;
+//				 
+//		   case sensor:
+//			   return CategoryTypeEnum.sensor;
+//			   
+//		   case fan:
+//			   return CategoryTypeEnum.fan;
+//			   
+//		   case powerSupply:
+//			   return CategoryTypeEnum.powerSupply;
+//			   
+//		   case stack:
+//			   return CategoryTypeEnum.stack;
+//
+//		    default:
+//			   break;
+//		}
+//		return CategoryTypeEnum.other;
+//	}
+//	
+//	
 	
 	/**
 	 * The Class EntityElement.

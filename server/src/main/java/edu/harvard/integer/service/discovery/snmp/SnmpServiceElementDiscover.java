@@ -494,7 +494,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		}
 		
 		se.setServiceElementTypeId(set.getID());
-        se.setDescription(set.getCategory().name());
+        se.setDescription(set.getCategory().getName());
 		
 		if (parentSe != null) {
 			se.setParentId(parentSe.getID());

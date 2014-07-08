@@ -52,10 +52,12 @@ import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorS
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
+import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -141,7 +143,11 @@ public class ContainmentGenerator {
 		levelOid.setName("MappingLevel");
         snmp = snmpMgr.getSNMPByName("ifEntry");
 		levelOid.setContextOID(snmp);
-		levelOid.setCategory(CategoryTypeEnum.port);
+		
+		ManagementObjectCapabilityManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+	
+		Category category = manager.getCategoryByName(CategoryTypeEnum.port.getName());
+		levelOid.setCategory(category);
 		
 		SnmpContainmentRelation sRelation = new SnmpContainmentRelation();
 		SNMPTable snmpTbl = (SNMPTable) snmpMgr.getSNMPByName("entAliasMappingEntry");		
@@ -207,13 +213,14 @@ public class ContainmentGenerator {
 		List<SnmpServiceElementTypeDiscriminator>  discriminators = new ArrayList<>();
 		levelOid.setDisriminators(discriminators);
 				
+		Category category = capMgr.getCategoryByName(CategoryTypeEnum.cpu.getName());
 		ServiceElementType setCpu = null;
-		ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.cpu, serviceElmType.getVendor());
+		ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(category, serviceElmType.getVendor());
 		if ( sets == null || sets.length == 0 ) {
 			
 			setCpu = new ServiceElementType();
 			setCpu.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
-			setCpu.setCategory(CategoryTypeEnum.cpu);
+			setCpu.setCategory(category);
 			setCpu.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			setDeviceTblComponentIdentify(setCpu, snmpMgr);
@@ -247,13 +254,14 @@ public class ContainmentGenerator {
 		
 		discriminators.add(sstd);
 		
+		category = capMgr.getCategoryByName(CategoryTypeEnum.printer.getName());
 		ServiceElementType setPrinter = null;
-		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.printer, serviceElmType.getVendor());
+		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(category, serviceElmType.getVendor());
 		if ( sets == null || sets.length == 0 ) {
 			
 			setPrinter = new ServiceElementType();
 			setPrinter.addSignatureValue(null,SignatureTypeEnum.Vendor, serviceElmType.getVendor());
-			setPrinter.setCategory(CategoryTypeEnum.printer);
+			setPrinter.setCategory(category);
 			setPrinter.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			setDeviceTblComponentIdentify(setPrinter, snmpMgr);
@@ -285,14 +293,15 @@ public class ContainmentGenerator {
 		
 		discriminators.add(sstd);
 		
-		
+
+		category = capMgr.getCategoryByName(CategoryTypeEnum.portIf.getName());
 		ServiceElementType setIf = null;
-		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.portIf, serviceElmType.getVendor());
+		sets =  discMgr.getServiceElementTypesByCategoryAndVendor(category, serviceElmType.getVendor());
 		if ( sets == null || sets.length == 0 ) {
 			
 			setIf = new ServiceElementType();
 			setIf.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
-			setIf.setCategory(CategoryTypeEnum.portIf);
+			setIf.setCategory(category);
 			setIf.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			SNMP defName = snmpMgr.getSNMPByOid(CommonSnmpOids.hrDeviceDescr);
@@ -324,15 +333,16 @@ public class ContainmentGenerator {
 		sstd.setServiceElementTypeId(setIf.getID());
 		discriminators.add(sstd);
 		
-		
+
+		category = capMgr.getCategoryByName(CategoryTypeEnum.disk.getName());
 		ServiceElementType diskType = null;
-		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.disk, serviceElmType.getVendor());
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(category, serviceElmType.getVendor());
 		
 		if ( sets == null || sets.length == 0 ) {
 			
             diskType = new ServiceElementType();
 			diskType.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
-			diskType.setCategory(CategoryTypeEnum.disk);
+			diskType.setCategory(category);
 			diskType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			setDeviceTblComponentIdentify(diskType, snmpMgr);
@@ -382,13 +392,15 @@ public class ContainmentGenerator {
 		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrSWInstalledName);
 		levelOid.setDescriminatorOID(snmp);
 		
-		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.software, serviceElmType.getVendor());
+
+		category = capMgr.getCategoryByName(CategoryTypeEnum.software.getName());
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(category, serviceElmType.getVendor());
 		ServiceElementType swType = null;
 		if ( sets == null || sets.length == 0 ) {
 			
 			swType = new ServiceElementType();
 			swType.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
-			swType.setCategory(CategoryTypeEnum.software);
+			swType.setCategory(category);
 			swType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			List<ID> attributeIds = new ArrayList<>();
@@ -438,14 +450,16 @@ public class ContainmentGenerator {
 		snmp = snmpMgr.getSNMPByOid(CommonSnmpOids.hrStorageDescr);
 		levelOid.setDescriminatorOID(snmp);
 		
-		sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.storage, serviceElmType.getVendor());
+
+		category = capMgr.getCategoryByName(CategoryTypeEnum.storage.getName());
+		sets = discMgr.getServiceElementTypesByCategoryAndVendor(category, serviceElmType.getVendor());
 		ServiceElementType storageType = null;
 		if ( sets == null || sets.length == 0 ) {
 			
 			storageType = new ServiceElementType();
 			storageType.addSignatureValue(null, SignatureTypeEnum.Vendor, serviceElmType.getVendor());
 			
-			storageType.setCategory(CategoryTypeEnum.storage);
+			storageType.setCategory(category);
 			storageType.setFieldReplaceableUnit(FieldReplaceableUnitEnum.No);
 			
 			List<ID> attributeIds = new ArrayList<>();

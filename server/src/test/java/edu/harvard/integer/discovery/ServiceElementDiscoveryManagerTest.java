@@ -68,6 +68,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.service.managementobjectcapability.snmp.ImportMIBTest;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -384,7 +385,16 @@ public class ServiceElementDiscoveryManagerTest {
 	public void createServiceElementType() {
 
 		ServiceElementType type = new ServiceElementType();
-		type.setCategory(CategoryTypeEnum.port);
+		Category category = null;
+		try {
+			category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.port.getName());
+		} catch (IntegerException e) {
+
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		type.setCategory(category);
 		type.addSignatureValue(null, SignatureTypeEnum.Vendor, vendor);
 		
 		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vendorSubType);
@@ -406,7 +416,14 @@ public class ServiceElementDiscoveryManagerTest {
 	public void createInterfaceServiceElementType() {
 		ServiceElementType type = new ServiceElementType();
 		type.setName("interface");
-		type.setCategory(CategoryTypeEnum.portIf);
+		Category category = null;
+		try {
+			category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.portIf.getName());
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		type.setCategory(category);
 		type.addSignatureValue(null, SignatureTypeEnum.Vendor, vendor);
 		
 		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vendorSubType);
@@ -432,9 +449,11 @@ public class ServiceElementDiscoveryManagerTest {
 
 			assert (serviceElementDiscoveryManger != null);
 
+			Category category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.port.getName());
+			
 			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger
 					.getServiceElementTypesByCategoryAndVendor(
-							CategoryTypeEnum.port, "Cisco");
+							category, "Cisco");
 
 			assert (serviceElementTypes != null);
 			assert (serviceElementTypes.length > 0);

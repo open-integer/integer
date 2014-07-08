@@ -49,7 +49,7 @@ import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**
@@ -137,7 +137,7 @@ public class Filter extends BaseEntity {
 	 */
 	@ElementCollection
 	@OrderColumn(name = "idx")	
-	private List<CategoryTypeEnum> categories = null;
+	private List<FilterNode> categories = null;
 	
 	/**
 	 * Providers selects for the filter.
@@ -363,14 +363,14 @@ public class Filter extends BaseEntity {
 	/**
 	 * @return the categories
 	 */
-	public List<CategoryTypeEnum> getCategories() {
+	public List<FilterNode> getCategories() {
 		return categories;
 	}
 
 	/**
 	 * @param categories the categories to set
 	 */
-	public void setCategories(List<CategoryTypeEnum> categories) {
+	public void setCategories(List<FilterNode> categories) {
 		this.categories = categories;
 	}
 

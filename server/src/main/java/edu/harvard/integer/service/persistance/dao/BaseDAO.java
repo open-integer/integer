@@ -566,10 +566,18 @@ public class BaseDAO {
 		T cleanCopy = null;
 		try {
 
-			if (!originialInstance.getClass().isEnum())
+			if (originialInstance instanceof BaseEntity) {
+				cleanCopy = (T) originialInstance.getClass().newInstance();
+			} else if (originialInstance != null && originialInstance.getClass().isArray()) {
+				cleanCopy = (T) createArrayFrom(originialInstance);
+				for (int i = 0; i < ((T[]) originialInstance).length; i++) {
+					((T[]) cleanCopy)[i] = copyFields(((T[]) cleanCopy)[i], (((T[])originialInstance)[i]));
+				}
+				
+			} else if (!originialInstance.getClass().isEnum())
 				cleanCopy = (T) originialInstance.getClass().newInstance();
 			else
-				cleanCopy = originialInstance;
+				cleanCopy = (T) originialInstance.getClass().newInstance();
 
 			if (logger.isDebugEnabled())
 				logger.debug("Created new instance " + cleanCopy.getClass());
@@ -596,6 +604,41 @@ public class BaseDAO {
 		return copy;
 	}
 
+	public Object createArrayFrom(Object value) {
+
+		if (value == null || value.getClass().isArray() == false)
+			return value;
+
+		if (Array.getLength(value) == 0)
+			return value;
+
+		// Doing byte[] this way because primative arrays choke in
+		// the other code.
+		if (value instanceof byte[]) {
+			Object newInstance = new byte[Array.getLength(value)];
+			System.arraycopy(value, 0, newInstance, 0, Array.getLength(value));
+			return newInstance;
+		}
+
+		String arrayName = value.getClass().getName();
+		String arrayElement = arrayName.substring(2, arrayName.indexOf(';'));
+		Class<?> arrayClass = null;
+		try {
+
+			arrayClass = Class.forName(arrayElement);
+
+		} catch (ClassNotFoundException e1) {
+			System.out
+					.println("Failed to create array of type " + arrayElement);
+			e1.printStackTrace();
+		}
+		Object newInstance = Array.newInstance(arrayClass,
+				Array.getLength(value));
+
+		return newInstance;
+
+	}
+
 	/**
 	 * Copy the fields from the "fromInstance" to the "toInstance". The
 	 * identifier for the toInstnace will remain. Only data fields will be
@@ -616,6 +659,20 @@ public class BaseDAO {
 		// Don't want to overwrite the identifier.
 		Long identifier = null;
 
+		if (toInstance == null && fromInstance != null) {
+			try {
+				toInstance = (T) fromInstance.getClass().newInstance();
+			} catch (InstantiationException e) {
+				
+				e.printStackTrace();
+				return fromInstance;
+			} catch (IllegalAccessException e) {
+				
+				e.printStackTrace();
+				return fromInstance;
+			}
+		}
+		
 		if (toInstance instanceof BaseEntity)
 			identifier = ((BaseEntity) toInstance).getIdentifier();
 
@@ -690,11 +747,13 @@ public class BaseDAO {
 		if (values == null)
 			return values;
 
+		T[] newList = (T[]) createArrayFrom(values);
+		
 		for (int i = 0; i < values.length; i++) {
-			values[i] = createCleanCopy(values[i]);
+			newList[i] = createCleanCopy(values[i]);
 		}
 
-		return values;
+		return newList;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

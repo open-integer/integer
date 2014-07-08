@@ -38,26 +38,40 @@ package edu.harvard.integer.common.topology;
  */
 public enum CategoryTypeEnum {
 
-	container,
-	stack,
-	backplane,
-	chassis,
-	portIf,
-	other,
-	powerSupply,
-	fan,
-	sensor,
-	module,
-	port,
-	cpu,
-	printer,
-	disk,
-	software,
-	storage,
-	system,
-	cache,
-	ipv4,
-	ipv6,
-	topology,
-	midplane
+	container("container"),
+	stack("stack"),
+	backplane("backplane"),
+	chassis("chassis"),
+	portIf("interface"),
+	other("other"),
+	powerSupply("powerSupply"),
+	fan("fan"),
+	sensor("sensor"),
+	module("module"),
+	port("port"),
+	cpu("cpu"),
+	printer("printer"),
+	disk("disk"),
+	software("software"),
+	storage("storage"),
+	system("system"),
+	cache("cache"),
+	ipv4("ipv4"),
+	ipv6("ipv6"),
+	topology("toplogy"),
+	midplane("midplane");
+	
+	private String name = null;
+	
+	CategoryTypeEnum(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
 }
