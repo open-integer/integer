@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,36 +30,40 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+
 package edu.harvard.integer.common.topology;
 
-/**
- * @author David Taylor
- *
- */
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.selection.Layer;
 
 /**
- * TopologyElement instances provide details for each ServiceElement about its
- * addresses, address types and layer of the network hierarchy in which they
- * exist.
+ * @author David Taylor
+ * 
  */
 @Entity
-public class TopologyElement extends BaseEntity {
+public class InterDeviceLink extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
+
+	@Embedded
+	@AttributeOverride(name = "address", column = @Column(name = "sourceAddress"))
+	private Address sourceAddress = null;
+	
+	@Embedded
+	@AttributeOverride(name = "address", column = @Column(name = "destinationAddress"))
+	private Address destinationAddress = null;
 
 	private Date created = null;
 
@@ -68,43 +72,33 @@ public class TopologyElement extends BaseEntity {
 	private String layer = null;
 
 	/**
-	 * Address is separate from layer since a layer like IP might have different
-	 * address types, e.g., IPv4 or IPv6. A topology element may exist at only
-	 * one layer. Multiple addresses are possible for an element at a given
-	 * layer.
+	 * @return the sourceAddress
 	 */
-	@ElementCollection
-	@OrderColumn(name = "idx")
-	private List<Address> address = null;
-
-	/**
-	 * @return the address
-	 */
-	public List<Address> getAddress() {
-		return address;
+	public Address getSourceAddress() {
+		return sourceAddress;
 	}
 
 	/**
-	 * @param address
-	 *            the address to set
+	 * @param sourceAddress
+	 *            the sourceAddress to set
 	 */
-	public void setAddress(List<Address> address) {
-		this.address = address;
+	public void setSourceAddress(Address sourceAddress) {
+		this.sourceAddress = sourceAddress;
 	}
 
 	/**
-	 * @return the layer
+	 * @return the destinationAddress
 	 */
-	public String getLayer() {
-		return layer;
+	public Address getDestinationAddress() {
+		return destinationAddress;
 	}
 
 	/**
-	 * @param layer
-	 *            the layer to set
+	 * @param destinationAddress
+	 *            the destinationAddress to set
 	 */
-	public void setLayer(String layer) {
-		this.layer = layer;
+	public void setDestinationAddress(Address destinationAddress) {
+		this.destinationAddress = destinationAddress;
 	}
 
 	/**
@@ -136,4 +130,20 @@ public class TopologyElement extends BaseEntity {
 	public void setModified(Date modified) {
 		this.modified = modified;
 	}
+
+	/**
+	 * @return the layer
+	 */
+	public String getLayer() {
+		return layer;
+	}
+
+	/**
+	 * @param layer
+	 *            the layer to set
+	 */
+	public void setLayer(String layer) {
+		this.layer = layer;
+	}
+
 }

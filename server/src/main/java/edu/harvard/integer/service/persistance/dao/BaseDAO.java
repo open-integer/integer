@@ -574,8 +574,8 @@ public class BaseDAO {
 					((T[]) cleanCopy)[i] = copyFields(((T[]) cleanCopy)[i], (((T[])originialInstance)[i]));
 				}
 				
-			} else if (!originialInstance.getClass().isEnum())
-				cleanCopy = (T) originialInstance.getClass().newInstance();
+			} else if (originialInstance.getClass().isEnum())
+				cleanCopy = (T) originialInstance;
 			else
 				cleanCopy = (T) originialInstance.getClass().newInstance();
 
