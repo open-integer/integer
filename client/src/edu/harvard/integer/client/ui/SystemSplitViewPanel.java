@@ -89,7 +89,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onSuccess(ServiceElement[] result) {
-				deviceMap.update(result);
+				//deviceMap.update(result);
 			}
 		});
 		

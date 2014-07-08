@@ -25,8 +25,8 @@ import com.emitrom.lienzo.client.core.types.Point2DArray;
 import com.emitrom.lienzo.client.core.types.Shadow;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
+import com.google.gwt.touch.client.Point;
 
-import edu.harvard.integer.client.utils.Coordinate;
 import edu.harvard.integer.client.utils.LinePoints;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
@@ -183,10 +183,10 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 * @param cur_y the cur_y
 	 */
 	private void addDragLines(int cur_x, int cur_y) {
-		Coordinate curPoint = new Coordinate(cur_x, cur_y);
+		Point curPoint = new Point(cur_x, cur_y);
 		
 		for (LinePoints lineConnector : lineConnectorList) {
-			Coordinate otherPoint = lineConnector.getEndPoint();
+			Point otherPoint = lineConnector.getEndPoint();
 			Line line = lineConnector.getLine();
 			line.setVisible(false);
 			
@@ -238,7 +238,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	private void updateDragLines(Point2D cur_point, List<LinePoints> lines, boolean visible, boolean draw) {
 		for (LinePoints linePoints : lines) {
-			Coordinate otherPoint = linePoints.getEndPoint();
+			Point otherPoint = linePoints.getEndPoint();
 			Point2D other_point = new Point2D(otherPoint.getX(), otherPoint.getY());
 			Line cur_line = linePoints.getLine();
 			cur_line.setPoints(new Point2DArray(cur_point, other_point));

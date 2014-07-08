@@ -1,6 +1,7 @@
 package edu.harvard.integer.client.utils;
 
 import com.emitrom.lienzo.client.core.shape.Line;
+import com.google.gwt.touch.client.Point;
 
 /**
  * The Class LinePoints.
@@ -11,10 +12,10 @@ public class LinePoints {
 	private Line line;
 	
 	/** The start point. */
-	private Coordinate startPoint;
+	private Point startPoint;
 	
 	/** The end point. */
-	private Coordinate endPoint;
+	private Point endPoint;
 
 	/**
 	 * Instantiates a new line points.
@@ -23,7 +24,7 @@ public class LinePoints {
 	 * @param startPoint the start point
 	 * @param endPoint the end point
 	 */
-	public LinePoints(Line line, Coordinate startPoint, Coordinate endPoint) {
+	public LinePoints(Line line, Point startPoint, Point endPoint) {
 		this.line = line;
 		this.startPoint = startPoint;
 		this.endPoint = endPoint;
@@ -52,7 +53,7 @@ public class LinePoints {
 	 *
 	 * @return the start point
 	 */
-	public Coordinate getStartPoint() {
+	public Point getStartPoint() {
 		return startPoint;
 	}
 
@@ -61,7 +62,7 @@ public class LinePoints {
 	 *
 	 * @param startPoint the new start point
 	 */
-	public void setStartPoint(Coordinate startPoint) {
+	public void setStartPoint(Point startPoint) {
 		this.startPoint = startPoint;
 	}
 
@@ -70,7 +71,7 @@ public class LinePoints {
 	 *
 	 * @return the end point
 	 */
-	public Coordinate getEndPoint() {
+	public Point getEndPoint() {
 		return endPoint;
 	}
 
@@ -79,7 +80,7 @@ public class LinePoints {
 	 *
 	 * @param endPoint the new end point
 	 */
-	public void setEndPoint(Coordinate endPoint) {
+	public void setEndPoint(Point endPoint) {
 		this.endPoint = endPoint;
 	}
 
