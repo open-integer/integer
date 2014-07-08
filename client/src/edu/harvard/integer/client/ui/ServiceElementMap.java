@@ -92,7 +92,6 @@ public class ServiceElementMap extends Layer {
 	 * Instantiates a new service element map.
 	 */
 	public ServiceElementMap() {
-		init(18);
 	}
 	
 	/**

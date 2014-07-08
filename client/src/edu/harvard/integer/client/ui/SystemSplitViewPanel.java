@@ -89,7 +89,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onSuccess(ServiceElement[] result) {
-				//deviceMap.update(result);
+				deviceMap.update(result);
 			}
 		});
 		
@@ -101,12 +101,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
         setSize("100%", MainClient.WINDOW_HEIGHT+"px");
-		
-//		FilterView filterView = createFilterView();
-//		westPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-//		westPanel.addSouth(filterView, 200);
-//		westPanel.add(createNetworkTreePanel());
-//		westPanel.setWidgetToggleDisplayAllowed(filterView, true);
 
 		EventView eventView = createEventView();
 		
