@@ -54,12 +54,16 @@ import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 
 /**
  * The Class EntityMibServiceElementDiscovery discover service element using 
@@ -211,8 +215,9 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	 *
 	 * @param row the row
 	 * @param levelOid the level oid
+	 * @throws IntegerException 
 	 */
-	private void recursiveDiscovery( PhysEntityRow row,  List<SnmpLevelOID> levelOids ) {
+	private void recursiveDiscovery( PhysEntityRow row,  List<SnmpLevelOID> levelOids ) throws IntegerException {
 
 		SnmpLevelOID pickLevelOid = null;
 		if ( row.getEntityClass() != EntityClassEnum.other ) {
@@ -229,7 +234,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 			if ( ee == null ) {
 			
 				ServiceElement se = null;
-				CategoryTypeEnum ce = convertEntityClassType(row.getEntityClass());
+				Category category = convertEntityClassType(row.getEntityClass());
 				try {
 					
 					/**
@@ -264,7 +269,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 						 * Check for if there is one in the database already exist.  If it is use it.
 						 * Else create a serviceElementType associated with the current entity row. 
 						 */
-						ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(ce, discNode.getTopServiceElementType().getVendor());
+						ServiceElementType[] sets =  discMgr.getServiceElementTypesByCategoryAndVendor(category, discNode.getTopServiceElementType().getVendor());
 						if ( sets != null && sets.length > 0 ) {
 							
 							for ( ServiceElementType tmpSet : sets ) {
@@ -383,7 +388,9 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 							 try {								 
 								 PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), p);
 								 
-								 ServiceElementType[] sets = discMgr.getServiceElementTypesByCategoryAndVendor(CategoryTypeEnum.portIf, 
+								 ManagementObjectCapabilityManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+								 category = manager.getCategoryByName(CategoryTypeEnum.portIf.getName());
+								 ServiceElementType[] sets = discMgr.getServiceElementTypesByCategoryAndVendor(category, 
 										                             discNode.getTopServiceElementType().getVendor() );
 								 
 								 String ifSubType = row.getEntPhysicalVendorType() + ":" + rpdu.get(0).getVariable().toInt();
@@ -402,7 +409,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								 ServiceElement ise = new ServiceElement();
 								 if ( iset == null ) {
 									 iset = new ServiceElementType();
-									 iset.setCategory(CategoryTypeEnum.portIf);
+									 iset.setCategory(category);
 									 iset.addSignatureValue(null, SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
 									 iset.setVendorSpecificSubType(ifSubType);
 									 
@@ -526,43 +533,13 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	 *
 	 * @param e the e
 	 * @return the category type enum
+	 * @throws IntegerException 
 	 */
-	public static CategoryTypeEnum convertEntityClassType( EntityClassEnum e ) {
+	public static Category convertEntityClassType( EntityClassEnum e ) throws IntegerException {
 		
-		switch (e) {
+		ManagementObjectCapabilityManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+		return manager.getCategoryByName(e.name());
 		
-		   case backplane:
-			   return CategoryTypeEnum.backplane;
-			
-		   case  chassis: 
-			   return CategoryTypeEnum.chassis;
-			   
-		   case cpu:
-			   return CategoryTypeEnum.cpu;
-			   
-		   case module:
-			   return CategoryTypeEnum.module;
-			   
-		   case port:
-			   return CategoryTypeEnum.port;
-				 
-		   case sensor:
-			   return CategoryTypeEnum.sensor;
-			   
-		   case fan:
-			   return CategoryTypeEnum.fan;
-			   
-		   case powerSupply:
-			   return CategoryTypeEnum.powerSupply;
-			   
-		   case stack:
-			   return CategoryTypeEnum.stack;
-
-		    default:
-			   break;
-		}
-		
-		return CategoryTypeEnum.other;
 	}
 	
 	

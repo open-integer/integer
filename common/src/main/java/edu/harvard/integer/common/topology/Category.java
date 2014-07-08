@@ -33,10 +33,12 @@
 
 package edu.harvard.integer.common.topology;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -56,7 +58,7 @@ public class Category extends BaseEntity {
 
 	private String description = null;
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name="idx")
 	private List<ID> childIds = null;
 

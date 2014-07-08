@@ -49,6 +49,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
@@ -107,7 +108,7 @@ public class ServiceElementTypeDAO extends BaseDAO {
 	/**
 	 * @return
 	 */
-	public ServiceElementType[] findByCategoryAndVendor(CategoryTypeEnum category, String vendor) {
+	public ServiceElementType[] findByCategoryAndVendor(Category category, String vendor) {
 
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
@@ -120,8 +121,8 @@ public class ServiceElementTypeDAO extends BaseDAO {
 		Join<ServiceElementType, Signature> signatures = from.join("signatures");
 		Join<Selection, SignatureValueOperator> values = signatures.join("valueOperators");
 		
-		ParameterExpression<CategoryTypeEnum> categoryParam = criteriaBuilder
-				.parameter(CategoryTypeEnum.class);
+		ParameterExpression<Category> categoryParam = criteriaBuilder
+				.parameter(Category.class);
 		
 		ParameterExpression<String> vendorParam = criteriaBuilder
 				.parameter(String.class);

@@ -77,8 +77,9 @@ public class YamlCategoryParser {
 	 * categories that are read in.
 	 * 
 	 * @param load
-	 * @param string. Indent to use for this category. This will get added to for child categories so the
-	 * children are indented.
+	 * @param string
+	 *            . Indent to use for this category. This will get added to for
+	 *            child categories so the children are indented.
 	 * 
 	 * @param categories
 	 */
@@ -86,22 +87,24 @@ public class YamlCategoryParser {
 
 		StringBuffer b = new StringBuffer();
 
-		Category dbCategory = dbCategories.get(load.getName());
-		if (dbCategory != null)
+		Category dbCategory = dbCategories.get(load.getName().toLowerCase());
+		if (dbCategory != null) {
 			b.append(indent).append(dbCategory.getID().toDebugString())
 					.append('\n');
 
-		b.append(indent).append("Description: ")
-				.append(dbCategory.getDescription()).append('\n');
-		if (dbCategory.getChildIds() != null) {
-			b.append(indent).append("Children: ");
+			b.append(indent).append("Description: ")
+					.append(dbCategory.getDescription()).append('\n');
 
-			for (ID childId : dbCategory.getChildIds()) {
-				b.append(" ").append(childId.getName()).append(" - ")
-						.append(childId.getIdentifier());
+			if (dbCategory.getChildIds() != null) {
+				b.append(indent).append("Children: ");
+
+				for (ID childId : dbCategory.getChildIds()) {
+					b.append(" ").append(childId.getName()).append(" - ")
+							.append(childId.getIdentifier());
+				}
+
+				b.append('\n');
 			}
-
-			b.append('\n');
 		}
 
 		System.out.println(b.toString());
@@ -115,8 +118,8 @@ public class YamlCategoryParser {
 	}
 
 	/**
-	 * Parse the YAML file. Create or update the database with data found
-	 * in YAML file.
+	 * Parse the YAML file. Create or update the database with data found in
+	 * YAML file.
 	 * 
 	 * 
 	 * @param yamlCategory
@@ -124,14 +127,12 @@ public class YamlCategoryParser {
 	 * 
 	 * @throws IntegerException
 	 */
-	public ID parseCategory(YamlCategory yamlCategory)
-			throws IntegerException {
-		
-		yamlCategories.put(yamlCategory.getName(), yamlCategory);
+	public ID parseCategory(YamlCategory yamlCategory) throws IntegerException {
 
 		List<ID> childIds = new ArrayList<ID>();
 
 		if (yamlCategory.getCategories() != null) {
+
 			for (YamlCategory child : yamlCategory.getCategories()) {
 
 				// pass layer and discovery down to child categories if not set
@@ -149,7 +150,7 @@ public class YamlCategoryParser {
 			}
 		}
 
-		Category category = dao.findByName(yamlCategory.getName());
+		Category category = null; // dao.findByName(yamlCategory.getName());
 		if (category == null) {
 			category = new Category();
 			category.setName(yamlCategory.getName());
@@ -162,25 +163,42 @@ public class YamlCategoryParser {
 		category.getChildIds().addAll(childIds);
 
 		category = dao.update(category);
-		dbCategories.put(category.getName(), category);
 
-		if (yamlCategory.getParents() != null) {
-			for (String parent : yamlCategory.getParents()) {
-				YamlCategory parentCategory = yamlCategories.get(parent);
-				if (parentCategory != null) {
+		return category.getID();
+	}
 
-					parentCategory.getCategories().add(yamlCategory);
-				}
+	/**
+	 * Parse the category list to link the parent category list to the proper
+	 * parents. This is the first step in parsing the YAML file.
+	 * 
+	 * @param yamlCategory
+	 * @throws IntegerException
+	 */
+	public void parseParentCategory(YamlCategory yamlCategory)
+			throws IntegerException {
 
-				Category dbParentCategory = dbCategories.get(parent);
-				if (dbParentCategory != null) {
-					dbParentCategory.getChildIds().add(category.getID());
+		yamlCategories.put(yamlCategory.getName().toLowerCase(), yamlCategory);
 
-					dbCategories.put(parent, dao.update(dbParentCategory));
-				}
+		if (yamlCategory.getCategories() != null) {
+			List<YamlCategory> childCategories = new ArrayList<YamlCategory>();
+			childCategories.addAll(yamlCategory.getCategories());
+
+			for (YamlCategory child : childCategories) {
+
+				parseParentCategory(child);
 			}
 		}
 
-		return category.getID();
+		if (yamlCategory.getParents() != null) {
+			for (String parentName : yamlCategory.getParents()) {
+				YamlCategory parentCategory = yamlCategories.get(parentName);
+				if (parentCategory.getCategories() == null) {
+					parentCategory.setCategories(new ArrayList<YamlCategory>());
+				}
+
+				parentCategory.getCategories().add(yamlCategory);
+			}
+		}
+
 	}
 }

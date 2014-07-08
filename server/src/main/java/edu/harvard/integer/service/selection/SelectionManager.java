@@ -41,6 +41,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -49,7 +52,7 @@ import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Layer;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.technology.Technology;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -58,6 +61,7 @@ import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
 import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
+import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 
 /**
  * 
@@ -73,6 +77,9 @@ public class SelectionManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
 
+	@Inject
+	private Logger logger;
+	
 	public SelectionManager() {
 		super(ManagerTypeEnum.SelectionManager);
 	}
@@ -105,19 +112,14 @@ public class SelectionManager extends BaseManager implements
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 		List<FilterNode> routing = new ArrayList<FilterNode>();
 
-		// TODO: remove once real data is available.
-		// if (technologies == null || technologies.length == 0) {
-		// nodes.addAll(getTechnologyTree());
-		// }
-
 		if (technologies != null && technologies.length > 0)
 			for (FilterNode filterNode : findChildren(dao,
 					technologies[0].getID())) {
 
-				if ("hardware".equals(filterNode.getName())
-						|| "software".equals(filterNode.getName())
-						|| "physical connectivity".equals(filterNode.getName())
-						|| "data link protocols".equals(filterNode.getName()))
+				if ("hardware".equals(filterNode.getName().toLowerCase())
+						|| "software".equals(filterNode.getName().toLowerCase())
+						|| "physical connectivity".equals(filterNode.getName().toLowerCase())
+						|| "data link protocols".equals(filterNode.getName().toLowerCase()))
 
 					nodes.add(filterNode);
 				else
@@ -128,7 +130,12 @@ public class SelectionManager extends BaseManager implements
 		filter.setCreated(new Date());
 		filter.setTechnologies(nodes);
 
-		filter.setCategories(Arrays.asList(CategoryTypeEnum.values()));
+		CategoryDAO categoryDAO = persistenceManager.getCategoryDAO();
+		Category[] categories = categoryDAO.findAll();
+		
+		//categories = (Category[]) categoryDAO.createCleanCopy(categories);
+
+		filter.setCategories(createCategoryList(categories));
 		filter.setCriticalities(Arrays.asList(CriticalityEnum.values()));
 		filter.setLinkTechnologies(routing);
 
@@ -139,6 +146,50 @@ public class SelectionManager extends BaseManager implements
 		selection.setFilters(filters);
 
 		return selection;
+	}
+
+	private List<FilterNode> createCategoryList(Category[] categories) throws IntegerException {
+		List<FilterNode> categoryNodes = new ArrayList<FilterNode>();
+		
+		CategoryDAO dao = persistenceManager.getCategoryDAO();
+		
+		for (Category category : categories) {
+			FilterNode node = new FilterNode();
+			node.setIdentifier(category.getIdentifier());
+			node.setItemId(category.getID());
+			node.setName(category.getName());
+			
+			node.setChildren(createChildCategoryList(dao, category.getChildIds()));
+			
+			categoryNodes.add(node);
+		}
+		
+		return categoryNodes;
+	}
+	
+	/**
+	 * @param childIds
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private List<FilterNode> createChildCategoryList(CategoryDAO dao, List<ID> childIds) throws IntegerException {
+		List<FilterNode> categoryNodes = new ArrayList<FilterNode>();
+		
+		for (ID id : childIds) {
+			FilterNode node = new FilterNode();
+			node.setIdentifier(id.getIdentifier());
+			node.setItemId(id);
+			node.setName(id.getName());
+			
+			Category category = dao.findById(id);
+			
+			if (category.getChildIds() != null)
+				node.setChildren(createChildCategoryList(dao, category.getChildIds()));
+			
+			categoryNodes.add(node);
+		}
+		
+		return categoryNodes;
 	}
 
 	private List<FilterNode> getTechnologyTree() {

@@ -42,6 +42,7 @@ import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
@@ -326,5 +327,14 @@ public interface ManagementObjectCapabilityManagerInterface extends
 	 */
 	ManagementObjectValue<?> getManagementObjectValuesById(ID ids)
 			throws IntegerException;
+
+	/**
+	 * Find the category for the given category name.
+	 * 
+	 * @param name. Name of the category to get from the datbase.
+	 * @return Category for the given name.
+	 * @throws IntegerException
+	 */
+	Category getCategoryByName(String name) throws IntegerException;
 
 }

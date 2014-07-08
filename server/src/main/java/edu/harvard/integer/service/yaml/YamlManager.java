@@ -91,6 +91,7 @@ import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
@@ -124,6 +125,9 @@ public class YamlManager extends BaseManager implements
 
 	@Inject
 	SnmpManagerInterface snmpManager;
+	
+	@Inject
+	ManagementObjectCapabilityManagerInterface managementObjectManager;
 
 	/**
 	 * @param managerType
@@ -505,7 +509,7 @@ public class YamlManager extends BaseManager implements
 						serviceElementTypeDao, yamlServiceElementType,
 						typeTranslate.getName());
 
-				exemplarSet.setCategory(CategoryTypeEnum.valueOf(typeTranslate
+				exemplarSet.setCategory(managementObjectManager.getCategoryByName(typeTranslate
 						.getCategory()));
 
 				if (typeTranslate.getMapping().equalsIgnoreCase(
@@ -529,8 +533,7 @@ public class YamlManager extends BaseManager implements
 					if (serviceElementType == null) {
 
 						serviceElementType = new ServiceElementType();
-						serviceElementType.setCategory(CategoryTypeEnum
-								.valueOf(typeTranslate.getCategory()));
+						serviceElementType.setCategory(managementObjectManager.getCategoryByName(typeTranslate.getCategory()));
 						serviceElementType.setName(typeTranslate.getName());
 						serviceElementType
 								.setDescription(yamlServiceElementType
@@ -865,7 +868,7 @@ public class YamlManager extends BaseManager implements
 
 			if (levelOid.getCategory() != null) {
 				try {
-					dbLevelOid.setCategory(CategoryTypeEnum.valueOf(levelOid
+					dbLevelOid.setCategory(managementObjectManager.getCategoryByName(levelOid
 							.getCategory()));
 				} catch (IllegalArgumentException e) {
 					logger.error("Unable to create category from "
@@ -1045,7 +1048,7 @@ public class YamlManager extends BaseManager implements
 		dbSet.setDefaultNameCababilityId(getCapability(serviceElementType
 				.getDefaultNameCabability()));
 		if (serviceElementType.getCategory() != null)
-			dbSet.setCategory(CategoryTypeEnum.valueOf(serviceElementType
+			dbSet.setCategory(managementObjectManager.getCategoryByName(serviceElementType
 					.getCategory()));
 
 		dbSet.setUniqueIdentifierCapabilities(createAttributeList(
@@ -1208,6 +1211,10 @@ public class YamlManager extends BaseManager implements
 		
 		YamlCategoryParser parser = new YamlCategoryParser(categories, dbCategories, persistanceManager.getCategoryDAO());
 		
+		// First parse the parents list to add the child categories to the parents.
+		parser.parseParentCategory(load);
+		
+		// Parse the parents and add to the database.
 		parser.parseCategory(load);
 
 		parser.printCategories(load, "");

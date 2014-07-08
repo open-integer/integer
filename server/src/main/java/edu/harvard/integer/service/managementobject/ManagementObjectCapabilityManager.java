@@ -49,6 +49,7 @@ import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.topology.AccessMethod;
 import edu.harvard.integer.common.topology.Applicability;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
@@ -58,6 +59,7 @@ import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
+import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.SnmpServiceElementTypeOverrideDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
@@ -467,5 +469,12 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		ManagementObjectValueDAO managementObjectValueDAO = dbm.getManagementObjectValueDAO();
 		
 		return managementObjectValueDAO.findById(id);
+	}
+	
+	@Override
+	public Category getCategoryByName(String name) throws IntegerException {
+		CategoryDAO dao = dbm.getCategoryDAO();
+		
+		return dao.findByName(name);
 	}
 }

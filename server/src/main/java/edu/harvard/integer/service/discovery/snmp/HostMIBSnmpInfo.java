@@ -48,6 +48,7 @@ import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 
 /**
@@ -65,7 +66,10 @@ public class HostMIBSnmpInfo {
 		levelOid.setName("PortMappingLevel");
         SNMP snmp = snmpMgr.getSNMPByName("ifEntry");
 		levelOid.setContextOID(snmp);
-		levelOid.setCategory(CategoryTypeEnum.port);
+		
+		ManagementObjectCapabilityManagerInterface managementObjectManager = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
+		
+		levelOid.setCategory(managementObjectManager.getCategoryByName(CategoryTypeEnum.port.getName()));
 		
 		if ( levelOid.getDisriminators() == null ) {
 			
