@@ -388,6 +388,12 @@ public class ServiceElementDiscoveryManagerTest {
 		Category category = null;
 		try {
 			category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.port.getName());
+			if (category == null) {
+				category = new Category();
+				category.setName(CategoryTypeEnum.port.getName());
+				category = managementObjectCapabilityManager.updateCategory(category);
+			}
+				
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
@@ -419,6 +425,12 @@ public class ServiceElementDiscoveryManagerTest {
 		Category category = null;
 		try {
 			category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.portIf.getName());
+			if (category == null) {
+				category = new Category();
+				category.setName(CategoryTypeEnum.port.getName());
+				category = managementObjectCapabilityManager.updateCategory(category);
+			}
+			
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
@@ -445,7 +457,7 @@ public class ServiceElementDiscoveryManagerTest {
 	public void getServiceElementByCategoryAndVendor() {
 		try {
 
-			createServiceElementType();
+			createInterfaceServiceElementType();
 
 			assert (serviceElementDiscoveryManger != null);
 
@@ -453,7 +465,7 @@ public class ServiceElementDiscoveryManagerTest {
 			
 			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger
 					.getServiceElementTypesByCategoryAndVendor(
-							category, "Cisco");
+							category, vendor);
 
 			assert (serviceElementTypes != null);
 			assert (serviceElementTypes.length > 0);

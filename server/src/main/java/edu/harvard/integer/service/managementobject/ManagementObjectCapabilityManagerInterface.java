@@ -337,4 +337,12 @@ public interface ManagementObjectCapabilityManagerInterface extends
 	 */
 	Category getCategoryByName(String name) throws IntegerException;
 
+	/**
+	 * Update the category. 
+	 * @param category
+	 * @return
+	 * @throws IntegerException
+	 */
+	Category updateCategory(Category category) throws IntegerException;
+
 }

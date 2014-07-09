@@ -477,4 +477,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		
 		return dao.findByName(name);
 	}
+	
+	@Override
+	public Category updateCategory(Category category) throws IntegerException {
+		CategoryDAO dao = dbm.getCategoryDAO();
+		return dao.update(category);
+	}
 }
