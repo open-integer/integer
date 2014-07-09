@@ -123,6 +123,16 @@ public class ParentChildServiceElementDiscovery extends
 		this.discNode = discNode;
 		elmMap = new HashMap<>();
 		physRowMap = new HashMap<String, List<ParentChildRelationNode>>();
+		try {
+			for ( SnmpLevelOID snmpLevel : sc.getSnmpLevels() ) {
+				
+				System.out.println("SnmpLevel " + snmpLevel.getName());
+			}
+		}
+		catch ( Exception e ) {
+			e.printStackTrace();
+		}
+		
 		for ( SnmpLevelOID snmpLevel : sc.getSnmpLevels() ) {
 			
 			if ( snmpLevel.getRelationToParent() instanceof SnmpParentChildRelationship ) {
@@ -169,6 +179,29 @@ public class ParentChildServiceElementDiscovery extends
 				recursiveDiscovery(topEntity);
 			}
 			else {
+				
+				if ( discNode.getTopServiceElementType().getCategory() == snmpLevel.getCategory() ) {
+					
+					SNMP snmp = snmpLevel.getContextOID();
+					if ( snmp.getScalarVB() != null && !snmp.getScalarVB() ) {
+						
+						/*
+						 * We will handle the non-scalar case later on.
+						 */
+						if ( snmpLevel.getDescriminatorOID() != null ) {
+							
+							
+						}
+					}
+					else {
+					
+						SnmpServiceElementTypeDiscriminator discriminator = snmpLevel.getDisriminators().get(0);
+						
+						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+						ServiceElement se =  createServiceElementFromType(discNode, set, "0", discNode.getAccessElement());						
+						se = accessMgr.updateServiceElement(se);
+					}
+				}
 				/**
 				 *  For the time being, we do for an example for the case that beside the ParentChildRelationsip, on the same sublevel
 				 *  it contains other SnmpLevelOID need to be discovered.  However it cannot rule out this kind of possibility.
@@ -257,8 +290,16 @@ public class ParentChildServiceElementDiscovery extends
 				 */
 				for ( SnmpLevelOID levelOid : containment.getSnmpLevels() ) {
 					
-					if ( levelOid.getCategory() != null && levelOid.getCategory() == set.getCategory()  ) {
+					String globalVal = null;
+					if ( levelOid.getGlobalDescriminatorOID() != null ) {
 						
+						PDU pdu = new PDU();
+						pdu.add(new VariableBinding(new OID(levelOid.getGlobalDescriminatorOID().getOid() + ".0")));
+						PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
+						
+						globalVal = rpdu.get(0).getVariable().toString();
+					}
+					if ( levelOid.getCategory() != null && levelOid.getCategory() == set.getCategory()  ) {
 						
 						if ( levelOid.getRelationToParent() != null ) {
 							
@@ -285,10 +326,19 @@ public class ParentChildServiceElementDiscovery extends
 										indexTable.add(pcmi);
 									}
 									addIndexMapping(sRelation.getMappingTable().getOid(), indexTable);									
-								}								
+								}	
+								
 							    for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
 							    
-							    	ServiceElementType relType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
+							    	/**
+							    	 * Skip it if the global discriminator value is not match.
+							    	 */
+							    	if ( globalVal != null ) {
+							    		
+							    		if ( !globalVal.equals(disc.getDiscriminatorValue().getValue().toString()) ) {
+							    			break;
+							    		}
+							    	}
 							        List<SNMP> indexSnmps = sRelation.getMappingTable().getIndex();	
 							    	
 							        int indexLocation = 0;
@@ -330,6 +380,21 @@ public class ParentChildServiceElementDiscovery extends
 							        		OID io = new OID(instOidi);
 							        		instOid = io.toString();
 							        	}
+							        	
+							        	String discrominatorValue = null;
+							        	if ( levelOid.getDescriminatorOID() != null ) {
+							        		
+							        		PDU pdu = new PDU();
+							        		pdu.add(new VariableBinding(new OID(levelOid.getDescriminatorOID().getOid() + "." + instOid)));
+							        		PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
+							        		discrominatorValue = rpdu.get(0).getVariable().toString();
+							        		
+							        		if ( !discrominatorValue.equals(disc.getDiscriminatorValue().getValue().toString()) ) {
+							        			break;
+							        		}
+							        	}
+							        	
+							        	ServiceElementType relType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
 							        	ServiceElement relTypese =  createServiceElementFromType(discNode, relType, instOid, se);
 							        	if ( relTypese.getName() == null ) {
 							        		
