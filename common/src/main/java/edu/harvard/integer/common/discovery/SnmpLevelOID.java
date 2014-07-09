@@ -86,6 +86,16 @@ public class SnmpLevelOID extends BaseEntity {
 	 */
 	@ManyToOne
 	private SNMP descriminatorOID = null;
+	
+	/**
+	 * The global scalar OID to be used to indicate the technology capability of 
+	 * the system to support the next level on the containment tree.  For example
+	 * for Cisco cdp, this OID can be referred to cdpGlobalRun.  When this value is false,
+	 * no service element related to cdp will be created.
+	 */
+	@ManyToOne
+	private SNMP globalDescriminatorOID = null;
+
 
 	/**
 	 * Some table may point to other tables that are contained in the higher
@@ -204,6 +214,23 @@ public class SnmpLevelOID extends BaseEntity {
 	 */
 	public void setCategory(CategoryTypeEnum category) {
 		this.category = category;
+	}
+	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public SNMP getGlobalDescriminatorOID() {
+		return globalDescriminatorOID;
+	}
+
+	/**
+	 * 
+	 * @param globalDescriminatorOID
+	 */
+	public void setGlobalDescriminatorOID(SNMP globalDescriminatorOID) {
+		this.globalDescriminatorOID = globalDescriminatorOID;
 	}
 
 }
