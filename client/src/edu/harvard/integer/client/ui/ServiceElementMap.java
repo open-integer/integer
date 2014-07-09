@@ -7,6 +7,8 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -47,7 +49,7 @@ public class ServiceElementMap extends Layer {
 	private int icon_height;
 	
 	/** The selected element. */
-	private ServiceElement selectedElement;
+	private BaseEntity selectedEntity;
 	
 	/** The selected timestamp. */
 	private long selectedTimestamp;
@@ -57,8 +59,8 @@ public class ServiceElementMap extends Layer {
 	 *
 	 * @return the selected element
 	 */
-	public ServiceElement getSelectedElement() {
-		return selectedElement;
+	public BaseEntity getSelectedEntity() {
+		return selectedEntity;
 	}
 	
 	/**
@@ -107,6 +109,15 @@ public class ServiceElementMap extends Layer {
 		}
 		update(serviceElements);
 	}
+	
+	private void initNetwork(int count) {
+		Network[] netowrks = new Network[count];
+		for (int i = 0; i < count; i++) {
+			netowrks[i] = new Network();
+			netowrks[i].setName("harvard-"+i);
+		}
+		update(netowrks);
+	}
 
 	/**
 	 * init_layout method calculates the icon size to be displayed based on the given number of items to be displayed.
@@ -131,12 +142,12 @@ public class ServiceElementMap extends Layer {
 	 *
 	 * @param result the result
 	 */
-	public void update(ServiceElement[] result) {
+	public void update(BaseEntity[] result) {
 		removeAll();
 		init_layout(result.length);
 		
 		int i = 0;
-		for (final ServiceElement device : result) {
+		for (final BaseEntity device : result) {
 			Point point = calculatePoint(result.length, i++);
         	
         	Picture picture = new Picture(Resources.IMAGES.pcom(), icon_width, icon_height, true, null);
@@ -144,7 +155,7 @@ public class ServiceElementMap extends Layer {
 
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
-        			selectedElement = device;
+        			selectedEntity = device;
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
         	};
