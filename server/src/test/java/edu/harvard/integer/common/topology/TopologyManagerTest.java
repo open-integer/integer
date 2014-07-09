@@ -260,7 +260,8 @@ public class TopologyManagerTest {
 		for (String key : deviceLinks.keySet()) {
 			ServiceElement serviceElement = getServiceElementByAddress(key, serviceElements);
 			if (serviceElement == null) {
-				serviceElements.add(createServiceElement(key));
+				serviceElement = createServiceElement(key);
+				serviceElements.add(serviceElement);
 			}
 			
 			String subnet = key.substring(0, key.lastIndexOf("."));
@@ -293,15 +294,6 @@ public class TopologyManagerTest {
 		logger.info("Found " + links.size() + " InterDeviceLinks");
 		
 
-//		for (ServiceElement serviceElement : serviceElements) {
-//			try {
-//				serviceElementManger.updateServiceElement(serviceElement);
-//			} catch (IntegerException e) {
-//			
-//				e.printStackTrace();
-//			}
-//		}
-		
 		for (Network network : networks) {
 			try {
 				Network dbNetwork = topologyManager.updateNetwork(network);
@@ -309,19 +301,15 @@ public class TopologyManagerTest {
 						" with " + dbNetwork.getServiceElements().size() + " Service Elements" +
 						" and " + dbNetwork.getInterDeviceLinks().size() + " Links");
 				
+				for (ServiceElement servieElement : network.getServiceElements()) {
+					logger.info("Added ServieElement " + servieElement.getID().toDebugString());
+				}
+				
 			} catch (IntegerException e) {
 			
 				e.printStackTrace();
 			}
 		}
-		
-//		for (InterDeviceLink interDeviceLink : links) {
-//			try {
-//				topologyManager.updateInterDeviceLink(interDeviceLink);
-//			} catch (IntegerException e) {
-//				e.printStackTrace();
-//			}
-//		}
 		
 	}
 

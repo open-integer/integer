@@ -98,6 +98,7 @@ public class NetworkDAO extends BaseDAO {
 		
 		if (network.getServiceElements() != null) {
 			ServiceElementDAO dao = new ServiceElementDAO(getEntityManager(), getLogger());
+			
 			List<ServiceElement> dbServiceElements = new ArrayList<ServiceElement>();
 			
 			for(ServiceElement serviceElement : network.getServiceElements()) {
