@@ -449,7 +449,7 @@ public class ServiceElementDiscoveryManagerTest {
 
 			assert (serviceElementDiscoveryManger != null);
 
-			Category category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.port.getName());
+			Category category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.portIf.getName());
 			
 			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger
 					.getServiceElementTypesByCategoryAndVendor(

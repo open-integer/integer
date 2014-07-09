@@ -35,7 +35,9 @@ package edu.harvard.integer.common.topology;
 
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -104,13 +106,18 @@ public class TopologyManagerTest {
 		}
 	}
 	
-	@Test
-	public void addInterDeviceLink() {
+	private InterDeviceLink createInterDeviceLink() {
 		InterDeviceLink link = new InterDeviceLink();
 		link.setCreated(new Date());
 		link.setDestinationAddress(new Address("1.2.3.4"));
 		link.setSourceAddress(new Address("2.3.4.5"));
 		link.setLayer("2.5");
+		
+		return link;
+	}
+	@Test
+	public void addInterDeviceLink() {
+		InterDeviceLink link = createInterDeviceLink();
 		
 		try {
 			topologyManager.updateInterDeviceLink(link);
@@ -141,12 +148,42 @@ public class TopologyManagerTest {
 		}
 	}
 	
+	@Test
 	public void addNetwork() {
 		Network network = new Network();
 		
 		network.setCreated(new Date());
 		network.setDescription("My Network");
 		network.setLayer("2.33");
+		network.setReachable(Boolean.TRUE);
+		
+		List<InterDeviceLink> links = new ArrayList<InterDeviceLink>();
+		links.add(createInterDeviceLink());
+		network.setInterDeviceLinks(links);
+		
+		List<ServiceElement> serviceElements = new ArrayList<ServiceElement>();
+		serviceElements.add(ServiceElementTest.createServiceElement());
+		
+		network.setServiceElements(serviceElements);
+		
+		List<Network> lowerNetworks = new ArrayList<Network>();
+		Network lowerNetwork = new Network();
+		
+		lowerNetwork.setCreated(new Date());
+		lowerNetwork.setDescription("My Network");
+		lowerNetwork.setLayer("2.33");
+		lowerNetwork.setReachable(Boolean.TRUE);
+		lowerNetworks.add(lowerNetwork);
+		
+		network.setLowerNetworks(lowerNetworks);
+		
+		try {
+			topologyManager.updateNetwork(network);
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
 	}
 	
 }
