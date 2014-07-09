@@ -203,7 +203,7 @@ public class TopologyManagerTest {
 	@Test
 	public void createFakeData() {
 
-		File deviceFile = new File("/Users/dtaylor/git/integer/server/src/test/resources/topology");
+		File deviceFile = new File("src/test/resources/topology");
 		
 		BufferedReader br = null;
 		String line = "";
@@ -292,6 +292,16 @@ public class TopologyManagerTest {
 		logger.info("Found " + serviceElements.size() + " Service Elements");
 		logger.info("Found " + links.size() + " InterDeviceLinks");
 		
+
+//		for (ServiceElement serviceElement : serviceElements) {
+//			try {
+//				serviceElementManger.updateServiceElement(serviceElement);
+//			} catch (IntegerException e) {
+//			
+//				e.printStackTrace();
+//			}
+//		}
+		
 		for (Network network : networks) {
 			try {
 				Network dbNetwork = topologyManager.updateNetwork(network);
@@ -305,22 +315,13 @@ public class TopologyManagerTest {
 			}
 		}
 		
-		for (InterDeviceLink interDeviceLink : links) {
-			try {
-				topologyManager.updateInterDeviceLink(interDeviceLink);
-			} catch (IntegerException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		for (ServiceElement serviceElement : serviceElements) {
-			try {
-				serviceElementManger.updateServiceElement(serviceElement);
-			} catch (IntegerException e) {
-			
-				e.printStackTrace();
-			}
-		}
+//		for (InterDeviceLink interDeviceLink : links) {
+//			try {
+//				topologyManager.updateInterDeviceLink(interDeviceLink);
+//			} catch (IntegerException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 	}
 
