@@ -82,7 +82,6 @@ public class ServiceElementTest {
 		//BasicConfigurator.configure();
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void addServiceElement() {
 

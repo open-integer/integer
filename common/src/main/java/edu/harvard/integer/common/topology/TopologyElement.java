@@ -39,14 +39,18 @@ package edu.harvard.integer.common.topology;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.selection.Layer;
+import edu.harvard.integer.common.ID;
 
 /**
  * TopologyElement instances provide details for each ServiceElement about its
@@ -67,6 +71,16 @@ public class TopologyElement extends BaseEntity {
 
 	private String layer = null;
 
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "serviceElementId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementType")),
+			@AttributeOverride(name = "name", column = @Column(name = "serviceElementName")) })
+	private ID serviceElementId = null;
+	
+	@ManyToMany
+	private List<InterDeviceLink> interDeviceLinks = null;
+	
 	/**
 	 * Address is separate from layer since a layer like IP might have different
 	 * address types, e.g., IPv4 or IPv6. A topology element may exist at only
@@ -135,5 +149,33 @@ public class TopologyElement extends BaseEntity {
 	 */
 	public void setModified(Date modified) {
 		this.modified = modified;
+	}
+
+	/**
+	 * @return the serviceElementId
+	 */
+	public ID getServiceElementId() {
+		return serviceElementId;
+	}
+
+	/**
+	 * @param serviceElementId the serviceElementId to set
+	 */
+	public void setServiceElementId(ID serviceElementId) {
+		this.serviceElementId = serviceElementId;
+	}
+
+	/**
+	 * @return the interDeviceLinks
+	 */
+	public List<InterDeviceLink> getInterDeviceLinks() {
+		return interDeviceLinks;
+	}
+
+	/**
+	 * @param interDeviceLinks the interDeviceLinks to set
+	 */
+	public void setInterDeviceLinks(List<InterDeviceLink> interDeviceLinks) {
+		this.interDeviceLinks = interDeviceLinks;
 	}
 }

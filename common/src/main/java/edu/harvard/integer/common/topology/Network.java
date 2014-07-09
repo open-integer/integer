@@ -38,10 +38,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.selection.Layer;
 
 /**
  * A network object is the sum of all the NetworkInfo, InterDeviceLink, and Path

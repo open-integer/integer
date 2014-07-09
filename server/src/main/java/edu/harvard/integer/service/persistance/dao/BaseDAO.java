@@ -747,6 +747,7 @@ public class BaseDAO {
 		if (values == null)
 			return values;
 
+		@SuppressWarnings("unchecked")
 		T[] newList = (T[]) createArrayFrom(values);
 		
 		for (int i = 0; i < values.length; i++) {

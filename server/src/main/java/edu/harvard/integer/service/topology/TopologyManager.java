@@ -36,8 +36,6 @@ package edu.harvard.integer.service.topology;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.Network;
@@ -57,8 +55,6 @@ import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 @Stateless
 public class TopologyManager extends BaseManager implements TopologyManagerLocalInterface, TopologyManagerRemoteInterface {
 
-	@Inject
-	private Logger logger;
 	
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
@@ -135,4 +131,5 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		TopologyElementDAO dao = persistenceManager.getTopologyElementDAO();
 		return dao.update(topologyElement);
 	}
+	
 }

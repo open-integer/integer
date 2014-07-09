@@ -177,7 +177,7 @@ public class SnmpManager extends BaseManager implements SnmpManagerLocalInterfac
 			
 			for (MIBImportResult result : results) {
 
-				logger.info("Number of product OIDs " + result.getObjectIdentifiers());
+				logger.info("Number of product OIDs " + result.getObjectIdentifiers().size());
 
 				
 				// Only save mib if the load was a success!
