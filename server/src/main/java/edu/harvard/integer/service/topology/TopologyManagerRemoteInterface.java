@@ -31,45 +31,15 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.service.topology;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
+import javax.ejb.Remote;
 
 /**
- * The YamlManager is used to import a YAML file. The current YAML file types
- * supported are Technology Tree, VendorContianment and VendorIdentifier
  * @author David Taylor
  *
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
+@Remote
+public interface TopologyManagerRemoteInterface extends TopologyManagerInterface {
 
-	/**
-	 * Read in the YAML in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists in the database then the technology 
-	 * will be update with new information found in the YAML. The YAML is
-	 * passed in as a string so the YAML file can be loaded from the GUI. 
-	 * 
-	 * @param content. YAML file passed in as a string. 
-	 * @return Status of the load. 
-	 * @throws IntegerException. 
-	 */
-	String loadTechnologyTree(String content) throws IntegerException;
-
-	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
-	 */
-	String loadServiceElementType(String content) throws IntegerException;
-
-	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
-	 */
-	String loadVendorContainment(String content) throws IntegerException;
-
-	public String loadCategory(String content) throws IntegerException;
 }

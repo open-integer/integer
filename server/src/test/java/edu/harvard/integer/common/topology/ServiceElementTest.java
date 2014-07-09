@@ -86,6 +86,19 @@ public class ServiceElementTest {
 	@Test
 	public void addServiceElement() {
 
+		ServiceElement serviceElement = createServiceElement();
+		try {
+			serviceElementManager.updateServiceElement(serviceElement);
+
+		} catch (IntegerException e) {
+			e.printStackTrace();
+
+			fail(e.toString());
+		}
+
+	}
+	
+	public static ServiceElement createServiceElement() {
 		ServiceElement serviceElement = new ServiceElement();
 		serviceElement.setName("My ServiceElement");
 		serviceElement.setDescription("A description");
@@ -109,16 +122,8 @@ public class ServiceElementTest {
 		List<ManagementObjectValue> values = new ArrayList<ManagementObjectValue>();
 		values.add(intValue);
 		serviceElement.setAttributeValues(values);
-		
-		try {
-			serviceElementManager.updateServiceElement(serviceElement);
 
-		} catch (IntegerException e) {
-			e.printStackTrace();
-
-			fail(e.toString());
-		}
-
+		return serviceElement;
 	}
 
 	@Test

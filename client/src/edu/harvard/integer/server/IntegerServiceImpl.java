@@ -22,6 +22,7 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.CriticalityEnum;
@@ -309,16 +310,17 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 				
 				b.append("Technologies: \n");
 				for (FilterNode filterNode : filter.getTechnologies()) {
-					b.append("\tTechnology: ").append(filterNode.getName()).append('\n');
+					printFilterNode(filterNode, b, "\tTechnology: ").append('\n');
 				}
 				b.append("Link:\n");
 				for (FilterNode filterNode : filter.getLinkTechnologies()) {
-					b.append("\tTechnology: ").append(filterNode.getName()).append('\n');
+					printFilterNode(filterNode, b, "\tLink Technology: ").append('\n');
 				}
 
 				b.append("Categories: \n");
-				for (CategoryTypeEnum category : filter.getCategories()) 
-					b.append("\tCategory: ").append(category).append('\n');
+				for (FilterNode category : filter.getCategories())
+					printFilterNode(category, b, "\tCategory: ").append('\n');
+					//b.append("\tCategory: ").append(category.getName()).append('\n');
 				
 				b.append("Criticaliy\n");
 				for (CriticalityEnum criticatlity :  filter.getCriticalities() )
@@ -334,6 +336,23 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		return selection;
 	}
 
+	private StringBuffer printFilterNode(FilterNode node, StringBuffer b, String indent) {
+		b.append(indent).append(node.getName()).append(":").append(node.getItemId().getIdentifier());
+		if (node.getChildren() != null) {
+			b.append('\n');
+			
+			for (FilterNode child : node.getChildren()) {
+				printFilterNode(child, b, indent + "  ");
+			}
+
+			b.append('\n');
+		}
+			
+		
+		
+		return b;
+	}
+	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.client.IntegerService#getServiceElementTypeById(edu.harvard.integer.common.ID)
 	 */

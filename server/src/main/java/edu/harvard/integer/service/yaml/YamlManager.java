@@ -34,6 +34,7 @@
 package edu.harvard.integer.service.yaml;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -66,6 +67,7 @@ import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -79,6 +81,7 @@ import edu.harvard.integer.common.yaml.YamlMechanismType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
 import edu.harvard.integer.common.yaml.YamlTechnology;
+import edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpContainmentRelation;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpLevelOID;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpParentChildRelationship;
@@ -88,10 +91,12 @@ import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
@@ -120,6 +125,9 @@ public class YamlManager extends BaseManager implements
 
 	@Inject
 	SnmpManagerInterface snmpManager;
+	
+	@Inject
+	ManagementObjectCapabilityManagerInterface managementObjectManager;
 
 	/**
 	 * @param managerType
@@ -501,7 +509,7 @@ public class YamlManager extends BaseManager implements
 						serviceElementTypeDao, yamlServiceElementType,
 						typeTranslate.getName());
 
-				exemplarSet.setCategory(CategoryTypeEnum.valueOf(typeTranslate
+				exemplarSet.setCategory(managementObjectManager.getCategoryByName(typeTranslate
 						.getCategory()));
 
 				if (typeTranslate.getMapping().equalsIgnoreCase(
@@ -525,8 +533,7 @@ public class YamlManager extends BaseManager implements
 					if (serviceElementType == null) {
 
 						serviceElementType = new ServiceElementType();
-						serviceElementType.setCategory(CategoryTypeEnum
-								.valueOf(typeTranslate.getCategory()));
+						serviceElementType.setCategory(managementObjectManager.getCategoryByName(typeTranslate.getCategory()));
 						serviceElementType.setName(typeTranslate.getName());
 						serviceElementType
 								.setDescription(yamlServiceElementType
@@ -870,7 +877,7 @@ public class YamlManager extends BaseManager implements
 
 			if (levelOid.getCategory() != null) {
 				try {
-					dbLevelOid.setCategory(CategoryTypeEnum.valueOf(levelOid
+					dbLevelOid.setCategory(managementObjectManager.getCategoryByName(levelOid
 							.getCategory()));
 				} catch (IllegalArgumentException e) {
 					logger.error("Unable to create category from "
@@ -1054,7 +1061,7 @@ public class YamlManager extends BaseManager implements
 		dbSet.setDefaultNameCababilityId(getCapability(serviceElementType
 				.getDefaultNameCabability()));
 		if (serviceElementType.getCategory() != null)
-			dbSet.setCategory(CategoryTypeEnum.valueOf(serviceElementType
+			dbSet.setCategory(managementObjectManager.getCategoryByName(serviceElementType
 					.getCategory()));
 
 		dbSet.setUniqueIdentifierCapabilities(createAttributeList(
@@ -1235,4 +1242,39 @@ public class YamlManager extends BaseManager implements
 
 		return null;
 	}
+	
+	@Override
+	public String loadCategory(String content) throws IntegerException {
+		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
+				YamlCategory.class, getClass().getClassLoader()));
+
+		YamlCategory load = null;
+
+		try {
+			load = (YamlCategory) yaml.load(content);
+		} catch (Throwable e) {
+			logger.error("Unexpected error reading in YAML! " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
+		}
+
+		logger.info("YAML Object is " + load.getClass().getName());
+
+		HashMap<String, YamlCategory> categories = new HashMap<String, YamlCategory>();
+		HashMap<String, Category> dbCategories = new HashMap<String, Category>();
+		
+		YamlCategoryParser parser = new YamlCategoryParser(categories, dbCategories, persistanceManager.getCategoryDAO());
+		
+		// First parse the parents list to add the child categories to the parents.
+		parser.parseParentCategory(load);
+		
+		// Parse the parents and add to the database.
+		parser.parseCategory(load);
+
+		parser.printCategories(load, "");
+		
+		return "Success";
+
+	}
+
 }

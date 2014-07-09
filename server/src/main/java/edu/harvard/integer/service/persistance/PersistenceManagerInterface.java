@@ -63,6 +63,9 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
 import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
+import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
+import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
+import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
@@ -70,6 +73,7 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDA
 import edu.harvard.integer.service.persistance.dao.topology.SignatureDAO;
 import edu.harvard.integer.service.persistance.dao.topology.SignatureValueOperatorDAO;
 import edu.harvard.integer.service.persistance.dao.topology.SnmpServiceElementTypeOverrideDAO;
+import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
@@ -350,5 +354,25 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	SignatureValueOperatorDAO getSignatureValueOperatorDAO();
+
+	/**
+	 * @return
+	 */
+	CategoryDAO getCategoryDAO();
+
+	/**
+	 * @return
+	 */
+	NetworkDAO getNetworkDAO();
+
+	/**
+	 * @return
+	 */
+	InterDeviceLinkDAO getInterDeviceLinkDAO();
+
+	/**
+	 * @return
+	 */
+	TopologyElementDAO getTopologyElementDAO();
 
 }

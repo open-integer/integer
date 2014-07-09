@@ -395,10 +395,11 @@ public class MibLoader implements MibLoaderLocalInterface {
 				dbVendorSubtype = new VendorIdentifier();
 			}
 
-			logger.info("Load " + vendor + " SubType " + snmp.getOid() + " :: "
-					+ snmp.getName() + " VendorId "
-					+ getVendorId(snmp.getOid()) + " Comment "
-					+ snmp.getComment());
+			if (logger.isDebugEnabled())
+				logger.debug("Load " + vendor + " SubType " + snmp.getOid() + " :: "
+						+ snmp.getName() + " VendorId "
+						+ getVendorId(snmp.getOid()) + " Comment "
+						+ snmp.getComment());
 
 			dbVendorSubtype.setName(vendor.trim());
 			dbVendorSubtype.setVendorOid(getVendorId(snmp.getOid()));

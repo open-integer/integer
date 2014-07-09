@@ -62,6 +62,7 @@ public class LoggerUtil {
 	 * @return
 	 */
 	public static String filterLog(String message) {
-		return message.replace("\n", "").replace("\r", "");
+		// Remove CR, LF and any html syntax.
+		return message.replace("\n", "").replace("\r", "").replaceAll("<.*>", "");
 	}
 }

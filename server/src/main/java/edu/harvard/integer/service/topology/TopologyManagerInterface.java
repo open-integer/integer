@@ -31,45 +31,74 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.service.topology;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.topology.InterDeviceLink;
+import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
- * The YamlManager is used to import a YAML file. The current YAML file types
- * supported are Technology Tree, VendorContianment and VendorIdentifier
  * @author David Taylor
- *
+ * 
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
+public interface TopologyManagerInterface extends BaseManagerInterface {
 
 	/**
-	 * Read in the YAML in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists in the database then the technology 
-	 * will be update with new information found in the YAML. The YAML is
-	 * passed in as a string so the YAML file can be loaded from the GUI. 
+	 * Find all the Network objects in the database. Return the list.
 	 * 
-	 * @param content. YAML file passed in as a string. 
-	 * @return Status of the load. 
-	 * @throws IntegerException. 
-	 */
-	String loadTechnologyTree(String content) throws IntegerException;
-
-	/**
-	 * @param content
 	 * @return
 	 * @throws IntegerException
 	 */
-	String loadServiceElementType(String content) throws IntegerException;
+	Network[] getAllNetworks() throws IntegerException;
 
 	/**
-	 * @param content
+	 * Update a Network in the database.
+	 * 
+	 * @param network
 	 * @return
 	 * @throws IntegerException
 	 */
-	String loadVendorContainment(String content) throws IntegerException;
+	Network updateNetwork(Network network) throws IntegerException;
 
-	public String loadCategory(String content) throws IntegerException;
+	/**
+	 * Get all InterDeviceLinks that are in the database.
+	 * 
+	 * @return InterDeviceLink[] of all InterDeviceLinks
+	 * @throws IntegerException
+	 */
+	InterDeviceLink[] getAllInterDeviceLinks() throws IntegerException;
+
+	/**
+	 * Update the InterDeviceLink in the database.
+	 * 
+	 * @param interDeviceLink
+	 * @return InterDeviceLink that has been updated. If this is a new
+	 *         InterDeviceLink then the identifier will be set on the returned
+	 *         object.
+	 * @throws IntegerException
+	 */
+	InterDeviceLink updateInterDeviceLink(InterDeviceLink interDeviceLink)
+			throws IntegerException;
+
+	/**
+	 * Get the list of all topology elements in the database.
+	 * 
+	 * @return TopologyElement[] of all TopologyElements
+	 * @throws IntegerException
+	 */
+	TopologyElement[] getAllTopologyElements() throws IntegerException;
+
+	/**
+	 * Update the toplogy element in the database.
+	 * 
+	 * @param topologyElement
+	 * @return TopologyElement that has been updated in the database. The new
+	 *         object will have the identifier set.
+	 * @throws IntegerException
+	 */
+	TopologyElement updateTopologyElement(TopologyElement topologyElement)
+			throws IntegerException;
+
 }

@@ -17,6 +17,7 @@ import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionModel;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
@@ -42,7 +43,9 @@ public class HvCheckListPanel<D> extends SimplePanel {
 				key = ((ID)d).getIdentifier();
 			else if (d != null && d instanceof Enum)
 				key = ((Enum<?>)d).name();
-			
+			else if (d instanceof BaseEntity)
+				key = ((BaseEntity) d).getName();
+				
 			return key;
 		}
 	};
@@ -109,6 +112,8 @@ public class HvCheckListPanel<D> extends SimplePanel {
 					value = ((ID)d).getName();
 				else if (d instanceof Enum)
 					value = ((Enum<?>)d).name();
+				else if (d instanceof BaseEntity)
+					value = ((BaseEntity) d).getName();
 				
 				return value;
 			}
@@ -121,6 +126,8 @@ public class HvCheckListPanel<D> extends SimplePanel {
 					return ((ID)d1).getName().compareTo(((ID)d2).getName());
 				else if (d1 instanceof Enum && d2 instanceof Enum)
 					return ((Enum<?>)d1).name().compareTo(((Enum<?>)d2).name());
+				else if (d1 instanceof BaseEntity)
+					return ((BaseEntity) d1).getName().compareTo(((BaseEntity) d2).getName());
 				else
 					return 1;
 			}

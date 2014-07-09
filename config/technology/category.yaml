@@ -11,7 +11,11 @@ categories:
         - name: Virtual
           description: virtual
           parent: system
-          
+          categories:
+            - name: interface
+              description: interface
+              parent: virtual
+              
         - name: Physical
           description: physical
           parent: system
@@ -175,7 +179,7 @@ categories:
       - name: software
         description: software
         parent: category-tree
-        technologies:
+        categories:
         - name: overall operating system
           description: overall operating system
           parent: software

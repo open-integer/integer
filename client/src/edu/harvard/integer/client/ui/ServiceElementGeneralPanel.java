@@ -148,7 +148,7 @@ public class ServiceElementGeneralPanel extends FormPanel {
 	 * @param serviceElementType the service element type
 	 */
 	public void update(ServiceElementType serviceElementType) {
-		String category = serviceElementType.getCategory().name();
+		String category = serviceElementType.getCategory().getName();
 		if (category != null)
 			categoryTextBox.setText(category);
 	}

@@ -13,6 +13,7 @@ import edu.harvard.integer.client.widget.HvCheckBoxTreePanel;
 import edu.harvard.integer.client.widget.HvCheckListPanel;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
@@ -26,7 +27,7 @@ import edu.harvard.integer.common.topology.CriticalityEnum;
 public class FilterPanel extends DockPanel {
 	
 	/** The category provider. */
-	private ListDataProvider<CategoryTypeEnum> categoryProvider = new ListDataProvider<CategoryTypeEnum>();
+	private ListDataProvider<LeaveItem> categoryProvider = new ListDataProvider<LeaveItem>();
 	
 	/** The technology provider. */
 	private ListDataProvider<LeaveItem> technologyProvider = new ListDataProvider<LeaveItem>();
@@ -88,7 +89,7 @@ public class FilterPanel extends DockPanel {
 			selectionPanel.add(new HvCheckListPanel<ID>(serviceProvider, filter.getServices()), "Business Services", 3);
 		
 		if (filter.getCategories() != null && !filter.getCategories().isEmpty())
-			selectionPanel.add(new HvCheckListPanel<CategoryTypeEnum>(categoryProvider, filter.getCategories()), "Categories", 3);
+			selectionPanel.add(new HvCheckBoxTreePanel(categoryProvider, filter.getCategories()), "Categories", 3);
 		
 		if (filter.getTechnologies() != null && !filter.getTechnologies().isEmpty())
 			selectionPanel.add(new HvCheckBoxTreePanel(technologyProvider, filter.getTechnologies()), "Service Technologies", 3);

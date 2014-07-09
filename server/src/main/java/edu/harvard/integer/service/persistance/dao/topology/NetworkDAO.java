@@ -31,38 +31,84 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.persistance;
+package edu.harvard.integer.service.persistance.dao.topology;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.persistence.DataPreLoadFile;
+import edu.harvard.integer.common.topology.InterDeviceLink;
+import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
- * 
- * The DAO is responsible for persisting the DataPreLoadFile. All
- * queries will be done in this class. 
- * 
  * @author David Taylor
  *
  */
-public class DataPreLoadFileDAO extends BaseDAO {
+public class NetworkDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-	public DataPreLoadFileDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, DataPreLoadFile.class);
-		
+	public NetworkDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, Network.class);
+
 	}
 
-	public int loadSQL(String sqlCmd) throws IntegerException {
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	 */
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
 		
-		return executeUpdate(sqlCmd);
+		if (!(entity instanceof Network))
+			return;
+		
+		Network network = (Network) entity;
+		if (network.getLowerNetworks() != null) {
+			List<Network> dbLowerNetworks = new ArrayList<Network>();
+			for (Network lowerNetwork : network.getLowerNetworks()) {
+				dbLowerNetworks.add(update(lowerNetwork));
+			}
+			
+			network.setLowerNetworks(dbLowerNetworks);
+		}
+		
+		if (network.getInterDeviceLinks() != null) {
+			InterDeviceLinkDAO interDeviceLinkDao = new InterDeviceLinkDAO(getEntityManager(), getLogger());
+			
+			List<InterDeviceLink> dbLinks = new ArrayList<InterDeviceLink>();
+			
+			for (InterDeviceLink interDeviceLink : network.getInterDeviceLinks()) {
+				dbLinks.add(interDeviceLinkDao.update(interDeviceLink));
+			}
+			
+			network.setInterDeviceLinks(dbLinks);
+		}
+		
+		
+		if (network.getServiceElements() != null) {
+			ServiceElementDAO dao = new ServiceElementDAO(getEntityManager(), getLogger());
+			List<ServiceElement> dbServiceElements = new ArrayList<ServiceElement>();
+			
+			for(ServiceElement serviceElement : network.getServiceElements()) {
+				dbServiceElements.add(dao.update(serviceElement));
+			}
+			
+			network.setServiceElements(dbServiceElements);
+		}
+		
+		super.preSave(entity);
 	}
+
+	
 }
