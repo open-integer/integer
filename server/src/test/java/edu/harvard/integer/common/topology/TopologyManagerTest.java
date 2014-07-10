@@ -275,6 +275,7 @@ public class TopologyManagerTest {
 			
 			for (InterDeviceLink interDeviceLink : links) {
 				String sourceSubnnet = interDeviceLink.getSourceAddress().getAddress().substring(0, interDeviceLink.getSourceAddress().getAddress().lastIndexOf("."));
+				String destinationSubnnet = interDeviceLink.getDestinationAddress().getAddress().substring(0, interDeviceLink.getDestinationAddress().getAddress().lastIndexOf("."));
 				
 				if (network.getName().equals(sourceSubnnet)) {
 					boolean foundIt = false;
