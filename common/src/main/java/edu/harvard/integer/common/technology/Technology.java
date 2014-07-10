@@ -41,12 +41,16 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OrderColumn;
 import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
+import edu.harvard.integer.common.topology.LayerTypeEnum;
 
 /**
  * This class which can contain parents and children is used to organize details
@@ -93,6 +97,13 @@ public class Technology extends BaseEntity {
 	@OrderColumn(name = "idx")
 	private List<ID> mechanisims = null;
 
+	@Enumerated(EnumType.STRING)
+	private LayerTypeEnum layer = null;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")	
+	private List<DiscoveryTypeEnum> discoveryTypes = null;
+	
 	/**
 	 * @return the description
 	 */
@@ -149,6 +160,34 @@ public class Technology extends BaseEntity {
 	 */
 	public void setMechanisims(List<ID> mechanisims) {
 		this.mechanisims = mechanisims;
+	}
+
+	/**
+	 * @return the layer
+	 */
+	public LayerTypeEnum getLayer() {
+		return layer;
+	}
+
+	/**
+	 * @param layer the layer to set
+	 */
+	public void setLayer(LayerTypeEnum layer) {
+		this.layer = layer;
+	}
+
+	/**
+	 * @return the discoveryTypes
+	 */
+	public List<DiscoveryTypeEnum> getDiscoveryTypes() {
+		return discoveryTypes;
+	}
+
+	/**
+	 * @param discoveryTypes the discoveryTypes to set
+	 */
+	public void setDiscoveryTypes(List<DiscoveryTypeEnum> discoveryTypes) {
+		this.discoveryTypes = discoveryTypes;
 	}
 
 }

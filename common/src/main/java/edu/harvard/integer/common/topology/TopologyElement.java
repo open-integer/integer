@@ -45,6 +45,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
@@ -69,7 +71,8 @@ public class TopologyElement extends BaseEntity {
 
 	private Date modified = null;
 
-	private String layer = null;
+	@Enumerated(EnumType.STRING)
+	private LayerTypeEnum layer = null;
 
 	@Embedded
 	@AttributeOverrides({
@@ -109,7 +112,7 @@ public class TopologyElement extends BaseEntity {
 	/**
 	 * @return the layer
 	 */
-	public String getLayer() {
+	public LayerTypeEnum getLayer() {
 		return layer;
 	}
 
@@ -117,7 +120,7 @@ public class TopologyElement extends BaseEntity {
 	 * @param layer
 	 *            the layer to set
 	 */
-	public void setLayer(String layer) {
+	public void setLayer(LayerTypeEnum layer) {
 		this.layer = layer;
 	}
 

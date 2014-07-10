@@ -31,41 +31,31 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.topology;
-
-import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.TopologyElement;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
+package edu.harvard.integer.common.topology;
 
 /**
  * @author David Taylor
  *
  */
-public class TopologyElementDAO extends BaseDAO {
-
-	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
-	 */
-	public TopologyElementDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, TopologyElement.class);
-
+public enum LayerTypeEnum {
+	Unknown("N/A"), One("1"), Two("2"), TwoAndHalf("2.5"), Three("3");
+	
+	private String layer = null;
+	
+	private LayerTypeEnum (String layer) {
+		this.layer = layer;
 	}
-
-	/**
-	 * Get the list of TopologyElements for the given service element ID.
-	 * 
-	 * @param serviceElementId
-	 * @return TopologyElement[] found for the service element.
-	 */
-	public TopologyElement[] findByServiceElementID(ID serviceElementId) {
-
-		return findByIDField(serviceElementId, "serviceElementId", TopologyElement.class);
+	
+	public String getLayer() {
+		return layer;
 	}
-
+	
+	public static LayerTypeEnum getLayerTypeEnum(String layer) {
+		for (LayerTypeEnum layerType : values()) {
+			if (layerType.getLayer().equals(layer));
+			return layerType;
+		}
+		
+		return Unknown;
+	}
 }

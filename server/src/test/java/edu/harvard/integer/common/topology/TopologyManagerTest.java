@@ -89,7 +89,7 @@ public class TopologyManagerTest {
 		topologyElement.setCreated(new Date());
 		topologyElement.setModified(new Date());
 		
-		topologyElement.setLayer("2");
+		topologyElement.setLayer(LayerTypeEnum.Two);
 
 		try {
 			topologyManager.updateTopologyElement(topologyElement);
@@ -125,7 +125,7 @@ public class TopologyManagerTest {
 		link.setCreated(new Date());
 		link.setDestinationAddress(new Address("1.2.3.4"));
 		link.setSourceAddress(new Address("2.3.4.5"));
-		link.setLayer("2.5");
+		link.setLayer(LayerTypeEnum.TwoAndHalf);
 		
 		return link;
 	}
@@ -168,7 +168,7 @@ public class TopologyManagerTest {
 		
 		network.setCreated(new Date());
 		network.setDescription("My Network");
-		network.setLayer("2.33");
+		network.setLayer(LayerTypeEnum.TwoAndHalf);
 		network.setReachable(Boolean.TRUE);
 		
 		List<InterDeviceLink> links = new ArrayList<InterDeviceLink>();
@@ -185,7 +185,7 @@ public class TopologyManagerTest {
 		
 		lowerNetwork.setCreated(new Date());
 		lowerNetwork.setDescription("My Network");
-		lowerNetwork.setLayer("2.33");
+		lowerNetwork.setLayer(LayerTypeEnum.TwoAndHalf);
 		lowerNetwork.setReachable(Boolean.TRUE);
 		lowerNetworks.add(lowerNetwork);
 		
@@ -383,6 +383,14 @@ public class TopologyManagerTest {
 		}
 		
 		return null;
+	}
+	
+	public void getLinksForSourceDestAddress() {
+		
+	}
+	
+	public void getPathsForSourceDestAddress() {
+		
 	}
 }
 

@@ -33,14 +33,8 @@
 package edu.harvard.integer.common;
 
 import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.SystemErrorCodes;
 /**
  * Base class for IPV4 and IPV6 address. 
  * 
@@ -78,17 +72,6 @@ public class Address implements Serializable {
 	 */
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	
-	@Transient
-	public InetAddress getInetAddress() throws IntegerException {
-		try {
-			return InetAddress.getByName(address);
-		} catch (UnknownHostException e) {
-			
-			e.printStackTrace();
-			throw new IntegerException(e, SystemErrorCodes.InvalidIpAddress);
-		}
 	}
 	
 }

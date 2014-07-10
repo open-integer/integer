@@ -34,33 +34,42 @@
 package edu.harvard.integer.common.topology;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
 
 /**
+ * A path is an ordered list of InterDeviceLink instances. For this reason paths
+ * will frequently come in pairs for certain types of InterDeviceLinks such as
+ * at Layer 3 between end systems. In these cases there will be one from one
+ * device to the other and another in the opposite direction.
+ * 
  * @author David Taylor
  * 
  */
-@Entity
-public class InterDeviceLink extends BaseEntity {
+public class Path extends BaseEntity {
 
 	/**
-	 * Serial Version UID
+	 * Serial version ID
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * This is the ordered list of InterDeviceLink objects that define a
+	 * specific path between any source and destination service elements.
+	 */
 	@Embedded
 	@AttributeOverride(name = "address", column = @Column(name = "sourceAddress"))
 	private Address sourceAddress = null;
-	
+
+	/**
+	 * The destination/end point of the path.
+	 */
 	@Embedded
 	@AttributeOverride(name = "address", column = @Column(name = "destinationAddress"))
 	private Address destinationAddress = null;
@@ -69,8 +78,11 @@ public class InterDeviceLink extends BaseEntity {
 
 	private Date modified = null;
 
-	@Enumerated(EnumType.STRING)
-	private LayerTypeEnum layer = null;
+	/**
+	 * This is the ordered list of InterDeviceLink objects that define a
+	 * specific path between any source and destination service elements.
+	 */
+	private List<InterDeviceLink> interDeviceLinks = null;
 
 	/**
 	 * @return the sourceAddress
@@ -133,18 +145,18 @@ public class InterDeviceLink extends BaseEntity {
 	}
 
 	/**
-	 * @return the layer
+	 * @return the interDeviceLinks
 	 */
-	public LayerTypeEnum getLayer() {
-		return layer;
+	public List<InterDeviceLink> getInterDeviceLinks() {
+		return interDeviceLinks;
 	}
 
 	/**
-	 * @param layer
-	 *            the layer to set
+	 * @param interDeviceLinks
+	 *            the interDeviceLinks to set
 	 */
-	public void setLayer(LayerTypeEnum layer) {
-		this.layer = layer;
+	public void setInterDeviceLinks(List<InterDeviceLink> interDeviceLinks) {
+		this.interDeviceLinks = interDeviceLinks;
 	}
 
 }

@@ -37,6 +37,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -67,15 +70,16 @@ public class Network extends BaseEntity {
 	
 	private Date modified = null;
 
-	private String layer = null;
+	@Enumerated(EnumType.STRING)
+	private LayerTypeEnum layer = null;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<InterDeviceLink> interDeviceLinks = null;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<ServiceElement> serviceElements = null;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Network> lowerNetworks = null;
 	
 	private Boolean reachable = null;
@@ -125,14 +129,14 @@ public class Network extends BaseEntity {
 	/**
 	 * @return the layer
 	 */
-	public String getLayer() {
+	public LayerTypeEnum getLayer() {
 		return layer;
 	}
 
 	/**
 	 * @param layer the layer to set
 	 */
-	public void setLayer(String layer) {
+	public void setLayer(LayerTypeEnum layer) {
 		this.layer = layer;
 	}
 
