@@ -427,9 +427,11 @@ public class ServiceElementDiscoveryManagerTest {
 			category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.portIf.getName());
 			if (category == null) {
 				category = new Category();
-				category.setName(CategoryTypeEnum.port.getName());
+				category.setName(CategoryTypeEnum.portIf.getName());
 				category = managementObjectCapabilityManager.updateCategory(category);
 			}
+			
+			assert (category != null);
 			
 		} catch (IntegerException e) {
 			e.printStackTrace();
@@ -462,6 +464,8 @@ public class ServiceElementDiscoveryManagerTest {
 			assert (serviceElementDiscoveryManger != null);
 
 			Category category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.portIf.getName());
+			
+			assert (category != null);
 			
 			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger
 					.getServiceElementTypesByCategoryAndVendor(

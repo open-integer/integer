@@ -471,6 +471,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return managementObjectValueDAO.findById(id);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getCategoryByName(java.lang.String)
+	 */
 	@Override
 	public Category getCategoryByName(String name) throws IntegerException {
 		CategoryDAO dao = dbm.getCategoryDAO();
@@ -478,6 +482,10 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return dao.findByName(name);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#updateCategory(edu.harvard.integer.common.topology.Category)
+	 */
 	@Override
 	public Category updateCategory(Category category) throws IntegerException {
 		CategoryDAO dao = dbm.getCategoryDAO();

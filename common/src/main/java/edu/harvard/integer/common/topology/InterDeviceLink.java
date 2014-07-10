@@ -39,11 +39,9 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.selection.Layer;
 
 /**
  * @author David Taylor

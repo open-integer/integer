@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvIconButton;
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -66,8 +67,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	/** The details button. */
 	public static HvIconButton detailsButton = new HvIconButton("Summary");
 
-	/** The selected element. */
-	public static ServiceElement selectedElement;
+	/** The selected entity. */
+	public static BaseEntity selectedEntity;
 
 	/** The network panel. */
 	private LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH, CONTENT_HEIGHT);
@@ -117,11 +118,11 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (deviceMap.getSelectedTimestamp() > containedTreeView.getSelectedTimestamp())
-					selectedElement = deviceMap.getSelectedElement();
+					selectedEntity = deviceMap.getSelectedEntity();
 				else
-					selectedElement = containedTreeView.getSelectedServiceElement();
+					selectedEntity = containedTreeView.getSelectedServiceElement();
 				
-				MainClient.integerService.getDeviceDetails(selectedElement.getID(), new AsyncCallback<DeviceDetails>() {
+				MainClient.integerService.getDeviceDetails(selectedEntity.getID(), new AsyncCallback<DeviceDetails>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -130,7 +131,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 					@Override
 					public void onSuccess(DeviceDetails deviceDetails) {
-						DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedElement.getName(), deviceDetails);
+						DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedEntity.getName(), deviceDetails);
 						HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
 						detailsDialog.enableOkButton(false);
 						detailsDialog.setSize("400px", "150px");
@@ -255,7 +256,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 *
 	 * @param se the se
 	 */
-	public static void showContainedTreeView(final ServiceElement se) {
+	public static void showContainedTreeView(final BaseEntity se) {
 		//containeeTreeView.updateTitle(se.getName());
 		eastSplitPanel.setWidgetHidden(containedSplitPanel, false);
 		

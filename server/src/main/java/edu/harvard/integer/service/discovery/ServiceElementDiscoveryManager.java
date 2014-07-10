@@ -44,7 +44,6 @@ import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 
 import edu.harvard.integer.access.snmp.CommonSnmpOids;
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.SnmpContainment;
@@ -54,7 +53,6 @@ import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -364,18 +362,6 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return dao.findByVendorSubtypeName(vendorSubTypeName);
 	}
 
-	private int countDots(String oidString) {
-		int count = 0;
-		int offset = 0;
-		offset = oidString.indexOf('.');
-
-		while (offset > 0) {
-			offset = oidString.indexOf(offset + 1, '.');
-			count++;
-		}
-
-		return count;
-	}
 
 	@Override
 	public List<VendorIdentifier> findVendorSubTree(String name)

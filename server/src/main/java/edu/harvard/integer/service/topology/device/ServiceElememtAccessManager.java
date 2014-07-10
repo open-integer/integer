@@ -109,8 +109,8 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	}
 
 	public ServiceElement getServiceElementByUninque(ID parentId,
-			ManagementObjectValue value) throws IntegerException {
-		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+			@SuppressWarnings("rawtypes") ManagementObjectValue value) throws IntegerException {
+	//	ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 
 		return null;
 		// return serviceElementDAO.findByIdAndValue(parentId, value);

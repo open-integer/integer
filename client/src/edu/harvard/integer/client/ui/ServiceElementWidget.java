@@ -29,8 +29,7 @@ import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.utils.LinePoints;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.BaseEntity;
 
 /**
  * The ServiceElementWidget class represents a Service Element Widget object displaying on the screen.
@@ -46,7 +45,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	private Picture picture;
 	
 	/** The service element. */
-	private ServiceElement serviceElement;
+	private BaseEntity entity;
 	
 	/** The line connector list. */
 	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
@@ -79,17 +78,15 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 * @param serviceElement the service element
 	 * @param clickHandler the click handler
 	 */
-	public ServiceElementWidget(Picture picture, ServiceElement serviceElement, NodeMouseClickHandler clickHandler) {
+	public ServiceElementWidget(Picture picture, BaseEntity entity, NodeMouseClickHandler clickHandler) {
 		this.picture = picture;
-		this.serviceElement = serviceElement;
+		this.entity = entity;
 		this.clickHandler = clickHandler;
 		
 		setDraggable(true);
 		setListening(true);
 
-		ID locationId = serviceElement.getPrimaryLocation();
-		String location = locationId != null ? locationId.getName() : "";
-		final HvMapIconPopup popup = new HvMapIconPopup(serviceElement.getName(), serviceElement.getConfiguredState(), location);
+		final HvMapIconPopup popup = new HvMapIconPopup(entity.getName(), "", "");
 		clippedImageWidth = (int)picture.getClippedImageDestinationWidth();
 		clippedImageHeight = (int)picture.getClippedImageDestinationHeight();
 		fontSize = (int) Math.ceil(clippedImageWidth * 2 / 9);
@@ -138,7 +135,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 			
 		});
 		
-		Text text = new Text(serviceElement.getName(), "oblique normal bold", fontSize);
+		Text text = new Text(entity.getName(), "oblique normal bold", fontSize);
 		text.setX(x).setY(y+labelBelowOffset).setTextAlign(TextAlign.LEFT).setFillColor(ColorName.DARKBLUE.getValue()).setScale(0.5);
 		add(text);
 	}
@@ -256,7 +253,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
 		if (clickHandler != null)
 			clickHandler.onNodeMouseClick(event);
-		SystemSplitViewPanel.showContainedTreeView(serviceElement);
+		SystemSplitViewPanel.showContainedTreeView(entity);
 		
 		setHighLighted(true); // highlighted whenever it gets clicked for now
 	}
