@@ -81,16 +81,6 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	
 	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
- 	
-	
-	/** The layer3 nodes. */
-	private ConcurrentHashMap<String, DiscoverNode>  l3Nodes = new ConcurrentHashMap<>();
-	
-	/** The layer2 nodes. */
-	private ConcurrentHashMap<String, DiscoverNode> l2Nodes = new ConcurrentHashMap<>();
-	
-	/** The discover nodes. The key is the IPAddress on the discover node during discvoery.  */
-	private ConcurrentHashMap<String, DiscoverNode> endNodes = new ConcurrentHashMap<>();
 	
 	/**
 	 * Map to keep track of each subnet tasks
@@ -180,37 +170,6 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	}
 
 
-	
-	/**
-	 * Gets the l3 nodes.
-	 *
-	 * @return the l3 nodes
-	 */
-	public ConcurrentHashMap<String, DiscoverNode> getL3Nodes() {
-		return l3Nodes;
-	}
-
-
-
-	/**
-	 * Gets the l2 nodes.
-	 *
-	 * @return the l2 nodes
-	 */
-	public ConcurrentHashMap<String, DiscoverNode> getL2Nodes() {
-		return l2Nodes;
-	}
-
-
-
-	/**
-	 * Gets the end nodes.
-	 *
-	 * @return the end nodes
-	 */
-	public ConcurrentHashMap<String, DiscoverNode> getEndNodes() {
-		return endNodes;
-	}
 
 
 
@@ -329,6 +288,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				try {
 					DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
 					dsif.discoveryComplete(discoverId);
+					
 				} catch (IntegerException e) {
 				
 					e.printStackTrace();

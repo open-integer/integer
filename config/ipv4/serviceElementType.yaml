@@ -13,7 +13,7 @@ serviceElementTypes:
       serviceElementTypeTranslates:
          - name: ipv4Address
            mapping: direct
-           category: topology
+           category: Network
       managementObjects:
           - name: ipAdEntAddr
             uri: ipAdEntAddr
@@ -43,7 +43,7 @@ serviceElementTypes:
       serviceElementTypeTranslates:
         - name: ipv4IpToPhysical
           mapping: direct
-          category: ipv4
+          category: Network Element Specific Components
 
       managementObjects:
         - name: ipNetToMediaIfIndex

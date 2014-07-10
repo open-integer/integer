@@ -322,14 +322,28 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    }
 		    VendorContainmentSelector vs = new VendorContainmentSelector();
 		    vs.setModel(model.trim());
-		    vs.setVendor(defineUnknownVendor(sysId.toString()));
+		    vs.setVendor(defineUnknownVendor(sysId.toString()).toLowerCase());
 		    
 		    ServiceElementType set = null;
-		    SnmpContainment sc = null;	
-		    
-		    sc = discMgr.getSnmpContainment(vs); 
+		    SnmpContainment sc = discMgr.getSnmpContainment(vs); 
 		    
 		    if ( sc != null && sc instanceof SnmpContainment) {
+		    	
+		    	if ( sc.getServiceElementTypeId() == null ) {
+		    		
+		    		set = new ServiceElementType();
+			    	set.addSignatureValue(null, SignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()));
+			    	set.addSignatureValue(null, SignatureTypeEnum.Model , model);
+			    	
+					set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
+					ContainmentGenerator.setUpTopServiceElementProperty(discoverNode.getElementEndPoint(), set, sc.getContainmentType());					
+					set = capMgr.updateServiceElementType(set);
+					
+					sc.setServiceElementTypeId(set.getID());
+					sc = capMgr.updateSnmpContainment(sc);
+					
+					discoverNode.setTopServiceElementType(set);
+		    	}
 			    set =  discMgr.getServiceElementTypeById(sc.getServiceElementTypeId());
 			    discoverNode.setTopServiceElementType(set);
 		    }
@@ -416,6 +430,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		}
 		catch ( IntegerException e ) {
 		
+			e.printStackTrace();
 			boolean skipErrorReport = false;
 			logger.info("Exception during discovery.  "+ e.getMessage() );
 			if ( e.getErrorCode() instanceof NetworkErrorCodes ) {

@@ -39,10 +39,12 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -96,8 +98,7 @@ public class SnmpContainment extends BaseEntity {
 			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
 	private ID serviceElementTypeId = null;
 
-
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<SnmpLevelOID> snmpLevels = null;
 
 	/**

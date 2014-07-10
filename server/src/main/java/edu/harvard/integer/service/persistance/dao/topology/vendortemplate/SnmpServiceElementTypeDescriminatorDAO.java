@@ -74,6 +74,7 @@ public class SnmpServiceElementTypeDescriminatorDAO extends BaseDAO {
 		
 		SnmpServiceElementTypeDiscriminatorValueDAO dao = new SnmpServiceElementTypeDiscriminatorValueDAO(getEntityManager(), getLogger());
 		discriminator.setDiscriminatorValue(dao.update(discriminator.getDiscriminatorValue()));
+		discriminator.setGlobaldiscriminatorValue(dao.update(discriminator.getGlobaldiscriminatorValue()));
 
 		super.preSave(entity);
 	}

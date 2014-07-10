@@ -51,8 +51,18 @@ public class YamlSnmpContainmentRelation extends YamlSnmpRelationship {
 	private String mappingOid = null;
 	
 	private String mappingType;
+	
+	private String mappingContext;
 
 	
+	public String getMappingContext() {
+		return mappingContext;
+	}
+
+	public void setMappingContext(String mappingContext) {
+		this.mappingContext = mappingContext;
+	}
+
 	public String getMappingType() {
 		return mappingType;
 	}

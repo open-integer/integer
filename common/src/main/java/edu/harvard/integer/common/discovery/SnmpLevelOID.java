@@ -36,13 +36,13 @@ package edu.harvard.integer.common.discovery;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
 
 /**
  * 
@@ -95,7 +95,7 @@ public class SnmpLevelOID extends BaseEntity {
 	 * no service element related to cdp will be created.
 	 */
 	@ManyToOne
-	private SNMP globalDescriminatorOID = null;
+	private SNMP globalDiscriminatorOID = null;
 
 
 	/**
@@ -104,13 +104,13 @@ public class SnmpLevelOID extends BaseEntity {
 	 * level down in the containment hierarchy. For example the device table may
 	 * contain storage which may contain file systems.
 	 */
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<SnmpLevelOID> children = null;
 
 	/**
 	 * List of SnmpServiceElementTypeDiscriptors for this SnmpLevel
 	 */
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<SnmpServiceElementTypeDiscriminator> disriminators = null;
 
 	/**
@@ -223,16 +223,16 @@ public class SnmpLevelOID extends BaseEntity {
 	 * 
 	 * @return
 	 */
-	public SNMP getGlobalDescriminatorOID() {
-		return globalDescriminatorOID;
+	public SNMP getGlobalDiscriminatorOID() {
+		return globalDiscriminatorOID;
 	}
 
 	/**
 	 * 
 	 * @param globalDescriminatorOID
 	 */
-	public void setGlobalDescriminatorOID(SNMP globalDescriminatorOID) {
-		this.globalDescriminatorOID = globalDescriminatorOID;
+	public void setGlobalDiscriminatorOID(SNMP globalDiscriminatorOID) {
+		this.globalDiscriminatorOID = globalDiscriminatorOID;
 	}
 
 }

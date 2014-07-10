@@ -1,7 +1,6 @@
 ---
 
 # management definition for CDP
-# by Loren Jan Wilson, 2014-05-21
 
 serviceElementTypes:
     - name: cisco-cdp-global
@@ -12,9 +11,9 @@ serviceElementTypes:
           mib: CISCO-CDP-MIB
           index: null
       serviceElementTypeTranslates:
-         - name: cpdGlobal
+         - name: cdpGlobal
            mapping: direct
-           category: system
+           category: System
       managementObjects:
           - name: cdpGlobalRun
             uri: cdpGlobalRun
@@ -53,9 +52,9 @@ serviceElementTypes:
           mib: CISCO-CDP-MIB
           index: [ cdpInterfaceIfIndex ]
       serviceElementTypeTranslates:
-         - name: cpdInterface
-           mapping: direct
-           category: portIf
+          - name: cdpInterface
+            mapping: direct
+            category: interface
       managementObjects:
           - name: cdpInterfaceEnable
             uri: cdpInterfaceEnable
@@ -65,17 +64,17 @@ serviceElementTypes:
             uri: cdpInterfaceName
             capability: cdp-interface-name
 
-          - name: cdpInterfaceMessageInterval
-            uri: cdpInterfaceMessageInterval
-            capability: cdp-interface-cdpInterfaceMessageInterval
-
-          - name: cdpInterfaceExtendedTrust
-            uri: cdpInterfaceExtendedTrust
-            capability: cdp-interface-cdpInterfaceExtendedTrust
-
-          - name: cdpInterfaceCosForUntrustedPort
-            uri: cdpInterfaceCosForUntrustedPort
-            capability: cdp-interface-cdpInterfaceCosForUntrustedPort
+    - name: cisco-system
+      description: Cisco system
+      vendor: cisco
+      extendServiceElementType: systemCommon
+      accessMethod:
+          protocol: SNMP
+      serviceElementTypeTranslates:
+         - name: ciscoSystem
+           mapping: direct
+           category: System
+      managementObjects:
 
     - name: cisco-cdp-cache
       description: Cisco enterprise CDP MIB, device cache per interface.
@@ -87,30 +86,30 @@ serviceElementTypes:
       serviceElementTypeTranslates:
          - name: cdpCache
            mapping: direct
-           category: cache
+           category: Network Element Specific Components
       managementObjects:
-          - name: cdpCacheAddressType
-            uri: cdpCacheAddressType
-            capability: cdp-cache-addressType
+         - name: cdpCacheAddressType
+           uri: cdpCacheAddressType
+           capability: cdp-cache-addressType
 
-          - name: cdpCacheAddress
-            uri: cdpCacheAddress
-            capability: cdp-cache-address
+         - name: cdpCacheAddress
+           uri: cdpCacheAddress
+           capability: cdp-cache-address
 
-          - name: cdpCacheVersion
-            uri: cdpCacheVersion
-            capability: cdp-cache-version
+         - name: cdpCacheVersion
+           uri: cdpCacheVersion
+           capability: cdp-cache-version
 
-          - name: cdpCacheDeviceId
-            uri: cdpCacheDeviceId
-            capability: cdp-cache-deviceId
+         - name: cdpCacheDeviceId
+           uri: cdpCacheDeviceId
+           capability: cdp-cache-deviceId
 
-          - name: cdpCacheDevicePort
-            uri: cdpCacheDevicePort
-            capability: cdp-cache-devicePort
+         - name: cdpCacheDevicePort
+           uri: cdpCacheDevicePort
+           capability: cdp-cache-devicePort
 
-          - name: cdpCachePlatform
-            uri: cdpCachePlatform
-            capability: cdp-cache-platform
+         - name: cdpCachePlatform
+           uri: cdpCachePlatform
+           capability: cdp-cache-platform
 
 ...

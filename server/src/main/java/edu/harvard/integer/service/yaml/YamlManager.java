@@ -673,40 +673,43 @@ public class YamlManager extends BaseManager implements
 			}
 		}
 		
-		for (YamlManagementObject yamlManagementObject : yamlServiceElementType
-				.getManagementObjects()) {
+		if ( yamlServiceElementType.getManagementObjects() != null ) {
+			for (YamlManagementObject yamlManagementObject : yamlServiceElementType
+					.getManagementObjects()) {
 
-			SNMPDAO dao = persistanceManager.getSNMPDAO();
-			SNMP snmp = dao.findByName(yamlManagementObject.getName());
-			if (snmp == null) {
-				logger.error("No SNMP object found with name "
-						+ yamlManagementObject.getName());
-			} else {
-				CapabilityDAO capabilityDAO = persistanceManager
-						.getCapabilityDAO();
-				Capability capability = capabilityDAO
-						.findByName(yamlManagementObject.getCapability());
-				if (capability == null) {
-					logger.error("No Capability found with name "
-							+ yamlManagementObject.getCapability()
-							+ " ServiceElement "
-							+ yamlServiceElementType.getName());
+				SNMPDAO dao = persistanceManager.getSNMPDAO();
+				SNMP snmp = dao.findByName(yamlManagementObject.getName());
+				if (snmp == null) {
+					logger.error("No SNMP object found with name "
+							+ yamlManagementObject.getName());
 				} else {
-					snmp.setCapabilityId(capability.getID());
-					snmp = dao.update(snmp);
-					managementObjects.add(snmp.getID());
-				}
-				if (yamlManagementObject.getUnique() == 1) {
-					List<ID> ids = serviceElementType
-							.getUniqueIdentifierCapabilities();
-					if (ids == null) {
-						ids = new ArrayList<>();
-						serviceElementType.setUniqueIdentifierCapabilities(ids);
+					CapabilityDAO capabilityDAO = persistanceManager
+							.getCapabilityDAO();
+					Capability capability = capabilityDAO
+							.findByName(yamlManagementObject.getCapability());
+					if (capability == null) {
+						logger.error("No Capability found with name "
+								+ yamlManagementObject.getCapability()
+								+ " ServiceElement "
+								+ yamlServiceElementType.getName());
+					} else {
+						snmp.setCapabilityId(capability.getID());
+						snmp = dao.update(snmp);
+						managementObjects.add(snmp.getID());
 					}
-					ids.add(snmp.getID());
+					if (yamlManagementObject.getUnique() == 1) {
+						List<ID> ids = serviceElementType
+								.getUniqueIdentifierCapabilities();
+						if (ids == null) {
+							ids = new ArrayList<>();
+							serviceElementType.setUniqueIdentifierCapabilities(ids);
+						}
+						ids.add(snmp.getID());
+					}
 				}
 			}
 		}
+		
 		logger.info("Setting Attributes " + managementObjects + " On "
 				+ serviceElementType.getName());
 		serviceElementType.setAttributeIds(managementObjects);
@@ -849,7 +852,7 @@ public class YamlManager extends BaseManager implements
 				dbLevelOid.setContextOID(getSnmpOid(levelOid.getContextOID()));
 			}
 			dbLevelOid.setDescriminatorOID(getSnmpOid(levelOid.getDescriminatorOID()));
-			dbLevelOid.setGlobalDescriminatorOID(getSnmpOid(levelOid.getGlobalDescriminatorOID()));
+			dbLevelOid.setGlobalDiscriminatorOID(getSnmpOid(levelOid.getGlobalDescriminatorOID()));
 			
 			dbLevelOid
 					.setDisriminators(createDiscriminatorList(
@@ -967,18 +970,27 @@ public class YamlManager extends BaseManager implements
 
 		containmentRelation
 				.setMappingTable((SNMPTable) getSnmpOid(yamlSnmpRelationship
-						.getChildTable()));
+						.getMappingTable()));
 
 		if (yamlSnmpRelationship.getChildTable() != null) {
 			SnmpLevelOID childSnmpLevel = findSnmpLevelOID(
 					yamlSnmpRelationship.getChildTable(), levels);
 			containmentRelation.setChildTable(childSnmpLevel);
 		}
+		
+		if ( yamlSnmpRelationship.getMappingContext() != null ) {
+			containmentRelation.setMappingContext((SNMPTable) getSnmpOid(yamlSnmpRelationship
+						.getMappingContext()));
+		}
 
 		if (yamlSnmpRelationship.getMappingType() != null) {
 
 			containmentRelation.setMappingType(RelationMappingTypeEnum
 					.valueOf(yamlSnmpRelationship.getMappingType()));
+		}
+		else if ( yamlSnmpRelationship.getMappingType() == null ) {
+			
+			containmentRelation.setMappingType(RelationMappingTypeEnum.FullOid);
 		}
 		return containmentRelation;
 	}
@@ -1008,6 +1020,13 @@ public class YamlManager extends BaseManager implements
 			if (dbDiscriminator == null) {
 				dbDiscriminator = new SnmpServiceElementTypeDiscriminator();
 				dbDiscriminator.setDiscriminatorValue(createDiscrimintatorValue(yamlSnmpServiceElementTypeDiscriminator));
+				
+				if ( yamlSnmpServiceElementTypeDiscriminator.getServiceElementTypeName() != null ) {
+					
+					ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
+					ServiceElementType dbSet = dao.findByName(yamlSnmpServiceElementTypeDiscriminator.getServiceElementTypeName());
+					dbDiscriminator.setServiceElementTypeId(dbSet.getID());
+				}
 				
 				if ( yamlSnmpServiceElementTypeDiscriminator.getGlobaldiscriminatorValue() != null ) {
 					
