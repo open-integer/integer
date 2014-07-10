@@ -673,40 +673,43 @@ public class YamlManager extends BaseManager implements
 			}
 		}
 		
-		for (YamlManagementObject yamlManagementObject : yamlServiceElementType
-				.getManagementObjects()) {
+		if ( yamlServiceElementType.getManagementObjects() != null ) {
+			for (YamlManagementObject yamlManagementObject : yamlServiceElementType
+					.getManagementObjects()) {
 
-			SNMPDAO dao = persistanceManager.getSNMPDAO();
-			SNMP snmp = dao.findByName(yamlManagementObject.getName());
-			if (snmp == null) {
-				logger.error("No SNMP object found with name "
-						+ yamlManagementObject.getName());
-			} else {
-				CapabilityDAO capabilityDAO = persistanceManager
-						.getCapabilityDAO();
-				Capability capability = capabilityDAO
-						.findByName(yamlManagementObject.getCapability());
-				if (capability == null) {
-					logger.error("No Capability found with name "
-							+ yamlManagementObject.getCapability()
-							+ " ServiceElement "
-							+ yamlServiceElementType.getName());
+				SNMPDAO dao = persistanceManager.getSNMPDAO();
+				SNMP snmp = dao.findByName(yamlManagementObject.getName());
+				if (snmp == null) {
+					logger.error("No SNMP object found with name "
+							+ yamlManagementObject.getName());
 				} else {
-					snmp.setCapabilityId(capability.getID());
-					snmp = dao.update(snmp);
-					managementObjects.add(snmp.getID());
-				}
-				if (yamlManagementObject.getUnique() == 1) {
-					List<ID> ids = serviceElementType
-							.getUniqueIdentifierCapabilities();
-					if (ids == null) {
-						ids = new ArrayList<>();
-						serviceElementType.setUniqueIdentifierCapabilities(ids);
+					CapabilityDAO capabilityDAO = persistanceManager
+							.getCapabilityDAO();
+					Capability capability = capabilityDAO
+							.findByName(yamlManagementObject.getCapability());
+					if (capability == null) {
+						logger.error("No Capability found with name "
+								+ yamlManagementObject.getCapability()
+								+ " ServiceElement "
+								+ yamlServiceElementType.getName());
+					} else {
+						snmp.setCapabilityId(capability.getID());
+						snmp = dao.update(snmp);
+						managementObjects.add(snmp.getID());
 					}
-					ids.add(snmp.getID());
+					if (yamlManagementObject.getUnique() == 1) {
+						List<ID> ids = serviceElementType
+								.getUniqueIdentifierCapabilities();
+						if (ids == null) {
+							ids = new ArrayList<>();
+							serviceElementType.setUniqueIdentifierCapabilities(ids);
+						}
+						ids.add(snmp.getID());
+					}
 				}
 			}
 		}
+		
 		logger.info("Setting Attributes " + managementObjects + " On "
 				+ serviceElementType.getName());
 		serviceElementType.setAttributeIds(managementObjects);
@@ -768,6 +771,10 @@ public class YamlManager extends BaseManager implements
 		selector.setModel(load.getModel());
 		selector.setSoftwareVersion(load.getSoftwareVersion());
 		selector.setVendor(load.getVendor());
+		
+		SnmpContainment snmpContainment = discoveryManager
+				.getSnmpContainment(selector);
+		
 		VendorContainmentSelector[] vendorContainmentSelectors = discoveryManager
 				.getVendorContainmentSelector(selector);
 
@@ -778,8 +785,6 @@ public class YamlManager extends BaseManager implements
 		} else
 			selector = vendorContainmentSelectors[0];
 
-		SnmpContainment snmpContainment = discoveryManager
-				.getSnmpContainment(selector);
 
 		if (snmpContainment == null) {
 			snmpContainment = new SnmpContainment();
@@ -796,11 +801,17 @@ public class YamlManager extends BaseManager implements
 				.getSnmpContainment().getSnmpLevels(), snmpContainment
 				.getSnmpLevels()));
 
-		snmpContainment.setServiceElementTypeId(createServiceElement(load
-				.getSnmpContainment().getServiceElementType()));
+		if ( load.getSnmpContainment().getServiceElementTypeName() != null ) {
+			ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
+			ServiceElementType serviceElementType = dao.findByName(load.getSnmpContainment().getServiceElementTypeName());
+			snmpContainment.setServiceElementTypeId(serviceElementType.getID());
+		}
+		else {
+			snmpContainment.setServiceElementTypeId(createServiceElement(load
+					.getSnmpContainment().getServiceElementType()));
+		}
 
-		snmpContainment = discoveryManager
-				.updateSnmpContainment(snmpContainment);
+		snmpContainment = discoveryManager.updateSnmpContainment(snmpContainment);
 		selector.setContainmentId(snmpContainment.getID());
 
 		discoveryManager.updateVendorContainmentSelector(selector);
@@ -840,8 +851,9 @@ public class YamlManager extends BaseManager implements
 				dbLevelOid = new SnmpLevelOID();
 				dbLevelOid.setContextOID(getSnmpOid(levelOid.getContextOID()));
 			}
-			dbLevelOid.setDescriminatorOID(getSnmpOid(levelOid
-					.getDescriminatorOID()));
+			dbLevelOid.setDescriminatorOID(getSnmpOid(levelOid.getDescriminatorOID()));
+			dbLevelOid.setGlobalDiscriminatorOID(getSnmpOid(levelOid.getGlobalDescriminatorOID()));
+			
 			dbLevelOid
 					.setDisriminators(createDiscriminatorList(
 							levelOid.getDisriminators(),
@@ -958,18 +970,27 @@ public class YamlManager extends BaseManager implements
 
 		containmentRelation
 				.setMappingTable((SNMPTable) getSnmpOid(yamlSnmpRelationship
-						.getChildTable()));
+						.getMappingTable()));
 
 		if (yamlSnmpRelationship.getChildTable() != null) {
 			SnmpLevelOID childSnmpLevel = findSnmpLevelOID(
 					yamlSnmpRelationship.getChildTable(), levels);
 			containmentRelation.setChildTable(childSnmpLevel);
 		}
+		
+		if ( yamlSnmpRelationship.getMappingContext() != null ) {
+			containmentRelation.setMappingContext((SNMPTable) getSnmpOid(yamlSnmpRelationship
+						.getMappingContext()));
+		}
 
 		if (yamlSnmpRelationship.getMappingType() != null) {
 
 			containmentRelation.setMappingType(RelationMappingTypeEnum
 					.valueOf(yamlSnmpRelationship.getMappingType()));
+		}
+		else if ( yamlSnmpRelationship.getMappingType() == null ) {
+			
+			containmentRelation.setMappingType(RelationMappingTypeEnum.FullOid);
 		}
 		return containmentRelation;
 	}
@@ -993,15 +1014,26 @@ public class YamlManager extends BaseManager implements
 			list = new ArrayList<SnmpServiceElementTypeDiscriminator>();
 
 		for (YamlSnmpServiceElementTypeDiscriminator yamlSnmpServiceElementTypeDiscriminator : disriminators) {
+			
 			SnmpServiceElementTypeDiscriminator dbDiscriminator = findDiscriminator(
 					yamlSnmpServiceElementTypeDiscriminator, list);
 			if (dbDiscriminator == null) {
 				dbDiscriminator = new SnmpServiceElementTypeDiscriminator();
-				dbDiscriminator
-						.setDiscriminatorValue(createDiscrimintatorValue(yamlSnmpServiceElementTypeDiscriminator));
-				dbDiscriminator
-						.setServiceElementTypeId(createServiceElement(yamlSnmpServiceElementTypeDiscriminator
-								.getServiceElementType()));
+				dbDiscriminator.setDiscriminatorValue(createDiscrimintatorValue(yamlSnmpServiceElementTypeDiscriminator));
+				
+				if ( yamlSnmpServiceElementTypeDiscriminator.getServiceElementTypeName() != null ) {
+					
+					ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
+					ServiceElementType dbSet = dao.findByName(yamlSnmpServiceElementTypeDiscriminator.getServiceElementTypeName());
+					dbDiscriminator.setServiceElementTypeId(dbSet.getID());
+				}
+				
+				if ( yamlSnmpServiceElementTypeDiscriminator.getGlobaldiscriminatorValue() != null ) {
+					
+					System.out.println("Try to make a break.  ");
+				     dbDiscriminator.setGlobaldiscriminatorValue(createGlobleDiscrimintatorValue(yamlSnmpServiceElementTypeDiscriminator));
+				}
+				
 				list.add(dbDiscriminator);
 			}
 
@@ -1119,6 +1151,24 @@ public class YamlManager extends BaseManager implements
 
 		return stringValue;
 	}
+	
+	
+	/**
+	 * Helper method to create a SnmpServiceElementTypeDiscriminatorValue
+	 * @param yamlDiscriminator. input data.
+	 * @return Created SnmpServiceElementTypeDiscriminatorValue.
+	 */
+	private SnmpServiceElementTypeDiscriminatorValue<?> createGlobleDiscrimintatorValue(
+			YamlSnmpServiceElementTypeDiscriminator yamlDiscriminator) {
+		
+		SnmpServiceElementTypeDiscriminatorStringValue stringValue = new SnmpServiceElementTypeDiscriminatorStringValue();
+		stringValue.setValue(yamlDiscriminator.getGlobaldiscriminatorValue());
+		stringValue.setName(yamlDiscriminator.getGlobaldiscriminatorValue());
+
+		return stringValue;
+	}
+	
+	
 
 	/**
 	 * Helper method to find an existing SnmpServiceElementTypeDiscriminator 
@@ -1133,14 +1183,37 @@ public class YamlManager extends BaseManager implements
 			List<SnmpServiceElementTypeDiscriminator> descrimintators) {
 
 		for (SnmpServiceElementTypeDiscriminator snmpServiceElementTypeDiscriminator : descrimintators) {
-			if (yamlDescriminator.getDiscriminatorValue().equals(
-					snmpServiceElementTypeDiscriminator.getDiscriminatorValue()
-							.getValue().toString()))
-				return snmpServiceElementTypeDiscriminator;
+			
+			boolean findDiscrValue = false;
+			String discriminatorValue = null;
+			if ( snmpServiceElementTypeDiscriminator.getDiscriminatorValue() != null ) {
+				discriminatorValue = snmpServiceElementTypeDiscriminator.getDiscriminatorValue().getValue().toString();
+			}
+			if ( discriminatorValue != null && discriminatorValue.equals(yamlDescriminator.getDiscriminatorValue())) {
+				findDiscrValue = true;
+			}
+			else if ( discriminatorValue == null ) {
+				findDiscrValue = true;
+			}
+			
+			if ( findDiscrValue ) {
+				
+				if ( snmpServiceElementTypeDiscriminator.getGlobaldiscriminatorValue() != null ) {
+					discriminatorValue = snmpServiceElementTypeDiscriminator.getGlobaldiscriminatorValue().getValue().toString();
+					if ( discriminatorValue.equals(yamlDescriminator.getGlobaldiscriminatorValue()) ) {
+						return snmpServiceElementTypeDiscriminator;
+					}
+				}
+				else if ( snmpServiceElementTypeDiscriminator.getGlobaldiscriminatorValue() == null ) {
+					return snmpServiceElementTypeDiscriminator;
+				}
+			}
 		}
 
 		return null;
 	}
+	
+	
 
 	/**
 	 * Helper method to find a SnmpLeveleOID in the passed in list of SnmpLevelOID's

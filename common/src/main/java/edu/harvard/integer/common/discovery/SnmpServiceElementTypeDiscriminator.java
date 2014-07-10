@@ -79,6 +79,15 @@ public class SnmpServiceElementTypeDiscriminator extends BaseEntity {
 	 */
 	@OneToOne
 	private SnmpServiceElementTypeDiscriminatorValue<?> discriminatorValue = null;
+	
+	/**
+	 * The specific value in the return global scalar discriminator OID that matches the
+	 * serviceElementTypeId in an instance of this object
+	 */
+	@OneToOne
+	private SnmpServiceElementTypeDiscriminatorValue<?> globaldiscriminatorValue = null;
+
+
 
 	/**
 	 * @return the serviceElementTypeId
@@ -111,4 +120,21 @@ public class SnmpServiceElementTypeDiscriminator extends BaseEntity {
 		this.discriminatorValue = discriminatorValue;
 	}
 
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public SnmpServiceElementTypeDiscriminatorValue<?> getGlobaldiscriminatorValue() {
+		return globaldiscriminatorValue;
+	}
+
+	/**
+	 * 
+	 * @param globaldiscriminatorValue
+	 */
+	public void setGlobaldiscriminatorValue(
+			SnmpServiceElementTypeDiscriminatorValue<?> globaldiscriminatorValue) {
+		this.globaldiscriminatorValue = globaldiscriminatorValue;
+	}
 }

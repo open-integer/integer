@@ -66,7 +66,18 @@ public class SnmpContainmentRelation extends SnmpRelationship {
 
 	@ManyToOne
 	private SNMP mappingOid = null;
+	
+	@ManyToOne
+	private SNMPTable mappingContext = null;
 
+
+	public SNMPTable getMappingContext() {
+		return mappingContext;
+	}
+
+	public void setMappingContext(SNMPTable mappingContext) {
+		this.mappingContext = mappingContext;
+	}
 
 	/**
 	 * @return the childTable

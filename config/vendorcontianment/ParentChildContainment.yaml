@@ -1,13 +1,13 @@
 ---
-
 # Containment for recursive parent child and sibling relationship. One of the pattern MIB for this
 # containment applied is Entity MIB.
 # Created by David Chan, 2014-07-17
 
+name: ciscoPhysicalContainment
 vendor: cisco
 snmpContainment:
       containmentType: EntityMib
-
+      serviceElementTypeName: systemCommon
       snmpLevels:
         - name: entityParentChild
           contextOID: entPhysicalEntry
@@ -20,30 +20,43 @@ snmpContainment:
  
         - name: portInterfaceMapping
           category: port
-          contextOID: entPhysicalEntry
+          contextOID: entPhysicalEntry 
+          descriminatorOID: cdpInterfaceEnable
+          globalDescriminatorOID: cdpGlobalRun
           containmentRelationship:
+            mappingContext: ifEntry
             mappingTable: entAliasMappingEntry
             mappingOid: entAliasMappingIdentifier
+            mappingType: FullOid
           disriminators:
-             - serviceElementType:
-                  name: interface
-                         
+             - serviceElementTypeName: interface
+               globaldiscriminatorValue: false
+               discriminatorValue: false
+             - serviceElementTypeName: interface
+               globaldiscriminatorValue: true
+               discriminatorValue: false
+             - serviceElementTypeName: cdpInterface
+               globaldiscriminatorValue: true
+               discriminatorValue: true
+                                                  
         - name: interfaceIpAddress
-          category: portIf
+          category: interface
           contextOID: ipAddrEntry
           containmentRelationship:
             mappingTable: ipAddrEntry
             mappingOid: ipAdEntIfIndex
             mappingType: InstanceOnly
           disriminators:
-             - serviceElementType:
-                  name: ipv4Address
+             - serviceElementTypeName: ipv4Address
 
         - name: interfaceMapping
-          category: portIf
+          category: interface
           contextOID: ipNetToMediaEntry
           disriminators:
-             - serviceElementType:
-                  name: ipv4IpToPhysical
+             - serviceElementTypeName: ipv4IpToPhysical
 
-         
+        - name: cdpGlobalLevel
+          category: System
+          contextOID: cdpGlobalRun
+          disriminators:
+             - serviceElementTypeName: cdpGlobal

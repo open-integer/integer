@@ -140,10 +140,18 @@ categories:
                   description: backplane
                   parent: common system components
                
+                - name: mibplane
+                  description: mibplane
+                  parent: common system components
+
                 - name: Memory
                   description: memory
                   parent: common system components
         
+                - name: stack
+                  description: stack
+                  parent: common system components
+
                 - name: port
                   description: port
                   parent: common system components

@@ -13,7 +13,7 @@ serviceElementTypes:
       serviceElementTypeTranslates:
          - name: interface
            mapping: direct
-           category: portIf
+           category: interface
               
       managementObjects:
           - name: ifDescr
@@ -45,4 +45,39 @@ serviceElementTypes:
           - name: ifOperStatus
             uri: ifOperStatus
             capability: interface-OperStatus
+            
+    - name: systemCommon
+      description: The Service element based on system group.
+      accessMethod:
+          protocol: SNMP
+      serviceElementTypeTranslates:
+         - name: systemCommon
+           mapping: direct
+           category: System
+           
+      managementObjects:
+         - name: sysDescr
+           uri: sysDescr
+           capability: system-description
+           
+         - name: sysObjectID
+           uri: sysObjectID
+           capability: system-objectId
+           
+         - name: sysUpTime
+           uri: sysUpTime
+           capability: system-uptime
+           
+         - name: sysContact
+           uri: sysContact
+           capability: system-contact
+           
+         - name: sysName
+           uri: sysName
+           capability: system-name
+           
+         - name: sysLocation
+           uri: sysLocation
+           capability: system-location
+          
 

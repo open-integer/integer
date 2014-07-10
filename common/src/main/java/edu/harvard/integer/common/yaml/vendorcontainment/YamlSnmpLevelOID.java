@@ -46,6 +46,8 @@ public class YamlSnmpLevelOID {
 	private String contextOID = null;
 
 	private String descriminatorOID = null;
+	
+	private String globalDescriminatorOID = null;
 
 	private List<YamlSnmpLevelOID> children = null;
 
@@ -182,6 +184,23 @@ public class YamlSnmpLevelOID {
 	 */
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getGlobalDescriminatorOID() {
+		return globalDescriminatorOID;
+	}
+
+	/**
+	 * 
+	 * @param globalDescriminatorOID
+	 */
+	public void setGlobalDescriminatorOID(String globalDescriminatorOID) {
+		this.globalDescriminatorOID = globalDescriminatorOID;
 	}
 
 }

@@ -36,13 +36,13 @@ package edu.harvard.integer.common.discovery;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
 
 /**
  * 
@@ -87,6 +87,16 @@ public class SnmpLevelOID extends BaseEntity {
 	 */
 	@ManyToOne
 	private SNMP descriminatorOID = null;
+	
+	/**
+	 * The global scalar OID to be used to indicate the technology capability of 
+	 * the system to support the next level on the containment tree.  For example
+	 * for Cisco cdp, this OID can be referred to cdpGlobalRun.  When this value is false,
+	 * no service element related to cdp will be created.
+	 */
+	@ManyToOne
+	private SNMP globalDiscriminatorOID = null;
+
 
 	/**
 	 * Some table may point to other tables that are contained in the higher
@@ -94,13 +104,13 @@ public class SnmpLevelOID extends BaseEntity {
 	 * level down in the containment hierarchy. For example the device table may
 	 * contain storage which may contain file systems.
 	 */
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<SnmpLevelOID> children = null;
 
 	/**
 	 * List of SnmpServiceElementTypeDiscriptors for this SnmpLevel
 	 */
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<SnmpServiceElementTypeDiscriminator> disriminators = null;
 
 	/**
@@ -206,6 +216,23 @@ public class SnmpLevelOID extends BaseEntity {
 	 */
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public SNMP getGlobalDiscriminatorOID() {
+		return globalDiscriminatorOID;
+	}
+
+	/**
+	 * 
+	 * @param globalDescriminatorOID
+	 */
+	public void setGlobalDiscriminatorOID(SNMP globalDiscriminatorOID) {
+		this.globalDiscriminatorOID = globalDiscriminatorOID;
 	}
 
 }

@@ -46,6 +46,8 @@ public class YamlSnmpContainment {
 	private List<YamlSnmpLevelOID> snmpLevels = null;
 
 	private YamlServiceElementType serviceElementType = null;
+	
+	private String serviceElementTypeName;
 
 	private String sysOidValue = null;
 	
@@ -122,6 +124,15 @@ public class YamlSnmpContainment {
 	 */
 	public void setContextOID(String contextOID) {
 		this.contextOID = contextOID;
+	}
+
+
+	public String getServiceElementTypeName() {
+		return serviceElementTypeName;
+	}
+
+	public void setServiceElementTypeName(String serviceElementTypeName) {
+		this.serviceElementTypeName = serviceElementTypeName;
 	}
 
 	

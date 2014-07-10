@@ -96,18 +96,22 @@ public class VendorContainmentSelectorDAO extends BaseDAO {
 		ParameterExpression<String> firmware = criteriaBuilder.parameter(String.class);
 		ParameterExpression<String> softwareVersion = criteriaBuilder.parameter(String.class);
 		
+		/*
 		query.select(from).where(criteriaBuilder.and(
 				criteriaBuilder.equal(from.get("vendor"), vendor),
 				criteriaBuilder.equal(from.get("model"), model)),
 				criteriaBuilder.equal(from.get("firmware"), firmware),
 				criteriaBuilder.equal(from.get("softwareVersion"), softwareVersion));
+		*/
 
+		query.select(from).where(
+				criteriaBuilder.equal(from.get("vendor"), vendor));
 		
 		TypedQuery<VendorContainmentSelector> typeQuery = getEntityManager().createQuery(query);
 		typeQuery.setParameter(vendor, selector.getVendor());
-		typeQuery.setParameter(model, selector.getModel());
-		typeQuery.setParameter(firmware, selector.getFirmware());
-		typeQuery.setParameter(softwareVersion, selector.getSoftwareVersion());
+//		typeQuery.setParameter(model, selector.getModel());
+//		typeQuery.setParameter(firmware, selector.getFirmware());
+//		typeQuery.setParameter(softwareVersion, selector.getSoftwareVersion());
 
 		List<VendorContainmentSelector> resultList = typeQuery.getResultList();
 

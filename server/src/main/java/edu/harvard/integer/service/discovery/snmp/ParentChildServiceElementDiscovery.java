@@ -55,8 +55,6 @@ import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
-import edu.harvard.integer.common.distribution.DistributedManager;
-import edu.harvard.integer.common.distribution.DistributedService;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
@@ -67,7 +65,6 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
-import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -128,10 +125,32 @@ public class ParentChildServiceElementDiscovery extends
 		this.containment = sc;
 		this.discNode = discNode;
 		elmMap = new HashMap<>();
-		physRowMap = new HashMap<String, List<ParentChildRelationNode>>();
+		physRowMap = new HashMap<String, List<ParentChildRelationNode>>();		
 		for ( SnmpLevelOID snmpLevel : sc.getSnmpLevels() ) {
 			
-			if ( snmpLevel.getRelationToParent() instanceof SnmpParentChildRelationship ) {
+			if ( snmpLevel.getCategory() != null && discNode.getTopServiceElementType().getCategory() == snmpLevel.getCategory() ) {
+				
+				SNMP snmp = snmpLevel.getContextOID();
+				if ( snmp.getScalarVB() != null && !snmp.getScalarVB() ) {
+					
+					/*
+					 * We will handle the non-scalar case later on.
+					 */
+					if ( snmpLevel.getDescriminatorOID() != null ) {
+						
+						
+					}
+				}
+				else {
+				
+					SnmpServiceElementTypeDiscriminator discriminator = snmpLevel.getDisriminators().get(0);
+					
+					ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
+					ServiceElement se =  createServiceElementFromType(discNode, set, "0", discNode.getAccessElement());						
+					se = accessMgr.updateServiceElement(se);
+				}
+			}
+			else if ( snmpLevel.getRelationToParent() != null && snmpLevel.getRelationToParent() instanceof SnmpParentChildRelationship ) {
 				
 				/** 
 				 * Retrieve all rows in a MIB table which contains the parent and child relation in once
@@ -173,13 +192,7 @@ public class ParentChildServiceElementDiscovery extends
 				 * Call this method to discover components on each level.
 				 */
 				recursiveDiscovery(topEntity);
-			}
-			else {
-				/**
-				 *  For the time being, we do for an example for the case that beside the ParentChildRelationsip, on the same sublevel
-				 *  it contains other SnmpLevelOID need to be discovered.  However it cannot rule out this kind of possibility.
-				 */
-			}
+			}			
 		}		
 		return discNode.getAccessElement();
 	}
@@ -263,8 +276,27 @@ public class ParentChildServiceElementDiscovery extends
 				 */
 				for ( SnmpLevelOID levelOid : containment.getSnmpLevels() ) {
 					
-					if ( levelOid.getCategory() != null && levelOid.getCategory().getID().equals(set.getCategory().getID())  ) {
+					String globalDiscriminatorVal = null;
+					if ( levelOid.getGlobalDiscriminatorOID() != null ) {
 						
+						SNMP snmp = levelOid.getGlobalDiscriminatorOID();
+						
+						PDU pdu = new PDU();
+		        		pdu.add(new VariableBinding(new OID(snmp.getOid() + ".0")));
+		        		PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
+		        		globalDiscriminatorVal = rpdu.get(0).getVariable().toString();
+		        		
+		        		if ( snmp.getTextualConvetion().equals("TruthValue")) {
+		        			if ( globalDiscriminatorVal.equals("1")) {
+		        				globalDiscriminatorVal = "true";
+		        			}
+		        			else {
+		        				globalDiscriminatorVal = "false";
+		        			}
+		        		}
+					}
+					
+					if ( levelOid.getCategory() != null && levelOid.getCategory().getID().equals(set.getCategory().getID())  ) {
 						
 						if ( levelOid.getRelationToParent() != null ) {
 							
@@ -291,10 +323,19 @@ public class ParentChildServiceElementDiscovery extends
 										indexTable.add(pcmi);
 									}
 									addIndexMapping(sRelation.getMappingTable().getOid(), indexTable);									
-								}								
+								}	
+								
 							    for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
 							    
-							    	ServiceElementType relType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
+							    	/**
+							    	 * Skip it if the global discriminator value is not match.
+							    	 */
+							    	if ( globalDiscriminatorVal != null ) {
+							    		
+							    		if ( !globalDiscriminatorVal.equals(disc.getGlobaldiscriminatorValue().getValue().toString()) ) {
+							    			continue;
+							    		}
+							    	}
 							        List<SNMP> indexSnmps = sRelation.getMappingTable().getIndex();	
 							    	
 							        int indexLocation = 0;
@@ -316,7 +357,7 @@ public class ParentChildServiceElementDiscovery extends
 							        	if ( pcmi.getMappingType() == RelationMappingTypeEnum.FullOid ) {
 							        		
 							        		OID fullOid = new OID(pcmi.getChildIndex());
-							        		OID contextOID = new OID(levelOid.getContextOID().getOid());
+							        		OID contextOID = new OID(sRelation.getMappingContext().getOid());
 							        		/*
 							        		 * If contextOID is table entry, the size of attribute needs to include attribute oid.
 							        		 */
@@ -336,7 +377,47 @@ public class ParentChildServiceElementDiscovery extends
 							        		OID io = new OID(instOidi);
 							        		instOid = io.toString();
 							        	}
-							        	ServiceElement relTypese =  createServiceElementFromType(discNode, relType, instOid, se);
+							        	
+							        	if ( instOid.equals("5179") ) {
+							        		System.out.println("Stop in here ....");
+							        	}
+							        	
+							        	String discrominatorValue = null;
+							        	if ( levelOid.getDescriminatorOID() != null ) {
+							        		
+							        		try {
+							        			SNMP snmp = levelOid.getDescriminatorOID();
+								        		PDU pdu = new PDU();
+								        		pdu.add(new VariableBinding(new OID(snmp.getOid() + "." + instOid)));
+								        		PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
+								        		discrominatorValue = rpdu.get(0).getVariable().toString();
+								        		if ( snmp.getTextualConvetion().equals("TruthValue")) {
+								        			if ( discrominatorValue.equals("1")) {
+								        				discrominatorValue = "true";
+								        			}
+								        			else {
+								        				discrominatorValue = "false";
+								        			}
+								        		}
+								        		
+								        		if ( !discrominatorValue.equals(disc.getDiscriminatorValue().getValue().toString()) ) {
+								        			continue;
+								        		}
+							        		}
+							        		catch ( Exception e ) {
+							        		
+							        		}
+							        	}
+							        	
+							        	ServiceElementType relType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
+							        	ServiceElement relTypese =  null;
+							        	try {
+							        		relTypese = createServiceElementFromType(discNode, relType, instOid, se);
+							        	}
+							        	catch ( Exception e ) {
+							        		continue;
+							        	}
+							        	
 							        	if ( relTypese.getName() == null ) {
 							        		
 							        		String rIndex = row.getIndex();
@@ -534,12 +615,28 @@ public class ParentChildServiceElementDiscovery extends
 		set.setCategory(manager.getCategoryByName(pr.getEntityClass().name()));
 		
 		set.setVendorSpecificSubType(pr.getEntPhysicalVendorType());
-		set.setDescription(pr.getEntPhysicalDescr());
+		
 		
 		set.addSignatureValue(null, SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
 		set.addSignatureValue(null, SignatureTypeEnum.Firmware, pr.getEntPhysicalFirmwareRev());
 		set.addSignatureValue(null, SignatureTypeEnum.SoftwareVersion, pr.getEntPhysicalSoftwareRev());
 		set.addSignatureValue(null, SignatureTypeEnum.Model, pr.getEntPhysicalModelName());
+		
+		VendorIdentifier vendorIdent = discMgr.getVendorIdentifier(pr.getEntPhysicalVendorType());
+		if ( vendorIdent != null ) {
+			
+			if ( vendorIdent.getVendorSubtypeName() != null ) {
+				
+				set.setName(vendorIdent.getVendorSubtypeName());
+			}
+			else {
+				set.setName(pr.getEntPhysicalVendorType());
+			}
+		}
+		else {
+			set.setName(pr.getEntPhysicalVendorType());
+		}
+		set.setDescription(pr.getEntityClass().name() + " " + set.getName());
 		
 		if ( pr.isEntPhysicalIsFRU() ) {
 			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);

@@ -83,6 +83,7 @@ public class SnmpLevelOIDDAO extends BaseDAO {
 		SNMPDAO snmpDao = new SNMPDAO(getEntityManager(), getLogger());
 		levelOID.setContextOID(snmpDao.update(levelOID.getContextOID()));
 		levelOID.setDescriminatorOID(snmpDao.update(levelOID.getDescriminatorOID()));
+		levelOID.setGlobalDiscriminatorOID(snmpDao.update(levelOID.getGlobalDiscriminatorOID()));
 		
 		levelOID.setDisriminators(dao.update(levelOID.getDisriminators()));
 		levelOID.setChildren(update(levelOID.getChildren()));

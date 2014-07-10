@@ -38,9 +38,23 @@ package edu.harvard.integer.common.yaml.vendorcontainment;
  * 
  */
 public class YamlSnmpServiceElementTypeDiscriminator {
+	
 	private YamlServiceElementType serviceElementType = null;
+	
+	private String serviceElementTypeName;
+
+	public String getServiceElementTypeName() {
+		return serviceElementTypeName;
+	}
+
+	public void setServiceElementTypeName(String serviceElementTypeName) {
+		this.serviceElementTypeName = serviceElementTypeName;
+	}
 
 	private String discriminatorValue = null;
+	
+	private String globaldiscriminatorValue = null;
+
 
 	/**
 	 * @return the serviceElementTypeId
@@ -72,4 +86,12 @@ public class YamlSnmpServiceElementTypeDiscriminator {
 		this.discriminatorValue = discriminatorValue;
 	}
 
+
+	public String getGlobaldiscriminatorValue() {
+		return globaldiscriminatorValue;
+	}
+
+	public void setGlobaldiscriminatorValue(String globaldiscriminatorValue) {
+		this.globaldiscriminatorValue = globaldiscriminatorValue;
+	}
 }

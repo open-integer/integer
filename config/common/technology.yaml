@@ -31,5 +31,29 @@ technologies:
 
                 - name: interface-OperStatus
                   description: Operation status
-...
+                  
+    - name: system
+      provides: [ system ]
+      description: Discoverable system elements. 
+      mechanisms:
+          - name: system
+            description: System
+            capabilities:
+                - name: system-description
+                  description: 
 
+                - name: system-objectId
+                  description: 
+
+                - name: system-uptime
+                  description: 
+
+                - name: system-contact
+                  description: 
+
+                - name: system-name
+                  description: 
+                  
+                - name: system-location
+                  description: 
+...
