@@ -30,6 +30,9 @@ public interface Resources {
 		
 		@Source("/images/wirelessRouter128.jpg")
 		ImageResource wirelessRoute128();
+		
+		@Source("/images/Network.jpg")
+		ImageResource network();
 
 	}
 	
