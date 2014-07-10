@@ -4,6 +4,7 @@ import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
 import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
 import com.emitrom.lienzo.client.core.shape.Layer;
 import com.emitrom.lienzo.client.core.shape.Picture;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.resources.Resources;
@@ -147,19 +148,24 @@ public class ServiceElementMap extends Layer {
 		init_layout(result.length);
 		
 		int i = 0;
-		for (final BaseEntity device : result) {
+		ImageResource image = Resources.IMAGES.graySwitch();
+		for (final BaseEntity entity : result) {
 			Point point = calculatePoint(result.length, i++);
-        	
-        	Picture picture = new Picture(Resources.IMAGES.pcom(), icon_width, icon_height, true, null);
+			if (entity instanceof ServiceElement)
+				image = Resources.IMAGES.pcom();
+			else if (entity instanceof Network)
+				image = Resources.IMAGES.network();
+			
+        	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
-        			selectedEntity = device;
+        			selectedEntity = entity;
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, device, mouseClickHandler);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, mouseClickHandler);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);

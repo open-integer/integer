@@ -18,6 +18,7 @@ import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
+import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -81,7 +82,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		
 		final ServiceElementMap deviceMap = new ServiceElementMap();
 
-		MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
+		//MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
+		MainClient.integerService.getAllNetworks(new AsyncCallback<Network[]>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -89,7 +91,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			}
 
 			@Override
-			public void onSuccess(ServiceElement[] result) {
+			public void onSuccess(Network[] result) {
 				deviceMap.update(result);
 			}
 		});
