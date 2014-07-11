@@ -43,6 +43,7 @@ import java.util.List;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -132,5 +133,15 @@ public class BaseDAOTest {
 		
 	}
 	
+	@Test
+	public void parseAddress() {
+		String address = "1.2.3.4";
+		
+		Long longAddress = Address.dottedIPToLong(address);
+		
+		assert (longAddress != null);
+		
+		assert (longAddress.longValue() == 16909060);
+	}
 
 }

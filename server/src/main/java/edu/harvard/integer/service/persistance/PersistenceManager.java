@@ -70,6 +70,7 @@ import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
+import edu.harvard.integer.service.persistance.dao.topology.InterNetworkLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
@@ -486,5 +487,10 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public PathDAO getPathDAO() {
 		return new PathDAO(em, logger);
+	}
+	
+	@Override
+	public InterNetworkLinkDAO getInterNetworkLinkDAO() {
+		return new InterNetworkLinkDAO(em, logger);
 	}
 }

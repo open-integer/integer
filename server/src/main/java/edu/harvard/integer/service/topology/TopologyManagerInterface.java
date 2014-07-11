@@ -38,6 +38,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManagerInterface;
@@ -151,5 +152,13 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 	 */
 	InterDeviceLink[] getInterDeviceLinksBySourceDestAddress(Address sourceAddress,
 			Address destAddress) throws IntegerException;
+
+	/**
+	 * Get the NetworkInformation for the entire network. This includes
+	 * the List of Netowrk's and the list of InterNetowrkLink's 
+	 * @return NetworkInformation for the entier network.
+	 * @throws IntegerException
+	 */
+	NetworkInformation getNetworkInformation() throws IntegerException;
 
 }

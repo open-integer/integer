@@ -33,71 +33,92 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.net.InetAddress;
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
- * A network object is the sum of all the NetworkInfo, InterDeviceLink, and Path
- * information within its domain.
- * <p>
- * It describes any layer of the network hierarchy down to the physical level.
- * At the physical level, 'discovery' will be limited.
- * <p>
- * It will contain, potentially many adjacencies.
- * 
  * @author David Taylor
  * 
  */
 @Entity
-public class Network extends BaseEntity {
+public class InterNetworkLink extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String description = null;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "address", column = @Column(name = "sourceAddress")),
+			@AttributeOverride(name = "mask", column = @Column(name = "sourceMask")) })
+	private Address sourceAddress = null;
+	
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "sourceNetworkId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "sourceNetworkType")),
+			@AttributeOverride(name = "name", column = @Column(name = "sourcesourceNetworkName")) })
+	private ID sourceNetworkId = null;
+	
+	@Embedded@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "destinationAddress")),
+		@AttributeOverride(name = "mask", column = @Column(name = "destinationMask")) })
+	private Address destinationAddress = null;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "destinationNetworkId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "destinationNetworkType")),
+			@AttributeOverride(name = "name", column = @Column(name = "destinationNetworkName")) })
+	private ID destinationNetworkId = null;
 	
 	private Date created = null;
-	
+
 	private Date modified = null;
 
 	@Enumerated(EnumType.STRING)
 	private LayerTypeEnum layer = null;
-	
-	@ManyToMany(fetch=FetchType.EAGER)
-	private List<InterDeviceLink> interDeviceLinks = null;
-	
-	@ManyToMany(fetch=FetchType.EAGER)
-	private List<ServiceElement> serviceElements = null;
-	
-	@ManyToMany(fetch=FetchType.EAGER)
-	private List<Network> lowerNetworks = null;
-	
-	private Boolean reachable = null;
 
 	/**
-	 * @return the description
+	 * @return the sourceAddress
 	 */
-	public String getDescription() {
-		return description;
+	public Address getSourceAddress() {
+		return sourceAddress;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param sourceAddress
+	 *            the sourceAddress to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSourceAddress(Address sourceAddress) {
+		this.sourceAddress = sourceAddress;
+	}
+
+	/**
+	 * @return the destinationAddress
+	 */
+	public Address getDestinationAddress() {
+		return destinationAddress;
+	}
+
+	/**
+	 * @param destinationAddress
+	 *            the destinationAddress to set
+	 */
+	public void setDestinationAddress(Address destinationAddress) {
+		this.destinationAddress = destinationAddress;
 	}
 
 	/**
@@ -108,7 +129,8 @@ public class Network extends BaseEntity {
 	}
 
 	/**
-	 * @param created the created to set
+	 * @param created
+	 *            the created to set
 	 */
 	public void setCreated(Date created) {
 		this.created = created;
@@ -122,7 +144,8 @@ public class Network extends BaseEntity {
 	}
 
 	/**
-	 * @param modified the modified to set
+	 * @param modified
+	 *            the modified to set
 	 */
 	public void setModified(Date modified) {
 		this.modified = modified;
@@ -136,76 +159,39 @@ public class Network extends BaseEntity {
 	}
 
 	/**
-	 * @param layer the layer to set
+	 * @param layer
+	 *            the layer to set
 	 */
 	public void setLayer(LayerTypeEnum layer) {
 		this.layer = layer;
 	}
 
 	/**
-	 * @return the interDeviceLinks
+	 * @return the sourceNetworkId
 	 */
-	public List<InterDeviceLink> getInterDeviceLinks() {
-		return interDeviceLinks;
+	public ID getSourceNetworkId() {
+		return sourceNetworkId;
 	}
 
 	/**
-	 * @param interDeviceLinks the interDeviceLinks to set
+	 * @param sourceNetworkId the sourceNetworkId to set
 	 */
-	public void setInterDeviceLinks(List<InterDeviceLink> interDeviceLinks) {
-		this.interDeviceLinks = interDeviceLinks;
+	public void setSourceNetworkId(ID sourceNetworkId) {
+		this.sourceNetworkId = sourceNetworkId;
 	}
 
 	/**
-	 * @return the serviceElements
+	 * @return the destinationNetworkId
 	 */
-	public List<ServiceElement> getServiceElements() {
-		return serviceElements;
+	public ID getDestinationNetworkId() {
+		return destinationNetworkId;
 	}
 
 	/**
-	 * @param serviceElements the serviceElements to set
+	 * @param destinationNetworkId the destinationNetworkId to set
 	 */
-	public void setServiceElements(List<ServiceElement> serviceElements) {
-		this.serviceElements = serviceElements;
+	public void setDestinationNetworkId(ID destinationNetworkId) {
+		this.destinationNetworkId = destinationNetworkId;
 	}
 
-	/**
-	 * @return the lowerNetworks
-	 */
-	public List<Network> getLowerNetworks() {
-		return lowerNetworks;
-	}
-
-	/**
-	 * @param lowerNetworks the lowerNetworks to set
-	 */
-	public void setLowerNetworks(List<Network> lowerNetworks) {
-		this.lowerNetworks = lowerNetworks;
-	}
-
-	/**
-	 * @return the reachable
-	 */
-	public Boolean getReachable() {
-		return reachable;
-	}
-
-	/**
-	 * @param reachable the reachable to set
-	 */
-	public void setReachable(Boolean reachable) {
-		this.reachable = reachable;
-	}
-
-	/**
-	 * @param sourceAddress
-	 * @return
-	 */
-	public static String createName(Address sourceAddress) {
-		
-		return Address.getSubNet(sourceAddress.getAddress(), sourceAddress.getMask());
-	}
-	
-	
 }

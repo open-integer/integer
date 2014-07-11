@@ -34,6 +34,7 @@
 package edu.harvard.integer.service.distribution;
 
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.annotation.PostConstruct;
@@ -352,7 +353,7 @@ public class DistributionService extends BaseService implements DistributionServ
 
 		try {
 			Address address = new Address(Inet4Address.getLocalHost()
-					.getHostAddress());
+					.getHostAddress(), "255.255.255.0");
 
 			IntegerServer integerServer = dao.findByAddress(address);
 			if (integerServer == null) {

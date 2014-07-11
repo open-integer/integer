@@ -154,4 +154,14 @@ public interface ServiceElementAccessManagerInterface extends
 	 */
 	ServiceElement[] getTopLevelServiceElementBySelection(ID selectionId)
 			throws IntegerException;
+
+	/**
+	 * Find the ServiceElement with the given name. If more than one 
+	 * ServiceElement has this name. Then the first one will be returned.
+	 * 
+	 * @param name
+	 * @return ServiceElement with the given name. or Null if not found.
+	 * @throws IntegerException
+	 */
+	ServiceElement getServiceElementByName(String name) throws IntegerException;
 }

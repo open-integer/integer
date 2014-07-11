@@ -254,7 +254,7 @@ public class DiscoveryService extends BaseService implements
 
 		DiscoverNet net = new DiscoverNet(ipTopologySeed.getSubnet()
 				.getAddress().getAddress(), ipTopologySeed.getSubnet()
-				.getMask().getAddress());
+				.getAddress().getMask());
 
 		IpDiscoverySeed seed = new IpDiscoverySeed(net,
 				ipTopologySeed.getCredentials());

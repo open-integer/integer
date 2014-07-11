@@ -89,8 +89,8 @@ public class DiscoveryServiceTest {
 		Subnet subnet = new Subnet();
 		Address address = new Address();
 		address.setAddress("10.240.127.0");
-		subnet.setAddress(new Address( "10.240.127.0" ));
-		subnet.setMask(new Address("255.255.255.0"));
+		subnet.setAddress(new Address( "10.240.127.0", "255.255.255.0" ));
+		
 		
 		seed.setSubnet(subnet);
 		seed.setRadius(Integer.valueOf(0));
@@ -131,8 +131,7 @@ public class DiscoveryServiceTest {
 		Subnet subnet = new Subnet();
 		Address address = new Address();
 		address.setAddress("10.240.127.0");
-		subnet.setAddress(new Address( "10.240.127.0" ));
-		subnet.setMask(new Address("255.255.255.0"));
+		subnet.setAddress(new Address( "10.240.127.0", "255.255.255.0" ));
 		
 		seed.setSubnet(subnet);
 		seed.setRadius(Integer.valueOf(0));

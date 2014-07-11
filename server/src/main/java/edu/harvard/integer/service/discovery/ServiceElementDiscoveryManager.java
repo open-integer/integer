@@ -284,6 +284,9 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 
 		SnmpContainmentDAO snmpContainmentDAO = dbm.getSnmpContainmentDAO();
 
+		if (containmentSelectors[0].getContainmentId() == null)
+			return null;
+		
 		return snmpContainmentDAO.findById(containmentSelectors[0]
 				.getContainmentId());
 	}

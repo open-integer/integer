@@ -57,6 +57,7 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
@@ -76,8 +77,8 @@ public class TopologyManagerTest {
 	@Inject
 	private ServiceElementAccessManagerInterface serviceElementManger;
 
-	private static Address sourceAddress = new Address("1.2.3.4");
-	private static Address destAddress = new Address("2.3.4.5");
+	private static Address sourceAddress = new Address("1.2.3.4", "255.255.255.0");
+	private static Address destAddress = new Address("2.3.4.5", "255.255.255.0");
 	
 	@Deployment
 	public static Archive<?> createTestArchive() {
@@ -209,8 +210,7 @@ public class TopologyManagerTest {
 		File deviceFile = new File("src/test/resources/topology");
 		
 		BufferedReader br = null;
-		String line = "";
-		String cvsSplitBy = " ";
+		String line = null;
 	 
 		List<Network> networks = new ArrayList<Network>();
 		List<ServiceElement> serviceElements = new ArrayList<ServiceElement>();
@@ -239,8 +239,30 @@ public class TopologyManagerTest {
 					}
 					
 					devLinks.add(device[1]);
-				
-					links.add(createInterDeviceLink(device[0], device[1]));
+					
+					ServiceElement sourceServiceElement = serviceElementManger.getServiceElementByName(device[0]);
+					if (sourceServiceElement == null)
+						sourceServiceElement = serviceElementManger.updateServiceElement(createServiceElement(device[0]));
+					
+					serviceElements.add(sourceServiceElement);
+					
+					ServiceElement destServiceElement = serviceElementManger.getServiceElementByName(device[1]);
+					if (destServiceElement == null)
+						destServiceElement = serviceElementManger.updateServiceElement(createServiceElement(device[1]));
+					
+					serviceElements.add(destServiceElement);
+					
+					
+					InterDeviceLink link = createInterDeviceLink(device[0], device[1]);
+					InterDeviceLink[] dbLinks = topologyManager.getInterDeviceLinksBySourceDestAddress(link.getSourceAddress(), link.getDestinationAddress());
+					if (dbLinks != null && dbLinks.length > 0)
+						link = dbLinks[0];
+					
+					link.setSourceServiceElementId(sourceServiceElement.getID());
+					link.setDestinationServiceElementId(destServiceElement.getID());
+					
+					links.add(link);
+					topologyManager.updateInterDeviceLink(link);
 					
 				} else
 					logger.info("Split into " + device.length + " columns " + line);
@@ -249,6 +271,9 @@ public class TopologyManagerTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (br != null) {
@@ -260,39 +285,41 @@ public class TopologyManagerTest {
 			}
 		}
 	 
-		for (String key : deviceLinks.keySet()) {
-			ServiceElement serviceElement = getServiceElementByAddress(key, serviceElements);
-			if (serviceElement == null) {
-				serviceElement = createServiceElement(key);
-				serviceElements.add(serviceElement);
-			}
-			
-			String subnet = key.substring(0, key.lastIndexOf("."));
-			Network network = findNetwork(subnet, networks);
-			if (network == null) {
-				network = createNetwork(subnet);
-				networks.add(network);
-			}
-			
-			network.getServiceElements().add(serviceElement);
-			
-			for (InterDeviceLink interDeviceLink : links) {
-				String sourceSubnnet = interDeviceLink.getSourceAddress().getAddress().substring(0, interDeviceLink.getSourceAddress().getAddress().lastIndexOf("."));
-				String destinationSubnnet = interDeviceLink.getDestinationAddress().getAddress().substring(0, interDeviceLink.getDestinationAddress().getAddress().lastIndexOf("."));
-				
-				if (network.getName().equals(sourceSubnnet)) {
-					boolean foundIt = false;
-					for (InterDeviceLink networklink : network.getInterDeviceLinks()) {
-						if (networklink.getSourceAddress().equals(interDeviceLink.getSourceAddress())) 
-							foundIt = true;
-					}
-					if (!foundIt)
-						network.getInterDeviceLinks().add(interDeviceLink);
-				}
-			}
-			
-		}
+//		for (String key : deviceLinks.keySet()) {
+//			ServiceElement serviceElement = getServiceElementByAddress(key, serviceElements);
+//			if (serviceElement == null) {
+//				serviceElement = createServiceElement(key);
+//				serviceElements.add(serviceElement);
+//			}
+//			
+//			String subnet = key.substring(0, key.lastIndexOf("."));
+//			Network network = findNetwork(subnet, networks);
+//			if (network == null) {
+//				network = createNetwork(subnet);
+//				networks.add(network);
+//			}
+//			
+//			network.getServiceElements().add(serviceElement);
+//			
+//			for (InterDeviceLink interDeviceLink : links) {
+//				String sourceSubnnet = interDeviceLink.getSourceAddress().getAddress().substring(0, interDeviceLink.getSourceAddress().getAddress().lastIndexOf("."));
+//			//	String destinationSubnnet = interDeviceLink.getDestinationAddress().getAddress().substring(0, interDeviceLink.getDestinationAddress().getAddress().lastIndexOf("."));
+//				
+//				if (network.getName().equals(sourceSubnnet)) {
+//					boolean foundIt = false;
+//					for (InterDeviceLink networklink : network.getInterDeviceLinks()) {
+//						if (networklink.getSourceAddress().equals(interDeviceLink.getSourceAddress())) 
+//							foundIt = true;
+//					}
+//					if (!foundIt)
+//						network.getInterDeviceLinks().add(interDeviceLink);
+//				}
+//			}
+//			
+//		}
 		
+		
+	
 		logger.info("Found " + networks.size() + " networks");
 		logger.info("Found " + serviceElements.size() + " Service Elements");
 		logger.info("Found " + links.size() + " InterDeviceLinks");
@@ -329,8 +356,8 @@ public class TopologyManagerTest {
 		InterDeviceLink link = new InterDeviceLink();
 		
 		link.setCreated(new Date());
-		link.setSourceAddress(new Address(string));
-		link.setDestinationAddress(new Address(string2));
+		link.setSourceAddress(new Address(string, "255.255.255.0"));
+		link.setDestinationAddress(new Address(string2, "255.255.255.0"));
 		link.setName(string + " - " + string2);
 		link.setModified(new Date());
 		
