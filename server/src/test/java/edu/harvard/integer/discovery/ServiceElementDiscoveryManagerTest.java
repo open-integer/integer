@@ -776,7 +776,7 @@ public class ServiceElementDiscoveryManagerTest {
 	}
 	
 	@Test
-	private void checkSnmpContainmentByVendor() {
+	public void checkSnmpContainmentByVendor() {
 	    VendorContainmentSelector vs = new VendorContainmentSelector();
 	    
 	    vs.setVendor("cisco");
