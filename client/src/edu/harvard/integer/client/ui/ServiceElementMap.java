@@ -230,6 +230,9 @@ public class ServiceElementMap extends Layer {
 			Point p1 = entityMap.get(id1);
 			Point p2 = entityMap.get(id2);
 			
+			if (p1 == null || p2 == null)
+				continue;
+			
 			// draw line between p0 and p
 			double x1 = p1.getX() + icon_width/2;
 			double y1 = p1.getY() + icon_height/2;
