@@ -33,83 +33,73 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.InterDeviceLink;
-import edu.harvard.integer.common.topology.Network;
-import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public class NetworkDAO extends BaseDAO {
+public class PathDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-	public NetworkDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, Network.class);
+	public PathDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, Path.class);
 
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	/**
+	 * @param sourceAddress
+	 * @param destAddress
+	 * @return
 	 */
-	@Override
-	public <T extends BaseEntity> void preSave(T entity)
-			throws IntegerException {
-		
-		if (!(entity instanceof Network))
-			return;
-		
-		Network network = (Network) entity;
-		if (network.getLowerNetworks() != null) {
-			List<Network> dbLowerNetworks = new ArrayList<Network>();
-			for (Network lowerNetwork : network.getLowerNetworks()) {
-				dbLowerNetworks.add(update(lowerNetwork));
-			}
-			
-			network.setLowerNetworks(dbLowerNetworks);
-		}
-		
-		if (network.getInterDeviceLinks() != null) {
-			InterDeviceLinkDAO interDeviceLinkDao = new InterDeviceLinkDAO(getEntityManager(), getLogger());
-			
-			List<InterDeviceLink> dbLinks = new ArrayList<InterDeviceLink>();
-			
-			for (InterDeviceLink interDeviceLink : network.getInterDeviceLinks()) {
-				dbLinks.add(interDeviceLinkDao.update(interDeviceLink));
-			}
-			
-			network.setInterDeviceLinks(dbLinks);
-		}
-		
-		
-		if (network.getServiceElements() != null) {
-			ServiceElementDAO dao = new ServiceElementDAO(getEntityManager(), getLogger());
-			
-			List<ServiceElement> dbServiceElements = new ArrayList<ServiceElement>();
-			
-			for(ServiceElement serviceElement : network.getServiceElements()) {
-				dbServiceElements.add(dao.update(serviceElement));
-			}
-			
-			network.setServiceElements(dbServiceElements);
-		}
-		
-		super.preSave(entity);
+	public Path findBySourceDestAddress(Address sourceAddress,
+			Address destAddress) {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<Path> query = criteriaBuilder.createQuery(Path.class);
+
+		Root<Path> from = query.from(Path.class);
+		query.select(from);
+
+		ParameterExpression<Address> sourceAddressField = criteriaBuilder
+				.parameter(Address.class);
+
+		ParameterExpression<Address> destAddressField = criteriaBuilder
+				.parameter(Address.class);
+
+		query.select(from).where(criteriaBuilder.and(
+				criteriaBuilder.equal(from.get("sourceAddress"), sourceAddressField),
+				criteriaBuilder.equal(from.get("destinationAddress"), destAddressField)));
+
+		TypedQuery<Path> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(sourceAddressField, sourceAddress);
+		typeQuery.setParameter(destAddressField, destAddress);
+
+		List<Path> resultList = typeQuery.getResultList();
+
+		if (resultList.size() > 0)
+			return resultList.get(0);
+		else
+			return null;		
 	}
 
-	
 }

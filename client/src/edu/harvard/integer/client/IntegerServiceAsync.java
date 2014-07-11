@@ -14,6 +14,7 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
+import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
@@ -126,4 +127,12 @@ public interface IntegerServiceAsync {
 	 */
 	void getServiceElementTypeById(ID serviceElementTypeId, AsyncCallback<ServiceElementType> callback);
 
+	/**
+	 * Gets the all networks.
+	 *
+	 * @param callback the callback
+	 * @return the all networks
+	 */
+	void getAllNetworks(AsyncCallback<Network[]> callback);
+	
 }

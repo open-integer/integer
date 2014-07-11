@@ -82,7 +82,9 @@ public interface ServiceElementDiscoveryManagerInterface extends
 			Long vendorId) throws IntegerException;
 
 	/**
-	 * Get the SnmpContainment hierarchy for the VendorContainmentSelector
+	 * Get the SnmpContainment hierarchy for the VendorContainmentSelector.
+	 * <p> 
+	 * NOTE: this will return the first match.
 	 * 
 	 * @param selector
 	 *            . The VendorContainmanetSelector to the the SnmpContainment
@@ -94,6 +96,27 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	SnmpContainment getSnmpContainment(VendorContainmentSelector selector)
 			throws IntegerException;
 
+	/**
+	 * Get all the SnmpContainment's hierarchy for the VendorContainmentSelector.
+	 * 
+	 * @param selector
+	 *            . The VendorContainmanetSelector to the the SnmpContainment
+	 *            for
+	 * @return SnmpContianment object that describes the hierarchy for this
+	 *         device type.
+	 * @throws IntegerException
+	 */
+	public SnmpContainment[] getSnmpContainments(
+			VendorContainmentSelector selector) throws IntegerException;
+	
+	/**
+	 * Get all the SnmpContainments that are in the database.
+	 * @return SnmpContainment[] of all SnmpContainments.
+	 * 
+	 * @throws IntegerException
+	 */
+	SnmpContainment[] getAllSnmpContainments() throws IntegerException;
+	
 	/**
 	 * Gets the top level polls. On IP network topology discovery, the list
 	 * should be a list of SNMP objects in the system group.

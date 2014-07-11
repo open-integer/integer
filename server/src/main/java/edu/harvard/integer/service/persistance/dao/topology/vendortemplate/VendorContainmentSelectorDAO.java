@@ -83,6 +83,7 @@ public class VendorContainmentSelectorDAO extends BaseDAO {
 	 * @return
 	 */
 	public VendorContainmentSelector[] findBySelector(VendorContainmentSelector selector) {
+		
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
 

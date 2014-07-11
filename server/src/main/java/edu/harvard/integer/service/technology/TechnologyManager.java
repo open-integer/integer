@@ -221,4 +221,5 @@ public class TechnologyManager extends BaseManager implements TechnologyManagerL
 		return null;
 	}
 
+	
 }

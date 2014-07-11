@@ -33,9 +33,12 @@
 
 package edu.harvard.integer.service.topology;
 
+import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -100,5 +103,53 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 	 */
 	TopologyElement updateTopologyElement(TopologyElement topologyElement)
 			throws IntegerException;
+
+	/**
+	 * Get the TopologyElements for the given service element ID. 
+	 * 
+	 * @param serviceElementId
+	 * @return TopologyElement[] for the ServiceElement ID.
+	 * @throws IntegerException
+	 */
+	public TopologyElement[] getTopologyElementsByServiceElement(ID serviceElementId) throws IntegerException;
+	
+	/**
+	 * Update the path in the database. If this is a new object then the
+	 * identifier will be set on the returned Path object.
+	 * 
+	 * @param path
+	 * @return Path with the identifier set.
+	 * @throws IntegerException
+	 */
+	Path updatePath(Path path) throws IntegerException;
+
+	/**
+	 * Get a list of all paths found in the database.
+	 * 
+	 * @return Path[] of all paths in the database.
+	 * @throws IntegerException
+	 */
+	Path[] getAllPaths() throws IntegerException;
+
+	/**
+	 * Get the Path object for the given source and destination address.
+	 * 
+	 * @param sourceAddress
+	 * @param destAddress
+	 * @return Path for source and destination address. If not found then return
+	 *         null.
+	 * @throws IntegerException
+	 */
+	Path getPathBySourceDestAddress(Address sourceAddress, Address destAddress)
+			throws IntegerException;
+
+	/**
+	 * @param sourceAddress
+	 * @param destAddress
+	 * @return
+	 * @throws IntegerException
+	 */
+	InterDeviceLink[] getInterDeviceLinksBySourceDestAddress(Address sourceAddress,
+			Address destAddress) throws IntegerException;
 
 }

@@ -16,7 +16,7 @@ technologies:
             - name: Ethernet Physical Layer
               description: ethernet physical layer
               parent: physical connectivity
-              discovery: [ service element type ]
+              discovery: [ ServiceElement ]
               layer:  1
               technologies:
                 - name: 1000base-T
@@ -29,13 +29,13 @@ technologies:
   
             - name: 802.11 wireless LAN
               description: Wi-Fi
-              discovery: [ service element type ]
+              discovery: [ ServiceElement ]
               layer:  2
               parent: physical connectivity
     
             - name: 802.16 wireless MAN
               description: WiMAX
-              discovery: [ service element type ]
+              discovery: [ ServiceElement ]
               layer:  2
               parent: physical connectivity
 
@@ -65,7 +65,7 @@ technologies:
                 - name: Neighbor Discovery
                   description: neighbor discovery
                   parent: link layer protocols
-                  discovery:  [ topology ]
+                  discovery:  [ Topology ]
                   layer:  2.5
                   technologies:
                   - name: CDP
@@ -99,7 +99,7 @@ technologies:
                 - name: Link Bonding
                   description: link bonding
                   parent: link layer protocols
-                  discovery:  [ service element type ]
+                  discovery:  [ ServiceElement ]
                   layer:  2
                   technologies:
                     - name: Host-to-host bonded link schemes
@@ -214,7 +214,7 @@ technologies:
             - name: VLAN tagging protocols
               description: VLAN tagging protocols
               parent: VLANs
-              discovery:  [ service element type, topology ]
+              discovery:  [ ServiceElement, Topology ]
               layer:  2
               technologies:
               - name: 802.1q vlan trunking
@@ -234,7 +234,7 @@ technologies:
               description: VLAN registration protocols
               parent: VLANs
               layer:  2.5
-              discovery: [ none ]
+              discovery: [ None ]
               technologies:
               - name: Cisco VTP
                 description: VLAN Trunking Protocol
@@ -249,7 +249,7 @@ technologies:
             - name: VLAN trunk negotiation protocols
               description: VLAN trunk negotiation protocols
               parent: VLANs
-              discovery: [ none ]
+              discovery: [ None ]
               technologies:
               - name: Cisco DTP
                 description: Dynamic Trunking Protocol
@@ -258,7 +258,7 @@ technologies:
             - name: Spanning-tree protocol versions and alternatives
               description: Spanning-tree protocol versions and alternatives
               parent: VLANs
-              discovery:  [ topology ]
+              discovery:  [ Topology ]
               layer:  2
               technologies:
               - name: standards-based spanning-tree versions - IEEE STP
@@ -327,7 +327,7 @@ technologies:
       - name: packet-switched networking
         description: packet-switched networking
         parent: networking
-        discovery:  [ service element type, topology]
+        discovery:  [ ServiceElement, Topology]
         layer:  2.5
         technologies:
         - name: Frame Relay
@@ -417,7 +417,7 @@ technologies:
         technologies:
           - name: Routing Table
             description: routing table
-            discovery: [ service element type, topology ]
+            discovery: [ ServiceElement, Topology ]
             layer:  3
             parent: routing
             technologies:
@@ -507,19 +507,19 @@ technologies:
 
             - name: static routes
               description: static routes
-              discovery: [ service element type, topology ]
+              discovery: [ ServiceElement, Topology ]
               layer:  3
               parent: routing table
 
             - name: directly-connected routes
               description: directly-connected routes
-              discovery: [ service element type, topology ]
+              discovery: [ ServiceElement, Topology ]
               layer:  3
               parent: routing table
 
             - name: locally-generated routes
               description: locally-generated routes
-              discovery: [ service element type, topology ]
+              discovery: [ ServiceElement, Topology ]
               layer:  3
               parent: routing table
 

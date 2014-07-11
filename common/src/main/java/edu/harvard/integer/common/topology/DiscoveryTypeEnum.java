@@ -43,5 +43,5 @@ package edu.harvard.integer.common.topology;
  * 
  */
 public enum DiscoveryTypeEnum {
-	ServiceElement, Topology, Both;
+	ServiceElement, Topology, Both, None;
 }

@@ -33,11 +33,20 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.topology.InterDeviceLink;
+import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -54,6 +63,42 @@ public class InterDeviceLinkDAO extends BaseDAO {
 	public InterDeviceLinkDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, InterDeviceLink.class);
 
+	}
+
+	/**
+	 * @param sourceAddress
+	 * @param destAddress
+	 * @return
+	 */
+	public InterDeviceLink[] findBySourceDestAddress(Address sourceAddress,
+			Address destAddress) {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<InterDeviceLink> query = criteriaBuilder.createQuery(InterDeviceLink.class);
+
+		Root<InterDeviceLink> from = query.from(InterDeviceLink.class);
+		query.select(from);
+
+		ParameterExpression<Address> sourceAddressField = criteriaBuilder
+				.parameter(Address.class);
+
+		ParameterExpression<Address> destAddressField = criteriaBuilder
+				.parameter(Address.class);
+
+		query.select(from).where(criteriaBuilder.and(
+				criteriaBuilder.equal(from.get("sourceAddress"), sourceAddressField),
+				criteriaBuilder.equal(from.get("destinationAddress"), destAddressField)));
+
+		TypedQuery<InterDeviceLink> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(sourceAddressField, sourceAddress);
+		typeQuery.setParameter(destAddressField, destAddress);
+
+		List<InterDeviceLink> resultList = typeQuery.getResultList();
+
+		return (InterDeviceLink[]) resultList.toArray(new InterDeviceLink[resultList
+				.size()]);
 	}
 
 }

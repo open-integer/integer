@@ -44,8 +44,6 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.common.persistence.PersistenceStepStatusEnum;
-import edu.harvard.integer.common.properties.IntegerProperties;
-import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.server.IntegerApplication;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
@@ -75,7 +73,7 @@ public class PersistenceService extends BaseService implements
 	DataLoaderInterface dataLoader;
 
 	DataPreLoadFile[] preloads = null;
-	
+
 	/**
 	 * All PersistenceService initialization occurs here.
 	 */
@@ -90,7 +88,7 @@ public class PersistenceService extends BaseService implements
 		loadPreloads();
 
 	}
-
+	
 	private void loadPreloads() {
 		logger.info("Loading preload data files");
 
@@ -100,7 +98,7 @@ public class PersistenceService extends BaseService implements
 			preloads = dao.findAll();
 
 			logger.info(showPreloads());
-			
+
 			for (DataPreLoadFile dataPreLoadFile : preloads) {
 				if (dataPreLoadFile.getStatus() == null
 						|| !PersistenceStepStatusEnum.Loaded
@@ -124,7 +122,7 @@ public class PersistenceService extends BaseService implements
 				} else
 					logger.info("Preload already loaded!" + dataPreLoadFile);
 			}
-			
+
 			logger.info(showPreloads());
 
 		} catch (IntegerException e) {
@@ -137,9 +135,9 @@ public class PersistenceService extends BaseService implements
 	@Override
 	public String showPreloads() {
 		StringBuffer b = new StringBuffer();
-		
+
 		b.append("Number of preloads ").append(preloads.length);
-		
+
 		for (DataPreLoadFile dataPreLoadFile : preloads) {
 			b.append("\nData Preload: ").append(dataPreLoadFile.getName());
 			b.append(" Status ").append(dataPreLoadFile.getStatus());

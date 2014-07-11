@@ -68,8 +68,9 @@ import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Category;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
+import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
+import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
@@ -96,9 +97,9 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
-import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
 
 /**
@@ -223,7 +224,9 @@ public class YamlManager extends BaseManager implements
 			technology.setDescription(node.getDescription());
 			technology.setMechanisims(saveMechanisms(technology,
 					node.getMechanisms()));
-
+			technology.setLayer(LayerTypeEnum.getLayerTypeEnum(node.getLayer()));
+			technology.setDiscoveryTypes(createDiscoveryTypeEnumList(node.getDiscovery()));
+			
 			technology = technologyManager.updateTechnology(technology);
 
 			if (node.getTechnologies() != null)
@@ -231,6 +234,25 @@ public class YamlManager extends BaseManager implements
 
 		}
 
+	}
+
+	/**
+	 * @param discovery
+	 * @return
+	 */
+	private List<DiscoveryTypeEnum> createDiscoveryTypeEnumList(
+			List<String> discovery) {
+		
+		if (discovery == null)
+			return null;
+		
+		List<DiscoveryTypeEnum> discoveryTypes = new ArrayList<DiscoveryTypeEnum>();
+		
+		for (String string : discovery) {
+			discoveryTypes.add(DiscoveryTypeEnum.valueOf(string));
+		}
+		
+		return discoveryTypes;
 	}
 
 	/**
@@ -840,6 +862,8 @@ public class YamlManager extends BaseManager implements
 		SnmpLevelOIDDAO levelDao = persistanceManager.getSnmpLevelOIDDAO();
 		SNMPDAO snmpDao = persistanceManager.getSNMPDAO();
 
+		SnmpRelationshipDAO relationshipDAO = persistanceManager.getSnmpSnmpRelationshipDAO();
+		
 		List<SnmpLevelOID> dbLevels = new ArrayList<SnmpLevelOID>();
 		for (YamlSnmpLevelOID levelOid : yamlSnmpLevelOids) {
 			SNMP snmp = snmpDao.findByName(levelOid.getContextOID());
@@ -877,6 +901,7 @@ public class YamlManager extends BaseManager implements
 				SnmpRelationship parentChildRelationship = createParentChildRelationship(
 						levelOid.getParentChildRelationship(),
 						dbLevelOid.getRelationToParent());
+				parentChildRelationship = relationshipDAO.update(parentChildRelationship);
 				dbLevelOid.setRelationToParent(parentChildRelationship);
 			} else {
 
@@ -1020,6 +1045,8 @@ public class YamlManager extends BaseManager implements
 		if (list == null)
 			list = new ArrayList<SnmpServiceElementTypeDiscriminator>();
 
+		ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
+		
 		for (YamlSnmpServiceElementTypeDiscriminator yamlSnmpServiceElementTypeDiscriminator : disriminators) {
 			
 			SnmpServiceElementTypeDiscriminator dbDiscriminator = findDiscriminator(
@@ -1029,16 +1056,20 @@ public class YamlManager extends BaseManager implements
 				dbDiscriminator.setDiscriminatorValue(createDiscrimintatorValue(yamlSnmpServiceElementTypeDiscriminator));
 				
 				if ( yamlSnmpServiceElementTypeDiscriminator.getServiceElementTypeName() != null ) {
-					
-					ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
+							
 					ServiceElementType dbSet = dao.findByName(yamlSnmpServiceElementTypeDiscriminator.getServiceElementTypeName());
+					if (dbSet == null) {
+						logger.error("Error ServiceElement " + yamlSnmpServiceElementTypeDiscriminator.getServiceElementTypeName() 
+								+ " not found!! Can not add SnmpLevelOID discriminator " );
+						
+						continue;
+					}
 					dbDiscriminator.setServiceElementTypeId(dbSet.getID());
 				}
 				
 				if ( yamlSnmpServiceElementTypeDiscriminator.getGlobaldiscriminatorValue() != null ) {
 					
-					System.out.println("Try to make a break.  ");
-				     dbDiscriminator.setGlobaldiscriminatorValue(createGlobleDiscrimintatorValue(yamlSnmpServiceElementTypeDiscriminator));
+					dbDiscriminator.setGlobaldiscriminatorValue(createGlobleDiscrimintatorValue(yamlSnmpServiceElementTypeDiscriminator));
 				}
 				
 				list.add(dbDiscriminator);

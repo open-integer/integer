@@ -76,6 +76,9 @@ public class TopologyManagerTest {
 	@Inject
 	private ServiceElementAccessManagerInterface serviceElementManger;
 
+	private static Address sourceAddress = new Address("1.2.3.4");
+	private static Address destAddress = new Address("2.3.4.5");
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return TestUtil.createTestArchive("TopologyManagerTest.war");
@@ -89,7 +92,7 @@ public class TopologyManagerTest {
 		topologyElement.setCreated(new Date());
 		topologyElement.setModified(new Date());
 		
-		topologyElement.setLayer("2");
+		topologyElement.setLayer(LayerTypeEnum.Two);
 
 		try {
 			topologyManager.updateTopologyElement(topologyElement);
@@ -123,9 +126,9 @@ public class TopologyManagerTest {
 	private InterDeviceLink createInterDeviceLink() {
 		InterDeviceLink link = new InterDeviceLink();
 		link.setCreated(new Date());
-		link.setDestinationAddress(new Address("1.2.3.4"));
-		link.setSourceAddress(new Address("2.3.4.5"));
-		link.setLayer("2.5");
+		link.setSourceAddress(sourceAddress);
+		link.setDestinationAddress(destAddress);
+		link.setLayer(LayerTypeEnum.TwoAndHalf);
 		
 		return link;
 	}
@@ -168,7 +171,7 @@ public class TopologyManagerTest {
 		
 		network.setCreated(new Date());
 		network.setDescription("My Network");
-		network.setLayer("2.33");
+		network.setLayer(LayerTypeEnum.TwoAndHalf);
 		network.setReachable(Boolean.TRUE);
 		
 		List<InterDeviceLink> links = new ArrayList<InterDeviceLink>();
@@ -185,7 +188,7 @@ public class TopologyManagerTest {
 		
 		lowerNetwork.setCreated(new Date());
 		lowerNetwork.setDescription("My Network");
-		lowerNetwork.setLayer("2.33");
+		lowerNetwork.setLayer(LayerTypeEnum.TwoAndHalf);
 		lowerNetwork.setReachable(Boolean.TRUE);
 		lowerNetworks.add(lowerNetwork);
 		
@@ -203,7 +206,7 @@ public class TopologyManagerTest {
 	@Test
 	public void createFakeData() {
 
-		File deviceFile = new File("/Users/dtaylor/git/integer/server/src/test/resources/topology");
+		File deviceFile = new File("src/test/resources/topology");
 		
 		BufferedReader br = null;
 		String line = "";
@@ -260,7 +263,8 @@ public class TopologyManagerTest {
 		for (String key : deviceLinks.keySet()) {
 			ServiceElement serviceElement = getServiceElementByAddress(key, serviceElements);
 			if (serviceElement == null) {
-				serviceElements.add(createServiceElement(key));
+				serviceElement = createServiceElement(key);
+				serviceElements.add(serviceElement);
 			}
 			
 			String subnet = key.substring(0, key.lastIndexOf("."));
@@ -274,6 +278,7 @@ public class TopologyManagerTest {
 			
 			for (InterDeviceLink interDeviceLink : links) {
 				String sourceSubnnet = interDeviceLink.getSourceAddress().getAddress().substring(0, interDeviceLink.getSourceAddress().getAddress().lastIndexOf("."));
+				String destinationSubnnet = interDeviceLink.getDestinationAddress().getAddress().substring(0, interDeviceLink.getDestinationAddress().getAddress().lastIndexOf("."));
 				
 				if (network.getName().equals(sourceSubnnet)) {
 					boolean foundIt = false;
@@ -292,6 +297,7 @@ public class TopologyManagerTest {
 		logger.info("Found " + serviceElements.size() + " Service Elements");
 		logger.info("Found " + links.size() + " InterDeviceLinks");
 		
+
 		for (Network network : networks) {
 			try {
 				Network dbNetwork = topologyManager.updateNetwork(network);
@@ -299,23 +305,10 @@ public class TopologyManagerTest {
 						" with " + dbNetwork.getServiceElements().size() + " Service Elements" +
 						" and " + dbNetwork.getInterDeviceLinks().size() + " Links");
 				
-			} catch (IntegerException e) {
-			
-				e.printStackTrace();
-			}
-		}
-		
-		for (InterDeviceLink interDeviceLink : links) {
-			try {
-				topologyManager.updateInterDeviceLink(interDeviceLink);
-			} catch (IntegerException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		for (ServiceElement serviceElement : serviceElements) {
-			try {
-				serviceElementManger.updateServiceElement(serviceElement);
+				for (ServiceElement servieElement : network.getServiceElements()) {
+					logger.info("Added ServieElement " + servieElement.getID().toDebugString());
+				}
+				
 			} catch (IntegerException e) {
 			
 				e.printStackTrace();
@@ -393,6 +386,82 @@ public class TopologyManagerTest {
 		}
 		
 		return null;
+	}
+	
+	@Test
+	public void getLinksForSourceDestAddress() {
+		InterDeviceLink[] links = null;
+		try {
+			links = topologyManager.getInterDeviceLinksBySourceDestAddress(sourceAddress, destAddress);
+			if (links == null || links.length == 0)
+				topologyManager.updateInterDeviceLink(createInterDeviceLink());
+			
+			links = topologyManager.getInterDeviceLinksBySourceDestAddress(sourceAddress, destAddress);
+			
+			assert (links != null);
+			assert (links.length > 0);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getPathsForSourceDestAddress() {
+		
+		try {
+			Path path = topologyManager.getPathBySourceDestAddress(sourceAddress, destAddress);
+			
+			if (path == null) {
+				topologyManager.updatePath(createPath());
+				
+				path = topologyManager.getPathBySourceDestAddress(sourceAddress, destAddress);
+			}
+			
+			assert (path != null);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	private Path createPath() {
+		Path path = new Path();
+		path.setCreated(new Date());
+		path.setModified(new Date());
+		path.setName(sourceAddress.getAddress() + " - " + destAddress.getAddress());
+		path.setSourceAddress(sourceAddress);
+		path.setDestinationAddress(destAddress);
+		
+		return path;
+	}
+	
+	@Test
+	public void getAllPaths() {
+		
+		try {
+			Path[] paths = topologyManager.getAllPaths();
+			if (paths == null || paths.length == 0) 
+				topologyManager.updatePath(createPath());
+			
+			paths = topologyManager.getAllPaths();
+			
+			assert (paths != null);
+			assert (paths.length > 0);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
 	}
 }
 

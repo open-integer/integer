@@ -22,14 +22,13 @@ import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Capability;
-import edu.harvard.integer.common.topology.Category;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
+import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Subnet;
@@ -41,6 +40,7 @@ import edu.harvard.integer.service.event.EventManagerInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.selection.SelectionManagerInterface;
+import edu.harvard.integer.service.topology.TopologyManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
@@ -369,5 +369,22 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		}
 		
 		return serviceElementType;
+	}
+
+	@Override
+	public Network[] getAllNetworks() throws Exception {
+		Network[] networks;
+
+		try {
+			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
+			
+			networks = topologyService.getAllNetworks();
+			
+			System.out.println("getAllNetworks return " + networks.length + " netowrks");
+		} 
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		return networks;
 	}
 }

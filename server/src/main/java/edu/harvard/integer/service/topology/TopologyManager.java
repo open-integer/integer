@@ -36,15 +36,19 @@ package edu.harvard.integer.service.topology;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
+import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 
 /**
@@ -75,7 +79,11 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	public Network[] getAllNetworks() throws IntegerException {
 		NetworkDAO dao = persistenceManager.getNetworkDAO();
 		
-		return dao.findAll();
+		Network[] networks = dao.findAll();
+		
+		networks = dao.copyArray(networks);
+		
+		return networks;
 	}
 
 	/*
@@ -102,6 +110,17 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getLinksBySourceDestAddress(edu.harvard.integer.common.Address, edu.harvard.integer.common.Address)
+	 */
+	@Override
+	public InterDeviceLink[] getInterDeviceLinksBySourceDestAddress(Address sourceAddress, Address destAddress) throws IntegerException {
+		InterDeviceLinkDAO dao = persistenceManager.getInterDeviceLinkDAO();
+	
+		return dao.findBySourceDestAddress(sourceAddress, destAddress);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#updateInterDeviceLink(edu.harvard.integer.common.topology.InterDeviceLink)
 	 */
 	@Override
@@ -124,6 +143,17 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getTopologyElementsByServiceElement(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public TopologyElement[] getTopologyElementsByServiceElement(ID serviceElementId) throws IntegerException {
+		TopologyElementDAO dao = persistenceManager.getTopologyElementDAO();
+		
+		return dao.findByServiceElementID(serviceElementId);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#updateTopologyElement(edu.harvard.integer.common.topology.TopologyElement)
 	 */
 	@Override
@@ -132,4 +162,24 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		return dao.update(topologyElement);
 	}
 	
+	@Override
+	public Path updatePath(Path path) throws IntegerException {
+		PathDAO dao = persistenceManager.getPathDAO();
+		
+		return dao.update(path);
+	}
+	
+	@Override
+	public Path[] getAllPaths() throws IntegerException {
+		PathDAO dao = persistenceManager.getPathDAO();
+		
+		return dao.findAll();
+	}
+	
+	@Override
+	public Path getPathBySourceDestAddress(Address sourceAddress, Address destAddress) throws IntegerException {
+		PathDAO dao = persistenceManager.getPathDAO();
+		
+		return dao.findBySourceDestAddress(sourceAddress, destAddress);
+	}
 }

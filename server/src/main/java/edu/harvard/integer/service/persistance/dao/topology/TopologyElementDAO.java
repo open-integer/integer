@@ -37,6 +37,7 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -54,6 +55,17 @@ public class TopologyElementDAO extends BaseDAO {
 	public TopologyElementDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, TopologyElement.class);
 
+	}
+
+	/**
+	 * Get the list of TopologyElements for the given service element ID.
+	 * 
+	 * @param serviceElementId
+	 * @return TopologyElement[] found for the service element.
+	 */
+	public TopologyElement[] findByServiceElementID(ID serviceElementId) {
+
+		return findByIDField(serviceElementId, "serviceElementId", TopologyElement.class);
 	}
 
 }

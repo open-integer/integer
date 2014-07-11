@@ -33,60 +33,29 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.util.List;
-
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OrderColumn;
-
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.ID;
-
 /**
  * @author David Taylor
  *
  */
-@Entity
-public class Category extends BaseEntity {
-
-	/**
-	 * Serial Version UID
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private String description = null;
+public enum LayerTypeEnum {
+	Unknown("N/A"), One("1"), Two("2"), TwoAndHalf("2.5"), Three("3");
 	
-	@ElementCollection(fetch=FetchType.EAGER)
-	@OrderColumn(name="idx")
-	private List<ID> childIds = null;
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
+	private String layer = null;
+	
+	private LayerTypeEnum (String layer) {
+		this.layer = layer;
 	}
-
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
+	
+	public String getLayer() {
+		return layer;
 	}
-
-	/**
-	 * @return the childIds
-	 */
-	public List<ID> getChildIds() {
-		return childIds;
+	
+	public static LayerTypeEnum getLayerTypeEnum(String layer) {
+		for (LayerTypeEnum layerType : values()) {
+			if (layerType.getLayer().equals(layer));
+			return layerType;
+		}
+		
+		return Unknown;
 	}
-
-	/**
-	 * @param childIds the childIds to set
-	 */
-	public void setChildIds(List<ID> childIds) {
-		this.childIds = childIds;
-	}
-
 }

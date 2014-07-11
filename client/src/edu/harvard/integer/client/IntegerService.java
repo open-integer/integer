@@ -11,6 +11,7 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
+import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
@@ -132,9 +133,18 @@ public interface IntegerService extends RemoteService {
 	/**
 	 * Gets the service element type by id.
 	 *
+	 * @param serviceElementTypeId the service element type id
 	 * @return the service element type by id
 	 * @throws Exception the exception
 	 */
 	ServiceElementType getServiceElementTypeById(ID serviceElementTypeId) throws Exception;
+	
+	/**
+	 * Gets the all networks.
+	 *
+	 * @return the all networks
+	 * @throws Exception the exception
+	 */
+	Network[] getAllNetworks() throws Exception;
 
 }

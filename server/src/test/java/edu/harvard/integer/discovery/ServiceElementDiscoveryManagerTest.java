@@ -80,6 +80,8 @@ import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.util.FileUtil;
 
 /**
@@ -772,4 +774,74 @@ public class ServiceElementDiscoveryManagerTest {
 			fail(e.toString());
 		}
 	}
+	
+	@Test
+	public void checkSnmpContainmentByVendor() {
+	    VendorContainmentSelector vs = new VendorContainmentSelector();
+	    
+	    vs.setVendor("cisco");
+	    
+	    try {
+			SnmpContainment sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
+			printSnmpContainment(sc);
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+		} 
+
+	}
+
+	@Test
+	public void checkSnmpContainment() {
+		
+		try {
+			SnmpContainment[] containments = serviceElementDiscoveryManger.getAllSnmpContainments();
+			for (SnmpContainment snmpContainment : containments) {
+				printSnmpContainment(snmpContainment);
+			}
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+		}
+
+	}
+
+
+	/**
+	 * @param snmpContainment
+	 */
+	private void printSnmpContainment(SnmpContainment snmpContainment) {
+		StringBuffer b = new StringBuffer();
+		b.append("SnmpContainment: " + snmpContainment.getName())
+				.append('\n');
+		b.append(" Type: ")
+				.append(snmpContainment.getContainmentType())
+				.append('\n');
+		b.append(" SnmpLevels: ")
+				.append(snmpContainment.getSnmpLevels().size())
+				.append('\n');
+		for (SnmpLevelOID level : snmpContainment.getSnmpLevels()) {
+			b.append(" Context: ")
+					.append(level.getContextOID().getOid())
+					.append('\n');
+			b.append(" Discriminators: ")
+					.append(level.getDisriminators().size())
+					.append('\n');
+			for (SnmpServiceElementTypeDiscriminator discriminator : level
+					.getDisriminators()) {
+				b.append("    Discrimator value: ")
+						.append(discriminator.getDiscriminatorValue())
+						.append('\n');
+				if (discriminator.getServiceElementTypeId() != null)
+					b.append("    Servie element Type: ")
+							.append(discriminator
+									.getServiceElementTypeId()
+									.toDebugString()).append('\n');
+			}
+		}
+		logger.info(b.toString());
+
+		
+	}
+
 }

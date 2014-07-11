@@ -45,7 +45,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Index;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -98,7 +99,7 @@ public class SnmpContainment extends BaseEntity {
 			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
 	private ID serviceElementTypeId = null;
 
-	@OneToMany(fetch=FetchType.EAGER)
+	@ElementCollection
 	private List<SnmpLevelOID> snmpLevels = null;
 
 	/**
