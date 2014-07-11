@@ -57,7 +57,6 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
@@ -133,6 +132,7 @@ public class TopologyManagerTest {
 		
 		return link;
 	}
+	
 	@Test
 	public void addInterDeviceLink() {
 		InterDeviceLink link = createInterDeviceLink();
@@ -201,6 +201,19 @@ public class TopologyManagerTest {
 			
 			e.printStackTrace();
 			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getNetworkInformation() {
+		try {
+			NetworkInformation networkInformation = topologyManager.getNetworkInformation();
+		
+			assert(networkInformation != null);
+			
+		} catch (IntegerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
