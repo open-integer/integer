@@ -1,7 +1,6 @@
 package edu.harvard.integer.client.ui;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +22,12 @@ import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.InterNetworkLink;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ServiceElementMap represents a map object of Integer.
  * This is a subclass class extended from com.emitrom.lienzo.client.core.shape.Layer.
@@ -69,7 +71,10 @@ public class ServiceElementMap extends Layer {
 	/** The selected timestamp. */
 	private long selectedTimestamp;
 	
+	/** The entity map. */
 	private Map<ID, Point> entityMap = new HashMap<ID, Point>();
+	
+	/** The entity list. */
 	private List<ID> entityList = new ArrayList<ID>();
 	
 	/**
@@ -128,6 +133,11 @@ public class ServiceElementMap extends Layer {
 		update(serviceElements);
 	}
 	
+	/**
+	 * Inits the network.
+	 *
+	 * @param count the count
+	 */
 	private void initNetwork(int count) {
 		Network[] netowrks = new Network[count];
 		for (int i = 0; i < count; i++) {
@@ -153,6 +163,16 @@ public class ServiceElementMap extends Layer {
 			icon_width = icon_width / 2;
 		}
 		icon_height = icon_width;
+	}
+	
+	/**
+	 * Update network information including network lkist and link list
+	 *
+	 * @param networkkInfo the networkk info
+	 */
+	public void updateNetworkInformation(NetworkInformation networkkInfo) {
+		update(networkkInfo.getNetworks());
+		drawLinks(networkkInfo.getLinks());
 	}
 
 	/**
@@ -195,28 +215,28 @@ public class ServiceElementMap extends Layer {
         	
         	add(icon);
 		}
-		
-		drawLinks();
 	}
 	
-	private void drawLinks() {
-		final ID id0 = entityList.get(0);
-		Point p0 = entityMap.get(id0);
-		double x0 = p0.getX() + icon_width/2;
-		double y0 = p0.getY() + icon_height/2;
-		
+	/**
+	 * Draw links.
+	 * @param links 
+	 */
+	private void drawLinks(InterNetworkLink[] links) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();
 		
-		for (final ID id : entityList) {
-			if (id.equals(id0))
-				continue;
-			
-			Point p = entityMap.get(id);
+		for (final InterNetworkLink link : links) {
+			ID id1 = link.getSourceNetworkId();
+			ID id2 = link.getDestinationNetworkId();
+			Point p1 = entityMap.get(id1);
+			Point p2 = entityMap.get(id2);
 			
 			// draw line between p0 and p
-			double x = p.getX() + icon_width/2;
-			double y = p.getY() + icon_height/2;
-			Line line = new Line(x0, y0, x, y);  
+			double x1 = p1.getX() + icon_width/2;
+			double y1 = p1.getY() + icon_height/2;
+			double x2 = p2.getX() + icon_width/2;
+			double y2 = p2.getY() + icon_height/2;
+			
+			Line line = new Line(x1, y1, x2, y2);  
             line.setStrokeColor(ColorName.GREEN).setStrokeWidth(1).setFillColor(ColorName.GREEN);
             
             line.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
@@ -225,9 +245,9 @@ public class ServiceElementMap extends Layer {
     			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
     				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
     				int y = 100 + event.getY() - 15;
-    				String name = id0.getName() + "-" + id.getName();
-    				tooltip.update(name);
+
     				tooltip.setPopupPosition(x, y);
+    				tooltip.update(link.getName());
     				tooltip.show();
     			}  
             });  
@@ -245,6 +265,13 @@ public class ServiceElementMap extends Layer {
 		}
 	}
 	
+	/**
+	 * Calculate point.
+	 *
+	 * @param total the total
+	 * @param i the i
+	 * @return the point
+	 */
 	public Point calculatePoint(int total, int i) {
 		if (layout_type == CIRCULAR_LAYOUT) 
 			return calculateCircularLayoutPoint(total, i);
@@ -252,6 +279,13 @@ public class ServiceElementMap extends Layer {
 		return calculateLineLayoutPoint(total, i);
 	}
 	
+	/**
+	 * Calculate line layout point.
+	 *
+	 * @param total the total
+	 * @param i the i
+	 * @return the point
+	 */
 	public Point calculateLineLayoutPoint(int total, int i) {
 		int col = i % icon_col_total;
 		int row = i / icon_col_total;
@@ -261,6 +295,13 @@ public class ServiceElementMap extends Layer {
 		return new Point(x, y);
 	}
 	
+	/**
+	 * Calculate circular layout point.
+	 *
+	 * @param total the total
+	 * @param i the i
+	 * @return the point
+	 */
 	public Point calculateCircularLayoutPoint(int total, int i) {
 		double height = SystemSplitViewPanel.CONTENT_HEIGHT - icon_height * 2;
         double width = SystemSplitViewPanel.CONTENT_WIDTH - icon_width * 2;

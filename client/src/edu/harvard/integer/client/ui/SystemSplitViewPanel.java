@@ -19,6 +19,7 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -83,7 +84,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		final ServiceElementMap deviceMap = new ServiceElementMap();
 
 		//MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
-		MainClient.integerService.getAllNetworks(new AsyncCallback<Network[]>() {
+		MainClient.integerService.getNetworkInformation(new AsyncCallback<NetworkInformation>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -91,8 +92,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			}
 
 			@Override
-			public void onSuccess(Network[] result) {
-				deviceMap.update(result);
+			public void onSuccess(NetworkInformation result) {
+				deviceMap.updateNetworkInformation(result);
 			}
 		});
 		
