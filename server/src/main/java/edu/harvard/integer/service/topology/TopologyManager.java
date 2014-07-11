@@ -109,7 +109,7 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		networkInfo.setNetworks(getAllNetworks());
 		
 		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
-		networkInfo.setLinks((InterNetworkLink[]) linkDao.findAll());
+		networkInfo.setLinks(linkDao.copyArray((InterNetworkLink[]) linkDao.findAll()));
 		
 		return networkInfo;
 	}

@@ -284,39 +284,6 @@ public class TopologyManagerTest {
 				}
 			}
 		}
-	 
-//		for (String key : deviceLinks.keySet()) {
-//			ServiceElement serviceElement = getServiceElementByAddress(key, serviceElements);
-//			if (serviceElement == null) {
-//				serviceElement = createServiceElement(key);
-//				serviceElements.add(serviceElement);
-//			}
-//			
-//			String subnet = key.substring(0, key.lastIndexOf("."));
-//			Network network = findNetwork(subnet, networks);
-//			if (network == null) {
-//				network = createNetwork(subnet);
-//				networks.add(network);
-//			}
-//			
-//			network.getServiceElements().add(serviceElement);
-//			
-//			for (InterDeviceLink interDeviceLink : links) {
-//				String sourceSubnnet = interDeviceLink.getSourceAddress().getAddress().substring(0, interDeviceLink.getSourceAddress().getAddress().lastIndexOf("."));
-//			//	String destinationSubnnet = interDeviceLink.getDestinationAddress().getAddress().substring(0, interDeviceLink.getDestinationAddress().getAddress().lastIndexOf("."));
-//				
-//				if (network.getName().equals(sourceSubnnet)) {
-//					boolean foundIt = false;
-//					for (InterDeviceLink networklink : network.getInterDeviceLinks()) {
-//						if (networklink.getSourceAddress().equals(interDeviceLink.getSourceAddress())) 
-//							foundIt = true;
-//					}
-//					if (!foundIt)
-//						network.getInterDeviceLinks().add(interDeviceLink);
-//				}
-//			}
-//			
-//		}
 		
 		
 	
