@@ -8,6 +8,10 @@ import java.util.Map;
 
 import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
 import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
+import com.emitrom.lienzo.client.core.event.NodeMouseEnterEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseEnterHandler;
+import com.emitrom.lienzo.client.core.event.NodeMouseExitEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseExitHandler;
 import com.emitrom.lienzo.client.core.shape.Layer;
 import com.emitrom.lienzo.client.core.shape.Line;
 import com.emitrom.lienzo.client.core.shape.Picture;
@@ -16,6 +20,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.Network;
@@ -195,12 +200,14 @@ public class ServiceElementMap extends Layer {
 	}
 	
 	private void drawLinks() {
-		ID id0 = entityList.get(0);
+		final ID id0 = entityList.get(0);
 		Point p0 = entityMap.get(id0);
 		double x0 = p0.getX() + icon_width/2;
 		double y0 = p0.getY() + icon_height/2;
 		
-		for (ID id : entityList) {
+		final HvMapIconPopup tooltip = new HvMapIconPopup();
+		
+		for (final ID id : entityList) {
 			if (id.equals(id0))
 				continue;
 			
@@ -211,6 +218,28 @@ public class ServiceElementMap extends Layer {
 			double y = p.getY() + icon_height/2;
 			Line line = new Line(x0, y0, x, y);  
             line.setStrokeColor(ColorName.GREEN).setStrokeWidth(1).setFillColor(ColorName.GREEN);
+            
+            line.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
+                
+    			@Override
+    			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
+    				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
+    				int y = 100 + event.getY() - 15;
+    				String name = id0.getName() + "-" + id.getName();
+    				tooltip.update(name);
+    				tooltip.setPopupPosition(x, y);
+    				tooltip.show();
+    			}  
+            });  
+      
+    		line.addNodeMouseExitHandler(new NodeMouseExitHandler() {
+
+    			@Override
+    			public void onNodeMouseExit(NodeMouseExitEvent event) {
+    				tooltip.hide();
+    			}  
+                
+            });  
             
             add(line);
 		}
