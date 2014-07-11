@@ -86,7 +86,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 		setDraggable(true);
 		setListening(true);
 
-		final HvMapIconPopup popup = new HvMapIconPopup(entity.getName(), "", "");
+		final HvMapIconPopup popup = new HvMapIconPopup(entity.getName());
 		clippedImageWidth = (int)picture.getClippedImageDestinationWidth();
 		clippedImageHeight = (int)picture.getClippedImageDestinationHeight();
 		fontSize = (int) Math.ceil(clippedImageWidth * 2 / 9);
