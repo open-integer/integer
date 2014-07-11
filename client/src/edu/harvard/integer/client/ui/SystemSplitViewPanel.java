@@ -87,7 +87,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Failed to receive Devices from Integer");
+				Window.alert("Failed to receive Networks from Integer");
 			}
 
 			@Override
