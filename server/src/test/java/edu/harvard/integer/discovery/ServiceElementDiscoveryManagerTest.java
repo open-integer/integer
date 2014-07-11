@@ -839,8 +839,9 @@ public class ServiceElementDiscoveryManagerTest {
 					.append('\n');
 
 			for (SnmpLevelOID level : snmpContainment.getSnmpLevels()) {
-				b.append(" Context: ").append(level.getContextOID().getOid())
-						.append('\n');
+				if (level.getContextOID() != null)
+					b.append(" Context: ").append(level.getContextOID().getOid())
+					.append('\n');
 
 				if (level.getDisriminators() != null) {
 					b.append(" Discriminators: ")
