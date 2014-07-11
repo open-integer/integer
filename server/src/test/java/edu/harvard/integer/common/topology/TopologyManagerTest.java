@@ -76,6 +76,9 @@ public class TopologyManagerTest {
 	@Inject
 	private ServiceElementAccessManagerInterface serviceElementManger;
 
+	private static Address sourceAddress = new Address("1.2.3.4");
+	private static Address destAddress = new Address("2.3.4.5");
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return TestUtil.createTestArchive("TopologyManagerTest.war");
@@ -123,8 +126,8 @@ public class TopologyManagerTest {
 	private InterDeviceLink createInterDeviceLink() {
 		InterDeviceLink link = new InterDeviceLink();
 		link.setCreated(new Date());
-		link.setDestinationAddress(new Address("1.2.3.4"));
-		link.setSourceAddress(new Address("2.3.4.5"));
+		link.setSourceAddress(sourceAddress);
+		link.setDestinationAddress(destAddress);
 		link.setLayer(LayerTypeEnum.TwoAndHalf);
 		
 		return link;
@@ -385,12 +388,80 @@ public class TopologyManagerTest {
 		return null;
 	}
 	
+	@Test
 	public void getLinksForSourceDestAddress() {
-		
+		InterDeviceLink[] links = null;
+		try {
+			links = topologyManager.getInterDeviceLinksBySourceDestAddress(sourceAddress, destAddress);
+			if (links == null || links.length == 0)
+				topologyManager.updateInterDeviceLink(createInterDeviceLink());
+			
+			links = topologyManager.getInterDeviceLinksBySourceDestAddress(sourceAddress, destAddress);
+			
+			assert (links != null);
+			assert (links.length > 0);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			
+			fail(e.toString());
+		}
 	}
 	
+	@Test
 	public void getPathsForSourceDestAddress() {
 		
+		try {
+			Path path = topologyManager.getPathBySourceDestAddress(sourceAddress, destAddress);
+			
+			if (path == null) {
+				topologyManager.updatePath(createPath());
+				
+				path = topologyManager.getPathBySourceDestAddress(sourceAddress, destAddress);
+			}
+			
+			assert (path != null);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	private Path createPath() {
+		Path path = new Path();
+		path.setCreated(new Date());
+		path.setModified(new Date());
+		path.setName(sourceAddress.getAddress() + " - " + destAddress.getAddress());
+		path.setSourceAddress(sourceAddress);
+		path.setDestinationAddress(destAddress);
+		
+		return path;
+	}
+	
+	@Test
+	public void getAllPaths() {
+		
+		try {
+			Path[] paths = topologyManager.getAllPaths();
+			if (paths == null || paths.length == 0) 
+				topologyManager.updatePath(createPath());
+			
+			paths = topologyManager.getAllPaths();
+			
+			assert (paths != null);
+			assert (paths.length > 0);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
 	}
 }
 
