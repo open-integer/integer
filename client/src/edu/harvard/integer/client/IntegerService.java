@@ -12,6 +12,7 @@ import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
@@ -147,4 +148,11 @@ public interface IntegerService extends RemoteService {
 	 */
 	Network[] getAllNetworks() throws Exception;
 
+	/**
+	 * Gets the network information.
+	 *
+	 * @return the network information
+	 * @throws Exception the exception
+	 */
+	NetworkInformation getNetworkInformation() throws Exception;
 }
