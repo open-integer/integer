@@ -33,7 +33,6 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.ElementCollection;

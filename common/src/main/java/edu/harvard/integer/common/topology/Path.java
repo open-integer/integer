@@ -38,7 +38,10 @@ import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
@@ -52,6 +55,7 @@ import edu.harvard.integer.common.BaseEntity;
  * @author David Taylor
  * 
  */
+@Entity
 public class Path extends BaseEntity {
 
 	/**
@@ -82,6 +86,7 @@ public class Path extends BaseEntity {
 	 * This is the ordered list of InterDeviceLink objects that define a
 	 * specific path between any source and destination service elements.
 	 */
+	@ElementCollection(fetch=FetchType.EAGER)
 	private List<InterDeviceLink> interDeviceLinks = null;
 
 	/**

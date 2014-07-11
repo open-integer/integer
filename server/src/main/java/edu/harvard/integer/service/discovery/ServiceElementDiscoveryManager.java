@@ -288,6 +288,22 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 				.getContainmentId());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getAllSnmpContainments()
+	 */
+	@Override
+	public SnmpContainment[] getAllSnmpContainments() throws IntegerException {
+		SnmpContainmentDAO dao = dbm.getSnmpContainmentDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getSnmpContainments(edu.harvard.integer.common.discovery.VendorContainmentSelector)
+	 */
+	@Override
 	public SnmpContainment[] getSnmpContainments(
 			VendorContainmentSelector selector) throws IntegerException {
 		VendorContainmentSelectorDAO dao = dbm

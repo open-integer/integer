@@ -143,4 +143,13 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 	Path getPathBySourceDestAddress(Address sourceAddress, Address destAddress)
 			throws IntegerException;
 
+	/**
+	 * @param sourceAddress
+	 * @param destAddress
+	 * @return
+	 * @throws IntegerException
+	 */
+	InterDeviceLink[] getInterDeviceLinksBySourceDestAddress(Address sourceAddress,
+			Address destAddress) throws IntegerException;
+
 }

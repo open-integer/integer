@@ -243,6 +243,9 @@ public class YamlManager extends BaseManager implements
 	private List<DiscoveryTypeEnum> createDiscoveryTypeEnumList(
 			List<String> discovery) {
 		
+		if (discovery == null)
+			return null;
+		
 		List<DiscoveryTypeEnum> discoveryTypes = new ArrayList<DiscoveryTypeEnum>();
 		
 		for (String string : discovery) {

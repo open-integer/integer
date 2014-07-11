@@ -79,7 +79,11 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	public Network[] getAllNetworks() throws IntegerException {
 		NetworkDAO dao = persistenceManager.getNetworkDAO();
 		
-		return dao.findAll();
+		Network[] networks = dao.findAll();
+		
+		networks = dao.copyArray(networks);
+		
+		return networks;
 	}
 
 	/*
@@ -104,7 +108,12 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		return dao.findAll();
 	}
 	
-	public InterDeviceLink[] getLinksBySourceDestAddress(Address sourceAddress, Address destAddress) throws IntegerException {
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getLinksBySourceDestAddress(edu.harvard.integer.common.Address, edu.harvard.integer.common.Address)
+	 */
+	@Override
+	public InterDeviceLink[] getInterDeviceLinksBySourceDestAddress(Address sourceAddress, Address destAddress) throws IntegerException {
 		InterDeviceLinkDAO dao = persistenceManager.getInterDeviceLinkDAO();
 	
 		return dao.findBySourceDestAddress(sourceAddress, destAddress);

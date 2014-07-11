@@ -38,8 +38,12 @@ import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpLevelOID;
+import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SnmpDisplayStringTC;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -75,5 +79,31 @@ public class SnmpContainmentDAO extends BaseDAO {
 		
 		super.preSave(entity);
 	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#findById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public <T extends BaseEntity> T findById(ID id) throws IntegerException {
+		
+		SnmpContainment snmpContainment = super.findById(id);
+		
+		if (snmpContainment.getSnmpLevels() != null) {
+			for (SnmpLevelOID levelOid : snmpContainment.getSnmpLevels()) {
+				if (getLogger().isDebugEnabled())
+					getLogger().debug("SnmpContainment " + snmpContainment.getID().toDebugString()
+							+ " levelOid " + levelOid.getContextOID()
+							+ " Number Of Discriminators " + levelOid.getDisriminators());
+				for (SnmpServiceElementTypeDiscriminator discrimnator : levelOid.getDisriminators()) {
+					getLogger().debug("Discrimnator Value: " + discrimnator.getDiscriminatorValue()
+							+ " ServiceElementType: " + discrimnator.getServiceElementTypeId());
+					
+				}
+			}
+		}
+		
+		return (T) snmpContainment;
+	}
+	
 	
 }

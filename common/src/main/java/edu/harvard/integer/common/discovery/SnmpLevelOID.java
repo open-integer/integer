@@ -35,10 +35,12 @@ package edu.harvard.integer.common.discovery;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -104,19 +106,21 @@ public class SnmpLevelOID extends BaseEntity {
 	 * level down in the containment hierarchy. For example the device table may
 	 * contain storage which may contain file systems.
 	 */
-	@OneToMany(fetch=FetchType.EAGER)
+	@ElementCollection(fetch=FetchType.EAGER)
 	private List<SnmpLevelOID> children = null;
 
 	/**
 	 * List of SnmpServiceElementTypeDiscriptors for this SnmpLevel
 	 */
-	@OneToMany(fetch=FetchType.EAGER)
+	@ElementCollection(fetch=FetchType.EAGER)
 	private List<SnmpServiceElementTypeDiscriminator> disriminators = null;
 
 	/**
 	 * SnmpContainmentRelation definition to map the ServiceElement from this level to a
-	 * different ServiceElement. Ex. entAliasMappingTable. Maps the logical
-	 * components and physical components to and extrernal to the entity MIB
+	 * different ServiceElement. 
+	 * <p>
+	 * Ex. entAliasMappingTable. Maps the logical
+	 * components and physical components to and external to the entity MIB
 	 * object. entAliasMappingIdentifier.33.0 = ifIndex.6
 	 */
 	@ManyToOne
