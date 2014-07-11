@@ -837,14 +837,6 @@ public class YamlManager extends BaseManager implements
 		selector.setContainmentId(snmpContainment.getID());
 
 		discoveryManager.updateVendorContainmentSelector(selector);
-		
-		VendorContainmentSelector vs = new VendorContainmentSelector();
-	    vs.setVendor("cisco");
-	    
-	    SnmpContainment sc = discoveryManager.getSnmpContainment(vs); 
-	    if ( sc != null ) {
-	        System.out.println("sc levels " + sc.getSnmpLevels().size() );
-	    }
 	}
 
 	/**
