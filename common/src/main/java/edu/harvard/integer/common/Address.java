@@ -35,12 +35,13 @@ package edu.harvard.integer.common;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+
 /**
- * Base class for IPV4 and IPV6 address. 
+ * Base class for IPV4 and IPV6 address.
  * 
  * @author David Taylor
- *
- *
+ * 
+ * 
  */
 @Embeddable
 public class Address implements Serializable {
@@ -49,17 +50,20 @@ public class Address implements Serializable {
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String address = null;
+
+	private String mask = null;
 
 	public Address() {
 		this.address = null;
 	}
-	
-	public Address(String address) {
+
+	public Address(String address, String mask) {
 		this.address = address;
+		this.mask = mask;
 	}
-	
+
 	/**
 	 * @return the address
 	 */
@@ -68,10 +72,80 @@ public class Address implements Serializable {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address
+	 *            the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	/**
+	 * @return the mask
+	 */
+	public String getMask() {
+		return mask;
+	}
+
+	/**
+	 * @param mask
+	 *            the mask to set
+	 */
+	public void setMask(String mask) {
+		this.mask = mask;
+	}
+
+	public static Long dottedIPToLong(String address) {
+		String[] parts = address.split("\\.");
+
+		Long result;
+		int token_a = Integer.valueOf(parts[0]);
+		int token_b = Integer.valueOf(parts[1]);
+		int token_c = Integer.valueOf(parts[2]);
+		int token_d = Integer.valueOf(parts[3]);
+
+
+		long a = (long) (token_a * (Math.pow(2, 24)));
+		long b = (long) (token_b * (Math.pow(2, 16)));
+		long c = (long) (token_c * (Math.pow(2, 8)));
+		long d = new Long(token_d).longValue();
 	
+		result = Long.valueOf(a + b + c + d);
+
+		return result;
+	}
+
+	public static String longToDottedIPString(Long integer_ip) {
+		long ip = integer_ip.longValue();
+
+		int inta = (int) ((ip >> 24) & 0xFF);
+		int intb = (int) ((ip >> 16) & 0xFF);
+		int intc = (int) ((ip >> 8) & 0xFF);
+		int intd = (int) ((ip) & 0xFF);
+
+		StringBuffer b = new StringBuffer();
+		b.append(inta);
+		b.append(".");
+
+		b.append(intb);
+		b.append(".");
+
+		b.append(intc);
+		b.append(".");
+
+		b.append(intd);
+
+		return b.toString();
+	}
+
+	public static String getSubNet(Address address) {
+		return getSubNet(address.getAddress(), address.getMask());
+	}
+	
+	public static String getSubNet(String address, String mask) {
+		Long theIP = dottedIPToLong(address);
+		Long theMask = dottedIPToLong(mask);
+		long baseAddress = theIP.intValue() & theMask.intValue();
+
+		return longToDottedIPString(Long.valueOf(baseAddress));
+	}
 }

@@ -223,4 +223,13 @@ public class ServiceElementDAO extends BaseDAO {
 		return findTopLevelServiceElements();
 	}
 
+	/**
+	 * @param name
+	 * @return
+	 */
+	public ServiceElement findByName(String name) {
+		
+		return findByStringField(name, "name", ServiceElement.class);
+	}
+
 }

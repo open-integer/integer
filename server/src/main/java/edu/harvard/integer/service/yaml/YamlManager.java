@@ -874,6 +874,18 @@ public class YamlManager extends BaseManager implements
 				dbLevelOid = new SnmpLevelOID();
 				dbLevelOid.setContextOID(getSnmpOid(levelOid.getContextOID()));
 			}
+			
+			if (levelOid.getCategory() != null) {
+				try {
+					dbLevelOid.setCategory(managementObjectManager.getCategoryByName(levelOid
+							.getCategory()));
+				} catch (IllegalArgumentException e) {
+					logger.error("Unable to create category from "
+							+ levelOid.getCategory());
+					throw e;
+				}
+			}
+			
 			dbLevelOid.setDescriminatorOID(getSnmpOid(levelOid.getDescriminatorOID()));
 			dbLevelOid.setGlobalDiscriminatorOID(getSnmpOid(levelOid.getGlobalDescriminatorOID()));
 			
@@ -902,16 +914,7 @@ public class YamlManager extends BaseManager implements
 				dbLevelOid.setChildren(createSnmpLevelOIDs(
 						levelOid.getChildren(), topLevels));
 
-			if (levelOid.getCategory() != null) {
-				try {
-					dbLevelOid.setCategory(managementObjectManager.getCategoryByName(levelOid
-							.getCategory()));
-				} catch (IllegalArgumentException e) {
-					logger.error("Unable to create category from "
-							+ levelOid.getCategory());
-					throw e;
-				}
-			}
+		
 
 			dbLevelOid = levelDao.update(dbLevelOid);
 			dbLevels.add(dbLevelOid);
@@ -1216,7 +1219,8 @@ public class YamlManager extends BaseManager implements
 			
 			boolean findDiscrValue = false;
 			String discriminatorValue = null;
-			if ( snmpServiceElementTypeDiscriminator.getDiscriminatorValue() != null ) {
+			if ( snmpServiceElementTypeDiscriminator.getDiscriminatorValue() != null &&
+					snmpServiceElementTypeDiscriminator.getDiscriminatorValue().getValue() != null) {
 				discriminatorValue = snmpServiceElementTypeDiscriminator.getDiscriminatorValue().getValue().toString();
 			}
 			if ( discriminatorValue != null && discriminatorValue.equals(yamlDescriminator.getDiscriminatorValue())) {

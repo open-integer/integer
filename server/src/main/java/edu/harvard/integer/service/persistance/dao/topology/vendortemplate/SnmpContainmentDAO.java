@@ -88,6 +88,13 @@ public class SnmpContainmentDAO extends BaseDAO {
 		
 		SnmpContainment snmpContainment = super.findById(id);
 		
+		checkLevels(snmpContainment);
+		
+		return (T) snmpContainment;
+	}
+
+	private void checkLevels(SnmpContainment snmpContainment) {
+		
 		if (snmpContainment.getSnmpLevels() != null) {
 			for (SnmpLevelOID levelOid : snmpContainment.getSnmpLevels()) {
 				if (getLogger().isDebugEnabled())
@@ -101,8 +108,21 @@ public class SnmpContainmentDAO extends BaseDAO {
 				}
 			}
 		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#findAll()
+	 */
+	@Override
+	public <T extends BaseEntity> T[] findAll() throws IntegerException {
 		
-		return (T) snmpContainment;
+		SnmpContainment[] snmpContainments = super.findAll();
+		
+		for (SnmpContainment snmpContainment : snmpContainments) {
+			checkLevels(snmpContainment);
+		}
+		
+		return (T[]) snmpContainments;
 	}
 	
 	

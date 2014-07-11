@@ -36,6 +36,7 @@ package edu.harvard.integer.common.topology;
 import java.util.Date;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -44,6 +45,7 @@ import javax.persistence.Enumerated;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
@@ -58,13 +60,31 @@ public class InterDeviceLink extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Embedded
-	@AttributeOverride(name = "address", column = @Column(name = "sourceAddress"))
+	@AttributeOverrides({
+			@AttributeOverride(name = "address", column = @Column(name = "sourceAddress")),
+			@AttributeOverride(name = "mask", column = @Column(name = "sourceMask")) })
 	private Address sourceAddress = null;
 	
 	@Embedded
-	@AttributeOverride(name = "address", column = @Column(name = "destinationAddress"))
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "sourceServiceElementId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "sourceServiceElementType")),
+			@AttributeOverride(name = "name", column = @Column(name = "sourceServiceElementName")) })
+	private ID sourceServiceElementId = null;
+	
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "destinationAddress")),
+		@AttributeOverride(name = "mask", column = @Column(name = "destinationMask")) })
 	private Address destinationAddress = null;
 
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "destinationServiceElementId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "cdestinationServiceElementType")),
+			@AttributeOverride(name = "name", column = @Column(name = "destinationServiceElementName")) })
+	private ID destinationServiceElementId = null;
+	
 	private Date created = null;
 
 	private Date modified = null;
@@ -145,6 +165,35 @@ public class InterDeviceLink extends BaseEntity {
 	 */
 	public void setLayer(LayerTypeEnum layer) {
 		this.layer = layer;
+	}
+
+	/**
+	 * @return the sourceServiceElementId
+	 */
+	public ID getSourceServiceElementId() {
+		return sourceServiceElementId;
+	}
+
+	/**
+	 * @param sourceServiceElementId the sourceServiceElementId to set
+	 */
+	public void setSourceServiceElementId(ID sourceServiceElementId) {
+		this.sourceServiceElementId = sourceServiceElementId;
+	}
+
+	/**
+	 * @return the destinationServiceElementId
+	 */
+	public ID getDestinationServiceElementId() {
+		return destinationServiceElementId;
+	}
+
+	/**
+	 * @param destinationServiceElementId the destinationServiceElementId to set
+	 */
+	public void setDestinationServiceElementId(
+			ID destinationServiceElementId) {
+		this.destinationServiceElementId = destinationServiceElementId;
 	}
 
 }

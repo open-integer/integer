@@ -1,14 +1,28 @@
 package edu.harvard.integer.client.ui;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
 import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
+import com.emitrom.lienzo.client.core.event.NodeMouseEnterEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseEnterHandler;
+import com.emitrom.lienzo.client.core.event.NodeMouseExitEvent;
+import com.emitrom.lienzo.client.core.event.NodeMouseExitHandler;
 import com.emitrom.lienzo.client.core.shape.Layer;
+import com.emitrom.lienzo.client.core.shape.Line;
 import com.emitrom.lienzo.client.core.shape.Picture;
+import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -54,6 +68,9 @@ public class ServiceElementMap extends Layer {
 	
 	/** The selected timestamp. */
 	private long selectedTimestamp;
+	
+	private Map<ID, Point> entityMap = new HashMap<ID, Point>();
+	private List<ID> entityList = new ArrayList<ID>();
 	
 	/**
 	 * Gets the selected element.
@@ -144,6 +161,7 @@ public class ServiceElementMap extends Layer {
 	 * @param result the result
 	 */
 	public void update(BaseEntity[] result) {
+		entityMap.clear();
 		removeAll();
 		init_layout(result.length);
 		
@@ -151,11 +169,18 @@ public class ServiceElementMap extends Layer {
 		ImageResource image = Resources.IMAGES.graySwitch();
 		for (final BaseEntity entity : result) {
 			Point point = calculatePoint(result.length, i++);
+			entityMap.put(entity.getID(), point);
+			entityList.add(entity.getID());
+			
 			if (entity instanceof ServiceElement)
 				image = Resources.IMAGES.pcom();
-			else if (entity instanceof Network)
+			else if (entity instanceof Network) {
 				image = Resources.IMAGES.network();
-			
+				Network network = (Network)entity;
+				network.getInterDeviceLinks();
+				network.getLowerNetworks();
+				network.getServiceElements();
+			}
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
@@ -169,6 +194,54 @@ public class ServiceElementMap extends Layer {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+		}
+		
+		drawLinks();
+	}
+	
+	private void drawLinks() {
+		final ID id0 = entityList.get(0);
+		Point p0 = entityMap.get(id0);
+		double x0 = p0.getX() + icon_width/2;
+		double y0 = p0.getY() + icon_height/2;
+		
+		final HvMapIconPopup tooltip = new HvMapIconPopup();
+		
+		for (final ID id : entityList) {
+			if (id.equals(id0))
+				continue;
+			
+			Point p = entityMap.get(id);
+			
+			// draw line between p0 and p
+			double x = p.getX() + icon_width/2;
+			double y = p.getY() + icon_height/2;
+			Line line = new Line(x0, y0, x, y);  
+            line.setStrokeColor(ColorName.GREEN).setStrokeWidth(1).setFillColor(ColorName.GREEN);
+            
+            line.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
+                
+    			@Override
+    			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
+    				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
+    				int y = 100 + event.getY() - 15;
+    				String name = id0.getName() + "-" + id.getName();
+    				tooltip.update(name);
+    				tooltip.setPopupPosition(x, y);
+    				tooltip.show();
+    			}  
+            });  
+      
+    		line.addNodeMouseExitHandler(new NodeMouseExitHandler() {
+
+    			@Override
+    			public void onNodeMouseExit(NodeMouseExitEvent event) {
+    				tooltip.hide();
+    			}  
+                
+            });  
+            
+            add(line);
 		}
 	}
 	

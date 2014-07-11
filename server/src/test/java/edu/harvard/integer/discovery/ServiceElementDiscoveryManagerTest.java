@@ -102,11 +102,10 @@ public class ServiceElementDiscoveryManagerTest {
 
 	@Inject
 	private SnmpManagerInterface snmpMaager;
-	
 
 	private String vendor = "Cisco";
 	private String vendorSubType = "CiscoSubType";
-	
+
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return TestUtil
@@ -389,24 +388,27 @@ public class ServiceElementDiscoveryManagerTest {
 		ServiceElementType type = new ServiceElementType();
 		Category category = null;
 		try {
-			category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.port.getName());
+			category = managementObjectCapabilityManager
+					.getCategoryByName(CategoryTypeEnum.port.getName());
 			if (category == null) {
 				category = new Category();
 				category.setName(CategoryTypeEnum.port.getName());
-				category = managementObjectCapabilityManager.updateCategory(category);
+				category = managementObjectCapabilityManager
+						.updateCategory(category);
 			}
-				
+
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
 			fail(e.toString());
 		}
-		
+
 		type.setCategory(category);
 		type.addSignatureValue(null, SignatureTypeEnum.Vendor, vendor);
-		
-		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vendorSubType);
-		
+
+		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType,
+				vendorSubType);
+
 		type.setVendorSpecificSubType(vendorSubType);
 
 		try {
@@ -426,24 +428,27 @@ public class ServiceElementDiscoveryManagerTest {
 		type.setName("interface");
 		Category category = null;
 		try {
-			category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.portIf.getName());
+			category = managementObjectCapabilityManager
+					.getCategoryByName(CategoryTypeEnum.portIf.getName());
 			if (category == null) {
 				category = new Category();
 				category.setName(CategoryTypeEnum.portIf.getName());
-				category = managementObjectCapabilityManager.updateCategory(category);
+				category = managementObjectCapabilityManager
+						.updateCategory(category);
 			}
-			
+
 			assert (category != null);
-			
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
 		type.setCategory(category);
 		type.addSignatureValue(null, SignatureTypeEnum.Vendor, vendor);
-		
-		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType, vendorSubType);
-		
+
+		type.addSignatureValue(null, SignatureTypeEnum.VendorSubType,
+				vendorSubType);
+
 		type.setVendorSpecificSubType(vendorSubType);
 
 		try {
@@ -465,13 +470,13 @@ public class ServiceElementDiscoveryManagerTest {
 
 			assert (serviceElementDiscoveryManger != null);
 
-			Category category = managementObjectCapabilityManager.getCategoryByName(CategoryTypeEnum.portIf.getName());
-			
+			Category category = managementObjectCapabilityManager
+					.getCategoryByName(CategoryTypeEnum.portIf.getName());
+
 			assert (category != null);
-			
+
 			ServiceElementType[] serviceElementTypes = serviceElementDiscoveryManger
-					.getServiceElementTypesByCategoryAndVendor(
-							category, vendor);
+					.getServiceElementTypesByCategoryAndVendor(category, vendor);
 
 			assert (serviceElementTypes != null);
 			assert (serviceElementTypes.length > 0);
@@ -486,37 +491,42 @@ public class ServiceElementDiscoveryManagerTest {
 			fail(e.toString());
 		}
 	}
-	
+
 	@Test
 	public void findServiceElementTypeByVendorAndVendorSubType() {
-		
+
 		ServiceElementType[] serviceElementTypes = null;
-		
+
 		try {
-			serviceElementTypes = serviceElementDiscoveryManger.getServiceElementTypesBySubtypeAndVendor(vendorSubType, vendor);
+			serviceElementTypes = serviceElementDiscoveryManger
+					.getServiceElementTypesBySubtypeAndVendor(vendorSubType,
+							vendor);
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
-		
+
 		if (serviceElementTypes == null || serviceElementTypes.length == 0) {
-			
+
 			createServiceElementType();
 
 			try {
-				serviceElementTypes = serviceElementDiscoveryManger.getServiceElementTypesBySubtypeAndVendor(vendorSubType, vendor);
+				serviceElementTypes = serviceElementDiscoveryManger
+						.getServiceElementTypesBySubtypeAndVendor(
+								vendorSubType, vendor);
 			} catch (IntegerException e) {
 				e.printStackTrace();
 				fail(e.toString());
-			}	
+			}
 		}
-		
-		assert(serviceElementTypes != null);
-		assert(serviceElementTypes.length > 0);
-		
-		logger.info("Found " + serviceElementTypes.length + " ServiceElementTypes for Vendor " + vendor
-				+ " and Subtype " + vendorSubType);
-		
+
+		assert (serviceElementTypes != null);
+		assert (serviceElementTypes.length > 0);
+
+		logger.info("Found " + serviceElementTypes.length
+				+ " ServiceElementTypes for Vendor " + vendor + " and Subtype "
+				+ vendorSubType);
+
 	}
 
 	@Test
@@ -568,14 +578,14 @@ public class ServiceElementDiscoveryManagerTest {
 
 	@Test
 	public void getVendorContainmentSelector() {
-		
+
 		createInterfaceServiceElementType();
-		
+
 		String firmwareVer = "Firmware1";
 		String model = "ModelT";
 		String softwareVer = "2.1";
 		String sysId = "Vendor1";
-		
+
 		VendorContainmentSelector vs = new VendorContainmentSelector();
 		vs.setFirmware(firmwareVer);
 		vs.setModel(model.trim());
@@ -594,13 +604,13 @@ public class ServiceElementDiscoveryManagerTest {
 
 		if (sc != null && sc instanceof SnmpContainment) {
 			try {
-				set = serviceElementDiscoveryManger.getServiceElementTypeById(sc
-						.getServiceElementTypeId());
+				set = serviceElementDiscoveryManger
+						.getServiceElementTypeById(sc.getServiceElementTypeId());
 			} catch (IntegerException e) {
 				e.printStackTrace();
 				fail(e.toString());
 			}
-		//	discoverNode.setTopServiceElementType(set);
+			// discoverNode.setTopServiceElementType(set);
 		}
 
 		if (sc == null) {
@@ -608,20 +618,21 @@ public class ServiceElementDiscoveryManagerTest {
 			SnmpContainmentType containmentType = SnmpContainmentType.EntityMib;
 
 			set = new ServiceElementType();
-			set.addSignatureValue(null, SignatureTypeEnum.Vendor,sysId);
+			set.addSignatureValue(null, SignatureTypeEnum.Vendor, sysId);
 			set.addSignatureValue(null, SignatureTypeEnum.Model, model);
 			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 
-//			ContainmentGenerator.setUpTopServiceElementProperty(
-//					discoverNode.getElementEndPoint(), set, containmentType);
+			// ContainmentGenerator.setUpTopServiceElementProperty(
+			// discoverNode.getElementEndPoint(), set, containmentType);
 
 			try {
-				set = managementObjectCapabilityManager.updateServiceElementType(set);
+				set = managementObjectCapabilityManager
+						.updateServiceElementType(set);
 			} catch (IntegerException e) {
 				e.printStackTrace();
 				fail(e.toString());
 			}
-		//	discoverNode.setTopServiceElementType(set);
+			// discoverNode.setTopServiceElementType(set);
 
 			try {
 				sc = ContainmentGenerator.generator(set, containmentType);
@@ -647,7 +658,8 @@ public class ServiceElementDiscoveryManagerTest {
 			vendorContainmentSelector.setVendor(sysId.toString());
 
 			try {
-				serviceElementDiscoveryManger.updateVendorContainmentSelector(vendorContainmentSelector);
+				serviceElementDiscoveryManger
+						.updateVendorContainmentSelector(vendorContainmentSelector);
 			} catch (IntegerException e) {
 				e.printStackTrace();
 				fail(e.toString());
@@ -660,8 +672,8 @@ public class ServiceElementDiscoveryManagerTest {
 
 		try {
 			sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
-			assert(sc != null);
-			
+			assert (sc != null);
+
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
@@ -774,74 +786,84 @@ public class ServiceElementDiscoveryManagerTest {
 			fail(e.toString());
 		}
 	}
-	
+
 	@Test
 	public void checkSnmpContainmentByVendor() {
-	    VendorContainmentSelector vs = new VendorContainmentSelector();
-	    
-	    vs.setVendor("cisco");
-	    
-	    try {
-			SnmpContainment sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
+		VendorContainmentSelector vs = new VendorContainmentSelector();
+
+		vs.setVendor("cisco");
+
+		try {
+			SnmpContainment sc = serviceElementDiscoveryManger
+					.getSnmpContainment(vs);
 			printSnmpContainment(sc);
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
-		} 
+		}
 
 	}
 
 	@Test
 	public void checkSnmpContainment() {
-		
+
 		try {
-			SnmpContainment[] containments = serviceElementDiscoveryManger.getAllSnmpContainments();
+			SnmpContainment[] containments = serviceElementDiscoveryManger
+					.getAllSnmpContainments();
 			for (SnmpContainment snmpContainment : containments) {
 				printSnmpContainment(snmpContainment);
 			}
 		} catch (IntegerException e) {
-			
+
 			e.printStackTrace();
 		}
 
 	}
 
-
 	/**
 	 * @param snmpContainment
 	 */
 	private void printSnmpContainment(SnmpContainment snmpContainment) {
+		if (snmpContainment == null)
+			return;
+
 		StringBuffer b = new StringBuffer();
-		b.append("SnmpContainment: " + snmpContainment.getName())
+
+		b.append("SnmpContainment: " + snmpContainment.getName()).append('\n');
+		b.append(" Type: ").append(snmpContainment.getContainmentType())
 				.append('\n');
-		b.append(" Type: ")
-				.append(snmpContainment.getContainmentType())
-				.append('\n');
-		b.append(" SnmpLevels: ")
-				.append(snmpContainment.getSnmpLevels().size())
-				.append('\n');
-		for (SnmpLevelOID level : snmpContainment.getSnmpLevels()) {
-			b.append(" Context: ")
-					.append(level.getContextOID().getOid())
+
+		if (snmpContainment.getSnmpLevels() != null) {
+			b.append(" SnmpLevels: ")
+					.append(snmpContainment.getSnmpLevels().size())
 					.append('\n');
-			b.append(" Discriminators: ")
-					.append(level.getDisriminators().size())
+
+			for (SnmpLevelOID level : snmpContainment.getSnmpLevels()) {
+				if (level.getContextOID() != null)
+					b.append(" Context: ").append(level.getContextOID().getOid())
 					.append('\n');
-			for (SnmpServiceElementTypeDiscriminator discriminator : level
-					.getDisriminators()) {
-				b.append("    Discrimator value: ")
-						.append(discriminator.getDiscriminatorValue())
-						.append('\n');
-				if (discriminator.getServiceElementTypeId() != null)
-					b.append("    Servie element Type: ")
-							.append(discriminator
-									.getServiceElementTypeId()
-									.toDebugString()).append('\n');
+
+				if (level.getDisriminators() != null) {
+					b.append(" Discriminators: ")
+							.append(level.getDisriminators().size())
+							.append('\n');
+					
+					for (SnmpServiceElementTypeDiscriminator discriminator : level
+							.getDisriminators()) {
+						b.append("    Discrimator value: ")
+								.append(discriminator.getDiscriminatorValue())
+								.append('\n');
+						if (discriminator.getServiceElementTypeId() != null)
+							b.append("    Servie element Type: ")
+									.append(discriminator
+											.getServiceElementTypeId()
+											.toDebugString()).append('\n');
+					}
+				}
 			}
 		}
 		logger.info(b.toString());
 
-		
 	}
 
 }

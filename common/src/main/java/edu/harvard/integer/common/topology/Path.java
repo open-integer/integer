@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -68,14 +69,18 @@ public class Path extends BaseEntity {
 	 * specific path between any source and destination service elements.
 	 */
 	@Embedded
-	@AttributeOverride(name = "address", column = @Column(name = "sourceAddress"))
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "sourceAddress")),
+		@AttributeOverride(name = "mask", column = @Column(name = "sourceMask")) })
 	private Address sourceAddress = null;
 
 	/**
 	 * The destination/end point of the path.
 	 */
 	@Embedded
-	@AttributeOverride(name = "address", column = @Column(name = "destinationAddress"))
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "destinationAddress")),
+		@AttributeOverride(name = "mask", column = @Column(name = "destinationMask")) })
 	private Address destinationAddress = null;
 
 	private Date created = null;

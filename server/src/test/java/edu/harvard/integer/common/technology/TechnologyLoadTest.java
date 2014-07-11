@@ -114,7 +114,7 @@ public class TechnologyLoadTest {
 	
 	private void parseArrayList(String indent,ArrayList<Object> list) {
 		for (Object value : list) {
-			//logger.info("Item " + value + " class " + value.getClass().getName());
+			
 			parseObject(indent, value);
 		}	
 	}
@@ -141,8 +141,6 @@ public class TechnologyLoadTest {
 	}
 	
 	
-//
-//
 	@Test
 	public void readCDPTechnology() {
 		File mibFile = new File("../config/cdp/technology.yaml");

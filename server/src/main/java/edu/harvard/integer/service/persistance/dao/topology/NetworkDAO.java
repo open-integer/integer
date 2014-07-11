@@ -111,5 +111,14 @@ public class NetworkDAO extends BaseDAO {
 		super.preSave(entity);
 	}
 
+	/**
+	 * @param sourceNetworkName
+	 */
+	public Network findByName(String sourceNetworkName) {
+		
+		return findByStringField(sourceNetworkName, "name", Network.class);
+		
+	}
+
 	
 }

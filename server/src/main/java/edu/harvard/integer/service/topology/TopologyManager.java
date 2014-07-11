@@ -33,20 +33,30 @@
 
 package edu.harvard.integer.service.topology;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
+import edu.harvard.integer.common.topology.InterNetworkLink;
+import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.Path;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
+import edu.harvard.integer.service.persistance.dao.topology.InterNetworkLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
@@ -59,6 +69,8 @@ import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 @Stateless
 public class TopologyManager extends BaseManager implements TopologyManagerLocalInterface, TopologyManagerRemoteInterface {
 
+	@Inject
+	private Logger logger;
 	
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
@@ -86,6 +98,22 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		return networks;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getNetworkInformation()
+	 */
+	@Override
+	public NetworkInformation getNetworkInformation() throws IntegerException {
+		NetworkInformation networkInfo = new NetworkInformation();
+		
+		networkInfo.setNetworks(getAllNetworks());
+		
+		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
+		networkInfo.setLinks(linkDao.copyArray((InterNetworkLink[]) linkDao.findAll()));
+		
+		return networkInfo;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#updateNetwork(edu.harvard.integer.common.topology.Network)
@@ -127,7 +155,64 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	public InterDeviceLink updateInterDeviceLink(InterDeviceLink interDeviceLink) throws IntegerException {
 		InterDeviceLinkDAO dao = persistenceManager.getInterDeviceLinkDAO();
 		
-		return dao.update(interDeviceLink);
+		interDeviceLink = dao.update(interDeviceLink);
+		
+		checkNetworks(interDeviceLink);
+		
+		return interDeviceLink;
+	}
+	
+	/**
+	 * @param interDeviceLink
+	 * @throws IntegerException 
+	 */
+	private void checkNetworks(InterDeviceLink interDeviceLink) throws IntegerException {
+
+		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
+		NetworkDAO networkDao = persistenceManager.getNetworkDAO();
+		
+		logger.info("Create network name from " + interDeviceLink.getSourceAddress().getAddress()
+				 + " and " + interDeviceLink.getSourceAddress().getMask());
+		
+		String sourceNetworkName = Network.createName(interDeviceLink.getSourceAddress());
+		String destNetworkName = Network.createName(interDeviceLink.getDestinationAddress());
+		Network sourceNetwork = networkDao.findByName(sourceNetworkName);
+		if (sourceNetwork == null)
+			sourceNetwork = networkDao.update(createNetwork(sourceNetworkName));
+		
+		Network destNetwork = networkDao.findByName(destNetworkName);
+		if (destNetwork == null)
+			destNetwork = networkDao.update(createNetwork(destNetworkName));
+		
+		InterNetworkLink[] networkLinks = linkDao.findBySourceDestID(sourceNetwork.getID(), destNetwork.getID());
+		if (networkLinks == null || networkLinks.length == 0) {
+			InterNetworkLink link = new InterNetworkLink();
+			link.setCreated(new Date());
+			link.setModified(new Date());
+			
+			link.setSourceAddress(new Address(Address.getSubNet(interDeviceLink.getSourceAddress()),
+						interDeviceLink.getSourceAddress().getMask()));
+			
+			link.setDestinationAddress(new Address(Address.getSubNet(interDeviceLink.getDestinationAddress()),
+					interDeviceLink.getDestinationAddress().getMask()));
+		
+			link.setLayer(LayerTypeEnum.Two);
+			link.setName(sourceNetworkName + " - " + destNetworkName);
+			
+			linkDao.update(link);
+		}
+		
+	}
+
+	private Network createNetwork(String address) {
+		Network network = new Network();
+		network.setCreated(new Date());
+		network.setModified(new Date());
+		network.setName(address);
+		network.setServiceElements(new ArrayList<ServiceElement>());
+		network.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
+		
+		return network;
 	}
 	
 	/*

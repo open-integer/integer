@@ -35,51 +35,50 @@ package edu.harvard.integer.common.topology;
 
 import java.io.Serializable;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-
-import edu.harvard.integer.common.Address;
-
 /**
+ * Helper class to get the Network's and InterDeviceLink's between the Network's in one
+ * call.
+ * 
  * @author David Taylor
- *
+ * 
  */
-@Embeddable
-public class Subnet implements Serializable {
+public class NetworkInformation implements Serializable {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Embedded
-	@AttributeOverrides({
-		@AttributeOverride(name = "address", column = @Column(name = "subnetAddress")),
-		@AttributeOverride(name = "address", column = @Column(name = "subnetMASK"))})
-	private Address address = null;
+	private Network[] networks = null;
 	
+	private InterNetworkLink[] links = null;
+
 	/**
-	 * 
+	 * @return the networks
 	 */
-	public Subnet() {
-		
+	public Network[] getNetworks() {
+		return networks;
 	}
 
 	/**
-	 * @return the address
+	 * @param networks the networks to set
 	 */
-	public Address getAddress() {
-		return address;
+	public void setNetworks(Network[] networks) {
+		this.networks = networks;
 	}
 
 	/**
-	 * @param address the address to set
+	 * @return the links
 	 */
-	public void setAddress(Address address) {
-		this.address = address;
+	public InterNetworkLink[] getLinks() {
+		return links;
 	}
 
+	/**
+	 * @param links the links to set
+	 */
+	public void setLinks(InterNetworkLink[] links) {
+		this.links = links;
+	}
+	
 }

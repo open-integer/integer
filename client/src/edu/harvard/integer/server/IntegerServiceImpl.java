@@ -192,8 +192,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			Subnet subnet = new Subnet();
 			Address address = new Address();
 			address.setAddress("10.240.127.0");
-			subnet.setAddress(new Address( "10.240.127.0" ));
-			subnet.setMask(new Address("255.255.255.0"));
+			subnet.setAddress(new Address( "10.240.127.0", "255.255.255.0"));
 			
 			seed.setSubnet(subnet);
 			seed.setRadius(Integer.valueOf(0));
@@ -235,8 +234,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		
 		IpTopologySeed seed = new IpTopologySeed();
 		Subnet subnet = new Subnet();
-		subnet.setAddress(new Address(address ));
-		subnet.setMask(new Address(mask));
+		subnet.setAddress(new Address(address, mask ));
 		
 		seed.setSubnet(subnet);
 		seed.setRadius(Integer.valueOf(0));

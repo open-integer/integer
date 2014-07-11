@@ -13,8 +13,14 @@ import com.google.gwt.user.client.ui.PopupPanel;
  */
 public class HvMapIconPopup extends PopupPanel {
 
-	/** The g. */
-	private Grid g = new Grid(3, 2);
+	/** The grid */
+	private Grid grid = new Grid(3, 2);
+	
+	public HvMapIconPopup() {
+		super(true);
+		setStyleName("MapIconPopup");
+		setWidget(grid);
+	}
 	
 	/**
 	 * Creates a new HvMapIconPopup instance.
@@ -23,21 +29,13 @@ public class HvMapIconPopup extends PopupPanel {
 	 * @param status the status
 	 * @param location the location
 	 */
-	public HvMapIconPopup(String name, String status, String location) {
-		super(true);
-		
-		setStyleName("MapIconPopup");
-		
-		g.setText(0, 0, "Name");
-		g.setText(0, 1, name);
-		
-		g.setText(1, 0, "Status");
-		g.setText(1, 1, status);
-		
-		g.setText(2, 0, "Location");
-		g.setText(2, 1, location);
-		
-		setWidget(g);
-
+	public HvMapIconPopup(String name) {
+		this();
+		update(name);
+	}
+	
+	public void update(String name) {
+		grid.setText(0, 0, "Name");
+		grid.setText(0, 1, name);
 	}
 }

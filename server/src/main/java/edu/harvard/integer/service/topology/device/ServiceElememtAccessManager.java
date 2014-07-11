@@ -237,6 +237,17 @@ public class ServiceElememtAccessManager extends BaseManager implements
 
 		return deviceDetails;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementByName(java.lang.String)
+	 */
+	@Override
+	public ServiceElement getServiceElementByName(String name) throws IntegerException {
+		ServiceElementDAO dao = dbm.getServiceElementDAO();
+		
+		return dao.findByName(name);
+	}
 
 	/*
 	 * (non-Javadoc)
