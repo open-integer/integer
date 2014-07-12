@@ -20,7 +20,7 @@ serviceElementTypes:
            category: backplane
          - name: cevContainer
            mapping: subObjIdentify
-           category: Common System Components
+           category: container
          - name: cevPowerSupply
            mapping: subObjIdentify
            category: power supply

@@ -74,6 +74,8 @@ import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.topology.TopologyManagerInterface;
+import edu.harvard.integer.service.topology.TopologyManagerLocalInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
@@ -103,6 +105,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	/** The capability manager. */
 	protected ManagementObjectCapabilityManagerInterface capMgr;
 	
+	protected TopologyManagerInterface topologyMgr;
+	
 	/** 
 	 * The mapping table is use to store pairs of parent index and child index.
 	 * This table is really for performance purpose.  In a lot of cases,
@@ -112,7 +116,11 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 */
 	private Map<String, List<ParentChildMappingIndex>> indexMappingTbl = new HashMap<String, List<ParentChildMappingIndex>>();
 	
-	
+	/**
+	 * This mapping table stores all instance oids for a table.  Discovery Service retrieves all instances for a table
+	 * at once and used them for later references.  
+	 */
+	private Map<String, List<String>>  instanceMappingTbl = new HashMap<>();
 
 
 	/**
@@ -123,9 +131,10 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	public SnmpServiceElementDiscover() throws IntegerException {
 		
 		capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
-		this.accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-		this.snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
-		this.discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+		accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+		snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
+		discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+		topologyMgr = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
 	}
 	
     
@@ -729,6 +738,56 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		
 		return indexMappingTbl.get(key);
 	}
+	
+
+
+	public Map<String, List<String>> getInstanceMappingTbl() {
+		return instanceMappingTbl;
+	}
+
+
+	public void setInstanceMappingTbl(Map<String, List<String>> instanceMappingTbl) {
+		this.instanceMappingTbl = instanceMappingTbl;
+	}
+
+	
+	/**
+	 * 
+	 * @param se
+	 * @return
+	 * @throws IntegerException
+	 */
+	public String getIpAddressFromSE( ServiceElement se ) throws IntegerException {
+	
+		for ( int i=0; i<se.getAttributeValues().size(); i++ ) { 
+			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(0);
+			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
+			 if ( snmp.getName().equals("ipAdEntAddr")) {
+				 return objVal.getValue().toString();
+			 }			 
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * 
+	 * @param se
+	 * @return
+	 * @throws IntegerException
+	 */
+	public String getIpMaskFromSE( ServiceElement se ) throws IntegerException {
+		
+		for ( int i=0; i<se.getAttributeValues().size(); i++ ) { 
+			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(0);
+			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
+			 if ( snmp.getName().equals("ipAdEntNetMask")) {
+				 return objVal.getValue().toString();
+			 }			 
+		}
+		return null;
+	}
+	
 	
 
 	/**
