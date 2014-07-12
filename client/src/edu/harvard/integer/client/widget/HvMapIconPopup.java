@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 public class HvMapIconPopup extends PopupPanel {
 
 	/** The grid */
-	private Grid grid = new Grid(3, 2);
+	private Grid grid = new Grid(2, 2);
 	
 	public HvMapIconPopup() {
 		super(true);
@@ -29,13 +29,15 @@ public class HvMapIconPopup extends PopupPanel {
 	 * @param status the status
 	 * @param location the location
 	 */
-	public HvMapIconPopup(String name) {
+	public HvMapIconPopup(String name, String status) {
 		this();
-		update(name);
+		update(name, status);
 	}
 	
-	public void update(String name) {
+	public void update(String name, String status) {
 		grid.setText(0, 0, "Name");
 		grid.setText(0, 1, name);
+		grid.setText(1, 0, "Status");
+		grid.setText(1, 1, status);
 	}
 }

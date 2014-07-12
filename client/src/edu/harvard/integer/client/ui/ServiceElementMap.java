@@ -19,6 +19,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -27,7 +28,6 @@ import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ServiceElementMap represents a map object of Integer.
  * This is a subclass class extended from com.emitrom.lienzo.client.core.shape.Layer.
@@ -74,8 +74,7 @@ public class ServiceElementMap extends Layer {
 	/** The entity map. */
 	private Map<ID, Point> entityMap = new HashMap<ID, Point>();
 	
-	/** The entity list. */
-	private List<ID> entityList = new ArrayList<ID>();
+	private List<Point> pointList = new ArrayList<Point>();
 	
 	/**
 	 * Gets the selected element.
@@ -185,12 +184,25 @@ public class ServiceElementMap extends Layer {
 		removeAll();
 		init_layout(result.length);
 		
+		// === testing only first 4 points ==
+		int N = 4;
+		init_layout(N);
+		// ==================================
+		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.graySwitch();
+		
 		for (final BaseEntity entity : result) {
-			Point point = calculatePoint(result.length, i++);
+			// Point point = calculatePoint(result.length, i++);
+			// === test only first 4 points ====
+			if (i >= N)
+				break;
+			// ==================================
+			
+			Point point = calculatePoint(N, i++);
 			entityMap.put(entity.getID(), point);
-			entityList.add(entity.getID());
+			pointList.add(point);
+			// ==================================
 			
 			if (entity instanceof ServiceElement)
 				image = Resources.IMAGES.pcom();
@@ -222,50 +234,97 @@ public class ServiceElementMap extends Layer {
 	 * @param links 
 	 */
 	private void drawLinks(InterNetworkLink[] links) {
-		final HvMapIconPopup tooltip = new HvMapIconPopup();
+		// draw fake links for demo
+		Point p1 = pointList.get(0);
+		Point p2 = pointList.get(1);
+		Point p3 = pointList.get(2);
+		Point p4 = pointList.get(3);
+		InterNetworkLink link1 = new InterNetworkLink();
+		link1.setName("link-1-2");
+		InterNetworkLink link2 = new InterNetworkLink();
+		link2.setName("link-2-4");
+		InterNetworkLink link3 = new InterNetworkLink();
+		link3.setName("link-3-4");
 		
+		drawLink(link1, p1, p2);
+		drawLink(link2, p2, p4);
+		drawLink(link3, p3, p4);
+		
+		// draw links
 		for (final InterNetworkLink link : links) {
 			ID id1 = link.getSourceNetworkId();
 			ID id2 = link.getDestinationNetworkId();
-			Point p1 = entityMap.get(id1);
-			Point p2 = entityMap.get(id2);
+			p1 = entityMap.get(id1);
+			p2 = entityMap.get(id2);
 			
 			if (p1 == null || p2 == null)
 				continue;
 			
 			// draw line between p0 and p
-			double x1 = p1.getX() + icon_width/2;
-			double y1 = p1.getY() + icon_height/2;
-			double x2 = p2.getX() + icon_width/2;
-			double y2 = p2.getY() + icon_height/2;
-			
-			Line line = new Line(x1, y1, x2, y2);  
-            line.setStrokeColor(ColorName.GREEN).setStrokeWidth(1).setFillColor(ColorName.GREEN);
-            
-            line.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
-                
-    			@Override
-    			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
-    				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
-    				int y = 100 + event.getY() - 15;
-
-    				tooltip.setPopupPosition(x, y);
-    				tooltip.update(link.getName());
-    				tooltip.show();
-    			}  
-            });  
-      
-    		line.addNodeMouseExitHandler(new NodeMouseExitHandler() {
-
-    			@Override
-    			public void onNodeMouseExit(NodeMouseExitEvent event) {
-    				tooltip.hide();
-    			}  
-                
-            });  
-            
-            add(line);
+			drawLink(link, p1, p2);
 		}
+	}
+	
+	private void drawLink(final InterNetworkLink link, Point p1, Point p2) {
+		final HvMapIconPopup tooltip = new HvMapIconPopup();
+		
+		double x1 = p1.getX() + icon_width/2;
+		double y1 = p1.getY() + icon_height/2;
+		double x2 = p2.getX() + icon_width/2;
+		double y2 = p2.getY() + icon_height/2;
+		
+		Line line = new Line(x1, y1, x2, y2);
+		ColorName colorName = ColorName.BLUE;
+		if (link.getName().equalsIgnoreCase("link-2-4"))
+			colorName = ColorName.RED;
+		else
+			colorName = ColorName.GREEN;
+//		if (linkStatus == null)
+//			colorName = ColorName.GREY;
+//		else if (linkStatus.equalsIgnoreCase("up"))
+//			colorName = ColorName.GREEN;
+//		else if (linkStatus.equalsIgnoreCase("down"));
+//			colorName = ColorName.RED;
+			
+        line.setStrokeColor(ColorName.GREEN).setStrokeWidth(3).setFillColor(colorName);
+        
+        line.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
+            
+			@Override
+			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
+				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
+				int y = 100 + event.getY() - 15;
+
+				tooltip.setPopupPosition(x, y);
+				tooltip.update(link.getName(), "Not availabel");
+				tooltip.show();
+			}  
+        });  
+  
+		line.addNodeMouseExitHandler(new NodeMouseExitHandler() {
+
+			@Override
+			public void onNodeMouseExit(NodeMouseExitEvent event) {
+				tooltip.hide();
+			}  
+            
+        });
+		
+		line.addNodeMouseClickHandler(new NodeMouseClickHandler() {
+
+			@Override
+			public void onNodeMouseClick(NodeMouseClickEvent event) {
+				LinkDetailsPanel detailsPanel = new LinkDetailsPanel(link);
+				HvDialogBox detailsDialog = new HvDialogBox("Link Details", detailsPanel);
+				detailsDialog.enableOkButton(false);
+				detailsDialog.setSize("400px", "150px");
+				detailsDialog.center();
+				detailsDialog.show();
+			}
+			
+		});
+        
+        add(line);
 	}
 	
 	/**
