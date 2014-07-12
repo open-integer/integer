@@ -837,7 +837,6 @@ public class YamlManager extends BaseManager implements
 		selector.setContainmentId(snmpContainment.getID());
 
 		discoveryManager.updateVendorContainmentSelector(selector);
-
 	}
 
 	/**

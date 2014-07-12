@@ -321,7 +321,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    	model = defineUnknownProduct(sysInfo.getSysObjectID()); 
 		    }
 		    VendorContainmentSelector vs = new VendorContainmentSelector();
-		    vs.setModel(model.trim());
+		//    vs.setModel(model.trim());
 		    vs.setVendor(defineUnknownVendor(sysId.toString()).toLowerCase());
 		    
 		    ServiceElementType set = null;

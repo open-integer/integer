@@ -31,18 +31,6 @@ serviceElementTypes:
             uri: cdpGlobalHoldTime
             capability: cdp-global-cdpGlobalHoldTime
 
-          - name: cdpGlobalLastChange
-            uri: cdpGlobalLastChange
-            capability: cdp-global-cdpGlobalLastChange
-
-          - name: cdpGlobalDeviceIdFormatCpb
-            uri: cdpGlobalDeviceIdFormatCpb
-            capability: cdp-global-cdpGlobalDeviceIdFormatCpb
-
-          - name: cdpGlobalDeviceIdFormat
-            uri: cdpGlobalDeviceIdFormat
-            capability: cdp-global-cdpGlobalDeviceIdFormat
-
     - name: cisco-cdp-interface
       description: Cisco enterprise CDP MIB, per-interface attributes.
       vendor: cisco

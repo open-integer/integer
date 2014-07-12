@@ -59,6 +59,7 @@ import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
+import edu.harvard.integer.service.discovery.snmp.TopologyNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
@@ -103,7 +104,12 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	private List<AccessPort>  accessPorts;
 	
 	/** The discover map. */
-	private ConcurrentHashMap<String, DiscoverNode> discoverMap = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, DiscoverNode> discoverMap = new ConcurrentHashMap<>();
+	
+	
+	private final ConcurrentHashMap<String, TopologyNode>  topologyMap = new ConcurrentHashMap<>();
+	
+	
 	
 	/** The net disc. */
 	private NetworkDiscovery  netDisc;
@@ -284,11 +290,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		 */
 		((Snmp)event.getSource()).cancel(event.getRequest(), this);
 	
-		DiscoverNode dn = discoverMap.get((String) event.getUserObject());	
-		if ( dn.getIpAddress().equals("10.240.127.121") ) {
-			System.out.println("Stop in here. ");
-		}
-		
+		DiscoverNode dn = discoverMap.get((String) event.getUserObject());			
 		try {
 			SnmpService.assertPDU(event);
 		} 
@@ -342,6 +344,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		PDU response = event.getResponse();
 		ElementDiscoverTask<E> elmTask = null;
 		try {
+			
 			elmTask = new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));
 			DiscoveryServiceInterface service = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
 			service.submitElementDiscoveryTask(elmTask);
@@ -443,5 +446,19 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	 */
 	public DiscoverNode removeDiscoverNode( String ip ) {
 		return discoverMap.remove(ip);
+	}
+	
+
+	public ConcurrentHashMap<String, TopologyNode> getTopologyMap() {
+		return topologyMap;
+	}
+
+	public void addTopologyNode( TopologyNode tn ) {
+		topologyMap.put(tn.getKey(), tn);
+	}
+	
+	
+	public void startSubnetTopologyDiscovery() {
+		
 	}
 }

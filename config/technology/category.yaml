@@ -68,6 +68,10 @@ categories:
                   description: network element specific components
                   parent: network element categories
                   categories:       
+                    - name: container
+                      description: slot is one type of container
+                      parent: network element specific components
+
                     - name: module
                       description: linecard, fpc, etc.
                       parent: network element specific components

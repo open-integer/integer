@@ -7,7 +7,7 @@ name: ciscoPhysicalContainment
 vendor: cisco
 snmpContainment:
       containmentType: EntityMib
-      serviceElementTypeName: systemCommon
+      serviceElementTypeName: ciscoSystem
       snmpLevels:
         - name: entityParentChild
           contextOID: entPhysicalEntry
@@ -20,7 +20,7 @@ snmpContainment:
  
         - name: portInterfaceMapping
           category: port
-          contextOID: entPhysicalEntry 
+          contextOID: ifEntry 
           descriminatorOID: cdpInterfaceEnable
           globalDescriminatorOID: cdpGlobalRun
           containmentRelationship:
@@ -38,23 +38,20 @@ snmpContainment:
              - serviceElementTypeName: cdpInterface
                globaldiscriminatorValue: true
                discriminatorValue: true
+          children:
+             - name: cdpCacheMapping
+               contextOID: cdpCacheEntry
+               disriminators:
+                  - serviceElementTypeName: cdpCache
+             - name: interfaceIpAddress
+               contextOID: ipAddrEntry
+               containmentRelationship: 
+                  mappingTable: ipAddrEntry
+                  mappingOid: ipAdEntIfIndex
+                  mappingType: InstanceOnly
+               disriminators:
+                  - serviceElementTypeName: ipv4Address  
                                                   
-        - name: interfaceIpAddress
-          category: interface
-          contextOID: ipAddrEntry
-          containmentRelationship:
-            mappingTable: ipAddrEntry
-            mappingOid: ipAdEntIfIndex
-            mappingType: InstanceOnly
-          disriminators:
-             - serviceElementTypeName: ipv4Address
-
-        - name: interfaceMapping
-          category: interface
-          contextOID: ipNetToMediaEntry
-          disriminators:
-             - serviceElementTypeName: ipv4IpToPhysical
-
         - name: cdpGlobalLevel
           category: System
           contextOID: cdpGlobalRun
