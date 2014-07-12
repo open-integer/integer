@@ -29,6 +29,7 @@ import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Subnet;
@@ -219,9 +220,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 				
 				manager.startDiscovery(rule);
 			} catch (IntegerException e) {
-				
-				e.printStackTrace();
-				
+				throw new Exception(e.getMessage());
 			}
 	}
 	
@@ -267,9 +266,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			
 			manager.startDiscovery(rule);
 		} catch (IntegerException e) {
-			
-			e.printStackTrace();
-			
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -286,7 +283,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			deviceDetails = serviceElementService.getDeviceDetails(id);
 		} 
 		catch (IntegerException e) {
-			e.printStackTrace();
+			throw new Exception(e.getMessage());
 		}
 
 		return deviceDetails;
@@ -328,12 +325,20 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			System.out.println("Return Blank selection " + b.toString());
 		}
 		catch (IntegerException e) {
-			e.printStackTrace();
+			throw new Exception(e.getMessage());
 		}
 		
 		return selection;
 	}
 
+	/**
+	 * Prints the filter node.
+	 *
+	 * @param node the node
+	 * @param b the b
+	 * @param indent the indent
+	 * @return the string buffer
+	 */
 	private StringBuffer printFilterNode(FilterNode node, StringBuffer b, String indent) {
 		b.append(indent).append(node.getName()).append(":").append(node.getItemId().getIdentifier());
 		if (node.getChildren() != null) {
@@ -363,12 +368,15 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			serviceElementType = discMgr.getServiceElementTypeById(serviceElementTypeId);
 		}
 		catch (IntegerException e) {
-			e.printStackTrace();
+			throw new Exception(e.getMessage());
 		}
 		
 		return serviceElementType;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getAllNetworks()
+	 */
 	@Override
 	public Network[] getAllNetworks() throws Exception {
 		Network[] networks;
@@ -384,5 +392,23 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			throw new Exception(e.getMessage());
 		}
 		return networks;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getNetworkInformation()
+	 */
+	@Override
+	public NetworkInformation getNetworkInformation() throws Exception {
+		NetworkInformation networkInfo = null;
+		
+		try {
+			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
+			networkInfo = topologyService.getNetworkInformation();
+		}
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return networkInfo;
 	}
 }

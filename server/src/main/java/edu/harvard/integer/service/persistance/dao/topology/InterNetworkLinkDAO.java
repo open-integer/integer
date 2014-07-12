@@ -46,7 +46,6 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.InterNetworkLink;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -62,7 +61,7 @@ public class InterNetworkLinkDAO extends BaseDAO {
 	 * @param clazz
 	 */
 	public InterNetworkLinkDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, InterDeviceLink.class);
+		super(entityManger, logger, InterNetworkLink.class);
 
 	}
 

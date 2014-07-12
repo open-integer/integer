@@ -42,6 +42,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
@@ -59,6 +60,7 @@ import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterNetworkLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 
 /**
@@ -180,6 +182,9 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		if (sourceNetwork == null)
 			sourceNetwork = networkDao.update(createNetwork(sourceNetworkName));
 		
+		addInterDeviceLinkToNetwork(interDeviceLink, sourceNetwork);
+		addServiceElementToNetwork(interDeviceLink.getSourceServiceElementId(), sourceNetwork);
+		
 		Network destNetwork = networkDao.findByName(destNetworkName);
 		if (destNetwork == null)
 			destNetwork = networkDao.update(createNetwork(destNetworkName));
@@ -201,6 +206,50 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 			
 			linkDao.update(link);
 		}
+		
+	}
+
+	/**
+	 * @param sourceServiceElementId
+	 * @param sourceNetwork
+	 * @throws IntegerException 
+	 */
+	private void addServiceElementToNetwork(ID sourceServiceElementId,
+			Network sourceNetwork) throws IntegerException {
+		
+		if (sourceServiceElementId == null)
+			return;
+		
+		if (sourceNetwork.getServiceElements() == null)
+			sourceNetwork.setServiceElements(new ArrayList<ServiceElement>());
+		
+		ServiceElementDAO dao = persistenceManager.getServiceElementDAO();
+		ServiceElement serviceElement = dao.findById(sourceServiceElementId);
+		sourceNetwork.getServiceElements().add(serviceElement);
+		
+	}
+
+	/**
+	 * @param interDeviceLink
+	 * @param sourceNetwork
+	 */
+	private void addInterDeviceLinkToNetwork(InterDeviceLink interDeviceLink,
+			Network sourceNetwork) {
+		
+		if (sourceNetwork.getInterDeviceLinks() == null)
+			sourceNetwork.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
+		
+		boolean foundLink = false;
+		for (InterDeviceLink link : sourceNetwork.getInterDeviceLinks()) {
+		
+			if (link.getSourceServiceElementId() != null &&
+					link.getSourceServiceElementId().equals(interDeviceLink.getSourceServiceElementId()) &&
+					link.getDestinationServiceElementId().equals(interDeviceLink.getDestinationServiceElementId()))
+				foundLink = true;
+		}
+		
+		if (!foundLink)
+			sourceNetwork.getInterDeviceLinks().add(interDeviceLink);
 		
 	}
 
