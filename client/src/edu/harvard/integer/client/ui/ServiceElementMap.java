@@ -65,6 +65,9 @@ public class ServiceElementMap extends Layer {
 	/** The icon_height. */
 	private int icon_height;
 	
+	/** The link_width. */
+	private int link_width = 3;
+	
 	/** The selected element. */
 	private BaseEntity selectedEntity;
 	
@@ -74,6 +77,7 @@ public class ServiceElementMap extends Layer {
 	/** The entity map. */
 	private Map<ID, Point> entityMap = new HashMap<ID, Point>();
 	
+	/** The point list. */
 	private List<Point> pointList = new ArrayList<Point>();
 	
 	/**
@@ -162,10 +166,15 @@ public class ServiceElementMap extends Layer {
 			icon_width = icon_width / 2;
 		}
 		icon_height = icon_width;
+		
+		if (total > 25 && total < 50)
+			link_width = 2;
+		else if (total >= 50)
+			link_width = 1;
 	}
 	
 	/**
-	 * Update network information including network lkist and link list
+	 * Update network information including network lkist and link list.
 	 *
 	 * @param networkkInfo the networkk info
 	 */
@@ -184,25 +193,13 @@ public class ServiceElementMap extends Layer {
 		removeAll();
 		init_layout(result.length);
 		
-		// === testing only first 4 points ==
-		int N = 4;
-		init_layout(N);
-		// ==================================
-		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.graySwitch();
 		
 		for (final BaseEntity entity : result) {
-			// Point point = calculatePoint(result.length, i++);
-			// === test only first 4 points ====
-			if (i >= N)
-				break;
-			// ==================================
-			
-			Point point = calculatePoint(N, i++);
+			Point point = calculatePoint(result.length, i++);
 			entityMap.put(entity.getID(), point);
 			pointList.add(point);
-			// ==================================
 			
 			if (entity instanceof ServiceElement)
 				image = Resources.IMAGES.pcom();
@@ -231,40 +228,32 @@ public class ServiceElementMap extends Layer {
 	
 	/**
 	 * Draw links.
-	 * @param links 
+	 *
+	 * @param links the links
 	 */
 	private void drawLinks(InterNetworkLink[] links) {
-		// draw fake links for demo
-		Point p1 = pointList.get(0);
-		Point p2 = pointList.get(1);
-		Point p3 = pointList.get(2);
-		Point p4 = pointList.get(3);
-		InterNetworkLink link1 = new InterNetworkLink();
-		link1.setName("link-1-2");
-		InterNetworkLink link2 = new InterNetworkLink();
-		link2.setName("link-2-4");
-		InterNetworkLink link3 = new InterNetworkLink();
-		link3.setName("link-3-4");
-		
-		drawLink(link1, p1, p2);
-		drawLink(link2, p2, p4);
-		drawLink(link3, p3, p4);
-		
 		// draw links
 		for (final InterNetworkLink link : links) {
 			ID id1 = link.getSourceNetworkId();
 			ID id2 = link.getDestinationNetworkId();
-			p1 = entityMap.get(id1);
-			p2 = entityMap.get(id2);
+			Point p1 = entityMap.get(id1);
+			Point p2 = entityMap.get(id2);
 			
 			if (p1 == null || p2 == null)
 				continue;
 			
-			// draw line between p0 and p
+			// draw line between p1 and p2
 			drawLink(link, p1, p2);
 		}
 	}
 	
+	/**
+	 * Draw link.
+	 *
+	 * @param link the link
+	 * @param p1 the p1
+	 * @param p2 the p2
+	 */
 	private void drawLink(final InterNetworkLink link, Point p1, Point p2) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();
 		
@@ -274,11 +263,8 @@ public class ServiceElementMap extends Layer {
 		double y2 = p2.getY() + icon_height/2;
 		
 		Line line = new Line(x1, y1, x2, y2);
-		ColorName colorName = ColorName.BLUE;
-		if (link.getName().equalsIgnoreCase("link-2-4"))
-			colorName = ColorName.RED;
-		else
-			colorName = ColorName.GREEN;
+		ColorName colorName = ColorName.GREEN;
+
 //		if (linkStatus == null)
 //			colorName = ColorName.GREY;
 //		else if (linkStatus.equalsIgnoreCase("up"))
@@ -286,7 +272,7 @@ public class ServiceElementMap extends Layer {
 //		else if (linkStatus.equalsIgnoreCase("down"));
 //			colorName = ColorName.RED;
 			
-        line.setStrokeColor(ColorName.GREEN).setStrokeWidth(3).setFillColor(colorName);
+        line.setStrokeColor(colorName).setStrokeWidth(link_width).setFillColor(colorName);
         
         line.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
             
