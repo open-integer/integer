@@ -265,7 +265,6 @@ public class TopologyManagerTest {
 					
 					serviceElements.add(destServiceElement);
 					
-					
 					InterDeviceLink link = createInterDeviceLink(device[0], device[1]);
 					InterDeviceLink[] dbLinks = topologyManager.getInterDeviceLinksBySourceDestAddress(link.getSourceAddress(), link.getDestinationAddress());
 					if (dbLinks != null && dbLinks.length > 0)

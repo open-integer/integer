@@ -42,7 +42,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
@@ -112,6 +111,19 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		
 		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
 		networkInfo.setLinks(linkDao.copyArray((InterNetworkLink[]) linkDao.findAll()));
+		
+		logger.info("Found " + networkInfo.getNetworks().length + " networks");
+		for (Network network : networkInfo.getNetworks()) {
+			logger.info("Network: " + network.getName());
+			
+			
+			for (InterNetworkLink link : networkInfo.getLinks()) {
+				if (link.getSourceNetworkId() != null &&
+						link.getSourceNetworkId().equals(network.getID()))
+					logger.info("    Link: " + link.getName());
+			}
+		}
+		
 		
 		return networkInfo;
 	}
@@ -197,10 +209,13 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 			
 			link.setSourceAddress(new Address(Address.getSubNet(interDeviceLink.getSourceAddress()),
 						interDeviceLink.getSourceAddress().getMask()));
+			link.setSourceNetworkId(sourceNetwork.getID());
 			
 			link.setDestinationAddress(new Address(Address.getSubNet(interDeviceLink.getDestinationAddress()),
 					interDeviceLink.getDestinationAddress().getMask()));
 		
+			link.setDestinationNetworkId(destNetwork.getID());
+			
 			link.setLayer(LayerTypeEnum.Two);
 			link.setName(sourceNetworkName + " - " + destNetworkName);
 			

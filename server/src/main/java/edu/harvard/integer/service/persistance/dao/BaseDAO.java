@@ -329,12 +329,14 @@ public class BaseDAO {
 			for (int i = 0; i < resultList.size(); i++) {
 				T t = resultList.get(i);
 
-				if (t instanceof BaseEntity)
-					logger.info("Found " + ((BaseEntity) t).getName() + " ID "
-							+ ((BaseEntity) t).getIdentifier());
-				else
-					logger.info("Found Non-BaseEntity " + t);
-
+				if (logger.isDebugEnabled()) {
+					if (t instanceof BaseEntity)
+						logger.debug("Found " + ((BaseEntity) t).getName() + " ID "
+								+ ((BaseEntity) t).getIdentifier());
+					else
+						logger.debug("Found Non-BaseEntity " + t);
+				}
+				
 				objs[i] = t;
 			}
 
