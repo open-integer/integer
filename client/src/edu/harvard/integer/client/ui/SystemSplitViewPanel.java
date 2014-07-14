@@ -80,10 +80,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 */
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
-		
-		final ServiceElementMap deviceMap = new ServiceElementMap();
 
-		//MainClient.integerService.getTopLevelElements(new AsyncCallback<ServiceElement[]>() {
+		final NetworkMap networkMap = new NetworkMap();
 		MainClient.integerService.getNetworkInformation(new AsyncCallback<NetworkInformation>() {
 
 			@Override
@@ -93,11 +91,11 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onSuccess(NetworkInformation result) {
-				deviceMap.updateNetworkInformation(result);
+				networkMap.updateNetworkInformation(result);
 			}
 		});
 		
-        networkPanel.add(deviceMap);
+        networkPanel.add(networkMap);
         
         networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
         networkPanel.getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_RIGHT));
@@ -120,8 +118,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (deviceMap.getSelectedTimestamp() > containedTreeView.getSelectedTimestamp())
-					selectedEntity = deviceMap.getSelectedEntity();
+				if (networkMap.getSelectedTimestamp() > containedTreeView.getSelectedTimestamp())
+					selectedEntity = networkMap.getSelectedEntity();
 				else
 					selectedEntity = containedTreeView.getSelectedServiceElement();
 				
