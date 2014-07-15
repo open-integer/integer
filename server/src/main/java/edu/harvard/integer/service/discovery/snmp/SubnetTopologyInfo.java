@@ -32,42 +32,57 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
-import edu.harvard.integer.common.topology.TopologyElement;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author dchan
+ * The Class SubnetTopologyInfo is data object holding layer2 topology information on each subnet.
  *
+ * @author dchan
  */
-public class TopologyNode {
+public class SubnetTopologyInfo {
+
+	/** The subnet id. */
+	private final String subnetId;
 	
-	private TopologyElement topologyElm;
-	private int ifIndex;
-	private boolean foundConnection = false;
+	/** The topology map.  The key is the IP Address of a discovered node. */
+	private Map<String, DeviceTopologyInfo>  topologyMap = new HashMap<String, DeviceTopologyInfo>();
 	
+	/**
+	 * Instantiates a new subnet topology info.
+	 *
+	 * @param subnetId the subnet id
+	 */
+	public SubnetTopologyInfo( String subnetId ) {
+		this.subnetId = subnetId;
+	}
 
-	public TopologyNode( TopologyElement topologyElm, int ifIndex ) {
-		
-		this.topologyElm = topologyElm;
-		this.ifIndex = ifIndex;
+	/**
+	 * Gets the subnet id.
+	 *
+	 * @return the subnet id
+	 */
+	public String getSubnetId() {
+		return subnetId;
+	}
+
+	/**
+	 * Gets the topology map.
+	 *
+	 * @return the topology map
+	 */
+	public Map<String, DeviceTopologyInfo> getTopologyMap() {
+		return topologyMap;
 	}
 	
-
-	public TopologyElement getTopologyElm() {
-		return topologyElm;
-	}
-
-	public int getIfIndex() {
-		return ifIndex;
-	}
 	
-	public boolean isFoundConnection() {
-		return foundConnection;
+	/**
+	 * Adds the device topology info.
+	 *
+	 * @param topoInfo the topo info
+	 */
+	public void addDeviceTopologyInfo( String discoverNodeIp, DeviceTopologyInfo topoInfo ) {
+	
+		topologyMap.put(discoverNodeIp, topoInfo);
 	}
-
-
-	public void setFoundConnection(boolean foundConnection) {
-		this.foundConnection = foundConnection;
-	}
-
-
 }

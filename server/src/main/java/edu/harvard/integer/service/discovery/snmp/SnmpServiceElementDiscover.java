@@ -75,7 +75,6 @@ import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
-import edu.harvard.integer.service.topology.TopologyManagerLocalInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
@@ -532,6 +531,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, instOid);
 		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
 		
+		
+		if ( set.getName().equals("cdpCache")) {
+			
+			CdpConnection cdpConnection = new CdpConnection(se);
+			discNode.addNetConnection(cdpConnection);
+		}
+		
 		return se;
 	}
 	
@@ -788,6 +794,24 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		return null;
 	}
 	
+	
+	/**
+	 * 
+	 * @param se
+	 * @return
+	 * @throws IntegerException
+	 */
+	public int getIfIndex ( ServiceElement se ) throws IntegerException {
+		
+		for ( int i=0; i<se.getAttributeValues().size(); i++ ) { 
+			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(0);
+			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
+			 if ( snmp.getName().equals("ipAdEntIfIndex")) {
+				 return Integer.parseInt(objVal.getValue().toString());
+			 }			 
+		}
+		return -1;
+	}
 	
 
 	/**
