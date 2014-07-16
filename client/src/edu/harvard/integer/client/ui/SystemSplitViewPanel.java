@@ -45,8 +45,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	/** The Constant WESTPANEL_WIDTH. */
 	public static final int WESTPANEL_WIDTH = 250;
-	
-	//public static SplitLayoutPanel westPanel = null;
+
 	/** The east panel. */
 	public static DockPanel eastPanel = null;
 	
@@ -190,11 +189,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
 	    containedSplitPanel.add(containedTreeView);
 		
-		/*eastSplitPanel.addEast(containedSplitPanel, 500);
-		eastSplitPanel.setWidgetHidden(containedSplitPanel, true);
-		eastSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
-		eastSplitPanel.add(networkPanel);*/
-	    serviceElementMapSplitPanel.addEast(containedSplitPanel, CONTENT_WIDTH/4);
+		serviceElementMapSplitPanel.addEast(containedSplitPanel, CONTENT_WIDTH/4);
 	    serviceElementMapSplitPanel.setWidgetHidden(containedSplitPanel, true);
 	    serviceElementMapSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
 	    serviceElementMapSplitPanel.add(serviceElementMapPanel);
@@ -297,7 +292,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 */
 	public static void showContainedTreeView(final ServiceElement se) {
 		//containeeTreeView.updateTitle(se.getName());
-		//eastSplitPanel.setWidgetHidden(containedSplitPanel, false);
 		serviceElementMapSplitPanel.setWidgetHidden(containedSplitPanel, false);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
@@ -317,6 +311,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 	public static void showServiceElementMap(Network network) {
 		eastSplitPanel.setWidgetHidden(serviceElementMapSplitPanel, false);
-		serviceElementMap.update(network.getServiceElements());
+		serviceElementMap.updateNetwork(network);;
 	}
 }

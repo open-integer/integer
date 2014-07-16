@@ -48,6 +48,8 @@ public class IntegerMap extends Layer {
 	/** The icon_width. */
 	protected int icon_width = SystemSplitViewPanel.CONTENT_WIDTH / 5;
 	
+	protected int line_width = 3;
+	
 	/** The icon_height. */
 	protected int icon_height;
 	
@@ -114,6 +116,11 @@ public class IntegerMap extends Layer {
 			icon_width = icon_width / 2;
 		}
 		icon_height = icon_width;
+		
+		if (total > 50)
+			line_width = 1;
+		else if (total > 25)
+			line_width = 2;
 	}
 	
 	/**
