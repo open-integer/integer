@@ -38,7 +38,8 @@ import edu.harvard.integer.common.topology.NetworkLayer;
  * @author dchan
  *
  */
-public interface ProtocolProperty {
+public interface NetworkConnection {
 
 	public NetworkLayer getNetworkLayer();
+	public int getIfIndex();
 }

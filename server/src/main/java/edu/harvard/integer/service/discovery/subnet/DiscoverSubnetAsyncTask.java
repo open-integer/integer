@@ -59,7 +59,6 @@ import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
-import edu.harvard.integer.service.discovery.snmp.TopologyNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
@@ -105,9 +104,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	
 	/** The discover map. */
 	private final ConcurrentHashMap<String, DiscoverNode> discoverMap = new ConcurrentHashMap<>();
-	
-	
-	private final ConcurrentHashMap<String, TopologyNode>  topologyMap = new ConcurrentHashMap<>();
 	
 	
 	
@@ -446,15 +442,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	 */
 	public DiscoverNode removeDiscoverNode( String ip ) {
 		return discoverMap.remove(ip);
-	}
-	
-
-	public ConcurrentHashMap<String, TopologyNode> getTopologyMap() {
-		return topologyMap;
-	}
-
-	public void addTopologyNode( TopologyNode tn ) {
-		topologyMap.put(tn.getKey(), tn);
 	}
 	
 	

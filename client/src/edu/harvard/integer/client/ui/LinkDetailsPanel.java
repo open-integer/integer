@@ -3,8 +3,6 @@
  */
 package edu.harvard.integer.client.ui;
 
-import java.util.Date;
-
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -12,10 +10,7 @@ import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.InterNetworkLink;
 
 /**
@@ -56,7 +51,7 @@ public class LinkDetailsPanel extends FormPanel {
 		grid.setWidget(3, 0, new Label("Destination"));
 		String destAddress = "not available";
 		if (link.getDestinationAddress() != null)
-			destAddress = link.getSourceAddress().getAddress();
+			destAddress = link.getDestinationAddress().getAddress();
 		grid.setWidget(3, 1, new Label(destAddress));
 
 		// You can use the CellFormatter to affect the layout of the grid's

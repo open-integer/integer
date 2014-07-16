@@ -32,42 +32,88 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
-import edu.harvard.integer.common.topology.TopologyElement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author dchan
+ * The Class DeviceTopologyInfo.
  *
+ * @author dchan
  */
-public class TopologyNode {
+public class DeviceTopologyInfo {
+
+	/** The topo nodes. */
+	private List<TopologyNode>  topoNodes = new ArrayList<>();
 	
-	private TopologyElement topologyElm;
-	private int ifIndex;
-	private boolean foundConnection = false;
+	/** The net connections. */
+	private List<NetworkConnection>  netConnections = new ArrayList<>();
+	
+	private boolean topoDiscoverDone = false;
+	
 	
 
-	public TopologyNode( TopologyElement topologyElm, int ifIndex ) {
+	public void setTopoDiscoverDone() {
+		this.topoDiscoverDone = true;
+	}
+
+
+
+	public boolean isTopoDiscoverDone() {
+		return topoDiscoverDone;
+	}
+
+
+
+	/**
+	 * Gets the topo nodes.
+	 *
+	 * @return the topo nodes
+	 */
+	public List<TopologyNode> getTopoNodes() {
+		return topoNodes;
+	}
+	
+	
+
+	/**
+	 * Gets the net connections.
+	 *
+	 * @return the net connections
+	 */
+	public List<NetworkConnection> getNetConnections() {
+		return netConnections;
+	}
+	
+	/**
+	 * Adds the topology node.
+	 *
+	 * @param tn the tn
+	 */
+	public void addTopologyNode( TopologyNode tn ) {	
 		
-		this.topologyElm = topologyElm;
-		this.ifIndex = ifIndex;
+		/**
+		 * If the topology node interface is already in the list, skip it.
+		 */
+		for ( TopologyNode t : topoNodes ) {
+			if ( t.getIfIndex() == tn.getIfIndex() ) {
+				return;
+			}
+		}
+		topoNodes.add(tn);
 	}
 	
-
-	public TopologyElement getTopologyElm() {
-		return topologyElm;
+	/**
+	 * Adds the net connection.
+	 *
+	 * @param netConnection the net connection
+	 */
+	public void addNetConnection( NetworkConnection netConnection ) {
+		
+		for ( NetworkConnection nc : netConnections ) {
+			if ( nc.getIfIndex() == netConnection.getIfIndex() ) {
+				return;
+			}
+		}
+	    netConnections.add(netConnection);	
 	}
-
-	public int getIfIndex() {
-		return ifIndex;
-	}
-	
-	public boolean isFoundConnection() {
-		return foundConnection;
-	}
-
-
-	public void setFoundConnection(boolean foundConnection) {
-		this.foundConnection = foundConnection;
-	}
-
-
 }

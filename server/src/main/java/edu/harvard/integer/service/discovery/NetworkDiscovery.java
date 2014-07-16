@@ -47,6 +47,7 @@ import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
@@ -83,10 +84,15 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
 	
 	/**
-	 * Map to keep track of each subnet tasks
+	 * Map to keep track of each subnet tasks.  The key is the subnet id.
 	 */
 	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask>  subnetTasks = new ConcurrentHashMap<>();
-    
+	
+    /**
+     * Map to hold discovered nodes which contains layer 2 connection information.
+     */
+	private List<DiscoverNode> linkLayerConnections = new ArrayList<DiscoverNode>();
+	
 
 	/** The discover seed. */
 	private final List<IpDiscoverySeed> discoverSeeds;
@@ -184,11 +190,38 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		try {
 			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveredServiceElement(discoverNode.getAccessElement());
 		} catch (IntegerException e) {
-			
 			logger.error("Error saveing ServiceElement " + discoverNode.getAccessElement());
+		}		
+		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
+		
+		/**
+		 * If the discovered node contains protocol connection, store it 
+		 */
+		if ( discoverNode.hasProtocolConnection() ) {		
+			addConnectionNode(subnetId, discoverNode);
 		}
 		
-		removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
+		/*
+		 * Look like the CDP neighbor connections can cross different subnets.
+		 * In this case the following code which bases on subnet is not valid.
+		 * 
+		if ( subnetComplete ) {
+			
+			 List<DiscoverNode> discNodes =  linkLayerConnection.remove(subnetId);
+			 DiscoveryServiceInterface discoveryService = null;
+			 
+			 try {
+				discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+				
+				DiscoverSubnetTopologyTask task = new DiscoverSubnetTopologyTask(discNodes, this);
+				discoveryService.submitSubnetTopologyDiscovery(task);
+			} 
+			 catch (IntegerException e) {
+				 
+				 logger.error("Cannot get discovery service " + e.getMessage());
+			}
+		}
+		*/
 	}
 	
 	
@@ -206,6 +239,20 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			logger.error("Error sending error " + errorCode + " args " + msg);
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * @param msg
+	 */
+	public void discoverTopologyComplete() {
+		
+		try {
+			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryTopologyComplete();
+		} catch (IntegerException e) {
+			
+			logger.error("Error sending error " + e.getLocalizedMessage());
+		}
 	}
 	
 	
@@ -235,7 +282,10 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			logger.error("Unable to call Service Manager to mark no response on a service element !! " + e.toString());
 		}
 		
-		removeIpAddressFromSubnet(ipAddress, subnetId, false);
+		boolean subnetComplete = removeIpAddressFromSubnet(ipAddress, subnetId, false);
+		if ( subnetComplete ) {
+			
+		}
 	}
 	
 	
@@ -258,8 +308,9 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 * 
 	 * @param ip
 	 * @param subnetid
+	 * @throws  
 	 */
-	private void removeIpAddressFromSubnet( String ip, String subnetid, boolean elmComplete ) {
+	private boolean removeIpAddressFromSubnet( String ip, String subnetid, boolean elmComplete )  {
 		
 		if ( subnetid != null ) {
 			@SuppressWarnings("unchecked")
@@ -289,14 +340,32 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
 					dsif.discoveryComplete(discoverId);
 					
-				} catch (IntegerException e) {
+					if ( linkLayerConnections.size() > 0 ) {
+						
+						DiscoverCdpTopologyTask task = new DiscoverCdpTopologyTask(linkLayerConnections, this);
+						task.call();
+					}
 				
-					e.printStackTrace();
+					return true;
+				} 
+				catch (Exception e) {
+				
 					logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
 				}
-				
 			}
 		}
+		return false;
+	}
+	
+	
+	/**
+	 * 
+	 * @param subnetId
+	 * @param dn
+	 */
+	private synchronized  void addConnectionNode( String subnetId, DiscoverNode dn ) {
+		
+		linkLayerConnections.add(dn);
 	}
 	
 	
