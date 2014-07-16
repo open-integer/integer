@@ -543,6 +543,10 @@ technologies:
 
             - name: Microsoft
               description: microsoft
+              parent: operating system
+              
+            - name: Apple
+              description: apple
               parent: operating system            
           
         - name: Middleware
