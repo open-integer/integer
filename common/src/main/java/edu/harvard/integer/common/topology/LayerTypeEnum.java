@@ -52,8 +52,8 @@ public enum LayerTypeEnum {
 	
 	public static LayerTypeEnum getLayerTypeEnum(String layer) {
 		for (LayerTypeEnum layerType : values()) {
-			if (layerType.getLayer().equals(layer));
-			return layerType;
+			if (layerType.getLayer().equals(layer))
+				return layerType;
 		}
 		
 		return Unknown;

@@ -54,6 +54,7 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
+import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -112,20 +113,23 @@ public class SelectionManager extends BaseManager implements
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 		List<FilterNode> routing = new ArrayList<FilterNode>();
 
-		if (technologies != null && technologies.length > 0)
-			for (FilterNode filterNode : findChildren(dao,
-					technologies[0].getID())) {
+		if (technologies != null && technologies.length > 0) {
+			Technology[] children = dao.findByParentId(technologies[0].getID());
+	
+			for (Technology technology : children) {
+				FilterNode node = new FilterNode();
+				node.setItemId(technology.getID());
+				node.setName(technology.getName());
+				node.setChildren(findChildren(dao, technology.getID()));
 
-				if ("hardware".equals(filterNode.getName().toLowerCase())
-						|| "software".equals(filterNode.getName().toLowerCase())
-						|| "physical connectivity".equals(filterNode.getName().toLowerCase())
-						|| "data link protocols".equals(filterNode.getName().toLowerCase()))
-
-					nodes.add(filterNode);
+				if (LayerTypeEnum.Unknown.equals(technology.getLayer()))
+					nodes.add(node);
 				else
-					routing.add(filterNode);
+					routing.add(node);
 			}
 
+		}
+		
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
 		filter.setTechnologies(nodes);

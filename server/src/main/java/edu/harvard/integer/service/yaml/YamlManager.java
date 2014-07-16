@@ -66,22 +66,17 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
-import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Category;
-import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
-import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.common.topology.ValueOpertorEnum;
-import edu.harvard.integer.common.yaml.YamlCapability;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
-import edu.harvard.integer.common.yaml.YamlMechanismType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
 import edu.harvard.integer.common.yaml.YamlTechnology;
@@ -180,7 +175,10 @@ public class YamlManager extends BaseManager implements
 				rootTech = root[0];
 			}
 
-			parseTechnologyTree(rootTech, load.getTechnologies());
+			YamlTechnologyParser parser = new YamlTechnologyParser(technologyManager, persistanceManager);
+			parser.init();
+			
+			parser.parseTechnologyTree(rootTech, load.getTechnologies());
 
 			root = technologyManager.getTopLevelTechnology();
 			if (root != null) {
@@ -201,137 +199,8 @@ public class YamlManager extends BaseManager implements
 		return "Success";
 	}
 
-	/**
-	 * Parse the Technology tree. This method is called recursively to process
-	 * all sub "TechnologyTree" elements. The current Technology is passed in so
-	 * that the child technology elements can be linked to the parent.
-	 * 
-	 * @param technology
-	 *            . The current Root of the Technology tree to parse.
-	 * @param list
-	 *            . YamlTechnology of the child technologies to be parsed.
-	 * 
-	 * @throws IntegerException
-	 */
-	private void parseTechnologyTree(Technology parentTechnology,
-			List<YamlTechnology> list) throws IntegerException {
-
-		for (YamlTechnology node : list) {
-			Technology technology = technologyManager.getTechnologyByName(node
-					.getName());
-			if (technology == null) {
-				technology = new Technology();
-				technology.setName(node.getName());
-			}
-
-			technology.setParentId(parentTechnology.getID());
-			technology.setDescription(node.getDescription());
-			technology.setMechanisims(saveMechanisms(technology,
-					node.getMechanisms()));
-			technology.setLayer(LayerTypeEnum.getLayerTypeEnum(node.getLayer()));
-			technology.setDiscoveryTypes(createDiscoveryTypeEnumList(node.getDiscovery()));
-			
-			technology = technologyManager.updateTechnology(technology);
-
-			if (node.getTechnologies() != null)
-				parseTechnologyTree(technology, node.getTechnologies());
-
-		}
-
-	}
-
-	/**
-	 * @param discovery
-	 * @return
-	 */
-	private List<DiscoveryTypeEnum> createDiscoveryTypeEnumList(
-			List<String> discovery) {
-		
-		if (discovery == null)
-			return null;
-		
-		List<DiscoveryTypeEnum> discoveryTypes = new ArrayList<DiscoveryTypeEnum>();
-		
-		for (String string : discovery) {
-			discoveryTypes.add(DiscoveryTypeEnum.valueOf(string));
-		}
-		
-		return discoveryTypes;
-	}
-
-	/**
-	 * Parse the Mechanisms for a technology. The mechanism is the lowest level
-	 * of the technology tree that does not have capabilities directly attached
-	 * to it.
-	 * 
-	 * @param mechanismTypes
-	 * @throws IntegerException
-	 */
-	private List<ID> saveMechanisms(Technology technology,
-			List<YamlMechanismType> mechanismTypes) throws IntegerException {
-
-		List<ID> ids = new ArrayList<ID>();
-
-		if (mechanismTypes == null)
-			return ids;
-
-		for (YamlMechanismType mechanism : mechanismTypes) {
-			Mechanism dbMechanism = technologyManager
-					.getMechanismByName(mechanism.getName());
-
-			if (dbMechanism == null) {
-				dbMechanism = new Mechanism();
-				dbMechanism.setName(mechanism.getName());
-			}
-
-			dbMechanism.setDescription(mechanism.getDescription());
-
-			List<ID> capabilitiIds = saveCapabilites(mechanism
-					.getCapabilities());
-
-			dbMechanism.setCapabilities(capabilitiIds);
-			dbMechanism = technologyManager.updateMechanism(dbMechanism);
-
-			ids.add(dbMechanism.getID());
-		}
-
-		return ids;
-	}
-
-	/**
-	 * Save the Capabilities found.
-	 * 
-	 * @param capabilities
-	 *            . YamlCapability list of capabilities to import.
-	 * @return List<ID>. IDs' of the imported capabilities.
-	 * @throws IntegerException
-	 */
-	private List<ID> saveCapabilites(List<YamlCapability> capabilities)
-			throws IntegerException {
-
-		CapabilityDAO dao = persistanceManager.getCapabilityDAO();
-
-		List<ID> ids = new ArrayList<ID>();
-
-		if (capabilities == null)
-			return ids;
-
-		for (YamlCapability yamlCapability : capabilities) {
-			Capability dbCapablity = dao.findByName(yamlCapability.getName());
-			if (dbCapablity == null) {
-				dbCapablity = new Capability();
-				dbCapablity.setName(yamlCapability.getName());
-			}
-
-			dbCapablity.setDescription(yamlCapability.getDescription());
-
-			dbCapablity = dao.update(dbCapablity);
-
-			ids.add(dbCapablity.getID());
-		}
-
-		return ids;
-	}
+	
+	
 
 	/**
 	 * Helper method to parse an array of objects.
