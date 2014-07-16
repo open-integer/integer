@@ -178,7 +178,7 @@ public class DistributionService extends BaseService implements DistributionServ
 	@Path(value="/AllManagers")
 	@GET
 	@Produces({ MediaType.TEXT_HTML })
-	private String showAllManagers() throws IntegerException {
+	public String showAllManagers() throws IntegerException {
 		StringBuffer b = new StringBuffer();
 		
 		b.append("My ServerID: ").append(getServerID());
@@ -211,7 +211,7 @@ public class DistributionService extends BaseService implements DistributionServ
 	@Path(value="/AllManagers")
 	@GET
 	@Produces({ MediaType.TEXT_HTML })
-	private String showAllServicess() throws IntegerException {
+	public String showAllServicess() throws IntegerException {
 		StringBuffer b = new StringBuffer();
 		
 		b.append("My ServerID: ").append(getServerID());

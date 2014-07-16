@@ -107,7 +107,8 @@ public class YamlCategoryParser {
 			}
 		}
 
-		System.out.println(b.toString());
+		if (b.length() > 5)
+			System.out.println(b.toString());
 
 		if (load.getCategories() != null) {
 			for (YamlCategory child : load.getCategories()) {

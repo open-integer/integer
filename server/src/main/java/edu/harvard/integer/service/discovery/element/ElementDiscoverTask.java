@@ -57,6 +57,7 @@ import edu.harvard.integer.common.discovery.SnmpContainmentType;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
+import edu.harvard.integer.common.discovery.VendorSignatureTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
@@ -322,7 +323,8 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    }
 		    VendorContainmentSelector vs = new VendorContainmentSelector();
 		//    vs.setModel(model.trim());
-		    vs.setVendor(defineUnknownVendor(sysId.toString()).toLowerCase());
+		    
+		    vs.addEqualSignature(VendorSignatureTypeEnum.Vendor, defineUnknownVendor(sysId.toString()).toLowerCase());
 		    
 		    ServiceElementType set = null;
 		    SnmpContainment sc = discMgr.getSnmpContainment(vs); 
@@ -368,10 +370,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				
 				VendorContainmentSelector vendorContainmentSelector = new VendorContainmentSelector();
 				vendorContainmentSelector.setContainmentId(updateSnmpContainment.getID());
-				vendorContainmentSelector.setFirmware(firmwareVer);
-				vendorContainmentSelector.setModel(model);
-				vendorContainmentSelector.setSoftwareVersion(softwareVer);
-				vendorContainmentSelector.setVendor(sysId.toString());
+				vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Firmware, firmwareVer);
+				vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Model, model);
+				vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.SoftwareVersion, softwareVer);
+				vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Vendor, sysId.toDottedString());
 				
 				discMgr.updateVendorContainmentSelector(vendorContainmentSelector);			
 				logger.info("Created SnmpContainment " + updateSnmpContainment.getID());

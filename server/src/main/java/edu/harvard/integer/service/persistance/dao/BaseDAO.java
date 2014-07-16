@@ -56,8 +56,8 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.common.type.displayable.SQLStatement;
-import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.util.LoggerUtil;
 
 /**
@@ -139,6 +139,7 @@ public class BaseDAO {
 			throw new IntegerException(ee,
 					DatabaseErrorCodes.EntityAlreadyExists);
 		} catch (Throwable e) {
+			e.printStackTrace();
 			throw new IntegerException(e, DatabaseErrorCodes.ErrorSavingData,
 					new DisplayableInterface[] { new SQLStatement("update "
 							+ entity.getID().toDebugString()) });

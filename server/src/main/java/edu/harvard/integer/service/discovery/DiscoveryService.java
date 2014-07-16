@@ -60,7 +60,7 @@ import edu.harvard.integer.common.properties.LongPropertyNames;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.util.DisplayableInterface;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;

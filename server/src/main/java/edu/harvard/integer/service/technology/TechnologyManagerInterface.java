@@ -169,4 +169,12 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 	 */
 	Mechanism getMechanismByName(String name) throws IntegerException;
 
+	/**
+	 * Get the child technology's for the given technology id
+	 * @param parentId
+	 * @return
+	 * @throws IntegerException
+	 */
+	Technology[] getChildTechnologysByParentId(ID parentId) throws IntegerException;
+
 }

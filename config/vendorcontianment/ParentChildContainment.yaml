@@ -4,7 +4,11 @@
 # Created by David Chan, 2014-07-17
 
 name: ciscoPhysicalContainment
-vendor: cisco
+signatures:
+      - name: Vendor
+        operator: Equal
+        value: cisco
+
 snmpContainment:
       containmentType: EntityMib
       serviceElementTypeName: ciscoSystem

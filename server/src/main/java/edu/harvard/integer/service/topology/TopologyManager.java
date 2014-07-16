@@ -112,10 +112,9 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
 		networkInfo.setLinks(linkDao.copyArray((InterNetworkLink[]) linkDao.findAll()));
 		
-		logger.info("Found " + networkInfo.getNetworks().length + " networks");
+		logger.info("Found " + networkInfo.getNetworks().length + " networks " + networkInfo.getLinks().length + " Links");
 		for (Network network : networkInfo.getNetworks()) {
 			logger.info("Network: " + network.getName());
-			
 			
 			for (InterNetworkLink link : networkInfo.getLinks()) {
 				if (link.getSourceNetworkId() != null &&
@@ -123,7 +122,6 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 					logger.info("    Link: " + link.getName());
 			}
 		}
-		
 		
 		return networkInfo;
 	}

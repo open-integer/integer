@@ -220,7 +220,7 @@ public class TopologyManagerTest {
 	@Test
 	public void createFakeData() {
 
-		File deviceFile = new File("src/test/resources/topology");
+		File deviceFile = new File("/Users/dtaylor/topology");
 		
 		BufferedReader br = null;
 		String line = null;
@@ -281,12 +281,15 @@ public class TopologyManagerTest {
 			}
 	 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.warn("topology file not found!! No fake data will be created");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
+			fail(e.toString());
 		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
+			fail(e.toString());
 		} finally {
 			if (br != null) {
 				try {
@@ -343,26 +346,6 @@ public class TopologyManagerTest {
 		return link;
 	}
 
-	private Network findNetwork(String address, List<Network> networks) {
-		for (Network network : networks) {
-			if (network.getName().equals(address))
-				return network;
-		}
-		
-		return null;
-	}
-	
-	private Network createNetwork(String address) {
-		Network network = new Network();
-		network.setCreated(new Date());
-		network.setModified(new Date());
-		network.setName(address);
-		network.setServiceElements(new ArrayList<ServiceElement>());
-		network.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
-		
-		return network;
-	}
-
 	/**
 	 * @param string
 	 * @return
@@ -378,22 +361,6 @@ public class TopologyManagerTest {
 	}
 
 
-	/**
-	 * @param string
-	 * @param serviceElements
-	 * @return
-	 */
-	private ServiceElement getServiceElementByAddress(String string,
-			List<ServiceElement> serviceElements) {
-		
-		for (ServiceElement serviceElement : serviceElements) {
-			if (serviceElement.getName().equals(string))
-				return serviceElement;
-		}
-		
-		return null;
-	}
-	
 	@Test
 	public void getLinksForSourceDestAddress() {
 		InterDeviceLink[] links = null;

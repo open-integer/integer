@@ -31,29 +31,44 @@
  *      
  */
 
-package edu.harvard.integer.common.type.displayable;
-
-import java.util.Locale;
+package edu.harvard.integer.common.discovery;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public class FilePathName implements DisplayableInterface {
+public enum VendorSignatureTypeEnum {
+	Vendor("vendor", String.class),
+	Model("model", String.class), 
+	SoftwareVersion("softwareVersion", String.class), 
+	HardwareVersion("hardwareVersion", String.class), 
+	Firmware("firmware", String.class),
+	VendorSubType("vendorSubType", String.class);
 
-	private String filePath = null;
-	
-	public FilePathName(String path) {
-		filePath = path;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
+	private String dbFieldName = null;
+	private Class<?> fieldClassType = null;
+
+	/**
+	 * @param dbFieldName
+	 * @param fieldClassType
 	 */
-	@Override
-	public String toDisplayString(Locale local) {
-		
-		return filePath;
+	private VendorSignatureTypeEnum(String dbFieldName, Class<?> fieldClassType) {
+		this.dbFieldName = dbFieldName;
+		this.fieldClassType = fieldClassType;
+	}
+
+	/**
+	 * @return the dbFieldName
+	 */
+	public String getDbFieldName() {
+		return dbFieldName;
+	}
+
+	/**
+	 * @return the fieldClassType
+	 */
+	public Class<?> getFieldClassType() {
+		return fieldClassType;
 	}
 
 }

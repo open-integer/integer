@@ -36,6 +36,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
 
@@ -84,19 +86,31 @@ public class PersistenceService extends BaseService implements
 
 		// Register the application for RESTfull interface
 		IntegerApplication.register(this);
-
-		loadPreloads();
-
+	
+		loadPreLoadFiles();
 	}
 	
-	private void loadPreloads() {
-		logger.info("Loading preload data files");
+	@Override
+	public void loadPreLoadFiles() {
 
 		DataPreLoadFileDAO dao = persistanceManager.getDataPreLoadFileDAO();
 
 		try {
 			preloads = dao.findAll();
+		} catch (IntegerException e) {
+			e.printStackTrace();
+		}
 
+		loadPreloads();
+
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.NEVER)
+	private void loadPreloads() {
+		logger.info("Loading preload data files");
+
+		try {
+			
 			logger.info(showPreloads());
 
 			for (DataPreLoadFile dataPreLoadFile : preloads) {
@@ -104,21 +118,8 @@ public class PersistenceService extends BaseService implements
 						|| !PersistenceStepStatusEnum.Loaded
 								.equals(dataPreLoadFile.getStatus())) {
 
-					long startTime = System.currentTimeMillis();
-
-					dataLoader.loadDataFile(dataPreLoadFile);
-
-					if (PersistenceStepStatusEnum.Loaded.equals(dataPreLoadFile
-							.getStatus())) {
-						logger.info("Loaded " + dataPreLoadFile.getDataFile());
-
-						dataPreLoadFile.setTimeToLoad(System
-								.currentTimeMillis() - startTime);
-						dataPreLoadFile.setErrorMessage(null);
-					}
-
-					dao.update(dataPreLoadFile);
-
+					loadDataFile(dataPreLoadFile);
+					
 				} else
 					logger.info("Preload already loaded!" + dataPreLoadFile);
 			}
@@ -132,6 +133,31 @@ public class PersistenceService extends BaseService implements
 		}
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	@Override
+	public void loadDataFile(DataPreLoadFile dataPreLoadFile) throws IntegerException {
+		long startTime = System.currentTimeMillis();
+		
+		DataPreLoadFileDAO dao = persistanceManager.getDataPreLoadFileDAO();
+		
+		logger.info("Start loading " + dataPreLoadFile.getName());
+
+		dataLoader.loadDataFile(dataPreLoadFile);
+		
+		if (PersistenceStepStatusEnum.Loaded.equals(dataPreLoadFile
+				.getStatus())) {
+			logger.info("Loaded " + dataPreLoadFile.getDataFile());
+
+			dataPreLoadFile.setTimeToLoad(System
+					.currentTimeMillis() - startTime);
+			dataPreLoadFile.setErrorMessage(null);
+		}
+
+		dao.update(dataPreLoadFile);
+		logger.info("Loaded in "+ (System.currentTimeMillis() - startTime));
+		
+	}
+	
 	@Override
 	public String showPreloads() {
 		StringBuffer b = new StringBuffer();
