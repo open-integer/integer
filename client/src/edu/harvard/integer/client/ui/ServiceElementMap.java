@@ -1,6 +1,8 @@
 package edu.harvard.integer.client.ui;
 
 
+import java.util.List;
+
 import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
 import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
 import com.emitrom.lienzo.client.core.shape.Picture;
@@ -24,12 +26,12 @@ public class ServiceElementMap extends IntegerMap {
 	/**
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
-	 * @param result the result
+	 * @param list the result
 	 */
-	public void update(BaseEntity[] result) {
+	public void update(List<ServiceElement> list) {
 		entityMap.clear();
 		removeAll();
-		init_layout(result.length);
+		init_layout(list.size());
 		
 		// === testing only first 4 points ==
 		int N = 10;
@@ -39,9 +41,7 @@ public class ServiceElementMap extends IntegerMap {
 		int i = 0;
 		ImageResource image = Resources.IMAGES.graySwitch();
 		
-		for (final BaseEntity entity : result) {
-			if (!(entity instanceof ServiceElement))
-				continue;
+		for (final ServiceElement entity : list) {
 			
 			// === test only first 4 points ====
 			if (i >= N)
