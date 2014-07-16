@@ -98,6 +98,16 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		
 		return networks;
 	}
+	
+	@Override
+	public Network getNetworkByAddress(Address networkAddress) throws IntegerException {
+		
+		NetworkDAO dao = persistenceManager.getNetworkDAO();
+		
+		Network networks = dao.findByAddress(networkAddress);
+		
+		return networks;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -161,6 +171,28 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getInterDeviceLinksBySourceDestNetworkIDs(edu.harvard.integer.common.ID, edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public InterDeviceLink[] getInterDeviceLinksBySourceDestServiceElementIDs(ID sourceId, ID destId) throws IntegerException {
+		InterDeviceLinkDAO dao = persistenceManager.getInterDeviceLinkDAO();
+	
+		return dao.findBySourceDestServiceElementIDs(sourceId, destId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getInterNetworkLinksBySourceDestNetworkIDs(edu.harvard.integer.common.ID, edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public InterNetworkLink[] getInterNetworkLinksBySourceDestNetworkIDs(ID sourceId, ID destId) throws IntegerException {
+		InterNetworkLinkDAO dao = persistenceManager.getInterNetworkLinkDAO();
+	
+		return dao.findBySourceDestID(sourceId, destId);
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#updateInterDeviceLink(edu.harvard.integer.common.topology.InterDeviceLink)
 	 */
 	@Override
@@ -190,14 +222,14 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		String destNetworkName = Network.createName(interDeviceLink.getDestinationAddress());
 		Network sourceNetwork = networkDao.findByName(sourceNetworkName);
 		if (sourceNetwork == null)
-			sourceNetwork = networkDao.update(createNetwork(sourceNetworkName));
+			sourceNetwork = networkDao.update(createNetwork(interDeviceLink.getSourceAddress()));
 		
 		addInterDeviceLinkToNetwork(interDeviceLink, sourceNetwork);
 		addServiceElementToNetwork(interDeviceLink.getSourceServiceElementId(), sourceNetwork);
 		
 		Network destNetwork = networkDao.findByName(destNetworkName);
 		if (destNetwork == null)
-			destNetwork = networkDao.update(createNetwork(destNetworkName));
+			destNetwork = networkDao.update(createNetwork(interDeviceLink.getDestinationAddress()));
 		
 		InterNetworkLink[] networkLinks = linkDao.findBySourceDestID(sourceNetwork.getID(), destNetwork.getID());
 		if (networkLinks == null || networkLinks.length == 0) {
@@ -266,11 +298,12 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		
 	}
 
-	private Network createNetwork(String address) {
+	private Network createNetwork(Address address) {
 		Network network = new Network();
 		network.setCreated(new Date());
 		network.setModified(new Date());
-		network.setName(address);
+		network.setName(Network.createName(address));
+		network.setAddress(address);
 		network.setServiceElements(new ArrayList<ServiceElement>());
 		network.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
 		
@@ -329,4 +362,6 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		
 		return dao.findBySourceDestAddress(sourceAddress, destAddress);
 	}
+	
+	
 }

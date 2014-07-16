@@ -40,6 +40,7 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
@@ -118,6 +119,15 @@ public class NetworkDAO extends BaseDAO {
 		
 		return findByStringField(sourceNetworkName, "name", Network.class);
 		
+	}
+
+	/**
+	 * @param networkAddress
+	 * @return
+	 */
+	public Network findByAddress(Address networkAddress) {
+		
+		return findByAddressField(networkAddress, "address", Network.class);
 	}
 
 	

@@ -124,10 +124,26 @@ public class TopologyManagerTest {
 	}
 	
 	private InterDeviceLink createInterDeviceLink() {
+		
+		ServiceElement sourceServiceElement = null;
+		ServiceElement destServiceElement = null;
+		try {
+			sourceServiceElement = serviceElementManger.updateServiceElement(createServiceElement(sourceAddress.getAddress()));
+			destServiceElement = serviceElementManger.updateServiceElement(createServiceElement(destAddress.getAddress()));
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
 		InterDeviceLink link = new InterDeviceLink();
 		link.setCreated(new Date());
 		link.setSourceAddress(sourceAddress);
+		link.setSourceServiceElementId(sourceServiceElement.getID());
+		
 		link.setDestinationAddress(destAddress);
+		link.setDestinationServiceElementId(destServiceElement.getID());
+		
 		link.setLayer(LayerTypeEnum.TwoAndHalf);
 		
 		return link;
@@ -135,15 +151,23 @@ public class TopologyManagerTest {
 	
 	@Test
 	public void addInterDeviceLink() {
+
+		insertInterDeviceLink();
+	}
+	
+	private InterDeviceLink insertInterDeviceLink() {
+
 		InterDeviceLink link = createInterDeviceLink();
 		
 		try {
-			topologyManager.updateInterDeviceLink(link);
+			link = topologyManager.updateInterDeviceLink(link);
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
 			fail(e.toString());
 		}
+		
+		return link;
 	}
 	
 	@Test
@@ -165,6 +189,27 @@ public class TopologyManagerTest {
 			fail(e.toString());
 		}
 	}
+	
+	@Test
+	public void getInterDeviceLinksBetweenDevices() {
+		InterDeviceLink srcLink = insertInterDeviceLink();
+	
+		InterDeviceLink[] links = null;
+		try {
+			links = topologyManager.getInterDeviceLinksBySourceDestServiceElementIDs(srcLink.getSourceServiceElementId(), srcLink.getDestinationServiceElementId());
+			
+		} catch (IntegerException e) {
+
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert (links != null);
+		assert (links.length > 0);
+			
+	}
+	
+	
 	
 	@Test
 	public void addNetwork() {
@@ -215,6 +260,44 @@ public class TopologyManagerTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void getInterNetworkLinks() {
+		
+		Network network = null;
+		Network destnetwork = null;
+		try {
+			network = topologyManager.getNetworkByAddress(sourceAddress);
+			if (network == null) {
+				insertInterDeviceLink();
+				
+				network = topologyManager.getNetworkByAddress(sourceAddress);
+			}
+		
+			destnetwork = topologyManager.getNetworkByAddress(destAddress);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert (network != null);
+		assert (destnetwork != null);
+		
+		InterNetworkLink[] links = null;
+		
+		try {
+			links = topologyManager.getInterNetworkLinksBySourceDestNetworkIDs(network.getID(), destnetwork.getID());
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert(links != null);
+		assert(links.length > 0);
 	}
 	
 	@Test
