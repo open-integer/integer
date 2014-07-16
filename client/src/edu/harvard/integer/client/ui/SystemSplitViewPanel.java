@@ -1,5 +1,7 @@
 package edu.harvard.integer.client.ui;
 
+import java.util.List;
+
 import com.emitrom.lienzo.client.core.mediator.EventFilter;
 import com.emitrom.lienzo.client.core.mediator.MousePanMediator;
 import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
@@ -51,6 +53,9 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	/** The east split panel. */
 	public static SplitLayoutPanel eastSplitPanel = null;
 	
+	/** The service element map split panel. */
+	public static SplitLayoutPanel serviceElementMapSplitPanel = null;
+	
 	/** The contained split panel. */
 	public static SplitLayoutPanel containedSplitPanel= null;
 	
@@ -73,7 +78,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public static BaseEntity selectedEntity;
 
 	/** The network panel. */
-	private LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH, CONTENT_HEIGHT);
+	private LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH/2, CONTENT_HEIGHT);
+	
+	/** The serviceElement map panel */
+	private static LienzoPanel serviceElementMapPanel = new LienzoPanel(CONTENT_WIDTH/2, CONTENT_HEIGHT);
+	
+	/** The service element map. */
+	final static ServiceElementMap serviceElementMap = new ServiceElementMap();
 
 	/**
 	 * Instantiates a new system split view panel.
@@ -81,6 +92,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
 
+		// Network Map
 		final NetworkMap networkMap = new NetworkMap();
 		MainClient.integerService.getNetworkInformation(new AsyncCallback<NetworkInformation>() {
 
@@ -103,7 +115,17 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         LienzoPanel.enableWindowMouseWheelScroll(true);
         
         setSize("100%", MainClient.WINDOW_HEIGHT+"px");
+        
+        // ServiceElement Map
+        // final ServiceElementMap serviceElementMap = new ServiceElementMap();
+        serviceElementMapPanel.add(serviceElementMap);
+        
+        serviceElementMapPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
+        serviceElementMapPanel.getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_RIGHT));
+        
+        serviceElementMapPanel.setSize("100%", MainClient.WINDOW_HEIGHT+"px");
 
+        // Event View
 		EventView eventView = createEventView();
 		
 		eastPanel = new DockPanel();
@@ -149,6 +171,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		eastSplitPanel.setSize("100%",  "500px");
 		
+		serviceElementMapSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
+		serviceElementMapSplitPanel.setSize("100%",  "500px");
+		
+		eastSplitPanel.addEast(serviceElementMapSplitPanel, CONTENT_WIDTH/2);
+		eastSplitPanel.setWidgetHidden(serviceElementMapSplitPanel, true);
+		eastSplitPanel.setWidgetToggleDisplayAllowed(serviceElementMapSplitPanel, true);
+		eastSplitPanel.add(networkPanel);
+		
 		containedSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		
 		containedTreeView = new ContainedTreeView(title, headers);
@@ -160,10 +190,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
 	    containedSplitPanel.add(containedTreeView);
 		
-		eastSplitPanel.addEast(containedSplitPanel, 500);
+		/*eastSplitPanel.addEast(containedSplitPanel, 500);
 		eastSplitPanel.setWidgetHidden(containedSplitPanel, true);
 		eastSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
-		eastSplitPanel.add(networkPanel);
+		eastSplitPanel.add(networkPanel);*/
+	    serviceElementMapSplitPanel.addEast(containedSplitPanel, CONTENT_WIDTH/4);
+	    serviceElementMapSplitPanel.setWidgetHidden(containedSplitPanel, true);
+	    serviceElementMapSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
+	    serviceElementMapSplitPanel.add(serviceElementMapPanel);
 		
 		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);
 		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
@@ -193,6 +227,10 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			
 		});
 		
+	}
+	
+	public void updateServiceElementMap(List<ServiceElement> list) {
+		serviceElementMap.update(list);
 	}
 
 	
@@ -257,9 +295,10 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 *
 	 * @param se the se
 	 */
-	public static void showContainedTreeView(final BaseEntity se) {
+	public static void showContainedTreeView(final ServiceElement se) {
 		//containeeTreeView.updateTitle(se.getName());
-		eastSplitPanel.setWidgetHidden(containedSplitPanel, false);
+		//eastSplitPanel.setWidgetHidden(containedSplitPanel, false);
+		serviceElementMapSplitPanel.setWidgetHidden(containedSplitPanel, false);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
@@ -273,5 +312,11 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				containedTreeView.updateTree(se.getName(), serviceElements);
 			}
 		});
+	}
+
+
+	public static void showServiceElementMap(Network network) {
+		eastSplitPanel.setWidgetHidden(serviceElementMapSplitPanel, false);
+		serviceElementMap.update(network.getServiceElements());
 	}
 }

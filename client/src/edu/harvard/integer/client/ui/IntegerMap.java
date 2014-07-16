@@ -21,6 +21,9 @@ import edu.harvard.integer.common.ID;
  */
 public class IntegerMap extends Layer {
 	
+	public static final int MAP_WIDTH = SystemSplitViewPanel.CONTENT_WIDTH / 3;
+	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT;
+	
 	/** The Constant OFFSET_X. */
 	public static final int OFFSET_X = 30;
 	
@@ -152,7 +155,7 @@ public class IntegerMap extends Layer {
 	 */
 	public Point calculateCircularLayoutPoint(int total, int i) {
 		double height = SystemSplitViewPanel.CONTENT_HEIGHT - icon_height * 2;
-        double width = SystemSplitViewPanel.CONTENT_WIDTH - icon_width * 2;
+        double width = SystemSplitViewPanel.CONTENT_WIDTH / 3 - icon_width * 2;
         double radius = 0.45 * (height < width ? height : width);
 		double angle = (2 * Math.PI * i++) / total;
     	double x = Math.cos(angle) * radius + width / 2;
