@@ -35,8 +35,6 @@ package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
 
-import edu.harvard.integer.common.util.DisplayableInterface;
-
 /**
  * @author David Taylor
  *

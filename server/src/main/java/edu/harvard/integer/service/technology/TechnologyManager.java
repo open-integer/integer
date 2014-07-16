@@ -150,6 +150,17 @@ public class TechnologyManager extends BaseManager implements TechnologyManagerL
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getChildTechnologyByParentId(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public Technology[] getChildTechnologysByParentId(ID parentId) throws IntegerException {
+		TechnologyDAO dao = persistenceManager.getTechnologyDAO();
+		
+		return dao.findByParentId(parentId);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getTopLevelTechnology()
 	 */
 	@Override

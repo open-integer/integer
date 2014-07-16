@@ -55,8 +55,8 @@ import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
-import edu.harvard.integer.common.util.DisplayableInterface;
 
 
 /**

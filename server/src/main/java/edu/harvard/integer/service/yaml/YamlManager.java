@@ -60,6 +60,8 @@ import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorS
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
+import edu.harvard.integer.common.discovery.VendorSignature;
+import edu.harvard.integer.common.discovery.VendorSignatureTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -75,6 +77,7 @@ import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.topology.SignatureValueOperator;
+import edu.harvard.integer.common.topology.ValueOpertorEnum;
 import edu.harvard.integer.common.yaml.YamlCapability;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
@@ -88,6 +91,7 @@ import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpLevelOID;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpParentChildRelationship;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment;
+import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorSignature;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.distribution.DistributionManager;
@@ -789,10 +793,7 @@ public class YamlManager extends BaseManager implements
 		}
 
 		VendorContainmentSelector selector = new VendorContainmentSelector();
-		selector.setFirmware(load.getFirmware());
-		selector.setModel(load.getModel());
-		selector.setSoftwareVersion(load.getSoftwareVersion());
-		selector.setVendor(load.getVendor());
+		selector.setSignatures(createSignatures(load.getSignatures()));
 		
 		SnmpContainment snmpContainment = discoveryManager
 				.getSnmpContainment(selector);
@@ -810,9 +811,20 @@ public class YamlManager extends BaseManager implements
 
 		if (snmpContainment == null) {
 			snmpContainment = new SnmpContainment();
-			snmpContainment.setName(load.getVendor() + ":"
-					+ load.getSoftwareVersion() + ":" + load.getModel() + ":"
-					+ load.getFirmware());
+			StringBuffer b = new StringBuffer();
+			if (selector.getSignatures() != null) {
+				for (VendorSignature signature : selector.getSignatures()) {
+					if (b.length() > 1)
+						b.append(", ");
+
+					b.append(signature.getSignatureType());
+					b.append(" ").append(signature.getValueOperator());
+					b.append(" ").append(signature.getValueOperator());
+				}
+			} else
+				b.append("All");
+			
+			snmpContainment.setName(b.toString());
 		}
 
 		SnmpContainmentType contanmentType = SnmpContainmentType.valueOf(load
@@ -837,6 +849,31 @@ public class YamlManager extends BaseManager implements
 		selector.setContainmentId(snmpContainment.getID());
 
 		discoveryManager.updateVendorContainmentSelector(selector);
+	}
+
+	/**
+	 * @param signatures
+	 * @return
+	 */
+	private List<VendorSignature> createSignatures(
+			List<YamlVendorSignature> signatures) {
+		
+		if (signatures == null)
+			return null;
+		
+		List<VendorSignature> vendorSignatures = new ArrayList<VendorSignature>();
+		
+		for (YamlVendorSignature yamlVendorSignature : signatures) {
+			VendorSignature vendorSignature = new VendorSignature();
+			vendorSignature.setSignatureType(VendorSignatureTypeEnum.valueOf(yamlVendorSignature.getName()));
+			
+			SignatureValueOperator operator = new SignatureValueOperator();
+			operator.setValue(yamlVendorSignature.getValue());
+			operator.setOperator(ValueOpertorEnum.valueOf(yamlVendorSignature.getOperator()));
+			vendorSignature.setValueOperator(operator);
+		}
+		
+		return vendorSignatures;
 	}
 
 	/**

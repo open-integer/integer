@@ -1,8 +1,4 @@
 name: hostMibContainment
-vendor: 
-model: 
-firmware: 
-softwareVersion: 
 
 snmpContainment: 
     containmentType: HostResourcesMib

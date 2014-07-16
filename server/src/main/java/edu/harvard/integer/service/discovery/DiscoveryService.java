@@ -60,9 +60,10 @@ import edu.harvard.integer.common.properties.LongPropertyNames;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.util.DisplayableInterface;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
+import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
@@ -356,6 +357,26 @@ public class DiscoveryService extends BaseService implements
 		logger.info("No response on Service Element " + se.getName()
 				+ " on IP " + ipAddress);
 
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#submitSubnetTopologyDiscovery(edu.harvard.integer.service.discovery.snmp.DiscoverSubnetTopologyTask)
+	 */
+	@Override
+	public Future<Void> submitSubnetTopologyDiscovery(
+			DiscoverCdpTopologyTask task) {
+		
+		return subPool.submit(task);
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#discoveryTopologyComplete()
+	 */
+	@Override
+	public void discoveryTopologyComplete() throws IntegerException {
+		
+		logger.info("Complete topology discovery. ");
+		
 	}
 
 }

@@ -46,9 +46,10 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.util.DisplayableInterface;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
+import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 
@@ -83,6 +84,16 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * @throws IntegerException
 	 */
 	void discoveryComplete(DiscoveryId dicoveryId) throws IntegerException;
+	
+	
+	/**
+	 * This method is called by the discovery process to notify the
+	 * DiscoveryService that the topology discovery specified by the DiscoveryId has
+	 * complete. This is only to be called by the discovery manager.
+	 * @throws IntegerException
+	 */
+	void discoveryTopologyComplete() throws IntegerException;
+	
 
 	/**
 	 * This method is called by the discovery process to report an error that
@@ -144,6 +155,9 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * @param task
 	 */
 	Future<Ipv4Range> submitSubnetDiscovery(DiscoverSubnetAsyncTask task);
+	
+	
+	Future<Void> submitSubnetTopologyDiscovery( DiscoverCdpTopologyTask task );
 
 	/**
 	 * @param serviceElementId

@@ -33,14 +33,20 @@
 
 package edu.harvard.integer.common.discovery;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.SignatureValueOperator;
+import edu.harvard.integer.common.topology.ValueOpertorEnum;
 
 /**
  * 
@@ -50,10 +56,12 @@ import edu.harvard.integer.common.ID;
  * firmware and software revision. Not all of these attributes need be filled
  * in.
  * 
- * <p>The SnmpVendorDiscoveryTemplate tells the system where to look on the systems
+ * <p>
+ * The SnmpVendorDiscoveryTemplate tells the system where to look on the systems
  * to get the model, firmware and softwareVersion data.
  * 
- * <p>The containment ID will contain the ID of the specific containment object to
+ * <p>
+ * The containment ID will contain the ID of the specific containment object to
  * use for this specific type of system. Other containment types could use SSH
  * or other protocols.
  * 
@@ -70,29 +78,11 @@ public class VendorContainmentSelector extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * This attribute must always be present. It is based on our lookup from the
-	 * SysOID retrieved from the system group.
+	 * A list of signatures that tell the system the range of systems that are
+	 * covered by an instance of the VendorContainmentSelector.
 	 */
-	private String vendor = null;
-
-	/**
-	 * The model of the system as retrieved by the SnmpVendorDiscoveryTemplate
-	 * earlier in the discovery process.
-	 */
-	private String model = null;
-
-	/**
-	 * The firmware version as retrieved from the
-	 * ServiceElementDiscoveryManager.
-	 */
-	private String firmware = null;
-
-	/**
-	 * Software version of the device as retrieved during the earlier phase of
-	 * discovery.
-	 */
-	private String softwareVersion = null;
-
+	@ElementCollection
+	private List<VendorSignature> signatures = null;
 
 	/**
 	 * The idId of the instances of the hardware containment structure class
@@ -126,66 +116,6 @@ public class VendorContainmentSelector extends BaseEntity {
 	private ID containmentId = null;
 
 	/**
-	 * @return the vendor
-	 */
-	public String getVendor() {
-		return vendor;
-	}
-
-	/**
-	 * @param vendor
-	 *            the vendor to set
-	 */
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
-
-	/**
-	 * @return the model
-	 */
-	public String getModel() {
-		return model;
-	}
-
-	/**
-	 * @param model
-	 *            the model to set
-	 */
-	public void setModel(String model) {
-		this.model = model;
-	}
-
-	/**
-	 * @return the firmware
-	 */
-	public String getFirmware() {
-		return firmware;
-	}
-
-	/**
-	 * @param firmware
-	 *            the firmware to set
-	 */
-	public void setFirmware(String firmware) {
-		this.firmware = firmware;
-	}
-
-	/**
-	 * @return the softwareVersion
-	 */
-	public String getSoftwareVersion() {
-		return softwareVersion;
-	}
-
-	/**
-	 * @param softwareVersion
-	 *            the softwareVersion to set
-	 */
-	public void setSoftwareVersion(String softwareVersion) {
-		this.softwareVersion = softwareVersion;
-	}
-
-	/**
 	 * @return the containmentId
 	 */
 	public ID getContainmentId() {
@@ -200,4 +130,35 @@ public class VendorContainmentSelector extends BaseEntity {
 		this.containmentId = containmentId;
 	}
 
+	/**
+	 * @return the signatures
+	 */
+	public List<VendorSignature> getSignatures() {
+		return signatures;
+	}
+
+	/**
+	 * @param signatures
+	 *            the signatures to set
+	 */
+	public void setSignatures(List<VendorSignature> signatures) {
+		this.signatures = signatures;
+	}
+
+	public void addEqualSignature(VendorSignatureTypeEnum type, String value) {
+		if (signatures == null)
+			signatures = new ArrayList<VendorSignature>();
+
+		VendorSignature signature = new VendorSignature();
+		signature.setName(value);
+		signature.setSignatureType(type);
+
+		SignatureValueOperator operator = new SignatureValueOperator();
+		operator.setOperator(ValueOpertorEnum.Equal);
+		operator.setValue(value);
+
+		signature.setValueOperator(operator);
+
+		signatures.add(signature);
+	}
 }

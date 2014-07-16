@@ -33,6 +33,8 @@
  */
 package edu.harvard.integer.service.persistance;
 
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.service.BaseServiceInterface;
 
 
@@ -52,5 +54,16 @@ public interface PersistenceServiceInterface extends BaseServiceInterface {
 	 * @return
 	 */
 	String showPreloads();
+
+	/**
+	 * @param file
+	 * @throws IntegerException 
+	 */
+	void loadDataFile(DataPreLoadFile file) throws IntegerException;
+
+	/**
+	 * 
+	 */
+	void loadPreLoadFiles();
 	
 }

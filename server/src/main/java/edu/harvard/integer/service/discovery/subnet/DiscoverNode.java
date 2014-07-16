@@ -42,6 +42,9 @@ import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.service.discovery.snmp.DeviceTopologyInfo;
+import edu.harvard.integer.service.discovery.snmp.NetworkConnection;
+import edu.harvard.integer.service.discovery.snmp.TopologyNode;
 
 /**
  * The Class DiscoverNode is a data object used for IP node discovery.
@@ -117,8 +120,9 @@ public class DiscoverNode extends ElementAccess {
 	
 	private Access access;
 	
+	private DeviceTopologyInfo topologyInfo = new DeviceTopologyInfo();
 
-
+	
 	/**
 	 * 
 	 */
@@ -332,7 +336,6 @@ public class DiscoverNode extends ElementAccess {
 	}
 	
 
-
 	public ServiceElement getExistingSE() {
 		return existingSE;
 	}
@@ -353,4 +356,40 @@ public class DiscoverNode extends ElementAccess {
 		}
 		stage = DiscoverStageE.Stop;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean hasProtocolConnection() {
+		
+		if ( topologyInfo.getNetConnections().size() > 0 ) {
+			return true;
+		}
+		return false;
+	}
+	
+
+	/**
+	 * Adds the topology node.
+	 *
+	 * @param tn the tn
+	 */
+	public void addTopologyNode( TopologyNode tn ) {		
+		topologyInfo.addTopologyNode(tn);
+	}
+	
+	/**
+	 * Adds the net connection.
+	 *
+	 * @param netConnection the net connection
+	 */
+	public void addNetConnection( NetworkConnection netConnection ) {
+	    topologyInfo.addNetConnection(netConnection);	
+	}
+	
+	public DeviceTopologyInfo getTopologyInfo() {
+		return topologyInfo;
+	}
+
 }

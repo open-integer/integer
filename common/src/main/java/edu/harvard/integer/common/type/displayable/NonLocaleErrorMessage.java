@@ -35,8 +35,6 @@ package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
 
-import edu.harvard.integer.common.util.DisplayableInterface;
-
 /**
  * 
  * This is a wrapper around a String that can not be converted to a users locale. This should only be used 

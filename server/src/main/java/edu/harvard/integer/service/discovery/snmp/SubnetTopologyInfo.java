@@ -30,30 +30,59 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.service.discovery.snmp;
 
-package edu.harvard.integer.common.type.displayable;
-
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author David Taylor
+ * The Class SubnetTopologyInfo is data object holding layer2 topology information on each subnet.
  *
+ * @author dchan
  */
-public class FilePathName implements DisplayableInterface {
+public class SubnetTopologyInfo {
 
-	private String filePath = null;
+	/** The subnet id. */
+	private final String subnetId;
 	
-	public FilePathName(String path) {
-		filePath = path;
-	}
+	/** The topology map.  The key is the IP Address of a discovered node. */
+	private Map<String, DeviceTopologyInfo>  topologyMap = new HashMap<String, DeviceTopologyInfo>();
 	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
+	/**
+	 * Instantiates a new subnet topology info.
+	 *
+	 * @param subnetId the subnet id
 	 */
-	@Override
-	public String toDisplayString(Locale local) {
-		
-		return filePath;
+	public SubnetTopologyInfo( String subnetId ) {
+		this.subnetId = subnetId;
 	}
 
+	/**
+	 * Gets the subnet id.
+	 *
+	 * @return the subnet id
+	 */
+	public String getSubnetId() {
+		return subnetId;
+	}
+
+	/**
+	 * Gets the topology map.
+	 *
+	 * @return the topology map
+	 */
+	public Map<String, DeviceTopologyInfo> getTopologyMap() {
+		return topologyMap;
+	}
+	
+	
+	/**
+	 * Adds the device topology info.
+	 *
+	 * @param topoInfo the topo info
+	 */
+	public void addDeviceTopologyInfo( String discoverNodeIp, DeviceTopologyInfo topoInfo ) {
+	
+		topologyMap.put(discoverNodeIp, topoInfo);
+	}
 }

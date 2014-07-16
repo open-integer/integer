@@ -275,9 +275,12 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		VendorContainmentSelector[] containmentSelectors = dao
 				.findBySelector(selector);
 
-		if (containmentSelectors == null || containmentSelectors.length == 0)
+		if (containmentSelectors == null || containmentSelectors.length == 0) {
 			return null;
 
+		}
+		
+		
 		if (logger.isDebugEnabled())
 			logger.debug("Found VendorContainmentSelector "
 					+ containmentSelectors[0].getID());

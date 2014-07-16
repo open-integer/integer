@@ -30,30 +30,90 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.service.discovery.snmp;
 
-package edu.harvard.integer.common.type.displayable;
-
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author David Taylor
+ * The Class DeviceTopologyInfo.
  *
+ * @author dchan
  */
-public class FilePathName implements DisplayableInterface {
+public class DeviceTopologyInfo {
 
-	private String filePath = null;
+	/** The topo nodes. */
+	private List<TopologyNode>  topoNodes = new ArrayList<>();
 	
-	public FilePathName(String path) {
-		filePath = path;
+	/** The net connections. */
+	private List<NetworkConnection>  netConnections = new ArrayList<>();
+	
+	private boolean topoDiscoverDone = false;
+	
+	
+
+	public void setTopoDiscoverDone() {
+		this.topoDiscoverDone = true;
 	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
+
+
+
+	public boolean isTopoDiscoverDone() {
+		return topoDiscoverDone;
+	}
+
+
+
+	/**
+	 * Gets the topo nodes.
+	 *
+	 * @return the topo nodes
 	 */
-	@Override
-	public String toDisplayString(Locale local) {
-		
-		return filePath;
+	public List<TopologyNode> getTopoNodes() {
+		return topoNodes;
 	}
+	
+	
 
+	/**
+	 * Gets the net connections.
+	 *
+	 * @return the net connections
+	 */
+	public List<NetworkConnection> getNetConnections() {
+		return netConnections;
+	}
+	
+	/**
+	 * Adds the topology node.
+	 *
+	 * @param tn the tn
+	 */
+	public void addTopologyNode( TopologyNode tn ) {	
+		
+		/**
+		 * If the topology node interface is already in the list, skip it.
+		 */
+		for ( TopologyNode t : topoNodes ) {
+			if ( t.getIfIndex() == tn.getIfIndex() ) {
+				return;
+			}
+		}
+		topoNodes.add(tn);
+	}
+	
+	/**
+	 * Adds the net connection.
+	 *
+	 * @param netConnection the net connection
+	 */
+	public void addNetConnection( NetworkConnection netConnection ) {
+		
+		for ( NetworkConnection nc : netConnections ) {
+			if ( nc.getIfIndex() == netConnection.getIfIndex() ) {
+				return;
+			}
+		}
+	    netConnections.add(netConnection);	
+	}
 }

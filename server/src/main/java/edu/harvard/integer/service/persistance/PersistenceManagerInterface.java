@@ -84,6 +84,7 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpS
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorSignatureDAO;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
 import edu.harvard.integer.service.persistance.dao.user.AuthInfoDAO;
 import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
@@ -386,5 +387,10 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	InterNetworkLinkDAO getInterNetworkLinkDAO();
+
+	/**
+	 * @return
+	 */
+	VendorSignatureDAO getVendorSignatureDAO();
 
 }

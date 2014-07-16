@@ -33,7 +33,6 @@
 package edu.harvard.integer.service.discovery.snmp;
 
 import edu.harvard.integer.common.topology.TopologyElement;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
  * @author dchan
@@ -41,41 +40,34 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
  */
 public class TopologyNode {
 	
-	private DiscoverNode discoverNode;
 	private TopologyElement topologyElm;
-	private String ifIndex;
-	private ProtocolProperty protocol;
+	private int ifIndex;
+	private boolean foundConnection = false;
 	
-	public TopologyNode( DiscoverNode discNode, TopologyElement topologyElm, String ifIndex ) {
+
+	public TopologyNode( TopologyElement topologyElm, int ifIndex ) {
 		
 		this.topologyElm = topologyElm;
 		this.ifIndex = ifIndex;
-		discoverNode = discNode;
 	}
 	
-	
-	public ProtocolProperty getProtocol() {
-		return protocol;
-	}
-
-	public void setProtocol(ProtocolProperty protocol) {
-		this.protocol = protocol;
-	}
 
 	public TopologyElement getTopologyElm() {
 		return topologyElm;
 	}
 
-	public String getIfIndex() {
+	public int getIfIndex() {
 		return ifIndex;
 	}
 	
-	public DiscoverNode getDiscoverNode() {
-		return discoverNode;
+	public boolean isFoundConnection() {
+		return foundConnection;
 	}
 
-	public String getKey() {
-		
-		return discoverNode.getIpAddress() + ":" + ifIndex;
+
+	public void setFoundConnection(boolean foundConnection) {
+		this.foundConnection = foundConnection;
 	}
+
+
 }

@@ -79,8 +79,8 @@ import edu.harvard.integer.common.snmp.SNMPIndex;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
-import edu.harvard.integer.common.util.DisplayableInterface;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
 import edu.harvard.integer.server.parser.mibparser.SNMPModuleCache;
 

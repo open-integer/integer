@@ -95,6 +95,9 @@ public class SnmpContainmentDAO extends BaseDAO {
 
 	private void checkLevels(SnmpContainment snmpContainment) {
 		
+		if (snmpContainment == null || snmpContainment.getSnmpLevels() == null)
+			return;
+		
 		if (snmpContainment.getSnmpLevels() != null) {
 			for (SnmpLevelOID levelOid : snmpContainment.getSnmpLevels()) {
 				if (getLogger().isDebugEnabled())
