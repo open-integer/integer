@@ -41,11 +41,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
@@ -78,8 +74,6 @@ public class SelectionManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
 
-	@Inject
-	private Logger logger;
 	
 	public SelectionManager() {
 		super(ManagerTypeEnum.SelectionManager);
@@ -196,66 +190,6 @@ public class SelectionManager extends BaseManager implements
 		return categoryNodes;
 	}
 
-	private List<FilterNode> getTechnologyTree() {
-		List<FilterNode> nodes = new ArrayList<FilterNode>();
-
-		FilterNode root = new FilterNode();
-
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
-				Technology.class.getName())));
-		root.setChildren(getRoutersLevel1());
-
-		nodes.add(root);
-
-		root = new FilterNode();
-
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
-				Technology.class.getName())));
-		root.setChildren(getServersLevel1());
-		nodes.add(root);
-
-		return nodes;
-	}
-
-	private List<FilterNode> getServersLevel1() {
-		List<FilterNode> nodes = new ArrayList<FilterNode>();
-
-		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		nodes.add(root);
-
-		return nodes;
-	}
-
-	private List<FilterNode> getRoutersLevel1() {
-		List<FilterNode> nodes = new ArrayList<FilterNode>();
-
-		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		return nodes;
-	}
 
 	private List<FilterNode> findChildren(TechnologyDAO dao, ID parentId)
 			throws IntegerException {
