@@ -146,8 +146,8 @@ categories:
                   description: backplane
                   parent: common system components
                
-                - name: Mibplane
-                  description: mibplane
+                - name: Midplane
+                  description: midplane
                   parent: common system components
 
                 - name: Memory
