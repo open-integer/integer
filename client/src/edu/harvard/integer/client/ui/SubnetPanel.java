@@ -2,14 +2,14 @@ package edu.harvard.integer.client.ui;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import edu.harvard.integer.client.widget.TitlePanel;
+import edu.harvard.integer.client.widget.HvTitlePanel;
 import edu.harvard.integer.common.topology.Network;
 
 public class SubnetPanel extends VerticalPanel {
 
 	public static String SUBNETMAP_TITLE = "Subnet ";
 	
-	private TitlePanel titlePanel = new TitlePanel(SUBNETMAP_TITLE);
+	private HvTitlePanel titlePanel = new HvTitlePanel(SUBNETMAP_TITLE);
 	private SubnetMapPanel subnetMapPanel = new SubnetMapPanel(IntegerMap.MAP_WIDTH, IntegerMap.MAP_HEIGHT);
 	
 	public SubnetPanel() {
