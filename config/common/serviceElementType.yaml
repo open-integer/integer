@@ -80,4 +80,21 @@ serviceElementTypes:
            uri: sysLocation
            capability: system-location
           
+    - name: unknownSystem
+      description: The Service element type for unknown device.
+      accessMethod:
+          protocol: NONE
+      serviceElementTypeTranslates:
+         - name: unknownSystem
+           mapping: direct
+           category: System
+
+    - name: connectionEndPort
+      description: The Service element type for connection end port which contain by an unknown system.
+      accessMethod:
+          protocol: NONE
+      serviceElementTypeTranslates:
+         - name: connectionEndPort
+           mapping: direct
+           category: Port
 

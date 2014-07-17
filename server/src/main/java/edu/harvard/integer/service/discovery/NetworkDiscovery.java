@@ -93,6 +93,11 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
      */
 	private List<DiscoverNode> linkLayerConnections = new ArrayList<DiscoverNode>();
 	
+	/**
+	 * Map to hold discovered unknown service elements.  The key is the device id.
+	 */
+	private ConcurrentHashMap<String, ServiceElement>  unknownElmMap = new ConcurrentHashMap<>();
+	
 
 	/** The discover seed. */
 	private final List<IpDiscoverySeed> discoverSeeds;
@@ -187,11 +192,15 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 */
 	public void discoveredElement(DiscoverNode discoverNode, String subnetId ) {
 		
+		DiscoveryServiceInterface discoveryService = null;
 		try {
-			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveredServiceElement(discoverNode.getAccessElement());
-		} catch (IntegerException e) {
+			discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+			discoveryService.discoveredServiceElement(discoverNode.getAccessElement());
+		} 
+		catch (IntegerException e) {
 			logger.error("Error saveing ServiceElement " + discoverNode.getAccessElement());
 		}		
+		
 		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
 		
 		/**
@@ -201,27 +210,9 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			addConnectionNode(subnetId, discoverNode);
 		}
 		
-		/*
-		 * Look like the CDP neighbor connections can cross different subnets.
-		 * In this case the following code which bases on subnet is not valid.
-		 * 
 		if ( subnetComplete ) {
-			
-			 List<DiscoverNode> discNodes =  linkLayerConnection.remove(subnetId);
-			 DiscoveryServiceInterface discoveryService = null;
-			 
-			 try {
-				discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
-				
-				DiscoverSubnetTopologyTask task = new DiscoverSubnetTopologyTask(discNodes, this);
-				discoveryService.submitSubnetTopologyDiscovery(task);
-			} 
-			 catch (IntegerException e) {
-				 
-				 logger.error("Cannot get discovery service " + e.getMessage());
-			}
+			logger.info("Subnet discovery complete " + subnetId);
 		}
-		*/
 	}
 	
 	
@@ -403,5 +394,15 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		return discoverId;
 	}
 
+	
+	public void addUnknownServiceElement( String elmId, ServiceElement se ) {
+		
+		unknownElmMap.put( elmId, se);
+	}
+	
+	public ServiceElement getUnknownServiceElement( String elmId ) {
+		
+		return unknownElmMap.get(elmId);
+	}
 
 }

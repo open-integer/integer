@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
+import org.snmp4j.smi.IpAddress;
+
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -48,6 +50,7 @@ import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityMa
 public class CdpConnection implements NetworkConnection {
 	
 	private int connifIndex;
+
 	private String remoteIpAddress;
 	private String remotePort;
 	private String remoteDeviceId;
@@ -65,10 +68,15 @@ public class CdpConnection implements NetworkConnection {
 		
 		ManagementObjectCapabilityManagerInterface capMgr = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
 		for ( int i=0; i<se.getAttributeValues().size(); i++ ) { 
-			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(0);
+			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(i);
 			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
 			 if ( snmp.getName().equals("cdpCacheAddress")) {
-				 remoteIpAddress = objVal.getValue().toString();
+				 
+				 String[] ipAddrs = objVal.getValue().toString().split(":");
+				 String ip = Integer.parseInt(ipAddrs[0], 16) + "." + Integer.parseInt(ipAddrs[1], 16) + "." +
+						 Integer.parseInt(ipAddrs[2], 16) + "." + Integer.parseInt(ipAddrs[3], 16);
+				 
+				 remoteIpAddress = ip;
 			 }			 
 			 else if ( snmp.getName().equals("cdpCacheVersion") ) {
 				 remoteVersion = objVal.getValue().toString();
@@ -83,8 +91,6 @@ public class CdpConnection implements NetworkConnection {
 				 remotePort = objVal.getValue().toString();
 			 }
 		}
-		
-		se.getServiceElementTypeId();
 	}
 	
 
@@ -126,6 +132,11 @@ public class CdpConnection implements NetworkConnection {
 	@Override
 	public int getIfIndex() {
 		return connifIndex;
+	}
+
+
+	public void setConnifIndex(int connifIndex) {
+		this.connifIndex = connifIndex;
 	}
 
 }

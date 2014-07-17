@@ -17,22 +17,23 @@ serviceElementTypes:
       managementObjects:
           - name: ipAdEntAddr
             uri: ipAdEntAddr
-            capability: topoogy-ipv4Address
+            capability: ipv4Address
 
           - name: ipAdEntIfIndex
             uri: ipAdEntIfIndex
+            capability: ifIndex
 
           - name: ipAdEntNetMask
             uri: ipAdEntNetMask
-            capability: topology-ipNetMask
+            capability: ipNetMask
 
           - name: ipAdEntBcastAddr
             uri: ipAdEntBcastAddr
-            capability: topology-ipBraodcastAddress
+            capability: ipBraodcastAddress
             
           - name: ipAdEntReasmMaxSize
             uri: ipAdEntReasmMaxSize
-            capability: topology-ipReasmMaxSize
+            capability: ipReasmMaxSize
 
     - name: ipv4IpToPhysical
       description: The service element contains IPv4 address to physical mapping.

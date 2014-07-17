@@ -11,6 +11,9 @@ technologies:
           - name: interface
             description: Interface
             capabilities:
+                - name: ifIndex
+                  description: A unique value for each interface.
+
                 - name: interface-description
                   description: Description
 

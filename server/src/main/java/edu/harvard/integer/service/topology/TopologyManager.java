@@ -201,7 +201,7 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		
 		interDeviceLink = dao.update(interDeviceLink);
 		
-//		checkNetworks(interDeviceLink);
+		checkNetworks(interDeviceLink);
 		
 		return interDeviceLink;
 	}

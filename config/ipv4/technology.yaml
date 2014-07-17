@@ -11,16 +11,19 @@ technologies:
           - name: IPv4Address
             description: Ip Address for IPv4
             capabilities:
-                - name: topoogy-ipv4Address
+                - name: ipv4Address
                   description: Ipv4 Address
 
-                - name: topology-ipNetMask
+                - name: ifIndex
+                  description: ifIndex
+
+                - name: ipNetMask
                   description: IP net mask
 
-                - name: topology-ipBraodcastAddress
+                - name: ipBraodcastAddress
                   description: IP Broadcast Address
 
-                - name: topology-ipReasmMaxSize
+                - name: ipReasmMaxSize
                   description: IP Reasm Max Size.
 
           - name: IPtoPhyscial

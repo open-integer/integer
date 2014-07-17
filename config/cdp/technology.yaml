@@ -77,7 +77,7 @@ technologies:
                 - name: cdp-cache-deviceId
                   description: The device ID of the remote device.
 
-                - name: cdp-cache-port
+                - name: cdp-cache-devicePort
                   description: The port on the remote device that we're connected to.
 
                 - name: cdp-cache-platform

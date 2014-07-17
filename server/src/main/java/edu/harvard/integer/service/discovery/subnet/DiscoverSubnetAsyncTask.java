@@ -236,13 +236,11 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     				logger.info("Discover being stop " );
     				break;
     			}
-    			
-    			String ip = range.next();    			
+    			String ip = range.next(); 
     			DiscoverNode dn = new DiscoverNode(ip);
     			dn.setSubnetId(seed.getSeedId());
     			
     			dn.setAccess(accesses.get(0));
-    			
     			discoverMap.put(dn.getIpAddress(), dn);
     					
     			PDU pdu = new PDU();

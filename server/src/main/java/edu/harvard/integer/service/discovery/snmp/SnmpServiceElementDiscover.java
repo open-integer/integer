@@ -476,6 +476,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	}
 	
 	
+	
+	
 	/**
 	 * Discover a service element from a device.  The retrieving information is specified in the pass in
 	 * service element type of the service element:
@@ -494,7 +496,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		/**
 		 * Setting the general information to the Service Element.
 		 */
-		ServiceElement se = new ServiceElement();
+		ServiceElement se = new ServiceElement();		
 		se.setUpdated(new Date());
 		
 		if ( discNode.getExistingSE() == null ) {
@@ -535,6 +537,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		if ( set.getName().equals("cdpCache")) {
 			
 			CdpConnection cdpConnection = new CdpConnection(se);
+			OID o = new OID(instOid);
+			cdpConnection.setConnifIndex(o.get(0));
+			
 			discNode.addNetConnection(cdpConnection);
 		}
 		
@@ -600,6 +605,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				}
 				else {
 					
+					/*
 					OID[] ids = new OID[1];
 					ids[0] = new OID(snmp.getOid());
 					List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(ept, ids);
@@ -623,6 +629,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							uids.add(sv.getID());
 						}	
 					}
+					*/
 				}
 				
 			}
@@ -766,7 +773,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	public String getIpAddressFromSE( ServiceElement se ) throws IntegerException {
 	
 		for ( int i=0; i<se.getAttributeValues().size(); i++ ) { 
-			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(0);
+			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(i);
 			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
 			 if ( snmp.getName().equals("ipAdEntAddr")) {
 				 return objVal.getValue().toString();
@@ -785,7 +792,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	public String getIpMaskFromSE( ServiceElement se ) throws IntegerException {
 		
 		for ( int i=0; i<se.getAttributeValues().size(); i++ ) { 
-			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(0);
+			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(i);
 			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
 			 if ( snmp.getName().equals("ipAdEntNetMask")) {
 				 return objVal.getValue().toString();
@@ -804,7 +811,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	public int getIfIndex ( ServiceElement se ) throws IntegerException {
 		
 		for ( int i=0; i<se.getAttributeValues().size(); i++ ) { 
-			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(0);
+			 ManagementObjectValue<?> objVal =  se.getAttributeValues().get(i);
 			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
 			 if ( snmp.getName().equals("ipAdEntIfIndex")) {
 				 return Integer.parseInt(objVal.getValue().toString());

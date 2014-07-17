@@ -673,6 +673,10 @@ public class ParentChildServiceElementDiscovery extends
 				         + " Index:" + row.getIndex() + " VendorType:" + row.getSubTypeValue() );
 		
 	    se.setServiceElementTypeId(set.getID());
+	    if ( se.getName().equals("cevSensor 6")) {
+	    	System.out.println("SE " + se.getName());
+	    }
+	    
 	    /**
 	     * Discover more detail for that service element.
 	     */

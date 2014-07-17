@@ -37,15 +37,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import sun.util.logging.resources.logging;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
+import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
+import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
  * The Class DiscoverSubnetTopologyTask.  The topology discovery is assumed all nodes have been discovered
@@ -69,6 +78,9 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 	/** The net disc. */
 	private NetworkDiscovery netDiscover;
 	
+	/** The logger. */
+    private static Logger logger = LoggerFactory.getLogger(DiscoverCdpTopologyTask.class);
+	
 	/**
 	 * Instantiates a new discover subnet topology task.
 	 *
@@ -87,10 +99,17 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 	 * @see java.util.concurrent.Callable#call()
 	 */
 	@Override
-	public Void call() throws Exception {
+	public Void call()  {
 		
 		try {
-			discoverNodeLink();
+			try {
+				discoverNodeLink();
+			} 
+			catch (IntegerException e) {
+				
+				e.printStackTrace();
+				logger.error("Cdp discovery error on network discover id " + netDiscover.getDiscoverId().toString() + " " + e.getLocalizedMessage());
+			}
 		}
 		finally {
 			netDiscover.discoverTopologyComplete();
@@ -196,6 +215,8 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			                   List<CdpConnectionNode> nextLevelNodes ) throws IntegerException {
 		
 		TopologyManagerInterface topologyMgr = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
+		ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
+		ServiceElementAccessManagerInterface accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 		
 		TopologyNode foundTn = null;
 		for ( TopologyNode tn : deviceInfo.getTopoNodes() ) {
@@ -217,6 +238,11 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		else {
 			nextLevelNodes.add(connNode);
 		}
+		
+		TopologyElement sourceTe = foundTn.getTopologyElm();
+		if ( sourceTe.getInterDeviceLinks() == null ) {
+			sourceTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
+		}
 		if ( connNode != null ) {
 			
 			connNode.associatedTn.setFoundConnection(true);
@@ -230,6 +256,10 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			upLink.setLayer(LayerTypeEnum.Two);
 			topologyMgr.updateInterDeviceLink(upLink);
 			
+			sourceTe.getInterDeviceLinks().add(upLink);
+			topologyMgr.updateTopologyElement(sourceTe);
+			
+			
             InterDeviceLink downLink = new InterDeviceLink();
 			downLink.setCreated(new Date());
 			downLink.setDestinationAddress(foundTn.getTopologyElm().getAddress().get(0));
@@ -238,12 +268,81 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			downLink.setSourceServiceElementId(connNode.associatedNode.getAccessElement().getID());
 			downLink.setLayer(LayerTypeEnum.Two);
 			topologyMgr.updateInterDeviceLink(downLink);
+			
+			TopologyElement destTe = connNode.associatedTn.getTopologyElm();			
+			if ( destTe.getInterDeviceLinks() == null ) {
+				destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
+			}
+			destTe.getInterDeviceLinks().add(downLink);
+			topologyMgr.updateTopologyElement(destTe);
 		}
 		else {
-			/**
-			 * If we cannot find the node, the node can be considering non-accessible.
-			 * In this case, Integer will create a generic device node.
-			 */					
+			
+			ServiceElementType set = discMgr.getServiceElementTypeByName("unknownSystem");
+			ServiceElement nodeSe = netDiscover.getUnknownServiceElement(cdpConn.getRemoteDeviceId());
+			
+			if ( nodeSe == null ) {
+				nodeSe = new ServiceElement();		
+				nodeSe.setUpdated(new Date());
+				nodeSe.setServiceElementTypeId(set.getID());
+				
+				nodeSe.setName(cdpConn.getRemoteDeviceId());
+				StringBuffer sb = new StringBuffer();
+				
+				sb.append("System Platform: " + cdpConn.getRemotePlatform());
+				sb.append("System version: " + cdpConn.getRemoteVersion());			
+				nodeSe.setDescription(sb.toString());
+				
+				nodeSe = accessMgr.updateServiceElement(nodeSe);
+				netDiscover.addUnknownServiceElement(cdpConn.getRemoteDeviceId(), nodeSe);
+			}
+            
+			set = discMgr.getServiceElementTypeByName("connectionEndPort");
+			ServiceElement se = new ServiceElement();		
+			se.setUpdated(new Date());
+			se.setServiceElementTypeId(set.getID());			
+			se.setName(cdpConn.getRemotePort());
+			se.setDescription("IPAddress: " + cdpConn.getRemoteIpAddress());				
+			se = accessMgr.updateServiceElement(se);
+			
+            InterDeviceLink upLink = new InterDeviceLink();
+			upLink.setCreated(new Date());
+			upLink.setSourceAddress(foundTn.getTopologyElm().getAddress().get(0));
+			Address addr = new Address();
+			addr.setAddress(cdpConn.getRemoteIpAddress());	
+			upLink.setDestinationAddress(addr);
+			upLink.setSourceServiceElementId(dn.getAccessElement().getID());
+			upLink.setDestinationServiceElementId(nodeSe.getID());
+			upLink.setLayer(LayerTypeEnum.Two);
+			
+			upLink = topologyMgr.updateInterDeviceLink(upLink);
+			
+			sourceTe.getInterDeviceLinks().add(upLink);
+			sourceTe = topologyMgr.updateTopologyElement(sourceTe);
+			
+			TopologyElement destTe = new TopologyElement();
+			destTe.setAddress(new ArrayList<Address>());
+			destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
+			
+			Address remoteAddr = new Address();
+			remoteAddr.setAddress(cdpConn.getRemoteIpAddress());
+			destTe.getAddress().add(remoteAddr);
+			destTe.setServiceElementId(se.getID());
+			
+            InterDeviceLink downLink = new InterDeviceLink();
+			downLink.setCreated(new Date());
+			downLink.setDestinationAddress(foundTn.getTopologyElm().getAddress().get(0));
+			
+			downLink.setSourceAddress(addr);
+			downLink.setDestinationServiceElementId(dn.getAccessElement().getID());
+			downLink.setSourceServiceElementId(nodeSe.getID());
+			downLink.setLayer(LayerTypeEnum.Two);
+			downLink = topologyMgr.updateInterDeviceLink(downLink);
+			
+			destTe.getInterDeviceLinks().add(downLink);
+			destTe = topologyMgr.updateTopologyElement(destTe);
+			
+			logger.info("Create link for remote ip address " + cdpConn.getRemoteIpAddress());
 		}				
 		
 	}
