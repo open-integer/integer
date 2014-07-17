@@ -557,22 +557,19 @@ public class YamlManager extends BaseManager implements
 						serviceElementType = new ServiceElementType();
 						serviceElementType.setCategory(managementObjectManager.getCategoryByName(typeTranslate.getCategory()));
 						serviceElementType.setName(typeTranslate.getName());
-						serviceElementType
-								.setDescription(yamlServiceElementType
-										.getDescription());
-						serviceElementType.addSignatureValue(null,
-								SignatureTypeEnum.Vendor,
+						serviceElementType.setDescription(yamlServiceElementType.getDescription());
+						
+					}
+					serviceElementType.addSignatureValue(null, SignatureTypeEnum.Vendor,
 								yamlServiceElementType.getVendor());
 
-						serviceElementType.setAttributeIds(exemplarSet
-								.getAttributeIds());
-						serviceElementType
-								.setUniqueIdentifierCapabilities(exemplarSet
+					serviceElementType.setAttributeIds(exemplarSet.getAttributeIds());
+					serviceElementType.setUniqueIdentifierCapabilities(exemplarSet
 										.getUniqueIdentifierCapabilities());
 
-						serviceElementTypeDao.update(serviceElementType);
+					serviceElementTypeDao.update(serviceElementType);
 
-					}
+					
 				}
 			}
 		}
