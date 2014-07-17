@@ -33,31 +33,15 @@
 
 package edu.harvard.integer.common.yaml.vendorcontainment;
 
+import java.util.List;
+
 /**
  * @author David Taylor
- *
+ * 
  */
 public class YamlVendorContainment {
-	
-	private String vendor = null;
 
-	/**
-	 * The model of the system as retrieved by the SnmpVendorDiscoveryTemplate
-	 * earlier in the discovery process.
-	 */
-	private String model = null;
-
-	/**
-	 * The firmware version as retrieved from the
-	 * ServiceElementDiscoveryManager.
-	 */
-	private String firmware = null;
-
-	/**
-	 * Software version of the device as retrieved during the earlier phase of
-	 * discovery.
-	 */
-	private String softwareVersion = null;
+	private List<YamlVendorSignature> signatures = null;
 
 	private YamlSnmpContainment snmpContainment = null;
 
@@ -72,59 +56,18 @@ public class YamlVendorContainment {
 	}
 
 	/**
-	 * @return the vendor
+	 * @return the signatures
 	 */
-	public String getVendor() {
-		return vendor;
+	public List<YamlVendorSignature> getSignatures() {
+		return signatures;
 	}
 
 	/**
-	 * @param vendor the vendor to set
+	 * @param signatures
+	 *            the signatures to set
 	 */
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
-
-	/**
-	 * @return the model
-	 */
-	public String getModel() {
-		return model;
-	}
-
-	/**
-	 * @param model the model to set
-	 */
-	public void setModel(String model) {
-		this.model = model;
-	}
-
-	/**
-	 * @return the firmware
-	 */
-	public String getFirmware() {
-		return firmware;
-	}
-
-	/**
-	 * @param firmware the firmware to set
-	 */
-	public void setFirmware(String firmware) {
-		this.firmware = firmware;
-	}
-
-	/**
-	 * @return the softwareVersion
-	 */
-	public String getSoftwareVersion() {
-		return softwareVersion;
-	}
-
-	/**
-	 * @param softwareVersion the softwareVersion to set
-	 */
-	public void setSoftwareVersion(String softwareVersion) {
-		this.softwareVersion = softwareVersion;
+	public void setSignatures(List<YamlVendorSignature> signatures) {
+		this.signatures = signatures;
 	}
 
 	/**
@@ -135,10 +78,11 @@ public class YamlVendorContainment {
 	}
 
 	/**
-	 * @param snmpContainment the snmpContainment to set
+	 * @param snmpContainment
+	 *            the snmpContainment to set
 	 */
 	public void setSnmpContainment(YamlSnmpContainment snmpContainment) {
 		this.snmpContainment = snmpContainment;
 	}
-	
+
 }

@@ -41,11 +41,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
@@ -54,6 +50,7 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
+import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -77,8 +74,6 @@ public class SelectionManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
 
-	@Inject
-	private Logger logger;
 	
 	public SelectionManager() {
 		super(ManagerTypeEnum.SelectionManager);
@@ -112,20 +107,23 @@ public class SelectionManager extends BaseManager implements
 		List<FilterNode> nodes = new ArrayList<FilterNode>();
 		List<FilterNode> routing = new ArrayList<FilterNode>();
 
-		if (technologies != null && technologies.length > 0)
-			for (FilterNode filterNode : findChildren(dao,
-					technologies[0].getID())) {
+		if (technologies != null && technologies.length > 0) {
+			Technology[] children = dao.findByParentId(technologies[0].getID());
+	
+			for (Technology technology : children) {
+				FilterNode node = new FilterNode();
+				node.setItemId(technology.getID());
+				node.setName(technology.getName());
+				node.setChildren(findChildren(dao, technology.getID()));
 
-				if ("hardware".equals(filterNode.getName().toLowerCase())
-						|| "software".equals(filterNode.getName().toLowerCase())
-						|| "physical connectivity".equals(filterNode.getName().toLowerCase())
-						|| "data link protocols".equals(filterNode.getName().toLowerCase()))
-
-					nodes.add(filterNode);
+				if (LayerTypeEnum.Unknown.equals(technology.getLayer()))
+					nodes.add(node);
 				else
-					routing.add(filterNode);
+					routing.add(node);
 			}
 
+		}
+		
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
 		filter.setTechnologies(nodes);
@@ -192,66 +190,6 @@ public class SelectionManager extends BaseManager implements
 		return categoryNodes;
 	}
 
-	private List<FilterNode> getTechnologyTree() {
-		List<FilterNode> nodes = new ArrayList<FilterNode>();
-
-		FilterNode root = new FilterNode();
-
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
-				Technology.class.getName())));
-		root.setChildren(getRoutersLevel1());
-
-		nodes.add(root);
-
-		root = new FilterNode();
-
-		root.setItemId(new ID(Long.valueOf(1), "Routers", new IDType(
-				Technology.class.getName())));
-		root.setChildren(getServersLevel1());
-		nodes.add(root);
-
-		return nodes;
-	}
-
-	private List<FilterNode> getServersLevel1() {
-		List<FilterNode> nodes = new ArrayList<FilterNode>();
-
-		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Server1", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Server2", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		nodes.add(root);
-
-		return nodes;
-	}
-
-	private List<FilterNode> getRoutersLevel1() {
-		List<FilterNode> nodes = new ArrayList<FilterNode>();
-
-		FilterNode root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(1), "Router1", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(2), "Router2", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		root = new FilterNode();
-		root.setItemId(new ID(Long.valueOf(3), "Router3", new IDType(
-				Technology.class.getName())));
-		nodes.add(root);
-
-		return nodes;
-	}
 
 	private List<FilterNode> findChildren(TechnologyDAO dao, ID parentId)
 			throws IntegerException {

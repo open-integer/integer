@@ -31,29 +31,63 @@
  *      
  */
 
-package edu.harvard.integer.common.type.displayable;
-
-import java.util.Locale;
+package edu.harvard.integer.common.yaml.vendorcontainment;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public class FilePathName implements DisplayableInterface {
+public class YamlVendorSignature {
 
-	private String filePath = null;
-	
-	public FilePathName(String path) {
-		filePath = path;
-	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
+	private String name = null;
+
+	private String operator = null;
+
+	private String value = null;
+
+	/**
+	 * @return the name
 	 */
-	@Override
-	public String toDisplayString(Locale local) {
-		
-		return filePath;
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the operator
+	 */
+	public String getOperator() {
+		return operator;
+	}
+
+	/**
+	 * @param operator
+	 *            the operator to set
+	 */
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	/**
+	 * @return the value
+	 */
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value
+	 *            the value to set
+	 */
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }

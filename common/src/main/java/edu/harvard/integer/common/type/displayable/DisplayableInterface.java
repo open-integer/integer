@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.common.util;
+package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
 

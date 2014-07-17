@@ -45,8 +45,8 @@ import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.InterDeviceLink;
-import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -94,6 +94,41 @@ public class InterDeviceLinkDAO extends BaseDAO {
 		TypedQuery<InterDeviceLink> typeQuery = getEntityManager().createQuery(query);
 		typeQuery.setParameter(sourceAddressField, sourceAddress);
 		typeQuery.setParameter(destAddressField, destAddress);
+
+		List<InterDeviceLink> resultList = typeQuery.getResultList();
+
+		return (InterDeviceLink[]) resultList.toArray(new InterDeviceLink[resultList
+				.size()]);
+	}
+
+	/**
+	 * @param sourceAddress
+	 * @param destAddress
+	 * @return
+	 */
+	public InterDeviceLink[] findBySourceDestServiceElementIDs(ID sourceId,
+			ID destId) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<InterDeviceLink> query = criteriaBuilder.createQuery(InterDeviceLink.class);
+
+		Root<InterDeviceLink> from = query.from(InterDeviceLink.class);
+		query.select(from);
+
+		ParameterExpression<ID> sourceAddressField = criteriaBuilder
+				.parameter(ID.class);
+
+		ParameterExpression<ID> destAddressField = criteriaBuilder
+				.parameter(ID.class);
+
+		query.select(from).where(criteriaBuilder.and(
+				criteriaBuilder.equal(from.get("sourceServiceElementId"), sourceAddressField),
+				criteriaBuilder.equal(from.get("destinationServiceElementId"), destAddressField)));
+
+		TypedQuery<InterDeviceLink> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(sourceAddressField, sourceId);
+		typeQuery.setParameter(destAddressField, destId);
 
 		List<InterDeviceLink> resultList = typeQuery.getResultList();
 

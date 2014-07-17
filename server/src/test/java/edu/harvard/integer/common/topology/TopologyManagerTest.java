@@ -124,10 +124,26 @@ public class TopologyManagerTest {
 	}
 	
 	private InterDeviceLink createInterDeviceLink() {
+		
+		ServiceElement sourceServiceElement = null;
+		ServiceElement destServiceElement = null;
+		try {
+			sourceServiceElement = serviceElementManger.updateServiceElement(createServiceElement(sourceAddress.getAddress()));
+			destServiceElement = serviceElementManger.updateServiceElement(createServiceElement(destAddress.getAddress()));
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
 		InterDeviceLink link = new InterDeviceLink();
 		link.setCreated(new Date());
 		link.setSourceAddress(sourceAddress);
+		link.setSourceServiceElementId(sourceServiceElement.getID());
+		
 		link.setDestinationAddress(destAddress);
+		link.setDestinationServiceElementId(destServiceElement.getID());
+		
 		link.setLayer(LayerTypeEnum.TwoAndHalf);
 		
 		return link;
@@ -135,15 +151,23 @@ public class TopologyManagerTest {
 	
 	@Test
 	public void addInterDeviceLink() {
+
+		insertInterDeviceLink();
+	}
+	
+	private InterDeviceLink insertInterDeviceLink() {
+
 		InterDeviceLink link = createInterDeviceLink();
 		
 		try {
-			topologyManager.updateInterDeviceLink(link);
+			link = topologyManager.updateInterDeviceLink(link);
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
 			fail(e.toString());
 		}
+		
+		return link;
 	}
 	
 	@Test
@@ -165,6 +189,27 @@ public class TopologyManagerTest {
 			fail(e.toString());
 		}
 	}
+	
+	@Test
+	public void getInterDeviceLinksBetweenDevices() {
+		InterDeviceLink srcLink = insertInterDeviceLink();
+	
+		InterDeviceLink[] links = null;
+		try {
+			links = topologyManager.getInterDeviceLinksBySourceDestServiceElementIDs(srcLink.getSourceServiceElementId(), srcLink.getDestinationServiceElementId());
+			
+		} catch (IntegerException e) {
+
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert (links != null);
+		assert (links.length > 0);
+			
+	}
+	
+	
 	
 	@Test
 	public void addNetwork() {
@@ -218,9 +263,47 @@ public class TopologyManagerTest {
 	}
 	
 	@Test
+	public void getInterNetworkLinks() {
+		
+		Network network = null;
+		Network destnetwork = null;
+		try {
+			network = topologyManager.getNetworkByAddress(sourceAddress);
+			if (network == null) {
+				insertInterDeviceLink();
+				
+				network = topologyManager.getNetworkByAddress(sourceAddress);
+			}
+		
+			destnetwork = topologyManager.getNetworkByAddress(destAddress);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert (network != null);
+		assert (destnetwork != null);
+		
+		InterNetworkLink[] links = null;
+		
+		try {
+			links = topologyManager.getInterNetworkLinksBySourceDestNetworkIDs(network.getID(), destnetwork.getID());
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert(links != null);
+		assert(links.length > 0);
+	}
+	
+	@Test
 	public void createFakeData() {
 
-		File deviceFile = new File("src/test/resources/topology");
+		File deviceFile = new File("/Users/dtaylor/topology");
 		
 		BufferedReader br = null;
 		String line = null;
@@ -281,12 +364,15 @@ public class TopologyManagerTest {
 			}
 	 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.warn("topology file not found!! No fake data will be created");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
+			fail(e.toString());
 		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
+			fail(e.toString());
 		} finally {
 			if (br != null) {
 				try {
@@ -343,26 +429,6 @@ public class TopologyManagerTest {
 		return link;
 	}
 
-	private Network findNetwork(String address, List<Network> networks) {
-		for (Network network : networks) {
-			if (network.getName().equals(address))
-				return network;
-		}
-		
-		return null;
-	}
-	
-	private Network createNetwork(String address) {
-		Network network = new Network();
-		network.setCreated(new Date());
-		network.setModified(new Date());
-		network.setName(address);
-		network.setServiceElements(new ArrayList<ServiceElement>());
-		network.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
-		
-		return network;
-	}
-
 	/**
 	 * @param string
 	 * @return
@@ -378,22 +444,6 @@ public class TopologyManagerTest {
 	}
 
 
-	/**
-	 * @param string
-	 * @param serviceElements
-	 * @return
-	 */
-	private ServiceElement getServiceElementByAddress(String string,
-			List<ServiceElement> serviceElements) {
-		
-		for (ServiceElement serviceElement : serviceElements) {
-			if (serviceElement.getName().equals(string))
-				return serviceElement;
-		}
-		
-		return null;
-	}
-	
 	@Test
 	public void getLinksForSourceDestAddress() {
 		InterDeviceLink[] links = null;

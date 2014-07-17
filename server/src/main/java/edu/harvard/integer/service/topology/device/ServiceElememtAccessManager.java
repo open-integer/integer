@@ -33,6 +33,8 @@
 
 package edu.harvard.integer.service.topology.device;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -260,6 +262,13 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	public ServiceElement getServiceElementByIpAddress(String ipAddress)
 			throws IntegerException {
 		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	public ServiceElement getServieElementByUniqueIDValues(List list) throws IntegerException {
+		// Get service element by unique ID values.
+		
 		return null;
 	}
 }

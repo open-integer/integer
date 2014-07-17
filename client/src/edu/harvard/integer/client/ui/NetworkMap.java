@@ -15,7 +15,6 @@ import com.google.gwt.touch.client.Point;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.InterNetworkLink;
 import edu.harvard.integer.common.topology.Network;
@@ -32,7 +31,7 @@ import edu.harvard.integer.common.topology.NetworkInformation;
 public class NetworkMap extends IntegerMap {
 	
 	/**
-	 * Update network information including network lkist and link list
+	 * Update network information including network lkist and link list.
 	 *
 	 * @param networkkInfo the networkk info
 	 */
@@ -46,29 +45,16 @@ public class NetworkMap extends IntegerMap {
 	 *
 	 * @param result the result
 	 */
-	private void update(BaseEntity[] result) {
+	private void update(Network[] result) {
 		entityMap.clear();
 		removeAll();
 		init_layout(result.length);
 		
-		// === testing only first 4 points ==
-		int N = 10;
-		init_layout(N);
-		// ==================================
-		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.network();
 		
-		for (final BaseEntity entity : result) {
-			if (!(entity instanceof Network))
-				continue;
-			
-			// === test only first 4 points ====
-			if (i >= N)
-				break;
-			
-			Point point = calculatePoint(N, i++);
-			// Point point = calculatePoint(result.length, i++);
+		for (final Network entity : result) {
+			Point point = calculatePoint(result.length, i++);
 			entityMap.put(entity.getID(), point);
 			pointList.add(point);
 			
@@ -95,7 +81,8 @@ public class NetworkMap extends IntegerMap {
 	
 	/**
 	 * Draw links.
-	 * @param links 
+	 *
+	 * @param links the links
 	 */
 	private void drawLinks(InterNetworkLink[] links) {
 		for (final InterNetworkLink link : links) {
@@ -107,11 +94,18 @@ public class NetworkMap extends IntegerMap {
 			if (p1 == null || p2 == null)
 				continue;
 			
-			// draw line between p0 and p
+			// draw line between p1 and p2
 			drawLink(link, p1, p2);
 		}
 	}
 	
+	/**
+	 * Draw link.
+	 *
+	 * @param link the link
+	 * @param p1 the p1
+	 * @param p2 the p2
+	 */
 	private void drawLink(final InterNetworkLink link, Point p1, Point p2) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();
 		
@@ -122,10 +116,6 @@ public class NetworkMap extends IntegerMap {
 		
 		Line line = new Line(x1, y1, x2, y2);
 		ColorName colorName = ColorName.BLUE;
-		if (link.getName().equalsIgnoreCase("link-2-4"))
-			colorName = ColorName.RED;
-		else
-			colorName = ColorName.GREEN;
 //		if (linkStatus == null)
 //			colorName = ColorName.GREY;
 //		else if (linkStatus.equalsIgnoreCase("up"))
@@ -133,7 +123,7 @@ public class NetworkMap extends IntegerMap {
 //		else if (linkStatus.equalsIgnoreCase("down"));
 //			colorName = ColorName.RED;
 			
-        line.setStrokeColor(ColorName.GREEN).setStrokeWidth(3).setFillColor(colorName);
+        line.setStrokeColor(colorName).setStrokeWidth(line_width).setFillColor(colorName);
         
         line.addNodeMouseEnterHandler(new NodeMouseEnterHandler() {  
             
@@ -161,7 +151,8 @@ public class NetworkMap extends IntegerMap {
 
 			@Override
 			public void onNodeMouseClick(NodeMouseClickEvent event) {
-				LinkDetailsPanel detailsPanel = new LinkDetailsPanel(link);
+				LinkDetailsPanel detailsPanel = new LinkDetailsPanel();
+				detailsPanel.update(link);
 				HvDialogBox detailsDialog = new HvDialogBox("Link Details", detailsPanel);
 				detailsDialog.enableOkButton(false);
 				detailsDialog.setSize("400px", "150px");

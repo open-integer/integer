@@ -33,28 +33,26 @@
 
 package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
+import edu.harvard.integer.common.discovery.VendorSignature;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * The DAO is responsible for persisting the VendorContainmentSelector. All
- * queries will be done in this class. 
- *
+ * queries will be done in this class.
+ * 
  * @author David Taylor
- *
+ * 
  */
 public class VendorContainmentSelectorDAO extends BaseDAO {
 
@@ -63,62 +61,115 @@ public class VendorContainmentSelectorDAO extends BaseDAO {
 	 * @param logger
 	 * @param clazz
 	 */
-	public VendorContainmentSelectorDAO(EntityManager entityManger, Logger logger) {
+	public VendorContainmentSelectorDAO(EntityManager entityManger,
+			Logger logger) {
 		super(entityManger, logger, VendorContainmentSelector.class);
-	
+
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
+	 * .integer.common.BaseEntity)
 	 */
 	@Override
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
-				
+
+		VendorContainmentSelector selector = (VendorContainmentSelector) entity;
+		
+		if (selector.getSignatures() != null) {
+			VendorSignatureDAO dao = new VendorSignatureDAO(getEntityManager(), getLogger());
+
+			List<VendorSignature> dbSignatures = new ArrayList<VendorSignature>();
+			for (VendorSignature signature : selector.getSignatures()) {
+				dbSignatures.add(dao.update(signature));
+			}
+
+			selector.setSignatures(dbSignatures);
+		}
+		
 		super.preSave(entity);
 	}
 
 	/**
 	 * @param selector
 	 * @return
+	 * @throws IntegerException
 	 */
-	public VendorContainmentSelector[] findBySelector(VendorContainmentSelector selector) {
-		
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-				.getCriteriaBuilder();
+	@SuppressWarnings({ "rawtypes" })
+	public VendorContainmentSelector[] findBySelector(
+			VendorContainmentSelector selector) throws IntegerException {
 
-		CriteriaQuery<VendorContainmentSelector> query = criteriaBuilder.createQuery(VendorContainmentSelector.class);
-
-		Root<VendorContainmentSelector> from = query.from(VendorContainmentSelector.class);
-		query.select(from);
+		StringBuffer queryBuffer = new StringBuffer(); 
+				
+		queryBuffer.append("Select vc.* from VendorContainmentSelector vc ").append('\n');
 		
-		ParameterExpression<String> vendor = criteriaBuilder.parameter(String.class);
-		ParameterExpression<String> model = criteriaBuilder.parameter(String.class);
-		ParameterExpression<String> firmware = criteriaBuilder.parameter(String.class);
-		ParameterExpression<String> softwareVersion = criteriaBuilder.parameter(String.class);
-		
-		/*
-		query.select(from).where(criteriaBuilder.and(
-				criteriaBuilder.equal(from.get("vendor"), vendor),
-				criteriaBuilder.equal(from.get("model"), model)),
-				criteriaBuilder.equal(from.get("firmware"), firmware),
-				criteriaBuilder.equal(from.get("softwareVersion"), softwareVersion));
-		*/
+		if (selector.getSignatures() != null) {
+			int i = 0;	
+			for (@SuppressWarnings("unused") VendorSignature signature : selector.getSignatures()) {
 
-		query.select(from).where(
-				criteriaBuilder.equal(from.get("vendor"), vendor));
-		
-		TypedQuery<VendorContainmentSelector> typeQuery = getEntityManager().createQuery(query);
-		typeQuery.setParameter(vendor, selector.getVendor());
-//		typeQuery.setParameter(model, selector.getModel());
-//		typeQuery.setParameter(firmware, selector.getFirmware());
-//		typeQuery.setParameter(softwareVersion, selector.getSoftwareVersion());
+				queryBuffer.append(" join VendorContainmentSelector_VendorSignature vcss").append(i);
+				queryBuffer.append(" on (vcss").append(i).append(".VendorContainmentSelector_identifier = vc.identifier)").append('\n');
 
-		List<VendorContainmentSelector> resultList = typeQuery.getResultList();
+				queryBuffer.append(" join VendorSignature vs").append(i).append(" on (vs").append(i).append(".identifier = vcss").append(i).append(".signatures_identifier)").append('\n');
 
+				queryBuffer.append(" join SignatureValueOperator vco").append(i);
+				queryBuffer.append(" on (vco").append(i).append(".identifier = vs").append(i).append(".valueOperator_identifier)").append('\n');
+
+				i++;
+			}
+
+			boolean addedOne = false;
+			i = 0;
+			for (@SuppressWarnings("unused") VendorSignature signature : selector.getSignatures()) {
+				if (addedOne)
+					queryBuffer.append(" and ");
+				else {
+					queryBuffer.append(" where ");
+					addedOne = true;
+				}
+
+				queryBuffer.append("vco").append(i).append(".value = :value").append(i++);
+			}
+		}
 		
-		return (VendorContainmentSelector[]) resultList
-				.toArray(new VendorContainmentSelector[resultList.size()]);
+		getLogger().info("findBySelector query " + queryBuffer.toString());
+		
+		Query nativeQuery = getEntityManager().createNativeQuery(queryBuffer.toString(), VendorContainmentSelector.class);
+		
+		if (selector.getSignatures() != null) {
+			int i = 0;
+			for (VendorSignature signature : selector.getSignatures()) {
+				getLogger().info("value" + i + " = " + signature.getValueOperator().getValue());
+				nativeQuery.setParameter("value" + i++, signature.getValueOperator().getValue());
+			}
+		}
+		
+		List results = nativeQuery.getResultList();
+		List<VendorContainmentSelector> selectors = new ArrayList<VendorContainmentSelector>();
+		getLogger().info("Got " + results.size() + " VendorContainmentSelector's");
+		
+		for (Object object : results) {
+			if (object instanceof VendorContainmentSelector)
+				selectors.add((VendorContainmentSelector) object);
+			else if (object.getClass().isArray()) {
+				for (Object obj : (Object[]) object) {
+					if (obj instanceof VendorContainmentSelector)
+						selectors.add((VendorContainmentSelector) obj);
+					else
+						getLogger().error("Did not get VendorContainmentSelector!! 1 Got " + obj.getClass().getName());
+				}
+			}
+			else
+				getLogger().error("Did not get VendorContainmentSelector!! Got " + object.getClass().getName());
+		}
+		
+		return (VendorContainmentSelector[]) selectors
+				.toArray(new VendorContainmentSelector[selectors.size()]);
+	
 	}
 
 }

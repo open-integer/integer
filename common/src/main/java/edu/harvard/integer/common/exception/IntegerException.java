@@ -36,7 +36,7 @@ package edu.harvard.integer.common.exception;
 import java.text.MessageFormat;
 import java.util.Locale;
 
-import edu.harvard.integer.common.util.DisplayableInterface;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 
 /**
  * 

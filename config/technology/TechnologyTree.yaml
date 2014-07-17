@@ -1,5 +1,7 @@
 #This is the default Integer Technology-tree. It is possible to change this, but it may have
-#unexpected side effects.
+#unexpected side effects. The initial letter of each name element is in capitols. The exception
+#is for hyphenated words. This is the element that the user interface presents for selections.
+
 name: technology-tree
 description: technology-tree
 parent: root
@@ -7,7 +9,9 @@ technologies:
       - name: Networking
         description:  networking
         parent: technology-tree
+
 #Physcial connectivity items are interfaces
+
         technologies:
         - name: Physical Connectivity
           description: physical connectivity
@@ -16,7 +20,7 @@ technologies:
             - name: Ethernet Physical Layer
               description: ethernet physical layer
               parent: physical connectivity
-              discovery: [ service element type ]
+              discovery: [ ServiceElement ]
               layer:  1
               technologies:
                 - name: 1000base-T
@@ -29,13 +33,13 @@ technologies:
   
             - name: 802.11 wireless LAN
               description: Wi-Fi
-              discovery: [ service element type ]
+              discovery: [ ServiceElement ]
               layer:  2
               parent: physical connectivity
     
             - name: 802.16 wireless MAN
               description: WiMAX
-              discovery: [ service element type ]
+              discovery: [ ServiceElement ]
               layer:  2
               parent: physical connectivity
 
@@ -65,7 +69,7 @@ technologies:
                 - name: Neighbor Discovery
                   description: neighbor discovery
                   parent: link layer protocols
-                  discovery:  [ topology ]
+                  discovery:  [ Topology ]
                   layer:  2.5
                   technologies:
                   - name: CDP
@@ -99,10 +103,10 @@ technologies:
                 - name: Link Bonding
                   description: link bonding
                   parent: link layer protocols
-                  discovery:  [ service element type ]
+                  discovery:  [ ServiceElement ]
                   layer:  2
                   technologies:
-                    - name: Host-to-host bonded link schemes
+                    - name: Host-to-host Bonded Link Schemes
                       description: host-to-host bonded link schemes
                       parent: link bonding
                       technologies:
@@ -126,41 +130,41 @@ technologies:
                         description: Linux Team driver
                         parent: host-to-host bonded link schemes
           
-                      - name: Microsoft load balancing and failover
+                      - name: Microsoft Load Balancing and Failover
                         description: microsoft load balancing and failover
                         parent: host-to-host bonded link schemes
                         
 #They remain at layer 2.5          
-                    - name: link bonding types
+                    - name: Link Bonding Types
                       description: link bonding types
                       parent: link layer protocols
                       layer: 2.5
                       technologies:
-                        - name: static single-sided configuration
+                        - name: Static Single-sided Sonfiguration
                           description: host-only
                           parent: link bonding types
                           technologies:
-                          - name: active-backup
+                          - name: Active-backup
                             description: active-backup
                             parent: static single-sided configuration
           
-                          - name: broadcast
+                          - name: Broadcast
                             description: broadcast
                             parent: static single-sided configuration
           
-                          - name: adaptive transmit
+                          - name: Adaptive Transmit
                             description: adaptive transmit
                             parent: static single-sided configuration
           
-                          - name: adaptive transmit and receive
+                          - name: Adaptive Transmit and Receive
                             description: adaptive transmit and receive
                             parent: static single-sided configuration
           
-                        - name: static dual-sided configuration
+                        - name: Static Dual-sided Configuration
                           description: static dual-sided configuration
                           parent: link bonding types
                           technologies:
-                          - name: round-robin
+                          - name: Round-robin
                             description: round-robin
                             parent: static dual-sided configuration
           
@@ -168,7 +172,7 @@ technologies:
                             description: xor
                             parent: static dual-sided configuration
           
-                        - name: dynamic protocols
+                        - name: Dynamic Protocols
                           description: dynamic protocols
                           parent: link bonding types
                           technologies:
@@ -211,13 +215,13 @@ technologies:
           description: Virtual Local Area Networks
           parent: networking
           technologies:
-            - name: VLAN tagging protocols
+            - name: VLAN Tagging Protocols
               description: VLAN tagging protocols
               parent: VLANs
-              discovery:  [ service element type, topology ]
+              discovery:  [ ServiceElement, Topology ]
               layer:  2
               technologies:
-              - name: 802.1q vlan trunking
+              - name: 802.1q VLAN Trunking
                 description: 802.1q vlan trunking
                 parent: VLAN tagging protocols
   
@@ -230,11 +234,12 @@ technologies:
                 parent: VLAN tagging protocols
  
 #Items below are not used for service element type identification or topology 
+
             - name: VLAN Registration Protocols
               description: VLAN registration protocols
               parent: VLANs
               layer:  2.5
-              discovery: [ none ]
+              discovery: [ None ]
               technologies:
               - name: Cisco VTP
                 description: VLAN Trunking Protocol
@@ -246,26 +251,26 @@ technologies:
 
 #Assume items below revert to the parent, VLANs which should be layer 2, not used for discovery.  
 
-            - name: VLAN trunk negotiation protocols
+            - name: VLAN Trunk Negotiation Protocols
               description: VLAN trunk negotiation protocols
               parent: VLANs
-              discovery: [ none ]
+              discovery: [ None ]
               technologies:
               - name: Cisco DTP
                 description: Dynamic Trunking Protocol
                 parent: VLAN trunk negotiation protocols
   
-            - name: Spanning-tree protocol versions and alternatives
+            - name: Spanning-tree Protocol Versions and Alternatives
               description: Spanning-tree protocol versions and alternatives
               parent: VLANs
-              discovery:  [ topology ]
+              discovery:  [ Topology ]
               layer:  2
               technologies:
-              - name: standards-based spanning-tree versions - IEEE STP
+              - name: Standards-based Spanning-tree Versions - IEEE STP
                 description: 802.1d) - RSTP (802.1w, 802.1d-2004) - MSTP (Multiple Spanning Tree Protocol) (802.1s, 802.1q-2005
                 parent: Spanning-tree protocol versions and alternatives
                 technologies:
-                - name: vendor-proprietary spanning-tree implementations
+                - name: Vendor-proprietary Spanning-tree Implementations
                   description: vendor-proprietary spanning-tree implementations
                   parent: Spanning-tree protocol versions and alternatives
                   technologies:
@@ -289,7 +294,7 @@ technologies:
                     description: Extreme EAPS
                     parent: vendor-proprietary spanning-tree implementations
   
-            - name: Spanning-tree replacement protocols
+            - name: Spanning-tree Replacement Protocols
               description: Spanning-tree replacement protocols
               parent: VLANs
               technologies:
@@ -302,6 +307,7 @@ technologies:
                 parent: Spanning-tree replacement protocols
 
 #Encryption - Not treated as interfaces.
+
         - name: Traffic Encryption Protocols
           description: traffic encryption protocols
           parent: networking
@@ -324,10 +330,10 @@ technologies:
 
 #Other Layer 2.5 Technologies All of these can be interfaces.
 
-      - name: packet-switched networking
+      - name: Packet-switched Networking
         description: packet-switched networking
         parent: networking
-        discovery:  [ service element type, topology]
+        discovery:  [ ServiceElement, Topology]
         layer:  2.5
         technologies:
         - name: Frame Relay
@@ -342,7 +348,7 @@ technologies:
           description: MPLS
           parent: packet-switched networking
 
-      - name: tunneling
+      - name: Tunneling
         description: tunneling
         parent: technology-tree
         layer: 2.5
@@ -417,11 +423,11 @@ technologies:
         technologies:
           - name: Routing Table
             description: routing table
-            discovery: [ service element type, topology ]
+            discovery: [ ServiceElement, Topology ]
             layer:  3
             parent: routing
             technologies:
-            - name: dynamic routes
+            - name: Dynamic Routes
               description: protocol-generated
               parent: routing table
               technologies:
@@ -505,21 +511,21 @@ technologies:
                   description: MLD
                   parent: IP multicast protocols
 
-            - name: static routes
+            - name: Static Routes
               description: static routes
-              discovery: [ service element type, topology ]
+              discovery: [ ServiceElement, Topology ]
               layer:  3
               parent: routing table
 
-            - name: directly-connected routes
+            - name: Directly-connected Routes
               description: directly-connected routes
-              discovery: [ service element type, topology ]
+              discovery: [ ServiceElement, Topology ]
               layer:  3
               parent: routing table
 
-            - name: locally-generated routes
+            - name: Locally-generated Routes
               description: locally-generated routes
-              discovery: [ service element type, topology ]
+              discovery: [ ServiceElement, Topology ]
               layer:  3
               parent: routing table
 
@@ -537,6 +543,10 @@ technologies:
 
             - name: Microsoft
               description: microsoft
+              parent: operating system
+              
+            - name: Apple
+              description: apple
               parent: operating system            
           
         - name: Middleware

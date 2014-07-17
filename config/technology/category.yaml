@@ -1,6 +1,8 @@
 #This is the default Integer Category-tree. It is possible to change this, but it may have
-#unexpected side effects.
-name: category-tree
+#unexpected side effects. The initial letter of each name element is in capitols. The exception
+#is for hyphenated words. This is the element that the user interface presents for selections.
+
+name: Category-tree
 description: category-tree
 parent: root
 categories:
@@ -12,7 +14,7 @@ categories:
           description: virtual
           parent: system
           categories:
-            - name: interface
+            - name: Interface
               description: interface
               parent: virtual
               
@@ -68,15 +70,15 @@ categories:
                   description: network element specific components
                   parent: network element categories
                   categories:       
-                    - name: container
+                    - name: Container
                       description: slot is one type of container
                       parent: network element specific components
 
-                    - name: module
+                    - name: Module
                       description: linecard, fpc, etc.
                       parent: network element specific components
             
-                    - name: routing engine
+                    - name: Routing Engine
                       description: routing engine
                       parent: network element specific components
                       
@@ -84,7 +86,7 @@ categories:
                       description: supervisor board
                       parent: network element specific components  
             
-                    - name: feature card
+                    - name: Feature Card
                       description: crypto, ssl, extra processing, etc.
                       parent: network element spefic components
                   
@@ -124,11 +126,11 @@ categories:
                   description: server specific components
                   parent: server categories
                   categories:       
-                  - name: raid array
+                  - name: Raid Array
                     description: raid array
                     parent: hardware
           
-                  - name: raid controller
+                  - name: Raid Controller
                     description: raid controller
                     parent: hardware
                      
@@ -136,67 +138,67 @@ categories:
               description:  common system components
               parents: [network element categories, server categories]
               categories:
-                - name: chassis
+                - name: Chassis
                   description: chassis
                   parent: common system components
         
-                - name: backplane
+                - name: Backplane
                   description: backplane
                   parent: common system components
                
-                - name: mibplane
-                  description: mibplane
+                - name: Midplane
+                  description: midplane
                   parent: common system components
 
                 - name: Memory
                   description: memory
                   parent: common system components
         
-                - name: stack
+                - name: Stack
                   description: stack
                   parent: common system components
 
-                - name: port
+                - name: Port
                   description: port
                   parent: common system components
         
-                - name: optic
+                - name: Optic
                   description: optic
                   parent: common system components
         
-                - name: fan
+                - name: Fan
                   description: fan
                   parent: common system components
         
-                - name: power supply
+                - name: Power Supply
                   description: power supply
                   parent: common system components
         
-                - name: sensor
+                - name: Sensor
                   description: sensor
                   parent: common system components
         
-                - name: cpu
+                - name: CPU
                   description: cpu
                   parent: common system components
         
-                - name: pcmcia card
+                - name: PCMCIA Card
                   description: pcmcia card
                   parent: common system components
         
-                - name: disk
+                - name: Disk
                   description: disk
                   parent: common system components
  
-      - name: software
+      - name: Software
         description: software
         parent: category-tree
         categories:
-        - name: overall operating system
+        - name: Overall Operating System
           description: overall operating system
           parent: software
 
-        - name: per-card operating system
+        - name: Per-card Operating System
           description: per-card operating system
           parent: software
         

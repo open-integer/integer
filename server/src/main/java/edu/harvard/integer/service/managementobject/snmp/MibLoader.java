@@ -35,6 +35,7 @@ package edu.harvard.integer.service.managementobject.snmp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -387,10 +388,16 @@ public class MibLoader implements MibLoaderLocalInterface {
 
 		List<SNMP> scalars = result.getObjectIdentifiers();
 
+		HashMap<String, VendorIdentifier> vendorIdentifierMap = new HashMap<String, VendorIdentifier>();
+		VendorIdentifier[] allVendorsIds = vendorIdentifierDAO.findAll();
+		for (VendorIdentifier vendorIdentifier : allVendorsIds) {
+			vendorIdentifierMap.put(vendorIdentifier.getVendorOid(), vendorIdentifier);
+		}
+		
 		for (SNMP snmp : scalars) {
 
-			VendorIdentifier dbVendorSubtype = vendorIdentifierDAO
-					.findByVendorSubtypeId(snmp.getOid());
+			VendorIdentifier dbVendorSubtype = vendorIdentifierMap.get(snmp.getOid());
+			
 			if (dbVendorSubtype == null) {
 				dbVendorSubtype = new VendorIdentifier();
 			}

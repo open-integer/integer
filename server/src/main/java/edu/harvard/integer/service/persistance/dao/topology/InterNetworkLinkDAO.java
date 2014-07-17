@@ -130,4 +130,5 @@ public class InterNetworkLinkDAO extends BaseDAO {
 		return (InterNetworkLink[]) resultList.toArray(new InterNetworkLink[resultList
 				.size()]);
 	}
+
 }

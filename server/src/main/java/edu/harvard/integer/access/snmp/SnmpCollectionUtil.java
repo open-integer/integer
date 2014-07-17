@@ -56,8 +56,8 @@ import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
-import edu.harvard.integer.common.util.DisplayableInterface;
 
 
 

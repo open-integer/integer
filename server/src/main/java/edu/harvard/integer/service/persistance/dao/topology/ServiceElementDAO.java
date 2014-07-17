@@ -187,10 +187,8 @@ public class ServiceElementDAO extends BaseDAO {
 				.parameter(ID.class);
 
 		query.select(from).where(
-				criteriaBuilder.and(criteriaBuilder.equal(
-						from.get("identifier"), idParam), criteriaBuilder
-						.equal(from.get("serviceElementTypeId"),
-								serviceElementTypeParam)));
+				criteriaBuilder.and(criteriaBuilder.equal(from.get("identifier"), idParam), 
+				criteriaBuilder.equal(from.get("serviceElementTypeId"), serviceElementTypeParam)));
 
 		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(
 				query);

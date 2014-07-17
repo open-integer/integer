@@ -31,29 +31,46 @@
  *      
  */
 
-package edu.harvard.integer.common.type.displayable;
+package edu.harvard.integer.service.persistance.dao.topology.vendortemplate;
 
-import java.util.Locale;
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.discovery.VendorSignature;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.topology.SignatureValueOperatorDAO;
 
 /**
  * @author David Taylor
  *
  */
-public class FilePathName implements DisplayableInterface {
+public class VendorSignatureDAO extends BaseDAO {
 
-	private String filePath = null;
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public VendorSignatureDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, VendorSignature.class);
 	
-	public FilePathName(String path) {
-		filePath = path;
 	}
-	
+
 	/* (non-Javadoc)
-	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
 	 */
 	@Override
-	public String toDisplayString(Locale local) {
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
 		
-		return filePath;
+		SignatureValueOperatorDAO dao = new SignatureValueOperatorDAO(getEntityManager(), getLogger());
+		VendorSignature signature = (VendorSignature) entity;
+		signature.setValueOperator(dao.update(signature.getValueOperator()));
+		
+		super.preSave(entity);
 	}
 
 }

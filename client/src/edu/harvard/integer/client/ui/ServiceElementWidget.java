@@ -30,6 +30,8 @@ import com.google.gwt.touch.client.Point;
 import edu.harvard.integer.client.utils.LinePoints;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.topology.Network;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * The ServiceElementWidget class represents a Service Element Widget object displaying on the screen.
@@ -253,7 +255,11 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	public void onNodeMouseClick(NodeMouseClickEvent event) {
 		if (clickHandler != null)
 			clickHandler.onNodeMouseClick(event);
-		SystemSplitViewPanel.showContainedTreeView(entity);
+		
+		if (entity instanceof Network)
+			SystemSplitViewPanel.showServiceElementMap((Network)entity);
+		else if (entity instanceof ServiceElement)
+			SystemSplitViewPanel.showContainedTreeView((ServiceElement)entity);
 		
 		setHighLighted(true); // highlighted whenever it gets clicked for now
 	}

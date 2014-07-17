@@ -33,10 +33,10 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.net.InetAddress;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -86,6 +86,9 @@ public class Network extends BaseEntity {
 	
 	private Boolean reachable = null;
 
+	@Embedded
+	private Address address = null;
+	
 	/**
 	 * @return the description
 	 */
@@ -205,6 +208,20 @@ public class Network extends BaseEntity {
 	public static String createName(Address sourceAddress) {
 		
 		return Address.getSubNet(sourceAddress.getAddress(), sourceAddress.getMask());
+	}
+
+	/**
+	 * @return the address
+	 */
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	

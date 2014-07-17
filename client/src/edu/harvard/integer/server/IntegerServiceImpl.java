@@ -300,29 +300,30 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			SelectionManagerInterface selectionService = DistributionManager.getManager(ManagerTypeEnum.SelectionManager);
 			selection = selectionService.getBlankSelection();
 			
-			StringBuffer b = new StringBuffer();
-			for (Filter filter : selection.getFilters()) {
-				
-				b.append("Technologies: \n");
-				for (FilterNode filterNode : filter.getTechnologies()) {
-					printFilterNode(filterNode, b, "\tTechnology: ").append('\n');
-				}
-				b.append("Link:\n");
-				for (FilterNode filterNode : filter.getLinkTechnologies()) {
-					printFilterNode(filterNode, b, "\tLink Technology: ").append('\n');
-				}
-
-				b.append("Categories: \n");
-				for (FilterNode category : filter.getCategories())
-					printFilterNode(category, b, "\tCategory: ").append('\n');
-					//b.append("\tCategory: ").append(category.getName()).append('\n');
-				
-				b.append("Criticaliy\n");
-				for (CriticalityEnum criticatlity :  filter.getCriticalities() )
-					b.append("Criticatly: ").append(criticatlity).append('\n');
-			}
-			
-			System.out.println("Return Blank selection " + b.toString());
+//			
+//			StringBuffer b = new StringBuffer();
+//			for (Filter filter : selection.getFilters()) {
+//				
+//				b.append("Technologies: \n");
+//				for (FilterNode filterNode : filter.getTechnologies()) {
+//					printFilterNode(filterNode, b, "\tTechnology: ").append('\n');
+//				}
+//				b.append("Link:\n");
+//				for (FilterNode filterNode : filter.getLinkTechnologies()) {
+//					printFilterNode(filterNode, b, "\tLink Technology: ").append('\n');
+//				}
+//
+//				b.append("Categories: \n");
+//				for (FilterNode category : filter.getCategories())
+//					printFilterNode(category, b, "\tCategory: ").append('\n');
+//					//b.append("\tCategory: ").append(category.getName()).append('\n');
+//				
+//				b.append("Criticaliy\n");
+//				for (CriticalityEnum criticatlity :  filter.getCriticalities() )
+//					b.append("Criticatly: ").append(criticatlity).append('\n');
+//			}
+//			
+//			System.out.println("Return Blank selection " + b.toString());
 		}
 		catch (IntegerException e) {
 			throw new Exception(e.getMessage());

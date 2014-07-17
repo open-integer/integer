@@ -64,6 +64,8 @@ import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
+import edu.harvard.integer.common.discovery.VendorSignature;
+import edu.harvard.integer.common.discovery.VendorSignatureTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.service.managementobjectcapability.snmp.ImportMIBTest;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -74,14 +76,14 @@ import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
+import edu.harvard.integer.common.topology.SignatureValueOperator;
+import edu.harvard.integer.common.topology.ValueOpertorEnum;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.snmp.containment.ContainmentGenerator;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
-import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.util.FileUtil;
 
 /**
@@ -424,6 +426,14 @@ public class ServiceElementDiscoveryManagerTest {
 
 	@Test
 	public void createInterfaceServiceElementType() {
+		addInterfaceServiceElementType();
+	}
+
+	/**
+	 * 
+	 */
+	private ServiceElementType addInterfaceServiceElementType() {
+
 		ServiceElementType type = new ServiceElementType();
 		type.setName("interface");
 		Category category = null;
@@ -452,14 +462,15 @@ public class ServiceElementDiscoveryManagerTest {
 		type.setVendorSpecificSubType(vendorSubType);
 
 		try {
-			managementObjectCapabilityManager.updateServiceElementType(type);
+			return managementObjectCapabilityManager.updateServiceElementType(type);
 
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
 			fail(e.toString());
 		}
-
+		
+		return null;
 	}
 
 	@Test
@@ -535,15 +546,32 @@ public class ServiceElementDiscoveryManagerTest {
 		vendorContainmentSelector
 				.setContainmentId(new ID(Long.valueOf(1), "SnmpContainment",
 						new IDType(SnmpContainment.class.getName())));
-		vendorContainmentSelector.setFirmware("Firmware");
-		vendorContainmentSelector.setModel("Model");
-		vendorContainmentSelector.setSoftwareVersion("12.32A");
-		vendorContainmentSelector.setVendor("Vendor");
-		;
+		
+		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Firmware, "Firmware");
+		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Model, "Model");
+		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.SoftwareVersion, "12.32A");
+		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Vendor, "Vendor");
 
+		SnmpContainment containment = new SnmpContainment();
+		containment.setName("Test containment");
+		List<SnmpLevelOID> levels = new ArrayList<SnmpLevelOID>();
+		levels.add(createSnmpLevelOID());
+		containment.setSnmpLevels(levels);
+
+		containment.setServiceElementTypeId(addInterfaceServiceElementType().getID());
+		
 		try {
-			serviceElementDiscoveryManger
-					.getSnmpContainment(vendorContainmentSelector);
+			containment = serviceElementDiscoveryManger.updateSnmpContainment(containment);
+		} catch (IntegerException e1) {
+			e1.printStackTrace();
+			fail(e1.toString());
+		}
+		
+		vendorContainmentSelector.setContainmentId(containment.getID());
+		
+		try {
+			vendorContainmentSelector = serviceElementDiscoveryManger.updateVendorContainmentSelector(vendorContainmentSelector);
+					
 		} catch (IntegerException e) {
 
 			e.printStackTrace();
@@ -552,6 +580,41 @@ public class ServiceElementDiscoveryManagerTest {
 
 	}
 
+	public SnmpLevelOID createSnmpLevelOID() {
+		SnmpLevelOID level = new SnmpLevelOID();
+		SNMP snmp = null;
+		try {
+			snmp = snmpMaager.updateSNMP(createOid("hrDeviceEntry",
+					CommonSnmpOids.hrDeviceEntry));
+		} catch (IntegerException e1) {
+			
+			e1.printStackTrace();
+			fail(e1.toString());
+			
+		}
+		
+		level.setContextOID(snmp);
+		level.setName("level 1");
+		try {
+			snmp = snmpMaager.updateSNMP(createOid("hrDeviceType",
+					CommonSnmpOids.hrDeviceType));
+		} catch (IntegerException e1) {
+			
+			e1.printStackTrace();
+			fail(e1.toString());
+		}
+		
+		level.setDescriminatorOID(snmp);
+		
+		List<SnmpServiceElementTypeDiscriminator> disriminators = new ArrayList<SnmpServiceElementTypeDiscriminator>();
+		SnmpServiceElementTypeDiscriminator descrimator = new SnmpServiceElementTypeDiscriminator();
+		descrimator.setDiscriminatorValue(null);
+		descrimator.setServiceElementTypeId(addInterfaceServiceElementType().getID());
+		level.setDisriminators(disriminators);
+	
+		return level;
+	}
+	
 	public void getAllVendorContainmentSelectors() {
 		try {
 			VendorContainmentSelector[] selectors = serviceElementDiscoveryManger
@@ -581,28 +644,38 @@ public class ServiceElementDiscoveryManagerTest {
 
 		createInterfaceServiceElementType();
 
+		createVendorContainmentSelector();
+		
 		String firmwareVer = "Firmware1";
 		String model = "ModelT";
 		String softwareVer = "2.1";
-		String sysId = "Vendor1";
 
 		VendorContainmentSelector vs = new VendorContainmentSelector();
-		vs.setFirmware(firmwareVer);
-		vs.setModel(model.trim());
-		vs.setSoftwareVersion(softwareVer);
-		vs.setVendor(sysId);
-
+		List<VendorSignature> signatures = new ArrayList<VendorSignature>();
+		
+		signatures.add(createEqualStringOperator(VendorSignatureTypeEnum.Firmware, firmwareVer));
+		signatures.add(createEqualStringOperator(VendorSignatureTypeEnum.Model, model));
+		signatures.add(createEqualStringOperator(VendorSignatureTypeEnum.SoftwareVersion, softwareVer));
+		signatures.add(createEqualStringOperator(VendorSignatureTypeEnum.Vendor, vendor));
+		
+		vs.setSignatures(signatures);
+		
 		ServiceElementType set = null;
 		SnmpContainment sc = null;
 
 		try {
 			sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
+			System.out.println("Found SnmpContainment " + sc);
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
 
+		
 		if (sc != null && sc instanceof SnmpContainment) {
+
+			System.out.println("SnmpContainment " + sc.getName() + " ServiceElementID " + sc.getServiceElementTypeId());
+			
 			try {
 				set = serviceElementDiscoveryManger
 						.getServiceElementTypeById(sc.getServiceElementTypeId());
@@ -618,7 +691,7 @@ public class ServiceElementDiscoveryManagerTest {
 			SnmpContainmentType containmentType = SnmpContainmentType.EntityMib;
 
 			set = new ServiceElementType();
-			set.addSignatureValue(null, SignatureTypeEnum.Vendor, sysId);
+			set.addSignatureValue(null, SignatureTypeEnum.Vendor, vendor);
 			set.addSignatureValue(null, SignatureTypeEnum.Model, model);
 			set.setFieldReplaceableUnit(FieldReplaceableUnitEnum.Yes);
 
@@ -652,11 +725,13 @@ public class ServiceElementDiscoveryManagerTest {
 			VendorContainmentSelector vendorContainmentSelector = new VendorContainmentSelector();
 			vendorContainmentSelector.setContainmentId(updateSnmpContainment
 					.getID());
-			vendorContainmentSelector.setFirmware(firmwareVer);
-			vendorContainmentSelector.setModel(model);
-			vendorContainmentSelector.setSoftwareVersion(softwareVer);
-			vendorContainmentSelector.setVendor(sysId.toString());
+			
 
+			vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Firmware, firmwareVer);
+			vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Model, model);
+			vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.SoftwareVersion, softwareVer);
+			vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Vendor, vendor);
+			
 			try {
 				serviceElementDiscoveryManger
 						.updateVendorContainmentSelector(vendorContainmentSelector);
@@ -678,6 +753,27 @@ public class ServiceElementDiscoveryManagerTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
+	}
+
+	/**
+	 * @param firmware
+	 * @param firmwareVer
+	 * @return
+	 */
+	private VendorSignature createEqualStringOperator(
+			VendorSignatureTypeEnum valueType, String value) {
+		
+		VendorSignature signature = new VendorSignature();
+		signature.setName(value);
+		signature.setSignatureType(valueType);
+		
+		SignatureValueOperator operator = new SignatureValueOperator();
+		operator.setOperator(ValueOpertorEnum.Equal);
+		operator.setValue(value);
+		
+		signature.setValueOperator(operator);
+		
+		return signature;
 	}
 
 	@Test
@@ -791,7 +887,7 @@ public class ServiceElementDiscoveryManagerTest {
 	public void checkSnmpContainmentByVendor() {
 		VendorContainmentSelector vs = new VendorContainmentSelector();
 
-		vs.setVendor("cisco");
+		vs.addEqualSignature(VendorSignatureTypeEnum.Vendor, "cisco");
 
 		try {
 			SnmpContainment sc = serviceElementDiscoveryManger

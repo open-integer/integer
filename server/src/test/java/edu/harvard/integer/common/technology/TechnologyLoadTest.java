@@ -91,7 +91,7 @@ public class TechnologyLoadTest {
 
 	@Test
 	public void readTechnologyTree() throws IntegerException {
-		File techTree = new File("../config/technology/TechnologyTree.yaml.new");
+		File techTree = new File("../config/technology/TechnologyTree.yaml");
 		String content = null;
 		try {
 			content = new String(Files.readAllBytes(techTree.toPath()));

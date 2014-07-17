@@ -81,6 +81,7 @@ import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.topology.SnmpServiceElementTypeOverride;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceServiceInterface;
 
 /**
  * @author David Taylor
@@ -89,6 +90,9 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 @RunWith(Arquillian.class)
 public class ManagementObjectCapbilityManagerTest {
 
+	@Inject
+	PersistenceServiceInterface persistenceService;
+	
 	@Inject
 	ManagementObjectCapabilityManagerInterface managementObjectManager;
 
@@ -106,7 +110,11 @@ public class ManagementObjectCapbilityManagerTest {
 		// BasicConfigurator.configure();
 	}
 
-	@Test
+//	@Test(timeout=10000)
+//	public void loadPreLoadDataFiles() {
+//		persistenceService.loadPreLoadFiles();
+//	}
+
 	public void addCapability() {
 		Capability capability = new Capability();
 		capability.setName("SystemGroup");

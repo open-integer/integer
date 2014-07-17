@@ -46,7 +46,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.util.DisplayableInterface;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
