@@ -11,8 +11,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
@@ -77,53 +81,25 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public static BaseEntity selectedEntity;
 
 	/** The network panel. */
-	private LienzoPanel networkPanel = new LienzoPanel(CONTENT_WIDTH/2, CONTENT_HEIGHT);
+	private NetworkPanel networkPanel = new NetworkPanel();
+	
+	/** The subnet panel. */
+	private static SubnetPanel subnetPanel = new SubnetPanel();
 	
 	/** The serviceElement map panel */
-	private static LienzoPanel serviceElementMapPanel = new LienzoPanel(CONTENT_WIDTH/2, CONTENT_HEIGHT);
+	//private static LienzoPanel serviceElementMapPanel = new LienzoPanel(IntegerMap.MAP_WIDTH, CONTENT_HEIGHT);
 	
 	/** The service element map. */
-	final static ServiceElementMap serviceElementMap = new ServiceElementMap();
+	//final static ServiceElementMap serviceElementMap = new ServiceElementMap();
 
 	/**
 	 * Instantiates a new system split view panel.
 	 */
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
-
-		// Network Map
-		final NetworkMap networkMap = new NetworkMap();
-		MainClient.integerService.getNetworkInformation(new AsyncCallback<NetworkInformation>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Failed to receive Networks from Integer");
-			}
-
-			@Override
-			public void onSuccess(NetworkInformation result) {
-				networkMap.updateNetworkInformation(result);
-			}
-		});
-		
-        networkPanel.add(networkMap);
-        
-        networkPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-        networkPanel.getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_RIGHT));
-        
-        LienzoPanel.enableWindowMouseWheelScroll(true);
         
         setSize("100%", MainClient.WINDOW_HEIGHT+"px");
         
-        // ServiceElement Map
-        // final ServiceElementMap serviceElementMap = new ServiceElementMap();
-        serviceElementMapPanel.add(serviceElementMap);
-        
-        serviceElementMapPanel.getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-        serviceElementMapPanel.getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_RIGHT));
-        
-        serviceElementMapPanel.setSize("100%", MainClient.WINDOW_HEIGHT+"px");
-
         // Event View
 		EventView eventView = createEventView();
 		
@@ -139,6 +115,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				NetworkMap networkMap = networkPanel.getNetworkMapPanel().getNetworkMap();
 				if (networkMap.getSelectedTimestamp() > containedTreeView.getSelectedTimestamp())
 					selectedEntity = networkMap.getSelectedEntity();
 				else
@@ -192,7 +169,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		serviceElementMapSplitPanel.addEast(containedSplitPanel, CONTENT_WIDTH/4);
 	    serviceElementMapSplitPanel.setWidgetHidden(containedSplitPanel, true);
 	    serviceElementMapSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
-	    serviceElementMapSplitPanel.add(serviceElementMapPanel);
+	    serviceElementMapSplitPanel.add(subnetPanel);
 		
 		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);
 		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
@@ -225,7 +202,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	}
 	
 	public void updateServiceElementMap(List<ServiceElement> list) {
-		serviceElementMap.update(list);
+		subnetPanel.getSubnetMapPanel().getSubnetMap().update(list);
 	}
 
 	
@@ -311,6 +288,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 	public static void showServiceElementMap(Network network) {
 		eastSplitPanel.setWidgetHidden(serviceElementMapSplitPanel, false);
-		serviceElementMap.updateNetwork(network);;
+		subnetPanel.updateSubnet(network);
 	}
 }

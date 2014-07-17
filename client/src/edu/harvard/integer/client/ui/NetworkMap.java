@@ -50,29 +50,34 @@ public class NetworkMap extends IntegerMap {
 		removeAll();
 		init_layout(result.length);
 		
+		// === testing only first 4 points ==
+		int N = 10;
+		init_layout(N);
+		// ==================================
+		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.network();
 		
-		for (final Network entity : result) {
-			Point point = calculatePoint(result.length, i++);
-			entityMap.put(entity.getID(), point);
-			pointList.add(point);
+		for (final Network network : result) {
+			// === test only first N points ====
+			if (i >= N)
+				break;
 			
-			image = Resources.IMAGES.network();
-			Network network = (Network) entity;
-			network.getInterDeviceLinks();
-			network.getServiceElements();
+			Point point = calculatePoint(N, i++);
+			// Point point = calculatePoint(result.length, i++);
+			entityMap.put(network.getID(), point);
+			pointList.add(point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
-        			selectedEntity = entity;
+        			selectedEntity = network;
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, mouseClickHandler);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, network, mouseClickHandler);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
@@ -94,7 +99,7 @@ public class NetworkMap extends IntegerMap {
 			if (p1 == null || p2 == null)
 				continue;
 			
-			// draw line between p1 and p2
+			// draw line between p0 and p
 			drawLink(link, p1, p2);
 		}
 	}

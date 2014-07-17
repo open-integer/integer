@@ -18,12 +18,9 @@ import com.google.gwt.touch.client.Point;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.InterDeviceLink;
-import edu.harvard.integer.common.topology.InterNetworkLink;
 import edu.harvard.integer.common.topology.Network;
-import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**

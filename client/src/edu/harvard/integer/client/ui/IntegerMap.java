@@ -21,14 +21,14 @@ import edu.harvard.integer.common.ID;
  */
 public class IntegerMap extends Layer {
 	
-	public static final int MAP_WIDTH = SystemSplitViewPanel.CONTENT_WIDTH / 3;
+	public static final int MAP_WIDTH = 2 * SystemSplitViewPanel.CONTENT_WIDTH / 3;
 	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT;
 	
 	/** The Constant OFFSET_X. */
 	public static final int OFFSET_X = 30;
 	
 	/** The Constant OFFSET_Y. */
-	public static final int OFFSET_Y = 30;
+	public static final int OFFSET_Y = 55;
 	
 	/** The Constant GRID_LAYOUT. */
 	public static final int GRID_LAYOUT = 1;
@@ -46,7 +46,7 @@ public class IntegerMap extends Layer {
 	protected int icon_col_total;
 	
 	/** The icon_width. */
-	protected int icon_width = SystemSplitViewPanel.CONTENT_WIDTH / 5;
+	protected int icon_width = MAP_WIDTH / 5;
 	
 	protected int line_width = 3;
 	
@@ -110,7 +110,7 @@ public class IntegerMap extends Layer {
 		icon_col_total = 2 * icon_row_total;
 		
 		if (icon_col_total != 0)
-			icon_width = SystemSplitViewPanel.CONTENT_WIDTH / (2 * icon_col_total);
+			icon_width = MAP_WIDTH / icon_col_total;
 		
 		if (layout_type == CIRCULAR_LAYOUT) {
 			icon_width = icon_width / 2;
@@ -161,12 +161,12 @@ public class IntegerMap extends Layer {
 	 * @return the point
 	 */
 	public Point calculateCircularLayoutPoint(int total, int i) {
-		double height = SystemSplitViewPanel.CONTENT_HEIGHT - icon_height * 2;
-        double width = SystemSplitViewPanel.CONTENT_WIDTH / 3 - icon_width * 2;
+		double height = MAP_HEIGHT - icon_height * 2 - OFFSET_Y;
+        double width = MAP_WIDTH - icon_width * 2;
         double radius = 0.45 * (height < width ? height : width);
 		double angle = (2 * Math.PI * i++) / total;
     	double x = Math.cos(angle) * radius + width / 2;
-    	double y = Math.sin(angle) * radius + height / 2 - OFFSET_Y;
+    	double y = Math.sin(angle) * radius + height / 2;
     	
     	return new Point(x, y);
 	}
