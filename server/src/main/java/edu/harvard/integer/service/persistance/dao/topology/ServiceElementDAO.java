@@ -275,7 +275,13 @@ public class ServiceElementDAO extends BaseDAO {
 				b.append("select se.* ").append('\n'); 
 				b.append("from ServiceElement se ").append('\n');
 				
+			    addedOne = false;
 				for (ID locationId : filter.getLocations()) {
+					if (addedOne)
+						b.append(" and ");
+					else
+						addedOne = true;
+					
 					b.append(" se.primaryLocationId == ").append(locationId.getIdentifier()).append('\n');
 				}
 			}
