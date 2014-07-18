@@ -661,18 +661,32 @@ public class YamlManager extends BaseManager implements
 		VendorContainmentSelector selector = new VendorContainmentSelector();
 		selector.setSignatures(createSignatures(load.getSignatures()));
 		
+		logger.info("Signatures " + selector.getSignatures().size());
+		for (VendorSignature signature : selector.getSignatures()) {
+			logger.info("Signature " + signature.getName() + " " + signature.getValueOperator().getValue()
+					+ " type " + signature.getSignatureType());
+		}
+		selector = discoveryManager
+				.updateVendorContainmentSelector(selector);
+		
+		logger.info("After save Signatures " + selector.getSignatures().size());
+		for (VendorSignature signature : selector.getSignatures()) {
+			logger.info("Signature " + signature.getName() + " " + signature.getValueOperator().getValue()
+					+ " type " + signature.getSignatureType());
+		}
+		
 		SnmpContainment snmpContainment = discoveryManager
 				.getSnmpContainment(selector);
 		
-		VendorContainmentSelector[] vendorContainmentSelectors = discoveryManager
-				.getVendorContainmentSelector(selector);
+//		VendorContainmentSelector[] vendorContainmentSelectors = discoveryManager
+//				.getVendorContainmentSelector(selector);
 
-		if (vendorContainmentSelectors == null
-				|| vendorContainmentSelectors.length == 0) {
-			selector = discoveryManager
-					.updateVendorContainmentSelector(selector);
-		} else
-			selector = vendorContainmentSelectors[0];
+//		if (vendorContainmentSelectors == null
+//				|| vendorContainmentSelectors.length == 0) {
+//			selector = discoveryManager
+//					.updateVendorContainmentSelector(selector);
+//		} else
+//			selector = vendorContainmentSelectors[0];
 
 
 		if (snmpContainment == null) {
@@ -683,14 +697,19 @@ public class YamlManager extends BaseManager implements
 					if (b.length() > 1)
 						b.append(", ");
 
-					b.append(signature.getSignatureType());
-					b.append(" ").append(signature.getValueOperator());
-					b.append(" ").append(signature.getValueOperator());
+					b.append(signature.getSignatureType().name());
+					b.append(" ").append(signature.getValueOperator().getOperator().name());
+					b.append(" ").append(signature.getValueOperator().getValue());
 				}
 			} else
 				b.append("All");
 			
-			snmpContainment.setName(b.toString());
+			logger.info("SnmpContainment name: " + b.toString());
+			if (b.toString().length() >= 50) {
+				logger.info("Generated name too long. " + b.toString());
+				snmpContainment.setName(b.toString().substring(0, 45));
+			} else
+				snmpContainment.setName(b.toString());
 		}
 
 		SnmpContainmentType contanmentType = SnmpContainmentType.valueOf(load
@@ -737,6 +756,8 @@ public class YamlManager extends BaseManager implements
 			operator.setValue(yamlVendorSignature.getValue());
 			operator.setOperator(ValueOpertorEnum.valueOf(yamlVendorSignature.getOperator()));
 			vendorSignature.setValueOperator(operator);
+			
+			vendorSignatures.add(vendorSignature);
 		}
 		
 		return vendorSignatures;
