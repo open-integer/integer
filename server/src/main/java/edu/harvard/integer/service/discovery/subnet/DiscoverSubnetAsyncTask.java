@@ -241,6 +241,10 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     			dn.setSubnetId(seed.getSeedId());
     			
     			dn.setAccess(accesses.get(0));
+    			
+    			if ( dn.getIpAddress().equals("10.240.127.121") && dn.getIpAddress().equals("10.240.127.144")) {
+    			     logger.info("Add discover node into the map " + dn.getIpAddress());
+    			}
     			discoverMap.put(dn.getIpAddress(), dn);
     					
     			PDU pdu = new PDU();
@@ -283,7 +287,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		 * Alawys cancel async request when response has been received otherwise a memory leak is created.
 		 */
 		((Snmp)event.getSource()).cancel(event.getRequest(), this);
-	
 		DiscoverNode dn = discoverMap.get((String) event.getUserObject());			
 		try {
 			SnmpService.assertPDU(event);

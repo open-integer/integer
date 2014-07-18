@@ -51,10 +51,10 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 public class IpDiscoverySeed {
 
 	/** The snmp timeout in million second. */
-	private int snmpTimeout = 3000;
+	private int snmpTimeout = 5000;
 	
 	/** The snmp retries. */
-	private int snmpRetries = 1;
+	private int snmpRetries = 2;
 	
 	/** The use icmp. */
 	private boolean useIcmp = true;

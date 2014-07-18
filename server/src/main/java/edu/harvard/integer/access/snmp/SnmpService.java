@@ -213,7 +213,7 @@ final public class SnmpService
     	for ( TableEvent te : tblEvents ) {
  
     		if ( te.isError() ) {
-    			
+    			logger.info("SNMP error " + te.getErrorMessage());
     			throw new IntegerException(null, NetworkErrorCodes.SNMPError, 
  	           		   new DisplayableInterface[] { new NonLocaleErrorMessage(te.getErrorMessage()) });
     			

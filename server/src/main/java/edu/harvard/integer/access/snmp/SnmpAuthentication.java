@@ -59,7 +59,7 @@ public abstract class SnmpAuthentication implements Authentication, Comparable<S
 	/**
 	 * SNMP try out count.
 	 */
-	private int tryCount = 1;
+	private int tryCount = 2;
 	
 	
 	/**

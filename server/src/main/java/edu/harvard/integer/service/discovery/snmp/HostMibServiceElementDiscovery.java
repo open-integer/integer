@@ -81,6 +81,7 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 		super();
 
 	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -145,8 +146,8 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toDottedString(), discNode.getAccessElement());						
-						se = accessMgr.updateServiceElement(se);
+						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toDottedString());						
+						se = updateServiceElement(se, set, discNode.getAccessElement());
 					}
 				}
 			}
@@ -158,8 +159,8 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toString(), discNode.getAccessElement());						
-						se = accessMgr.updateServiceElement(se);
+						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toString());						
+						se = updateServiceElement(se, set, discNode.getAccessElement());
 					}
 				}
 				else {
@@ -169,8 +170,8 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 					
 					for ( TableEvent de : deviceEvents ) {
 						
-						ServiceElement se =  createServiceElementFromType(discNode, set, de.getIndex().toString(), discNode.getAccessElement());
-						se = accessMgr.updateServiceElement(se);
+						ServiceElement se =  createServiceElementFromType(discNode, set, de.getIndex().toString());
+						se = updateServiceElement(se, set, discNode.getAccessElement());
 					}
 				}
 			}
