@@ -885,13 +885,18 @@ public class ServiceElementDiscoveryManagerTest {
 
 	@Test
 	public void checkSnmpContainmentByVendor() {
+		createVendorContainmentSelector();
+
 		VendorContainmentSelector vs = new VendorContainmentSelector();
 
-		vs.addEqualSignature(VendorSignatureTypeEnum.Vendor, "cisco");
+		vs.addEqualSignature(VendorSignatureTypeEnum.Vendor, "vendor");
 
 		try {
 			SnmpContainment sc = serviceElementDiscoveryManger
 					.getSnmpContainment(vs);
+			
+			assert (sc != null);
+			
 			printSnmpContainment(sc);
 		} catch (IntegerException e) {
 

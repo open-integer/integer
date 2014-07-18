@@ -132,7 +132,7 @@ public class VendorContainmentSelectorDAO extends BaseDAO {
 					addedOne = true;
 				}
 
-				queryBuffer.append("vco").append(i).append(".value = :value").append(i++);
+				queryBuffer.append("lower(vco").append(i).append(".value) = :value").append(i++);
 			}
 		}
 		
@@ -144,7 +144,7 @@ public class VendorContainmentSelectorDAO extends BaseDAO {
 			int i = 0;
 			for (VendorSignature signature : selector.getSignatures()) {
 				getLogger().info("value" + i + " = " + signature.getValueOperator().getValue());
-				nativeQuery.setParameter("value" + i++, signature.getValueOperator().getValue());
+				nativeQuery.setParameter("value" + i++, signature.getValueOperator().getValue().toLowerCase());
 			}
 		}
 		
