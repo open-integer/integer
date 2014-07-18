@@ -714,9 +714,10 @@ public class BaseDAO {
 								+ f.getName() + "(" + value + ")"));
 
 				} catch (NoSuchMethodException e) {
-					throw new IntegerException(
-							e,
-							DatabaseErrorCodes.UnableToCreateCleanCopyNoSuchMethod);
+					logger.warn("No getter on " + fromInstance.getClass().getName() + " method " + f.getName());
+//					throw new IntegerException(
+//							e,
+//							DatabaseErrorCodes.UnableToCreateCleanCopyNoSuchMethod);
 				} catch (SecurityException e) {
 					throw new IntegerException(
 							e,

@@ -289,7 +289,7 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		ServiceElementDAO dao = dbm.getServiceElementDAO();
 		
 		for (ServiceElement serviceElement : serviceElements) {
-			if (serviceElement.getParentId() == null)
+			if (serviceElement.getParentIds() == null || serviceElement.getParentIds().size() == 0)
 				topLevelServiceElements.put(serviceElement.getID(), serviceElement);
 			else {
 				ServiceElement topLevel = getTopLevel(serviceElement, dao);
@@ -307,8 +307,8 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	 * @throws IntegerException 
 	 */
 	private ServiceElement getTopLevel(ServiceElement serviceElement, ServiceElementDAO dao) throws IntegerException {
-		if (serviceElement.getParentId() != null) {
-			ServiceElement parent = dao.findById(serviceElement.getParentId());
+		if (serviceElement.getParentIds() != null && serviceElement.getParentIds().size() > 0) {
+			ServiceElement parent = dao.findById(serviceElement.getParentIds().get(0));
 			return getTopLevel(parent, dao);
 		} else
 			return serviceElement;

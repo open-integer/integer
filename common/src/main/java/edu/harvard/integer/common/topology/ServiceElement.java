@@ -37,6 +37,7 @@ package edu.harvard.integer.common.topology;
  *
  */
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,16 +59,18 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 
 /**
- * A service element can be any function from an os manager in a vm environment to a high-level 
- * web service.  The idea is that services are defined independently of the physical systems on 
- * which they run.  For the system to work there must be a connection between the service and 
- * the physical world. Certainly not all services will run on all hardware.  For example you would 
- * not run Jboss on an ethernet switch. Note that this service element is that, not a service.  
- * This means that a service may have many service elements of the same kind working cooperatively
- * for load balancing, redundancy or other purposes on different pieces of hardware.  
- * In other cases as in the case of an OS instance/VM on a particular piece of hardware.
- * An example of a service element that exists on potentially many different systems is a 
- * postfix type system for mail routing. 
+ * A service element can be any function from an os manager in a vm environment
+ * to a high-level web service. The idea is that services are defined
+ * independently of the physical systems on which they run. For the system to
+ * work there must be a connection between the service and the physical world.
+ * Certainly not all services will run on all hardware. For example you would
+ * not run Jboss on an ethernet switch. Note that this service element is that,
+ * not a service. This means that a service may have many service elements of
+ * the same kind working cooperatively for load balancing, redundancy or other
+ * purposes on different pieces of hardware. In other cases as in the case of an
+ * OS instance/VM on a particular piece of hardware. An example of a service
+ * element that exists on potentially many different systems is a postfix type
+ * system for mail routing.
  */
 @Entity
 public class ServiceElement extends BaseEntity implements Serializable {
@@ -96,15 +99,12 @@ public class ServiceElement extends BaseEntity implements Serializable {
 			@AttributeOverride(name = "name", column = @Column(name = "iconName")) })
 	private ID iconID = null;
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "parentId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "parentType")),
-			@AttributeOverride(name = "name", column = @Column(name = "parentName")) })
-	private ID parentId = null;
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> parentIds = null;
 
 	private Boolean hasChildren = false;
-	
+
 	// Since some ServiceElements will have many capabilities this attribute
 	// will list all the capabilities the serviceElement has. This does not mean
 	// that the service element has been configured, that would be determined by
@@ -260,7 +260,7 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	public ServiceElement() {
 		super();
 	}
-	
+
 	/**
 	 * Configured state includes whether the service element is in compliance
 	 * with current policy or not. If it is not, then other methods would be
@@ -301,18 +301,39 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	}
 
 	/**
+	 * Set the parent ID for this service element. This will replace any parents
+	 * that are currently set for this service element.
+	 */
+	public void setParentId(ID id) {
+		parentIds = new ArrayList<ID>();
+		parentIds.add(id);
+	}
+
+	/**
+	 * Add a parent to this service element. 
+	 * @param id
+	 */
+	public void addParentId(ID id) {
+		if (parentIds == null)
+			parentIds = new ArrayList<ID>();
+		
+		if (!parentIds.contains(id))
+			parentIds.add(id);
+			
+	}
+	/**
 	 * @return the parentId
 	 */
-	public ID getParentId() {
-		return parentId;
+	public List<ID> getParentIds() {
+		return parentIds;
 	}
 
 	/**
 	 * @param parentId
 	 *            the parentId to set
 	 */
-	public void setParentId(ID parentId) {
-		this.parentId = parentId;
+	public void setParentId(List<ID> parentIds) {
+		this.parentIds = parentIds;
 	}
 
 	/**
@@ -595,7 +616,8 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * @param hasChildren the hasChildren to set
+	 * @param hasChildren
+	 *            the hasChildren to set
 	 */
 	public void setHasChildren(Boolean hasChildren) {
 		this.hasChildren = hasChildren;

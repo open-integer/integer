@@ -115,8 +115,8 @@ public class ServiceElementDAO extends BaseDAO {
 			serviceElement.setAttributeValues(dbValues);
 		}
 
-		if (serviceElement.getParentId() != null) {
-			ServiceElement parent = findById(serviceElement.getParentId());
+		if (serviceElement.getParentIds() != null && serviceElement.getParentIds().size() > 0) {
+			ServiceElement parent = findById(serviceElement.getParentIds().get(0));
 			if (parent != null)
 				parent.setHasChildren(true);
 			update(parent);
@@ -130,24 +130,40 @@ public class ServiceElementDAO extends BaseDAO {
 	 * @return
 	 */
 	public ServiceElement[] findTopLevelServiceElements() {
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-				.getCriteriaBuilder();
+		
 
-		CriteriaQuery<ServiceElement> query = criteriaBuilder
-				.createQuery(ServiceElement.class);
-
-		Root<ServiceElement> from = query.from(ServiceElement.class);
-		query.select(from);
-
-		query.select(from).where(criteriaBuilder.isNull(from.get("parentId")));
-
-		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(
-				query);
-
-		List<ServiceElement> resultList = typeQuery.getResultList();
-
-		return (ServiceElement[]) resultList
-				.toArray(new ServiceElement[resultList.size()]);
+		StringBuffer b = new StringBuffer();
+		
+		b.append("select se.* ").append('\n');
+		b.append("from ServiceElement se ").append('\n');
+		b.append(" where not exists (select * from  ServiceElement_parentids sep ").append('\n');
+		b.append("where sep.ServiceElement_identifier = se.identifier)");
+		
+		Query query = getEntityManager().createNativeQuery(b.toString(), ServiceElement.class);
+		
+		List<ServiceElement> resultList = query.getResultList();
+		
+		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList
+				.size()]);
+//		
+//		CriteriaBuilder criteriaBuilder = getEntityManager()
+//				.getCriteriaBuilder();
+//
+//		CriteriaQuery<ServiceElement> query = criteriaBuilder
+//				.createQuery(ServiceElement.class);
+//
+//		Root<ServiceElement> from = query.from(ServiceElement.class);
+//		query.select(from);
+//
+//		query.select(from).where(criteriaBuilder.isNull(from.get("parentIds")));
+//
+//		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(
+//				query);
+//
+//		List<ServiceElement> resultList = typeQuery.getResultList();
+//
+//		return (ServiceElement[]) resultList
+//				.toArray(new ServiceElement[resultList.size()]);
 	}
 
 	/**
@@ -156,8 +172,21 @@ public class ServiceElementDAO extends BaseDAO {
 	 */
 	public ServiceElement[] findByParentId(ID parent) {
 
-		return findByIDField(parent, "parentId", ServiceElement.class);
-
+		StringBuffer b = new StringBuffer();
+		
+		b.append("select se.* ").append('\n');
+		b.append("from ServiceElement se ").append('\n');
+		b.append("   join ServiceElement_parentids sep ").append('\n');
+		b.append("where spe.identifier = :parent");
+		
+		Query query = getEntityManager().createNativeQuery(b.toString(), ServiceElement.class);
+		query.setParameter("parent", parent.getIdentifier());
+		
+		
+		List<ServiceElement> resultList = query.getResultList();
+		
+		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList
+				.size()]);
 	}
 
 	/**
