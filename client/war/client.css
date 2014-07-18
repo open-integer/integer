@@ -68,6 +68,11 @@ h4 {
     text-align: left;
 }
 
+.gwt-tabPanel {
+	margin: 0;
+	padding: 0;
+}
+
 .titlePanel { 
 	background-color: #68228B;
 	width: 100%;
@@ -76,8 +81,12 @@ h4 {
 	font-family: arial;
     font-weight: bold;
     color: white;
-    margin: 0;
-    padding: 0;
+    padding-top: 6px;
+	padding-right: auto;
+	padding-bottom: 6px;
+	padding-left: auto;
+	float: left;
+	display: block;
 }
 
 .toolbar {

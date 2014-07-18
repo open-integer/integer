@@ -1,22 +1,14 @@
 package edu.harvard.integer.client.ui;
 
-import java.util.List;
-
-import com.emitrom.lienzo.client.core.mediator.EventFilter;
-import com.emitrom.lienzo.client.core.mediator.MousePanMediator;
-import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
-import com.emitrom.lienzo.client.widget.LienzoPanel;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
@@ -25,7 +17,6 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.Network;
-import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -53,18 +44,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	/** The east panel. */
 	public static DockPanel eastPanel = null;
 	
-	/** The east split panel. */
-	public static SplitLayoutPanel eastSplitPanel = null;
-	
-	/** The service element map split panel. */
-	public static SplitLayoutPanel serviceElementMapSplitPanel = null;
-	
-	/** The contained split panel. */
-	public static SplitLayoutPanel containedSplitPanel= null;
-	
-	/** The details tab panel. */
-	public static ServiceElementDetailsTabPanel detailsTabPanel = null;
-	
 	/** The Constant title. */
 	public static final String title = "Device Children";
 	
@@ -83,14 +62,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	/** The network panel. */
 	private NetworkPanel networkPanel = new NetworkPanel();
 	
-	/** The subnet panel. */
-	private static SubnetPanel subnetPanel = new SubnetPanel();
-	
-	/** The serviceElement map panel */
-	//private static LienzoPanel serviceElementMapPanel = new LienzoPanel(IntegerMap.MAP_WIDTH, CONTENT_HEIGHT);
-	
-	/** The service element map. */
-	//final static ServiceElementMap serviceElementMap = new ServiceElementMap();
+	/** The tab panel. */
+	private static TabLayoutPanel tabPanel = new TabLayoutPanel(2.5, Unit.EM);
 
 	/**
 	 * Instantiates a new system split view panel.
@@ -143,36 +116,15 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			
 		});
 		mapToolbarPanel.add(detailsButton);
-		
-		eastSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		eastSplitPanel.setSize("100%",  "500px");
-		
-		serviceElementMapSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		serviceElementMapSplitPanel.setSize("100%",  "500px");
-		
-		eastSplitPanel.addEast(serviceElementMapSplitPanel, CONTENT_WIDTH/2);
-		eastSplitPanel.setWidgetHidden(serviceElementMapSplitPanel, true);
-		eastSplitPanel.setWidgetToggleDisplayAllowed(serviceElementMapSplitPanel, true);
-		eastSplitPanel.add(networkPanel);
-		
-		containedSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		
-		containedTreeView = new ContainedTreeView(title, headers);
-		
-		detailsTabPanel = new ServiceElementDetailsTabPanel();
 	    
-	    containedSplitPanel.addSouth(detailsTabPanel, 300);
-	    containedSplitPanel.setWidgetHidden(detailsTabPanel, true);
-	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
-	    containedSplitPanel.add(containedTreeView);
-		
-		serviceElementMapSplitPanel.addEast(containedSplitPanel, CONTENT_WIDTH/4);
-	    serviceElementMapSplitPanel.setWidgetHidden(containedSplitPanel, true);
-	    serviceElementMapSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
-	    serviceElementMapSplitPanel.add(subnetPanel);
+	    // tabPanel
+		tabPanel.setSize("100%", CONTENT_HEIGHT+"px");
+	    tabPanel.setAnimationDuration(500);
+	    tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
+	    tabPanel.add(networkPanel, "Network Map");
 		
 		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);
-		eastPanel.add(eastSplitPanel, DockPanel.CENTER);
+		eastPanel.add(tabPanel, DockPanel.CENTER);
 		eastPanel.add(eventView, DockPanel.SOUTH);
 		
 		final FilterPanel filterPanel = new FilterPanel();
@@ -199,10 +151,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			
 		});
 		
-	}
-	
-	public void updateServiceElementMap(List<ServiceElement> list) {
-		subnetPanel.getSubnetMapPanel().getSubnetMap().update(list);
 	}
 
 	
@@ -252,15 +200,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		});*/
 		return eventView;
 	}
-
-	/**
-	 * Enablecontained tree view.
-	 *
-	 * @param enable the enable
-	 */
-	public static void enablecontaineeTreeView(boolean enable) {
-		eastSplitPanel.setWidgetHidden(containedTreeView, !enable);
-	}
 	
 	/**
 	 * Show contained tree view.
@@ -268,8 +207,17 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 * @param se the se
 	 */
 	public static void showContainedTreeView(final ServiceElement se) {
-		//containeeTreeView.updateTitle(se.getName());
-		serviceElementMapSplitPanel.setWidgetHidden(containedSplitPanel, false);
+		SplitLayoutPanel containedSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
+		ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
+		final ContainedTreeView containedTreeView = new ContainedTreeView(title, headers, containedSplitPanel, detailsTabPanel);
+		
+	    
+	    containedSplitPanel.addSouth(detailsTabPanel, 300);
+	    containedSplitPanel.setWidgetHidden(detailsTabPanel, true);
+	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
+	    containedSplitPanel.add(containedTreeView);
+	    tabPanel.add(containedSplitPanel, se.getName());
+		tabPanel.selectTab(containedSplitPanel);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
@@ -287,7 +235,9 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 
 	public static void showServiceElementMap(Network network) {
-		eastSplitPanel.setWidgetHidden(serviceElementMapSplitPanel, false);
+		SubnetPanel subnetPanel = new SubnetPanel();
 		subnetPanel.updateSubnet(network);
+		tabPanel.add(subnetPanel, network.getName());
+		tabPanel.selectTab(subnetPanel);
 	}
 }
