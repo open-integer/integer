@@ -26,6 +26,7 @@ import edu.harvard.integer.client.ui.OragnizationPanel;
 import edu.harvard.integer.client.ui.RolePanel;
 import edu.harvard.integer.client.ui.ServiceElementPanel;
 import edu.harvard.integer.client.ui.ServiceElementTypePanel;
+import edu.harvard.integer.client.ui.StatusPanel;
 import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.ui.UserPanel;
 import edu.harvard.integer.client.widget.HvDialogBox;
@@ -53,6 +54,9 @@ public class MainClient implements EntryPoint {
 	
 	/** The flex table. */
 	private HvFlexTable flexTable;
+	
+	/** The status panel. */
+	public static StatusPanel statusPanel = new StatusPanel();
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -115,6 +119,8 @@ public class MainClient implements EntryPoint {
 		currentWidget = new SystemSplitViewPanel();
 		RootPanel.get("root").add(currentWidget);
 		
+		// Status Bar
+		RootPanel.get("status").add(statusPanel);
 	}
 	
 	/**
@@ -150,7 +156,7 @@ public class MainClient implements EntryPoint {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert("Failed to get all mib modules");
+						MainClient.statusPanel.update("Failed to get all mib modules");
 					}
 
 					@Override

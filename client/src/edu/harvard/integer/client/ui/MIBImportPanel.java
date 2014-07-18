@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Label;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
+import edu.harvard.integer.client.MainClient;
 
 /**
  * This MIBImportPanel class represents a panel to import MIB file.
@@ -90,7 +91,7 @@ public class MIBImportPanel extends FormPanel {
 				String fileType = file.getType();
 
 				if (!fileType.startsWith("text") && !fileType.isEmpty()) {
-					Window.alert("The file you selected \"" + filename + "\" is not a text file.");
+					MainClient.statusPanel.update("The file you selected \"" + filename + "\" is not a text file.");
 					submitEvent.cancel();
 					return;
 				}
@@ -101,7 +102,7 @@ public class MIBImportPanel extends FormPanel {
 
 					@Override
 					public void onError(ErrorEvent errEvent) {
-						Window.alert("Import failed: " + errEvent.toString());
+						MainClient.statusPanel.update("Import failed: " + errEvent.toString());
 						submitEvent.cancel();
 					}
 				});
@@ -115,16 +116,11 @@ public class MIBImportPanel extends FormPanel {
 								true,
 								new AsyncCallback<String>() {
 									public void onFailure(Throwable caught) {
-										// Show the RPC error message to the
-										// user
-										Window.alert("Import failed: "
-												+ caught.getMessage() + "\n\n"
-												+ "Mib file " + filename
-												+ ": \n\n" + mibContents);
+										MainClient.statusPanel.update("Failed to import MIB file " + filename);
 									}
 
 									public void onSuccess(String result) {
-										Window.alert("Import completed");
+										MainClient.statusPanel.update("Import completed");
 									}
 								});
 					}
@@ -141,7 +137,7 @@ public class MIBImportPanel extends FormPanel {
 				// event is fired. Assuming the service returned a response of
 				// type text/html, we can get the result text here (see the
 				// FormPanel documentation for further explanation).
-				Window.alert(event.getResults());
+				MainClient.statusPanel.update(event.getResults());
 			}
 		});
 	}
