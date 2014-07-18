@@ -255,6 +255,8 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 			linkDao.update(link);
 		}
 		
+		interDeviceLink.setSourceNetworkId(sourceNetwork.getID());
+		interDeviceLink.setDestinationNetworkId(destNetwork.getID());
 	}
 
 	/**

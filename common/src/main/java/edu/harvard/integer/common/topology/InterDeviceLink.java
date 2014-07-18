@@ -71,6 +71,13 @@ public class InterDeviceLink extends BaseEntity {
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "sourceServiceElementType")),
 			@AttributeOverride(name = "name", column = @Column(name = "sourceServiceElementName")) })
 	private ID sourceServiceElementId = null;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "sourceNetworkId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "sourceNetworkType")),
+			@AttributeOverride(name = "name", column = @Column(name = "sourceNetworkName")) })
+	private ID sourceNetworkId = null;
 	
 	@Embedded
 	@AttributeOverrides({
@@ -84,6 +91,13 @@ public class InterDeviceLink extends BaseEntity {
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "cdestinationServiceElementType")),
 			@AttributeOverride(name = "name", column = @Column(name = "destinationServiceElementName")) })
 	private ID destinationServiceElementId = null;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "destinationNetworkd")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "cdestinationNetworkType")),
+			@AttributeOverride(name = "name", column = @Column(name = "destinationNetworkName")) })
+	private ID destinationNetworkId = null;
 	
 	private Date created = null;
 
@@ -182,6 +196,20 @@ public class InterDeviceLink extends BaseEntity {
 	}
 
 	/**
+	 * @return the sourceNetworkId
+	 */
+	public ID getSourceNetworkId() {
+		return sourceNetworkId;
+	}
+
+	/**
+	 * @param sourceNetworkId the sourceNetworkId to set
+	 */
+	public void setSourceNetworkId(ID sourceNetworkId) {
+		this.sourceNetworkId = sourceNetworkId;
+	}
+
+	/**
 	 * @return the destinationServiceElementId
 	 */
 	public ID getDestinationServiceElementId() {
@@ -194,6 +222,20 @@ public class InterDeviceLink extends BaseEntity {
 	public void setDestinationServiceElementId(
 			ID destinationServiceElementId) {
 		this.destinationServiceElementId = destinationServiceElementId;
+	}
+
+	/**
+	 * @return the destinationNetworkId
+	 */
+	public ID getDestinationNetworkId() {
+		return destinationNetworkId;
+	}
+
+	/**
+	 * @param destinationNetworkId the destinationNetworkId to set
+	 */
+	public void setDestinationNetworkId(ID destinationNetworkId) {
+		this.destinationNetworkId = destinationNetworkId;
 	}
 
 }

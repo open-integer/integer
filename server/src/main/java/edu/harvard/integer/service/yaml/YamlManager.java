@@ -661,20 +661,10 @@ public class YamlManager extends BaseManager implements
 		VendorContainmentSelector selector = new VendorContainmentSelector();
 		selector.setSignatures(createSignatures(load.getSignatures()));
 		
-		logger.info("Signatures " + selector.getSignatures().size());
-		for (VendorSignature signature : selector.getSignatures()) {
-			logger.info("Signature " + signature.getName() + " " + signature.getValueOperator().getValue()
-					+ " type " + signature.getSignatureType());
-		}
+
 		selector = discoveryManager
 				.updateVendorContainmentSelector(selector);
-		
-		logger.info("After save Signatures " + selector.getSignatures().size());
-		for (VendorSignature signature : selector.getSignatures()) {
-			logger.info("Signature " + signature.getName() + " " + signature.getValueOperator().getValue()
-					+ " type " + signature.getSignatureType());
-		}
-		
+				
 		SnmpContainment snmpContainment = discoveryManager
 				.getSnmpContainment(selector);
 		
