@@ -215,8 +215,9 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
 		NetworkDAO networkDao = persistenceManager.getNetworkDAO();
 		
-		logger.info("Create network name from " + interDeviceLink.getSourceAddress().getAddress()
-				 + " and " + interDeviceLink.getSourceAddress().getMask());
+		if (logger.isDebugEnabled())
+			logger.debug("Create network name from " + interDeviceLink.getSourceAddress().getAddress()
+					+ " and " + interDeviceLink.getSourceAddress().getMask());
 		
 		String sourceNetworkName = Network.createName(interDeviceLink.getSourceAddress());
 		String destNetworkName = Network.createName(interDeviceLink.getDestinationAddress());
@@ -230,6 +231,8 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		Network destNetwork = networkDao.findByName(destNetworkName);
 		if (destNetwork == null)
 			destNetwork = networkDao.update(createNetwork(interDeviceLink.getDestinationAddress()));
+		
+		addServiceElementToNetwork(interDeviceLink.getDestinationServiceElementId(), destNetwork);
 		
 		InterNetworkLink[] networkLinks = linkDao.findBySourceDestID(sourceNetwork.getID(), destNetwork.getID());
 		if (networkLinks == null || networkLinks.length == 0) {
@@ -270,7 +273,16 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		
 		ServiceElementDAO dao = persistenceManager.getServiceElementDAO();
 		ServiceElement serviceElement = dao.findById(sourceServiceElementId);
-		sourceNetwork.getServiceElements().add(serviceElement);
+		
+		boolean foundIt = false;
+		for (ServiceElement netServieElement : sourceNetwork.getServiceElements()) {
+			if (netServieElement.getID().equals(sourceServiceElementId)) {
+				foundIt = true;
+				break;
+			}
+		}
+		if (!foundIt)
+			sourceNetwork.getServiceElements().add(serviceElement);
 		
 	}
 

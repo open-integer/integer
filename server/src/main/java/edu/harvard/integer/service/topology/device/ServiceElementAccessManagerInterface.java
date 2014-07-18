@@ -164,4 +164,22 @@ public interface ServiceElementAccessManagerInterface extends
 	 * @throws IntegerException
 	 */
 	ServiceElement getServiceElementByName(String name) throws IntegerException;
+
+	/**
+	 * Get all the service elements that match the given selection.
+	 * @param selection
+	 * @return ServiceElement[] that match the selection.
+	 * @throws IntegerException
+	 */
+	ServiceElement[] getServiceElementsBySelection(Selection selection)
+			throws IntegerException;
+
+	/**
+	 * Get all the top level service elements that match the give selection.
+	 * @param selection
+	 * @return ServiceElement[] of the top level service elements that match the selection.
+	 * @throws IntegerException
+	 */
+	ServiceElement[] getTopLevelServicesElementsBySelection(Selection selection)
+			throws IntegerException;
 }

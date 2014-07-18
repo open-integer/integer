@@ -59,6 +59,9 @@ import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.technology.Service;
 import edu.harvard.integer.common.technology.Technology;
+import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.topology.device.ServiceElememtAccessManager;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
  * @author David Taylor
@@ -70,6 +73,9 @@ public class SelectionManagerTest {
 	@Inject
 	private SelectionManagerInterface selectionManager;
 
+	@Inject
+	private ServiceElementAccessManagerInterface serviceElementManager;
+	
 	private Logger logger = LoggerFactory.getLogger(SelectionManagerTest.class);
 
 	@Deployment
@@ -239,5 +245,30 @@ public class SelectionManagerTest {
 				showFilterNode(name + "::" + node.getName(), filterNode);
 			}
 		}
+	}
+	
+	@Test
+	public void getServiceElementsBySelection() {
+		Selection selection = null;
+		try {
+			selection = selectionManager.getBlankSelection();
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert (selection != null);
+		
+		ServiceElement[] serviceElements = null;
+		try {
+			serviceElements = serviceElementManager.getServiceElementsBySelection(selection);
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		logger.info("Found " + serviceElements.length + " ServiceElements for Selection");
 	}
 }

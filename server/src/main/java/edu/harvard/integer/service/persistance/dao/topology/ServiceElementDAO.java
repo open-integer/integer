@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -211,16 +212,110 @@ public class ServiceElementDAO extends BaseDAO {
 		
 		StringBuffer b = new StringBuffer();
 		
+		b.append("select se.* ").append('\n');
+		b.append("from ServiceElement se ").append('\n'); 
+		b.append("    join ServiceElement_AttributeValues seav on (seav.ServiceElement_identifier = se.identifier) ").append('\n');
+		b.append("    join ManagementObjectValue mov on (mov.identifier = seav.attributeValues_identifier) ").append('\n');
+		b.append("    join ServiceElementManagementObject mo on (mo.identifier = mov.managementObjectId) ").append('\n');
+		b.append("    join Capability c on (c.identifier = mo.capabilityId) ").append('\n');
+		b.append("    join Mechanism_capabilities mc on (mc.identifier = c.identifier) ").append('\n');
+		b.append("    join Mechanism m on (m.identifier = mc.Mechanism_identifier) ").append('\n');
+		b.append("    join Technology_mechanisims tm on (tm.identifier = m.identifier) ").append('\n');
+		b.append("    join Technology t on (t.identifier = tm.Technology_identifier) ").append('\n');
+		b.append("where ").append('\n');
+		
+		boolean addedOne = false;
+		
 		for (Filter filter : selection.getFilters() ) {
-			for (FilterNode filterNode : filter.getTechnologies()) {
-				if (filterNode.getSelected()) {
-					
+			if (filter.getTechnologies() != null)
+				addedOne = addFilterNodeRestriction("t.name", filter.getTechnologies(), addedOne, b, false);
+			
+			if (filter.getLinkTechnologies() != null)
+				addedOne = addFilterNodeRestriction("t.name", filter.getLinkTechnologies(), addedOne, b, false);
+		
+			if (addedOne)
+				b.append(")").append('\n');
+			else
+				b.append(" 1 = 1 ").append('\n');
+			
+			if (filter.getCategories() != null && filter.getCategories().size() > 0) {
+
+				if (filter.getTechnologies() != null || filter.getLinkTechnologies() != null)
+					b.append('\n').append(" union ").append('\n');
+				
+				b.append("select se.* ").append('\n');
+				b.append("from ServiceElement se ").append('\n'); 
+				b.append("  join ServiceElementType selt on (selt.identifier = se.serviceElementTypeId) ").append('\n');
+				b.append("  join Category c on (c.identifier = selt.category_identifier) ").append('\n');
+				b.append("where ").append('\n');
+
+				addedOne = false;
+				addFilterNodeRestriction("c.name", filter.getCategories(), addedOne, b, false);
+				if (!addedOne) 
+					b.append(" 1 = 1 ").append('\n');
+				
+				b.append('\n').append(" union ").append('\n');
+
+				b.append("select se.* ").append('\n'); 
+				b.append("from ServiceElement se ").append('\n');
+				b.append("   join ServiceElementType selt on (selt.identifier = se.serviceElementTypeId) ").append('\n');
+				b.append("   join Category c on (c.identifier = selt.category_identifier) ").append('\n');
+				b.append("   join Category_childIds cc on (cc.Category_identifier = c.identifier) ").append('\n');
+				b.append("where ").append('\n');
+				addedOne = false;
+				addFilterNodeRestriction("cc.name", filter.getCategories(), addedOne, b, false);
+				if (!addedOne) 
+					b.append(" 1 = 1 ").append('\n');
+				
+			}
+			
+			if (filter.getLocations() != null && filter.getLocations().size() > 0) {
+				b.append('\n').append(" union ").append('\n');
+
+				b.append("select se.* ").append('\n'); 
+				b.append("from ServiceElement se ").append('\n');
+				
+				for (ID locationId : filter.getLocations()) {
+					b.append(" se.primaryLocationId == ").append(locationId.getIdentifier()).append('\n');
 				}
 			}
 		}
-		return findTopLevelServiceElements();
+	
+		b.append(" group by se.identifier");
+		
+		Query createQuery = getEntityManager().createNativeQuery(b.toString(), ServiceElement.class);
+		
+		@SuppressWarnings("unchecked")
+		List<ServiceElement> resultList = createQuery.getResultList();
+
+		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList
+				.size()]);
 	}
 
+	private boolean addFilterNodeRestriction(String fieldName, List<FilterNode> techNodes, boolean addedOne, StringBuffer b, boolean isSelected) {
+		for (FilterNode filterNode : techNodes) {
+			if (filterNode == null) {
+				getLogger().warn("FilterNode is null. Adding nodes for " + fieldName + " SQL to this point " + b.toString());
+				continue;
+			}
+			
+			if (isSelected || Boolean.TRUE.equals(filterNode.getSelected())) {
+				if (addedOne) 
+					b.append(" or ");
+				else {
+					b.append("( ");
+					addedOne = true;
+				}
+				
+				b.append(" ").append(fieldName).append(" = '").append(filterNode.getItemId().getName()).append("'");
+				
+				if (filterNode.getChildren() != null)
+					addFilterNodeRestriction(fieldName, filterNode.getChildren(), addedOne, b, true);
+			}
+		}
+		return addedOne;
+	}
+	
 	/**
 	 * @param name
 	 * @return

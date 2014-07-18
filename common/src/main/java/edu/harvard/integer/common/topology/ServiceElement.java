@@ -173,24 +173,6 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	@OrderColumn(name = "idx")
 	private List<ID> credentials = null;
 
-	/*
-	 * Listing of the id object instances that reference domains supported by
-	 * this service element. This list helps with scoping of configuration
-	 * sequencing and control.
-	 */
-	@ElementCollection
-	@OrderColumn(name = "idx")
-	private List<ID> domainIds = null;
-
-	/**
-	 * Listing of the id object instances that reference mechanisms supported by
-	 * this service element. This list helps with scoping of configuration
-	 * sequencing and control.
-	 */
-	@ElementCollection
-	@OrderColumn(name = "idx")
-	private List<ID> mechanismIds = null;
-
 	/**
 	 * A listing of all the ServiceElementProtocolInstanceIdentifier instances
 	 * for this service element.
@@ -451,36 +433,6 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 */
 	public void setCredentials(List<ID> credentials) {
 		this.credentials = credentials;
-	}
-
-	/**
-	 * @return the domainIds
-	 */
-	public List<ID> getDomainIds() {
-		return domainIds;
-	}
-
-	/**
-	 * @param domainIds
-	 *            the domainIds to set
-	 */
-	public void setDomainIds(List<ID> domainIds) {
-		this.domainIds = domainIds;
-	}
-
-	/**
-	 * @return the mechanismIds
-	 */
-	public List<ID> getMechanismIds() {
-		return mechanismIds;
-	}
-
-	/**
-	 * @param mechanismIds
-	 *            the mechanismIds to set
-	 */
-	public void setMechanismIds(List<ID> mechanismIds) {
-		this.mechanismIds = mechanismIds;
 	}
 
 	/**

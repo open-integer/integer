@@ -36,14 +36,12 @@ package edu.harvard.integer.service.discovery;
 import java.util.concurrent.Future;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
 import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.type.displayable.DisplayableInterface;

@@ -51,6 +51,7 @@ import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -554,4 +555,8 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		return dao.findByName(name);
 	}
 
+	public ServiceElementType[] getServiceElementTypeBySelection(Selection selection) throws IntegerException {
+		
+		return null;
+	}
 }

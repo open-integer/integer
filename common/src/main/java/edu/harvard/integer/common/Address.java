@@ -142,6 +142,9 @@ public class Address implements Serializable {
 	}
 	
 	public static String getSubNet(String address, String mask) {
+		if (mask == null)
+			mask = "255.255.255.0";
+		
 		Long theIP = dottedIPToLong(address);
 		Long theMask = dottedIPToLong(mask);
 		long baseAddress = theIP.intValue() & theMask.intValue();

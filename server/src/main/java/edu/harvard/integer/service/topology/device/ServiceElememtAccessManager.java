@@ -33,7 +33,7 @@
 
 package edu.harvard.integer.service.topology.device;
 
-import java.util.List;
+import java.util.HashMap;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -265,10 +265,52 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		return null;
 	}
 	
-	
-	public ServiceElement getServieElementByUniqueIDValues(List list) throws IntegerException {
-		// Get service element by unique ID values.
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementsBySelection(edu.harvard.integer.common.selection.Selection)
+	 */
+	@Override
+	public ServiceElement[] getServiceElementsBySelection(Selection selection) throws IntegerException {
+		ServiceElementDAO dao = dbm.getServiceElementDAO();
 		
-		return null;
+		return dao.findBySelection(selection);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getTopLevelServicesElementsBySelection(edu.harvard.integer.common.selection.Selection)
+	 */
+	@Override
+	public ServiceElement[] getTopLevelServicesElementsBySelection(Selection selection) throws IntegerException {
+		ServiceElement[] serviceElements = getServiceElementsBySelection(selection);
+		
+		HashMap<ID, ServiceElement> topLevelServiceElements = new HashMap<ID, ServiceElement>();
+		
+		ServiceElementDAO dao = dbm.getServiceElementDAO();
+		
+		for (ServiceElement serviceElement : serviceElements) {
+			if (serviceElement.getParentId() == null)
+				topLevelServiceElements.put(serviceElement.getID(), serviceElement);
+			else {
+				ServiceElement topLevel = getTopLevel(serviceElement, dao);
+				if (topLevel != null && topLevelServiceElements.get(topLevel.getID()) == null)
+					topLevelServiceElements.put(topLevel.getID(), topLevel);
+			}
+		}
+		
+		return serviceElements;
+	}
+
+	/**
+	 * @param serviceElement
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private ServiceElement getTopLevel(ServiceElement serviceElement, ServiceElementDAO dao) throws IntegerException {
+		if (serviceElement.getParentId() != null) {
+			ServiceElement parent = dao.findById(serviceElement.getParentId());
+			return getTopLevel(parent, dao);
+		} else
+			return serviceElement;
 	}
 }

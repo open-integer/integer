@@ -341,6 +341,9 @@ public class TopologyManagerTest {
 						sourceServiceElement = serviceElementManger.updateServiceElement(createServiceElement(device[0]));
 					
 					serviceElements.add(sourceServiceElement);
+					ServiceElement itfServiceElement = createInterfaceServiceElement("If " + device[1]);
+					itfServiceElement.setParentId(sourceServiceElement.getID());
+					serviceElementManger.updateServiceElement(itfServiceElement);
 					
 					ServiceElement destServiceElement = serviceElementManger.getServiceElementByName(device[1]);
 					if (destServiceElement == null)
@@ -443,6 +446,14 @@ public class TopologyManagerTest {
 		return serviceElement;
 	}
 
+	private ServiceElement createInterfaceServiceElement(String name) {
+		ServiceElement serviceElement = new ServiceElement();
+		serviceElement.setName(name);
+		serviceElement.setCreated(new Date());
+		serviceElement.setDescription("Interface " + name);
+		
+		return serviceElement;
+	}
 
 	@Test
 	public void getLinksForSourceDestAddress() {
