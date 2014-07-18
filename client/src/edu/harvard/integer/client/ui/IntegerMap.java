@@ -21,7 +21,7 @@ import edu.harvard.integer.common.ID;
  */
 public class IntegerMap extends Layer {
 	
-	public static final int MAP_WIDTH = 2 * SystemSplitViewPanel.CONTENT_WIDTH / 3;
+	public static final int MAP_WIDTH = SystemSplitViewPanel.CONTENT_WIDTH;
 	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT;
 	
 	/** The Constant OFFSET_X. */

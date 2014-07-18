@@ -7,6 +7,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
@@ -23,17 +24,23 @@ import edu.harvard.integer.common.topology.ServiceElementType;
  */
 public class ContainedTreeView extends ScrollPanel {
 	
+	/** The tree. */
 	private Tree tree = new Tree();
-	private ServiceElement selectedServiceElement;
-	private long selectedTimestamp;
 	
+	/** The selected service element. */
+	private ServiceElement selectedServiceElement;
+	
+	/** The selected timestamp. */
+	private long selectedTimestamp;
+
 	/**
 	 * Create a new ContainedTreeView.
 	 *
 	 * @param title the title
 	 * @param headers the headers
+	 * @param detailsTabPanel the details tab panel
 	 */
-	public ContainedTreeView(String title, String[] headers) {
+	public ContainedTreeView(String title, String[] headers, final SplitLayoutPanel containedSplitPanel, final ServiceElementDetailsTabPanel detailsTabPanel) {
 		tree.setTitle(title);
 	    tree.setAnimationEnabled(true);
 		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -43,7 +50,7 @@ public class ContainedTreeView extends ScrollPanel {
 				final TreeItem treeItem = event.getSelectedItem();
 				
 				selectedServiceElement = (ServiceElement)treeItem.getUserObject();
-				SystemSplitViewPanel.detailsTabPanel.update(selectedServiceElement);
+				detailsTabPanel.update(selectedServiceElement);
 				
 				selectedTimestamp = System.currentTimeMillis();
 				
@@ -55,7 +62,7 @@ public class ContainedTreeView extends ScrollPanel {
 
 					@Override
 					public void onSuccess(ServiceElement[] serviceElements) {
-						SystemSplitViewPanel.containedSplitPanel.setWidgetHidden(SystemSplitViewPanel.detailsTabPanel, false);
+						containedSplitPanel.setWidgetHidden(detailsTabPanel, false);
 						
 						if (serviceElements == null || serviceElements.length == 0)
 							return;
@@ -80,7 +87,7 @@ public class ContainedTreeView extends ScrollPanel {
 									@Override
 									public void onSuccess(
 											ServiceElementType serviceElementType) {
-										SystemSplitViewPanel.detailsTabPanel.update(serviceElementType);
+										detailsTabPanel.update(serviceElementType);
 									}
 									
 								});
@@ -96,7 +103,8 @@ public class ContainedTreeView extends ScrollPanel {
 	/**
 	 * Update method will refresh the contained tree view of the object by object's name and the list of service element objects.
 	 *
-	 * @param result the result
+	 * @param name the name
+	 * @param elements the elements
 	 */
 	public void updateTree(String name, ServiceElement[] elements) {
 
@@ -117,10 +125,20 @@ public class ContainedTreeView extends ScrollPanel {
 
 	}
 
+	/**
+	 * Gets the selected service element.
+	 *
+	 * @return the selected service element
+	 */
 	public ServiceElement getSelectedServiceElement() {
 		return selectedServiceElement;
 	}
 	
+	/**
+	 * Gets the selected timestamp.
+	 *
+	 * @return the selected timestamp
+	 */
 	public long getSelectedTimestamp() {
 		return selectedTimestamp;
 	}
