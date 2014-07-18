@@ -73,6 +73,11 @@ h4 {
 	padding: 0;
 }
 
+.gwt-Panel {
+	margin: 0;
+	padding: 0;
+}
+
 .titlePanel { 
 	background-color: #68228B;
 	width: 100%;

@@ -71,6 +71,9 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public SystemSplitViewPanel() {
 		super(SPLITTER_SIZE);
         
+		// clean up tabPanel
+		tabPanel.clear();
+		
         setSize("100%", MainClient.WINDOW_HEIGHT+"px");
         
         // Event View
@@ -91,27 +94,27 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				NetworkMap networkMap = networkPanel.getNetworkMapPanel().getNetworkMap();
 				if (networkMap.getSelectedTimestamp() > containedTreeView.getSelectedTimestamp())
 					selectedEntity = networkMap.getSelectedEntity();
-				else
+				else {
 					selectedEntity = containedTreeView.getSelectedServiceElement();
 				
-				MainClient.integerService.getDeviceDetails(selectedEntity.getID(), new AsyncCallback<DeviceDetails>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Failed to receive Devices from Integer");
-					}
-
-					@Override
-					public void onSuccess(DeviceDetails deviceDetails) {
-						DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedEntity.getName(), deviceDetails);
-						HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
-						detailsDialog.enableOkButton(false);
-						detailsDialog.setSize("400px", "150px");
-						detailsDialog.center();
-						detailsDialog.show();
-					}
-				});
-				
+					MainClient.integerService.getDeviceDetails(selectedEntity.getID(), new AsyncCallback<DeviceDetails>() {
+	
+						@Override
+						public void onFailure(Throwable caught) {
+							MainClient.statusPanel.update("Failed to receive detail information of " + selectedEntity.getName());
+						}
+	
+						@Override
+						public void onSuccess(DeviceDetails deviceDetails) {
+							DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedEntity.getName(), deviceDetails);
+							HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
+							detailsDialog.enableOkButton(false);
+							detailsDialog.setSize("400px", "150px");
+							detailsDialog.center();
+							detailsDialog.show();
+						}
+					});
+				}
 			}
 			
 		});
@@ -119,7 +122,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	    
 	    // tabPanel
 		tabPanel.setSize("100%", CONTENT_HEIGHT+"px");
-	    tabPanel.setAnimationDuration(500);
+	    tabPanel.setAnimationDuration(1500);
 	    tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 	    tabPanel.add(networkPanel, "Network Map");
 		
@@ -140,8 +143,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
+				MainClient.statusPanel.update("Failed to receive default filter and selection.");
 			}
 
 			@Override
@@ -223,7 +225,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error");
+				MainClient.statusPanel.update("Failed to receive contained service elements of " + se.getName());
 			}
 
 			@Override
@@ -235,6 +237,11 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 
 	public static void showServiceElementMap(Network network) {
+		if (network.getServiceElements() == null || network.getServiceElements().isEmpty()) {
+			MainClient.statusPanel.update("No service element exists in network " + network.getName());
+			return;
+		}
+			
 		SubnetPanel subnetPanel = new SubnetPanel();
 		subnetPanel.updateSubnet(network);
 		tabPanel.add(subnetPanel, network.getName());
