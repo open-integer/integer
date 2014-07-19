@@ -154,6 +154,8 @@ public class ServiceElememtAccessManager extends BaseManager implements
 			throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 
+		logger.info("Get child service elements for parent " + parentId.toDebugString());
+		
 		ServiceElement[] topLevel = serviceElementDAO.findByParentId(parentId);
 		for (int i = 0; i < topLevel.length; i++) {
 
@@ -272,6 +274,8 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	@Override
 	public ServiceElement[] getServiceElementsBySelection(Selection selection) throws IntegerException {
 		ServiceElementDAO dao = dbm.getServiceElementDAO();
+		
+		logger.info("Get ServiceElementsBySeletion " + selection.getID().toDebugString());
 		
 		return dao.findBySelection(selection);
 	}
