@@ -120,6 +120,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 * at once and used them for later references.  
 	 */
 	private Map<String, List<String>>  instanceMappingTbl = new HashMap<>();
+	
+	/**
+	 * Hash map stores ServiceElements which contains unique identify attributes.  The key is combination of
+     * discovered or not.
+	 */
+	private Map<String, ServiceElement>  uniqueSEMap = new HashMap<>();
 
 
 	/**
@@ -168,11 +174,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					
 					SNMP snmp = (SNMP) mrgObj;
 					OID vbOid = new OID(snmp.getOid());
-					vbOid.append(instOid);
-					
-					vbs.add(new VariableBinding(vbOid));
-					
-					logger.info("Search for this oid ****************************** " + vbOid );
+					vbOid.append(instOid);					
+					vbs.add(new VariableBinding(vbOid));					
 				}
 			}
 			PDU rpdu = null;
@@ -181,11 +184,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				pdu.addAll(vbs);
 				
 				logger.info("Start Retrieve SNMP request back from " + ePoint.getIpAddress());
-				
-				for ( int i=0; i<pdu.getVariableBindings().size(); i++ ) {
-					
-					logger.info("Get value from this oid " +  pdu.getVariableBindings().get(i).getOid().toString());
-				}
+				logger.info("Get value from this oid " +  pdu.getVariableBindings().get(0).getOid().toString());
 				
 			    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
 			    List<ManagementObjectValue> attributes = se.getAttributeValues();
@@ -491,7 +490,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 * @throws IntegerException the integer exception
 	 */
 	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
-			                                            String instOid, ServiceElement parentSe ) throws IntegerException {
+			                                            String instOid ) throws IntegerException {
 		
 		/**
 		 * Setting the general information to the Service Element.
@@ -506,10 +505,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		se.setServiceElementTypeId(set.getID());
         se.setDescription(set.getCategory().getName());
 		
-		if (parentSe != null) {
-			se.setParentId(parentSe.getID());
-		}
-
 		/**
 		 * Retrieve the name to identify the service element.
 		 */
@@ -804,6 +799,31 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 	/**
 	 * 
+	 * @param setName
+	 * @param uniqueVal
+	 * @param se
+	 */
+	protected void putCheckingUniqueSE( String setName, String uniqueVal, ServiceElement se ) {
+		String key = setName + ":" + uniqueVal;
+		uniqueSEMap.put(key, se);
+	}
+	
+	
+	/**
+	 * 
+	 * @param setName
+	 * @param uniqueVal
+	 * @return
+	 */
+	protected ServiceElement getCheckingUniqueSE( String setName, String uniqueVal ) {
+		
+		String key = setName + ":" + uniqueVal;
+		return uniqueSEMap.get(key);
+	}
+	
+	
+	/**
+	 * 
 	 * @param se
 	 * @return
 	 * @throws IntegerException
@@ -818,6 +838,60 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			 }			 
 		}
 		return -1;
+	}
+	
+	
+	/**
+	 * Update service element in database.  First it checks if a service element with same unique values being discovered
+	 * before or not.  If it is, just return the discovered one.  Otherwise stores the newly one in the database and return it.
+	 * 
+	 * @param se
+	 * @param set
+	 * @return
+	 * @throws IntegerException
+	 */
+	public ServiceElement updateServiceElement( ServiceElement se, 
+			                                    ServiceElementType set, 
+			                                    ServiceElement parentSe ) throws IntegerException {
+		
+		/**
+    	 * Check if the discovered service element has been discovered or not.
+    	 * If it is, do not update it in database but just update its parent id.
+    	 */
+    	if ( set.getUniqueIdentifierCapabilities() != null && 
+    			set.getUniqueIdentifierCapabilities().size() > 0 ) {
+    		
+    		StringBuffer sb = new StringBuffer();
+    		 for ( ID id : set.getUniqueIdentifierCapabilities() ) {
+    			 
+    			 for ( ManagementObjectValue<?> val : se.getAttributeValues() ) {
+    				 if ( val.getManagementObject().getIdentifier() == id.getIdentifier() ) {
+    					 
+    					 sb.append(val.getValue().toString() + ":");
+    					 break;
+    				 }
+    			 }
+    		 }
+    		 if ( sb.length() > 0 ) {
+    			 
+    			 ServiceElement dupSe = getCheckingUniqueSE( set.getName(), sb.toString());
+    			 if ( dupSe != null ) {
+    				 dupSe.addParentId(parentSe.getID());
+    				 dupSe = accessMgr.updateServiceElement(dupSe);
+    				 return dupSe;
+    			 }    
+    			 else {
+    				 
+    				 se.setParentId(parentSe.getID());
+    				 dupSe = accessMgr.updateServiceElement(se);
+    				 putCheckingUniqueSE( set.getName(), sb.toString(), dupSe);
+    				 
+    				 return dupSe;
+    			 }
+    		 }
+    	}
+    	se.setParentId(parentSe.getID());
+	    return accessMgr.updateServiceElement(se);
 	}
 	
 

@@ -200,9 +200,6 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		catch (IntegerException e) {
 			logger.error("Error saveing ServiceElement " + discoverNode.getAccessElement());
 		}		
-		
-		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
-		
 		/**
 		 * If the discovered node contains protocol connection, store it 
 		 */
@@ -210,6 +207,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			addConnectionNode(subnetId, discoverNode);
 		}
 		
+		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
 		if ( subnetComplete ) {
 			logger.info("Subnet discovery complete " + subnetId);
 		}
@@ -332,6 +330,11 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					dsif.discoveryComplete(discoverId);
 					
 					if ( linkLayerConnections.size() > 0 ) {
+						
+						logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
+						if ( linkLayerConnections.size() == 1 ) {
+							logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
+						}
 						
 						DiscoverCdpTopologyTask task = new DiscoverCdpTopologyTask(linkLayerConnections, this);
 						task.call();

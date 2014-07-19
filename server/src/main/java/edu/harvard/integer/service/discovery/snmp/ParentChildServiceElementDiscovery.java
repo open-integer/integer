@@ -147,8 +147,8 @@ public class ParentChildServiceElementDiscovery extends
 					SnmpServiceElementTypeDiscriminator discriminator = snmpLevel.getDisriminators().get(0);
 					
 					ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-					ServiceElement se =  createServiceElementFromType(discNode, set, "0", discNode.getAccessElement());						
-					se = accessMgr.updateServiceElement(se);
+					ServiceElement se =  createServiceElementFromType(discNode, set, "0");						
+					se = updateServiceElement(se, set, discNode.getAccessElement());
 				}
 			}
 			else if ( snmpLevel.getRelationToParent() != null && snmpLevel.getRelationToParent() instanceof SnmpParentChildRelationship ) {
@@ -446,7 +446,7 @@ public class ParentChildServiceElementDiscovery extends
 			        	}
 			        	levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
 			        	try {
-			        		levelSe = createServiceElementFromType(discNode, levelSetType, instOid, parentSe);
+			        		levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
 			        	}
 			        	catch ( Exception e ) {
 			        		continue;
@@ -456,7 +456,9 @@ public class ParentChildServiceElementDiscovery extends
 			        		levelSe.setName(levelSetType.getName() + " " + instOid);
 			        	}
 			        	
-			        	levelSe = accessMgr.updateServiceElement(levelSe);
+			        	levelSe = updateServiceElement(levelSe, levelSetType, parentSe);
+			        	
+			        	
 		                if ( levelSetType.getCategory().getName().equals("Network") ) {
 							
 							TopologyElement te = new TopologyElement();
@@ -493,12 +495,12 @@ public class ParentChildServiceElementDiscovery extends
 			for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
 				
 				levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
-				levelSe = createServiceElementFromType(discNode, levelSetType, instOid, parentSe);
+				levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
 				if ( levelSe.getName() == null ) {    		
 	        		levelSe.setName(levelSetType.getName() + " " + instOid);
 	        	}
 				
-				levelSe = accessMgr.updateServiceElement(levelSe);
+				levelSe = updateServiceElement(levelSe, levelSetType, parentSe );
                 if ( levelSetType.getCategory().getName().equals("Network") ) {
 					
 					TopologyElement te = new TopologyElement();
@@ -654,13 +656,15 @@ public class ParentChildServiceElementDiscovery extends
 			se.setCreated(discNode.getExistingSE().getCreated());
 		}
 		se.setUpdated(new Date());
+		ServiceElement parentSe = null;
+		
 		if ( row.getContainmentValue().equals("0")) {
-			se.setParentId(discNode.getAccessElement().getID());
+			
+			parentSe = discNode.getAccessElement();
 		}
 		else {
 
-			EntityElement parentEE = elmMap.get( row.getContainmentValue());
-			se.setParentId(parentEE.serviceElement.getID());
+			parentSe = elmMap.get( row.getContainmentValue() ).serviceElement;
 		}
 		
 		String seName = set.getName() + " " + row.getSiblingValue();
@@ -672,11 +676,7 @@ public class ParentChildServiceElementDiscovery extends
 		logger.info("Create Element <" + se.getName() + "> " + " entityClass:" + set.getCategory().getName() 
 				         + " Index:" + row.getIndex() + " VendorType:" + row.getSubTypeValue() );
 		
-	    se.setServiceElementTypeId(set.getID());
-	    if ( se.getName().equals("cevSensor 6")) {
-	    	System.out.println("SE " + se.getName());
-	    }
-	    
+	    se.setServiceElementTypeId(set.getID());	    
 	    /**
 	     * Discover more detail for that service element.
 	     */
@@ -686,7 +686,7 @@ public class ParentChildServiceElementDiscovery extends
 	    /**
 	     * Create service element in the database.
 	     */
-	    se = accessMgr.updateServiceElement(se);
+	    se = updateServiceElement(se, set, parentSe);
 	    return se;
 	}
 	
