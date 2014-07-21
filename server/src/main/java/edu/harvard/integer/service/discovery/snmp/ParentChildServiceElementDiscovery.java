@@ -45,7 +45,6 @@ import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
-import com.sun.org.apache.bcel.internal.classfile.Unknown;
 
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.ID;

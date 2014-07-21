@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.hibernate.type.descriptor.sql.BitTypeDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +68,8 @@ import net.percederberg.mibble.snmp.SnmpModuleIdentity;
 import net.percederberg.mibble.snmp.SnmpObjectType;
 import net.percederberg.mibble.snmp.SnmpRevision;
 import net.percederberg.mibble.snmp.SnmpTextualConvention;
+import net.percederberg.mibble.type.BitSetType;
+import net.percederberg.mibble.type.IntegerType;
 import net.percederberg.mibble.type.ObjectIdentifierType;
 import net.percederberg.mibble.value.ObjectIdentifierValue;
 import edu.harvard.integer.common.exception.CommonErrorCodes;
@@ -79,6 +82,9 @@ import edu.harvard.integer.common.snmp.SNMPIndex;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.snmp.SNMPModuleHistory;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.snmp.SnmpEnumList;
+import edu.harvard.integer.common.snmp.SnmpEnumValue;
+import edu.harvard.integer.common.snmp.SnmpSyntax;
 import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
 import edu.harvard.integer.server.parser.mibparser.MibParser;
@@ -252,8 +258,7 @@ public class MibbleParser implements MibParser{
     					/**
     					 * Only card if it is accessable.
     					 */
-    					snmpType = (SnmpObjectType) avs.getType();
-
+    					snmpType = (SnmpObjectType) avs.getType();    					
     					if (snmpType.getAccess().canRead() || snmpType.getAccess().canWrite() )
     					{
     						ObjectIdentifierValue obj = (ObjectIdentifierValue) avs.getValue();
@@ -698,9 +703,49 @@ public class MibbleParser implements MibParser{
 		
 	    SNMP snmp = new SNMP();
 	    snmp.setScalarVB(isScalar);
+	    
+	    if ( obj.toObject().toString().indexOf("1.3.6.1.4.1.9.9.23.1.3.6") >= 0 ) {
+	    	System.out.println(obj.toObject().toString());
+	    }
 
 	    if ( snmpType.getSyntax().getReferenceSymbol() != null && snmpType.getSyntax().getReferenceSymbol().getType() instanceof SnmpTextualConvention )
 	    {
+	    	if ( snmpType.getSyntax() instanceof IntegerType ) {
+	    		 IntegerType it = (IntegerType) snmpType.getSyntax();
+	    		 MibValueSymbol[] mvss = it.getAllSymbols();
+	    		 if ( mvss != null ) {
+	    			 SnmpEnumList sel = new SnmpEnumList();
+	    			 sel.setValues(new ArrayList<SnmpEnumValue>());
+	    			 for ( MibValueSymbol mvs : mvss ) {
+		    			
+	    				 SnmpEnumValue sev = new SnmpEnumValue();
+	    				 sev.setName(mvs.getName());
+	    				 sev.setValue(Integer.parseInt(mvs.getValue().toString()));	    				 
+	    				 sel.getValues().add(sev);
+	    				 
+		    			 System.out.println("" + mvs.getName() + " " + mvs.getValue().toString()); 
+		    		 }
+	    			 snmp.setSyntax(sel);
+	    		 }
+	    	}
+	    	else if ( snmpType.getSyntax() instanceof BitSetType ) {
+	    		BitSetType bt = (BitSetType)snmpType.getSyntax();
+	    		MibValueSymbol[] mvss = bt.getAllSymbols();
+	    		 if ( mvss != null ) {
+	    			 SnmpEnumList sel = new SnmpEnumList();
+	    			 sel.setValues(new ArrayList<SnmpEnumValue>());
+	    			 for ( MibValueSymbol mvs : mvss ) {
+		    			
+	    				 SnmpEnumValue sev = new SnmpEnumValue();
+	    				 sev.setName(mvs.getName());
+	    				 sev.setValue(Integer.parseInt(mvs.getValue().toString()));	    				 
+	    				 sel.getValues().add(sev);
+	    				 
+		    			 System.out.println("" + mvs.getName() + " " + mvs.getValue().toString()); 
+		    		 }
+	    			 snmp.setSyntax(sel);
+	    		 }
+	    	}
 	    	snmp.setTextualConvetion(snmpType.getSyntax().getReferenceSymbol().getName());
 	    }
 	    snmp.setName(obj.getName());

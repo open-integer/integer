@@ -41,6 +41,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
@@ -94,7 +95,7 @@ public class SNMP extends ServiceElementManagementObject implements Serializable
 	 */
 	private String textualConvetion = null;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private SnmpSyntax syntax = null;
 	
 	/*

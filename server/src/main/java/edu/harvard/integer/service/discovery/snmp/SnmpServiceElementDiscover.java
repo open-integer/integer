@@ -69,6 +69,8 @@ import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.snmp.SnmpEnumList;
+import edu.harvard.integer.common.snmp.SnmpEnumValue;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -932,6 +934,19 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			PDU pdu = new PDU();
     		pdu.add(new VariableBinding(new OID(snmp.getOid() + ".0")));
     		PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
+    		
+    		/*
+    		String deviceVal = rpdu.get(0).getVariable().toString();
+    		if ( snmp.getSyntax() instanceof SnmpEnumList ) {
+    			SnmpEnumList sel = (SnmpEnumList) snmp.getSyntax();
+    			
+    			for ( SnmpEnumValue sev : sel.getValues() ) {				
+    				if ( sev.getValue() == Integer.parseInt(deviceVal) ) {
+    					globalDiscriminatorVal = sev.getName();
+    				}
+    			}
+    		}
+    		*/
     		globalDiscriminatorVal = rpdu.get(0).getVariable().toString();
     		
     		if ( snmp.getTextualConvetion().equals("TruthValue")) {
