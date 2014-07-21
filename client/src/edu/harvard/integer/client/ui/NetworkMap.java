@@ -36,7 +36,9 @@ public class NetworkMap extends IntegerMap {
 	 * @param networkkInfo the networkk info
 	 */
 	public void updateNetworkInformation(NetworkInformation networkkInfo) {
-		update(networkkInfo.getNetworks());
+		entityMap.clear();
+		removeAll();
+		updateNetworks(networkkInfo.getNetworks());
 		drawLinks(networkkInfo.getLinks());
 	}
 
@@ -45,13 +47,12 @@ public class NetworkMap extends IntegerMap {
 	 *
 	 * @param result the result
 	 */
-	private void update(Network[] result) {
-		entityMap.clear();
-		removeAll();
+	private void updateNetworks(Network[] result) {
+		
 		init_layout(result.length);
 		
-		// === testing only first 4 points ==
-		int N = 50;
+		// === testing only first N points ==
+		int N = 180;
 		init_layout(N);
 		// ==================================
 		

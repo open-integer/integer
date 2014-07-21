@@ -34,18 +34,20 @@ import edu.harvard.integer.common.topology.ServiceElement;
 public class SubnetMap extends IntegerMap {
 
 	public void updateNetwork(Network network) {
-		update(network.getServiceElements());
+		entityMap.clear();
+		removeAll();
+		updateServiceElements(network.getServiceElements());
+		updateLowerNetworks(network.getLowerNetworks());
 		drawLinks(network.getInterDeviceLinks());
 	}
-	
+
 	/**
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
 	 * @param list the result
 	 */
-	public void update(List<ServiceElement> list) {
-		entityMap.clear();
-		removeAll();
+	public void updateServiceElements(List<ServiceElement> list) {
+		
 		init_layout(list.size());
 		
 		int i = 0;
@@ -72,6 +74,11 @@ public class SubnetMap extends IntegerMap {
         	
         	add(icon);
 		}
+	}
+	
+	private void updateLowerNetworks(List<Network> lowerNetworks) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**
