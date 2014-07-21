@@ -80,6 +80,7 @@ public class ServiceElementType extends BaseEntity {
 	 * take several Signature instances to accurately identify an SET.
 	 * 
 	 */
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OneToMany
 	private List<Signature> signatures = null;
 
