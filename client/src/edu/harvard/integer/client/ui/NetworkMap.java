@@ -51,7 +51,7 @@ public class NetworkMap extends IntegerMap {
 		init_layout(result.length);
 		
 		// === testing only first 4 points ==
-		int N = 10;
+		int N = 50;
 		init_layout(N);
 		// ==================================
 		
@@ -134,8 +134,8 @@ public class NetworkMap extends IntegerMap {
             
 			@Override
 			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
-				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
-				int y = 100 + event.getY() - 15;
+				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX();
+				int y = 200 + event.getY();
 
 				tooltip.setPopupPosition(x, y);
 				tooltip.update(link.getName(), "Not availabel");

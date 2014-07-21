@@ -21,6 +21,9 @@ import edu.harvard.integer.common.ID;
  */
 public class IntegerMap extends Layer {
 	
+	public static final double HALF_PI = Math.PI / 2;
+	public static final double ONE_AND_HALF_PI = Math.PI + HALF_PI;
+	
 	public static final int MAP_WIDTH = SystemSplitViewPanel.CONTENT_WIDTH;
 	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT;
 	
@@ -28,13 +31,16 @@ public class IntegerMap extends Layer {
 	public static final int OFFSET_X = 30;
 	
 	/** The Constant OFFSET_Y. */
-	public static final int OFFSET_Y = 55;
+	public static final int OFFSET_Y = 30;
 	
 	/** The Constant GRID_LAYOUT. */
 	public static final int GRID_LAYOUT = 1;
 	
 	/** The Constant CIRCULAR_LAYOUT. */
 	public static final int CIRCULAR_LAYOUT = 2;
+	
+	/** The Constant ELLIPSE_LAYOUT. */
+	public static final int ELLIPSE_LAYOUT = 3;
 	
 	/** The layout_type. */
 	protected int layout_type = CIRCULAR_LAYOUT;
@@ -106,14 +112,16 @@ public class IntegerMap extends Layer {
 	 * @param total the total
 	 */
 	protected void init_layout(int total) {
-		icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
-		icon_col_total = 2 * icon_row_total;
-		
-		if (icon_col_total != 0)
-			icon_width = MAP_WIDTH / icon_col_total;
-		
-		if (layout_type == CIRCULAR_LAYOUT) {
-			icon_width = icon_width / 2;
+		int half_total = (int) (Math.ceil(total/2)) + 2;
+		if (layout_type == ELLIPSE_LAYOUT ||
+			layout_type == CIRCULAR_LAYOUT) {
+			int dw = MAP_WIDTH / half_total;
+			int dh = MAP_HEIGHT / half_total;
+			icon_width = dh < dw ? dh : dw;
+		}
+		else {
+			icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
+			icon_col_total = 2 * icon_row_total;
 		}
 		icon_height = icon_width;
 		
@@ -133,6 +141,8 @@ public class IntegerMap extends Layer {
 	public Point calculatePoint(int total, int i) {
 		if (layout_type == CIRCULAR_LAYOUT) 
 			return calculateCircularLayoutPoint(total, i);
+		else if (layout_type == ELLIPSE_LAYOUT)
+			return calculateEllipseLayoutPoint(total, i);
 		
 		return calculateLineLayoutPoint(total, i);
 	}
@@ -162,11 +172,29 @@ public class IntegerMap extends Layer {
 	 */
 	public Point calculateCircularLayoutPoint(int total, int i) {
 		double height = MAP_HEIGHT - icon_height * 2 - OFFSET_Y;
-        double width = MAP_WIDTH - icon_width * 2;
+        double width = MAP_WIDTH - icon_width * 2 - OFFSET_X;
         double radius = 0.45 * (height < width ? height : width);
-		double angle = (2 * Math.PI * i++) / total;
+		double angle = (2 * Math.PI * i) / total;
     	double x = Math.cos(angle) * radius + width / 2;
     	double y = Math.sin(angle) * radius + height / 2;
+    	
+    	return new Point(x, y);
+	}
+	
+	public Point calculateEllipseLayoutPoint(int total, int i) {
+		double a = (MAP_WIDTH - icon_width * 2) * 0.45 - OFFSET_X;
+		double b = (MAP_HEIGHT - icon_height * 2) * 0.45 - OFFSET_Y;
+		double angle = (2 * Math.PI * i) / total;
+		double tan = Math.tan(angle);
+    	double x0 = a * b / Math.sqrt(b*b + a*a*tan*tan);
+    	double y0 = a * b * tan / Math.sqrt(b*b + a*a*tan*tan);
+    	
+    	if (angle > HALF_PI && angle < ONE_AND_HALF_PI) {
+    		x0 = -x0;
+    		y0 = -y0;
+    	}
+    	double x = x0 + a + OFFSET_X;
+    	double y = y0 + b + OFFSET_Y;
     	
     	return new Point(x, y);
 	}
