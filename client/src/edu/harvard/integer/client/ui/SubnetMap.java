@@ -1,7 +1,9 @@
 package edu.harvard.integer.client.ui;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.emitrom.lienzo.client.core.event.NodeMouseClickEvent;
 import com.emitrom.lienzo.client.core.event.NodeMouseClickHandler;
@@ -33,8 +35,11 @@ import edu.harvard.integer.common.topology.ServiceElement;
  */
 public class SubnetMap extends IntegerMap {
 
+	protected Map<ID, Point> diffNetworksMap = new HashMap<ID, Point>();
+	
 	public void updateNetwork(Network network) {
 		entityMap.clear();
+		diffNetworksMap.clear();
 		removeAll();
 		
 		if (network.getLowerNetworks() == null || network.getLowerNetworks().isEmpty())
@@ -43,6 +48,8 @@ public class SubnetMap extends IntegerMap {
 			updateServiceElements(network.getServiceElements(), LAYOUT_LEFT);
 			updateLowerNetworks(network.getLowerNetworks(), LAYOUT_RIGHT);
 		}
+		
+		updateInterDeviceDiffNetworks(network.getInterDeviceLinks());
 		
 		drawLinks(network.getInterDeviceLinks());
 	}
@@ -92,7 +99,7 @@ public class SubnetMap extends IntegerMap {
 		for (final Network entity : list) {
 			Point point = calculatePoint(list.size(), i++);
 			entityMap.put(entity.getID(), point);
-			pointList.add(point);
+			//pointList.add(point);
 			
 			image = Resources.IMAGES.pcom();
 			
@@ -106,6 +113,77 @@ public class SubnetMap extends IntegerMap {
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, mouseClickHandler);
+        	icon.draw((int)point.getX(), (int)point.getY());
+        	
+        	add(icon);
+		}
+	}
+	
+	private void updateInterDeviceDiffNetworks(List<InterDeviceLink> list) {
+		layout_type = this.ELLIPSE_LAYOUT;
+		
+		// find all the networks not in this subnet
+		int counterDiffNetwork = 0;
+		for (final InterDeviceLink link : list) {
+			ID id1 = link.getSourceServiceElementId();
+			ID id2 = link.getDestinationServiceElementId();
+			Point p1 = entityMap.get(id1);
+			Point p2 = entityMap.get(id2);
+			
+			if (p1 == null || p2 == null) 
+				counterDiffNetwork++;
+		}
+
+		int i = 0;
+		ImageResource image = Resources.IMAGES.network();	
+			
+		for (final InterDeviceLink link : list) {
+			ID id1 = link.getSourceServiceElementId();
+			ID id2 = link.getDestinationServiceElementId();
+			Point p1 = entityMap.get(id1);
+			Point p2 = entityMap.get(id2);
+			Point point = null;
+			ID networkId = null;
+			
+			final ServiceElement fakeSe = new ServiceElement();
+			
+			if (p1 == null || p2 == null) {
+				point = calculatePoint(counterDiffNetwork, i++);
+				//pointList.add(point);
+				fakeSe.setIdentifier((long) i);
+				
+				if (p1 == null) {
+					networkId = link.getSourceNetworkId();
+					fakeSe.setName(id1.getName());
+					fakeSe.setIdentifier(id1.getIdentifier());
+				}
+				else {
+					networkId = link.getDestinationNetworkId();
+					fakeSe.setName(id2.getName());
+					fakeSe.setIdentifier(id2.getIdentifier());
+				}
+				
+				if (networkId != null)
+					entityMap.put(networkId, point);
+				else {
+					// fake for test
+					entityMap.put(fakeSe.getID(), point);
+				}
+					
+			}
+			else
+				continue;
+			
+        	Picture picture = new Picture(image, icon_width, icon_height, true, null);
+        	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
+
+        		@Override
+        		public void onNodeMouseClick(NodeMouseClickEvent event) {
+        			selectedEntity = fakeSe;
+        			selectedTimestamp = System.currentTimeMillis();
+        		} 		
+        	};
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, fakeSe, mouseClickHandler);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);

@@ -247,10 +247,15 @@ public class IntegerMap extends Layer {
 	public Point calculateEllipseLayoutPoint(int total, int i) {
 		double a = (MAP_WIDTH - icon_width * 2) * 0.45 - OFFSET_X;
 		double b = (MAP_HEIGHT - icon_height * 2) * 0.45 - OFFSET_Y;
-		double angle = (2 * Math.PI * i) / total;
+		double angle = (DOUBLE_PI * i) / total;
 		double tan = Math.tan(angle);
-    	double x0 = a * b / Math.sqrt(b*b + a*a*tan*tan);
-    	double y0 = a * b * tan / Math.sqrt(b*b + a*a*tan*tan);
+		
+		double aa = a * a;
+		double ab = a * b;
+		double bb = b * b;
+		double tantan = tan * tan;
+    	double x0 = ab / Math.sqrt(bb + aa * tantan);
+    	double y0 = ab * tan / Math.sqrt(bb + aa * tantan);
     	
     	if (angle > HALF_PI && angle < ONE_AND_HALF_PI) {
     		x0 = -x0;

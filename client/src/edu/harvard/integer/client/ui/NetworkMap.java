@@ -41,7 +41,6 @@ public class NetworkMap extends IntegerMap {
 		int linkSize = networkkInfo.getLinks().length;
 		String text = "showing network: " + netSize + " subnets, " + linkSize + " links";
 		MainClient.statusPanel.updateStatus(text);
-		
 		entityMap.clear();
 		removeAll();
 		updateNetworks(networkkInfo.getNetworks());
