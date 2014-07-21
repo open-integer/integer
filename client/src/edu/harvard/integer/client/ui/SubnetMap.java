@@ -31,7 +31,7 @@ import edu.harvard.integer.common.topology.ServiceElement;
  * @author  Joel Huang
  * @version 1.0, May 2014
  */
-public class ServiceElementMap extends IntegerMap {
+public class SubnetMap extends IntegerMap {
 
 	public void updateNetwork(Network network) {
 		update(network.getServiceElements());
