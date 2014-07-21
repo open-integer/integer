@@ -36,8 +36,14 @@ public class SubnetMap extends IntegerMap {
 	public void updateNetwork(Network network) {
 		entityMap.clear();
 		removeAll();
-		updateServiceElements(network.getServiceElements());
-		updateLowerNetworks(network.getLowerNetworks());
+		
+		if (network.getLowerNetworks() == null || network.getLowerNetworks().isEmpty())
+			updateServiceElements(network.getServiceElements(), LAYOUT_CENTER);
+		else {
+			updateServiceElements(network.getServiceElements(), LAYOUT_LEFT);
+			updateLowerNetworks(network.getLowerNetworks(), LAYOUT_RIGHT);
+		}
+		
 		drawLinks(network.getInterDeviceLinks());
 	}
 
@@ -46,8 +52,8 @@ public class SubnetMap extends IntegerMap {
 	 *
 	 * @param list the result
 	 */
-	public void updateServiceElements(List<ServiceElement> list) {
-		
+	public void updateServiceElements(List<ServiceElement> list, int layout_position) {
+		this.layout_position = layout_position;
 		init_layout(list.size());
 		
 		int i = 0;
@@ -76,9 +82,34 @@ public class SubnetMap extends IntegerMap {
 		}
 	}
 	
-	private void updateLowerNetworks(List<Network> lowerNetworks) {
-		// TODO Auto-generated method stub
+	private void updateLowerNetworks(List<Network> list, int layout_position) {
+		this.layout_position = layout_position;
+		init_layout(list.size());
 		
+		int i = 0;
+		ImageResource image = Resources.IMAGES.network();
+		
+		for (final Network entity : list) {
+			Point point = calculatePoint(list.size(), i++);
+			entityMap.put(entity.getID(), point);
+			pointList.add(point);
+			
+			image = Resources.IMAGES.pcom();
+			
+        	Picture picture = new Picture(image, icon_width, icon_height, true, null);
+        	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
+
+        		@Override
+        		public void onNodeMouseClick(NodeMouseClickEvent event) {
+        			selectedEntity = entity;
+        			selectedTimestamp = System.currentTimeMillis();
+        		} 		
+        	};
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, mouseClickHandler);
+        	icon.draw((int)point.getX(), (int)point.getY());
+        	
+        	add(icon);
+		}
 	}
 	
 	/**

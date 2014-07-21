@@ -21,11 +21,29 @@ import edu.harvard.integer.common.ID;
  */
 public class IntegerMap extends Layer {
 	
+	/** The Constant HALF_PI. */
 	public static final double HALF_PI = Math.PI / 2;
+	
+	/** The Constant ONE_AND_HALF_PI. */
 	public static final double ONE_AND_HALF_PI = Math.PI + HALF_PI;
 	
+	/** The Constant DOUBLE_PI. */
+	public static final double DOUBLE_PI = Math.PI + Math.PI;
+	
+	/** The Constant MAP_WIDTH. */
 	public static final int MAP_WIDTH = SystemSplitViewPanel.CONTENT_WIDTH;
+	
+	/** The Constant MAP_HEIGHT. */
 	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT;
+	
+	/** The Constant LAYOUT_CENTER. */
+	public static final int LAYOUT_CENTER = 1;
+	
+	/** The Constant LAYOUT_LEFT. */
+	public static final int LAYOUT_LEFT = 2;
+	
+	/** The Constant LAYOUT_RIGHT. */
+	public static final int LAYOUT_RIGHT = 3;
 	
 	/** The Constant OFFSET_X. */
 	public static final int OFFSET_X = 30;
@@ -45,6 +63,9 @@ public class IntegerMap extends Layer {
 	/** The layout_type. */
 	protected int layout_type = CIRCULAR_LAYOUT;
 	
+	/** The layout_position. */
+	protected int layout_position = LAYOUT_CENTER;
+	
 	/** The icon_row_total. */
 	private int icon_row_total;
 	
@@ -60,14 +81,15 @@ public class IntegerMap extends Layer {
 	protected int icon_height;
 	
 	/** The selected element. */
-	BaseEntity selectedEntity;
+	protected BaseEntity selectedEntity;
 	
 	/** The selected timestamp. */
-	long selectedTimestamp;
+	protected long selectedTimestamp;
 	
 	/** The entity map. */
 	protected Map<ID, Point> entityMap = new HashMap<ID, Point>();
 	
+	/** The point list. */
 	protected List<Point> pointList = new ArrayList<Point>();
 	
 	/**
@@ -112,11 +134,14 @@ public class IntegerMap extends Layer {
 	 * @param total the total
 	 */
 	protected void init_layout(int total) {
+		int layout_width = getLayoutWidth();
+		int layout_height = getLayoutHeight();
+			
 		int half_total = (int) (Math.ceil(total/2)) + 2;
 		if (layout_type == ELLIPSE_LAYOUT ||
 			layout_type == CIRCULAR_LAYOUT) {
-			int dw = MAP_WIDTH / half_total;
-			int dh = MAP_HEIGHT / half_total;
+			int dw = layout_width / half_total;
+			int dh = layout_height / half_total;
 			icon_width = dh < dw ? dh : dw;
 		}
 		else {
@@ -129,6 +154,32 @@ public class IntegerMap extends Layer {
 			line_width = 1;
 		else if (total > 25)
 			line_width = 2;
+	}
+	
+	/**
+	 * Gets the layout width.
+	 * It returns MAP_WIDTH 	if layout_position is CENTER
+	 * 			  MAP_WIDTH/2 	if layout_position is LEFT or RIGHT
+	 *
+	 * @return the layout width
+	 */
+	private int getLayoutWidth() {
+		int layout_width = MAP_WIDTH;
+		if (layout_position == LAYOUT_LEFT ||
+			layout_position == LAYOUT_RIGHT	) {
+			layout_width = MAP_WIDTH / 2;
+		}
+		return layout_width;
+	}
+	
+	/**
+	 * Gets the layout height.
+	 *
+	 * @return the layout height
+	 */
+	private int getLayoutHeight() {
+		// always MAP_HEIGHT for now
+		return MAP_HEIGHT;
 	}
 	
 	/**
@@ -164,19 +215,31 @@ public class IntegerMap extends Layer {
 	}
 	
 	/**
-	 * Calculate circular layout point.
+	 * Calculate circular layout point. 
+	 * It supports 3 layout positions: CENTER, LEFT and RIGHT.
 	 *
 	 * @param total the total
 	 * @param i the i
 	 * @return the point
 	 */
 	public Point calculateCircularLayoutPoint(int total, int i) {
-		double height = MAP_HEIGHT - icon_height * 2 - OFFSET_Y;
-        double width = MAP_WIDTH - icon_width * 2 - OFFSET_X;
-        double radius = 0.45 * (height < width ? height : width);
-		double angle = (2 * Math.PI * i) / total;
-    	double x = Math.cos(angle) * radius + width / 2;
-    	double y = Math.sin(angle) * radius + height / 2;
+		int layout_width = getLayoutWidth();
+		int layout_height = getLayoutHeight();
+		
+		double width = layout_width - icon_width * 2 - OFFSET_X;
+		double height = layout_height - icon_height * 2 - OFFSET_Y;
+        
+		double radius = 0.45 * (height < width ? height : width);
+		double angle = (DOUBLE_PI * i) / total;
+		double start_x = width / 2;
+		double start_y = height / 2;
+		
+		// start_x should be shift to right for LAYOUT_RIGHT position
+		if (layout_position == LAYOUT_RIGHT)
+			start_x += width;
+			
+    	double x = Math.cos(angle) * radius + start_x;
+    	double y = Math.sin(angle) * radius + start_y;
     	
     	return new Point(x, y);
 	}
