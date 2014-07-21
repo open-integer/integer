@@ -156,7 +156,7 @@ public class MainClient implements EntryPoint {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						MainClient.statusPanel.update("Failed to get all mib modules");
+						MainClient.statusPanel.showAlert("Failed to get all mib modules");
 					}
 
 					@Override

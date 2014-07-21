@@ -91,7 +91,7 @@ public class MIBImportPanel extends FormPanel {
 				String fileType = file.getType();
 
 				if (!fileType.startsWith("text") && !fileType.isEmpty()) {
-					MainClient.statusPanel.update("The file you selected \"" + filename + "\" is not a text file.");
+					MainClient.statusPanel.showAlert("The file you selected \"" + filename + "\" is not a text file.");
 					submitEvent.cancel();
 					return;
 				}
@@ -102,7 +102,7 @@ public class MIBImportPanel extends FormPanel {
 
 					@Override
 					public void onError(ErrorEvent errEvent) {
-						MainClient.statusPanel.update("Import failed: " + errEvent.toString());
+						MainClient.statusPanel.showAlert("Import failed: " + errEvent.toString());
 						submitEvent.cancel();
 					}
 				});
@@ -116,11 +116,11 @@ public class MIBImportPanel extends FormPanel {
 								true,
 								new AsyncCallback<String>() {
 									public void onFailure(Throwable caught) {
-										MainClient.statusPanel.update("Failed to import MIB file " + filename);
+										MainClient.statusPanel.showAlert("Failed to import MIB file " + filename);
 									}
 
 									public void onSuccess(String result) {
-										MainClient.statusPanel.update("Import completed");
+										MainClient.statusPanel.showAlert("Import completed");
 									}
 								});
 					}
@@ -137,7 +137,7 @@ public class MIBImportPanel extends FormPanel {
 				// event is fired. Assuming the service returned a response of
 				// type text/html, we can get the result text here (see the
 				// FormPanel documentation for further explanation).
-				MainClient.statusPanel.update(event.getResults());
+				MainClient.statusPanel.showAlert(event.getResults());
 			}
 		});
 	}

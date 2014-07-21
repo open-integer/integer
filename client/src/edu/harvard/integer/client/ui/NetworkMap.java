@@ -12,6 +12,7 @@ import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
 
+import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
@@ -36,6 +37,11 @@ public class NetworkMap extends IntegerMap {
 	 * @param networkkInfo the networkk info
 	 */
 	public void updateNetworkInformation(NetworkInformation networkkInfo) {
+		int netSize = networkkInfo.getNetworks().length;
+		int linkSize = networkkInfo.getLinks().length;
+		String text = "showing network: " + netSize + " subnets, " + linkSize + " links";
+		MainClient.statusPanel.updateStatus(text);
+		
 		entityMap.clear();
 		removeAll();
 		updateNetworks(networkkInfo.getNetworks());
@@ -52,7 +58,7 @@ public class NetworkMap extends IntegerMap {
 		init_layout(result.length);
 		
 		// === testing only first N points ==
-		int N = 180;
+		int N = 10;
 		init_layout(N);
 		// ==================================
 		

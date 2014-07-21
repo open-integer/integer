@@ -17,8 +17,12 @@ public class StatusPanel extends HorizontalPanel {
 		add(statusBox);
 	}
 	
-	public void update(String text) {
+	public void showAlert(String text) {
 		statusBox.setText(text);
 		Window.alert(text);
+	}
+	
+	public void updateStatus(String text) {
+		statusBox.setText(text);
 	}
 }
