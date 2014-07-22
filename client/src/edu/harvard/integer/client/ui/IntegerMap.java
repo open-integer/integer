@@ -1,8 +1,6 @@
 package edu.harvard.integer.client.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.emitrom.lienzo.client.core.shape.Layer;
@@ -81,17 +79,29 @@ public class IntegerMap extends Layer {
 	/** The line_width. */
 	protected int line_width = 3;
 	
-	protected double semi_x;
-	protected double semi_y;
-	protected double semi_xx;
-	protected double semi_xy;
-	protected double semi_yy;
+	/** The circle radius of Circular Layout **/
+	protected double radius;
 	
-	double a;
-	double b;
-	double aa;
-	double ab;
-	double bb;
+	/** The semi length of x-axis **/
+	protected double a;
+	
+	/** The semi length of y-axis **/
+	protected double b;
+	
+	/** The square of semi length of x-axis **/
+	protected double aa;
+	
+	/** The product of semi length of x-axis and semi length of y-axis **/
+	protected double ab;
+	
+	/** The square of semi length of y-axis **/
+	protected double bb;
+	
+	/** The x-axis value of original point **/
+	protected double original_x;
+	
+	/** The y-axis value of original point **/
+	protected double original_y;
 	
 	/** The selected element. */
 	protected BaseEntity selectedEntity;
@@ -101,9 +111,6 @@ public class IntegerMap extends Layer {
 	
 	/** The entity map. */
 	protected Map<ID, Point> entityMap = new HashMap<ID, Point>();
-	
-	/** The point list. */
-	// protected List<Point> pointList = new ArrayList<Point>();
 	
 	/**
 	 * Gets the selected element.
@@ -149,13 +156,25 @@ public class IntegerMap extends Layer {
 	protected void init_layout(int total) {
 		int layout_width = getLayoutWidth();
 		int layout_height = getLayoutHeight();
-			
+		
 		int half_total = (int) (Math.ceil(total/2)) + 2;
+		int dw = layout_width / half_total;
+		int dh = layout_height / half_total;
+		icon_width = dh < dw ? dh : dw;
+		icon_height = icon_width;
+		
 		if (layout_type == ELLIPSE_LAYOUT ||
 			layout_type == CIRCULAR_LAYOUT) {
-			int dw = layout_width / half_total;
-			int dh = layout_height / half_total;
-			icon_width = dh < dw ? dh : dw;
+			double width = layout_width - icon_width * 2 - OFFSET_X;
+			double height = layout_height - icon_height * 2 - OFFSET_Y;
+	        
+			radius = 0.45 * (height < width ? height : width);
+			
+			original_x = width / 2;
+			original_y = height / 2;
+			
+			if (layout_position == LAYOUT_RIGHT)
+				original_x += width;
 			
 			a = (MAP_WIDTH - icon_width * 2) * 0.45 - OFFSET_X;
 			b = (MAP_HEIGHT - icon_height * 2) / 3 - OFFSET_Y;
@@ -167,7 +186,7 @@ public class IntegerMap extends Layer {
 			icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
 			icon_col_total = 2 * icon_row_total;
 		}
-		icon_height = icon_width;
+		
 		
 		if (total > 50)
 			line_width = 1;
@@ -241,24 +260,9 @@ public class IntegerMap extends Layer {
 	 * @param i the i
 	 * @return the point
 	 */
-	public Point calculateCircularLayoutPoint(double angle) {
-		int layout_width = getLayoutWidth();
-		int layout_height = getLayoutHeight();
-		
-		double width = layout_width - icon_width * 2 - OFFSET_X;
-		double height = layout_height - icon_height * 2 - OFFSET_Y;
-        
-		double radius = 0.45 * (height < width ? height : width);
-		
-		double start_x = width / 2;
-		double start_y = height / 2;
-		
-		// start_x should be shift to right for LAYOUT_RIGHT position
-		if (layout_position == LAYOUT_RIGHT)
-			start_x += width;
-			
-    	double x = Math.cos(angle) * radius + start_x;
-    	double y = Math.sin(angle) * radius + start_y;
+	public Point calculateCircularLayoutPoint(double angle) {		
+    	double x = Math.cos(angle) * radius + original_x;
+    	double y = Math.sin(angle) * radius + original_y;
     	
     	return new Point(x, y);
 	}
