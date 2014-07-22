@@ -65,13 +65,15 @@ public class SubnetMap extends IntegerMap {
 		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.graySwitch();
+		double angle = 0;
+		double increment = DOUBLE_PI / list.size();
 		
 		for (final ServiceElement entity : list) {
-			Point point = calculatePoint(list.size(), i++);
+			Point point = calculatePoint(list.size(), i++, angle);
 			entityMap.put(entity.getID(), point);
-			pointList.add(point);
+			//pointList.add(point);
 			
-			image = Resources.IMAGES.pcom();
+			image = Resources.IMAGES.grayRouter();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
@@ -86,6 +88,8 @@ public class SubnetMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	
+        	angle += increment;
 		}
 	}
 	
@@ -95,9 +99,11 @@ public class SubnetMap extends IntegerMap {
 		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.network();
+		double angle = 0;
+		double increment = DOUBLE_PI / list.size();
 		
 		for (final Network entity : list) {
-			Point point = calculatePoint(list.size(), i++);
+			Point point = calculatePoint(list.size(), i++, angle);
 			entityMap.put(entity.getID(), point);
 			//pointList.add(point);
 			
@@ -116,11 +122,13 @@ public class SubnetMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	
+        	angle += increment;
 		}
 	}
 	
 	private void updateInterDeviceDiffNetworks(List<InterDeviceLink> list) {
-		layout_type = this.ELLIPSE_LAYOUT;
+		layout_type = ELLIPSE_LAYOUT;
 		
 		// find all the networks not in this subnet
 		int counterDiffNetwork = 0;
@@ -135,7 +143,9 @@ public class SubnetMap extends IntegerMap {
 		}
 
 		int i = 0;
-		ImageResource image = Resources.IMAGES.network();	
+		ImageResource image = Resources.IMAGES.grayRouter();
+		double angle = 0;
+		double increment = DOUBLE_PI / list.size();
 			
 		for (final InterDeviceLink link : list) {
 			ID id1 = link.getSourceServiceElementId();
@@ -148,7 +158,7 @@ public class SubnetMap extends IntegerMap {
 			final ServiceElement fakeSe = new ServiceElement();
 			
 			if (p1 == null || p2 == null) {
-				point = calculatePoint(counterDiffNetwork, i++);
+				point = calculatePoint(counterDiffNetwork, i++, angle);
 				//pointList.add(point);
 				fakeSe.setIdentifier((long) i);
 				
@@ -187,6 +197,8 @@ public class SubnetMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	
+        	angle += increment;
 		}
 	}
 	

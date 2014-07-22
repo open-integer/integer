@@ -63,16 +63,18 @@ public class NetworkMap extends IntegerMap {
 		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.network();
+		double angle = 0;
+		double increment = DOUBLE_PI / N;
 		
 		for (final Network network : result) {
 			// === test only first N points ====
 			if (i >= N)
 				break;
 			
-			Point point = calculatePoint(N, i++);
+			Point point = calculatePoint(N, i++, angle);
 			// Point point = calculatePoint(result.length, i++);
 			entityMap.put(network.getID(), point);
-			pointList.add(point);
+			//pointList.add(point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
@@ -87,6 +89,8 @@ public class NetworkMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	
+        	angle += increment;
 		}
 	}
 	

@@ -75,10 +75,23 @@ public class IntegerMap extends Layer {
 	/** The icon_width. */
 	protected int icon_width = MAP_WIDTH / 5;
 	
-	protected int line_width = 3;
-	
 	/** The icon_height. */
 	protected int icon_height;
+	
+	/** The line_width. */
+	protected int line_width = 3;
+	
+	protected double semi_x;
+	protected double semi_y;
+	protected double semi_xx;
+	protected double semi_xy;
+	protected double semi_yy;
+	
+	double a;
+	double b;
+	double aa;
+	double ab;
+	double bb;
 	
 	/** The selected element. */
 	protected BaseEntity selectedEntity;
@@ -90,7 +103,7 @@ public class IntegerMap extends Layer {
 	protected Map<ID, Point> entityMap = new HashMap<ID, Point>();
 	
 	/** The point list. */
-	protected List<Point> pointList = new ArrayList<Point>();
+	// protected List<Point> pointList = new ArrayList<Point>();
 	
 	/**
 	 * Gets the selected element.
@@ -143,6 +156,12 @@ public class IntegerMap extends Layer {
 			int dw = layout_width / half_total;
 			int dh = layout_height / half_total;
 			icon_width = dh < dw ? dh : dw;
+			
+			a = (MAP_WIDTH - icon_width * 2) * 0.45 - OFFSET_X;
+			b = (MAP_HEIGHT - icon_height * 2) / 3 - OFFSET_Y;
+			aa = a * a;
+			ab = a * b;
+			bb = b * b;
 		}
 		else {
 			icon_row_total = (int) Math.ceil(Math.sqrt(total/2));
@@ -189,11 +208,11 @@ public class IntegerMap extends Layer {
 	 * @param i the i
 	 * @return the point
 	 */
-	public Point calculatePoint(int total, int i) {
+	public Point calculatePoint(int total, int i, double angle) {
 		if (layout_type == CIRCULAR_LAYOUT) 
-			return calculateCircularLayoutPoint(total, i);
+			return calculateCircularLayoutPoint(angle);
 		else if (layout_type == ELLIPSE_LAYOUT)
-			return calculateEllipseLayoutPoint(total, i);
+			return calculateEllipseLayoutPoint(angle);
 		
 		return calculateLineLayoutPoint(total, i);
 	}
@@ -222,7 +241,7 @@ public class IntegerMap extends Layer {
 	 * @param i the i
 	 * @return the point
 	 */
-	public Point calculateCircularLayoutPoint(int total, int i) {
+	public Point calculateCircularLayoutPoint(double angle) {
 		int layout_width = getLayoutWidth();
 		int layout_height = getLayoutHeight();
 		
@@ -230,7 +249,7 @@ public class IntegerMap extends Layer {
 		double height = layout_height - icon_height * 2 - OFFSET_Y;
         
 		double radius = 0.45 * (height < width ? height : width);
-		double angle = (DOUBLE_PI * i) / total;
+		
 		double start_x = width / 2;
 		double start_y = height / 2;
 		
@@ -244,25 +263,20 @@ public class IntegerMap extends Layer {
     	return new Point(x, y);
 	}
 	
-	public Point calculateEllipseLayoutPoint(int total, int i) {
-		double a = (MAP_WIDTH - icon_width * 2) * 0.45 - OFFSET_X;
-		double b = (MAP_HEIGHT - icon_height * 2) * 0.45 - OFFSET_Y;
-		double angle = (DOUBLE_PI * i) / total;
+	public Point calculateEllipseLayoutPoint(double angle) {
 		double tan = Math.tan(angle);
-		
-		double aa = a * a;
-		double ab = a * b;
-		double bb = b * b;
 		double tantan = tan * tan;
-    	double x0 = ab / Math.sqrt(bb + aa * tantan);
-    	double y0 = ab * tan / Math.sqrt(bb + aa * tantan);
+		double sqrt = Math.sqrt(bb + aa * tantan);
+		
+    	double x0 = ab / sqrt;
+    	double y0 = x0 * tan;
     	
     	if (angle > HALF_PI && angle < ONE_AND_HALF_PI) {
     		x0 = -x0;
     		y0 = -y0;
     	}
     	double x = x0 + a + OFFSET_X;
-    	double y = y0 + b + OFFSET_Y;
+    	double y = y0 + OFFSET_Y + MAP_HEIGHT/3 + OFFSET_Y;
     	
     	return new Point(x, y);
 	}
