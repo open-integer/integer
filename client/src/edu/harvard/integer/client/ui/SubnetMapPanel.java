@@ -6,7 +6,7 @@ import com.emitrom.lienzo.client.core.mediator.MouseWheelZoomMediator;
 import com.emitrom.lienzo.client.widget.LienzoPanel;
 
 public class SubnetMapPanel extends LienzoPanel {
-	public final ServiceElementMap subnetMap = new ServiceElementMap();
+	public final SubnetMap subnetMap = new SubnetMap();
 	
 	public SubnetMapPanel(int width, int height) {
 		super(width, height);
@@ -19,7 +19,7 @@ public class SubnetMapPanel extends LienzoPanel {
 		LienzoPanel.enableWindowMouseWheelScroll(true);
 	}
 
-	public ServiceElementMap getSubnetMap() {
+	public SubnetMap getSubnetMap() {
 		return subnetMap;
 	}
 }

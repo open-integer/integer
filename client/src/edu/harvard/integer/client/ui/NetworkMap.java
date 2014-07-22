@@ -12,6 +12,7 @@ import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
 
+import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
@@ -36,7 +37,13 @@ public class NetworkMap extends IntegerMap {
 	 * @param networkkInfo the networkk info
 	 */
 	public void updateNetworkInformation(NetworkInformation networkkInfo) {
-		update(networkkInfo.getNetworks());
+		int netSize = networkkInfo.getNetworks().length;
+		int linkSize = networkkInfo.getLinks().length;
+		String text = "showing network: " + netSize + " subnets, " + linkSize + " links";
+		MainClient.statusPanel.updateStatus(text);
+		entityMap.clear();
+		removeAll();
+		updateNetworks(networkkInfo.getNetworks());
 		drawLinks(networkkInfo.getLinks());
 	}
 
@@ -45,28 +52,29 @@ public class NetworkMap extends IntegerMap {
 	 *
 	 * @param result the result
 	 */
-	private void update(Network[] result) {
-		entityMap.clear();
-		removeAll();
+	private void updateNetworks(Network[] result) {
+		
 		init_layout(result.length);
 		
-		// === testing only first 4 points ==
+		// === testing only first N points ==
 		int N = 10;
 		init_layout(N);
 		// ==================================
 		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.network();
+		double angle = 0;
+		double increment = DOUBLE_PI / N;
 		
 		for (final Network network : result) {
 			// === test only first N points ====
 			if (i >= N)
 				break;
 			
-			Point point = calculatePoint(N, i++);
+			Point point = calculatePoint(N, i++, angle);
 			// Point point = calculatePoint(result.length, i++);
 			entityMap.put(network.getID(), point);
-			pointList.add(point);
+			//pointList.add(point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
@@ -81,6 +89,8 @@ public class NetworkMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	
+        	angle += increment;
 		}
 	}
 	
@@ -134,8 +144,8 @@ public class NetworkMap extends IntegerMap {
             
 			@Override
 			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
-				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
-				int y = 100 + event.getY() - 15;
+				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX();
+				int y = 200 + event.getY();
 
 				tooltip.setPopupPosition(x, y);
 				tooltip.update(link.getName(), "Not availabel");

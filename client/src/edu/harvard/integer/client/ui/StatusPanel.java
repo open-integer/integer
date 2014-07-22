@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.TextBox;
 public class StatusPanel extends HorizontalPanel {
 	
 	public static int STATUS_WIDTH = 600;
-	public static int STATUS_HEIGHT = 28;
+	public static int STATUS_HEIGHT = 26;
 	private TextBox statusBox = new TextBox();
 	
 	public StatusPanel() {
@@ -17,8 +17,12 @@ public class StatusPanel extends HorizontalPanel {
 		add(statusBox);
 	}
 	
-	public void update(String text) {
+	public void showAlert(String text) {
 		statusBox.setText(text);
 		Window.alert(text);
+	}
+	
+	public void updateStatus(String text) {
+		statusBox.setText(text);
 	}
 }

@@ -101,7 +101,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 						@Override
 						public void onFailure(Throwable caught) {
-							MainClient.statusPanel.update("Failed to receive detail information of " + selectedEntity.getName());
+							MainClient.statusPanel.showAlert("Failed to receive detail information of " + selectedEntity.getName());
 						}
 	
 						@Override
@@ -143,7 +143,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				MainClient.statusPanel.update("Failed to receive default filter and selection.");
+				MainClient.statusPanel.showAlert("Failed to receive default filter and selection.");
 			}
 
 			@Override
@@ -225,7 +225,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				MainClient.statusPanel.update("Failed to receive contained service elements of " + se.getName());
+				MainClient.statusPanel.showAlert("Failed to receive contained service elements of " + se.getName());
 			}
 
 			@Override
@@ -238,10 +238,16 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 	public static void showServiceElementMap(Network network) {
 		if (network.getServiceElements() == null || network.getServiceElements().isEmpty()) {
-			MainClient.statusPanel.update("No service element exists in network " + network.getName());
+			MainClient.statusPanel.showAlert("No service element exists in network " + network.getName());
 			return;
 		}
 			
+		int seSize = network.getServiceElements().size();
+		int netSize = network.getLowerNetworks().size();
+		int linkSize = network.getInterDeviceLinks().size();
+		String text = "showing subnet " + network.getName() + ": " + seSize + " service elements, " + netSize + " lower networks, " + linkSize + " inter device links.";
+		MainClient.statusPanel.updateStatus(text);
+		
 		SubnetPanel subnetPanel = new SubnetPanel();
 		subnetPanel.updateSubnet(network);
 		tabPanel.add(subnetPanel, network.getName());
