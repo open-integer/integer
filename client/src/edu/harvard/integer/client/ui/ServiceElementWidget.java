@@ -30,6 +30,7 @@ import com.google.gwt.touch.client.Point;
 import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -49,11 +50,11 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	/** The service element. */
 	private BaseEntity entity;
 	
-	/** The line connector list. */
-	private List<HvLink> linePointList = new ArrayList<HvLink>(); 
+	/** The list of associated link. */
+	private List<HvLink> linkList = new ArrayList<HvLink>(); 
 	
-	/** The drag line connector list. */
-	private List<HvLink> dragLinePointList = new ArrayList<HvLink>();
+	/** The list of link to be dragged. */
+	private List<HvLink> dragLinkList = new ArrayList<HvLink>();
 	
 	/** The click handler. */
 	private NodeMouseClickHandler clickHandler;
@@ -83,7 +84,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 * Constructor class of HvServiceElementWidget.
 	 *
 	 * @param picture the picture
-	 * @param serviceElement the service element
+	 * @param entity the entity
 	 * @param clickHandler the click handler
 	 */
 	public ServiceElementWidget(Picture picture, BaseEntity entity, NodeMouseClickHandler clickHandler) {
@@ -129,7 +130,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	}
 	
 	/**
-	 * Draw the widget at position of (x, y)
+	 * Draw the widget at position of (x, y).
 	 *
 	 * @param x the x
 	 * @param y the y
@@ -151,12 +152,12 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	}
 	
 	/**
-	 * Adds the line connector between the points
+	 * Adds the line connector between the points.
 	 *
-	 * @param lc the lc
+	 * @param link the link
 	 */
-	public void addLineConnector(HvLink linePoints) {
-		linePointList.add(linePoints);
+	public void addLink(HvLink link) {
+		linkList.add(link);
 	}
 
 	/* (non-Javadoc)
@@ -164,7 +165,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	@Override
 	public void onNodeDragEnd(NodeDragEndEvent event) {
-		removeDragLines(event.getX(), event.getY());
+		removeDraggedLinks(event.getX(), event.getY());
 	}
 
 	/* (non-Javadoc)
@@ -180,20 +181,30 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	@Override
 	public void onNodeDragStart(NodeDragStartEvent event) {
-		addDragLines(event.getX(), event.getY());
+		addDraggingLinks(event.getX(), event.getY());
 	}
 	
 	/**
-	 * Adds the drag lines at position of (x, y)
+	 * Adds the drag lines at position of (x, y).
 	 *
 	 * @param cur_x the cur_x
 	 * @param cur_y the cur_y
 	 */
-	private void addDragLines(int cur_x, int cur_y) {
+	private void addDraggingLinks(int cur_x, int cur_y) {
+		Point2D cur_point = new Point2D(cur_x, cur_y);
 		
-		for (HvLink linePoints : linePointList) {
-			Point otherPoint = linePoints.getEndPoint();
-			Line line = linePoints.getLine();
+		for (HvLink link : linkList) {
+			ID startId = link.getStartWidget().getEntity().getID();
+			ID endId = link.getEndWidget().getEntity().getID();
+			
+			// ignore the link which startId is not this entity id
+			if (!entity.getID().equals(startId) || startId.equals(endId))
+				continue;
+			
+			Point otherPoint = link.getEndPoint();
+			Line line = link.getLine();
+			ServiceElementWidget endWidget = link.getEndWidget();
+			
 			line.setVisible(false);
 			
 			Line newLine = new Line(cur_x, cur_y, otherPoint.getX()+half_icon_width, otherPoint.getY()+half_icon_height);
@@ -209,52 +220,65 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 			Point curPoint = new Point(cur_x - half_icon_width, cur_y - half_icon_height);
 			
 			// save lines being dragged
-			HvLink newLinePoints = new HvLink(newLine, curPoint, otherPoint);
-			dragLinePointList.add(newLinePoints);
+			HvLink newLinePoints = new HvLink(newLine, curPoint, otherPoint, this, endWidget);
+			dragLinkList.add(newLinePoints);
+			
+			// update the link associated with end point
+			//updateEndPointLinks(cur_point, endWidget.getLinkList());
+			
 		}
 	}
 	
 	/**
-	 * Move drag lines to position of (x, y)
+	 * Move drag lines to position of (x, y).
 	 *
 	 * @param cur_x the cur_x
 	 * @param cur_y the cur_y
 	 */
 	private void moveDragLines(int cur_x, int cur_y) {
 		Point2D cur_point = new Point2D(cur_x, cur_y);
-		updateDragLines(cur_point, dragLinePointList, true, false);
+		updateDraggingLinks(cur_point, dragLinkList, true, false);
 	}
 
 	/**
-	 * Removes the drag lines from position of (x, y)
+	 * Removes the dragged links at center of icons.
 	 *
 	 * @param cur_x the cur_x
 	 * @param cur_y the cur_y
 	 */
-	private void removeDragLines(int cur_x, int cur_y) {
+	private void removeDraggedLinks(int cur_x, int cur_y) {
 		Point2D cur_point = new Point2D(cur_x, cur_y);
-		updateDragLines(cur_point, dragLinePointList, false, false);
-		updateDragLines(cur_point, linePointList, true, true);
+		updateDraggingLinks(cur_point, dragLinkList, false, false);
+		updateDraggingLinks(cur_point, linkList, true, true);
 	}
 	
 	/**
-	 * Update drag lines.
+	 * Update the dragging links at center of icons.
 	 *
 	 * @param cur_point the cur_point
-	 * @param lines the lines
+	 * @param links the lines
 	 * @param visible the visible
 	 * @param draw the draw
 	 */
-	private void updateDragLines(Point2D cur_point, List<HvLink> lines, boolean visible, boolean draw) {
-		for (HvLink linePoints : lines) {
-			Point otherPoint = linePoints.getEndPoint();
+	private void updateDraggingLinks(Point2D cur_point, List<HvLink> links, boolean visible, boolean draw) {
+		for (HvLink link : links) {
+			Point otherPoint = link.getEndPoint();
 			Point2D other_point = new Point2D(otherPoint.getX() + half_icon_width, otherPoint.getY() + half_icon_height);
-			Line cur_line = linePoints.getLine();
+			Line cur_line = link.getLine();
 			cur_line.setPoints(new Point2DArray(cur_point, other_point));
 			cur_line.setVisible(visible);
 			
 			if (draw)
 				cur_line.getScene().draw();
+		}
+	}
+	
+	private void updateEndPointLinks(Point2D endPoint, List<HvLink> links) {
+		for (HvLink link : links) {
+			Point startPoint = link.getStartPoint();
+			Point2D startPoint2d = new Point2D(startPoint.getX() + half_icon_width, startPoint.getY() + half_icon_height);
+			Line cur_line = link.getLine();
+			cur_line.setPoints(new Point2DArray(startPoint2d, endPoint));
 		}
 	}
 
@@ -272,6 +296,15 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 			SystemSplitViewPanel.showContainedTreeView((ServiceElement)entity);
 		
 		setHighLighted(true); // highlighted whenever it gets clicked for now
+	}
+	
+	/**
+	 * Gets the entity.
+	 *
+	 * @return the entity
+	 */
+	public BaseEntity getEntity() {
+		return entity;
 	}
 	
 	/**
@@ -302,4 +335,14 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 		ColorName highLightColor = highLight ? ColorName.DARKBLUE : ColorName.WHITE;
 		picture.setShadow(new Shadow(highLightColor, 3,3,3)).getLayer().draw();
 	}
+
+	/**
+	 * Gets the list of associated links.
+	 *
+	 * @return the link list
+	 */
+	public List<HvLink> getLinkList() {
+		return linkList;
+	}
+
 }

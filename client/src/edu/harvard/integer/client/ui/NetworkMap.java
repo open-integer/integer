@@ -104,6 +104,10 @@ public class NetworkMap extends IntegerMap {
 		for (final InterNetworkLink link : links) {
 			ID id1 = link.getSourceNetworkId();
 			ID id2 = link.getDestinationNetworkId();
+			
+			if (id1.equals(id2))
+				continue;
+			
 			Point p1 = entityMap.get(id1);
 			Point p2 = entityMap.get(id2);
 			
@@ -117,12 +121,12 @@ public class NetworkMap extends IntegerMap {
 			ServiceElementWidget icon2 = iconMap.get(id2);
 			
 			// save line (source: p1, destination: p2) to icon1
-			HvLink linePoints1 = new HvLink(line, p1, p2);
-            icon1.addLineConnector(linePoints1);
+			HvLink link1 = new HvLink(line, p1, p2, icon1, icon2);
+            icon1.addLink(link1);
             
             // save line (source: p2, destination: p1) to icon2
-            HvLink linePoints2 = new HvLink(line, p2, p1);
-            icon2.addLineConnector(linePoints2);
+            HvLink link2 = new HvLink(line, p2, p1, icon2, icon1);
+            icon2.addLink(link2);
 		}
 	}
 	
