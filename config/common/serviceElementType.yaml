@@ -16,6 +16,11 @@ serviceElementTypes:
            category: interface
               
       managementObjects:
+          - name: ifIndex
+            uri: ifIndex
+            capability: ifIndex
+            unique: 1
+
           - name: ifDescr
             uri: ifDescr
             capability: interface-description

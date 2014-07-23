@@ -57,6 +57,10 @@ categories:
                 - name: Firewall
                   description:  firewall
                   parent: network element categories
+
+                - name: Vlan
+                  description: vlan
+                  parent: network element categories
                   
                 - name: NAT
                   description:  nat

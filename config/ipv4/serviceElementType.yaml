@@ -18,6 +18,7 @@ serviceElementTypes:
           - name: ipAdEntAddr
             uri: ipAdEntAddr
             capability: ipv4Address
+            unique: 1
 
           - name: ipAdEntIfIndex
             uri: ipAdEntIfIndex

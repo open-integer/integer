@@ -1,0 +1,35 @@
+---
+
+# technology definition for Cisco VLAN
+# by David Chan, 2014-07-23
+
+technologies:
+    # Cisco VLAN 
+    # 
+    - name: vlan
+    #  provides: [ vlan-discovery ]
+      parent: vlan discovery
+      description: VLAN 
+      mechanisms:
+          - name: cisco-vlan
+            description: Cisco VLAN
+            capabilities:
+                - name: vtpVlanIndex
+                  description: The VLAN-id of this VLAN on ISL or 802.1q trunks.
+
+                - name: vtpVlanState
+                  description: The state of this VLAN
+
+                - name: vtpVlanType
+                  description: The type of this VLAN.
+
+                - name: vtpVlanName
+                  description: The name of this VLAN.
+
+                - name: vtpVlanMtu
+                  description: The MTU size on this VLAN,
+
+                - name: vtpVlanDot10Said
+                  description: The value of the 802.10 SAID field for this VLAN.
+        
+...

@@ -1,0 +1,40 @@
+---
+
+# Management definition for Cisco VLAN Service Element Types
+# by David Chan, 2014-07-22
+
+serviceElementTypes:
+    - name: ciscoVtpVlan
+      description: CISCO VLAN service element type.
+      accessMethod:
+          protocol: SNMP
+      vendor: cisco
+      serviceElementTypeTranslates:
+         - name: ciscoVtpVlan 
+           mapping: direct
+           category: Vlan
+              
+      managementObjects:
+          - name: vtpVlanIndex
+            uri: vtpVlanIndex
+            capability: vtpVlanIndex
+
+          - name: vtpVlanState
+            uri: vtpVlanState
+            capability: vtpVlanState
+
+          - name: vtpVlanType
+            uri: vtpVlanType
+            capability: vtpVlanType
+
+          - name: vtpVlanName
+            uri: vtpVlanName
+            capability: vtpVlanName
+
+          - name: vtpVlanMtu
+            uri: vtpVlanMtu
+            capability: vtpVlanMtu
+            
+          - name: vtpVlanDot10Said
+            uri: vtpVlanDot10Said
+            capability: vtpVlanDot10Said
