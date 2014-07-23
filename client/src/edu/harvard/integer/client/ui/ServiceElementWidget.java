@@ -27,7 +27,7 @@ import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
 import com.google.gwt.touch.client.Point;
 
-import edu.harvard.integer.client.utils.LinePoints;
+import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.topology.Network;
@@ -50,10 +50,10 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	private BaseEntity entity;
 	
 	/** The line connector list. */
-	private List<LinePoints> linePointList = new ArrayList<LinePoints>(); 
+	private List<HvLink> linePointList = new ArrayList<HvLink>(); 
 	
 	/** The drag line connector list. */
-	private List<LinePoints> dragLinePointList = new ArrayList<LinePoints>();
+	private List<HvLink> dragLinePointList = new ArrayList<HvLink>();
 	
 	/** The click handler. */
 	private NodeMouseClickHandler clickHandler;
@@ -155,7 +155,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 *
 	 * @param lc the lc
 	 */
-	public void addLineConnector(LinePoints linePoints) {
+	public void addLineConnector(HvLink linePoints) {
 		linePointList.add(linePoints);
 	}
 
@@ -191,7 +191,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	private void addDragLines(int cur_x, int cur_y) {
 		
-		for (LinePoints linePoints : linePointList) {
+		for (HvLink linePoints : linePointList) {
 			Point otherPoint = linePoints.getEndPoint();
 			Line line = linePoints.getLine();
 			line.setVisible(false);
@@ -209,7 +209,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 			Point curPoint = new Point(cur_x - half_icon_width, cur_y - half_icon_height);
 			
 			// save lines being dragged
-			LinePoints newLinePoints = new LinePoints(newLine, curPoint, otherPoint);
+			HvLink newLinePoints = new HvLink(newLine, curPoint, otherPoint);
 			dragLinePointList.add(newLinePoints);
 		}
 	}
@@ -245,8 +245,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 * @param visible the visible
 	 * @param draw the draw
 	 */
-	private void updateDragLines(Point2D cur_point, List<LinePoints> lines, boolean visible, boolean draw) {
-		for (LinePoints linePoints : lines) {
+	private void updateDragLines(Point2D cur_point, List<HvLink> lines, boolean visible, boolean draw) {
+		for (HvLink linePoints : lines) {
 			Point otherPoint = linePoints.getEndPoint();
 			Point2D other_point = new Point2D(otherPoint.getX() + half_icon_width, otherPoint.getY() + half_icon_height);
 			Line cur_line = linePoints.getLine();

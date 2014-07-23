@@ -4,9 +4,9 @@ import com.emitrom.lienzo.client.core.shape.Line;
 import com.google.gwt.touch.client.Point;
 
 /**
- * The Class LinePoints.
+ * The Class HvLink.
  */
-public class LinePoints {
+public class HvLink {
 	
 	/** The line. */
 	private Line line;
@@ -24,7 +24,7 @@ public class LinePoints {
 	 * @param startPoint the start point
 	 * @param endPoint the end point
 	 */
-	public LinePoints(Line line, Point startPoint, Point endPoint) {
+	public HvLink(Line line, Point startPoint, Point endPoint) {
 		this.line = line;
 		this.startPoint = startPoint;
 		this.endPoint = endPoint;

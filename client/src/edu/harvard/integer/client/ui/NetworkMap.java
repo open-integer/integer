@@ -14,7 +14,7 @@ import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.resources.Resources;
-import edu.harvard.integer.client.utils.LinePoints;
+import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
@@ -117,11 +117,11 @@ public class NetworkMap extends IntegerMap {
 			ServiceElementWidget icon2 = iconMap.get(id2);
 			
 			// save line (source: p1, destination: p2) to icon1
-			LinePoints linePoints1 = new LinePoints(line, p1, p2);
+			HvLink linePoints1 = new HvLink(line, p1, p2);
             icon1.addLineConnector(linePoints1);
             
             // save line (source: p2, destination: p1) to icon2
-            LinePoints linePoints2 = new LinePoints(line, p2, p1);
+            HvLink linePoints2 = new HvLink(line, p2, p1);
             icon2.addLineConnector(linePoints2);
 		}
 	}
