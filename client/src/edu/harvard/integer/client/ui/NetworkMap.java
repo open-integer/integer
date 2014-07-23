@@ -14,6 +14,7 @@ import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.client.utils.LinePoints;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
@@ -74,7 +75,6 @@ public class NetworkMap extends IntegerMap {
 			Point point = calculatePoint(N, i++, angle);
 			// Point point = calculatePoint(result.length, i++);
 			entityMap.put(network.getID(), point);
-			//pointList.add(point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
@@ -89,6 +89,7 @@ public class NetworkMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	iconMap.put(network.getID(), icon);
         	
         	angle += increment;
 		}
@@ -110,7 +111,18 @@ public class NetworkMap extends IntegerMap {
 				continue;
 			
 			// draw line between p0 and p
-			drawLink(link, p1, p2);
+			Line line = drawLink(link, p1, p2);
+			
+			ServiceElementWidget icon1 = iconMap.get(id1);
+			ServiceElementWidget icon2 = iconMap.get(id2);
+			
+			// save line (source: p1, destination: p2) to icon1
+			LinePoints linePoints1 = new LinePoints(line, p1, p2);
+            icon1.addLineConnector(linePoints1);
+            
+            // save line (source: p2, destination: p1) to icon2
+            LinePoints linePoints2 = new LinePoints(line, p2, p1);
+            icon2.addLineConnector(linePoints2);
 		}
 	}
 	
@@ -121,7 +133,7 @@ public class NetworkMap extends IntegerMap {
 	 * @param p1 the p1
 	 * @param p2 the p2
 	 */
-	private void drawLink(final InterNetworkLink link, Point p1, Point p2) {
+	private Line drawLink(final InterNetworkLink link, Point p1, Point p2) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();
 		
 		double x1 = p1.getX() + icon_width/2;
@@ -178,6 +190,7 @@ public class NetworkMap extends IntegerMap {
 		});
         
         add(line);
+        return line;
 	}
 
 }

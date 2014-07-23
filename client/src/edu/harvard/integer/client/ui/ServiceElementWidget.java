@@ -50,10 +50,10 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	private BaseEntity entity;
 	
 	/** The line connector list. */
-	private List<LinePoints> lineConnectorList = new ArrayList<LinePoints>(); 
+	private List<LinePoints> linePointList = new ArrayList<LinePoints>(); 
 	
 	/** The drag line connector list. */
-	private List<LinePoints> dragLineConnectorList = new ArrayList<LinePoints>();
+	private List<LinePoints> dragLinePointList = new ArrayList<LinePoints>();
 	
 	/** The click handler. */
 	private NodeMouseClickHandler clickHandler;
@@ -66,6 +66,12 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	
 	/** The clipped image height. */
 	private int clippedImageHeight;
+	
+	/** The half of icon_width. */
+	private double half_icon_width;
+	
+	/** The half of icon_height. */
+	private double half_icon_height;
 	
 	/** The font size. */
 	private int fontSize ;
@@ -91,6 +97,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 		final HvMapIconPopup popup = new HvMapIconPopup(entity.getName(), "");
 		clippedImageWidth = (int)picture.getClippedImageDestinationWidth();
 		clippedImageHeight = (int)picture.getClippedImageDestinationHeight();
+		half_icon_width = clippedImageWidth/2;
+		half_icon_height = clippedImageHeight/2;
 		fontSize = (int) Math.ceil(clippedImageWidth * 2 / 9);
 		labelBelowOffset = clippedImageHeight + (int) Math.ceil(clippedImageHeight * 15 / 90);
 		
@@ -147,8 +155,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 *
 	 * @param lc the lc
 	 */
-	public void addLineConnector(LinePoints lc) {
-		lineConnectorList.add(lc);
+	public void addLineConnector(LinePoints linePoints) {
+		linePointList.add(linePoints);
 	}
 
 	/* (non-Javadoc)
@@ -182,14 +190,13 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 * @param cur_y the cur_y
 	 */
 	private void addDragLines(int cur_x, int cur_y) {
-		Point curPoint = new Point(cur_x, cur_y);
 		
-		for (LinePoints lineConnector : lineConnectorList) {
-			Point otherPoint = lineConnector.getEndPoint();
-			Line line = lineConnector.getLine();
+		for (LinePoints linePoints : linePointList) {
+			Point otherPoint = linePoints.getEndPoint();
+			Line line = linePoints.getLine();
 			line.setVisible(false);
 			
-			Line newLine = new Line(cur_x, cur_y, otherPoint.getX(), otherPoint.getY());
+			Line newLine = new Line(cur_x, cur_y, otherPoint.getX()+half_icon_width, otherPoint.getY()+half_icon_height);
 			newLine.setStrokeColor(ColorName.LIGHTGRAY).setStrokeWidth(2).setFillColor(ColorName.LIGHTPINK);  	
 			
 			if (newLine.getParent() == null) {  
@@ -198,9 +205,12 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
             } 
 			newLine.setVisible(true);
 			
+			// save current point at top-left corner of the icon
+			Point curPoint = new Point(cur_x - half_icon_width, cur_y - half_icon_height);
+			
 			// save lines being dragged
-			LinePoints newLineConnector = new LinePoints(newLine, curPoint, otherPoint);
-			dragLineConnectorList.add(newLineConnector);
+			LinePoints newLinePoints = new LinePoints(newLine, curPoint, otherPoint);
+			dragLinePointList.add(newLinePoints);
 		}
 	}
 	
@@ -212,7 +222,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	private void moveDragLines(int cur_x, int cur_y) {
 		Point2D cur_point = new Point2D(cur_x, cur_y);
-		updateDragLines(cur_point, dragLineConnectorList, true, false);
+		updateDragLines(cur_point, dragLinePointList, true, false);
 	}
 
 	/**
@@ -223,8 +233,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	private void removeDragLines(int cur_x, int cur_y) {
 		Point2D cur_point = new Point2D(cur_x, cur_y);
-		updateDragLines(cur_point, dragLineConnectorList, false, false);
-		updateDragLines(cur_point, lineConnectorList, true, true);
+		updateDragLines(cur_point, dragLinePointList, false, false);
+		updateDragLines(cur_point, linePointList, true, true);
 	}
 	
 	/**
@@ -238,7 +248,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	private void updateDragLines(Point2D cur_point, List<LinePoints> lines, boolean visible, boolean draw) {
 		for (LinePoints linePoints : lines) {
 			Point otherPoint = linePoints.getEndPoint();
-			Point2D other_point = new Point2D(otherPoint.getX(), otherPoint.getY());
+			Point2D other_point = new Point2D(otherPoint.getX() + half_icon_width, otherPoint.getY() + half_icon_height);
 			Line cur_line = linePoints.getLine();
 			cur_line.setPoints(new Point2DArray(cur_point, other_point));
 			cur_line.setVisible(visible);

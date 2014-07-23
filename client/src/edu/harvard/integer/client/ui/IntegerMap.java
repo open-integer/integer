@@ -112,6 +112,9 @@ public class IntegerMap extends Layer {
 	/** The entity map. */
 	protected Map<ID, Point> entityMap = new HashMap<ID, Point>();
 	
+	/** The service element icon map. */
+	protected Map<ID, ServiceElementWidget> iconMap = new HashMap<ID, ServiceElementWidget>();
+	
 	/**
 	 * Gets the selected element.
 	 *
@@ -221,7 +224,7 @@ public class IntegerMap extends Layer {
 	}
 	
 	/**
-	 * Calculate point.
+	 * Calculate point at up-left corner of the icon
 	 *
 	 * @param total the total
 	 * @param i the i
