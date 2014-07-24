@@ -38,6 +38,8 @@ public class NetworkMap extends IntegerMap {
 	 * @param networkkInfo the networkk info
 	 */
 	public void updateNetworkInformation(NetworkInformation networkkInfo) {
+		layout_type = ELLIPSE_LAYOUT;
+		
 		int netSize = networkkInfo.getNetworks().length;
 		int linkSize = networkkInfo.getLinks().length;
 		String text = "showing network: " + netSize + " subnets, " + linkSize + " links";
@@ -54,26 +56,16 @@ public class NetworkMap extends IntegerMap {
 	 * @param result the result
 	 */
 	private void updateNetworks(Network[] result) {
-		
-		init_layout(result.length);
-		
-		// === testing only first N points ==
-		int N = 10;
-		init_layout(N);
-		// ==================================
+		int n = result.length;
+		init_layout(n);
 		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.network();
 		double angle = 0;
-		double increment = DOUBLE_PI / N;
+		double increment = DOUBLE_PI / n;
 		
 		for (final Network network : result) {
-			// === test only first N points ====
-			if (i >= N)
-				break;
-			
-			Point point = calculatePoint(N, i++, angle);
-			// Point point = calculatePoint(result.length, i++);
+			Point point = calculatePoint(n, i++, angle);
 			entityMap.put(network.getID(), point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
