@@ -69,8 +69,6 @@ import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
-import edu.harvard.integer.common.snmp.SnmpEnumList;
-import edu.harvard.integer.common.snmp.SnmpEnumValue;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -225,6 +223,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							
 							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
 							
+							iv.setName(snmp.getName());
 							iv.setValue(vb.getVariable().toInt());
 							iv.setManagementObject(snmp.getID());
 							
@@ -349,6 +348,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							
 							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
 							
+							iv.setName(snmp.getName());
 							iv.setValue(vb.getVariable().toInt());
 							iv.setManagementObject(snmp.getID());
 							
@@ -434,6 +434,26 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * Find match variable binding from a return PDU based on a SNMP object.
+	 *
+	 * @param snmp the snmp
+	 * @param rpdu the rpdu
+	 * @return the variable binding
+	 */
+	public VariableBinding findMatchVB( SNMP snmp, TableEvent tblEvent ) {
+		
+		for ( VariableBinding vb : tblEvent.getColumns() ) {
+			
+			if ( vb.getOid().startsWith(new OID(snmp.getOid())) ) {
+				return vb;
+			}
+		}
+		return null;
+	}
+	
 
 	
 	
@@ -484,6 +504,146 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		return targetTes;
 	}
 	
+	
+	/**
+	 * Discover a service element from a device.  The retrieving information is specified in the pass in
+	 * service element type of the service element:
+	 * 
+	 * The default name, unique identifier and attributes.
+	 *
+	 * @param discNode the discover node
+	 * @param set Service Element Type for the discovering Service Element.
+	 * @param parentSE the parent Service Element
+	 * @return the service element
+	 * @throws IntegerException the integer exception
+	 */
+	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
+			                                            TableEvent tblEvent,
+			                                            List<IndexSNMPValue> indexSNMPValues ) throws IntegerException {
+		
+		/**
+		 * Setting the general information to the Service Element.
+		 */
+		ServiceElement se = new ServiceElement();		
+		se.setUpdated(new Date());
+		
+		if ( discNode.getExistingSE() == null ) {
+			se.setCreated(new Date());
+		}
+		
+		se.setServiceElementTypeId(set.getID());
+        se.setDescription(discNode.getTopServiceElementType().getVendor() + " " + set.getName());
+		
+		/**
+		 * Retrieve the name to identify the service element.
+		 */
+		SNMP nameAttr = null;
+		if (set.getDefaultNameCababilityId() != null) {
+
+			for ( ID snmpId : set.getAttributeIds() ) {
+				SNMP tmpSnmp = (SNMP) capMgr.getManagementObjectById(snmpId);
+				if ( tmpSnmp.getCapabilityId().getIdentifier().longValue() == set.getDefaultNameCababilityId().getIdentifier().longValue() ) {
+					nameAttr = tmpSnmp;
+					break;
+				}				
+			}
+			
+			if ( nameAttr != null ) {
+				boolean foundNameValue = false;
+				for ( VariableBinding vb : tblEvent.getColumns() ) {
+					
+					if ( vb.getOid().toString().indexOf(nameAttr.getOid()) >= 0 ) {
+						foundNameValue = true;
+						se.setName(vb.getVariable().toString());					
+						break;
+					}
+				}			
+				if ( !foundNameValue ) {
+						
+					for ( IndexSNMPValue snmpVal : indexSNMPValues ) {
+						if ( snmpVal.indexSNMP.getOid().indexOf(nameAttr.getOid()) >= 0 ) {
+							foundNameValue = true;
+							se.setName(snmpVal.indexVal);					
+							break;
+						}
+					}					
+				}
+			}			
+		}
+		
+
+		/**
+		 * Walk through the attribute SEMO list to construct a PDU to retrieve data from a device
+		 */
+		List<ID>  attributeIds =  set.getAttributeIds();	
+		
+		@SuppressWarnings("rawtypes")
+		List<ManagementObjectValue> attributes = se.getAttributeValues();
+		if ( attributes == null )
+		{
+			attributes = new ArrayList<>();
+			se.setAttributeValues(attributes);
+		}
+		List<ServiceElementProtocolInstanceIdentifier> insts = se.getValues();
+		if ( insts == null ) {
+			insts = new ArrayList<>();
+			se.setValues(insts);
+		}
+		   
+		for ( ID id : attributeIds ) {
+				
+			ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
+			if ( mrgObj instanceof SNMP ) {
+					
+				SNMP snmp = (SNMP) mrgObj;
+				VariableBinding vb = findMatchVB(snmp, tblEvent);
+				if ( vb != null ) {
+					
+					if ( vb.getVariable() instanceof UnsignedInteger32 ||
+							vb.getVariable() instanceof Integer32 ) {
+						
+					    ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+						
+					    iv.setName(snmp.getName());
+					    iv.setValue(vb.getVariable().toInt());
+					    iv.setManagementObject(snmp.getID());
+						
+					    se.getAttributeValues().add(iv);
+					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+			            inst.setValue(tblEvent.getIndex().toString());
+			            se.getValues().add(inst);
+				    }
+				    else {
+					
+					    ManagementObjectStringValue sv = new ManagementObjectStringValue();
+                        sv.setValue(vb.getVariable().toString());
+                        sv.setManagementObject(snmp.getID());
+                     
+					    se.getAttributeValues().add(sv);
+					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+			            inst.setValue(tblEvent.getIndex().toString());
+			            se.getValues().add(inst);
+				    }			
+				}
+				else {
+				
+					for ( IndexSNMPValue indexVal : indexSNMPValues ) {
+						
+						if ( indexVal.indexSNMP.getIdentifier() == snmp.getIdentifier() ) {
+							
+						    ManagementObjectStringValue sv = new ManagementObjectStringValue();
+	                        sv.setValue(indexVal.toString());
+	                        sv.setManagementObject(snmp.getID());
+	                     
+						    se.getAttributeValues().add(sv);
+							break;
+						}
+					}
+				}				
+			}
+		}		
+		return se;
+	}
 	
 	
 	
@@ -538,7 +698,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, instOid);
 		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
 		
-		
 		if ( set.getName().equals("cdpCache")) {
 			
 			CdpConnection cdpConnection = new CdpConnection(se);
@@ -586,6 +745,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 								vb.getVariable() instanceof Integer32 ) {
 							
 							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+							
+							iv.setName(snmp.getName());
 							iv.setValue(vb.getVariable().toInt());
 							iv.setManagementObject(snmp.getID());
 							
@@ -608,35 +769,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 						uids.add(mov.getID());
 					}
 				}
-				else {
-					
-					/*
-					OID[] ids = new OID[1];
-					ids[0] = new OID(snmp.getOid());
-					List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(ept, ids);
-					
-					for (TableEvent te : tblEvents) {
-						
-						String idValue = te.getColumns()[0].getVariable().toString();
-						if ( idValue != null && !idValue.equals("")) {
-							
-							ManagementObjectStringValue sv = new ManagementObjectStringValue();
-							sv.setValue(idValue);
-							sv.setManagementObject(snmp.getID());
-							
-							sv = (ManagementObjectStringValue) capMgr.updateManagementObjectValue(sv);
-							List<ID> uids = se.getUniqueIdentifierIds();
-							
-							if ( uids == null ) {
-								uids = new ArrayList<>();
-								se.setUniqueIdentifierIds(uids);
-							}
-							uids.add(sv.getID());
-						}	
-					}
-					*/
-				}
-				
 			}
 		}
 	}
@@ -934,7 +1066,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			PDU pdu = new PDU();
     		pdu.add(new VariableBinding(new OID(snmp.getOid() + ".0")));
     		PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
-    		
+    		    		
     		/*
     		String deviceVal = rpdu.get(0).getVariable().toString();
     		if ( snmp.getSyntax() instanceof SnmpEnumList ) {
@@ -1061,8 +1193,11 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				        			continue;
 				        		}
 			        		}
-			        		catch ( Exception e ) {
+			        		catch ( IntegerException e ) {
 			        		
+			        			if ( !e.getErrorCode().getErrorCode().equals("SNMPNoSuchError") ) {
+			        				throw e;
+			        			}
 			        		}
 			        	}
 			        	levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
@@ -1294,6 +1429,14 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		return null;
 	}
 	
+	
+
+
+	public class IndexSNMPValue {
+		
+		String indexVal;
+		SNMP indexSNMP;
+	}
 	
 	
 	

@@ -51,6 +51,7 @@ VALUES
     ('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CISCO VLAN MIB', 'CISCO-PRIVATE-VLAN-MIB.my', 'MIB', NULL, NULL, NULL),
     ('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CISCO VTP VLAN MIB', 'CISCO-VTP-MIB.my', 'MIB', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CDP MIB', 'CISCO-CDP-MIB.my', 'MIB', NULL, NULL, NULL),
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CISCO VLAN Membership', 'CISCO-VLAN-MEMBERSHIP-MIB.my', 'MIB', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'NetSnmp MIB', 'NET-SNMP-MIB', 'MIB', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'NetSnmp', 'NET-SNMP-TC', 'ProductMIB', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Cisco', 'CISCO-PRODUCTS-MIB.my', 'ProductMIB', NULL, NULL, NULL),

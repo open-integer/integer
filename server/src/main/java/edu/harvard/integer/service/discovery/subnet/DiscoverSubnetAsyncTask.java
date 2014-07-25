@@ -239,7 +239,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     			String ip = range.next(); 
     			DiscoverNode dn = new DiscoverNode(ip);
     			dn.setSubnetId(seed.getSeedId());
-    			
     			dn.setAccess(accesses.get(0));
     			
     			if ( dn.getIpAddress().equals("10.240.127.121") && dn.getIpAddress().equals("10.240.127.144")) {
@@ -303,6 +302,16 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 				for ( int i=0; i< accesses.size(); i++ ) {
 					
 					Access a = accesses.get(i);
+					try {
+						if ( dn.getAccess().equal(a) && i < ( accesses.size() - 1 ) ) {
+							
+						}
+					}
+					catch ( Exception es ) {
+						
+						es.printStackTrace();
+					}
+					
 					if ( dn.getAccess().equal(a) && i < ( accesses.size() - 1 ) ) {
 						
 						a = accesses.get(i+1);

@@ -400,9 +400,16 @@ public class YamlManager extends BaseManager implements
 			}
 
 			for (YamlServiceElementTypeTranslate typeTranslate : typeTranslates) {
+				
 				ServiceElementType exemplarSet = getServiceElementType(
 						serviceElementTypeDao, yamlServiceElementType,
 						typeTranslate.getName());
+				
+				if ( typeTranslate.getDefaultNameCabability() != null  ) {
+					
+					ID nameID = getCapability(typeTranslate.getDefaultNameCabability());
+					exemplarSet.setDefaultNameCababilityId(nameID);
+				}
 
 				exemplarSet.setCategory(managementObjectManager.getCategoryByName(typeTranslate
 						.getCategory()));
@@ -437,6 +444,10 @@ public class YamlManager extends BaseManager implements
 								yamlServiceElementType.getVendor());
 
 					serviceElementType.setAttributeIds(exemplarSet.getAttributeIds());
+					if ( exemplarSet.getDefaultNameCababilityId() != null ) {
+						serviceElementType.setDefaultNameCababilityId(exemplarSet.getDefaultNameCababilityId());
+					}
+					
 					serviceElementType.setUniqueIdentifierCapabilities(exemplarSet
 										.getUniqueIdentifierCapabilities());
 

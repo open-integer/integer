@@ -61,3 +61,10 @@ snmpContainment:
           contextOID: cdpGlobalRun
           disriminators:
              - serviceElementTypeName: cdpGlobal
+             
+        - name: ciscoVlanLevel
+          category: System
+          contextOID: vtpVlanEntry
+          disriminators:
+             - serviceElementTypeName: ciscoVtpVlan
+          

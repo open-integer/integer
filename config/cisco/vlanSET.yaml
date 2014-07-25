@@ -11,6 +11,7 @@ serviceElementTypes:
       vendor: cisco
       serviceElementTypeTranslates:
          - name: ciscoVtpVlan 
+           defaultNameCabability: vtpVlanName
            mapping: direct
            category: Vlan
               
@@ -38,3 +39,62 @@ serviceElementTypes:
           - name: vtpVlanDot10Said
             uri: vtpVlanDot10Said
             capability: vtpVlanDot10Said
+            
+          - name: vtpVlanTranslationalVlan1
+            uri: vtpVlanTranslationalVlan1
+            capability: vtpVlanTranslationalVlan1
+            
+          - name: vtpVlanTranslationalVlan2
+            uri: vtpVlanTranslationalVlan2
+            capability: vtpVlanTranslationalVlan2
+            
+          - name: vtpVlanIfIndex
+            uri: vtpVlanIfIndex
+            capability: ifIndex
+            
+    - name: ciscoVlanTokenType
+      description: CISCO VLAN Token service element type.
+      accessMethod:
+          protocol: SNMP
+      vendor: cisco
+      extendServiceElementType: ciscoVtpVlan
+      serviceElementTypeTranslates:
+         - name: ciscoVlanTokenType 
+           mapping: direct
+           category: Vlan
+         
+      managementObjects:
+          - name: vtpVlanParentVlan
+            uri: vtpVlanParentVlan
+            capability: vtpVlanParentVlan
+            
+          - name: vtpVlanRingNumber
+            uri: vtpVlanRingNumber
+            capability: vtpVlanRingNumber
+            
+          - name: vtpVlanBridgeType
+            uri: vtpVlanBridgeType
+            capability: vtpVlanBridgeType
+            
+    - name: ciscoVlanFdnetType
+      description: CISCO VLAN Fdnet service element type.
+      accessMethod:
+          protocol: SNMP
+      vendor: cisco
+      extendServiceElementType: ciscoVtpVlan
+      serviceElementTypeTranslates:
+         - name: ciscoVlanFdnetType 
+           mapping: direct
+           category: Vlan
+           
+      managementObjects:
+          - name: vtpVlanBridgeNumber
+            uri: vtpVlanBridgeNumber
+            capability: vtpVlanBridgeNumber
+            
+          - name: vtpVlanStpType
+            uri: vtpVlanStpType
+            capability: vtpVlanStpType
+      
+        
+          

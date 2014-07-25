@@ -41,6 +41,16 @@ public class YamlServiceElementTypeTranslate {
 	private String mapping;
 	private String category;
 	private String name = null;
+	private String defaultNameCabability = null;
+	
+
+	public String getDefaultNameCabability() {
+		return defaultNameCabability;
+	}
+
+	public void setDefaultNameCabability(String defaultNameCabability) {
+		this.defaultNameCabability = defaultNameCabability;
+	}
 
 	public String getName() {
 		return name;

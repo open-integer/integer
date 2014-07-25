@@ -189,7 +189,20 @@ final public class SnmpService
 			throw new IntegerException(null, NetworkErrorCodes.CannotReach, 
 	           		   new DisplayableInterface[] { new NonLocaleErrorMessage(e.getLocalizedMessage()) });
 		}
-    	assertPDU(response);
+    	try {
+    		assertPDU(response);
+    	}
+    	catch ( IntegerException e ) {
+    		
+    		StringBuffer sb = new StringBuffer();
+    		sb.append("SNMP Request error PDU \n");
+    		for ( VariableBinding vb : pdu.getVariableBindings() ) {
+    			sb.append(vb.getOid().toDottedString() + "\n" );	
+    		}  		
+    		logger.info(sb.toString());   
+    		throw e;
+    	}
+    	
         PDU rpdu = response.getResponse();
     	return rpdu;
     }

@@ -31,5 +31,26 @@ technologies:
 
                 - name: vtpVlanDot10Said
                   description: The value of the 802.10 SAID field for this VLAN.
+                  
+                - name: vtpVlanTranslationalVlan1
+                  description: A VLAN to which this VLAN is being translational-bridged.
+                  
+                - name: vtpVlanTranslationalVlan2
+                  description: Another VLAN, i.e., other than that indicated by vtpVlanTranslationalVlan1, to which this VLAN is being translational-bridged.
+                  
+                - name: vtpVlanParentVlan
+                  description: The parent VLAN for this VLAN. 
+                  
+                - name: vtpVlanRingNumber
+                  description: The ring number of this VLAN. 
+                  
+                - name: vtpVlanBridgeType
+                  description: The type of the Source Route bridging mode in use on this VLAN
+                  
+                - name: vtpVlanStpType
+                  description: The type of the Spanning Tree Protocol (STP) running on this VLAN.
+                  
+                - name: vtpVlanBridgeNumber
+                  description: The bridge number of the VTP-capable switches for this VLAN.
         
 ...
