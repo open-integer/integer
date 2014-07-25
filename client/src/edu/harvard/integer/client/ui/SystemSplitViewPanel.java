@@ -1,23 +1,15 @@
 package edu.harvard.integer.client.ui;
 
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 import edu.harvard.integer.client.MainClient;
-import edu.harvard.integer.client.widget.HvDialogBox;
-import edu.harvard.integer.client.widget.HvIconButton;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.selection.Selection;
-import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.Network;
-import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
  * The Class SystemSplitViewPanel represents a split panel object of System
@@ -44,20 +36,11 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	/** The east panel. */
 	public static DockPanel eastPanel = null;
 	
-	/** The Constant title. */
-	public static final String title = "Device Children";
-	
-	/** The Constant headers. */
-	public static final String[] headers = {"Name", "Status", "Description"};
-	
 	/** The contained tree view. */
 	public static ContainedTreeView containedTreeView = null;
-	
-	/** The details button. */
-	public static HvIconButton detailsButton = new HvIconButton("Summary");
 
 	/** The selected entity. */
-	public static BaseEntity selectedEntity;
+	//public static BaseEntity selectedEntity;
 
 	/** The network panel. */
 	private NetworkPanel networkPanel = new NetworkPanel();
@@ -83,50 +66,13 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.setBorderWidth(1);
 		eastPanel.setSize("100%", "100%");
 
-		HorizontalPanel mapToolbarPanel = new HorizontalPanel();
-		mapToolbarPanel.setStyleName("toolbar");
-		
-		// Details button
-		detailsButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				NetworkMap networkMap = networkPanel.getNetworkMapPanel().getNetworkMap();
-				if (networkMap.getSelectedTimestamp() > containedTreeView.getSelectedTimestamp())
-					selectedEntity = networkMap.getSelectedEntity();
-				else {
-					selectedEntity = containedTreeView.getSelectedServiceElement();
-				
-					MainClient.integerService.getDeviceDetails(selectedEntity.getID(), new AsyncCallback<DeviceDetails>() {
-	
-						@Override
-						public void onFailure(Throwable caught) {
-							MainClient.statusPanel.showAlert("Failed to receive detail information of " + selectedEntity.getName());
-						}
-	
-						@Override
-						public void onSuccess(DeviceDetails deviceDetails) {
-							DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedEntity.getName(), deviceDetails);
-							HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
-							detailsDialog.enableOkButton(false);
-							detailsDialog.setSize("400px", "150px");
-							detailsDialog.center();
-							detailsDialog.show();
-						}
-					});
-				}
-			}
-			
-		});
-		mapToolbarPanel.add(detailsButton);
 	    
 	    // tabPanel
 		tabPanel.setSize("100%", CONTENT_HEIGHT+"px");
-	    tabPanel.setAnimationDuration(1500);
+	    tabPanel.setAnimationDuration(500);
 	    tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 	    tabPanel.add(networkPanel, "Network Map");
-		
-		eastPanel.add(mapToolbarPanel, DockPanel.NORTH);
+
 		eastPanel.add(tabPanel, DockPanel.CENTER);
 		eastPanel.add(eventView, DockPanel.SOUTH);
 		
@@ -208,7 +154,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 *
 	 * @param se the se
 	 */
-	public static void showContainedTreeView(final ServiceElement se) {
+	/*public static void showContainedTreeView(final ServiceElement se) {
 		SplitLayoutPanel containedSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 		ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
 		final ContainedTreeView containedTreeView = new ContainedTreeView(title, headers, containedSplitPanel, detailsTabPanel);
@@ -218,8 +164,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	    containedSplitPanel.setWidgetHidden(detailsTabPanel, true);
 	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
 	    containedSplitPanel.add(containedTreeView);
-	    tabPanel.add(containedSplitPanel, se.getName());
-		tabPanel.selectTab(containedSplitPanel);
+	    //tabPanel.add(containedSplitPanel, se.getName());
+		//tabPanel.selectTab(containedSplitPanel);
 		
 		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
 
@@ -233,7 +179,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				containedTreeView.updateTree(se.getName(), serviceElements);
 			}
 		});
-	}
+	}*/
 
 
 	public static void showServiceElementMap(Network network) {
@@ -253,4 +199,5 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		tabPanel.add(subnetPanel, network.getName());
 		tabPanel.selectTab(subnetPanel);
 	}
+	
 }

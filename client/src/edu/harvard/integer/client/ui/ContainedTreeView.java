@@ -37,10 +37,9 @@ public class ContainedTreeView extends ScrollPanel {
 	 * Create a new ContainedTreeView.
 	 *
 	 * @param title the title
-	 * @param headers the headers
 	 * @param detailsTabPanel the details tab panel
 	 */
-	public ContainedTreeView(String title, String[] headers, final SplitLayoutPanel containedSplitPanel, final ServiceElementDetailsTabPanel detailsTabPanel) {
+	public ContainedTreeView(String title, final SplitLayoutPanel containedSplitPanel, final ServiceElementDetailsTabPanel detailsTabPanel) {
 		tree.setTitle(title);
 	    tree.setAnimationEnabled(true);
 		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {

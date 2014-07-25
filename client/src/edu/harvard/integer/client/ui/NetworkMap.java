@@ -45,6 +45,7 @@ public class NetworkMap extends IntegerMap {
 		String text = "showing network: " + netSize + " subnets, " + linkSize + " links";
 		MainClient.statusPanel.updateStatus(text);
 		entityMap.clear();
+		iconMap.clear();
 		removeAll();
 		updateNetworks(networkkInfo.getNetworks());
 		drawLinks(networkkInfo.getLinks());
@@ -56,7 +57,7 @@ public class NetworkMap extends IntegerMap {
 	 * @param result the result
 	 */
 	private void updateNetworks(Network[] result) {
-		int n = result.length;
+		int n = 20; // result.length;
 		init_layout(n);
 		
 		int i = 0;
@@ -65,6 +66,9 @@ public class NetworkMap extends IntegerMap {
 		double increment = DOUBLE_PI / n;
 		
 		for (final Network network : result) {
+			if (i >= n)
+				break;
+			
 			Point point = calculatePoint(n, i++, angle);
 			entityMap.put(network.getID(), point);
 			
@@ -77,7 +81,7 @@ public class NetworkMap extends IntegerMap {
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, network, mouseClickHandler);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, network, null);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);

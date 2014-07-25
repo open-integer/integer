@@ -35,8 +35,13 @@ import edu.harvard.integer.common.topology.ServiceElement;
  */
 public class SubnetMap extends IntegerMap {
 
+	private SubnetPanel subnetPanel;
 	protected Map<ID, Point> diffNetworksMap = new HashMap<ID, Point>();
 	
+	public SubnetMap(SubnetPanel parentPanel) {
+		subnetPanel = parentPanel;
+	}
+
 	public void updateNetwork(Network network) {
 		entityMap.clear();
 		diffNetworksMap.clear();
@@ -81,10 +86,12 @@ public class SubnetMap extends IntegerMap {
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
         			selectedEntity = entity;
-        			selectedTimestamp = System.currentTimeMillis();
+        			//selectedTimestamp = System.currentTimeMillis();
+        			
+        			subnetPanel.showContainedTreeView(entity);
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, mouseClickHandler);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, subnetPanel);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
@@ -118,7 +125,7 @@ public class SubnetMap extends IntegerMap {
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, mouseClickHandler);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, null);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
@@ -185,15 +192,15 @@ public class SubnetMap extends IntegerMap {
 				continue;
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
-        	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
+        	/*NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
         			selectedEntity = fakeSe;
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
-        	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, fakeSe, mouseClickHandler);
+        	};*/
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, fakeSe, null);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);

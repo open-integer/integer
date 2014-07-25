@@ -1,11 +1,14 @@
 package edu.harvard.integer.client.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.emitrom.lienzo.client.core.shape.Layer;
 import com.google.gwt.touch.client.Point;
 
+import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
@@ -114,6 +117,9 @@ public class IntegerMap extends Layer {
 	
 	/** The service element icon map. */
 	protected Map<ID, ServiceElementWidget> iconMap = new HashMap<ID, ServiceElementWidget>();
+	
+	/** The list of Link in map **/
+	protected List<HvLink> linkList = new ArrayList<HvLink>();
 	
 	/**
 	 * Gets the selected element.
