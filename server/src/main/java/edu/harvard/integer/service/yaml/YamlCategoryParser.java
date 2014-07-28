@@ -146,26 +146,58 @@ public class YamlCategoryParser {
 					child.setDiscovery(yamlCategory.getDiscovery());
 
 				ID childId = parseCategory(child);
-				if (childId != null)
+				if (childId != null && !childIds.contains(childId))
 					childIds.add(childId);
 			}
 		}
 
-		Category category = null; // dao.findByName(yamlCategory.getName());
+		Category category = dao.findByName(yamlCategory.getName());
 		if (category == null) {
 			category = new Category();
 			category.setName(yamlCategory.getName());
+		} else {
+			category = cloneCategory(category);
 		}
 
 		category.setDescription(yamlCategory.getDescription());
 		if (category.getChildIds() == null)
 			category.setChildIds(new ArrayList<ID>());
 
-		category.getChildIds().addAll(childIds);
+		for (ID childId : childIds) {
+			if (!category.getChildIds().contains(childId))
+				category.getChildIds().add(childId);
+		}
 
 		category = dao.update(category);
 
 		return category.getID();
+	}
+
+	/**
+	 * @param category
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private Category cloneCategory(Category dbCategory) throws IntegerException {
+		
+		Category category = new Category();
+		category.setName(dbCategory.getName());
+		category.setDescription(dbCategory.getDescription());
+		
+		if (dbCategory.getChildIds() != null) {
+			category.setChildIds(new ArrayList<ID>());
+			for (ID childId : dbCategory.getChildIds()) {
+				if (childId.getIdentifier() != null)
+					category.getChildIds().add(cloneCategory((Category) dao.findById(childId)).getID());
+					
+			}
+		}
+		
+		return dao.update(category);
+		
+//		category = dao.update(category);
+//		category.setName(category.getName() + ":" + category.getIdentifier());
+//		return category;
 	}
 
 	/**
@@ -182,7 +214,17 @@ public class YamlCategoryParser {
 
 		if (yamlCategory.getCategories() != null) {
 			List<YamlCategory> childCategories = new ArrayList<YamlCategory>();
-			childCategories.addAll(yamlCategory.getCategories());
+
+			for (YamlCategory category : yamlCategory.getCategories()) {
+				YamlCategory parentCategory = yamlCategories.get(category.getName().toLowerCase());
+				
+				if (parentCategory != null) {
+					childCategories.add(parentCategory);
+				} else
+					childCategories.add(category);
+			}
+			
+			//childCategories.addAll(yamlCategory.getCategories());
 
 			for (YamlCategory child : childCategories) {
 
@@ -192,6 +234,7 @@ public class YamlCategoryParser {
 
 		if (yamlCategory.getParents() != null) {
 			for (String parentName : yamlCategory.getParents()) {
+				
 				YamlCategory parentCategory = yamlCategories.get(parentName);
 				if (parentCategory.getCategories() == null) {
 					parentCategory.setCategories(new ArrayList<YamlCategory>());

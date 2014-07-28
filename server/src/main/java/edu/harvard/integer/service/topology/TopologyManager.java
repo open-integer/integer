@@ -234,7 +234,20 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		
 		addServiceElementToNetwork(interDeviceLink.getDestinationServiceElementId(), destNetwork);
 		
-		InterNetworkLink[] networkLinks = linkDao.findBySourceDestID(sourceNetwork.getID(), destNetwork.getID());
+
+		interDeviceLink.setSourceNetworkId(sourceNetwork.getID());
+		interDeviceLink.setDestinationNetworkId(destNetwork.getID());
+		
+		addInterNetworkLink(interDeviceLink, sourceNetworkName, destNetworkName);
+		
+	}
+
+	private void addInterNetworkLink(InterDeviceLink interDeviceLink, String sourceNetworkName, String destNetworkName) throws IntegerException {
+		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
+		
+		InterNetworkLink[] networkLinks = linkDao.findBySourceDestID(interDeviceLink.getSourceNetworkId(), 
+				interDeviceLink.getDestinationNetworkId());
+		
 		if (networkLinks == null || networkLinks.length == 0) {
 			InterNetworkLink link = new InterNetworkLink();
 			link.setCreated(new Date());
@@ -242,23 +255,19 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 			
 			link.setSourceAddress(new Address(Address.getSubNet(interDeviceLink.getSourceAddress()),
 						interDeviceLink.getSourceAddress().getMask()));
-			link.setSourceNetworkId(sourceNetwork.getID());
+			link.setSourceNetworkId(interDeviceLink.getSourceNetworkId());
 			
 			link.setDestinationAddress(new Address(Address.getSubNet(interDeviceLink.getDestinationAddress()),
 					interDeviceLink.getDestinationAddress().getMask()));
 		
-			link.setDestinationNetworkId(destNetwork.getID());
+			link.setDestinationNetworkId(interDeviceLink.getDestinationNetworkId());
 			
 			link.setLayer(LayerTypeEnum.Two);
 			link.setName(sourceNetworkName + " - " + destNetworkName);
 			
 			linkDao.update(link);
 		}
-		
-		interDeviceLink.setSourceNetworkId(sourceNetwork.getID());
-		interDeviceLink.setDestinationNetworkId(destNetwork.getID());
 	}
-
 	/**
 	 * @param sourceServiceElementId
 	 * @param sourceNetwork

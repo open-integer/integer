@@ -41,6 +41,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
@@ -74,6 +76,8 @@ public class SelectionManager extends BaseManager implements
 	@Inject
 	private PersistenceManagerInterface persistenceManager;
 
+	@Inject
+	private Logger logger;
 	
 	public SelectionManager() {
 		super(ManagerTypeEnum.SelectionManager);
@@ -129,7 +133,7 @@ public class SelectionManager extends BaseManager implements
 		filter.setTechnologies(nodes);
 
 		CategoryDAO categoryDAO = persistenceManager.getCategoryDAO();
-		Category[] categories = categoryDAO.findAll();
+		Category[] categories = categoryDAO.findAllTopLevel();
 		
 		//categories = (Category[]) categoryDAO.createCleanCopy(categories);
 
@@ -179,6 +183,7 @@ public class SelectionManager extends BaseManager implements
 			node.setItemId(id);
 			node.setName(id.getName());
 			
+			logger.info("Find category " + id.toDebugString());
 			Category category = dao.findById(id);
 			
 			if (category.getChildIds() != null)

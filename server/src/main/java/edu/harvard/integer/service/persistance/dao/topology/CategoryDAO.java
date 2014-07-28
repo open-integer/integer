@@ -33,11 +33,18 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.Category;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -65,4 +72,27 @@ public class CategoryDAO extends BaseDAO {
 		return findByStringField(name, "name", Category.class);
 	}
 
+	public Category[] findAllTopLevel() throws IntegerException {
+		StringBuffer b = new StringBuffer();
+		
+		b.append("select c.* ").append('\n');
+		b.append("from Category c ").append('\n');
+		b.append(" where not exists (select c.identifier from Category_childIds cid where c.identifier = cid.identifier) ").append('\n');
+	
+		Query query = getEntityManager().createNativeQuery(b.toString(), Category.class);
+		
+		@SuppressWarnings("unchecked")
+		List<Category> resultList = query.getResultList();
+	
+		List<Category> topLevels = new ArrayList<Category>();
+		
+		for (Category category : resultList) {
+			for (ID childId : category.getChildIds()) {
+				Category dbCategory = findById(childId);
+				topLevels.add(dbCategory);
+			}
+		}
+		return (Category[]) topLevels.toArray(new Category[topLevels
+				.size()]);
+	}
 }
