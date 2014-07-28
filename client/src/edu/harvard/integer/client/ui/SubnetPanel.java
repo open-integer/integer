@@ -127,6 +127,8 @@ public class SubnetPanel extends VerticalPanel {
 
 			@Override
 			public void onSuccess(ServiceElement[] serviceElements) {
+				subnetSplitPanel.setWidgetHidden(containedSplitPanel, false);
+				
 				MainClient.statusPanel.updateStatus("Received " + serviceElements.length + " contained service elements of " + entity.getName());
 				containedTreeView.updateTree(entity.getName(), serviceElements);
 			}
