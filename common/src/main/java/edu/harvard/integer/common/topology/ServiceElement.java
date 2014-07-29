@@ -92,12 +92,7 @@ public class ServiceElement extends BaseEntity implements Serializable {
 			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
 	private ID serviceElementTypeId = null;
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "iconId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "iconType")),
-			@AttributeOverride(name = "name", column = @Column(name = "iconName")) })
-	private ID iconID = null;
+	private String iconName = null;
 
 	@ElementCollection
 	@OrderColumn(name = "idx")
@@ -429,16 +424,16 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	/**
 	 * @return the iconID
 	 */
-	public ID getIconID() {
-		return iconID;
+	public String getIconName() {
+		return iconName;
 	}
 
 	/**
 	 * @param iconID
 	 *            the iconID to set
 	 */
-	public void setIconID(ID iconID) {
-		this.iconID = iconID;
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
 	}
 
 	/**

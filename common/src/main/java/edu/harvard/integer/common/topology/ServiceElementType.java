@@ -97,12 +97,7 @@ public class ServiceElementType extends BaseEntity {
 	@OrderColumn(name = "idx")
 	private List<ID> childServiceElementTypes;
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "iconId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "iconType")),
-			@AttributeOverride(name = "name", column = @Column(name = "iconName")) })
-	private ID iconId = null;
+	private String iconName = null;
 
 	private String description = null;
 
@@ -341,16 +336,16 @@ public class ServiceElementType extends BaseEntity {
 	/**
 	 * @return the iconId
 	 */
-	public ID getIconId() {
-		return iconId;
+	public String getIconName() {
+		return iconName;
 	}
 
 	/**
 	 * @param iconId
 	 *            the iconId to set
 	 */
-	public void setIconId(ID iconId) {
-		this.iconId = iconId;
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
 	}
 
 	/**
