@@ -1,0 +1,35 @@
+#This is the default Harvard-specific Business Service list. It is possible to change this, but it may have
+#unexpected side effects. The initial letter of each name element is in capitols. The exception
+#is for hyphenated words. This is the element that the user interface presents for selections.
+
+name: Business Service-tree
+description: business service-tree
+parent: root
+business service:
+      - name: IAM
+        description:  Identity and Access Management
+        parent: business service-tree
+
+      - name: Email
+        description:  email
+        parent: business service-tree
+        
+      - name: Human Resources
+        description:  human resources
+        parent: business service-tree
+        
+      - name: Payroll
+        description: payroll 
+        parent: business service-tree
+        
+      - name: Student Information System
+        description:  student information system
+        parent: business service-tree
+        
+      - name: Collaboration
+        description:  collaboration
+        parent: business service-tree
+        
+      - name: Library Resources
+        description:  library resources
+        parent: business service-tree
