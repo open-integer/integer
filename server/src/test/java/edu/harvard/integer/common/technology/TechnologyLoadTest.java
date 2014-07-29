@@ -309,7 +309,7 @@ public class TechnologyLoadTest {
 	@Test
 	public void readServie() {
 
-		File techTree = new File("../config/technology/BusinessServices.yaml");
+		File techTree = new File("../config/BusinessServices.yaml");
 		String content = null;
 		try {
 			content = new String(Files.readAllBytes(techTree.toPath()));
