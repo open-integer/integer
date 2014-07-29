@@ -34,14 +34,18 @@
 package edu.harvard.integer.common.topology;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
@@ -106,6 +110,10 @@ public class InterDeviceLink extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private LayerTypeEnum layer = null;
 
+	@ElementCollection(fetch=FetchType.EAGER)
+	@OrderColumn(name="idx")
+	private List<ID> lowerLevelLinks = null;
+	
 	/**
 	 * @return the sourceAddress
 	 */
@@ -236,6 +244,20 @@ public class InterDeviceLink extends BaseEntity {
 	 */
 	public void setDestinationNetworkId(ID destinationNetworkId) {
 		this.destinationNetworkId = destinationNetworkId;
+	}
+
+	/**
+	 * @return the lowerLevelLinks
+	 */
+	public List<ID> getLowerLevelLinks() {
+		return lowerLevelLinks;
+	}
+
+	/**
+	 * @param lowerLevelLinks the lowerLevelLinks to set
+	 */
+	public void setLowerLevelLinks(List<ID> lowerLevelLinks) {
+		this.lowerLevelLinks = lowerLevelLinks;
 	}
 
 }
