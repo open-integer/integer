@@ -35,7 +35,7 @@ public class IntegerMap extends Layer {
 	public static final int MAP_WIDTH = SystemSplitViewPanel.CONTENT_WIDTH;
 	
 	/** The Constant MAP_HEIGHT. */
-	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT;
+	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT -100;
 	
 	/** The Constant LAYOUT_CENTER. */
 	public static final int LAYOUT_CENTER = 1;
@@ -166,9 +166,9 @@ public class IntegerMap extends Layer {
 		int layout_width = getLayoutWidth();
 		int layout_height = getLayoutHeight();
 		
-		int half_total = (int) (Math.ceil(total/2)) + 2;
-		int dw = layout_width / half_total;
-		int dh = layout_height / half_total;
+		int sqrt_total = (int) (2 * Math.sqrt(total));
+		int dw = layout_width / sqrt_total;
+		int dh = layout_height / sqrt_total;
 		icon_width = dh < dw ? dh : dw;
 		icon_height = icon_width;
 		
@@ -289,7 +289,7 @@ public class IntegerMap extends Layer {
     		y0 = -y0;
     	}
     	double x = x0 + a + OFFSET_X;
-    	double y = y0 + OFFSET_Y + MAP_HEIGHT/3 + OFFSET_Y;
+    	double y = y0 + b + OFFSET_Y;
     	
     	return new Point(x, y);
 	}

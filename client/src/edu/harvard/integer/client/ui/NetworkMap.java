@@ -57,7 +57,7 @@ public class NetworkMap extends IntegerMap {
 	 * @param result the result
 	 */
 	private void updateNetworks(Network[] result) {
-		int n = 20; // result.length;
+		int n = result.length;
 		init_layout(n);
 		
 		int i = 0;
