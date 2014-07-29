@@ -85,6 +85,10 @@ public class DataLoader implements DataLoaderInterface {
 
 		switch (dataPreLoadFile.getFileType()) {
 
+		case Service:
+			loadService(dataPreLoadFile);
+			break;
+			
 		case TechnologyTreeYaml:
 		case TechnologyYaml:
 			loadTechnologyTreeYaml(dataPreLoadFile);
@@ -119,6 +123,46 @@ public class DataLoader implements DataLoaderInterface {
 					+ dataPreLoadFile.getFileType() + " Can not load!!");
 		}
 
+	}
+
+
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException 
+	 */
+	private void loadService(DataPreLoadFile dataPreLoadFile) throws IntegerException {
+
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+			return;
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
+			return;
+		}
+
+		String data = FileUtil.readInMIB(file);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
+		
+		if (manager != null) {
+			try {
+				manager.importService(data);
+
+				dataPreLoadFile.setTimeLoaded(new Date());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+
+			} catch (IntegerException e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			}
+		}
+	
 	}
 
 

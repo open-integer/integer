@@ -43,12 +43,14 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Layer;
 import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.common.technology.Service;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
@@ -59,6 +61,7 @@ import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
 import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
+import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 
@@ -130,12 +133,19 @@ public class SelectionManager extends BaseManager implements
 		
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
+		
+		ServiceDAO serviceDao = persistenceManager.getServiceDAO();
+		Service[] allServices = serviceDao.findAll();
+		List<ID> serviceIds = new ArrayList<ID>();
+		for (Service service : allServices) {
+			serviceIds.add(service.getID());
+		}
+		filter.setServices(serviceIds);
+		
 		filter.setTechnologies(nodes);
 
 		CategoryDAO categoryDAO = persistenceManager.getCategoryDAO();
 		Category[] categories = categoryDAO.findAllTopLevel();
-		
-		//categories = (Category[]) categoryDAO.createCleanCopy(categories);
 
 		filter.setCategories(createCategoryList(categories));
 		filter.setCriticalities(Arrays.asList(CriticalityEnum.values()));

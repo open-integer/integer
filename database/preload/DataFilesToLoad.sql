@@ -56,6 +56,7 @@ VALUES
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'NetSnmp', 'NET-SNMP-TC', 'ProductMIB', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Cisco', 'CISCO-PRODUCTS-MIB.my', 'ProductMIB', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Cisco Entity', 'CISCO-ENTITY-VENDORTYPE-OID-MIB.my', 'ProductMIB', NULL, NULL, NULL),
+ 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Business Service', 'BusinessServices.yaml', 'Service', NULL, NULL, NULL),
  	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'TechnologyTree', 'technology/TechnologyTree.yaml', 'TechnologyTreeYaml', NULL, NULL, NULL),
  	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Category', 'technology/category.yaml', 'CategoryYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Interface Technology', 'common/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),

@@ -33,50 +33,67 @@
 
 package edu.harvard.integer.service.yaml;
 
+import java.util.Date;
+
+import edu.harvard.integer.common.distribution.DistributedManager;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.common.technology.Service;
+import edu.harvard.integer.common.yaml.YamlService;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.technology.TechnologyManagerInterface;
 
 /**
- * The YamlManager is used to import a YAML file. The current YAML file types
- * supported are Technology Tree, VendorContianment and VendorIdentifier
  * @author David Taylor
  *
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
+public class YamlServiceParser {
 
-	/**
-	 * Read in the YAML in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists in the database then the technology 
-	 * will be update with new information found in the YAML. The YAML is
-	 * passed in as a string so the YAML file can be loaded from the GUI. 
-	 * 
-	 * @param content. YAML file passed in as a string. 
-	 * @return Status of the load. 
-	 * @throws IntegerException. 
-	 */
-	String loadTechnologyTree(String content) throws IntegerException;
-
-	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
-	 */
-	String loadServiceElementType(String content) throws IntegerException;
-
-	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
-	 */
-	String loadVendorContainment(String content) throws IntegerException;
-
-	public String loadCategory(String content) throws IntegerException;
-
-	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
-	 */
-	String importService(String content) throws IntegerException;
+	private YamlService yamlService = null;
+	
+	private Service[] allServices = null;
+	
+	public YamlServiceParser(YamlService servie) {
+		this.yamlService = servie;
+	}
+	
+	public String parse() throws IntegerException {
+		
+		if (yamlService == null)
+			return "NoData";
+		
+		if (yamlService.getBusinessServices() == null)
+			return "NoData";
+		
+		TechnologyManagerInterface technologyManager = DistributionManager.getManager(ManagerTypeEnum.TechnologyManager);
+		allServices = technologyManager.getAllServices();
+		
+		for (YamlService service : yamlService.getBusinessServices()) {
+			Service dbService = getServiceByName(service.getName());
+			
+			if (dbService.getIdentifier() == null) {
+				dbService.setName(service.getName());
+				dbService.setCreated(new Date());
+			}
+			
+			if (dbService.getDescription() == null || !dbService.getDescription().equals(service)) {
+				dbService.setDescription(service.getDescription());
+				dbService.setLastModified(new Date());
+				
+				technologyManager.updateService(dbService);
+			}
+			
+		}
+		
+		return "success";
+	}
+	
+	private Service getServiceByName(String name) {
+		for (Service service : allServices) {
+			if (service.getName().equals(name))
+				return service;
+		}
+		
+		return new Service();
+	}
 }

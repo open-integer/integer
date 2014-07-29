@@ -305,4 +305,28 @@ public class TechnologyLoadTest {
 				fail(e.toString());
 		}
 	}
+	
+	@Test
+	public void readServie() {
+
+		File techTree = new File("../config/technology/BusinessServices.yaml");
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(techTree.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading YAML: " + e.getMessage());
+		}
+			
+		try {
+			yamlManager.importService(content);
+		} catch (IntegerException e) {
+			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
+				logger.warn("OID not found! ParentChildContainment not read!!");
+			else
+				fail(e.toString());
+		}
+	}
 }

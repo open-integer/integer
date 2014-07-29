@@ -47,7 +47,7 @@ import edu.harvard.integer.common.ID;
 /**
  * A business service is the highest level of abstraction in this hierarchy and
  * is the think that is most visible to customers. Examples include Payroll,
- * Personnel, Learning Managagement, and student information. These services
+ * Personnel, Learning Management, and student information. These services
  * will be comprised of potentially many technologies required to realize the
  * service.
  * 

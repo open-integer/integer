@@ -79,6 +79,7 @@ import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
+import edu.harvard.integer.common.yaml.YamlService;
 import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpContainmentRelation;
@@ -1226,17 +1227,17 @@ public class YamlManager extends BaseManager implements
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
 				YamlCategory.class, getClass().getClassLoader()));
 
-		YamlCategory load = null;
+		YamlCategory yamlCategory = null;
 
 		try {
-			load = (YamlCategory) yaml.load(content);
+			yamlCategory = (YamlCategory) yaml.load(content);
 		} catch (Throwable e) {
 			logger.error("Unexpected error reading in YAML! " + e.toString());
 			e.printStackTrace();
 			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
 		}
 
-		logger.info("YAML Object is " + load.getClass().getName());
+		logger.info("YAML Object is " + yamlCategory.getClass().getName());
 
 		HashMap<String, YamlCategory> categories = new HashMap<String, YamlCategory>();
 		HashMap<String, Category> dbCategories = new HashMap<String, Category>();
@@ -1244,15 +1245,36 @@ public class YamlManager extends BaseManager implements
 		YamlCategoryParser parser = new YamlCategoryParser(categories, dbCategories, persistanceManager.getCategoryDAO());
 		
 		// First parse the parents list to add the child categories to the parents.
-		parser.parseParentCategory(load);
+		parser.parseParentCategory(yamlCategory);
 		
 		// Parse the parents and add to the database.
-		parser.parseCategory(load);
+		parser.parseCategory(yamlCategory);
 
-		parser.printCategories(load, "");
+		parser.printCategories(yamlCategory, "");
 		
 		return "Success";
 
 	}
 
+	@Override
+	public String importService(String content) throws IntegerException {
+		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
+				YamlService.class, getClass().getClassLoader()));
+
+		YamlService yamlService = null;
+
+		try {
+			yamlService = (YamlService) yaml.load(content);
+		} catch (Throwable e) {
+			logger.error("Unexpected error reading in YAML! " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
+		}
+
+		logger.info("YAML Object is " + yamlService.getClass().getName());
+		
+		YamlServiceParser parser = new YamlServiceParser(yamlService);
+		
+		return parser.parse();
+	}
 }

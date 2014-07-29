@@ -31,52 +31,82 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.common.yaml;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.service.BaseManagerInterface;
+import java.util.List;
 
 /**
- * The YamlManager is used to import a YAML file. The current YAML file types
- * supported are Technology Tree, VendorContianment and VendorIdentifier
  * @author David Taylor
- *
+ * 
  */
-public interface YamlManagerInterface extends BaseManagerInterface {
+public class YamlService {
+
+	private String name = null;
+
+	private String description = null;
+
+	private String parent = null;
+
+	private List<YamlService> businessServices = null;
 
 	/**
-	 * Read in the YAML in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists in the database then the technology 
-	 * will be update with new information found in the YAML. The YAML is
-	 * passed in as a string so the YAML file can be loaded from the GUI. 
-	 * 
-	 * @param content. YAML file passed in as a string. 
-	 * @return Status of the load. 
-	 * @throws IntegerException. 
+	 * @return the name
 	 */
-	String loadTechnologyTree(String content) throws IntegerException;
+	public String getName() {
+		return name;
+	}
 
 	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
+	 * @param name
+	 *            the name to set
 	 */
-	String loadServiceElementType(String content) throws IntegerException;
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
+	 * @return the description
 	 */
-	String loadVendorContainment(String content) throws IntegerException;
-
-	public String loadCategory(String content) throws IntegerException;
+	public String getDescription() {
+		return description;
+	}
 
 	/**
-	 * @param content
-	 * @return
-	 * @throws IntegerException
+	 * @param description
+	 *            the description to set
 	 */
-	String importService(String content) throws IntegerException;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public String getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent
+	 *            the parent to set
+	 */
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return the businessServices
+	 */
+	public List<YamlService> getBusinessServices() {
+		return businessServices;
+	}
+
+	/**
+	 * @param businessServices
+	 *            the businessServices to set
+	 */
+	public void setBusinessServices(List<YamlService> businessServices) {
+		this.businessServices = businessServices;
+	}
+
 }

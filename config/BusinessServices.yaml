@@ -5,7 +5,7 @@
 name: Business Service-tree
 description: business service-tree
 parent: root
-business service:
+businessServices:
       - name: IAM
         description:  Identity and Access Management
         parent: business service-tree
