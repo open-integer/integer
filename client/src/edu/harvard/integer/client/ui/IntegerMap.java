@@ -166,7 +166,7 @@ public class IntegerMap extends Layer {
 		int layout_width = getLayoutWidth();
 		int layout_height = getLayoutHeight();
 		
-		int sqrt_total = (int) (2 * Math.sqrt(total));
+		int sqrt_total = (int) (2 * Math.sqrt(total)) + 2;
 		int dw = layout_width / sqrt_total;
 		int dh = layout_height / sqrt_total;
 		icon_width = dh < dw ? dh : dw;
@@ -290,6 +290,13 @@ public class IntegerMap extends Layer {
     	}
     	double x = x0 + a + OFFSET_X;
     	double y = y0 + b + OFFSET_Y;
+    	
+    	return new Point(x, y);
+	}
+	
+	public Point getCenterPoint() {
+		double x = a + OFFSET_X;
+    	double y = b + OFFSET_Y;
     	
     	return new Point(x, y);
 	}
