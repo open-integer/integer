@@ -50,11 +50,14 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	/** The service element. */
 	private BaseEntity entity;
 	
+	/** The point position of this widget */
+	private Point point;
+	
 	/** The list of associated link. */
-	private List<HvLink> linkList = new ArrayList<HvLink>(); 
+	private final List<HvLink> linkList = new ArrayList<HvLink>(); 
 	
 	/** The list of link to be dragged. */
-	private List<HvLink> dragLinkList = new ArrayList<HvLink>();
+	private final List<HvLink> dragLinkList = new ArrayList<HvLink>();
 	
 	/** The subnetPanel. */
 	private SubnetPanel subnetPanel;
@@ -67,12 +70,6 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	
 	/** The clipped image height. */
 	private int clippedImageHeight;
-	
-	/** The half of icon_width. */
-	private double half_icon_width;
-	
-	/** The half of icon_height. */
-	private double half_icon_height;
 	
 	/** The font size. */
 	private int fontSize ;
@@ -98,8 +95,6 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 		final HvMapIconPopup popup = new HvMapIconPopup(entity.getName(), "");
 		clippedImageWidth = (int)picture.getClippedImageDestinationWidth();
 		clippedImageHeight = (int)picture.getClippedImageDestinationHeight();
-		half_icon_width = clippedImageWidth/2;
-		half_icon_height = clippedImageHeight/2;
 		fontSize = (int) Math.ceil(clippedImageWidth * 2 / 9);
 		labelBelowOffset = clippedImageHeight + (int) Math.ceil(clippedImageHeight * 15 / 90);
 		
@@ -136,6 +131,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 * @param y the y
 	 */
 	public void draw(int x, int y) {
+		point = new Point(x, y);
+		
 		picture.setStrokeColor(ColorName.CYAN).setStrokeWidth(3).setX(x).setY(y).onLoad(new PictureLoadedHandler() {
 
 			@Override
@@ -165,7 +162,9 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	@Override
 	public void onNodeDragEnd(NodeDragEndEvent event) {
-		removeDraggedLinks(event.getX(), event.getY());
+		// update the point position
+		point = new Point(event.getX(), event.getY());
+		removeDraggedLinks(point);
 		
 		// clear to finish
 		clearDragLinks();
@@ -176,7 +175,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	@Override
 	public void onNodeDragMove(NodeDragMoveEvent event) {
-		moveDragLines(event.getX(), event.getY());
+		point = new Point(event.getX(), event.getY());
+		moveDragLines(point);
 	}
 
 	/* (non-Javadoc)
@@ -184,12 +184,13 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	@Override
 	public void onNodeDragStart(NodeDragStartEvent event) {
-		addDraggingLinks(event.getX(), event.getY());
+		point = new Point(event.getX(), event.getY());
+		addDraggingLinks(point);
 	}
 	
 	private void clearDragLinks() {
 		for (HvLink link : dragLinkList) {
-			getViewport().getDraglayer().add(link.getLine());
+			getViewport().getDraglayer().remove(link.getLine());
 		}
 		dragLinkList.clear();
 	}
@@ -200,9 +201,7 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 * @param cur_x the cur_x
 	 * @param cur_y the cur_y
 	 */
-	private void addDraggingLinks(int cur_x, int cur_y) {
-		
-		Point2D cur_point = new Point2D(cur_x, cur_y);
+	private void addDraggingLinks(Point point) {
 		
 		for (HvLink link : linkList) {
 			ID startId = link.getStartWidget().getEntity().getID();
@@ -215,84 +214,86 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 			Point otherPoint = link.getEndPoint();
 			Line line = link.getLine();
 			ServiceElementWidget endWidget = link.getEndWidget();
+			otherPoint = endWidget.getPoint();
 			
 			line.setVisible(false);
 			
-			Line newLine = new Line(cur_x, cur_y, otherPoint.getX()+half_icon_width, otherPoint.getY()+half_icon_height);
-			newLine.setStrokeColor(ColorName.LIGHTGRAY).setStrokeWidth(2).setFillColor(ColorName.LIGHTPINK);  	
+			Line newLine = new Line(point.getX(), point.getY(), otherPoint.getX(), otherPoint.getY());
+			newLine.setStrokeColor(ColorName.LIGHTGRAY).setStrokeWidth(2).setFillColor(ColorName.LIGHTGRAY);  	
 			
 			if (newLine.getParent() == null) {  
-                //getViewport().getDraglayer().add(newLine);  
+                getViewport().getDraglayer().add(newLine);  
                 newLine.moveToBottom();  
             } 
 			newLine.setVisible(true);
 			
-			// save current point at top-left corner of the icon
-			Point curPoint = new Point(cur_x - half_icon_width, cur_y - half_icon_height);
-			
 			// save lines being dragged
-			HvLink newLinePoints = new HvLink(newLine, curPoint, otherPoint, this, endWidget);
-			//dragLinkList.add(newLinePoints);
+			HvLink newLink = new HvLink(newLine, point, otherPoint, this, endWidget);
+			dragLinkList.add(newLink);
 			
-			// update the link associated with end point
-			updateEndPointLink(endWidget, this, curPoint);
-			
+			// update other end point for this widget
+			endWidget.updateLinkEndPoint(this);
 		}
 	}
 	
 	/**
-	 * Move drag lines to position of (x, y).
+	 * Update link to the given end point widget.
 	 *
-	 * @param cur_x the cur_x
-	 * @param cur_y the cur_y
+	 * @param widget the widget
 	 */
-	private void moveDragLines(int cur_x, int cur_y) {
-		Point2D cur_point = new Point2D(cur_x, cur_y);
-		//updateDraggingLinks(cur_point, dragLinkList, true, false);
+	private void updateLinkEndPoint(ServiceElementWidget widget) {
+		Point2D widgetPoint = new Point2D(widget.getPoint().getX(), widget.getPoint().getY());
+		
+		for (HvLink link : linkList) {
+			if (link.hasWidget(widget)) {
+				Point2D curPoint = new Point2D(point.getX(), point.getY());
+				
+				Line cur_line = link.getLine();
+				cur_line.setPoints(new Point2DArray(widgetPoint, curPoint));
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * Move drag lines to the given point.
+	 *
+	 * @param Point the point
+	 */
+	private void moveDragLines(Point point) {
+		//Point cur_point = new Point(cur_x, cur_y);
+		updateDraggingLinks(point, dragLinkList, true, false);
 	}
 
 	/**
 	 * Removes the dragged links at center of icons.
 	 *
-	 * @param cur_x the cur_x
-	 * @param cur_y the cur_y
+	 * @param Point the point
 	 */
-	private void removeDraggedLinks(int cur_x, int cur_y) {
-		Point2D cur_point = new Point2D(cur_x, cur_y);
-		//updateDraggingLinks(cur_point, dragLinkList, false, false);
-		updateDraggingLinks(cur_point, linkList, true, true);
+	private void removeDraggedLinks(Point point) {
+		updateDraggingLinks(point, dragLinkList, false, false);
+		updateDraggingLinks(point, linkList, true, true);
 	}
 	
 	/**
 	 * Update the dragging links at center of icons.
 	 *
-	 * @param cur_point the cur_point
-	 * @param links the lines
+	 * @param point the point
+	 * @param links the links
 	 * @param visible the visible
 	 * @param draw the draw
 	 */
-	private void updateDraggingLinks(Point2D cur_point, List<HvLink> links, boolean visible, boolean draw) {
+	private void updateDraggingLinks(Point point, List<HvLink> links, boolean visible, boolean draw) {
+		Point2D point2d = new Point2D(point.getX(), point.getY());
 		for (HvLink link : links) {
-			Point otherPoint = link.getEndPoint();
-			Point2D other_point = new Point2D(otherPoint.getX() + half_icon_width, otherPoint.getY() + half_icon_height);
+			ServiceElementWidget otherEndWidget = link.getEndWidget();
+			Point2D other_point = new Point2D(otherEndWidget.getPoint().getX(), otherEndWidget.getPoint().getY());
 			Line cur_line = link.getLine();
-			cur_line.setPoints(new Point2DArray(cur_point, other_point));
+			cur_line.setPoints(new Point2DArray(point2d, other_point));
 			cur_line.setVisible(visible);
 			
 			if (draw)
 				cur_line.getScene().draw();
-		}
-	}
-	
-	private void updateEndPointLink(ServiceElementWidget startWidget, ServiceElementWidget endWidget, Point endPoint) {
-		for (HvLink link : startWidget.getLinkList()) {
-			if (link.getEndWidget().getEntity().getID().equals(endWidget.getEntity().getID())) {
-				Point startPoint = link.getStartPoint();
-				Point2D startPoint2d = new Point2D(startPoint.getX() + half_icon_width, startPoint.getY() + half_icon_height);
-				Point2D endPoint2d = new Point2D(endPoint.getX() + half_icon_width, endPoint.getY() + half_icon_height);
-				Line cur_line = link.getLine();
-				cur_line.setPoints(new Point2DArray(startPoint2d, endPoint2d));
-			}
 		}
 	}
 
@@ -357,6 +358,14 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 */
 	public List<HvLink> getLinkList() {
 		return linkList;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 }

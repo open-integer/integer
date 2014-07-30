@@ -18,6 +18,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.resources.Resources;
+import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
@@ -45,6 +46,7 @@ public class SubnetMap extends IntegerMap {
 	public void updateNetwork(Network network) {
 		entityMap.clear();
 		diffNetworksMap.clear();
+		iconMap.clear();
 		removeAll();
 		
 		if (network.getLowerNetworks() == null || network.getLowerNetworks().isEmpty())
@@ -95,6 +97,7 @@ public class SubnetMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	iconMap.put(entity.getID(), icon);
         	
         	angle += increment;
 		}
@@ -129,6 +132,7 @@ public class SubnetMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	iconMap.put(entity.getID(), icon);
         	
         	angle += increment;
 		}
@@ -204,6 +208,7 @@ public class SubnetMap extends IntegerMap {
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
+        	iconMap.put(fakeSe.getID(), icon);
         	
         	angle += increment;
 		}
@@ -218,6 +223,10 @@ public class SubnetMap extends IntegerMap {
 		for (final InterDeviceLink link : list) {
 			ID id1 = link.getSourceServiceElementId();
 			ID id2 = link.getDestinationServiceElementId();
+			
+			if (id1.equals(id2))
+				continue;
+			
 			Point p1 = entityMap.get(id1);
 			Point p2 = entityMap.get(id2);
 			
@@ -225,7 +234,21 @@ public class SubnetMap extends IntegerMap {
 				continue;
 			
 			// draw line between p1 and p2
-			drawLink(link, p1, p2);
+			Line line = drawLink(link, p1, p2);
+			
+			ServiceElementWidget icon1 = iconMap.get(id1);
+			ServiceElementWidget icon2 = iconMap.get(id2);
+			
+			if (icon1 == null || icon2 == null)
+				continue;
+			
+			// save line (source: p1, destination: p2) to icon1
+			HvLink link1 = new HvLink(line, p1, p2, icon1, icon2);
+            icon1.addLink(link1);
+            
+            // save line (source: p2, destination: p1) to icon2
+            HvLink link2 = new HvLink(line, p2, p1, icon2, icon1);
+            icon2.addLink(link2);
 		}
 	}
 	
@@ -236,7 +259,7 @@ public class SubnetMap extends IntegerMap {
 	 * @param p1 the p1
 	 * @param p2 the p2
 	 */
-	private void drawLink(final InterDeviceLink link, Point p1, Point p2) {
+	private Line drawLink(final InterDeviceLink link, Point p1, Point p2) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();
 		
 		double x1 = p1.getX() + icon_width/2;
@@ -263,7 +286,7 @@ public class SubnetMap extends IntegerMap {
 				int y = 100 + event.getY() - 15;
 
 				tooltip.setPopupPosition(x, y);
-				tooltip.update(link.getName(), "Not availabel");
+				tooltip.update(link.getName(), "Not available");
 				tooltip.show();
 			}  
         });  
@@ -293,6 +316,7 @@ public class SubnetMap extends IntegerMap {
 		});
         
         add(line);
+        return line;
 	}
 
 }

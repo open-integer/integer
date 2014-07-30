@@ -111,7 +111,7 @@ public class NetworkMap extends IntegerMap {
 			if (p1 == null || p2 == null)
 				continue;
 			
-			// draw line between p0 and p
+			// draw line between p1 and p2
 			Line line = drawLink(link, p1, p2);
 			
 			ServiceElementWidget icon1 = iconMap.get(id1);
@@ -161,7 +161,7 @@ public class NetworkMap extends IntegerMap {
 				int y = 200 + event.getY();
 
 				tooltip.setPopupPosition(x, y);
-				tooltip.update(link.getName(), "Not availabel");
+				tooltip.update(link.getName(), "Not available");
 				tooltip.show();
 			}  
         });  

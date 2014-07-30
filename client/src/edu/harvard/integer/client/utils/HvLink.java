@@ -4,6 +4,7 @@ import com.emitrom.lienzo.client.core.shape.Line;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.ui.ServiceElementWidget;
+import edu.harvard.integer.common.ID;
 
 /**
  * The Class HvLink.
@@ -132,4 +133,30 @@ public class HvLink {
 		this.endWidget = endWidget;
 	}
 
+	public boolean hasWidget(ServiceElementWidget widget) {
+		ID startId = startWidget.getEntity().getID();
+		ID endId = endWidget.getEntity().getID();
+		ID widgetId = widget.getEntity().getID();
+
+		return startId.equals(widgetId) || endId.equals(widgetId);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		
+		if (!(obj instanceof HvLink))
+			return false;
+		
+		HvLink linkObj = (HvLink)obj;
+		
+		ID startId = startWidget.getEntity().getID();
+		ID endId = endWidget.getEntity().getID();
+		ID objStartId = linkObj.getStartWidget().getEntity().getID();
+		ID objEndId = linkObj.getEndWidget().getEntity().getID();
+
+		return startId.equals(objStartId) && endId.equals(objEndId) ||
+			   startId.equals(objEndId) && endId.equals(objStartId);
+	}
 }
