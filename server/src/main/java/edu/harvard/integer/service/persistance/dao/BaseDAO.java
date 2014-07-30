@@ -486,11 +486,13 @@ public class BaseDAO {
 		if (entities == null)
 			return null;
 
+		List<T> dbEntries = new ArrayList<T>();
+		
 		for (T baseEntity : entities) {
-			update(baseEntity);
+			dbEntries.add(update(baseEntity));
 		}
 
-		return entities;
+		return dbEntries;
 	}
 
 	/**

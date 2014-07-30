@@ -31,66 +31,67 @@
  *      
  */
 
-package edu.harvard.integer.service.discovery;
+package edu.harvard.integer.service.persistance.dao.discovery;
 
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.discovery.DiscoveryId;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.schedule.CalendarPolicy;
 import edu.harvard.integer.common.topology.DiscoveryRule;
-import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.common.topology.IpTopologySeed;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
- * The discovery manager is used to discover the network devices. This will be
- * used to start an instance of discovery with a DiscoveryRule that descibes the
- * parameters of the discovery.
- * 
  * @author David Taylor
- * 
+ *
  */
-public interface DiscoveryManagerInterface extends BaseManagerInterface {
+public class DiscoveryRuleDAO extends BaseDAO {
 
 	/**
-	 * Start a discovery with the given discovery rule.
-	 * 
-	 * @param rule
-	 *            . This Discovery Rule defines the scope and device types to
-	 *            discover
-	 * 
-	 * @return DiscoveryId that identifies this instance of a discovery.
-	 * 
-	 * @throws IntegerException
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	public DiscoveryId startDiscovery(DiscoveryRule rule)
-			throws IntegerException;
+	public DiscoveryRuleDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, DiscoveryRule.class);
 
-	/**
-	 * Get all DiscoveryRule's in the database.
-	 * 
-	 * @return DiscoveryRule[] of all disovery rules.
-	 * 
-	 * @throws IntegerException
-	 */
-	DiscoveryRule[] getAllDiscoveryRules() throws IntegerException;
+	}
 
-	/**
-	 * Find the discovery rule with the give ID. If the rule is not found then
-	 * null will be returned.
-	 * 
-	 * @param discoveryRuleId. ID of the discovery rule to find in the database.
-	 * @return DiscoveryRule for the given ID. If not found then return null.
-	 * @throws IntegerException
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
 	 */
-	DiscoveryRule getDiscoveryRuleById(ID discoveryRuleId)
-			throws IntegerException;
+	@Override
+	public <T extends BaseEntity> void preSave(T entity)
+			throws IntegerException {
+		
+		DiscoveryRule rule = (DiscoveryRule) entity;
+		
+		if (rule.getCalendars() != null) {
+			CalendarPolicyDAO policyDAO = new CalendarPolicyDAO(getEntityManager(), getLogger());
+			List<CalendarPolicy> dbCalendars = new ArrayList<CalendarPolicy>();
+			for (CalendarPolicy policy : rule.getCalendars()) {
+				dbCalendars.add(policyDAO.update(policy));
+			}
+			rule.setCalendars(dbCalendars);
+		}
+		
+		if (rule.getTopologySeeds() != null) {
+			IpTopologySeedDAO dao = new IpTopologySeedDAO(getEntityManager(), getLogger());
+			List<IpTopologySeed> seeds = new ArrayList<IpTopologySeed>();
+			for (IpTopologySeed policy : rule.getTopologySeeds()) {
+				seeds.add(dao.update(policy));
+			}
+			rule.setTopologySeeds(seeds);
+		}
+	
+		
+		super.preSave(entity);
+	}
 
-	/**
-	 * Update or save the Discovery Rule in the database. The Identifier for the 
-	 * discovery rule will be valid after this call. 
-	 * 
-	 * @param rule. DiscoveryRule to save.
-	 * @return DiscoveryRule that has been saved in the database.
-	 * @throws IntegerException
-	 */
-	DiscoveryRule updateDiscoveryRule(DiscoveryRule rule)
-			throws IntegerException;
 }
