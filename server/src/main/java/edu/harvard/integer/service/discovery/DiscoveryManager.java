@@ -32,11 +32,15 @@
  */
 package edu.harvard.integer.service.discovery;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -83,6 +87,25 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 		logger.info("Start discovery of " + rule);
 		
 		return discoveryService.startDiscovery(rule);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#startDiscovery(java.util.List)
+	 */
+	@Override
+	public List<DiscoveryId> startDiscovery(List<ID> ruleIds) throws IntegerException {
+		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
+		
+		List<DiscoveryId> discoveryIds = new ArrayList<DiscoveryId>();
+		
+		for (ID id : ruleIds) {
+			DiscoveryRule rule = dao.findById(id);
+			if (rule != null)
+				discoveryIds.add(startDiscovery(rule));
+		}
+		
+		return discoveryIds;
 	}
 	
 	/*

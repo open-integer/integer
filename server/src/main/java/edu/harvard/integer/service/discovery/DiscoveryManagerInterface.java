@@ -33,6 +33,8 @@
 
 package edu.harvard.integer.service.discovery;
 
+import java.util.List;
+
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -135,4 +137,15 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	DiscoveryRule getDiscoveryRuleByName(String name) throws IntegerException;
+
+	/**
+	 * Start a discovery on each DiscoveryRule that is identified in the list of
+	 * ID's. 
+	 * 
+	 * @param ruleIds
+	 * @return DiscoveyIds for each of the discoveries that was started.
+	 * 
+	 * @throws IntegerException
+	 */
+	List<DiscoveryId> startDiscovery(List<ID> ruleIds) throws IntegerException;
 }
