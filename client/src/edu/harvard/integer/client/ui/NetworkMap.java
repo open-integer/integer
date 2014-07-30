@@ -69,7 +69,8 @@ public class NetworkMap extends IntegerMap {
 			if (i >= n)
 				break;
 			
-			Point point = calculatePoint(n, i++, angle);
+			Point point = n == 1 ? getCenterPoint() : calculatePoint(n, i, angle);
+			
 			entityMap.put(network.getID(), point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);

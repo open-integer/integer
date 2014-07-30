@@ -110,6 +110,9 @@ public class SubnetPanel extends VerticalPanel {
 	}
 	
 	public void showContainedTreeView(final BaseEntity entity) {
+		// clear containedSplitPanel first
+		containedSplitPanel.clear();
+		
 		ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
 		final ContainedTreeView containedTreeView = new ContainedTreeView("Device Details", containedSplitPanel, detailsTabPanel);
 	    
