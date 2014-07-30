@@ -36,6 +36,7 @@ package edu.harvard.integer.service.discovery;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -76,7 +77,8 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 	 * Find the discovery rule with the give ID. If the rule is not found then
 	 * null will be returned.
 	 * 
-	 * @param discoveryRuleId. ID of the discovery rule to find in the database.
+	 * @param discoveryRuleId
+	 *            . ID of the discovery rule to find in the database.
 	 * @return DiscoveryRule for the given ID. If not found then return null.
 	 * @throws IntegerException
 	 */
@@ -84,13 +86,53 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 			throws IntegerException;
 
 	/**
-	 * Update or save the Discovery Rule in the database. The Identifier for the 
-	 * discovery rule will be valid after this call. 
+	 * Update or save the Discovery Rule in the database. The Identifier for the
+	 * discovery rule will be valid after this call.
 	 * 
-	 * @param rule. DiscoveryRule to save.
+	 * @param rule
+	 *            . DiscoveryRule to save.
 	 * @return DiscoveryRule that has been saved in the database.
 	 * @throws IntegerException
 	 */
 	DiscoveryRule updateDiscoveryRule(DiscoveryRule rule)
 			throws IntegerException;
+
+	/**
+	 * Get a list of all SNMP global credentials in the database.
+	 * 
+	 * @return SnmpGlobalReadCredential[] found in the database.
+	 * @throws IntegerException
+	 */
+	SnmpGlobalReadCredential[] getAllGlobalCredentails()
+			throws IntegerException;
+
+	/**
+	 * Update / save the SnmpGlobalReadCredential in the database.
+	 * 
+	 * @param globalCredentail
+	 *            . SnmpGlobalReadCredential to save.
+	 * @return SnmpGlobalReadCredential that has been saved in the database.
+	 * @throws IntegerException
+	 */
+	SnmpGlobalReadCredential updateSnmpGlobalReadCredentail(
+			SnmpGlobalReadCredential globalCredentail) throws IntegerException;
+
+	/**
+	 * Get the SnmpGlobalReadCredentail with the given ID.
+	 * 
+	 * @param id
+	 * @return SnmpGlobalReadCredentail for the given ID. If not found then
+	 *         return null.
+	 * @throws IntegerException
+	 */
+	SnmpGlobalReadCredential getSnmpGlobalReadCredentialById(ID id)
+			throws IntegerException;
+
+	/**
+	 * Get the discovery rule with the given name. 
+	 * @param name
+	 * @return DiscoverRule with the given name. If not found in the database then return null.
+	 * @throws IntegerException
+	 */
+	DiscoveryRule getDiscoveryRuleByName(String name) throws IntegerException;
 }

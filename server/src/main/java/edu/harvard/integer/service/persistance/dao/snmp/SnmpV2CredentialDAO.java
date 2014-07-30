@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,59 +30,30 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common.snmp;
 
-import java.io.Serializable;
+package edu.harvard.integer.service.persistance.dao.snmp;
 
-import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 
-import edu.harvard.integer.common.topology.Credential;
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
- * Holder for SNMP V2 credentials (community strings) needed to talk to an SNMP
- * device.
- * 
  * @author David Taylor
- * 
+ *
  */
-@Entity
-public class SnmpV2cCredentail extends Credential implements Serializable {
-	/**
-	 * Serialization version
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private String readCommunity = null;
-	private String writeCommunity = null;
+public class SnmpV2CredentialDAO extends BaseDAO {
 
 	/**
-	 * @return the readCommunity
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
 	 */
-	public String getReadCommunity() {
-		return readCommunity;
-	}
-
-	/**
-	 * @param readCommunity
-	 *            the readCommunity to set
-	 */
-	public void setReadCommunity(String readCommunity) {
-		this.readCommunity = readCommunity;
-	}
-
-	/**
-	 * @return the writeCommunity
-	 */
-	public String getWriteCommunity() {
-		return writeCommunity;
-	}
-
-	/**
-	 * @param writeCommunity
-	 *            the writeCommunity to set
-	 */
-	public void setWriteCommunity(String writeCommunity) {
-		this.writeCommunity = writeCommunity;
+	public SnmpV2CredentialDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, SnmpV2cCredentail.class);
+		
 	}
 
 }

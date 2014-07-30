@@ -68,6 +68,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
 import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
 
 /**
@@ -172,6 +173,8 @@ public class DiscoveryService extends BaseService implements
 	@Override
 	public DiscoveryId startDiscovery(DiscoveryRule rule)
 			throws IntegerException {
+	
+			
 		DiscoveryId id = new DiscoveryId();
 		id.setServerId(IntegerProperties.getInstance().getLongProperty(
 				LongPropertyNames.ServerId));
@@ -185,6 +188,9 @@ public class DiscoveryService extends BaseService implements
 
 		case Topology:
 			startTopologyDiscovery(rule.getTopologySeeds());
+			
+		case None:
+			logger.error("NO discovery type specifed! Discovery will not run for rule " + rule.getName());
 		}
 
 		return id;

@@ -40,11 +40,13 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpGlobalReadCredentialDAO;
 
 /**
  * @author dchan
@@ -107,6 +109,17 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getDiscoveryRuleByName(java.lang.String)
+	 */
+	@Override
+	public DiscoveryRule getDiscoveryRuleByName(String name) throws IntegerException {
+		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
+		
+		return dao.findByName(name);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#updateDiscoveryRule(edu.harvard.integer.common.topology.DiscoveryRule)
 	 */
 	@Override
@@ -114,5 +127,37 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
 		
 		return dao.update(rule);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getAllGlobalCredentails()
+	 */
+	@Override
+	public SnmpGlobalReadCredential[] getAllGlobalCredentails() throws IntegerException {
+		SnmpGlobalReadCredentialDAO dao = persistenceManager.getSnmpGlobalReadCredentialDAO();
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#updateSnmpGlobalReadCredentail(edu.harvard.integer.common.snmp.SnmpGlobalReadCredential)
+	 */
+	@Override
+	public SnmpGlobalReadCredential updateSnmpGlobalReadCredentail(SnmpGlobalReadCredential globalCredentail) throws IntegerException {
+		SnmpGlobalReadCredentialDAO dao = persistenceManager.getSnmpGlobalReadCredentialDAO();
+		
+		return dao.update(globalCredentail);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getSnmpGlobalReadCredentialById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public SnmpGlobalReadCredential getSnmpGlobalReadCredentialById(ID id) throws IntegerException {
+		SnmpGlobalReadCredentialDAO dao = persistenceManager.getSnmpGlobalReadCredentialDAO();
+		
+		return dao.findById(id);
 	}
 }

@@ -94,4 +94,15 @@ public class DiscoveryRuleDAO extends BaseDAO {
 		super.preSave(entity);
 	}
 
+	/**
+	 * Find the discovery rule with the given name. If more than one rule 
+	 * has the same name then the first one will be returned.
+	 * @param name
+	 * @return DiscoveryRule with the given name
+	 */
+	public DiscoveryRule findByName(String name) {
+
+		return findByStringField(name, "name", DiscoveryRule.class);
+	}
+
 }

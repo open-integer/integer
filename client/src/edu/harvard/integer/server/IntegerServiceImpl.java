@@ -1,6 +1,7 @@
 package edu.harvard.integer.server;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Credential;
@@ -231,6 +233,8 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void startDiscovery(String address, String mask) throws Exception {
 		
+		DiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
+		
 		IpTopologySeed seed = new IpTopologySeed();
 		Subnet subnet = new Subnet();
 		subnet.setAddress(new Address(address, mask ));
@@ -238,33 +242,34 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		seed.setSubnet(subnet);
 		seed.setRadius(Integer.valueOf(0));
 		
+		SnmpGlobalReadCredential[] globalCredentails = manager.getAllGlobalCredentails();
 		List<Credential> credentials = new ArrayList<Credential>();
 		
-		SnmpV2cCredentail credential = new SnmpV2cCredentail();
-		credential.setReadCommunity("integer");
-		credential.setWriteCommunity("integerrw");;
-		
-		credentials.add(credential);
-		
-		credential = new SnmpV2cCredentail();
-		credential.setReadCommunity("recorded/solaris-system");
-		credential.setWriteCommunity("integerrw");;
-		credentials.add(credential);
-		
+		for (SnmpGlobalReadCredential snmpGlobalReadCredential : globalCredentails) {
+			credentials.addAll(snmpGlobalReadCredential.getCredentials());
+		}
+
 		seed.setCredentials(credentials);
 		
 		List<IpTopologySeed> topologySeeds = new ArrayList<IpTopologySeed>();
 		topologySeeds.add(seed);
 		DiscoveryRule rule = new DiscoveryRule();
 		
+		rule.setName("Subnet: " + address + " mask " + mask);
+		
 		rule.setTopologySeeds(topologySeeds);
 		rule.setDiscoveryType(DiscoveryTypeEnum.ServiceElement);
 		rule.setCreated(new Date());
 		
+		DiscoveryRule dbRule = manager.getDiscoveryRuleByName(rule.getName());
+		
+		if (dbRule == null)
+			dbRule = manager.updateDiscoveryRule(rule);
+		
 		try {
-			DiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
 			
-			manager.startDiscovery(rule);
+			manager.startDiscovery(dbRule);
+			
 		} catch (IntegerException e) {
 			throw new Exception(e.getMessage());
 		}

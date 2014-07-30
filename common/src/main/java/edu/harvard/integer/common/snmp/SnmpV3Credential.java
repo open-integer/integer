@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,59 +30,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+
 package edu.harvard.integer.common.snmp;
-
-import java.io.Serializable;
-
-import javax.persistence.Entity;
 
 import edu.harvard.integer.common.topology.Credential;
 
 /**
- * Holder for SNMP V2 credentials (community strings) needed to talk to an SNMP
- * device.
- * 
  * @author David Taylor
- * 
+ *
  */
-@Entity
-public class SnmpV2cCredentail extends Credential implements Serializable {
+public class SnmpV3Credential extends Credential {
+
 	/**
-	 * Serialization version
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private String readCommunity = null;
-	private String writeCommunity = null;
-
-	/**
-	 * @return the readCommunity
-	 */
-	public String getReadCommunity() {
-		return readCommunity;
-	}
-
-	/**
-	 * @param readCommunity
-	 *            the readCommunity to set
-	 */
-	public void setReadCommunity(String readCommunity) {
-		this.readCommunity = readCommunity;
-	}
-
-	/**
-	 * @return the writeCommunity
-	 */
-	public String getWriteCommunity() {
-		return writeCommunity;
-	}
-
-	/**
-	 * @param writeCommunity
-	 *            the writeCommunity to set
-	 */
-	public void setWriteCommunity(String writeCommunity) {
-		this.writeCommunity = writeCommunity;
-	}
 
 }

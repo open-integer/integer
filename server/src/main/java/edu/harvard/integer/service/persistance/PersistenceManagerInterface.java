@@ -63,6 +63,8 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpGlobalReadCredentialDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpV3CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
@@ -83,8 +85,8 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.Disco
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
-import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValueDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValueDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorSignatureDAO;
@@ -411,4 +413,14 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 */
 	SnmpV2cCredentailDAO getSnmpV2cCredentailDAO();
 
+	/**
+	 * @return
+	 */
+	SnmpV3CredentialDAO getSnmpV3CredentailDAO();
+
+	/**
+	 * @return SnmpGlobalReadCredentialDAO 
+	 * @return
+	 */
+	SnmpGlobalReadCredentialDAO getSnmpGlobalReadCredentialDAO();
 }

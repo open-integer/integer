@@ -68,6 +68,8 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpGlobalReadCredentialDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpV3CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
@@ -516,5 +518,15 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public SnmpV2cCredentailDAO getSnmpV2cCredentailDAO() {
 		return new SnmpV2cCredentailDAO(em, logger);
+	}
+	
+	@Override
+	public SnmpV3CredentialDAO getSnmpV3CredentailDAO() {
+		return new SnmpV3CredentialDAO(em, logger);
+	}
+	
+	@Override
+	public SnmpGlobalReadCredentialDAO getSnmpGlobalReadCredentialDAO() {
+		return new SnmpGlobalReadCredentialDAO(em, logger);
 	}
 }
