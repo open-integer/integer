@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.DiscoveryRule;
@@ -141,4 +142,57 @@ public class DiscoveryManagerTest {
 		}
 	}
 
+	@Test
+	public void addGlobalCredentails() {
+		List<Credential> credentials = new ArrayList<Credential>();
+		
+		SnmpV2cCredentail credential = new SnmpV2cCredentail();
+		credential.setReadCommunity("integer");
+		credential.setWriteCommunity("integerrw");;
+		
+		credentials.add(credential);
+		
+		credential = new SnmpV2cCredentail();
+		credential.setReadCommunity("recorded/solaris-system");
+		credential.setWriteCommunity("integerrw");;
+		credentials.add(credential);
+		
+		SnmpGlobalReadCredential gloablCredentails = new SnmpGlobalReadCredential();
+		gloablCredentails.setCredentials(credentials);
+	
+		try {
+			discoveryManager.updateSnmpGlobalReadCredentail(gloablCredentails);
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+	}
+	
+	@Test
+	public void getAllGlobalCredentails() {
+		
+		try {
+			SnmpGlobalReadCredential[] credentials = discoveryManager.getAllGlobalCredentails();
+			if (credentials == null || credentials.length == 0) {
+				addGlobalCredentails();
+				credentials = discoveryManager.getAllGlobalCredentails();
+			}
+			
+			assert(credentials != null);
+			assert(credentials.length > 0);
+			
+			for (SnmpGlobalReadCredential snmpGlobalReadCredential : credentials) {
+				assert (snmpGlobalReadCredential.getCredentials() != null);
+				assert (snmpGlobalReadCredential.getCredentials().size() > 0);
+			}
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
 }
