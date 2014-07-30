@@ -150,6 +150,27 @@ public class ManagementObjectCapbilityManagerTest {
 	}
 
 	@Test
+	public void getCapabilityByName() {
+		
+		Capability capability = null;
+		
+		try {
+			capability = managementObjectManager.getCapabilityByName("SysName");
+			
+			if (capability == null)
+				addCapabilitysysName();
+			
+			capability = managementObjectManager.getCapabilityByName("SysName");
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		assert (capability != null);
+	}
+	
+	@Test
 	public void addManagementObjectToCapability() {
 
 		Capability capability = new Capability();

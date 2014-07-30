@@ -37,11 +37,14 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
 
 /**
  * @author dchan
@@ -54,9 +57,12 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	private Logger logger;
 	
 	@Inject
-	DiscoveryServiceInterface discoveryService;
+	private DiscoveryServiceInterface discoveryService;
 	
 
+	@Inject
+	private PersistenceManagerInterface persistenceManager;
+	
 	/**
 	 * @param managerType
 	 */
@@ -75,5 +81,38 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 		logger.info("Start discovery of " + rule);
 		
 		return discoveryService.startDiscovery(rule);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getAllDiscoveryRules()
+	 */
+	@Override
+	public DiscoveryRule[] getAllDiscoveryRules() throws IntegerException {
+		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getDiscoveryRuleById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public DiscoveryRule getDiscoveryRuleById(ID discoveryRuleId) throws IntegerException {
+		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
+		
+		return dao.findById(discoveryRuleId);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#updateDiscoveryRule(edu.harvard.integer.common.topology.DiscoveryRule)
+	 */
+	@Override
+	public DiscoveryRule updateDiscoveryRule(DiscoveryRule rule) throws IntegerException {
+		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
+		
+		return dao.update(rule);
 	}
 }

@@ -43,6 +43,9 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
+import edu.harvard.integer.service.persistance.dao.discovery.IpTopologySeedDAO;
+import edu.harvard.integer.service.persistance.dao.discovery.SnmpV2cCredentailDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServiceDAO;
@@ -498,5 +501,20 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public VendorSignatureDAO getVendorSignatureDAO() {
 		return new VendorSignatureDAO(em, logger);
+	}
+	
+	@Override
+	public DiscoveryRuleDAO getDiscoveryRuleDAO() {
+		return new DiscoveryRuleDAO(em, logger);
+	}
+	
+	@Override
+	public IpTopologySeedDAO getIpTopologySeedDAO() {
+		return new IpTopologySeedDAO(em, logger);
+	}
+	
+	@Override
+	public SnmpV2cCredentailDAO getSnmpV2cCredentailDAO() {
+		return new SnmpV2cCredentailDAO(em, logger);
 	}
 }

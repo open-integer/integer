@@ -38,6 +38,9 @@ import javax.ejb.Local;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
+import edu.harvard.integer.service.persistance.dao.discovery.IpTopologySeedDAO;
+import edu.harvard.integer.service.persistance.dao.discovery.SnmpV2cCredentailDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServiceDAO;
@@ -392,5 +395,20 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	VendorSignatureDAO getVendorSignatureDAO();
+
+	/**
+	 * @return
+	 */
+	DiscoveryRuleDAO getDiscoveryRuleDAO();
+
+	/**
+	 * @return
+	 */
+	IpTopologySeedDAO getIpTopologySeedDAO();
+
+	/**
+	 * @return
+	 */
+	SnmpV2cCredentailDAO getSnmpV2cCredentailDAO();
 
 }

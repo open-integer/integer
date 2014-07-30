@@ -280,6 +280,15 @@ public class ManagementObjectCapabilityManager extends BaseManager implements
 		return Arrays.asList(findAll);
 	}
 
+	/*
+	 * @see edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface#getCapabilityByName(java.lang.String)
+	 */
+	@Override
+	public Capability getCapabilityByName(String name) throws IntegerException {
+		CapabilityDAO dao = dbm.getCapabilityDAO();
+		
+		return dao.findByName(name);
+	}
 	
 	/*
 	 * (non-Javadoc)

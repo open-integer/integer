@@ -345,4 +345,13 @@ public interface ManagementObjectCapabilityManagerInterface extends
 	 */
 	Category updateCategory(Category category) throws IntegerException;
 
+	/**
+	 * Get the capability with the given name. 
+	 * 
+	 * @param name. Name of capability to get from the database.
+	 * @return Capability found for the given name.
+	 * @throws IntegerException
+	 */
+	Capability getCapabilityByName(String name) throws IntegerException;
+
 }
