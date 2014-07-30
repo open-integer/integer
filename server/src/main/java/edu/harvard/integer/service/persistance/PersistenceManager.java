@@ -45,7 +45,7 @@ import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.IpTopologySeedDAO;
-import edu.harvard.integer.service.persistance.dao.discovery.SnmpV2cCredentailDAO;
+import edu.harvard.integer.service.persistance.dao.discovery.SnmpAssociationDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedManagerDAO;
 import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServiceDAO;
@@ -69,6 +69,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPModuleHistoryDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SnmpGlobalReadCredentialDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SnmpV3CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
@@ -78,6 +79,8 @@ import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterNetworkLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
@@ -90,8 +93,8 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.Disco
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
-import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValueDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
+import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpServiceElementTypeDiscriminatorValueDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorContainmentSelectorDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.VendorSignatureDAO;
@@ -516,8 +519,8 @@ public class PersistenceManager extends BaseManager implements
 	}
 	
 	@Override
-	public SnmpV2cCredentailDAO getSnmpV2cCredentailDAO() {
-		return new SnmpV2cCredentailDAO(em, logger);
+	public SnmpV2CredentialDAO getSnmpV2cCredentailDAO() {
+		return new SnmpV2CredentialDAO(em, logger);
 	}
 	
 	@Override
@@ -528,5 +531,20 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public SnmpGlobalReadCredentialDAO getSnmpGlobalReadCredentialDAO() {
 		return new SnmpGlobalReadCredentialDAO(em, logger);
+	}
+	
+	@Override
+	public ServiceElementAssociationDAO getServiceElementAssociationDAO() {
+		return new ServiceElementAssociationDAO(em, logger);
+	}
+	
+	@Override
+	public ServiceElementAssociationTypeDAO getServiceElementAssociationTypeDAO() {
+		return new ServiceElementAssociationTypeDAO(em, logger);
+	}
+	
+	@Override
+	public SnmpAssociationDAO getSnmpAssociationDAO() {
+		return new SnmpAssociationDAO(em, logger);
 	}
 }

@@ -39,8 +39,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.snmp.SNMP;
@@ -107,13 +106,25 @@ public class SnmpLevelOID extends BaseEntity {
 	 * contain storage which may contain file systems.
 	 */
 	@ElementCollection(fetch=FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<SnmpLevelOID> children = null;
 
 	/**
 	 * List of SnmpServiceElementTypeDiscriptors for this SnmpLevel
 	 */
 	@ElementCollection(fetch=FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<SnmpServiceElementTypeDiscriminator> disriminators = null;
+	
+	
+	/**
+	 * List of SnmpAssociation for this SnmpLevel
+	 */
+	@ElementCollection(fetch=FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	private List<SnmpAssociation> associations = null;
+	
+
 
 	/**
 	 * SnmpContainmentRelation definition to map the ServiceElement from this level to a
@@ -132,6 +143,10 @@ public class SnmpLevelOID extends BaseEntity {
 	 */
 	@ManyToOne
 	private Category category = null;
+	
+	
+	
+	
 	
 	/**
 	 * @return the contextOID
@@ -201,6 +216,7 @@ public class SnmpLevelOID extends BaseEntity {
 		return relationToParent;
 	}
 
+	
 	/**
 	 * @param relationToParent the relationToParent to set
 	 */
@@ -239,4 +255,12 @@ public class SnmpLevelOID extends BaseEntity {
 		this.globalDiscriminatorOID = globalDiscriminatorOID;
 	}
 
+
+	public List<SnmpAssociation> getAssociations() {
+		return associations;
+	}
+
+	public void setAssociations(List<SnmpAssociation> associations) {
+		this.associations = associations;
+	}
 }

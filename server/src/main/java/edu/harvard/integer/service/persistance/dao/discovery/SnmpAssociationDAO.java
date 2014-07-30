@@ -37,42 +37,23 @@ import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.IpTopologySeed;
+import edu.harvard.integer.common.discovery.SnmpAssociation;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
 
 /**
  * @author David Taylor
  *
  */
-public class IpTopologySeedDAO extends BaseDAO {
+public class SnmpAssociationDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-	public IpTopologySeedDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, IpTopologySeed.class);
+	public SnmpAssociationDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, SnmpAssociation.class);
+
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
-	 */
-	@Override
-	public <T extends BaseEntity> void preSave(T entity)
-			throws IntegerException {
-
-		IpTopologySeed seed = (IpTopologySeed) entity;
-		
-		if (seed.getCredentials() != null) {
-			SnmpV2CredentialDAO dao = new SnmpV2CredentialDAO(getEntityManager(), getLogger());
-			seed.setCredentials(dao.update(seed.getCredentials()));
-		}
-		
-		super.preSave(entity);
-	}
 }

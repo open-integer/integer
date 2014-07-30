@@ -31,29 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.discovery;
+package edu.harvard.integer.service.persistance.dao.topology;
 
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.topology.Credential;
+import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public class SnmpV2cCredentailDAO extends BaseDAO {
+public class ServiceElementAssociationTypeDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-	public SnmpV2cCredentailDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, Credential.class);
-
+	public ServiceElementAssociationTypeDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, ServiceElementAssociationType.class);
+		
 	}
 
 }

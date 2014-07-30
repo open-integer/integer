@@ -49,6 +49,7 @@ import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.discovery.SnmpAssociationDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 
 /**
@@ -90,6 +91,11 @@ public class SnmpLevelOIDDAO extends BaseDAO {
 		
 		SnmpRelationshipDAO relationDao = new SnmpRelationshipDAO(getEntityManager(), getLogger());
 		levelOID.setRelationToParent(relationDao.update(levelOID.getRelationToParent()));
+		
+		if (levelOID.getAssociations() != null) {
+			SnmpAssociationDAO snmpAssocationDao = new SnmpAssociationDAO(getEntityManager(), getLogger());
+			levelOID.setAssociations(snmpAssocationDao.update(levelOID.getAssociations()));
+		}
 		
 		super.preSave(entity);
 	}

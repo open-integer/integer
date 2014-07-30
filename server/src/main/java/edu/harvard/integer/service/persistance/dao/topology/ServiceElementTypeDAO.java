@@ -88,16 +88,10 @@ public class ServiceElementTypeDAO extends BaseDAO {
 		}
 		
 		ServiceElementType serviceElementType = (ServiceElementType) entity;
+		
 		if (serviceElementType.getSignatures() != null) {
 			SignatureDAO dao = new SignatureDAO(getEntityManager(), getLogger());
-			
-			List<Signature> dbSignatures = new ArrayList<Signature>();
-			
-			for (Signature signature : serviceElementType.getSignatures()) {
-				dbSignatures.add(dao.update(signature));
-			}
-			
-			serviceElementType.setSignatures(dbSignatures);
+			serviceElementType.setSignatures(dao.update(serviceElementType.getSignatures()));	
 		}
 				
 		super.preSave(entity);

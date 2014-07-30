@@ -96,7 +96,7 @@ public class ServiceElementType extends BaseEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> childServiceElementTypes;
-
+	
 	private String iconName = null;
 
 	private String description = null;
@@ -181,6 +181,16 @@ public class ServiceElementType extends BaseEntity {
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "snmpOverrideType")),
 			@AttributeOverride(name = "name", column = @Column(name = "snmpOverrideName")) })
 	private ID snmpOverride = null;
+	
+	
+	/**
+	 * List of Association Type objects associated with this service element type.
+	 */
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	private List<ID> associations = null;
+
+
 
 	/**
 	 * @return the featureSet
@@ -513,6 +523,14 @@ public class ServiceElementType extends BaseEntity {
 	 */
 	public void setSnmpOverride(ID snmpOverride) {
 		this.snmpOverride = snmpOverride;
+	}
+
+	public List<ID> getAssociations() {
+		return associations;
+	}
+
+	public void setAssociations(List<ID> associations) {
+		this.associations = associations;
 	}
 
 }

@@ -251,6 +251,10 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	@ElementCollection
 	@OrderColumn(name = "idx")
 	private List<ID> serviceElementProtocolInstanceIdentifiers = null;
+	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	private List<ServiceElementAssociation> associations = null;
 
 	public ServiceElement() {
 		super();
@@ -618,4 +622,12 @@ public class ServiceElement extends BaseEntity implements Serializable {
 		this.hasChildren = hasChildren;
 	}
 
+
+	public List<ServiceElementAssociation> getAssociations() {
+		return associations;
+	}
+
+	public void setAssociations(List<ServiceElementAssociation> associations) {
+		this.associations = associations;
+	}
 }

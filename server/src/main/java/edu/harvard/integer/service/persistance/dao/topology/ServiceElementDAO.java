@@ -33,7 +33,6 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -56,7 +55,6 @@ import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 
@@ -85,34 +83,25 @@ public class ServiceElementDAO extends BaseDAO {
 	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
 	 * .integer.common.BaseEntity)
 	 */
-	@SuppressWarnings("rawtypes")
 	@Override
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
 
 		ServiceElement serviceElement = (ServiceElement) entity;
+		
+	
 		if (serviceElement.getValues() != null) {
-			List<ServiceElementProtocolInstanceIdentifier> values = new ArrayList<ServiceElementProtocolInstanceIdentifier>();
-
 			ServiceElementProtocolInstanceIdentifierDAO seiDAO = new ServiceElementProtocolInstanceIdentifierDAO(
 					getEntityManager(), getLogger());
-			for (int i = 0; i < serviceElement.getValues().size(); i++) {
-				values.add(seiDAO.update(serviceElement.getValues().get(i)));
-			}
-
-			serviceElement.setValues(values);
+			serviceElement.setValues(seiDAO.update(serviceElement.getValues()));
+			
 		}
 
-		ManagementObjectValueDAO valueDao = new ManagementObjectValueDAO(
-				getEntityManager(), getLogger());
-		List<ManagementObjectValue> dbValues = new ArrayList<ManagementObjectValue>();
+		
 		if (serviceElement.getAttributeValues() != null) {
-			for (ManagementObjectValue value : serviceElement
-					.getAttributeValues()) {
-				dbValues.add(valueDao.update(value));
-			}
-
-			serviceElement.setAttributeValues(dbValues);
+			ManagementObjectValueDAO valueDao = new ManagementObjectValueDAO(
+					getEntityManager(), getLogger());
+			serviceElement.setAttributeValues(valueDao.update(serviceElement.getAttributeValues()));
 		}
 
 		if (serviceElement.getParentIds() != null && serviceElement.getParentIds().size() > 0) {
@@ -120,6 +109,11 @@ public class ServiceElementDAO extends BaseDAO {
 			if (parent != null)
 				parent.setHasChildren(true);
 			update(parent);
+		}
+		
+		if (serviceElement.getAssociations() != null) {
+			ServiceElementAssociationDAO dao = new ServiceElementAssociationDAO(getEntityManager(), getLogger());
+			serviceElement.setAssociations(dao.update(serviceElement.getAssociations()));
 		}
 
 		super.preSave(entity);
@@ -141,6 +135,7 @@ public class ServiceElementDAO extends BaseDAO {
 		
 		Query query = getEntityManager().createNativeQuery(b.toString(), ServiceElement.class);
 		
+		@SuppressWarnings("unchecked")
 		List<ServiceElement> resultList = query.getResultList();
 		
 		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList

@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.discovery;
+package edu.harvard.integer.service.persistance.dao.topology;
 
 import javax.persistence.EntityManager;
 
@@ -39,40 +39,53 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.IpTopologySeed;
+import edu.harvard.integer.common.topology.ServiceElementAssociation;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
+import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
 
 /**
  * @author David Taylor
  *
  */
-public class IpTopologySeedDAO extends BaseDAO {
+public class ServiceElementAssociationDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-	public IpTopologySeedDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, IpTopologySeed.class);
+	public ServiceElementAssociationDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, ServiceElementAssociation.class);
+		
 	}
-
 	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
+	 * .integer.common.BaseEntity)
 	 */
 	@Override
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
 
-		IpTopologySeed seed = (IpTopologySeed) entity;
+		ServiceElementAssociation serviceElementAssociation = (ServiceElementAssociation) entity;
 		
-		if (seed.getCredentials() != null) {
-			SnmpV2CredentialDAO dao = new SnmpV2CredentialDAO(getEntityManager(), getLogger());
-			seed.setCredentials(dao.update(seed.getCredentials()));
+	
+		if (serviceElementAssociation.getValues() != null) {
+			ServiceElementProtocolInstanceIdentifierDAO seiDAO = new ServiceElementProtocolInstanceIdentifierDAO(
+					getEntityManager(), getLogger());
+			serviceElementAssociation.setValues(seiDAO.update(serviceElementAssociation.getValues()));			
 		}
 		
+		if (serviceElementAssociation.getAttributeValues() != null) {
+			ManagementObjectValueDAO valueDao = new ManagementObjectValueDAO(
+					getEntityManager(), getLogger());
+			serviceElementAssociation.setAttributeValues(valueDao.update(serviceElementAssociation.getAttributeValues()));
+		}
+
 		super.preSave(entity);
 	}
+
 }

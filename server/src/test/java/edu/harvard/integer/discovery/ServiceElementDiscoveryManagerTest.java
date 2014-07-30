@@ -105,6 +105,10 @@ public class ServiceElementDiscoveryManagerTest {
 	@Inject
 	private SnmpManagerInterface snmpMaager;
 
+
+	private String firmwareVer = "Firmware1";
+	private String model = "ModelT";
+	private String softwareVer = "2.1";
 	private String vendor = "Cisco";
 	private String vendorSubType = "CiscoSubType";
 
@@ -547,9 +551,9 @@ public class ServiceElementDiscoveryManagerTest {
 				.setContainmentId(new ID(Long.valueOf(1), "SnmpContainment",
 						new IDType(SnmpContainment.class.getName())));
 		
-		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Firmware, "Firmware");
-		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Model, "Model");
-		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.SoftwareVersion, "12.32A");
+		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Firmware,  firmwareVer);
+		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Model, model);
+		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.SoftwareVersion, softwareVer);
 		vendorContainmentSelector.addEqualSignature(VendorSignatureTypeEnum.Vendor, "Vendor");
 
 		SnmpContainment containment = new SnmpContainment();
@@ -645,10 +649,6 @@ public class ServiceElementDiscoveryManagerTest {
 		createInterfaceServiceElementType();
 
 		createVendorContainmentSelector();
-		
-		String firmwareVer = "Firmware1";
-		String model = "ModelT";
-		String softwareVer = "2.1";
 
 		VendorContainmentSelector vs = new VendorContainmentSelector();
 		List<VendorSignature> signatures = new ArrayList<VendorSignature>();
@@ -661,24 +661,24 @@ public class ServiceElementDiscoveryManagerTest {
 		vs.setSignatures(signatures);
 		
 		ServiceElementType set = null;
-		SnmpContainment sc = null;
+		SnmpContainment snmpContainment = null;
 
 		try {
-			sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
-			System.out.println("Found SnmpContainment " + sc);
+			snmpContainment = serviceElementDiscoveryManger.getSnmpContainment(vs);
+			System.out.println("Found SnmpContainment " + snmpContainment);
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
 
 		
-		if (sc != null && sc instanceof SnmpContainment) {
+		if (snmpContainment != null && snmpContainment instanceof SnmpContainment) {
 
-			System.out.println("SnmpContainment " + sc.getName() + " ServiceElementID " + sc.getServiceElementTypeId());
+			System.out.println("SnmpContainment " + snmpContainment.getID().toDebugString() + " ServiceElementID " + snmpContainment.getServiceElementTypeId());
 			
 			try {
 				set = serviceElementDiscoveryManger
-						.getServiceElementTypeById(sc.getServiceElementTypeId());
+						.getServiceElementTypeById(snmpContainment.getServiceElementTypeId());
 			} catch (IntegerException e) {
 				e.printStackTrace();
 				fail(e.toString());
@@ -686,7 +686,7 @@ public class ServiceElementDiscoveryManagerTest {
 			// discoverNode.setTopServiceElementType(set);
 		}
 
-		if (sc == null) {
+		if (snmpContainment == null) {
 
 			SnmpContainmentType containmentType = SnmpContainmentType.EntityMib;
 
@@ -708,7 +708,7 @@ public class ServiceElementDiscoveryManagerTest {
 			// discoverNode.setTopServiceElementType(set);
 
 			try {
-				sc = ContainmentGenerator.generator(set, containmentType);
+				snmpContainment = ContainmentGenerator.generator(set, containmentType);
 			} catch (IntegerException e) {
 				e.printStackTrace();
 				fail(e.toString());
@@ -716,7 +716,7 @@ public class ServiceElementDiscoveryManagerTest {
 			SnmpContainment updateSnmpContainment = null;
 			try {
 				updateSnmpContainment = managementObjectCapabilityManager
-						.updateSnmpContainment(sc);
+						.updateSnmpContainment(snmpContainment);
 			} catch (IntegerException e) {
 				e.printStackTrace();
 				fail(e.toString());
@@ -746,8 +746,8 @@ public class ServiceElementDiscoveryManagerTest {
 		}
 
 		try {
-			sc = serviceElementDiscoveryManger.getSnmpContainment(vs);
-			assert (sc != null);
+			snmpContainment = serviceElementDiscoveryManger.getSnmpContainment(vs);
+			assert (snmpContainment != null);
 
 		} catch (IntegerException e) {
 			e.printStackTrace();

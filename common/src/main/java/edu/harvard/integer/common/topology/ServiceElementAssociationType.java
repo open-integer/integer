@@ -30,49 +30,64 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.common.topology;
 
-package edu.harvard.integer.service.persistance.dao.discovery;
+import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.IpTopologySeed;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
+import edu.harvard.integer.common.ID;
 
 /**
- * @author David Taylor
+ * @author dchan
  *
  */
-public class IpTopologySeedDAO extends BaseDAO {
+@Entity
+public class ServiceElementAssociationType extends BaseEntity {
 
 	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
+	 * 
 	 */
-	public IpTopologySeedDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, IpTopologySeed.class);
+	private static final long serialVersionUID = 1L;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "serviceElementTypeId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementTypeType")),
+			@AttributeOverride(name = "name", column = @Column(name = "serviceElementTypeName")) })
+	private ID serviceElementTypeId = null;
+
+	/**
+	 * A listing of default attributes that the discovery system will collect.
+	 * This list can be modified by the system administrator.
+	 */
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	private List<ID> attributeIds = null;
+	
+	public ID getServiceElementTypeId() {
+		return serviceElementTypeId;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard.integer.common.BaseEntity)
-	 */
-	@Override
-	public <T extends BaseEntity> void preSave(T entity)
-			throws IntegerException {
+	public void setServiceElementTypeId(ID serviceElementTypeId) {
+		this.serviceElementTypeId = serviceElementTypeId;
+	}
 
-		IpTopologySeed seed = (IpTopologySeed) entity;
-		
-		if (seed.getCredentials() != null) {
-			SnmpV2CredentialDAO dao = new SnmpV2CredentialDAO(getEntityManager(), getLogger());
-			seed.setCredentials(dao.update(seed.getCredentials()));
-		}
-		
-		super.preSave(entity);
+
+
+	public List<ID> getAttributeIds() {
+		return attributeIds;
+	}
+
+	public void setAttributeIds(List<ID> attributeIds) {
+		this.attributeIds = attributeIds;
 	}
 }
