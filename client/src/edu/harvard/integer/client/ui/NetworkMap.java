@@ -65,11 +65,11 @@ public class NetworkMap extends IntegerMap {
 		double angle = 0;
 		double increment = DOUBLE_PI / n;
 		
-		Point point = getCenterPoint();
-		
 		for (final Network network : result) {
 			if (i >= n)
 				break;
+			
+			Point point = n == 1 ? getCenterPoint() : calculatePoint(n, i, angle);
 			
 			entityMap.put(network.getID(), point);
 			
@@ -89,7 +89,6 @@ public class NetworkMap extends IntegerMap {
         	iconMap.put(network.getID(), icon);
         	
         	angle += increment;
-        	point = calculatePoint(n, i++, angle);
 		}
 	}
 	
