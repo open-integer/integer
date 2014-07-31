@@ -63,6 +63,7 @@ public class DiscoverNet implements Serializable {
 		utils = new SubnetUtils(ipnet, mask);
 		startIpi = utils.getInfo().asInteger( utils.getInfo().getLowAddress() );
 		endIpi = utils.getInfo().asInteger( utils.getInfo().getHighAddress() );
+		
 	}
 	
 	public DiscoverNet( String cidr ) 

@@ -40,6 +40,7 @@ import java.util.List;
 import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
+import edu.harvard.integer.access.snmp.LinkCapability;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.snmp.DeviceTopologyInfo;
@@ -94,7 +95,18 @@ public class DiscoverNode extends ElementAccess {
 		Stop
 	}
 	
+	/**
+	 * If true do not discover next subnet.
+	 */
+	private boolean searchNextSubnet = false;
 	
+    /**
+     * The subnet that belong to this discovered node.
+     */
+	private DiscoverNet discoverNet;
+	
+	private List<DiscoverNet> otherSubnet = new ArrayList<>();
+
 
 	/**
 	 * Used to indicate what discover stage on this node.
@@ -105,6 +117,7 @@ public class DiscoverNode extends ElementAccess {
 
 	private String subnetId;
 
+
 	private ServiceElementType topServiceElementType;
 	
 	/**
@@ -112,7 +125,6 @@ public class DiscoverNode extends ElementAccess {
 	 * discover service element.
 	 */
 	private ServiceElement existingSE;
-	
 	
 
 	/**  The ip address of the node. */
@@ -127,15 +139,30 @@ public class DiscoverNode extends ElementAccess {
 	 * 
 	 */
 	private List<Identify>  identifies;
+	
+	
+	/**
+	 * Boolean used to indicate whether the current discovered node can forward packages
+	 * or not.
+	 */
+	private boolean isFwdNode = true;
 
+	private List<LinkCapability>   linkCapabilities = new ArrayList<>();
+
+	private String sysNamn;
+	
+	
 
 	/**
 	 * Instantiates a new discover node.
 	 *
 	 * @param ipAddress the ip address
 	 */
-	public DiscoverNode( String ipAddress ) {
+	public DiscoverNode( String ipAddress, boolean searchNextSubnet, DiscoverNet discoverNet ) {
+		
 		this.ipAddress = ipAddress;
+		this.searchNextSubnet = searchNextSubnet;
+		this.discoverNet = discoverNet;
 	}
 	
 	
@@ -391,5 +418,56 @@ public class DiscoverNode extends ElementAccess {
 	public DeviceTopologyInfo getTopologyInfo() {
 		return topologyInfo;
 	}
+
+	
+
+	public boolean isFwdNode() {
+		return isFwdNode;
+	}
+
+
+	public void setFwdNode(boolean isFwdNode) {
+		this.isFwdNode = isFwdNode;
+	}
+
+
+
+	public List<LinkCapability> getLinkCapabilities() {
+		return linkCapabilities;
+	}
+
+
+	public void setLinkCapabilities(List<LinkCapability> linkCapabilities) {
+		this.linkCapabilities = linkCapabilities;
+	}
+
+	
+
+	public boolean isSearchNextSubnet() {
+		return searchNextSubnet;
+	}
+
+
+	public DiscoverNet getDiscoverNet() {
+		return discoverNet;
+	}
+
+
+
+	public List<DiscoverNet> getOtherSubnet() {
+		return otherSubnet;
+	}
+
+
+	
+	public String getSysNamn() {
+		return sysNamn;
+	}
+
+
+	public void setSysNamn(String sysNamn) {
+		this.sysNamn = sysNamn;
+	}
+
 
 }

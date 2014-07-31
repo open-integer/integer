@@ -391,7 +391,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		
 		for ( int i=0;i<discNodes.size(); i++ ) {
 			
-			DiscoverNode dn = discNodes.get(0);
+			DiscoverNode dn = discNodes.get(i);
 			for ( TopologyNode tn : dn.getTopologyInfo().getTopoNodes() ) {
 		
 				List<Address> addrs = tn.getTopologyElm().getAddress();

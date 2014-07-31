@@ -438,7 +438,7 @@ public class ParentChildServiceElementDiscovery extends
 
 		String description = null;
 		String seName = null;
-		if ( vif.getVendorSubtypeId() != null ) {
+		if ( vif != null && vif.getVendorSubtypeId() != null ) {
 			
 			OID o = new OID(vif.getVendorSubtypeId());
 			o = o.trim();

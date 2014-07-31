@@ -72,7 +72,15 @@ public class CdpConnection implements NetworkConnection {
 			 SNMP snmp =  (SNMP) capMgr.getManagementObjectById(objVal.getManagementObject());
 			 if ( snmp.getName().equals("cdpCacheAddress")) {
 				 
-				 String[] ipAddrs = objVal.getValue().toString().split(":");
+				 String[] ipAddrs = null;
+				 String valStr = objVal.getValue().toString().trim();
+				 if ( valStr.indexOf(":") >= 0 ) {
+					 ipAddrs = objVal.getValue().toString().split(":");
+				 }
+				 else {
+					 ipAddrs = objVal.getValue().toString().split(" ");
+				 }
+				 
 				 String ip = Integer.parseInt(ipAddrs[0], 16) + "." + Integer.parseInt(ipAddrs[1], 16) + "." +
 						 Integer.parseInt(ipAddrs[2], 16) + "." + Integer.parseInt(ipAddrs[3], 16);
 				 

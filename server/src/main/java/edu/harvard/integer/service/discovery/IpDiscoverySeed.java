@@ -98,14 +98,23 @@ public class IpDiscoverySeed {
 	 * @param net
 	 * @param credentials
 	 */
+	public IpDiscoverySeed( final List<Authentication> auths, final DiscoverNet net ) {
+		
+		this.discoverNet = net;
+		this.auths = auths;
+	}
+	
+	
+	/**
+	 * 
+	 * @param net
+	 * @param credentials
+	 */
 	public IpDiscoverySeed( final DiscoverNet net, final List<Credential> credentials ) {
 		
 		this.discoverNet = net;
 		setCredential(credentials);
 	}
-	
-	
-	
 	
 	
 	

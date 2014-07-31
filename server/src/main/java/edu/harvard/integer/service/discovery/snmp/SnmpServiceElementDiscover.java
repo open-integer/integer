@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.net.util.SubnetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snmp4j.PDU;
@@ -77,6 +78,7 @@ import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -167,7 +169,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		
 		if ( set.getAttributeIds() != null && set.getAttributeIds().size() > 0 ) {
 			
-			logger.info("Size of attributesIds " + set.getAttributeIds().size() );
 			PDU pdu = new PDU();
 			List<VariableBinding> vbs = new ArrayList<>();
 			
@@ -190,10 +191,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			if ( vbs.size() > 0 ) {
 				
 				pdu.addAll(vbs);
-				
-				logger.info("Start Retrieve SNMP request back from " + ePoint.getIpAddress());
-				logger.info("Get value from this oid " +  pdu.getVariableBindings().get(0).getOid().toString());
-				
+				logger.info("Get value for SET " + set.getName() + " from " + ePoint.getIpAddress() + " Starting oid " 
+				                      +  pdu.getVariableBindings().get(0).getOid().toString() + " size " + set.getAttributeIds().size() );			
 			    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
 			    List<ManagementObjectValue> attributes = se.getAttributeValues();
 				if ( attributes == null )
@@ -216,6 +215,10 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					if ( mrgObj instanceof SNMP ) {
 						
 						SNMP snmp = (SNMP) mrgObj;
+						
+						if ( snmp.getOid().equals("1.3.6.1.4.1.9.9.23.1.2.1.1.4") ) {
+							System.out.println("Break in here. ");
+						}
 						VariableBinding vb = findMatchVB(snmp, rpdu);
 						
 						if ( vb.getVariable() instanceof UnsignedInteger32 ||
@@ -1096,7 +1099,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			if ( levelOid.getRelationToParent() instanceof SnmpContainmentRelation ) {
 				
 				SnmpContainmentRelation sRelation = (SnmpContainmentRelation) levelOid.getRelationToParent();
-				List<ParentChildMappingIndex> indexTable = getIndexMapping(sRelation.getMappingTable().getOid());
+				List<ParentChildMappingIndex> indexTable = getIndexMapping(discNode.getIpAddress() + ":" +  sRelation.getMappingTable().getOid());
 				if ( indexTable == null ) {
 					
 					indexTable = new ArrayList<>();
@@ -1115,11 +1118,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 						
 						indexTable.add(pcmi);
 					}
-					addIndexMapping(sRelation.getMappingTable().getOid(), indexTable);									
+					addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexTable);									
 				}	
 				
 			    for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
 			    
+			    	
+			    	levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
 			    	/**
 			    	 * Skip it if the global discriminator value is not match.
 			    	 */
@@ -1200,7 +1205,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			        			}
 			        		}
 			        	}
-			        	levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
 			        	try {
 			        		levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
 			        	}
@@ -1211,9 +1215,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			        	if ( levelSe.getName() == null ) {    		
 			        		levelSe.setName(levelSetType.getName() + " " + instOid);
 			        	}
-			        	
 			        	levelSe = updateServiceElement(levelSe, levelSetType, parentSe);
-			        	
 			        	
 		                if ( levelSetType.getCategory().getName().equals("Network") ) {
 							
@@ -1240,6 +1242,24 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							int ifIndex = getIfIndex(levelSe);
 							TopologyNode tn = new TopologyNode(te, ifIndex);
 							discNode.addTopologyNode(tn);
+							
+							if ( discNode.isSearchNextSubnet() ) {
+								
+								if (  !"255.255.255.255".equals(mask) && !discNode.getDiscoverNet().isInRange(ipaddr) ) {
+									
+									DiscoverNet dn = new DiscoverNet(ipaddr, mask);
+									/*
+									 * Skip the IP address which is not net class C.
+									 */
+									SubnetUtils sutils = new SubnetUtils(ipaddr, mask);
+									String cidr = sutils.getInfo().getCidrSignature();
+									
+									String[] cc = cidr.split("/");
+									if ( Integer.parseInt(cc[1]) >= 24 ) {
+									      discNode.getOtherSubnet().add(dn);
+									}									
+								}
+							}
 						}
 			        	logger.info("Save service element " + levelSe.getName());
 			        }
@@ -1294,7 +1314,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				if ( nextLevel.getRelationToParent() != null && nextLevel.getRelationToParent() instanceof SnmpContainmentRelation ) {
 					SnmpContainmentRelation sRelation = (SnmpContainmentRelation) nextLevel.getRelationToParent();
 					
-					List<ParentChildMappingIndex> indexTable = getIndexMapping(sRelation.getMappingTable().getOid());
+					List<ParentChildMappingIndex> indexTable = getIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid());
 					if ( indexTable == null ) {
 						
 						indexTable = new ArrayList<>();
@@ -1313,7 +1333,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							
 							indexTable.add(pcmi);
 						}
-						addIndexMapping(sRelation.getMappingTable().getOid(), indexTable);									
+						addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexTable);									
 					}	
 					List<SNMP> indexSnmps = sRelation.getMappingTable().getIndex();
 					int indexLocation = 0;	
@@ -1328,6 +1348,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				        indexLocation++;
 				    }
 				    if ( indexLocation < indexSnmps.size() ) {
+				    	
 				    	 ParentChildMappingIndex pcmi = findMappingIndex(indexTable,  instOid, indexLocation);
 					     if ( pcmi != null ) {
 					          levelDiscovery( nextLevel, levelSetType, levelSe, nextLevel.getContextOID().getOid(), instOid, null, discNode );

@@ -34,7 +34,9 @@
 package edu.harvard.integer.service.discovery;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
@@ -48,6 +50,7 @@ import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
@@ -84,9 +87,16 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
 	
 	/**
-	 * Map to keep track of each subnet tasks.  The key is the subnet id.
+	 * Map to keep track of each seed subnet tasks.  The key is the subnet id.
 	 */
 	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask>  subnetTasks = new ConcurrentHashMap<>();
+	
+	
+	/**
+	 * Map to keep track of each found subnet tasks.  The key is the subnet id.
+	 */
+	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask>  foundSubnetTask = new ConcurrentHashMap<>();
+	
 	
     /**
      * Map to hold discovered nodes which contains layer 2 connection information.
@@ -112,10 +122,35 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	private List<VariableBinding> topLevelVBs;
 	
 	/**
+	 * Use to store discovered SubNet.
+	 * The key is the highest address plus the lowerest address of the subnet in a format as upperAddrr + ":" lowerAddrr
+	 */
+	private ConcurrentHashMap<String, DiscoverNet>  foundSubnets = new ConcurrentHashMap<>();
+	
+	
+	/**
+	 *  Hash map store IPAddress associated with an discovered node.  Take router as an example,
+	 *  it can have more than one IP addresses.  During discovering
+	 *  the discovering processing will skip any IP address in the map since the node they belong is already
+	 *  discovered.
+	 */
+	private ConcurrentHashMap<String, String>  discoverdAddresses = new ConcurrentHashMap<>();
+	
+	
+	/**
+	 *  Hash map store System Name associated with an discovered node.  Take router as an example,
+	 *  it can have more than one IP addresses.  During discovering
+	 *  the discovering processing will skip any node in the map since the node they is already
+	 *  discovered.
+	 */
+	private Map<String, DiscoverNode>  discoverdSystems = new HashMap<>();
+	
+
+
+	/**
 	 * Discovery id to keep track of discovery.
 	 */
 	private final DiscoveryId discoverId;
-	
 	
 	
 	/**
@@ -157,13 +192,14 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			} catch (IntegerException e1) {
 				
 				logger.error("Error getting DiscoveryService " + e1.toString(), e1);
+				return discFuture;
 			}
 		
 			for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
 				
 				try {
 					@SuppressWarnings("unchecked")
-					DiscoverSubnetAsyncTask<ElementAccess> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+					DiscoverSubnetAsyncTask<ElementAccess> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed, true);
 	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
 					
 					Future<Ipv4Range> v = discoveryService.submitSubnetDiscovery(subTask);
@@ -177,11 +213,23 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			}
 		}
 		return discFuture;
-
 	}
 
 
 
+	/**
+	 * 
+	 * @param discoverNode
+	 * @param subnetId
+	 */
+	public void removeAliasIp(DiscoverNode discoverNode, String subnetId) {
+		
+		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
+		if ( subnetComplete ) {
+			logger.info("Subnet discovery complete " + subnetId);
+		}
+	}
+	
 
 
 	/**
@@ -203,7 +251,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		/**
 		 * If the discovered node contains protocol connection, store it 
 		 */
-		if ( discoverNode.hasProtocolConnection() ) {		
+		if ( discoverNode.hasProtocolConnection() && discoverNode.isFwdNode() ) {		
 			addConnectionNode(subnetId, discoverNode);
 		}
 		
@@ -226,8 +274,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		} catch (IntegerException e) {
 			
 			logger.error("Error sending error " + errorCode + " args " + msg);
-		}
-		
+		}		
 	}
 	
 	/**
@@ -293,59 +340,81 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 
 	/**
 	 * Remove IP Address discovery from subnet map. This method being called a IP device being done 
-	 * with discovery.  
+	 * with discovery.  Return true if all subnet done with discovered.
 	 * 
 	 * @param ip
 	 * @param subnetid
 	 * @throws  
 	 */
+	@SuppressWarnings("unchecked")
 	private boolean removeIpAddressFromSubnet( String ip, String subnetid, boolean elmComplete )  {
+		
+		DiscoveryServiceInterface discoveryService = null;
+		/**
+		 * Scan though the new discovered subnet and discover them.
+		 */
+		try {
+			discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+		} 
+		catch (IntegerException e1) {
+			
+			logger.error("Error getting DiscoveryService " + e1.toString(), e1);
+			return false;
+		}
 		
 		if ( subnetid != null ) {
 			@SuppressWarnings("unchecked")
-			DiscoverSubnetAsyncTask<ElementAccess> subTask = subnetTasks.get(subnetid);
+			DiscoverSubnetAsyncTask<ElementAccess> subTask = subnetTasks.get(subnetid);		
 			if ( subTask != null ) {
 				
 				subTask.removeDiscoverNode(ip);
 				if ( subTask.discoveryNodeCount() == 0 ) {
 					
 					subnetTasks.remove(subnetid);
-					
-					if ( elmComplete ) {
-						try {
-							DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
-							dsif.discoveryComplete(discoverId);
-						} catch (IntegerException e) {
-						
-							e.printStackTrace();
-							logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
-						}
-					}
 					logger.debug("Discovered subnet **** " + subnetid);
 				}
-			}
-			if ( subnetTasks.size() == 0 ) {
-				try {
-					DiscoveryServiceInterface dsif = (DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
-					dsif.discoveryComplete(discoverId);
-					
-					if ( linkLayerConnections.size() > 0 ) {
-						
-						logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
-						if ( linkLayerConnections.size() == 1 ) {
-							logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
-						}
-						
-						DiscoverCdpTopologyTask task = new DiscoverCdpTopologyTask(linkLayerConnections, this);
-						task.call();
-					}
-				
-					return true;
-				} 
-				catch (Exception e) {
-				
-					logger.error("Unable to call DiscoveryService to mark discovery complete!! " + e.toString());
+				if ( subnetTasks.size() == 0 ) {
+				    for ( DiscoverNet dnet : foundSubnets.values() ) {
+				    	
+				    	IpDiscoverySeed discoverSeed = new IpDiscoverySeed( discoverSeeds.get(0).getAuths(), dnet );
+				    	try {
+							DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed, false);
+			                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), subTask);
+							discoveryService.submitSubnetDiscovery(foundSubTask);
+							
+						} catch (IntegerException e) {
+							
+							logger.equals("Error on submit found subnet discover...  " + e.toString() );
+							e.printStackTrace();
+						} 
+				    }
 				}
+			}
+			else {
+				
+			   subTask = foundSubnetTask.get(subnetid);	
+			   if ( subTask != null ) {
+					
+					subTask.removeDiscoverNode(ip);
+					if ( subTask.discoveryNodeCount() == 0 ) {
+						
+						foundSubnetTask.remove(subnetid);
+						logger.debug("Discovered subnet **** " + subnetid);
+					}
+			   }
+			}
+		}
+		if ( foundSubnetTask.size() == 0 && subnetTasks.size() == 0 ) {
+			
+			if ( linkLayerConnections.size() > 0 ) {
+				
+				logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
+				if ( linkLayerConnections.size() == 1 ) {
+					logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
+				}
+				
+				DiscoverCdpTopologyTask task = new DiscoverCdpTopologyTask(linkLayerConnections, this);
+				task.call();
 			}
 		}
 		return false;
@@ -407,5 +476,56 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		
 		return unknownElmMap.get(elmId);
 	}
+	
+	
+	/**
+	 * Store a found subnet into foundSubnet map and mark IPAddress as discovered address.
+	 * 
+	 * @param ip
+	 * @param mask
+	 * @return
+	 */
+	public boolean putFoundSubNet( String ip, String mask ) {
+		
+		DiscoverNet dnet = new DiscoverNet(ip, mask);
+		String rangeKey = dnet.getStartIp() + ":" + dnet.getEndIp();
+		
+		boolean found = true;
+		if ( foundSubnets.get(rangeKey) == null ) {
+			
+			foundSubnets.put(rangeKey, dnet);
+			found = false;
+		}
+		
+		discoverdAddresses.put(ip, ip);
+		return found;
+	}
 
+	
+	/**
+	 * Find disocvered IP address 
+	 * @param ipAddress
+	 * @return
+	 */
+	public String findDiscoveredIpAddresses( String ipAddress ) {
+		return discoverdAddresses.get(ipAddress);
+	}
+	
+
+	/**
+	 * Check if the node with a same system name is already discovered.
+	 * If not discovered, it will put into the map.
+	 * 
+	 * @param sysName
+	 * @return
+	 */
+	public synchronized boolean alreadyDiscovered( String sysName, DiscoverNode dnode ) {
+		
+		if ( discoverdSystems.get(sysName) != null ) {
+			return true;
+		}
+		discoverdSystems.put(sysName, dnode);
+		return false;
+	}
+	
 }

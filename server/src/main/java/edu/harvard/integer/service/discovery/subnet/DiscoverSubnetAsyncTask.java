@@ -91,9 +91,8 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	/** If it is true, done with discovery. */
 	private boolean doneDiscovery;
 
-	
+	private boolean searchNextSubnet = false;
 
-	
 	/** The accesses. */
 	private List<Access> accesses = new ArrayList<>();  
 
@@ -104,7 +103,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	
 	/** The discover map. */
 	private final ConcurrentHashMap<String, DiscoverNode> discoverMap = new ConcurrentHashMap<>();
-	
 	
 	
 	/** The net disc. */
@@ -120,10 +118,12 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	 * @throws IntegerException the integer exception
 	 */
 	public DiscoverSubnetAsyncTask( NetworkDiscovery dis,
-			                        IpDiscoverySeed seed) throws IntegerException {
+			                        IpDiscoverySeed seed,
+			                        boolean searchNextSubnet ) throws IntegerException {
 		
 		this.seed = seed;
 		netDisc = dis;
+		this.searchNextSubnet = searchNextSubnet;
 		
 		/**
 		 * First create an access list and sort them.
@@ -236,14 +236,11 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     				logger.info("Discover being stop " );
     				break;
     			}
-    			String ip = range.next(); 
-    			DiscoverNode dn = new DiscoverNode(ip);
+    			String ip = range.next();     			
+    			DiscoverNode dn = new DiscoverNode(ip, searchNextSubnet, seed.getDiscoverNet() );
     			dn.setSubnetId(seed.getSeedId());
     			dn.setAccess(accesses.get(0));
-    			
-    			if ( dn.getIpAddress().equals("10.240.127.121") && dn.getIpAddress().equals("10.240.127.144")) {
-    			     logger.info("Add discover node into the map " + dn.getIpAddress());
-    			}
+  
     			discoverMap.put(dn.getIpAddress(), dn);
     					
     			PDU pdu = new PDU();
@@ -308,7 +305,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 						}
 					}
 					catch ( Exception es ) {
-						
 						es.printStackTrace();
 					}
 					
@@ -350,7 +346,14 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		PDU response = event.getResponse();
 		ElementDiscoverTask<E> elmTask = null;
 		try {
+			SnmpSysInfo sysInfo = new SnmpSysInfo(response);
+			if ( netDisc.alreadyDiscovered(sysInfo.getSysName(), dn) ) {
+				
+				netDisc.removeAliasIp(dn, dn.getSubnetId());
+				return;
+			}
 			
+			dn.setSysNamn(sysInfo.getSysName());
 			elmTask = new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));
 			DiscoveryServiceInterface service = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
 			service.submitElementDiscoveryTask(elmTask);
@@ -454,8 +457,11 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		return discoverMap.remove(ip);
 	}
 	
+
 	
-	public void startSubnetTopologyDiscovery() {
-		
+	public boolean isSearchNextSubnet() {
+		return searchNextSubnet;
 	}
+
+	
 }

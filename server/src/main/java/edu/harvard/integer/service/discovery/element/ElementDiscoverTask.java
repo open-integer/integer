@@ -69,6 +69,7 @@ import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.snmp.SnmpServiceElementDiscover;
 import edu.harvard.integer.service.discovery.snmp.containment.ContainmentGenerator;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -447,6 +448,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 			}
 		}
 		finally {
+			
+			for ( DiscoverNet dnet : discoverNode.getOtherSubnet() ) {
+				netDiscover.putFoundSubNet(dnet.getIpAddress(), dnet.getNetmask());
+			}
 			netDiscover.discoveredElement(discoverNode, discoverNode.getSubnetId());
 		}
 		return null;
