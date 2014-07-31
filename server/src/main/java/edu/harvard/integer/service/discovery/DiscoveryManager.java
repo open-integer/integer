@@ -118,7 +118,7 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	public DiscoveryRule[] getAllDiscoveryRules() throws IntegerException {
 		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
 		
-		return dao.findAll();
+		return (DiscoveryRule[]) dao.copyArray(dao.findAll());
 	}
 	
 	/*
@@ -162,7 +162,7 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	public IpTopologySeed[] getAllIpTopologySeeds() throws IntegerException {
 		IpTopologySeedDAO dao = persistenceManager.getIpTopologySeedDAO();
 		
-		return dao.findAll();
+		return (IpTopologySeed[]) dao.copyArray(dao.findAll());
 	}
 	
 	/*
@@ -182,7 +182,7 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	@Override
 	public SnmpGlobalReadCredential[] getAllGlobalCredentails() throws IntegerException {
 		SnmpGlobalReadCredentialDAO dao = persistenceManager.getSnmpGlobalReadCredentialDAO();
-		return dao.findAll();
+		return (SnmpGlobalReadCredential[]) dao.copyArray(dao.findAll());
 	}
 	
 	/*

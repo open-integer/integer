@@ -35,7 +35,10 @@ package edu.harvard.integer.common.topology;
 
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -55,7 +58,8 @@ import edu.harvard.integer.common.discovery.DiscoveryOrderEnum;
  * TopologySeeds are used by the system to start and limit the scope of a
  * topology discovery.
  * 
- * <p>Note that the way the include and exclude attributes work is that if none are
+ * <p>
+ * Note that the way the include and exclude attributes work is that if none are
  * filled in then, the system would discovery everything. If the technology has
  * an Include or Exclude list, then the technologies listed determine whether
  * the discovery program will include those devices and the service elements
@@ -72,20 +76,41 @@ public class IpTopologySeed extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String description = null;
+
 	/**
 	 * A set of networks not to be included in the discovery even if they are
 	 * within the radius of the discovery.
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<Subnet> netExclustions = null;
 
 	/**
 	 * A list of gateways to exclude.
 	 */
-	@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<Address> gatewayExclusuions = null;
+
+	/**
+	 * Initial gateway allows the specification of the starting gateway on a
+	 * subnet in IpTopologySeeds that would be used as the starting point for a
+	 * topology Discovery.
+	 * <p/>
+	 * If a subnet were specified it would do the same thing. That is find the
+	 * routers on the network and go out as many hops as the radius attribute
+	 * requires.
+	 * <p/>
+	 * In some subnets, there may be more than one router. In this case, whether
+	 * a router or subnet wer specified, the hop count always begins at the
+	 * first hop outside the subnet.
+	 */
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "address", column = @Column(name = "initialGatewayAddress")),
+			@AttributeOverride(name = "mask", column = @Column(name = "initialGatewayMask")) })
+	private Address initialGateway = null;
 
 	/**
 	 * This is the starting subnet for the discovery process. If radius is null,
@@ -163,10 +188,25 @@ public class IpTopologySeed extends BaseEntity {
 	/**
 	 * Credentials to use for this discovery
 	 */
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	@CollectionTable(name = "IpTopologySeed_Credentials")
 	private List<Credential> credentials = null;
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	/**
 	 * @return the netExclustions
@@ -196,6 +236,21 @@ public class IpTopologySeed extends BaseEntity {
 	 */
 	public void setGatewayExclusuions(List<Address> gatewayExclusuions) {
 		this.gatewayExclusuions = gatewayExclusuions;
+	}
+
+	/**
+	 * @return the initialGateway
+	 */
+	public Address getInitialGateway() {
+		return initialGateway;
+	}
+
+	/**
+	 * @param initialGateway
+	 *            the initialGateway to set
+	 */
+	public void setInitialGateway(Address initialGateway) {
+		this.initialGateway = initialGateway;
 	}
 
 	/**

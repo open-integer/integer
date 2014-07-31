@@ -33,7 +33,7 @@
 
 package edu.harvard.integer.discovery;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -194,5 +194,23 @@ public class DiscoveryManagerTest {
 			fail(e.toString());
 		}
 	}
-	
+
+	@Test
+	public void getAllIpTopologySeeds() {
+		try {
+			IpTopologySeed[] topologySeeds = discoveryManager.getAllIpTopologySeeds();
+			if (topologySeeds == null || topologySeeds.length == 0) {
+				addDiscoveryRule();
+				topologySeeds = discoveryManager.getAllIpTopologySeeds();
+			}
+			
+			assert(topologySeeds != null);
+			assert(topologySeeds.length > 0);
+				
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
 }

@@ -61,17 +61,19 @@ public class DiscoveryRule extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String description = null;
+	
 	/**
 	 * A list of the calendar policies associated with this discovery rule.
 	 */
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<CalendarPolicy> calendars = null;
 
 	/**
 	 * Discovery type is the type(s) of discovery to perform. For example
 	 * service element only, topology only or both. Topology will always include
 	 * topology modifiers such as a load balancer, or NAT or global site
-	 * selector.
+	 * selector.  Od
 	 */
 	@Enumerated(EnumType.STRING)
 	private DiscoveryTypeEnum discoveryType = null;
@@ -172,6 +174,20 @@ public class DiscoveryRule extends BaseEntity {
 	 */
 	public void setModified(Date modified) {
 		this.modified = modified;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
