@@ -68,6 +68,18 @@ public class Subnet implements Serializable {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		
+		if (address != null)
+			return address.toString();
+		else
+			return "N/A";
+	}
+
 	/**
 	 * @return the address
 	 */

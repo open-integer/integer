@@ -234,11 +234,21 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		DiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
 		
 		IpTopologySeed seed = new IpTopologySeed();
+		
 		Subnet subnet = new Subnet();
 		subnet.setAddress(new Address(address, mask ));
 		
+		seed.setName("Subnet: " + subnet);
+		seed.setDescription("Default for " + subnet);
+		
 		seed.setSubnet(subnet);
 		seed.setRadius(Integer.valueOf(0));
+		
+		seed.setSnmpRetriesServiceElementDiscovery(Integer.valueOf(2));
+		seed.setSnmpTimeoutServiceElementDiscovery(Long.valueOf(800));
+		
+		seed.setSnmpRetriesTopologyDiscovery(Integer.valueOf(2));
+		seed.setSnmpTimeoutTopologyDiscovery(Long.valueOf(800));
 		
 		SnmpGlobalReadCredential[] globalCredentails = manager.getAllGlobalCredentails();
 		List<Credential> credentials = new ArrayList<Credential>();
@@ -253,7 +263,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		topologySeeds.add(seed);
 		DiscoveryRule rule = new DiscoveryRule();
 		
-		rule.setName("Subnet: " + address + " mask " + mask);
+		rule.setName("Subnet: " + subnet);
 		
 		rule.setTopologySeeds(topologySeeds);
 		rule.setDiscoveryType(DiscoveryTypeEnum.ServiceElement);
