@@ -164,6 +164,7 @@ public class DiscoverNode extends ElementAccess {
 		this.discoverNet = dnet;
 	}
 	
+	
 
 	/**
 	 * Instantiates a new discover node.
