@@ -41,6 +41,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
@@ -75,14 +76,14 @@ public class IpTopologySeed extends BaseEntity {
 	 * A set of networks not to be included in the discovery even if they are
 	 * within the radius of the discovery.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<Subnet> netExclustions = null;
 
 	/**
 	 * A list of gateways to exclude.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<Address> gatewayExclusuions = null;
 
@@ -162,7 +163,7 @@ public class IpTopologySeed extends BaseEntity {
 	/**
 	 * Credentials to use for this discovery
 	 */
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	@CollectionTable(name = "IpTopologySeed_Credentials")
 	private List<Credential> credentials = null;

@@ -39,6 +39,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -78,7 +79,7 @@ public class DiscoveryRule extends BaseEntity {
 	/**
 	 * List of the Topology Seeds used for an instance of this rule.
 	 */
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<IpTopologySeed> topologySeeds = null;
 
 	/**

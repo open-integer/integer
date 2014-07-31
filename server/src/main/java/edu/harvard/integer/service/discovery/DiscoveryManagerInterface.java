@@ -40,6 +40,7 @@ import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.topology.DiscoveryRule;
+import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
@@ -131,16 +132,18 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 			throws IntegerException;
 
 	/**
-	 * Get the discovery rule with the given name. 
+	 * Get the discovery rule with the given name.
+	 * 
 	 * @param name
-	 * @return DiscoverRule with the given name. If not found in the database then return null.
+	 * @return DiscoverRule with the given name. If not found in the database
+	 *         then return null.
 	 * @throws IntegerException
 	 */
 	DiscoveryRule getDiscoveryRuleByName(String name) throws IntegerException;
 
 	/**
 	 * Start a discovery on each DiscoveryRule that is identified in the list of
-	 * ID's. 
+	 * ID's.
 	 * 
 	 * @param ruleIds
 	 * @return DiscoveyIds for each of the discoveries that was started.
@@ -148,4 +151,26 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	List<DiscoveryId> startDiscovery(List<ID> ruleIds) throws IntegerException;
+
+	/**
+	 * Return the list of all IpTopologySeeds in the database.
+	 * 
+	 * @return IpTopologySeed[] of all IpTopologySeeds in the database.
+	 * 
+	 * @throws IntegerException
+	 */
+	IpTopologySeed[] getAllIpTopologySeeds() throws IntegerException;
+
+	/**
+	 * Update / save the IpTopologySeed.
+	 * 
+	 * @param seed
+	 *            Ip topology seed to update/save
+	 * @return The IpTopologySeed that has been saved in the database. The
+	 *         identifier will be set on the returned object if creating a new
+	 *         one.
+	 * @throws IntegerException
+	 */
+	IpTopologySeed updateIpTopologySeed(IpTopologySeed seed)
+			throws IntegerException;
 }

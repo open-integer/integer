@@ -46,10 +46,12 @@ import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.topology.DiscoveryRule;
+import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
+import edu.harvard.integer.service.persistance.dao.discovery.IpTopologySeedDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SnmpGlobalReadCredentialDAO;
 
 /**
@@ -152,6 +154,27 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 		return dao.update(rule);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getAllIpTopologySeeds()
+	 */
+	@Override
+	public IpTopologySeed[] getAllIpTopologySeeds() throws IntegerException {
+		IpTopologySeedDAO dao = persistenceManager.getIpTopologySeedDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#updateIpTopologySeed(edu.harvard.integer.common.topology.IpTopologySeed)
+	 */
+	@Override
+	public IpTopologySeed updateIpTopologySeed(IpTopologySeed seed) throws IntegerException {
+		IpTopologySeedDAO dao = persistenceManager.getIpTopologySeedDAO();
+		
+		return dao.update(seed);
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getAllGlobalCredentails()
