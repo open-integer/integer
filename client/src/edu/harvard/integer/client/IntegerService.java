@@ -7,15 +7,20 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
+import edu.harvard.integer.common.topology.DiscoveryRule;
+import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
+// TODO: Auto-generated Javadoc
 /**
  * The client side stub for the RPC service.
  */
@@ -154,5 +159,29 @@ public interface IntegerService extends RemoteService {
 	 * @return the network information
 	 * @throws Exception the exception
 	 */
-	NetworkInformation getNetworkInformation() throws Exception;
+	NetworkInformation getNetworkInformation() throws Exception;	
+	
+	/**
+	 * Gets the all discovery rules.
+	 *
+	 * @return the all discovery rules
+	 * @throws Exception the exception
+	 */
+	DiscoveryRule[] getAllDiscoveryRules() throws Exception;
+	
+	/**
+	 * Gets the all global credentails.
+	 *
+	 * @return the all global credentails
+	 * @throws Exception the exception
+	 */
+	SnmpGlobalReadCredential[] getAllGlobalCredentails() throws Exception;
+	
+	/**
+	 * Gets the all ip topology seeds.
+	 *
+	 * @return the all ip topology seeds
+	 * @throws Exception the exception
+	 */
+	IpTopologySeed[] getAllIpTopologySeeds() throws Exception;
 }

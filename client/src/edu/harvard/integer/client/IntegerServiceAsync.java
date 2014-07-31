@@ -12,8 +12,11 @@ import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
+import edu.harvard.integer.common.topology.DiscoveryRule;
+import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -143,5 +146,29 @@ public interface IntegerServiceAsync {
 	 * @return the network information
 	 */
 	void getNetworkInformation(AsyncCallback<NetworkInformation> callback);
+
+	/**
+	 * Gets the all discovery rules.
+	 *
+	 * @param callback the callback
+	 * @return the all discovery rules
+	 */
+	void getAllDiscoveryRules(AsyncCallback<DiscoveryRule[]> callback);
+
+	/**
+	 * Gets the all global credentails.
+	 *
+	 * @param callback the callback
+	 * @return the all global credentails
+	 */
+	void getAllGlobalCredentails(AsyncCallback<SnmpGlobalReadCredential[]> callback);
+
+	/**
+	 * Gets the all ip topology seeds.
+	 *
+	 * @param callback the callback
+	 * @return the all ip topology seeds
+	 */
+	void getAllIpTopologySeeds(AsyncCallback<IpTopologySeed[]> callback);
 	
 }
