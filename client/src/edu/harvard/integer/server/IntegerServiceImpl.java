@@ -1,7 +1,6 @@
 package edu.harvard.integer.server;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +24,6 @@ import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Credential;
-import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
@@ -417,5 +415,65 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		}
 		
 		return networkInfo;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getAllDiscoveryRules()
+	 */
+	@Override
+	public DiscoveryRule[] getAllDiscoveryRules() throws Exception {
+		DiscoveryRule[] discoveryRules;
+
+		try {
+			DiscoveryManagerInterface discoveryService = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
+			
+			discoveryRules = discoveryService.getAllDiscoveryRules();
+			
+			System.out.println("getAllDiscoveryRules return " + discoveryRules.length + " discoveryRules");
+		} 
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		return discoveryRules;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getAllGlobalCredentails()
+	 */
+	@Override
+	public SnmpGlobalReadCredential[] getAllGlobalCredentails() throws Exception {
+		SnmpGlobalReadCredential[] snmpGlobalReadCredentials;
+
+		try {
+			DiscoveryManagerInterface discoveryService = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
+			
+			snmpGlobalReadCredentials = discoveryService.getAllGlobalCredentails();
+			
+			System.out.println("getAllGlobalCredentails return " + snmpGlobalReadCredentials.length + " snmpGlobalReadCredentials");
+		} 
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		return snmpGlobalReadCredentials;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getAllIpTopologySeeds()
+	 */
+	@Override
+	public IpTopologySeed[] getAllIpTopologySeeds() throws Exception {
+		IpTopologySeed[] ipTopologySeeds;
+
+		try {
+			DiscoveryManagerInterface discoveryService = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
+			
+			ipTopologySeeds = discoveryService.getAllIpTopologySeeds();
+			
+			System.out.println("getAllIpTopologySeeds return " + ipTopologySeeds.length + " ipTopologySeeds");
+		} 
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		return ipTopologySeeds;
 	}
 }

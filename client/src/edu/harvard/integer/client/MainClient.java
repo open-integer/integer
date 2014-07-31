@@ -19,6 +19,8 @@ import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.CapabilityView;
 import edu.harvard.integer.client.ui.ContactPanel;
 import edu.harvard.integer.client.ui.DiscoveryRulePanel;
+import edu.harvard.integer.client.ui.DiscoveryRuleView;
+import edu.harvard.integer.client.ui.IpTopologySeedView;
 import edu.harvard.integer.client.ui.LocationPanel;
 import edu.harvard.integer.client.ui.MIBImportPanel;
 import edu.harvard.integer.client.ui.MechanismPanel;
@@ -26,13 +28,17 @@ import edu.harvard.integer.client.ui.OragnizationPanel;
 import edu.harvard.integer.client.ui.RolePanel;
 import edu.harvard.integer.client.ui.ServiceElementPanel;
 import edu.harvard.integer.client.ui.ServiceElementTypePanel;
+import edu.harvard.integer.client.ui.SnmpGlobalReadCredentialView;
 import edu.harvard.integer.client.ui.StatusPanel;
 import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.client.ui.UserPanel;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvFlexTable;
 import edu.harvard.integer.common.snmp.MIBInfo;
+import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.DiscoveryRule;
+import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
@@ -116,13 +122,22 @@ public class MainClient implements EntryPoint {
 		// Start Discovery
 		createStartDiscoveryLink();
 		
+		// DiscoveryRules
+		createDiscoveryRulesLink();
+		
+		// IpTopologySeeds
+		createIpTopologySeedsLink();
+		
+		// SnmpGlobalReadCredentials
+		createSnmpGlobalReadCredentials();
+		
 		currentWidget = new SystemSplitViewPanel();
 		RootPanel.get("root").add(currentWidget);
 		
 		// Status Bar
 		RootPanel.get("status").add(statusPanel);
 	}
-	
+
 	/**
 	 * Creates the system page link.
 	 */
@@ -512,4 +527,101 @@ public class MainClient implements EntryPoint {
 			}
 		});
 	}
+
+	private void createDiscoveryRulesLink() {
+		Element element = (Element) Document.get().getElementById("discoveryRules");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				String title = "Discovery Rules";
+				final String[] headers = {"Name", "Description", "Type", "IP Topology Seeds Number", "Created", "Modified"};
+				final DiscoveryRuleView view = new DiscoveryRuleView(title, headers);
+				integerService.getAllDiscoveryRules(new AsyncCallback<DiscoveryRule[]>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(DiscoveryRule[] result) {
+						view.update(result);
+					}
+					
+				});
+
+				if (currentWidget != null)
+					RootPanel.get("root").remove(currentWidget);
+
+				currentWidget = view;
+				RootPanel.get("root").add(currentWidget);
+			}
+		});
+	}
+	
+	private void createIpTopologySeedsLink() {
+		Element element = (Element) Document.get().getElementById("#ipTopologySeeds");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				String title = "IP Topology Seeds";
+				final String[] headers = {"Name", "Description", "Subnet", "Mask", "Radius", "Discovery Timeout", "Discovery Retries", "Topology Timeout", "Topology Retries", "Initial Gateway"};
+				final IpTopologySeedView ipTopologySeedView = new IpTopologySeedView(title, headers);
+				integerService.getAllIpTopologySeeds(new AsyncCallback<IpTopologySeed[]>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(IpTopologySeed[] result) {
+						ipTopologySeedView.update(result);
+					}
+					
+				});
+
+				if (currentWidget != null)
+					RootPanel.get("root").remove(currentWidget);
+
+				currentWidget = ipTopologySeedView;
+				RootPanel.get("root").add(currentWidget);
+			}
+		});
+	}
+	
+	private void createSnmpGlobalReadCredentials() {
+		Element element = (Element) Document.get().getElementById("snmpGlobalReadCredentials");
+		Anchor anchor = Anchor.wrap(element);
+		anchor.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				String title = "SNMP Global Read Credentials";
+				final String[] headers = {"Name", "Community String List", "V3 Credentials", "Alternate Port List"};
+				final SnmpGlobalReadCredentialView view = new SnmpGlobalReadCredentialView(title, headers);
+				integerService.getAllGlobalCredentails(new AsyncCallback<SnmpGlobalReadCredential[]>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(SnmpGlobalReadCredential[] result) {
+						view.update(result);
+					}
+					
+				});
+
+				if (currentWidget != null)
+					RootPanel.get("root").remove(currentWidget);
+
+				currentWidget = view;
+				RootPanel.get("root").add(currentWidget);
+			}
+		});
+	}
+	
 }
