@@ -134,7 +134,6 @@ public class DiscoverNode extends ElementAccess {
 	
 	private DeviceTopologyInfo topologyInfo = new DeviceTopologyInfo();
 
-	
 	/**
 	 * 
 	 */
@@ -151,6 +150,19 @@ public class DiscoverNode extends ElementAccess {
 
 	private String sysNamn;
 	
+	/**
+	 * Instantiates a new discover node.
+	 *
+	 * @param ipAddress the ip address
+	 */
+	public DiscoverNode( String ipAddress ) {
+		
+		this.ipAddress = ipAddress;
+		this.searchNextSubnet = false;
+		
+		DiscoverNet dnet = new DiscoverNet(ipAddress, "255.255.255.0");
+		this.discoverNet = dnet;
+	}
 	
 
 	/**

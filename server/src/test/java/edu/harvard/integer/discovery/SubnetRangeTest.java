@@ -79,7 +79,7 @@ public class SubnetRangeTest {
 		
 		try {
 			NetworkDiscovery netDisc = null;
-			DiscoverSubnetAsyncTask<ElementAccess> task = new DiscoverSubnetAsyncTask<>(netDisc, seed);
+			DiscoverSubnetAsyncTask<ElementAccess> task = new DiscoverSubnetAsyncTask<>(netDisc, seed, false);
 		    if ( task.isInRange(outTestip) ) {
 		    	fail("It should be out of range " + outTestip + " with given ip " + netIp + " mask " + mask );
 		    }
