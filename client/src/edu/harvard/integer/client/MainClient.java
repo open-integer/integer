@@ -8,7 +8,6 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -18,7 +17,7 @@ import edu.harvard.integer.client.ui.CalendarPolicyPanel;
 import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.CapabilityView;
 import edu.harvard.integer.client.ui.ContactPanel;
-import edu.harvard.integer.client.ui.DiscoveryRulePanel;
+import edu.harvard.integer.client.ui.StartDiscoveryPanel;
 import edu.harvard.integer.client.ui.DiscoveryRuleView;
 import edu.harvard.integer.client.ui.IpTopologySeedView;
 import edu.harvard.integer.client.ui.LocationPanel;
@@ -518,7 +517,7 @@ public class MainClient implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				DiscoveryRulePanel panel = new DiscoveryRulePanel();
+				StartDiscoveryPanel panel = new StartDiscoveryPanel();
 				HvDialogBox dialog = new HvDialogBox("Start Discovery",
 						panel);
 				dialog.setSize("400px", "250px");
@@ -528,6 +527,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 
+	/**
+	 * Creates the discovery rules link.
+	 */
 	private void createDiscoveryRulesLink() {
 		Element element = (Element) Document.get().getElementById("discoveryRules");
 		Anchor anchor = Anchor.wrap(element);
@@ -537,7 +539,11 @@ public class MainClient implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				String title = "Discovery Rules";
 				final String[] headers = {"Name", "Description", "Type", "IP Topology Seeds Number", "Created", "Modified"};
+				final int[] columnWidthes = {100, 150, 100, 80, 100, 100};
+				
 				final DiscoveryRuleView view = new DiscoveryRuleView(title, headers);
+				view.setColumnsWidth(columnWidthes);
+				
 				integerService.getAllDiscoveryRules(new AsyncCallback<DiscoveryRule[]>() {
 
 					@Override
@@ -560,16 +566,22 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the ip topology seeds link.
+	 */
 	private void createIpTopologySeedsLink() {
-		Element element = (Element) Document.get().getElementById("#ipTopologySeeds");
+		Element element = (Element) Document.get().getElementById("ipTopologySeeds");
 		Anchor anchor = Anchor.wrap(element);
 		anchor.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				String title = "IP Topology Seeds";
-				final String[] headers = {"Name", "Description", "Subnet", "Mask", "Radius", "Discovery Timeout", "Discovery Retries", "Topology Timeout", "Topology Retries", "Initial Gateway"};
+				final String[] headers = {"Name", "Description", "Subnet", "Radius", "Discovery Timeout", "Discovery Retries", "Topology Timeout", "Topology Retries", "Initial Gateway"};
+				final int[] columnWidthes = {100, 150, 100, 100, 80,  80, 80, 80, 120};
+				
 				final IpTopologySeedView ipTopologySeedView = new IpTopologySeedView(title, headers);
+				ipTopologySeedView.setColumnsWidth(columnWidthes);
 				integerService.getAllIpTopologySeeds(new AsyncCallback<IpTopologySeed[]>() {
 
 					@Override
@@ -592,6 +604,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the snmp global read credentials.
+	 */
 	private void createSnmpGlobalReadCredentials() {
 		Element element = (Element) Document.get().getElementById("snmpGlobalReadCredentials");
 		Anchor anchor = Anchor.wrap(element);
@@ -600,8 +615,11 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				String title = "SNMP Global Read Credentials";
-				final String[] headers = {"Name", "Community String List", "V3 Credentials", "Alternate Port List"};
+				final String[] headers = {"Name", "Credentials", "Alternate Port List"};
+				final int[] columnWidthes = {150, 300, 150};
+				
 				final SnmpGlobalReadCredentialView view = new SnmpGlobalReadCredentialView(title, headers);
+				view.setColumnsWidth(columnWidthes);
 				integerService.getAllGlobalCredentails(new AsyncCallback<SnmpGlobalReadCredential[]>() {
 
 					@Override

@@ -52,6 +52,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -251,10 +252,18 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	@ElementCollection
 	@OrderColumn(name = "idx")
 	private List<ID> serviceElementProtocolInstanceIdentifiers = null;
-	
-	@ElementCollection(fetch=FetchType.EAGER)
+
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ServiceElementAssociation> associations = null;
+
+	/**
+	 * Category that this service element is in. Category is a general type of
+	 * serviceElement like a disk or Ethernet card without any vendor
+	 * specificities.
+	 */
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Category category = null;
 
 	public ServiceElement() {
 		super();
@@ -309,17 +318,19 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * Add a parent to this service element. 
+	 * Add a parent to this service element.
+	 * 
 	 * @param id
 	 */
 	public void addParentId(ID id) {
 		if (parentIds == null)
 			parentIds = new ArrayList<ID>();
-		
+
 		if (!parentIds.contains(id))
 			parentIds.add(id);
-			
+
 	}
+
 	/**
 	 * @return the parentId
 	 */
@@ -622,12 +633,26 @@ public class ServiceElement extends BaseEntity implements Serializable {
 		this.hasChildren = hasChildren;
 	}
 
-
 	public List<ServiceElementAssociation> getAssociations() {
 		return associations;
 	}
 
 	public void setAssociations(List<ServiceElementAssociation> associations) {
 		this.associations = associations;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public Category getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category
+	 *            the category to set
+	 */
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 }

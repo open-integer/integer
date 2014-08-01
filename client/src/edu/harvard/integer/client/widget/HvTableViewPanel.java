@@ -2,12 +2,18 @@ package edu.harvard.integer.client.widget;
 
 import java.util.List;
 
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import edu.harvard.integer.client.MainClient;
+import edu.harvard.integer.client.ui.SystemSplitViewPanel;
 import edu.harvard.integer.common.ID;
 
 /**
@@ -38,8 +44,16 @@ public class HvTableViewPanel extends VerticalPanel {
 	/** The flex table. */
 	protected HvFlexTable flexTable;
 	
+	protected CellTable cellTable;
+	
 	/** The add button. */
 	protected HvIconButton addButton = new HvIconButton("Add");
+	
+	/** The splitPanel contains flexTable at west and detailsPanel at east */
+	protected SplitLayoutPanel splitPanel = new SplitLayoutPanel();
+	
+	/** The detailsPanel will be displayed with the details of the row when row is selected */
+	protected SimplePanel detailsPanel = new SimplePanel();
 	
 	/**
 	 * Creates a new HvTableViewPanel instance.
@@ -80,7 +94,16 @@ public class HvTableViewPanel extends VerticalPanel {
 		}
 		
 		flexTable = new HvFlexTable(headers);
-		add(flexTable.getVisualPanel());
+		
+		splitPanel.addEast(detailsPanel, MainClient.WINDOW_WIDTH/2);
+		splitPanel.setWidgetHidden(detailsPanel, true);
+		splitPanel.setWidgetToggleDisplayAllowed(detailsPanel, true);	
+		splitPanel.add(flexTable.getVisualPanel());
+		splitPanel.setSize("100%", SystemSplitViewPanel.CONTENT_HEIGHT+"px");
+
+		add(splitPanel);
+		
+		setSize("100%", "100%");
 	}
 	
 	/**
@@ -118,5 +141,15 @@ public class HvTableViewPanel extends VerticalPanel {
 			flexTable.addRow(rowData);
 		}
 		flexTable.applyDataRowStyles();
+	}
+	
+	public void setColumnsWidth(int[] columnWidth) {
+		for (int i = 0; i < columnWidth.length; i++) {
+			flexTable.getColumnFormatter().setWidth(i, columnWidth[i]+"px");
+		}
+	}
+	
+	public void addTableListener(TableListener listener) {
+		flexTable.addTableListener(listener);
 	}
 }

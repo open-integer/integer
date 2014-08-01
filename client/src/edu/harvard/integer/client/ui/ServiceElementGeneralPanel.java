@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 
@@ -76,26 +77,26 @@ public class ServiceElementGeneralPanel extends FormPanel {
 		grid.setWidget(1, 0, new Label("Description"));
 		grid.setWidget(1, 1, descTextBox);
 		
-		grid.setWidget(2, 0, new Label("Primary Location"));
-		grid.setWidget(2, 1, locationTextBox);
+		grid.setWidget(2, 0, new Label("Category"));
+		grid.setWidget(2, 1, categoryTextBox);
+		
+		grid.setWidget(3, 0, new Label("Primary Location"));
+		grid.setWidget(3, 1, locationTextBox);
 
-		grid.setWidget(3, 0, new Label("Operational Control ID"));
-		grid.setWidget(3, 1, controlIdTextBox);
+		grid.setWidget(4, 0, new Label("Operational Control ID"));
+		grid.setWidget(4, 1, controlIdTextBox);
 		
-		grid.setWidget(4, 0, new Label("Criticality"));
-		grid.setWidget(4, 1, criticalityTextBox);
+		grid.setWidget(5, 0, new Label("Criticality"));
+		grid.setWidget(5, 1, criticalityTextBox);
 
-		grid.setWidget(5, 0, new Label("Created Date"));
-		grid.setWidget(5, 1, createdTextBox);
+		grid.setWidget(6, 0, new Label("Created Date"));
+		grid.setWidget(6, 1, createdTextBox);
 		
-		grid.setWidget(6, 0, new Label("Update Date"));
-		grid.setWidget(6, 1, updatedTextBox);
+		grid.setWidget(7, 0, new Label("Update Date"));
+		grid.setWidget(7, 1, updatedTextBox);
 		
-		grid.setWidget(7, 0, new Label("Comment"));
-		grid.setWidget(7, 1, commentTextBox);
-		
-		grid.setWidget(8, 0, new Label("Category"));
-		grid.setWidget(8, 1, categoryTextBox);
+		grid.setWidget(8, 0, new Label("Comment"));
+		grid.setWidget(8, 1, commentTextBox);
 
 		grid.getCellFormatter().setWidth(0, 0, "180px");
 		grid.getCellFormatter().setWidth(0, 1, "250px");
@@ -118,27 +119,25 @@ public class ServiceElementGeneralPanel extends FormPanel {
 		nameTextBox.setText(serviceElement.getName());
 		descTextBox.setText(serviceElement.getDescription());
 		
+		Category category = serviceElement.getCategory();
+		categoryTextBox.setText(category != null ? category.toString() : "");
+		
 		ID primaryLocationId = serviceElement.getPrimaryLocation();
-		if (primaryLocationId != null && primaryLocationId.getName() != null)
-			locationTextBox.setText(primaryLocationId.getName());
+		locationTextBox.setText(primaryLocationId != null ? primaryLocationId.getName() : "");
 		
 		ID operationalControlId = serviceElement.getOperationalControlId();
-		if (operationalControlId != null && operationalControlId.getName() != null)
-			controlIdTextBox.setText(operationalControlId.getName());
+		controlIdTextBox.setText(operationalControlId != null ? operationalControlId.getName() : "");
 		
 		criticalityTextBox.setText(""+serviceElement.getServiceElementCriticality());
 		
 		Date createdDate = serviceElement.getCreated();
-		if (createdDate != null && createdDate.toString() != null)
-			createdTextBox.setText(DATE_FORMAT.format(createdDate));
+		createdTextBox.setText(createdDate != null ? DATE_FORMAT.format(createdDate) : "");
 		
 		Date updatedDate = serviceElement.getUpdated();
-		if (updatedDate != null && updatedDate.toString() != null)
-			updatedTextBox.setText(DATE_FORMAT.format(updatedDate));
+		updatedTextBox.setText(updatedDate != null ? DATE_FORMAT.format(updatedDate) : "");
 		
 		String comment = serviceElement.getComment();
-		if (comment != null)
-			commentTextBox.setText(comment);
+		commentTextBox.setText(comment != null ? comment : "");
 
 	}
 	

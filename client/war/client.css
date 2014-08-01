@@ -89,7 +89,7 @@ h4 {
     padding-top: 6px;
 	padding-right: auto;
 	padding-bottom: 6px;
-	padding-left: auto;
+	padding-left: 6px;
 	float: left;
 	display: block;
 }
@@ -102,7 +102,7 @@ h4 {
 	padding-top: 6px;
 	padding-right: auto;
 	padding-bottom: 6px;
-	padding-left: auto;
+	padding-left: 6px;
 	float: left;
 	display: block;
 }
@@ -241,6 +241,10 @@ h4 {
 .FlexTable-EvenRow {
     background-color: white;
     height: 26px;
+}
+
+.FlexTable-Highlighted {
+	background-color: #fffacd;
 }
 
 .FlexTable-Cell {

@@ -144,4 +144,16 @@ public class BaseDAOTest {
 		assert (longAddress.longValue() == 16909060);
 	}
 
+	@Test
+	public void showCidrAddress() {
+		Address address = new Address("1.2.3.4", "255.255.255.0");
+		System.out.println("Address " + address.getAddress());
+		System.out.println("Mask " + address.getMask());
+		
+		System.out.println("CIDR " + Long.bitCount(Address.dottedIPToLong(address.getMask())));
+		
+		System.out.println("Address " + address);
+		
+		
+	}
 }

@@ -234,7 +234,10 @@ public class DistributionManager {
 			if (server.getServerId().equals(serverId)) {
 				String hostUrl = server.getServerAddress().getAddress() + ":"
 						+ server.getPort();
-				logger.info("Using " + hostUrl + " for serverId " + serverId);
+				
+				if (logger.isDebugEnabled())
+					logger.debug("Using " + hostUrl + " for serverId " + serverId);
+				
 				return hostUrl;
 			}
 		}

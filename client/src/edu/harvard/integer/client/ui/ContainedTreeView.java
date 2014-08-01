@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.TreeItem;
 
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.common.topology.ServiceElementType;
 
 /**
  * The Class ContainedTreeView represents a contained tree view object of Integer.
@@ -30,6 +29,12 @@ public class ContainedTreeView extends ScrollPanel {
 	/** The selected service element. */
 	private ServiceElement selectedServiceElement;
 	
+	/** The contained split panel contains tree and detailsTabPanel */
+	private SplitLayoutPanel containedSplitPanel;
+	
+	/** The detailsTabPanel of service element. */
+	private ServiceElementDetailsTabPanel detailsTabPanel;
+	
 	/** The selected timestamp. */
 	private long selectedTimestamp;
 
@@ -40,6 +45,9 @@ public class ContainedTreeView extends ScrollPanel {
 	 * @param detailsTabPanel the details tab panel
 	 */
 	public ContainedTreeView(String title, final SplitLayoutPanel containedSplitPanel, final ServiceElementDetailsTabPanel detailsTabPanel) {
+		this.containedSplitPanel = containedSplitPanel;
+		this.detailsTabPanel = detailsTabPanel;
+		
 		tree.setTitle(title);
 	    tree.setAnimationEnabled(true);
 		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -49,9 +57,15 @@ public class ContainedTreeView extends ScrollPanel {
 				final TreeItem treeItem = event.getSelectedItem();
 				
 				selectedServiceElement = (ServiceElement)treeItem.getUserObject();
-				detailsTabPanel.update(selectedServiceElement);
+				
+				if (selectedServiceElement != null)
+					detailsTabPanel.update(selectedServiceElement);
 				
 				selectedTimestamp = System.currentTimeMillis();
+				
+				// skip if children are already populated
+				if (treeItem.getChildCount() > 0)
+					return;
 				
 				MainClient.integerService.getServiceElementByParentId(selectedServiceElement.getID(), new AsyncCallback<ServiceElement[]>() {
 
@@ -74,22 +88,6 @@ public class ContainedTreeView extends ScrollPanel {
 							item.setUserObject(se);
 							treeItem.addItem(item);
 						}
-						
-						MainClient.integerService.getServiceElementTypeById(
-								selectedServiceElement.getServiceElementTypeId(), 
-								new AsyncCallback<ServiceElementType>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-									}
-
-									@Override
-									public void onSuccess(
-											ServiceElementType serviceElementType) {
-										detailsTabPanel.update(serviceElementType);
-									}
-									
-								});
 					}
 				});
 			}
@@ -102,15 +100,17 @@ public class ContainedTreeView extends ScrollPanel {
 	/**
 	 * Update method will refresh the contained tree view of the object by object's name and the list of service element objects.
 	 *
-	 * @param name the name
+	 * @param  the name
 	 * @param elements the elements
 	 */
-	public void updateTree(String name, ServiceElement[] elements) {
-
+	public void updateTree(ServiceElement serviceElement, ServiceElement[] elements) {
+		containedSplitPanel.setWidgetHidden(detailsTabPanel, false);
+		
 		tree.removeItems();
 	    tree.setAnimationEnabled(true);
 	    TreeItem root = new TreeItem();
-	    root.setText(name);
+	    root.setUserObject(serviceElement);
+	    root.setText(serviceElement.getName());
 	    
 	    for (ServiceElement se : elements) {
 	    	TreeItem item = new TreeItem();

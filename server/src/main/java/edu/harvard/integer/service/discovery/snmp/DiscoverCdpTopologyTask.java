@@ -281,7 +281,8 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			ServiceElement nodeSe = netDiscover.getUnknownServiceElement(cdpConn.getRemoteDeviceId());
 			
 			if ( nodeSe == null ) {
-				nodeSe = new ServiceElement();		
+				nodeSe = new ServiceElement();
+				nodeSe.setCategory(set.getCategory());
 				nodeSe.setUpdated(new Date());
 				nodeSe.setServiceElementTypeId(set.getID());
 				

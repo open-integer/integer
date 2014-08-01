@@ -409,6 +409,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 								 ServiceElement ise = new ServiceElement();
 								 if ( iset == null ) {
 									 iset = new ServiceElementType();
+									 ise.setCategory(set.getCategory());
 									 iset.setCategory(category);
 									 iset.addSignatureValue(null, SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
 									 iset.setVendorSpecificSubType(ifSubType);
@@ -699,6 +700,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 	public ServiceElement createAndDiscoverServiceElement( ServiceElementType set, PhysEntityRow row ) throws IntegerException {
 		
 		ServiceElement se = new ServiceElement();
+		se.setCategory(set.getCategory());
 		
 		if ( discNode.getExistingSE() == null ) {
 			se.setCreated(new Date());

@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 import edu.harvard.integer.client.MainClient;
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.Network;
 
@@ -38,9 +37,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	/** The contained tree view. */
 	public static ContainedTreeView containedTreeView = null;
-
-	/** The selected entity. */
-	//public static BaseEntity selectedEntity;
 
 	/** The network panel. */
 	private NetworkPanel networkPanel = new NetworkPanel();

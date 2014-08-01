@@ -3,11 +3,11 @@ package edu.harvard.integer.client.ui;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import edu.harvard.integer.client.widget.HvTitlePanel;
+import edu.harvard.integer.client.widget.HvTitleBar;
 
 public class NetworkPanel extends VerticalPanel {
 
-	private HvTitlePanel titlePanel = new HvTitlePanel("Network Map");
+	private HvTitleBar titlePanel = new HvTitleBar("Network Map");
 	private NetworkMapPanel networkMapPanel = new NetworkMapPanel(IntegerMap.MAP_WIDTH, IntegerMap.MAP_HEIGHT);
 	
 	public NetworkPanel() {

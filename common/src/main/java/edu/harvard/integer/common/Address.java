@@ -57,13 +57,25 @@ public class Address implements Serializable {
 
 	public Address() {
 		this.address = null;
+		this.mask = null;
 	}
 
 	public Address(String address, String mask) {
 		this.address = address;
 		this.mask = mask;
+		
+		if (this.mask == null)
+			this.mask = "255.255.255.255";
 	}
 
+	@Override
+	public String toString() {
+		if (mask == null)
+			mask = "255.255.255.255";
+		
+		return address + "/" + numberOfBits(mask);
+	}
+	
 	/**
 	 * @return the address
 	 */
@@ -94,6 +106,10 @@ public class Address implements Serializable {
 		this.mask = mask;
 	}
 
+	public static int numberOfBits(String mask) {
+		return Long.bitCount(Address.dottedIPToLong(mask));
+	}
+	
 	public static Long dottedIPToLong(String address) {
 		String[] parts = address.split("\\.");
 

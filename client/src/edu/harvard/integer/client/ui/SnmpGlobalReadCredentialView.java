@@ -25,6 +25,7 @@ public class SnmpGlobalReadCredentialView extends HvTableViewPanel {
 	public SnmpGlobalReadCredentialView(String title, String[] headers) {
 		super(title, headers);
 		addButton.setVisible(false);
+	
 	}
 
 	/**
@@ -35,7 +36,7 @@ public class SnmpGlobalReadCredentialView extends HvTableViewPanel {
 	public void update(SnmpGlobalReadCredential[] result) {
 		if (result == null || result.length == 0) {
 			MainClient.statusPanel.updateStatus("No SnmpGlobalReadCredential");
-			//  return;
+			return;
 		}
 		
 		flexTable.clean();
@@ -44,17 +45,16 @@ public class SnmpGlobalReadCredentialView extends HvTableViewPanel {
 			String name = readCredential.getName();
 			List<Credential> credentialList = readCredential.getCredentials();
 			List<Integer> portList = readCredential.getAlternatePorts();
-			String communityStringList = "Not Supported";
 			
 			StringBuffer credentials = new StringBuffer();
 			for (Credential credential : credentialList)
-				credentials.append(credential.getName()).append(" ");
+				credentials.append(credential.toString()).append(" ");
 			
 			StringBuffer ports = new StringBuffer();
 			for (Integer port : portList)
 				ports.append(port).append(", ");
 			
-			Object[] rowData = { name, communityStringList, credentials.toString(), ports.toString()};
+			Object[] rowData = { name, credentials.toString(), ports.toString()};
 			flexTable.addRow(rowData);
 		}
 		flexTable.applyDataRowStyles();
