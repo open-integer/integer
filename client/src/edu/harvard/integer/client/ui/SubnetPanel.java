@@ -109,7 +109,7 @@ public class SubnetPanel extends VerticalPanel {
 		subnetMapPanel.getSubnetMap().updateNetwork(network);
 	}
 	
-	public void showContainedTreeView(final BaseEntity entity) {
+	public void showContainedTreeView(final ServiceElement serviceElement) {
 		// clear containedSplitPanel first
 		containedSplitPanel.clear();
 		
@@ -121,19 +121,19 @@ public class SubnetPanel extends VerticalPanel {
 	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
 	    containedSplitPanel.add(containedTreeView);
 		
-		MainClient.integerService.getServiceElementByParentId(entity.getID(), new AsyncCallback<ServiceElement[]>() {
+		MainClient.integerService.getServiceElementByParentId(serviceElement.getID(), new AsyncCallback<ServiceElement[]>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				MainClient.statusPanel.showAlert("Failed to receive contained service elements of " + entity.getName());
+				MainClient.statusPanel.showAlert("Failed to receive contained service elements of " + serviceElement.getName());
 			}
 
 			@Override
 			public void onSuccess(ServiceElement[] serviceElements) {
 				subnetSplitPanel.setWidgetHidden(containedSplitPanel, false);
 				
-				MainClient.statusPanel.updateStatus("Received " + serviceElements.length + " contained service elements of " + entity.getName());
-				containedTreeView.updateTree(entity.getName(), serviceElements);
+				MainClient.statusPanel.updateStatus("Received " + serviceElements.length + " contained service elements of " + serviceElement.getName());
+				containedTreeView.updateTree(serviceElement, serviceElements);
 			}
 		});
 	}

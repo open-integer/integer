@@ -306,9 +306,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 		if (entity instanceof Network)
 			SystemSplitViewPanel.showServiceElementMap((Network)entity);
 		else if (entity instanceof ServiceElement) {
-			//SystemSplitViewPanel.showContainedTreeView((ServiceElement)entity);
 			subnetPanel.setSelectedEntity(entity);
-			subnetPanel.showContainedTreeView(entity);
+			subnetPanel.showContainedTreeView((ServiceElement)entity);
 		}
 		setHighLighted(true); // highlighted whenever it gets clicked for now
 	}
