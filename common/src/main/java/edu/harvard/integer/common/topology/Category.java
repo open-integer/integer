@@ -44,8 +44,11 @@ import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 /**
+ * Category is a general type of serviceElement like a disk or Ethernet card
+ * without any vendor specificities.
+ * 
  * @author David Taylor
- *
+ * 
  */
 @Entity
 public class Category extends BaseEntity {
@@ -56,9 +59,9 @@ public class Category extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	private String description = null;
-	
-	@ElementCollection(fetch=FetchType.EAGER)
-	@OrderColumn(name="idx")
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<ID> childIds = null;
 
 	/**
@@ -69,7 +72,8 @@ public class Category extends BaseEntity {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -83,7 +87,8 @@ public class Category extends BaseEntity {
 	}
 
 	/**
-	 * @param childIds the childIds to set
+	 * @param childIds
+	 *            the childIds to set
 	 */
 	public void setChildIds(List<ID> childIds) {
 		this.childIds = childIds;

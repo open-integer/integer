@@ -110,6 +110,10 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 		return discoveryIds;
 	}
 	
+	public void stopDiscoveryByDiscoveryRuleId(ID discoveryRuleId) throws IntegerException {
+		
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getAllDiscoveryRules()

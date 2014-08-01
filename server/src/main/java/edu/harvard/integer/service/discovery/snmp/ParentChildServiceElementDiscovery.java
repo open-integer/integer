@@ -501,7 +501,8 @@ public class ParentChildServiceElementDiscovery extends
 		logger.info("Create Element <" + se.getName() + "> " + " entityClass:" + set.getCategory().getName() 
 				         + " Index:" + row.getIndex() + " VendorType:" + row.getSubTypeValue() );
 		
-	    se.setServiceElementTypeId(set.getID());	    
+	    se.setServiceElementTypeId(set.getID());
+	    se.setCategory(set.getCategory());
 	    /**
 	     * Discover more detail for that service element.
 	     */
@@ -532,7 +533,8 @@ public class ParentChildServiceElementDiscovery extends
 	public ServiceElement createAndDiscoverServiceElement( ServiceElementType set, ParentChildRelationNode row ) throws IntegerException {
 		
 		ServiceElement se = new ServiceElement();
-		
+		se.setCategory(set.getCategory());
+		 
 		if ( discNode.getExistingSE() == null ) {
 			se.setCreated(new Date());
 		}
@@ -540,6 +542,7 @@ public class ParentChildServiceElementDiscovery extends
 			se.setCreated(discNode.getExistingSE().getCreated());
 		}
 		se.setUpdated(new Date());
+	
 		ServiceElement parentSe = null;
 		
 		if ( row.getContainmentValue().equals("0")) {

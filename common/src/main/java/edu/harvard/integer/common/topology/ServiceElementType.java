@@ -72,7 +72,7 @@ public class ServiceElementType extends BaseEntity {
 	 * Currents types that are supported are: Virtual Hardware Software Element
 	 * Software Application See RFCS 2287 and 2564
 	 */
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Category category = null;
 
 	/**

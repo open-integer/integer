@@ -527,7 +527,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		/**
 		 * Setting the general information to the Service Element.
 		 */
-		ServiceElement se = new ServiceElement();		
+		ServiceElement se = new ServiceElement();	
+		se.setCategory(set.getCategory());
 		se.setUpdated(new Date());
 		
 		if ( discNode.getExistingSE() == null ) {
@@ -668,7 +669,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		/**
 		 * Setting the general information to the Service Element.
 		 */
-		ServiceElement se = new ServiceElement();		
+		ServiceElement se = new ServiceElement();
+		se.setCategory(set.getCategory());
 		se.setUpdated(new Date());
 		
 		if ( discNode.getExistingSE() == null ) {
