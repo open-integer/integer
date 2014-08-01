@@ -6,6 +6,8 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.harvard.integer.common.ID;
@@ -79,6 +81,9 @@ public class HvTableViewPanel extends VerticalPanel {
 			add(dockPanel);
 		}
 		
+		SplitLayoutPanel splitPanel = new SplitLayoutPanel();
+		
+		
 		flexTable = new HvFlexTable(headers);
 		add(flexTable.getVisualPanel());
 	}
@@ -118,5 +123,15 @@ public class HvTableViewPanel extends VerticalPanel {
 			flexTable.addRow(rowData);
 		}
 		flexTable.applyDataRowStyles();
+	}
+	
+	public void setColumnsWidth(int[] columnWidth) {
+		for (int i = 0; i < columnWidth.length; i++) {
+			flexTable.getColumnFormatter().setWidth(i, columnWidth[i]+"px");
+		}
+	}
+	
+	public void addTableListener(TableListener listener) {
+		flexTable.addTableListener(listener);
 	}
 }

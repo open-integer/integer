@@ -1,5 +1,11 @@
 package edu.harvard.integer.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gwt.user.client.ui.SourcesTableEvents;
+import com.google.gwt.user.client.ui.TableListener;
+
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvTableViewPanel;
 import edu.harvard.integer.common.topology.DiscoveryRule;
@@ -13,6 +19,7 @@ import edu.harvard.integer.common.topology.DiscoveryRule;
  */
 public class DiscoveryRuleView extends HvTableViewPanel {
 	
+	private List<DiscoveryRule> list = new ArrayList<DiscoveryRule>();
 	/**
 	 * Instantiates a new DiscoveryRule view.
 	 *
@@ -22,6 +29,16 @@ public class DiscoveryRuleView extends HvTableViewPanel {
 	public DiscoveryRuleView(String title, String[] headers) {
 		super(title, headers);
 		addButton.setVisible(false);
+		
+		flexTable.addTableListener( new TableListener(){
+
+			@Override
+			public void onCellClicked(SourcesTableEvents sender, int row,
+					int cell) {
+				DiscoveryRule rule = list.get(row);
+			}
+           
+        });
 	}
 
 	/**
@@ -36,6 +53,7 @@ public class DiscoveryRuleView extends HvTableViewPanel {
 		}
 		
 		flexTable.clean();
+		list.clear();
 		
 		for (DiscoveryRule rule : result) {
 			String name = rule.getName();
@@ -47,6 +65,7 @@ public class DiscoveryRuleView extends HvTableViewPanel {
 			
 			Object[] rowData = { name, description, type, seedsCount, created, modified};
 			flexTable.addRow(rowData);
+			list.add(rule);
 		}
 		flexTable.applyDataRowStyles();
 		
