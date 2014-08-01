@@ -21,11 +21,11 @@ import edu.harvard.integer.client.IntegerServiceAsync;
  * @author  Joel Huang
  * @version 1.0, May 2014
  */
-public class DiscoveryRulePanel extends FormPanel {
+public class StartDiscoveryPanel extends FormPanel {
 
 	private final IntegerServiceAsync integerService = GWT.create(IntegerService.class);
 	
-	public DiscoveryRulePanel() {
+	public StartDiscoveryPanel() {
 		setEncoding(FormPanel.ENCODING_MULTIPART);
 		setMethod(FormPanel.METHOD_POST);
 

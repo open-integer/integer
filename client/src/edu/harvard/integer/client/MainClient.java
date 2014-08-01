@@ -18,7 +18,7 @@ import edu.harvard.integer.client.ui.CalendarPolicyPanel;
 import edu.harvard.integer.client.ui.CapabilityPanel;
 import edu.harvard.integer.client.ui.CapabilityView;
 import edu.harvard.integer.client.ui.ContactPanel;
-import edu.harvard.integer.client.ui.DiscoveryRulePanel;
+import edu.harvard.integer.client.ui.StartDiscoveryPanel;
 import edu.harvard.integer.client.ui.DiscoveryRuleView;
 import edu.harvard.integer.client.ui.IpTopologySeedView;
 import edu.harvard.integer.client.ui.LocationPanel;
@@ -518,7 +518,7 @@ public class MainClient implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				DiscoveryRulePanel panel = new DiscoveryRulePanel();
+				StartDiscoveryPanel panel = new StartDiscoveryPanel();
 				HvDialogBox dialog = new HvDialogBox("Start Discovery",
 						panel);
 				dialog.setSize("400px", "250px");
