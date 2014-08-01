@@ -74,7 +74,7 @@ public class ContainedTreeView extends ScrollPanel {
 							item.setUserObject(se);
 							treeItem.addItem(item);
 						}
-						
+						/*
 						MainClient.integerService.getServiceElementTypeById(
 								selectedServiceElement.getServiceElementTypeId(), 
 								new AsyncCallback<ServiceElementType>() {
@@ -90,6 +90,7 @@ public class ContainedTreeView extends ScrollPanel {
 									}
 									
 								});
+						*/
 					}
 				});
 			}
