@@ -1,8 +1,16 @@
 package edu.harvard.integer.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gwt.user.client.ui.SourcesTableEvents;
+import com.google.gwt.user.client.ui.TableListener;
+
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvTableViewPanel;
+import edu.harvard.integer.client.widget.HvTitlePanel;
 import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 
 /**
@@ -14,6 +22,9 @@ import edu.harvard.integer.common.topology.IpTopologySeed;
  */
 public class IpTopologySeedView extends HvTableViewPanel {
 	
+	private List<IpTopologySeed> list = new ArrayList<IpTopologySeed>();
+	private IpTopologySeedPanel topologySeedPanel = new IpTopologySeedPanel();
+	
 	/**
 	 * Instantiates a new IpTopologySeed view.
 	 *
@@ -23,6 +34,27 @@ public class IpTopologySeedView extends HvTableViewPanel {
 	public IpTopologySeedView(String title, String[] headers) {
 		super(title, headers);
 		addButton.setVisible(false);
+		
+		HvTitlePanel detailsTitlePanel = new HvTitlePanel("IP Topology Seed", topologySeedPanel);
+		detailsPanel.setWidget(detailsTitlePanel);
+		
+		flexTable.addTableListener( new TableListener(){
+
+			@Override
+			public void onCellClicked(SourcesTableEvents sender, int row,
+					int cell) {
+				IpTopologySeed seed = list.get(row-1);
+				
+				if (seed == null)
+					return;
+				
+				topologySeedPanel.update(seed);
+				
+				// show detailsPanel with the rulePanel
+				splitPanel.setWidgetHidden(detailsPanel, false);
+			}
+           
+        });
 	}
 
 	/**
@@ -42,17 +74,17 @@ public class IpTopologySeedView extends HvTableViewPanel {
 			String name = seed.getName();
 			String description = seed.getDescription();
 			String subnet = seed.getSubnet() != null ? seed.getSubnet().toString() : "";
-			String mask = "Not Supported";
 			int radius = seed.getRadius();
 			Long discoveryTimeout = seed.getSnmpTimeoutServiceElementDiscovery();
 			Integer discoveryRetries = seed.getSnmpRetriesServiceElementDiscovery();
 			Long topologyTimeout = seed.getSnmpTimeoutTopologyDiscovery();
 			Integer topologyRetries = seed.getSnmpRetriesTopologyDiscovery();
 			Address gateway = seed.getInitialGateway();
-			String initGateway = gateway != null ? gateway.getAddress() + "/" + gateway.getMask() : "";
+			String initGateway = gateway != null ? gateway.toString() : "";
 			
-			Object[] rowData = { name, description, subnet, mask, radius, discoveryTimeout, discoveryRetries, topologyTimeout, topologyRetries, initGateway};
+			Object[] rowData = { name, description, subnet, radius, discoveryTimeout, discoveryRetries, topologyTimeout, topologyRetries, initGateway};
 			flexTable.addRow(rowData);
+			list.add(seed);
 		}
 		flexTable.applyDataRowStyles();
 		

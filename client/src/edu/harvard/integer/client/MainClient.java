@@ -572,8 +572,8 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				String title = "IP Topology Seeds";
-				final String[] headers = {"Name", "Description", "Subnet", "Mask", "Radius", "Discovery Timeout", "Discovery Retries", "Topology Timeout", "Topology Retries", "Initial Gateway"};
-				final int[] columnWidthes = {100, 150, 100, 100, 100, 80,  80, 80, 80, 120};
+				final String[] headers = {"Name", "Description", "Subnet", "Radius", "Discovery Timeout", "Discovery Retries", "Topology Timeout", "Topology Retries", "Initial Gateway"};
+				final int[] columnWidthes = {100, 150, 100, 100, 80,  80, 80, 80, 120};
 				
 				final IpTopologySeedView ipTopologySeedView = new IpTopologySeedView(title, headers);
 				ipTopologySeedView.setColumnsWidth(columnWidthes);
@@ -607,7 +607,7 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				String title = "SNMP Global Read Credentials";
-				final String[] headers = {"Name", "Community String List", "V3 Credentials", "Alternate Port List"};
+				final String[] headers = {"Name", "V3 Credentials", "Alternate Port List"};
 				final int[] columnWidthes = {150, 250, 200, 150};
 				
 				final SnmpGlobalReadCredentialView view = new SnmpGlobalReadCredentialView(title, headers);
