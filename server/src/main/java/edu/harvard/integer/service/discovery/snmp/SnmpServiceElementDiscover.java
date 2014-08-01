@@ -68,6 +68,7 @@ import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
@@ -684,7 +685,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		SNMP nameAttr = null;
 		if (set.getDefaultNameCababilityId() != null) {
 
-			nameAttr = (SNMP) capMgr.getManagementObjectById(set.getDefaultNameCababilityId()); 
+			for ( ID snmpId : set.getAttributeIds() ) {
+				SNMP tmpSnmp = (SNMP) capMgr.getManagementObjectById(snmpId);
+				if ( tmpSnmp.getCapabilityId().getIdentifier().longValue() == set.getDefaultNameCababilityId().getIdentifier().longValue() ) {
+					nameAttr = tmpSnmp;
+					break;
+				}				
+			}
 			PDU pdu = new PDU();
 			
 			OID o = new OID(nameAttr.getOid());
@@ -1036,7 +1043,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     		 }
     	}
     	se.setParentId(parentSe.getID());
-	    return accessMgr.updateServiceElement(se);
+    	
+    	try {
+	         return accessMgr.updateServiceElement(se);
+    	}
+    	catch ( IntegerException ie ) {
+    		throw ie;
+    	}
 	}
 	
 	
@@ -1057,9 +1070,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			                     DiscoverNode discNode ) throws IntegerException {
 		
 
-		ServiceElementType levelSetType = null;
-		ServiceElement levelSe =  null;
-		String instOid = foundInstance;
+		String instOid = foundInstance;		
+		List<LevelDiscoveredSE> discoveredInstOids = new ArrayList<>();
 		
 		String globalDiscriminatorVal = null;
 		if ( levelOid.getGlobalDiscriminatorOID() != null ) {
@@ -1070,18 +1082,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     		pdu.add(new VariableBinding(new OID(snmp.getOid() + ".0")));
     		PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
     		    		
-    		/*
-    		String deviceVal = rpdu.get(0).getVariable().toString();
-    		if ( snmp.getSyntax() instanceof SnmpEnumList ) {
-    			SnmpEnumList sel = (SnmpEnumList) snmp.getSyntax();
-    			
-    			for ( SnmpEnumValue sev : sel.getValues() ) {				
-    				if ( sev.getValue() == Integer.parseInt(deviceVal) ) {
-    					globalDiscriminatorVal = sev.getName();
-    				}
-    			}
-    		}
-    		*/
     		globalDiscriminatorVal = rpdu.get(0).getVariable().toString();
     		
     		if ( snmp.getTextualConvetion().equals("TruthValue")) {
@@ -1094,10 +1094,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     		}
 		}
 		
-		if ( levelOid.getRelationToParent() != null ) {
+		/**
+		 * First handle the case without parent and child relationship. 
+		 */
+		if ( levelOid.getRelationToParent() != null && instOid == null) {
 			
 			if ( levelOid.getRelationToParent() instanceof SnmpContainmentRelation ) {
-				
+			
 				SnmpContainmentRelation sRelation = (SnmpContainmentRelation) levelOid.getRelationToParent();
 				List<ParentChildMappingIndex> indexTable = getIndexMapping(discNode.getIpAddress() + ":" +  sRelation.getMappingTable().getOid());
 				if ( indexTable == null ) {
@@ -1123,8 +1126,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				
 			    for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
 			    
-			    	
-			    	levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
+			    	ServiceElementType levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
 			    	/**
 			    	 * Skip it if the global discriminator value is not match.
 			    	 */
@@ -1205,17 +1207,28 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			        			}
 			        		}
 			        	}
+			        	
+			            ServiceElement levelSe = null;
 			        	try {
+			        		
 			        		levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
 			        	}
 			        	catch ( Exception e ) {
 			        		continue;
 			        	}
-			        	
 			        	if ( levelSe.getName() == null ) {    		
 			        		levelSe.setName(levelSetType.getName() + " " + instOid);
 			        	}
+			        	if ( levelSe.getName().equals("interface 85")) {
+			        		System.out.println("Break in here.... ");
+			        	}
 			        	levelSe = updateServiceElement(levelSe, levelSetType, parentSe);
+			        	
+			        	LevelDiscoveredSE lds = new LevelDiscoveredSE();
+			        	lds.instOid = instOid;
+			        	lds.levelSe = levelSe;
+			        	lds.levelSetType = levelSetType;
+						discoveredInstOids.add(lds);
 			        	
 		                if ( levelSetType.getCategory().getName().equals("Network") ) {
 							
@@ -1268,134 +1281,261 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			}
 		}
 		else {
-			for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
+			
+			/**
+			 * This is the case no parent and child relationship.
+			 * There are 3 cases.
+			 * 
+			 * First the discriminator OID is null and instance oid is null.
+			 * Second the instance oid is not null.
+			 * Third the discriminator is not null but instance oid is null.
+			 * 
+			 * The current code is handled the first two cases.
+			 * 
+			 */
+			if ( levelOid.getDescriminatorOID() == null && instOid == null ) {
 				
-				levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
-				levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
-				if ( levelSe.getName() == null ) {    		
-	        		levelSe.setName(levelSetType.getName() + " " + instOid);
-	        	}
+				SnmpServiceElementTypeDiscriminator ssetd = levelOid.getDisriminators().get(0);
+				ServiceElementType set = discMgr.getServiceElementTypeById(ssetd.getServiceElementTypeId());
 				
-				levelSe = updateServiceElement(levelSe, levelSetType, parentSe );
-                if ( levelSetType.getCategory().getName().equals("Network") ) {
+				List<ID> ids = set.getAttributeIds();
+				List<SNMP> accessSnmps = new ArrayList<>();
+				List<SNMP> nonAccessSnmps = new ArrayList<>();
+				
+				for ( ID id : ids ) {
 					
-					TopologyElement te = new TopologyElement();
-					
-					String ipaddr = getIpAddressFromSE(levelSe);
-					String mask = getIpMaskFromSE(levelSe);
-					
-					Address a = new Address();
-					a.setAddress(ipaddr);
-					a.setMask(mask);					
-					te.setName(ipaddr);
-					
-					if ( te.getAddress() == null ) {
-						te.setAddress(new ArrayList<Address>());
+					SNMP s = (SNMP) capMgr.getManagementObjectById(id);
+					if ( s.getMaxAccess() == null || s.getMaxAccess() == MaxAccess.NotAccessible ) {
+						nonAccessSnmps.add(s);
 					}
-					te.getAddress().add(a);
-					te.setCreated(new Date());
-					te.setServiceElementId(levelSe.getID());
-					te.setLayer(LayerTypeEnum.Two);
+					else {
+						accessSnmps.add(s);
+					}
+				}
+				
+				OID[] oidColumns = new OID[accessSnmps.size()];
+				for ( int i=0; i<accessSnmps.size(); i++ ) {
 					
-					te = topologyMgr.updateTopologyElement(te);
-					int ifIndex = getIfIndex(levelSe);
-					TopologyNode tn = new TopologyNode(te, ifIndex);
-					discNode.addTopologyNode(tn);
+					SNMP s = accessSnmps.get(i);
+					oidColumns[i] = new OID(s.getOid());
+				}
+				
+				List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), oidColumns);
+				for ( TableEvent tblEvent : tblEvents ) {
+					
+					List<IndexSNMPValue> indexVals = new ArrayList<>();
+					if ( nonAccessSnmps.size() > 0 ) {
+						
+						SNMPTable snmpTbl = (SNMPTable) levelOid.getContextOID();
+						List<SNMP> indexs =  snmpTbl.getIndex();
+						for ( SNMP ss : nonAccessSnmps ) {
+							
+							//
+							// If index size is 1, we know the whole part of table index is
+							// the non access SNMP value.
+							//
+							if ( indexs.size() == 1 ) {
+								SNMP is = indexs.get(0);
+								if ( is.getOid().equals(ss.getOid()) ) {
+								
+									IndexSNMPValue indexVal = new IndexSNMPValue();
+									indexVal.indexSNMP = is;
+									indexVal.indexVal = tblEvent.getIndex().toString();
+									
+									indexVals.add(indexVal);
+									
+								}
+							}
+							else {
+								for ( int j=0; j<indexs.size(); j++ ) {
+									
+									SNMP is = indexs.get(j);
+									if ( is.getOid().equals(ss.getOid()) ) {
+									
+										IndexSNMPValue indexVal = new IndexSNMPValue();
+										indexVal.indexSNMP = is;
+										indexVal.indexVal =  Integer.toString(tblEvent.getIndex().get(j));
+										indexVals.add(indexVal);
+									}
+								}
+							}
+						}
+					}
+					
+					ServiceElement se = createServiceElementFromType(discNode, set, tblEvent, indexVals);
+					se = updateServiceElement(se, set, discNode.getAccessElement());
+					
+					LevelDiscoveredSE lds = new LevelDiscoveredSE();
+					lds.instOid = tblEvent.getIndex().toString();
+					lds.levelSe = se;
+					lds.levelSetType = set;
+					
+					discoveredInstOids.add(lds);
 				}
 			}
+			else if ( instOid != null ){
+				
+				for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
+					
+					ServiceElementType levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
+					ServiceElement levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
+					if ( levelSe.getName() == null ) {    		
+		        		levelSe.setName(levelSetType.getName() + " " + instOid);
+		        	}
+					
+					levelSe = updateServiceElement(levelSe, levelSetType, parentSe );
+					LevelDiscoveredSE lds = new LevelDiscoveredSE();
+					lds.instOid = instOid;
+					lds.levelSe = levelSe;
+					lds.levelSetType = levelSetType;
+					
+					discoveredInstOids.add(lds);
+					
+					
+	                if ( levelSetType.getCategory().getName().equals("Network") ) {
+						
+						TopologyElement te = new TopologyElement();
+						
+						String ipaddr = getIpAddressFromSE(levelSe);
+						String mask = getIpMaskFromSE(levelSe);
+						
+						Address a = new Address();
+						a.setAddress(ipaddr);
+						a.setMask(mask);					
+						te.setName(ipaddr);
+						
+						if ( te.getAddress() == null ) {
+							te.setAddress(new ArrayList<Address>());
+						}
+						te.getAddress().add(a);
+						te.setCreated(new Date());
+						te.setServiceElementId(levelSe.getID());
+						te.setLayer(LayerTypeEnum.Two);
+						
+						te = topologyMgr.updateTopologyElement(te);
+						int ifIndex = getIfIndex(levelSe);
+						TopologyNode tn = new TopologyNode(te, ifIndex);
+						discNode.addTopologyNode(tn);
+					}
+				}
+			}			
 		}
 		
 		/**
 		 * Go through the next level recursively continue discover.
 		 */
 		if ( levelOid.getChildren() != null ) {
-			for ( SnmpLevelOID nextLevel : levelOid.getChildren() ) {
+			
+			for ( LevelDiscoveredSE lds : discoveredInstOids ) {
 				
-				if ( nextLevel.getRelationToParent() != null && nextLevel.getRelationToParent() instanceof SnmpContainmentRelation ) {
-					SnmpContainmentRelation sRelation = (SnmpContainmentRelation) nextLevel.getRelationToParent();
+				for ( SnmpLevelOID nextLevel : levelOid.getChildren() ) {
 					
-					List<ParentChildMappingIndex> indexTable = getIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid());
-					if ( indexTable == null ) {
+					if ( nextLevel.getRelationToParent() != null && nextLevel.getRelationToParent() instanceof SnmpContainmentRelation ) {
+						SnmpContainmentRelation sRelation = (SnmpContainmentRelation) nextLevel.getRelationToParent();
 						
-						indexTable = new ArrayList<>();
-						
-						OID[] aliasMap = new OID[1];
-						aliasMap[0] = new OID(sRelation.getMappingOid().getOid());
-						List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
-						
-						for ( TableEvent te : tblEvents ) {
+						//
+						// If Mapping table is same as the context OID of levelOID,
+						// We do not need to search in information on the mapping table.
+						//
+						//
+						if ( sRelation.getMappingTable().getOid().equals(levelOid.getContextOID().getOid()) ) {
 							
-							String childIndex = te.getIndex().toString();
-							String mappingTblIndex = te.getColumns()[0].getVariable().toString();
-							
-							ParentChildMappingIndex pcmi = new ParentChildMappingIndex(mappingTblIndex, sRelation.getMappingType());
-							pcmi.setChildIndex(childIndex);
-							
-							indexTable.add(pcmi);
+							 ManagementObjectValue<?> mval = findAttributeValueFromSE(sRelation.getMappingOid(), lds.levelSe);
+							 if ( mval != null ) {
+								 levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
+						        		  nextLevel.getContextOID().getOid(), lds.instOid, mval.getValue().toString(), discNode );
+							 }
+							 else {
+								 logger.warn("Missing attribute " + sRelation.getMappingOid().getName());
+							 }
 						}
-						addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexTable);									
-					}	
-					List<SNMP> indexSnmps = sRelation.getMappingTable().getIndex();
-					int indexLocation = 0;	
-				    for ( SNMP snmp : indexSnmps ) {
-				        	
-				        OID contextO = new OID(nextLevel.getContextOID().getOid());
-				        OID indexO = new OID(snmp.getOid());
-				        	
-				        if ( indexO.startsWith(contextO) ) {
-				        	break;
-				        }							        	
-				        indexLocation++;
-				    }
-				    if ( indexLocation < indexSnmps.size() ) {
-				    	
-				    	 ParentChildMappingIndex pcmi = findMappingIndex(indexTable,  instOid, indexLocation);
-					     if ( pcmi != null ) {
-					          levelDiscovery( nextLevel, levelSetType, levelSe, nextLevel.getContextOID().getOid(), instOid, null, discNode );
-					     }
-				    }
-				}
-				else {
-					
-					List<String> instances = getInstanceMappingTbl().get(nextLevel.getContextOID().getOid());
-					if ( instances == null ) {
-						
-						instances = new ArrayList<>();
-						ServiceElementType targetSet = discMgr.getServiceElementTypeById(nextLevel.getDisriminators().get(0).getServiceElementTypeId());
-						SNMP s = (SNMP) capMgr.getManagementObjectById(targetSet.getAttributeIds().get(0));
-						
-
-						OID[] aliasMap = new OID[1];
-						aliasMap[0] = new OID(s.getOid());
-						List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
-						
-						for ( TableEvent te : tblEvents ) {						
-							instances.add(te.getIndex().toString());
-						}
-						getInstanceMappingTbl().put(nextLevel.getContextOID().getOid(), instances);
-					}		
-					List<SNMP> indexSnmps =  ((SNMPTable)nextLevel.getContextOID()).getIndex();
-					int indexLocation = 0;
-				    for ( SNMP snmp : indexSnmps ) {
-				        	
-				        OID contextO = new OID(nextLevel.getContextOID().getOid());
-				        OID indexO = new OID(snmp.getOid());
-				        	
-				        if ( indexO.startsWith(contextO) ) {
-				        	break;
-				        }							        	
-				        indexLocation++;
-				    }
-					for ( String i : instances ) {
-						
-						if ( indexLocation == 0 ) {
-							if ( i.startsWith(instOid) ) {
-								 levelDiscovery( nextLevel, levelSetType, levelSe, levelOid.getContextOID().getOid(), instOid, i, discNode );
-								break;
-							}
+						else {
+							List<ParentChildMappingIndex> indexTable = getIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid());
+							if ( indexTable == null ) {
+								
+								indexTable = new ArrayList<>();
+								
+								OID[] aliasMap = new OID[1];
+								aliasMap[0] = new OID(sRelation.getMappingOid().getOid());
+								List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
+								
+								for ( TableEvent te : tblEvents ) {
+									
+									String childIndex = te.getIndex().toString();
+									String mappingTblIndex = te.getColumns()[0].getVariable().toString();
+									
+									ParentChildMappingIndex pcmi = new ParentChildMappingIndex(mappingTblIndex, sRelation.getMappingType());
+									pcmi.setChildIndex(childIndex);
+									
+									indexTable.add(pcmi);
+								}
+								addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexTable);									
+							}	
+							List<SNMP> indexSnmps = sRelation.getMappingTable().getIndex();
+							int indexLocation = 0;	
+						    for ( SNMP snmp : indexSnmps ) {
+						        	
+						        OID contextO = new OID(nextLevel.getContextOID().getOid());
+						        OID indexO = new OID(snmp.getOid());
+						        	
+						        if ( indexO.startsWith(contextO) ) {
+						        	break;
+						        }							        	
+						        indexLocation++;
+						    }
+						    if ( indexLocation < indexSnmps.size() ) {
+						    	
+						    	 ParentChildMappingIndex pcmi = findMappingIndex(indexTable,  lds.instOid, indexLocation);
+							     if ( pcmi != null ) {
+							          levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
+							        		  nextLevel.getContextOID().getOid(), lds.instOid, null, discNode );
+							     }
+						    }
 						}
 					}
-				}				
+					else {
+						
+						List<String> instances = getInstanceMappingTbl().get(nextLevel.getContextOID().getOid());
+						if ( instances == null ) {
+							
+							instances = new ArrayList<>();
+							ServiceElementType targetSet = discMgr.getServiceElementTypeById(nextLevel.getDisriminators().get(0).getServiceElementTypeId());
+							SNMP s = (SNMP) capMgr.getManagementObjectById(targetSet.getAttributeIds().get(0));
+							
+
+							OID[] aliasMap = new OID[1];
+							aliasMap[0] = new OID(s.getOid());
+							List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
+							
+							for ( TableEvent te : tblEvents ) {						
+								instances.add(te.getIndex().toString());
+							}
+							getInstanceMappingTbl().put(nextLevel.getContextOID().getOid(), instances);
+						}		
+						List<SNMP> indexSnmps =  ((SNMPTable)nextLevel.getContextOID()).getIndex();
+						int indexLocation = 0;
+					    for ( SNMP snmp : indexSnmps ) {
+					        	
+					        OID contextO = new OID(nextLevel.getContextOID().getOid());
+					        OID indexO = new OID(snmp.getOid());
+					        	
+					        if ( indexO.startsWith(contextO) ) {
+					        	break;
+					        }							        	
+					        indexLocation++;
+					    }
+						for ( String i : instances ) {
+							
+							if ( indexLocation == 0 ) {
+								if ( i.startsWith(lds.instOid) ) {
+									 levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
+											 levelOid.getContextOID().getOid(), lds.instOid, i, discNode );
+									break;
+								}
+							}
+						}
+					}	
+				}
 			}
 		}
 		
@@ -1451,6 +1591,25 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	}
 	
 	
+	/**
+	 * 
+	 * @param snmp
+	 * @param se
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private ManagementObjectValue<?> findAttributeValueFromSE( SNMP searchSnmp, ServiceElement se ) throws IntegerException {
+		
+		for ( ManagementObjectValue<?> mval : se.getAttributeValues() ) {
+			
+			SNMP snmp =  (SNMP) capMgr.getManagementObjectById(mval.getManagementObject());
+			 if ( snmp.getIdentifier().longValue() == searchSnmp.getIdentifier().longValue() ) {
+				 return mval;
+			 }	
+		}
+		return null;
+	}
+	
 
 
 	public class IndexSNMPValue {
@@ -1459,6 +1618,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		SNMP indexSNMP;
 	}
 	
+	
+	public class LevelDiscoveredSE {
+		
+		String instOid;
+		ServiceElementType levelSetType = null;
+		ServiceElement levelSe =  null;
+	}
 	
 	
 
