@@ -67,4 +67,14 @@ snmpContainment:
           contextOID: vtpVlanEntry
           disriminators:
              - serviceElementTypeName: ciscoVtpVlan
+          children:
+             - name: vlanVurtualIfMapping
+               contextOID: ifEntry
+               containmentRelationship:
+                  mappingContext: ifEntry
+                  mappingTable:  vtpVlanEntry
+                  mappingOid: vtpVlanIfIndex
+                  mappingType: InstanceOnly
+               disriminators:
+                  - serviceElementTypeName: interface   
           
