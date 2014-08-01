@@ -136,6 +136,10 @@ public class ParentChildServiceElementDiscovery extends
 					
 						if ( snmpLevel.getRelationToParent() == null ) {	
 							
+							levelDiscovery(snmpLevel, discNode.getTopServiceElementType(), 
+								           discNode.getAccessElement(), null, null, null, discNode);
+							
+							/*
 							if ( snmpLevel.getDescriminatorOID() == null ) {
 						
 								SnmpServiceElementTypeDiscriminator ssetd = snmpLevel.getDisriminators().get(0);
@@ -173,10 +177,10 @@ public class ParentChildServiceElementDiscovery extends
 										List<SNMP> indexs =  snmpTbl.getIndex();
 										for ( SNMP ss : nonAccessSnmps ) {
 											
-											/**
-											 * If index size is 1, we know the whole part of table index is
-											 * the non access SNMP value.
-											 */
+											//
+											// If index size is 1, we know the whole part of table index is
+											// the non access SNMP value.
+											//
 											if ( indexs.size() == 1 ) {
 												SNMP is = indexs.get(0);
 												if ( is.getOid().equals(ss.getOid()) ) {
@@ -233,7 +237,9 @@ public class ParentChildServiceElementDiscovery extends
 									}									
 								}
 							}
-						}						
+							*/
+						}
+						
 					}
 					else {
 					
