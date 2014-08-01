@@ -8,7 +8,6 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -528,6 +527,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 
+	/**
+	 * Creates the discovery rules link.
+	 */
 	private void createDiscoveryRulesLink() {
 		Element element = (Element) Document.get().getElementById("discoveryRules");
 		Anchor anchor = Anchor.wrap(element);
@@ -564,6 +566,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the ip topology seeds link.
+	 */
 	private void createIpTopologySeedsLink() {
 		Element element = (Element) Document.get().getElementById("ipTopologySeeds");
 		Anchor anchor = Anchor.wrap(element);
@@ -599,6 +604,9 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Creates the snmp global read credentials.
+	 */
 	private void createSnmpGlobalReadCredentials() {
 		Element element = (Element) Document.get().getElementById("snmpGlobalReadCredentials");
 		Anchor anchor = Anchor.wrap(element);
@@ -607,8 +615,8 @@ public class MainClient implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				String title = "SNMP Global Read Credentials";
-				final String[] headers = {"Name", "V3 Credentials", "Alternate Port List"};
-				final int[] columnWidthes = {150, 250, 200, 150};
+				final String[] headers = {"Name", "Credentials", "Alternate Port List"};
+				final int[] columnWidthes = {150, 300, 150};
 				
 				final SnmpGlobalReadCredentialView view = new SnmpGlobalReadCredentialView(title, headers);
 				view.setColumnsWidth(columnWidthes);
