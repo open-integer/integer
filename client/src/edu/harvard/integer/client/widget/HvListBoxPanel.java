@@ -93,13 +93,23 @@ public class HvListBoxPanel extends ListBox {
 	}
 
 	/**
-	 * Sets the up down button visible.
+	 * Sets the Up and Down buttons visible.
 	 *
-	 * @param visible the new up down button visible
+	 * @param visible the up and down buttons
 	 */
 	public void setUpDownButtonVisible(boolean visible) {
 		upButton.setVisible(visible);
 		downButton.setVisible(visible);
+	}
+	
+	/**
+	 * Sets the Add and Delete buttons visible.
+	 *
+	 * @param visible the add and delete buttons
+	 */
+	public void setAddDeleteButtonVisible(boolean visible) {
+		addButton.setVisible(visible);
+		deleteButton.setVisible(visible);
 	}
 	
 }
