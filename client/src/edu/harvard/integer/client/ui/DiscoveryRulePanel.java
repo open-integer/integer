@@ -68,7 +68,7 @@ public class DiscoveryRulePanel extends FormPanel {
 		// You can use the CellFormatter to affect the layout of the grid's
 		// cells.
 		grid.getCellFormatter().setWidth(0, 0, "150px");
-		grid.getCellFormatter().setWidth(0, 1, "250px");
+		grid.getCellFormatter().setWidth(0, 1, "300px");
 
 		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
 		formatter.setHorizontalAlignment(0, 1,

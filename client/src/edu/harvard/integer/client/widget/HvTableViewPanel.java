@@ -95,7 +95,7 @@ public class HvTableViewPanel extends VerticalPanel {
 		
 		flexTable = new HvFlexTable(headers);
 		
-		splitPanel.addEast(detailsPanel, MainClient.WINDOW_WIDTH/3);
+		splitPanel.addEast(detailsPanel, MainClient.WINDOW_WIDTH/2);
 		splitPanel.setWidgetHidden(detailsPanel, true);
 		splitPanel.setWidgetToggleDisplayAllowed(detailsPanel, true);	
 		splitPanel.add(flexTable.getVisualPanel());

@@ -20,6 +20,8 @@ public class HvFlexTable extends FlexTable {
 	/** The Constant HeaderRowIndex. */
 	private static final int HeaderRowIndex = 0;
 	
+	private int highlightedRow = -1;
+	
 	/** The headers. */
 	private String[] headers;
 	
@@ -63,15 +65,8 @@ public class HvFlexTable extends FlexTable {
 	 * Apply data row styles.
 	 */
 	public void applyDataRowStyles() {
-		HTMLTable.RowFormatter rf = getRowFormatter();
-
-		for (int row = 1; row < getRowCount(); ++row) {
-			if ((row % 2) != 0) {
-				rf.addStyleName(row, "FlexTable-OddRow");
-			} else {
-				rf.addStyleName(row, "FlexTable-EvenRow");
-			}
-		}
+		for (int row = 1; row < getRowCount(); ++row)
+			resetRowBackground(row);
 	}
 	
 	/**
@@ -140,5 +135,26 @@ public class HvFlexTable extends FlexTable {
 			setWidget(rowIndex, cell, widget);
 		}
 		rowIndex++;
+	}
+	
+	public void setHighlighted(int row) {
+		if (highlightedRow > -1) {
+			getRowFormatter().removeStyleName(row, "FlexTable-Highlighted");
+			resetRowBackground(highlightedRow);
+		}
+		
+		getRowFormatter().addStyleName(row, "FlexTable-Highlighted");
+		
+		highlightedRow = row;
+	}
+	
+	private void resetRowBackground(int row) {
+		HTMLTable.RowFormatter rf = getRowFormatter();
+		
+		if ((row % 2) != 0) {
+			rf.addStyleName(row, "FlexTable-OddRow");
+		} else {
+			rf.addStyleName(row, "FlexTable-EvenRow");
+		}
 	}
 }
