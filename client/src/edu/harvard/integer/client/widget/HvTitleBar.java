@@ -3,11 +3,11 @@ package edu.harvard.integer.client.widget;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SimplePanel;
 
-public class HvTitlePanel extends SimplePanel{
+public class HvTitleBar extends SimplePanel{
 
 	private HTML titleHtml;
 	
-	public HvTitlePanel(String title) {
+	public HvTitleBar(String title) {
 		titleHtml = new HTML(title);
 		add(titleHtml);
 		setStyleName("titlePanel");

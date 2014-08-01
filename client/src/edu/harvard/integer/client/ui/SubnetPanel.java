@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvIconButton;
-import edu.harvard.integer.client.widget.HvTitlePanel;
+import edu.harvard.integer.client.widget.HvTitleBar;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.Network;
@@ -25,7 +25,7 @@ public class SubnetPanel extends VerticalPanel {
 	public static String SUBNETMAP_TITLE = "Subnet ";
 	
 	/** The title panel. */
-	private HvTitlePanel titlePanel = new HvTitlePanel(SUBNETMAP_TITLE);
+	private HvTitleBar titlePanel = new HvTitleBar(SUBNETMAP_TITLE);
 	
 	/** The toolbar panel. */
 	private HorizontalPanel toolbarPanel = new HorizontalPanel();
