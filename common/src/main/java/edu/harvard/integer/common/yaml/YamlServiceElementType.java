@@ -50,12 +50,21 @@ public class YamlServiceElementType {
 	 */
 	private String extendServiceElementType;
 	
-
 	private YamlAccessMethod accessMethod = null;
 
 	private List<YamlManagementObject> managementObjects = null;
  	private List<YamlServiceElementTypeTranslate>  serviceElementTypeTranslates = null;
+ 	
+ 	private List<YamlServiceElementAssociationType> associations;
 	
+
+	public List<YamlServiceElementAssociationType> getAssociations() {
+		return associations;
+	}
+
+	public void setAssociations(List<YamlServiceElementAssociationType> associations) {
+		this.associations = associations;
+	}
 
 	public String getVendor() {
 		return vendor;

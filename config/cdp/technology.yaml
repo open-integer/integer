@@ -56,6 +56,15 @@ technologies:
 
                 - name: cdp-interface-cdpInterfaceCosForUntrustedPort
                   description: Indicates the value to be sent by COS for Untrusted Ports TLV.
+                  
+                - name: vmVlanType
+                  description: The type of VLAN membership assigned to this port.
+                  
+                - name: vmVlan
+                  description: The VLAN id of the VLAN the port is assigned to when vmVlanType is set to static or dynamic.
+                  
+                - name: vmPortStatus
+                  description: An indication of the current VLAN status of the port.
 
           - name: cdp-cache
             index: [ cdp-cache-ifIndex, cdp-cache-deviceIndex ]

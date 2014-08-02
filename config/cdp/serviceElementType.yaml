@@ -30,7 +30,33 @@ serviceElementTypes:
           - name: cdpGlobalHoldTime
             uri: cdpGlobalHoldTime
             capability: cdp-global-cdpGlobalHoldTime
-
+            
+    - name: ciscoInterface
+      description: CISCO interface which contains CISCO own attributes and associations with other SE.
+      vendor: cisco
+      extendServiceElementType: interface
+      accessMethod: 
+          protocol: SNMP
+      serviceElementTypeTranslates:
+          - name: ciscoInterface
+            mapping: direct
+            category: interface
+      associations:
+         - name: ifVlanAssociation
+           associateServiceElementTypeName: ciscoVtpVlan
+           managementObjects:
+              - name: vmVlanType
+                uri: vmVlanType
+                capability: vmVlanType
+                       
+              - name: vmVlan
+                uri: vmVlan
+                capability: vmVlan
+                       
+              - name: vmPortStatus
+                uri: vmPortStatus
+                capability: vmPortStatus
+                       
     - name: cisco-cdp-interface
       description: Cisco enterprise CDP MIB, per-interface attributes.
       vendor: cisco

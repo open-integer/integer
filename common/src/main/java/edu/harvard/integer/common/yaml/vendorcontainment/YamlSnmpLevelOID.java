@@ -35,6 +35,8 @@ package edu.harvard.integer.common.yaml.vendorcontainment;
 
 import java.util.List;
 
+import edu.harvard.integer.common.yaml.YamlSnmpAssociation;
+
 /**
  * @author David Taylor
  * 
@@ -66,6 +68,8 @@ public class YamlSnmpLevelOID {
 	
 	private YamlSnmpParentChildRelationship parentChildRelationship = null;
 	
+	private List<YamlSnmpAssociation>  associations;
+
 	private String category = null;
 	
 	/**
@@ -203,4 +207,12 @@ public class YamlSnmpLevelOID {
 		this.globalDescriminatorOID = globalDescriminatorOID;
 	}
 
+	
+	public List<YamlSnmpAssociation> getAssociations() {
+		return associations;
+	}
+
+	public void setAssociations(List<YamlSnmpAssociation> associations) {
+		this.associations = associations;
+	}
 }
