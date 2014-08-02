@@ -70,6 +70,7 @@ import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
+import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
@@ -77,6 +78,7 @@ import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.common.topology.ValueOpertorEnum;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
+import edu.harvard.integer.common.yaml.YamlServiceElementAssociationType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
 import edu.harvard.integer.common.yaml.YamlService;
@@ -97,6 +99,7 @@ import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
@@ -368,9 +371,9 @@ public class YamlManager extends BaseManager implements
 
 		ServiceElementTypeDAO serviceElementTypeDao = persistanceManager
 				.getServiceElementTypeDAO();
-
-		parseServiceElements(load.getServiceElementTypes(),
-				serviceElementTypeDao);
+		
+		ServiceElementAssociationTypeDAO associationDao = persistanceManager.getServiceElementAssociationTypeDAO();
+		parseServiceElements(load.getServiceElementTypes(), serviceElementTypeDao, associationDao );
 
 		return "Success";
 	}
@@ -387,7 +390,8 @@ public class YamlManager extends BaseManager implements
 	 */
 	private void parseServiceElements(
 			List<YamlServiceElementType> serviceElementTypes,
-			ServiceElementTypeDAO serviceElementTypeDao)
+			ServiceElementTypeDAO serviceElementTypeDao,
+			ServiceElementAssociationTypeDAO associationDao )
 			throws IntegerException {
 
 		for (YamlServiceElementType yamlServiceElementType : serviceElementTypes) {
@@ -430,7 +434,55 @@ public class YamlManager extends BaseManager implements
 					}
 
 				} else {
+					
+					List<ID> associationIds = new ArrayList<>();
+					if ( yamlServiceElementType.getAssociations() != null  ) {
+						
+						for ( YamlServiceElementAssociationType yassType : yamlServiceElementType.getAssociations() ) {
+							
+							ServiceElementAssociationType assType = new ServiceElementAssociationType();
+							assType.setName(yassType.getName());
+							
+							ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
+							ServiceElementType serviceElementType = dao.findByName(yassType.getAssociateServiceElementTypeName());
+							assType.setServiceElementTypeId(serviceElementType.getID());
+							
+							if ( yassType.getManagementObjects() != null ) {
+								
+								List<ID> managementObjects = new ArrayList<ID>();
+								for (YamlManagementObject yamlManagementObject : yassType.getManagementObjects()) {
 
+									SNMPDAO snmpDao = persistanceManager.getSNMPDAO();
+									SNMP snmp = snmpDao.findByName(yamlManagementObject.getName());
+									if (snmp == null) {
+										logger.error("No SNMP object found with name "
+												+ yamlManagementObject.getName());
+									} else {
+										CapabilityDAO capabilityDAO = persistanceManager.getCapabilityDAO();
+										Capability capability = capabilityDAO
+												.findByName(yamlManagementObject.getCapability());
+										if (capability == null) {
+											logger.error("No Capability found with name "
+													+ yamlManagementObject.getCapability()
+													+ " ServiceElement "
+													+ yamlServiceElementType.getName());
+										} else {
+											snmp.setCapabilityId(capability.getID());
+											snmp = snmpDao.update(snmp);
+											managementObjects.add(snmp.getID());
+										}
+									}
+								}
+								
+								if ( managementObjects.size() > 0 ) {
+									assType.setAttributeIds(managementObjects);
+								}
+								assType = associationDao.update(assType);
+								associationIds.add(assType.getID());
+							}
+						}
+					}
+					
 					ServiceElementType serviceElementType = serviceElementTypeDao
 							.findByName(typeTranslate.getName());
 					if (serviceElementType == null) {
@@ -438,9 +490,12 @@ public class YamlManager extends BaseManager implements
 						serviceElementType = new ServiceElementType();
 						serviceElementType.setCategory(managementObjectManager.getCategoryByName(typeTranslate.getCategory()));
 						serviceElementType.setName(typeTranslate.getName());
-						serviceElementType.setDescription(yamlServiceElementType.getDescription());
-						
+						serviceElementType.setDescription(yamlServiceElementType.getDescription());	
 					}
+					if ( associationIds.size() > 0 ) {
+						serviceElementType.setAssociations(associationIds);
+					}
+					
 					serviceElementType.addSignatureValue(null, SignatureTypeEnum.Vendor,
 								yamlServiceElementType.getVendor());
 
