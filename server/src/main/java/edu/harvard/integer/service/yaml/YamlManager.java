@@ -76,6 +76,7 @@ import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.common.topology.ValueOpertorEnum;
 import edu.harvard.integer.common.yaml.YamlDomainData;
+import edu.harvard.integer.common.yaml.YamlLocation;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
@@ -1274,6 +1275,28 @@ public class YamlManager extends BaseManager implements
 		logger.info("YAML Object is " + yamlService.getClass().getName());
 		
 		YamlServiceParser parser = new YamlServiceParser(yamlService);
+		
+		return parser.parse();
+	}
+	
+	@Override
+	public String importLocation(String content) throws IntegerException {
+		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
+				YamlLocation[].class, getClass().getClassLoader()));
+
+		YamlLocation[] yamlLocations = null;
+
+		try {
+			yamlLocations = (YamlLocation[]) yaml.load(content);
+		} catch (Throwable e) {
+			logger.error("Unexpected error reading in YAML! " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
+		}
+
+		logger.info("YAML Object is " + yamlLocations.getClass().getName());
+		
+		YamlLocationParser parser = new YamlLocationParser(yamlLocations);
 		
 		return parser.parse();
 	}

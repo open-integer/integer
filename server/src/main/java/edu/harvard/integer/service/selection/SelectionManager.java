@@ -55,6 +55,7 @@ import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
+import edu.harvard.integer.common.user.Location;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -151,6 +152,7 @@ public class SelectionManager extends BaseManager implements
 		filter.setCriticalities(Arrays.asList(CriticalityEnum.values()));
 		filter.setLinkTechnologies(routing);
 
+		filter.setLocations(createLocationList((Location[]) persistenceManager.getLocationDAO().findAll()));
 		List<Filter> filters = new ArrayList<Filter>();
 		filters.add(filter);
 
@@ -158,6 +160,18 @@ public class SelectionManager extends BaseManager implements
 		selection.setFilters(filters);
 
 		return selection;
+	}
+
+	/**
+	 * @param findAll
+	 * @return
+	 */
+	private List<ID> createLocationList(Location[] locations) {
+		List<ID> ids = new ArrayList<ID>();
+		 for (Location location : locations) {
+			ids.add(location.getID());
+		}
+		return ids;
 	}
 
 	private List<FilterNode> createCategoryList(Category[] categories) throws IntegerException {

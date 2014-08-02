@@ -52,6 +52,7 @@ import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.TopologyElement;
+import edu.harvard.integer.common.user.Location;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -61,6 +62,7 @@ import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
+import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
 
 /**
  * 
@@ -386,5 +388,36 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		return dao.findBySourceDestAddress(sourceAddress, destAddress);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getAllLocations()
+	 */
+	@Override
+	public Location[] getAllLocations() throws IntegerException {
+		LocationDAO dao = persistenceManager.getLocationDAO();
+		
+		return dao.findAll();
+	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#updateLocation(edu.harvard.integer.common.user.Location)
+	 */
+	@Override
+	public Location updateLocation(Location location) throws IntegerException {
+		LocationDAO dao = persistenceManager.getLocationDAO();
+		
+		return dao.update(location);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getLocationById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public Location getLocationById(ID locationId) throws IntegerException {
+		LocationDAO dao = persistenceManager.getLocationDAO();
+		
+		return dao.findById(locationId);
+	}
 }

@@ -55,6 +55,16 @@ public class SnmpV2cCredentail extends Credential implements Serializable {
 	private String readCommunity = null;
 	private String writeCommunity = null;
 
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.BaseEntity#toString()
+	 */
+	@Override
+	public String toString() {
+		
+		return readCommunity;
+	}
+
 	/**
 	 * @return the readCommunity
 	 */

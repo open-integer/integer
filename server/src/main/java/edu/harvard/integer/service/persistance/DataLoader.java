@@ -118,11 +118,54 @@ public class DataLoader implements DataLoaderInterface {
 			loadSQLData(dataPreLoadFile);
 			break;
 
+		case Location:
+			loadLocationData(dataPreLoadFile);
+			break;
+			
 		default:
 			logger.error("Unknown data file type "
 					+ dataPreLoadFile.getFileType() + " Can not load!!");
 		}
 
+	}
+
+
+	/**
+	 * @param dataPreLoadFile
+	 */
+	private void loadLocationData(DataPreLoadFile dataPreLoadFile) throws IntegerException {
+
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+			return;
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
+			return;
+		}
+
+		String data = FileUtil.readInMIB(file);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
+		
+		if (manager != null) {
+			try {
+				manager.importLocation(data);
+
+				dataPreLoadFile.setTimeLoaded(new Date());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+
+			} catch (IntegerException e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			}
+		}
+		
 	}
 
 

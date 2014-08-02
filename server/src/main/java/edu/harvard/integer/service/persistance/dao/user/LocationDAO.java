@@ -56,7 +56,7 @@ public class LocationDAO extends BaseDAO {
 	 */
 	public LocationDAO(EntityManager entityManger, Logger logger) {
 		super(entityManger, logger, Location.class);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

@@ -33,6 +33,8 @@
 
 package edu.harvard.integer.common.user;
 
+import javax.persistence.Entity;
+
 import edu.harvard.integer.common.BaseEntity;
 
 /**
@@ -42,11 +44,198 @@ import edu.harvard.integer.common.BaseEntity;
  * 
  * 
  */
+@Entity
 public class Location extends BaseEntity {
 
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
+
+	private String address1 = null;
+
+	private String address2 = null;
+
+	private String city = null;
+
+	private String state = null;
+
+	private String postalCode = null;
+
+	private String locationType = null;
+
+	private String floor = null;
+
+	private String room = null;
+
+	private String rack = null;
+
+	private String shelf = null;
+	
+	private String other = null;
+
+	/**
+	 * @return the address1
+	 */
+	public String getAddress1() {
+		return address1;
+	}
+
+	/**
+	 * @param address1
+	 *            the address1 to set
+	 */
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	/**
+	 * @return the address2
+	 */
+	public String getAddress2() {
+		return address2;
+	}
+
+	/**
+	 * @param address2
+	 *            the address2 to set
+	 */
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city
+	 *            the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * @param state
+	 *            the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the postalCode
+	 */
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	/**
+	 * @param postalCode
+	 *            the postalCode to set
+	 */
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	/**
+	 * @return the locationType
+	 */
+	public String getLocationType() {
+		return locationType;
+	}
+
+	/**
+	 * @param locationType
+	 *            the locationType to set
+	 */
+	public void setLocationType(String locationType) {
+		this.locationType = locationType;
+	}
+
+	/**
+	 * @return the floor
+	 */
+	public String getFloor() {
+		return floor;
+	}
+
+	/**
+	 * @param floor
+	 *            the floor to set
+	 */
+	public void setFloor(String floor) {
+		this.floor = floor;
+	}
+
+	/**
+	 * @return the room
+	 */
+	public String getRoom() {
+		return room;
+	}
+
+	/**
+	 * @param room
+	 *            the room to set
+	 */
+	public void setRoom(String room) {
+		this.room = room;
+	}
+
+	/**
+	 * @return the rack
+	 */
+	public String getRack() {
+		return rack;
+	}
+
+	/**
+	 * @param rack
+	 *            the rack to set
+	 */
+	public void setRack(String rack) {
+		this.rack = rack;
+	}
+
+	/**
+	 * @return the shelf
+	 */
+	public String getShelf() {
+		return shelf;
+	}
+
+	/**
+	 * @param shelf
+	 *            the shelf to set
+	 */
+	public void setShelf(String shelf) {
+		this.shelf = shelf;
+	}
+
+	/**
+	 * @return the other
+	 */
+	public String getOther() {
+		return other;
+	}
+
+	/**
+	 * @param other the other to set
+	 */
+	public void setOther(String other) {
+		this.other = other;
+	}
 
 }

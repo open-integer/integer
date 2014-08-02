@@ -47,7 +47,8 @@ public enum PreloadFileType {
 	VendorContainmentYaml("yaml"),
 	CategoryYaml("yaml"),
 	SQL("sql"), 
-	Service("yaml");
+	Service("yaml"),
+	Location("yaml");
 	
 	String dataSubDir = null;
 	
