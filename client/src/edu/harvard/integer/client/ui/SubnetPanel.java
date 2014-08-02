@@ -31,10 +31,10 @@ public class SubnetPanel extends VerticalPanel {
 	private HorizontalPanel toolbarPanel = new HorizontalPanel();
 	
 	/** The contained split panel contains ContainedTreeView and Detail Tab panel */
-	private SplitLayoutPanel containedSplitPanel = new SplitLayoutPanel(SystemSplitViewPanel.SPLITTER_SIZE);
+	private SplitLayoutPanel containedSplitPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
 	
 	/** The subnet split panel contains subnetMapPanel and containedTreeView */
-	private SplitLayoutPanel subnetSplitPanel = new SplitLayoutPanel(SystemSplitViewPanel.SPLITTER_SIZE);
+	private SplitLayoutPanel subnetSplitPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
 	
 	/** The subnet map panel. */
 	private SubnetMapPanel subnetMapPanel = new SubnetMapPanel(this, IntegerMap.MAP_WIDTH, IntegerMap.MAP_HEIGHT);

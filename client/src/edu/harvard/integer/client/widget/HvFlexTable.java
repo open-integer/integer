@@ -35,14 +35,14 @@ public class HvFlexTable extends FlexTable {
 	 */
 	public HvFlexTable(String[] headers) {
 		setWidth("100%");
-		setCellSpacing(0);
+		setCellSpacing(1);
 		addStyleName("flexTable");
 		
 		this.headers = headers;
 		addHeader();
 		
 		scrollPanel = new ScrollPanel(this);
-		scrollPanel.setSize("1000px", "500px");
+		scrollPanel.setSize("1800px", "800px");
 	}
 
 	/**

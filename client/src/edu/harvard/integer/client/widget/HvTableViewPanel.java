@@ -44,13 +44,11 @@ public class HvTableViewPanel extends VerticalPanel {
 	/** The flex table. */
 	protected HvFlexTable flexTable;
 	
-	protected CellTable cellTable;
-	
 	/** The add button. */
 	protected HvIconButton addButton = new HvIconButton("Add");
 	
 	/** The splitPanel contains flexTable at west and detailsPanel at east */
-	protected SplitLayoutPanel splitPanel = new SplitLayoutPanel();
+	protected SplitLayoutPanel splitPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
 	
 	/** The detailsPanel will be displayed with the details of the row when row is selected */
 	protected SimplePanel detailsPanel = new SimplePanel();
@@ -96,11 +94,13 @@ public class HvTableViewPanel extends VerticalPanel {
 		
 		flexTable = new HvFlexTable(headers);
 		
-		splitPanel.addEast(detailsPanel, MainClient.WINDOW_WIDTH/2);
+		splitPanel.addEast(detailsPanel, 450);
 		splitPanel.setWidgetHidden(detailsPanel, true);
 		splitPanel.setWidgetToggleDisplayAllowed(detailsPanel, true);	
 		splitPanel.add(flexTable.getVisualPanel());
 		splitPanel.setSize("100%", SystemSplitViewPanel.CONTENT_HEIGHT+"px");
+		splitPanel.setWidgetMinSize(detailsPanel, 20);
+		splitPanel.setWidgetSnapClosedSize(detailsPanel, 30);
 
 		add(splitPanel);
 		

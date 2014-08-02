@@ -220,9 +220,9 @@ h4 {
 .flexTable {
 	border-collapse: collapse;
   	background-color:  #efefef;
-  	margin: 0;
-  	padding: 0;
-  	border:0;
+  	margin: 2px;
+  	padding: 3px;
+  	border: 1px solid #a0a0a0;
 }
 
 .flexTableHeader {

@@ -20,9 +20,6 @@ import edu.harvard.integer.common.topology.Network;
  */
 public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
-	/** The Constant SPLITTER_SIZE. */
-	public static final int SPLITTER_SIZE = 4;
-	
 	/** The Constant CONTENT_WIDTH. */
 	public static final int CONTENT_WIDTH = 1200;
 	
@@ -48,7 +45,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 * Instantiates a new system split view panel.
 	 */
 	public SystemSplitViewPanel() {
-		super(SPLITTER_SIZE);
+		super(MainClient.SPLITTER_SIZE);
         
 		// clean up tabPanel
 		tabPanel.clear();
