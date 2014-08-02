@@ -47,6 +47,7 @@ public class DiscoveryRuleView extends HvTableViewPanel {
 					return;
 				
 				rulePanel.update(rule);
+				flexTable.setHighlighted(row);
 				
 				// show detailsPanel with the rulePanel
 				splitPanel.setWidgetHidden(detailsPanel, false);

@@ -152,9 +152,9 @@ public class HvFlexTable extends FlexTable {
 		HTMLTable.RowFormatter rf = getRowFormatter();
 		
 		if ((row % 2) != 0) {
-			rf.addStyleName(row, "FlexTable-OddRow");
+			rf.setStyleName(row, "FlexTable-OddRow");
 		} else {
-			rf.addStyleName(row, "FlexTable-EvenRow");
+			rf.setStyleName(row, "FlexTable-EvenRow");
 		}
 	}
 }

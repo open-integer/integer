@@ -49,6 +49,7 @@ public class IpTopologySeedView extends HvTableViewPanel {
 					return;
 				
 				topologySeedPanel.update(seed);
+				flexTable.setHighlighted(row);
 				
 				// show detailsPanel with the rulePanel
 				splitPanel.setWidgetHidden(detailsPanel, false);
