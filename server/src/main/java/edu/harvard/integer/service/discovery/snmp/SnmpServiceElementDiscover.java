@@ -1444,8 +1444,15 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							
 							 ManagementObjectValue<?> mval = findAttributeValueFromSE(sRelation.getMappingOid(), lds.levelSe);
 							 if ( mval != null ) {
-								 levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
+								 
+								 String instVal = mval.getValue().toString();
+								 if ( instVal.equals("0") && nextLevel.getContextOID() instanceof SNMPTable ) {
+									 logger.info("Found 0 instance oid of table index " + nextLevel.getContextOID().getOid() + " skip the row");
+								 }
+								 else {
+								     levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
 						        		  nextLevel.getContextOID().getOid(), lds.instOid, mval.getValue().toString(), discNode );
+								 }
 							 }
 							 else {
 								 logger.warn("Missing attribute " + sRelation.getMappingOid().getName());
