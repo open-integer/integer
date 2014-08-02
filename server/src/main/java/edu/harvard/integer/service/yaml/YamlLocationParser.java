@@ -33,66 +33,68 @@
 
 package edu.harvard.integer.service.yaml;
 
-import java.util.Date;
-
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.technology.Service;
-import edu.harvard.integer.common.yaml.YamlService;
+import edu.harvard.integer.common.user.Location;
+import edu.harvard.integer.common.yaml.YamlLocation;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
-import edu.harvard.integer.service.technology.TechnologyManagerInterface;
+import edu.harvard.integer.service.topology.TopologyManagerInterface;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public class YamlServiceParser {
+public class YamlLocationParser {
 
-	private YamlService yamlService = null;
+	private YamlLocation[] yamlLocations = null;
 	
-	private Service[] allServices = null;
+	private Location[] allLocations = null;
 	
-	public YamlServiceParser(YamlService servie) {
-		this.yamlService = servie;
+	/**
+	 * @param yamlLocations
+	 */
+	public YamlLocationParser(YamlLocation[] yamlLocations) {
+		this.yamlLocations = yamlLocations;
 	}
-	
+
 	public String parse() throws IntegerException {
-		
-		if (yamlService == null)
+
+		if (yamlLocations == null)
+			return "NoData";
+
+		if (yamlLocations.length == 0)
 			return "NoData";
 		
-		if (yamlService.getBusinessServices() == null)
-			return "NoData";
 		
-		TechnologyManagerInterface technologyManager = DistributionManager.getManager(ManagerTypeEnum.TechnologyManager);
-		allServices = technologyManager.getAllServices();
+		TopologyManagerInterface topologyManager = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
+		allLocations = topologyManager.getAllLocations();
 		
-		for (YamlService service : yamlService.getBusinessServices()) {
-			Service dbService = getServiceByName(service.getName());
+		for (YamlLocation location : yamlLocations) {
+			Location dbLocation = getLocationByName(location.getBuildingName());
 			
-			if (dbService.getIdentifier() == null) {
-				dbService.setName(service.getName());
-				dbService.setCreated(new Date());
+			if (dbLocation.getIdentifier() == null) {
+				dbLocation.setName(location.getBuildingName());
 			}
 			
-			if (dbService.getDescription() == null || !dbService.getDescription().equals(service)) {
-				dbService.setDescription(service.getDescription());
-				dbService.setLastModified(new Date());
-				
-				technologyManager.updateService(dbService);
-			}
+			dbLocation.setAddress1(location.getAddr1());
+			dbLocation.setAddress2(location.getAddr2());
+			dbLocation.setCity(location.getCity());
+			dbLocation.setState(location.getStateProvence());
+			dbLocation.setPostalCode(location.getPostalCode());
+			dbLocation.setOther(location.getBuildingID());
 			
+			topologyManager.updateLocation(dbLocation);
 		}
 		
 		return "success";
 	}
 	
-	private Service getServiceByName(String name) {
-		for (Service service : allServices) {
-			if (service.getName().equals(name))
-				return service;
+	private Location getLocationByName(String name) {
+		for (Location location : allLocations) {
+			if (location.getName().equals(name))
+				return location;
 		}
 		
-		return new Service();
+		return new Location();
 	}
 }

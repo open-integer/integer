@@ -1,0 +1,4248 @@
+- buildingID: 00010
+  country: US
+  stateProvence: MA
+  city: Jamaica Plain
+  postalCode: 02130
+  addr1: 125 Arborway
+  addr2:
+  buildingName: Hunnewell Building
+- buildingID: 00012
+  country: US
+  stateProvence: MA
+  city: Jamaica Plain
+  postalCode: 02131
+  addr1: 1300 Centre St
+  addr2:
+  buildingName: Weld Hill Research and Admin Building
+- buildingID: 00015
+  country: US
+  stateProvence: MA
+  city: Jamaica Plain
+  postalCode: 02130
+  addr1: 125 Arborway
+  addr2:
+  buildingName: Maintenance Building
+- buildingID: 00020
+  country: US
+  stateProvence: MA
+  city: Jamaica Plain
+  postalCode: 02130
+  addr1: 1050 Centre St
+  addr2:
+  buildingName: Dana Greenhouse
+- buildingID: 00022
+  country: US
+  stateProvence: MA
+  city: Jamaica Plain
+  postalCode: 02130
+  addr1: 1050 Centre St
+  addr2:
+  buildingName: Cold Storage Building
+- buildingID: 00025
+  country: US
+  stateProvence: MA
+  city: Jamaica Plain
+  postalCode: 02130
+  addr1: 1090 Centre St
+  addr2:
+  buildingName: 1090 Centre Street
+- buildingID: 00026
+  country: US
+  stateProvence: MA
+  city: Roslindale
+  postalCode: 02131
+  addr1: 163 Walter St
+  addr2:
+  buildingName: 163 Walter Street
+- buildingID: 00091
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 32 Quincy St
+  addr2:
+  buildingName: 32 Quincy Street
+- buildingID: 00100
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 485 Broadway
+  addr2:
+  buildingName: Sackler
+- buildingID: 00107
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 27 Kirkland St
+  addr2:
+  buildingName: Adolphus Busch Hall
+- buildingID: 00108
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1746 Cambridge St
+  addr2:
+  buildingName: 1746 Cambridge Street
+- buildingID: 00110
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: 200 Innerbelt Road
+  addr2:
+  buildingName: Sommerville Site
+- buildingID: 00470
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 79-81 Garden St
+  addr2:
+  buildingName: Kittredge Hall - Hu Press
+- buildingID: 00600
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 23 Harvard Yard
+  addr2:
+  buildingName: Memorial Church Appleton Chapel
+- buildingID: 00610
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 21 Kirkland St
+  addr2:
+  buildingName: Sparks House
+- buildingID: 00615
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 21 Kirkland St
+  addr2:
+  buildingName: Sparks House Garage
+- buildingID: 00700
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1 Francis Ave
+  addr2:
+  buildingName: Lippmann House
+- buildingID: 00951
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Quincy St
+  addr2:
+  buildingName: Faculty Club
+- buildingID: 01130
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 75 Mt Auburn St
+  addr2:
+  buildingName: Smith Center Health Services
+- buildingID: 01200
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Ware St
+  addr2:
+  buildingName: 10 Ware Street
+- buildingID: 01201
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 65 Mt Auburn St
+  addr2:
+  buildingName: 65 Rear Mount Auburn Tele Building
+- buildingID: 01205
+  country: US
+  stateProvence: MA
+  city: Medford
+  postalCode: 02155
+  addr1: 144 Murray Street
+  addr2:
+  buildingName: Murray Street 144
+- buildingID: 01300
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 175 North Harvard St
+  addr2:
+  buildingName: 175 North Harvard Street Building and Gr
+- buildingID: 01330
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 36 Oxford St
+  addr2:
+  buildingName: Oxford Street Substation
+- buildingID: 01389
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Cowperthwaite St
+  addr2:
+  buildingName: Cowperthwaite Garage
+- buildingID: 01391
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Felton St
+  addr2:
+  buildingName: Broadway Garage
+- buildingID: 01392
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: N/A Harvard Yard
+  addr2:
+  buildingName: Johnston Gate House
+- buildingID: 01393
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Harvard Yard
+  addr2:
+  buildingName: Widener Gate Lodge
+- buildingID: 01395
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 52 Oxford St
+  addr2:
+  buildingName: Oxford Street Garage
+- buildingID: 01396
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 1 Western Ave
+  addr2:
+  buildingName: One Western Avenue Garage
+- buildingID: 01397
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6-8 Everett St
+  addr2:
+  buildingName: Everett Street Northwest Corner Garage
+- buildingID: 01701
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 46 Blackstone St
+  addr2:
+  buildingName: Blackstone Steam Plant
+- buildingID: 01702
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 46 Blackstone St
+  addr2:
+  buildingName: Blackstone North
+- buildingID: 01703
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 24 Blackstone St
+  addr2:
+  buildingName: Blackstone South
+- buildingID: 01707
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 46 Blackstone St
+  addr2:
+  buildingName: Blackstone West
+- buildingID: 01850
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 25 Mt Auburn St
+  addr2:
+  buildingName: Agen 25 Mount Auburn Street
+- buildingID: 02111
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 79 J. F. Kennedy St
+  addr2:
+  buildingName: Littauer Center
+- buildingID: 02112
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 79 J. F. Kennedy St
+  addr2:
+  buildingName: Belfer Center
+- buildingID: 02113
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1 Eliot St
+  addr2:
+  buildingName: David Rubenstein Building
+- buildingID: 02114
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 15 Eliot St
+  addr2:
+  buildingName: Taubman Building
+- buildingID: 02116
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 100 Mt Auburn St
+  addr2:
+  buildingName: 104 Mount Auburn Street
+- buildingID: 02121
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1 Brattle Sq
+  addr2:
+  buildingName: 1 Brattle Square
+- buildingID: 02122
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 50 Church St
+  addr2:
+  buildingName: 50 Church Street
+- buildingID: 02124
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 University Rd
+  addr2:
+  buildingName: 20 University Road
+- buildingID: 02240
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 42-48 Quincy St
+  addr2:
+  buildingName: Gund Hall
+- buildingID: 02241
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 7 Sumner Rd
+  addr2:
+  buildingName: 7 Sumner Road
+- buildingID: 02243
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 9 Ash St
+  addr2:
+  buildingName: 9 Ash Street
+- buildingID: 02244
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Sumner Rd
+  addr2:
+  buildingName: 20 Sumner Road
+- buildingID: 02245
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 40 Kirkland St
+  addr2:
+  buildingName: 40 Kirkland Street
+- buildingID: 02246
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 42 Kirkland St
+  addr2:
+  buildingName: 42 Kirkland Street
+- buildingID: 02311
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 45 Francis Ave
+  addr2:
+  buildingName: Andover Hall
+- buildingID: 02312
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 45 Francis Ave
+  addr2:
+  buildingName: Andover-Harvard Theological Library
+- buildingID: 02315
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 14 Divinity Ave
+  addr2:
+  buildingName: Divinity Hall
+- buildingID: 02316
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 47 Francis Ave
+  addr2:
+  buildingName: Rockefeller Hall
+- buildingID: 02318
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 44 Francis Ave
+  addr2:
+  buildingName: Jewett House
+- buildingID: 02320
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 56 Francis Ave
+  addr2:
+  buildingName: Carriage House
+- buildingID: 02321
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 42 Francis Ave
+  addr2:
+  buildingName: Center for the Study of World Religions
+- buildingID: 02400
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8 Appian Way
+  addr2:
+  buildingName: Read House
+- buildingID: 02401
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 7 Appian Way
+  addr2:
+  buildingName: Nichols House
+- buildingID: 02402
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Appian Way
+  addr2:
+  buildingName: Gutman Library
+- buildingID: 02403
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 13 Appian Way
+  addr2:
+  buildingName: Longfellow Hall
+- buildingID: 02404
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 14 Appian Way
+  addr2:
+  buildingName: Larsen Hall
+- buildingID: 02405
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Garden St
+  addr2:
+  buildingName: Westengard House 3 Garden Street
+- buildingID: 02410
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 44 Brattle St
+  addr2:
+  buildingName: 44 Brattle Street
+- buildingID: 02510
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1515 Massachusetts Ave
+  addr2:
+  buildingName: Austin Hall
+- buildingID: 02512
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1511 Massachusetts Ave
+  addr2:
+  buildingName: Gannett House
+- buildingID: 02514
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1545 Massachusetts Ave
+  addr2:
+  buildingName: Langdell Hall
+- buildingID: 02516
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1557 Massachusetts Ave
+  addr2:
+  buildingName: Lewis International Law Center
+- buildingID: 02518
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1525 Massachusetts Ave
+  addr2:
+  buildingName: Griswold Hall
+- buildingID: 02520
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1563 Massachusetts Ave
+  addr2:
+  buildingName: Pound Hall
+- buildingID: 02522
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1575 Massachusetts Ave
+  addr2:
+  buildingName: Hauser Hall
+- buildingID: 02524
+  country: US
+  stateProvence: MA
+  city: Jamaica Plain
+  postalCode: 02130
+  addr1: 122 Boylston St
+  addr2:
+  buildingName: Legal Services Center
+- buildingID: 02532
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 23 Everett St
+  addr2:
+  buildingName: 23 Everett Street
+- buildingID: 02535
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 125 Mt Auburn St
+  addr2:
+  buildingName: 125 Mount Auburn Street
+- buildingID: 02541
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1585 Massachusetts Ave
+  addr2:
+  buildingName: Wasserstein Hall
+- buildingID: 02572
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Everett St
+  addr2:
+  buildingName: Story Hall
+- buildingID: 02573
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Everett St
+  addr2:
+  buildingName: Shaw Hall
+- buildingID: 02574
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Everett St
+  addr2:
+  buildingName: Ames Hall
+- buildingID: 02575
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Everett St
+  addr2:
+  buildingName: Dane Hall
+- buildingID: 02580
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 18 Everett St
+  addr2:
+  buildingName: Holmes Hall
+- buildingID: 02582
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1533-1541 Massachusetts Ave
+  addr2:
+  buildingName: Hastings Hall
+- buildingID: 02586
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1651 Massachusetts Ave
+  addr2:
+  buildingName: North Hall
+- buildingID: 02587
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1637 Massachusetts Ave
+  addr2:
+  buildingName: 1637 Massachusetts Avenue
+- buildingID: 02588
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Mellens St
+  addr2:
+  buildingName: Baker Hall
+- buildingID: 02589
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Mellen St
+  addr2:
+  buildingName: 3 Mellen Street
+- buildingID: 02700
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02215
+  addr1: 199-207 Park Dr
+  addr2:
+  buildingName: Shattuck International House
+- buildingID: 02740
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 665 Huntington Ave
+  addr2:
+  buildingName: SPH1
+- buildingID: 02750
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 655 Huntington Ave
+  addr2:
+  buildingName: SPH2
+- buildingID: 02770
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 9 Bow St
+  addr2:
+  buildingName: 9 Bow Street
+- buildingID: 02780
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Plympton St
+  addr2:
+  buildingName: 22 Plympton Street
+- buildingID: 02790
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 677 Huntington Ave
+  addr2:
+  buildingName: Kresge Building (SPH3)
+- buildingID: 02805
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 401 Park Dr
+  addr2:
+  buildingName: Landmark Center
+- buildingID: 02810
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02120
+  addr1: 35 Wigglesworth St
+  addr2:
+  buildingName: Wigglesworth Building
+- buildingID: 02815
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 1613 Tremont St
+  addr2:
+  buildingName: 1613 Tremont Street
+- buildingID: 02820
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 708 Huntington Ave
+  addr2:
+  buildingName: 708 Huntington Avenue
+- buildingID: 02825
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02120
+  addr1: 25 Wigglesworth St
+  addr2:
+  buildingName: 25 Wigglesworth Street
+- buildingID: 02830
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 716 Huntington Ave
+  addr2:
+  buildingName: 716 Huntington Avenue
+- buildingID: 02840
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 718 Huntington Ave
+  addr2:
+  buildingName: 718 Huntington Avenue
+- buildingID: 02845
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 90 Smith St
+  addr2:
+  buildingName: 90 Smith Street
+- buildingID: 02850
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02445
+  addr1: 841 Parker St
+  addr2:
+  buildingName: 841 Parker Street
+- buildingID: 02860
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 1633-1639 Tremont St
+  addr2:
+  buildingName: 1633/1635/1637/1639 Tremont Street
+- buildingID: 02870
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 1552-1556 Tremont St
+  addr2:
+  buildingName: 1552-1556 Tremont Street
+- buildingID: 02875
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 300 The Fenway
+  addr2:
+  buildingName: Simmons
+- buildingID: 03022
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 84-86 Brattle St
+  addr2:
+  buildingName: Cronkhite Center
+- buildingID: 03032
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 James St
+  addr2:
+  buildingName: Schlesinger Library
+- buildingID: 03052
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 34 Concord Ave
+  addr2:
+  buildingName: 34 Concord Avenue
+- buildingID: 03062
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 36 Concord Ave
+  addr2:
+  buildingName: 36 Concord Avenue
+- buildingID: 03072
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 38 Concord Ave
+  addr2:
+  buildingName: 38 Concord Avenue
+- buildingID: 03082
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 40 Concord Ave
+  addr2:
+  buildingName: 40 Concord Avenue
+- buildingID: 03091
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6-8 Garden St
+  addr2:
+  buildingName: Byerly Hall
+- buildingID: 03097
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 83 Brattle St
+  addr2:
+  buildingName: 83 Brattle Street
+- buildingID: 03099
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 James St
+  addr2:
+  buildingName: Agassiz House
+- buildingID: 03101
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Garden St
+  addr2:
+  buildingName: Fay House
+- buildingID: 03103
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 76 Brattle St
+  addr2:
+  buildingName: Greenleaf House
+- buildingID: 03105
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 18 Mason St
+  addr2:
+  buildingName: Knafel Center
+- buildingID: 03107
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 79-81 Brattle St
+  addr2:
+  buildingName: Alumnae House
+- buildingID: 03109
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 77 Brattle St
+  addr2:
+  buildingName: Buckingham House
+- buildingID: 03111
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 69 Brattle St
+  addr2:
+  buildingName: Putnam House
+- buildingID: 03231
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Harvard Yard
+  addr2:
+  buildingName: Canaday Hall A
+- buildingID: 03232
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Harvard Yard
+  addr2:
+  buildingName: Canaday Hall
+- buildingID: 03234
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Harvard Yard
+  addr2:
+  buildingName: Canaday Hall C
+- buildingID: 03242
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 64 Linnaean St
+  addr2:
+  buildingName: Currier House Master's Residence
+- buildingID: 03251
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 945 Memorial Dr
+  addr2:
+  buildingName: Dunster House
+- buildingID: 03252
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 945 Memorial Dr
+  addr2:
+  buildingName: Dunster House Master's Residence
+- buildingID: 03261
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 80 J. F. Kennedy St
+  addr2:
+  buildingName: Eliot-Kirkland Link
+- buildingID: 03262
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 967 Memorial Dr
+  addr2:
+  buildingName: Eliot House Master's Residence
+- buildingID: 03263
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 101 Dunster St
+  addr2:
+  buildingName: Eliot House
+- buildingID: 03281
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 28 Dewolfe St
+  addr2:
+  buildingName: Leverett Library Building
+- buildingID: 03282
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 25 Dewolfe St
+  addr2:
+  buildingName: Leverett Master's House
+- buildingID: 03283
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 40 Dewolfe St
+  addr2:
+  buildingName: Leverett Tower F
+- buildingID: 03285
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 40 Dewolfe St
+  addr2:
+  buildingName: Leverett Tower G
+- buildingID: 03291
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Holyoke Pl
+  addr2:
+  buildingName: Lowell House
+- buildingID: 03292
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 50 Holyoke St
+  addr2:
+  buildingName: Lowell Master's House
+- buildingID: 03306
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 46 Linnaean St
+  addr2:
+  buildingName: Pforzheimer Master's Residence
+- buildingID: 03313
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 58 Plympton St
+  addr2:
+  buildingName: Quincy House Library
+- buildingID: 03315
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 58 Plympton St
+  addr2:
+  buildingName: Quincy House New Residence Hall
+- buildingID: 03321
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Harvard Yard
+  addr2:
+  buildingName: Wigglesworth Hall A
+- buildingID: 03322
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Harvard Yard
+  addr2:
+  buildingName: Wigglesworth Hall B
+- buildingID: 03323
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Harvard Yard
+  addr2:
+  buildingName: Wigglesworth Hall C
+- buildingID: 03334
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 966 Memorial Dr
+  addr2:
+  buildingName: Winthrop Master's House
+- buildingID: 03341
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Sacramento St
+  addr2:
+  buildingName: 3 Sacramento Street at Dudley House
+- buildingID: 03343
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5-7 Linden St
+  addr2:
+  buildingName: 5-7 Linden Street
+- buildingID: 03344
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 54 Dunster St
+  addr2:
+  buildingName: 54 Dunster Street
+- buildingID: 03350
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Holyoke St
+  addr2:
+  buildingName: Apley Court at Dudley House
+- buildingID: 03351
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 63 Mt Auburn St
+  addr2:
+  buildingName: Claverly Hall
+- buildingID: 03352
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 7 Harvard Yard
+  addr2:
+  buildingName: Grays Hall
+- buildingID: 03353
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Prescott St
+  addr2:
+  buildingName: Greenough Hall
+- buildingID: 03354
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 13 Harvard Yard
+  addr2:
+  buildingName: Hollis Hall
+- buildingID: 03355
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 19 Harvard Yard
+  addr2:
+  buildingName: Holworthy Hall
+- buildingID: 03356
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 14-18 Mill St
+  addr2:
+  buildingName: House Masters Garages
+- buildingID: 03360
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 2 Prescott St
+  addr2:
+  buildingName: Hurlbut Hall
+- buildingID: 03361
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8 Harvard Yard
+  addr2:
+  buildingName: Lehman Hall
+- buildingID: 03362
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 14 Harvard Yard
+  addr2:
+  buildingName: Lionel Hall
+- buildingID: 03363
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11 Harvard Yard
+  addr2:
+  buildingName: Massachusetts Hall
+- buildingID: 03365
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 9 Harvard Yard
+  addr2:
+  buildingName: Matthews Hall
+- buildingID: 03366
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Prescott St
+  addr2:
+  buildingName: Morton Prince House
+- buildingID: 03367
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Harvard Yard
+  addr2:
+  buildingName: Mower Hall
+- buildingID: 03368
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 387 Harvard St
+  addr2:
+  buildingName: Pennypacker Hall
+- buildingID: 03369
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 18 Harvard Yard
+  addr2:
+  buildingName: Phillips Brooks House
+- buildingID: 03370
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Bond St
+  addr2:
+  buildingName: Quadrangle Athletic Facility
+- buildingID: 03371
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17 Harvard Yard
+  addr2:
+  buildingName: Stoughton Hall
+- buildingID: 03372
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Harvard Yard
+  addr2:
+  buildingName: Straus Hall
+- buildingID: 03373
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 21 Harvard Yard
+  addr2:
+  buildingName: Thayer Hall
+- buildingID: 03374
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Harvard Yard
+  addr2:
+  buildingName: Weld Hall
+- buildingID: 03375
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Holyoke St
+  addr2:
+  buildingName: Farkas Hall
+- buildingID: 03376
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 113 Walker St
+  addr2:
+  buildingName: 113 Walker Street
+- buildingID: 03760
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 15 Oxford St
+  addr2:
+  buildingName: Cruft Laboratory
+- buildingID: 03761
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 58 Oxford St
+  addr2:
+  buildingName: Engineering Science Laboratory
+- buildingID: 03762
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 33 Oxford St
+  addr2:
+  buildingName: Maxwell-Dworkin
+- buildingID: 03764
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 25 Oxford St
+  addr2:
+  buildingName: Pierce Hall
+- buildingID: 03840
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 55 North Harvard St
+  addr2:
+  buildingName: Blodgett Pool
+- buildingID: 03845
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 45 North Harvard St
+  addr2:
+  buildingName: Lavietes Pavilion
+- buildingID: 03851
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 67  North Harvard St
+  addr2:
+  buildingName: Bright Hockey Center
+- buildingID: 03852
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 736 Soldiers Field Rd
+  addr2:
+  buildingName: Bright Rink Refrigeration
+- buildingID: 03855
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 47 North Harvard St
+  addr2:
+  buildingName: Dillon Field House
+- buildingID: 03860
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 69 North Harvard St
+  addr2:
+  buildingName: Gordon Track and Tennis Center
+- buildingID: 03865
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02142
+  addr1: 45 Memorial Dr
+  addr2:
+  buildingName: Harvard Yacht Club
+- buildingID: 03870
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1515 Massachusetts Ave
+  addr2:
+  buildingName: Hemenway Gymnasium
+- buildingID: 03875
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 39 Holyoke St
+  addr2:
+  buildingName: Malkin Athletic Center
+- buildingID: 03885
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 65 North Harvard St
+  addr2:
+  buildingName: Murr Building
+- buildingID: 03891
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 801 Soldiers Field Rd
+  addr2:
+  buildingName: Newell Boat House
+- buildingID: 03892
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 801 Soldiers Field Rd
+  addr2:
+  buildingName: Newell Boat House Addition
+- buildingID: 03900
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 780 Soldiers Field Rd
+  addr2:
+  buildingName: Palmer Dixon Courts
+- buildingID: 03910
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 79 North Harvard St
+  addr2:
+  buildingName: Stadium
+- buildingID: 03915
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 971 Memorial Dr
+  addr2:
+  buildingName: Weld Boat House
+- buildingID: 03920
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 71 North Harvard St
+  addr2:
+  buildingName: Beren Tennis Pavilion
+- buildingID: 04021
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 51 Brattle St
+  addr2:
+  buildingName: 51 Brattle Street
+- buildingID: 04022
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 53 Church St
+  addr2:
+  buildingName: 53 Church Street
+- buildingID: 04023
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1 Story St
+  addr2:
+  buildingName: 1 Story Street
+- buildingID: 04110
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8 Prescott St
+  addr2:
+  buildingName: 8 Prescott Street Garage
+- buildingID: 04115
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8 Prescott St
+  addr2:
+  buildingName: 8 Prescott St
+- buildingID: 04131
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Oxford St
+  addr2:
+  buildingName: Conant Chemistry Lab
+- buildingID: 04132
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Oxford St
+  addr2:
+  buildingName: Converse Chemistry Lab
+- buildingID: 04133
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Oxford St
+  addr2:
+  buildingName: Mallinckrodt Chemistry Lab
+- buildingID: 04134
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 18 Oxford St
+  addr2:
+  buildingName: Mallinckrodt-Hoffman Link
+- buildingID: 04135
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Oxford St
+  addr2:
+  buildingName: Naito
+- buildingID: 04145
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Oxford St
+  addr2:
+  buildingName: Hoffman Laboratory
+- buildingID: 04191
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Observatory Bldg A
+- buildingID: 04192
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Observatory Bldg B
+- buildingID: 04193
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Observatory Bldg C
+- buildingID: 04194
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Observatory Bldg D
+- buildingID: 04195
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Observatory Bldg E
+- buildingID: 04196
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Observatory Garage
+- buildingID: 04197
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Perkin Laboratory
+- buildingID: 04198
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Garden St
+  addr2:
+  buildingName: Observatory Rotunda
+- buildingID: 04199
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 
+  addr1: 160 Concord Ave
+  addr2:
+  buildingName: 160 Concord Avenue
+- buildingID: 04221
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17 Oxford St
+  addr2:
+  buildingName: Jefferson Laboratory
+- buildingID: 04222
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11 Oxford St
+  addr2:
+  buildingName: Lyman Laboratory
+- buildingID: 04230
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Divinity Ave
+  addr2:
+  buildingName: University Herbaria
+- buildingID: 04240
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 24 Oxford St
+  addr2:
+  buildingName: Geological Museum
+- buildingID: 04255
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17 Sumner Rd
+  addr2:
+  buildingName: 17 Sumner Road
+- buildingID: 04260
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1727 Cambridge St
+  addr2:
+  buildingName: 1727 Cambridge Street
+- buildingID: 04265
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 2 Divinity Ave
+  addr2:
+  buildingName: 2 Divinity Avenue Yenching Library
+- buildingID: 04270
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Garden St
+  addr2:
+  buildingName: 20 Garden Street
+- buildingID: 04275
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 34 Kirkland St
+  addr2:
+  buildingName: 34 Kirkland Street
+- buildingID: 04280
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 38 Kirkland St
+  addr2:
+  buildingName: 38 Kirkland Street
+- buildingID: 04285
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Bryant St
+  addr2:
+  buildingName: 5 Bryant Street
+- buildingID: 04290
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 J. F. Kennedy St
+  addr2:
+  buildingName: 60 Kennedy Street
+- buildingID: 04295
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 61 Kirkland St
+  addr2:
+  buildingName: 61 Kirkland Street
+- buildingID: 04300
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 69 Dunster St
+  addr2:
+  buildingName: 69 Dunster Street
+- buildingID: 04305
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 7 Bryant St
+  addr2:
+  buildingName: 7 Bryant Street
+- buildingID: 04310
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 74 Mt Auburn St
+  addr2:
+  buildingName: 74 Mount Auburn Street
+- buildingID: 04315
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 77 Dunster St
+  addr2:
+  buildingName: 77 Dunster Street
+- buildingID: 04320
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 9 Kirkland Pl
+  addr2:
+  buildingName: 9 Kirkland Place
+- buildingID: 04325
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Divinity Ave
+  addr2:
+  buildingName: Biological Laboratory
+- buildingID: 04330
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Harvard Yard
+  addr2:
+  buildingName: Boylston Hall
+- buildingID: 04340
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 19 Prescott St
+  addr2:
+  buildingName: Carpenter Center
+- buildingID: 04350
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 38 Oxford St
+  addr2:
+  buildingName: Cea 38 Oxford Street
+- buildingID: 04365
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 19 Quincy St
+  addr2:
+  buildingName: Emerson Hall
+- buildingID: 04370
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Divinity Ave
+  addr2:
+  buildingName: Farlow Herbarium
+- buildingID: 04375
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Harvard Yard
+  addr2:
+  buildingName: Harvard Hall
+- buildingID: 04380
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 15 Harvard Yard
+  addr2:
+  buildingName: Holden Chapel
+- buildingID: 04385
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1805 Cambridge St
+  addr2:
+  buildingName: Littauer Center
+- buildingID: 04390
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 64 Brattle St
+  addr2:
+  buildingName: Loeb Drama Center
+- buildingID: 04395
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17 Kirkland St
+  addr2:
+  buildingName: Lowell Lecture Hall
+- buildingID: 04400
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 45 Quincy Street
+  addr2:
+  buildingName: Memorial Hall
+- buildingID: 04405
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Kirkland St
+  addr2:
+  buildingName: Music Building
+- buildingID: 04410
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 50 Oxford St
+  addr2:
+  buildingName: OEB Greenhouse
+- buildingID: 04415
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 35 Quincy St
+  addr2:
+  buildingName: Robinson Hall
+- buildingID: 04420
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1 Oxford St
+  addr2:
+  buildingName: Science Center
+- buildingID: 04425
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 25 Harvard Yard
+  addr2:
+  buildingName: Sever Hall
+- buildingID: 04430
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 25 Francis Ave
+  addr2:
+  buildingName: Shannon Hall
+- buildingID: 04435
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 7 Divinity Ave
+  addr2:
+  buildingName: Sherman Fairchild Biochemistry
+- buildingID: 04445
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1 Harvard Yard
+  addr2:
+  buildingName: University Hall
+- buildingID: 04450
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8 Linden St
+  addr2:
+  buildingName: Linden Street Studios
+- buildingID: 04455
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 29 Francis Ave
+  addr2:
+  buildingName: Vanserg Building
+- buildingID: 04460
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 33 Kirkland St
+  addr2:
+  buildingName: William James Hall
+- buildingID: 04471
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1737 Cambridge St
+  addr2:
+  buildingName: Knafel Building
+- buildingID: 04472
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1730 Cambridge St
+  addr2:
+  buildingName: CGIS South
+- buildingID: 04480
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 13 Frisbie Pl
+  addr2:
+  buildingName: Bauer Life Sciences Building
+- buildingID: 04550
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1430 Massachusetts Ave
+  addr2:
+  buildingName: 1430 Massachusetts Avenue
+- buildingID: 04551
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 625 Massachusetts Ave
+  addr2:
+  buildingName: 625 Massachusetts Avenue
+- buildingID: 04552
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 59 Plympton St
+  addr2:
+  buildingName: 59 Plympton Street
+- buildingID: 04553
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 155 Fawcett St
+  addr2:
+  buildingName: 155 Fawcett Street
+- buildingID: 04554
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1414 Massachusetts Ave
+  addr2:
+  buildingName: 1414 Massachusetts Avenue
+- buildingID: 04555
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02142
+  addr1: 100 Edwin Land Blvd
+  addr2:
+  buildingName: Rowland Institute
+- buildingID: 04558
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1 Bow Street
+  addr2:
+  buildingName: 1 Bow Street
+- buildingID: 04559
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Divinity Ave
+  addr2:
+  buildingName: Biological Research Infrastructure
+- buildingID: 04560
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 52 Oxford St
+  addr2:
+  buildingName: Northwest Building
+- buildingID: 04760
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 26 Oxford St
+  addr2:
+  buildingName: Museum of Comparative Zoology Laboratories
+- buildingID: 04765
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 26 Oxford St
+  addr2:
+  buildingName: Museum of Comparative Zoology
+- buildingID: 04780
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11 Divinity Ave
+  addr2:
+  buildingName: Peabody Museum
+- buildingID: 04790
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Divinity Ave
+  addr2:
+  buildingName: Semitic Museum
+- buildingID: 04860
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 26 Everett St
+  addr2:
+  buildingName: Child Hall
+- buildingID: 04861
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 36 Oxford St
+  addr2:
+  buildingName: Conant Hall
+- buildingID: 04862
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 35-39 Oxford St
+  addr2:
+  buildingName: Perkins Hall
+- buildingID: 04863
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 24 Everett St
+  addr2:
+  buildingName: Richards Hall
+- buildingID: 04930
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 59 Shepard St
+  addr2:
+  buildingName: Hilles Library
+- buildingID: 04931
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 29 Harvard Yard
+  addr2:
+  buildingName: Houghton Library
+- buildingID: 04932
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11 Quincy St
+  addr2:
+  buildingName: Lamont Library
+- buildingID: 04933
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: N/A Harvard Yard
+  addr2:
+  buildingName: Pusey Library
+- buildingID: 04934
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 21 Divinity Ave
+  addr2:
+  buildingName: Tozzer Anthropology Building
+- buildingID: 04935
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 31 Harvard Yard
+  addr2:
+  buildingName: Widener Library
+- buildingID: 05000
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 25 Harvard Way
+  addr2:
+  buildingName: Baker Library/Bloomberg
+- buildingID: 05001
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 230 Western Ave
+  addr2:
+  buildingName: Teele Hall
+- buildingID: 05003
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 70 North Harvard St
+  addr2:
+  buildingName: Shad Hall
+- buildingID: 05004
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 25 Travis St
+  addr2:
+  buildingName: 25 Travis Street
+- buildingID: 05020
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 51 Harvard Way
+  addr2:
+  buildingName: Dean's House
+- buildingID: 05022
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 39 Harvard Way
+  addr2:
+  buildingName: Burden Hall
+- buildingID: 05023
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 66 North Harvard St
+  addr2:
+  buildingName: Class of 1959 Chapel
+- buildingID: 05024
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 117 Western Ave
+  addr2:
+  buildingName: Spangler Center
+- buildingID: 05040
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 35 Harvard Way
+  addr2:
+  buildingName: Aldrich Hall
+- buildingID: 05041
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 47 Harvard Way
+  addr2:
+  buildingName: McCollum Center
+- buildingID: 05042
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 33 Harvard Way
+  addr2:
+  buildingName: Cumnock Hall
+- buildingID: 05043
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 37 Harvard Way
+  addr2:
+  buildingName: Hawes Hall
+- buildingID: 05060
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 24 Harvard Way
+  addr2:
+  buildingName: Gallatin Hall
+- buildingID: 05061
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 10 North Harvard St
+  addr2:
+  buildingName: Hamilton Hall
+- buildingID: 05062
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 
+  addr1: 44 Harvard Way
+  addr2:
+  buildingName: McCulloch Hall
+- buildingID: 05063
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 14 Harvard Way
+  addr2:
+  buildingName: Morris Hall
+- buildingID: 05064
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 34 Harvard Way
+  addr2:
+  buildingName: Chase Hall
+- buildingID: 05065
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 38 Harvard Way
+  addr2:
+  buildingName: Mellon Hall
+- buildingID: 05066
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 45 Harvard Way
+  addr2:
+  buildingName: Baker Hall
+- buildingID: 05067
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 47A Harvard Way
+  addr2:
+  buildingName: Mcarthur Hall
+- buildingID: 05068
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: Harvard Way
+  addr2:
+  buildingName: Tata Hall
+- buildingID: 05090
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 26 Harvard Way
+  addr2:
+  buildingName: Ludcke House
+- buildingID: 05091
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 15 Harvard Way
+  addr2:
+  buildingName: Morgan Hall
+- buildingID: 05092
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 50 North Harvard St
+  addr2:
+  buildingName: Cotting House
+- buildingID: 05093
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 30 Harvard Way
+  addr2:
+  buildingName: Dillon House
+- buildingID: 05094
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 20 Harvard Way
+  addr2:
+  buildingName: Connell House
+- buildingID: 05096
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 40 Harvard Way
+  addr2:
+  buildingName: Greenhill House
+- buildingID: 05097
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 660 Soldiers Field Rd
+  addr2:
+  buildingName: Glass Hall
+- buildingID: 05099
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 20 North Harvard St
+  addr2:
+  buildingName: Wyss Hall
+- buildingID: 05100
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 28 Harvard Way
+  addr2:
+  buildingName: Wilder's House
+- buildingID: 05106
+  country: US
+  stateProvence: MA
+  city: Watertown
+  postalCode: 02472
+  addr1: 300 North Beacon St
+  addr2:
+  buildingName: Arsenal Building #39
+- buildingID: 05121
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 51 North Harvard Street
+  addr2:
+  buildingName: Crimson Commons
+- buildingID: 05531
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 4 Blackfan Cir
+  addr2:
+  buildingName: Harvard Institutes of Medicine
+- buildingID: 05532
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 107 Avenue Louis Pasteur
+  addr2:
+  buildingName: Vanderbilt Hall
+- buildingID: 05533
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 25 Shattuck St
+  addr2:
+  buildingName: Gordon Hall
+- buildingID: 05534
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 220 Longwood Ave
+  addr2:
+  buildingName: Goldenson Building
+- buildingID: 05535
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 240 Longwood Ave
+  addr2:
+  buildingName: Hms Building C
+- buildingID: 05536
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 200 Longwood Ave
+  addr2:
+  buildingName: Armenise
+- buildingID: 05537
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 260 Longwood Ave
+  addr2:
+  buildingName: Tosteson Medical Education Center
+- buildingID: 05539
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 180 Longwood Ave
+  addr2:
+  buildingName: 180 Longwood Avenue
+- buildingID: 05540
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 641 Huntington Ave
+  addr2:
+  buildingName: 641 Huntington Avenue
+- buildingID: 05541
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 10 Shattuck St
+  addr2:
+  buildingName: Countway Library
+- buildingID: 05542
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 160-164 Longwood Ave
+  addr2:
+  buildingName: 160-164 Longwood Avenue
+- buildingID: 05543
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 45 Shattuck St
+  addr2:
+  buildingName: LHRRB
+- buildingID: 05544
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 250 Longwood Ave
+  addr2:
+  buildingName: Seeley Mudd
+- buildingID: 05551
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 200 Longwood Ave
+  addr2:
+  buildingName: Warren Alpert Building
+- buildingID: 05552
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 200 Longwood Ave
+  addr2:
+  buildingName: Underground Parking EQRF
+- buildingID: 05566
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02215
+  addr1: 1260 Boylston St
+  addr2:
+  buildingName: 1260 Boylston Street
+- buildingID: 05585
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 77 Avenue Louis Pasteur
+  addr2:
+  buildingName: New Research Building
+- buildingID: 05589
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: One Kendall Sq
+  addr2:
+  buildingName: One Kendall Square
+- buildingID: 05593
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 158 Longwood Ave
+  addr2:
+  buildingName: 158 Longwood Ave
+- buildingID: 05594
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 1542 Tremont St
+  addr2:
+  buildingName: 1542 Tremont Street
+- buildingID: 05595
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02111
+  addr1: 1 Summer St
+  addr2:
+  buildingName: Hms Data Center at One Summer Street
+- buildingID: 05599
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 3 Blackfan Cir
+  addr2:
+  buildingName: Wyss Institute at CISB
+- buildingID: 05600
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 
+  addr1: 20 Overland St
+  addr2:
+  buildingName: 20 Overland Street
+- buildingID: 05762
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 188 Longwood Ave
+  addr2:
+  buildingName: School Of Dental Medicine
+- buildingID: 05765
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02115
+  addr1: 190 Longwood Ave
+  addr2:
+  buildingName: New Dental Research Building
+- buildingID: 06006
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Quincy St
+  addr2:
+  buildingName: Dana Palmer
+- buildingID: 06007
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 33 Elmwood Ave
+  addr2:
+  buildingName: 33 Elmwood Barn
+- buildingID: 06008
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 33 Elmwood Ave
+  addr2:
+  buildingName: 33 Elmwood Avenue Small House
+- buildingID: 06009
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 33 Elmwood Ave
+  addr2:
+  buildingName: President's House
+- buildingID: 06010
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 33A Elmwood Ave
+  addr2:
+  buildingName: 33A Elmwood Carriage House
+- buildingID: 06022
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 78 Mt Auburn St
+  addr2:
+  buildingName: 78 Mount Auburn Street
+- buildingID: 06023
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 126 Mt Auburn St
+  addr2:
+  buildingName: 126 Mount Auburn Street
+- buildingID: 06025
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 46 Oxford St
+  addr2:
+  buildingName: Palfrey House
+- buildingID: 06027
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Sacramento St
+  addr2:
+  buildingName: 5 Sacramento Street
+- buildingID: 06029
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17-19 South St
+  addr2:
+  buildingName: 17-19 South Street
+- buildingID: 06030
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 21 South St
+  addr2:
+  buildingName: Advocate Building
+- buildingID: 06033
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 4-12 Story St
+  addr2:
+  buildingName: 8 Story Street
+- buildingID: 06036
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 48 Trowbridge St
+  addr2:
+  buildingName: Doebele House
+- buildingID: 06037
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1341 Massachusetts Ave
+  addr2:
+  buildingName: Wadsworth House
+- buildingID: 06038
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 7 Ware St
+  addr2:
+  buildingName: 7 Ware Street
+- buildingID: 06040
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 41 Winthrop St
+  addr2:
+  buildingName: 41 Winthrop Street
+- buildingID: 06041
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 65-67 Winthrop St
+  addr2:
+  buildingName: 65-67 Winthrop Street
+- buildingID: 06042
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 124 Mt Auburn St
+  addr2:
+  buildingName: University Place
+- buildingID: 06043
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 75 Mt Auburn St
+  addr2:
+  buildingName: Smith Campus Center
+- buildingID: 06048
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 28 Travis St
+  addr2:
+  buildingName: 28 Travis Street
+- buildingID: 06050
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 168 Western Ave
+  addr2:
+  buildingName: 168 Western Avenue
+- buildingID: 06052
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 100 Holton St
+  addr2:
+  buildingName: 100 Holton Street
+- buildingID: 06053
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 1230 Soldiers Field Rd
+  addr2:
+  buildingName: 1230 Soldiers Field Road
+- buildingID: 06055
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 287 Western Ave
+  addr2:
+  buildingName: 287 Western Avenue
+- buildingID: 06056
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 367 Western Ave
+  addr2:
+  buildingName: 367 Western Avenue
+- buildingID: 06057
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 370 Western Ave
+  addr2:
+  buildingName: 370 Western Avenue
+- buildingID: 06059
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 1120 Soldiers Field Rd
+  addr2:
+  buildingName: 1120 Soldiers Field Road
+- buildingID: 06062
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1350 Massachusetts Ave
+  addr2:
+  buildingName: Smith Campus Center Shops
+- buildingID: 06063
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 28 Church St
+  addr2:
+  buildingName: 26-28 Church Street
+- buildingID: 06064
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 32-42 Church St
+  addr2:
+  buildingName: 32-42 Church Street
+- buildingID: 06065
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 110 Mt Auburn St
+  addr2:
+  buildingName: Harvard Square Hotel
+- buildingID: 06066
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 110 Mt Auburn St
+  addr2:
+  buildingName: Harvard Square Hotel Garage
+- buildingID: 06067
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8 Holyoke St
+  addr2:
+  buildingName: 8 Holyoke Street
+- buildingID: 06068
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1201 Massachusetts Ave
+  addr2:
+  buildingName: 1201 Massachusetts Ave
+- buildingID: 06069
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1607-1615 Massachusetts Ave
+  addr2:
+  buildingName: 1607-1615 Massachusetts Avenue
+- buildingID: 06071
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 132 Mt Auburn St
+  addr2:
+  buildingName: 132 Mount Auburn Street
+- buildingID: 06072
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 134 Mt Auburn St
+  addr2:
+  buildingName: French Consulate
+- buildingID: 06073
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 140-142 Mt Auburn St
+  addr2:
+  buildingName: 140-142 Mount Auburn Street
+- buildingID: 06074
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 125 Western Ave
+  addr2:
+  buildingName: Batten Hall
+- buildingID: 06075
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1236-1256 Massachusetts Ave
+  addr2:
+  buildingName: Hampden Hall
+- buildingID: 06076
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1300-1316 Massachusetts Ave
+  addr2:
+  buildingName: Fairfax Hall
+- buildingID: 06077
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 2 Holyoke St
+  addr2:
+  buildingName: Manter Hall
+- buildingID: 06078
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: 3 Beckwith Cir
+  addr2:
+  buildingName: Beckwith Circle Bldg A
+- buildingID: 06079
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: 4 Beckwith Cir
+  addr2:
+  buildingName: Beckwith Circle Bldg B
+- buildingID: 06080
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: 7 Beckwith Circle
+  addr2:
+  buildingName: Beckwith Circle Bldg C
+- buildingID: 06081
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: 252 Beckwith Cir
+  addr2:
+  buildingName: Beckwith Circle Bldg D
+- buildingID: 06082
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: 258 Beckwith Cir
+  addr2:
+  buildingName: Beckwith Circle Bldg E
+- buildingID: 06083
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 28-34A Irving St
+  addr2:
+  buildingName: Haskins Hall
+- buildingID: 06085
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Holden St
+  addr2:
+  buildingName: Holden Green Bldg A
+- buildingID: 06086
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Holden St
+  addr2:
+  buildingName: Holden Green Bldg B
+- buildingID: 06087
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: Holden St
+  addr2:
+  buildingName: Holden Green Bldg C
+- buildingID: 06088
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 101 Holden St
+  addr2:
+  buildingName: Holden Green Bldg D
+- buildingID: 06089
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: Holden St
+  addr2:
+  buildingName: Holden Green Bldg E
+- buildingID: 06090
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02143
+  addr1: 104 Holden St
+  addr2:
+  buildingName: Holden Green Bldg F
+- buildingID: 06091
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: Holden St
+  addr2:
+  buildingName: Holden Green Bldg G
+- buildingID: 06092
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02138
+  addr1: Holden St
+  addr2:
+  buildingName: Holden Greeen Bldg H
+- buildingID: 06093
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: Holden St
+  addr2:
+  buildingName: Holden Green Bldg I
+- buildingID: 06094
+  country: US
+  stateProvence: MA
+  city: Somerville
+  postalCode: 02143
+  addr1: Holden St
+  addr2:
+  buildingName: Holden Green Bldg J
+- buildingID: 06095
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02134
+  addr1: 37-41 Kirkland St
+  addr2:
+  buildingName: 37-41 Kirkland Street
+- buildingID: 06096
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 4 Mt Auburn St
+  addr2:
+  buildingName: 4-6 Mount Auburn Street
+- buildingID: 06098
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 65 Mt Auburn St
+  addr2:
+  buildingName: 65 Mount Auburn Street
+- buildingID: 06100
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1-7 Shaler Ln
+  addr2:
+  buildingName: 1-7 Shaler Lane
+- buildingID: 06101
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02215
+  addr1: 170 Brookline Ave
+  addr2:
+  buildingName: 170 Brookline Avenue
+- buildingID: 06102
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11-33 Shaler Ln
+  addr2:
+  buildingName: 11-33 Shaler Lane
+- buildingID: 06103
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12-24 Shaler Ln
+  addr2:
+  buildingName: 12-24 Shaler Lane
+- buildingID: 06104
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 4 Shaler Ln
+  addr2:
+  buildingName: 2-8 Shaler Lane
+- buildingID: 06105
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 15 Everett St
+  addr2:
+  buildingName: Terry Terrace
+- buildingID: 06107
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 125 Putnam Ave
+  addr2:
+  buildingName: Peabody Terrace Garage
+- buildingID: 06108
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg A
+- buildingID: 06109
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg B
+- buildingID: 06110
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg C
+- buildingID: 06111
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg D
+- buildingID: 06112
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg E
+- buildingID: 06114
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 111 Western Ave
+  addr2:
+  buildingName: Soldiers Field Park Garage
+- buildingID: 06115
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 111 Western Ave
+  addr2:
+  buildingName: Soldiers Field Park 2
+- buildingID: 06116
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 111 Western Ave
+  addr2:
+  buildingName: Soldiers Field Park 3
+- buildingID: 06117
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 111 Western Ave
+  addr2:
+  buildingName: Soldiers Field Park 4
+- buildingID: 06118
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02163
+  addr1: 111 Western Ave
+  addr2:
+  buildingName: Soldiers Field Park 1
+- buildingID: 06120
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 24 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg A
+- buildingID: 06121
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg B
+- buildingID: 06122
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 24 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg C
+- buildingID: 06123
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 30 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg D
+- buildingID: 06124
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 34 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg E
+- buildingID: 06125
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 24 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg F
+- buildingID: 06126
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg G
+- buildingID: 06127
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 24 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg H
+- buildingID: 06128
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 24 Fernald Dr
+  addr2:
+  buildingName: Botanic Gardens Bldg I
+- buildingID: 06131
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 21 Robinson St
+  addr2:
+  buildingName: 21 Robinson Street
+- buildingID: 06133
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 29 Garden St
+  addr2:
+  buildingName: 29 Garden Street
+- buildingID: 06134
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Dewolfe St
+  addr2:
+  buildingName: 10 Dewolfe Street
+- buildingID: 06135
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Dewolfe St
+  addr2:
+  buildingName: 20 Dewolfe Street
+- buildingID: 06136
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1-2 Athens Ter
+  addr2:
+  buildingName: 1-2 Athens Terrace
+- buildingID: 06137
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Athens Ter
+  addr2:
+  buildingName: 3 Athens Terrace
+- buildingID: 06138
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 4 Athens Ter
+  addr2:
+  buildingName: 4-6 Athens Terrace
+- buildingID: 06139
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 33-35 Banks St
+  addr2:
+  buildingName: 33-35 Banks Street
+- buildingID: 06140
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 41-43 Banks St
+  addr2:
+  buildingName: 41-43 Banks Street
+- buildingID: 06141
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 47 Banks St
+  addr2:
+  buildingName: 47 Banks Street
+- buildingID: 06142
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 4 Grant St
+  addr2:
+  buildingName: 4 Grant Street
+- buildingID: 06143
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 2 Grant St
+  addr2:
+  buildingName: 2 Grant Street
+- buildingID: 06144
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 25 Flagg St
+  addr2:
+  buildingName: 118 Banks Street and 23-25 Flagg Street
+- buildingID: 06147
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6.5 Grant St
+  addr2:
+  buildingName: 6.5 Grant Street
+- buildingID: 06148
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 6 Grant St
+  addr2:
+  buildingName: 6 Grant Street
+- buildingID: 06149
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8 Grant St
+  addr2:
+  buildingName: 8 Grant Street
+- buildingID: 06150
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12-12.5 Grant St
+  addr2:
+  buildingName: 12-12.5 Grant Street
+- buildingID: 06151
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17 Grant St
+  addr2:
+  buildingName: 17 Grant Street Garage
+- buildingID: 06152
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17 Grant St
+  addr2:
+  buildingName: 17 Grant Street
+- buildingID: 06161
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 10 Mellen St
+  addr2:
+  buildingName: 10 Mellen Street
+- buildingID: 06162
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 12 Mellen St
+  addr2:
+  buildingName: 12 Mellen Street
+- buildingID: 06163
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 14-6 Mellen St
+  addr2:
+  buildingName: 14-16 Mellen Street
+- buildingID: 06164
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 18 Mellen St
+  addr2:
+  buildingName: 18-18A Mellen Street
+- buildingID: 06165
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Mellen St
+  addr2:
+  buildingName: 20 Mellen Street
+- buildingID: 06168
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 101-103 Plympton St
+  addr2:
+  buildingName: 101-103 Plympton Street
+- buildingID: 06170
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5A Sacramento St
+  addr2:
+  buildingName: 5A Sacramento Street
+- buildingID: 06171
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11 Sumner Rd
+  addr2:
+  buildingName: 11 Sumner Road
+- buildingID: 06172
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 13 Sumner Rd
+  addr2:
+  buildingName: 13 Sumner Road
+- buildingID: 06173
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 381-383 Western Ave
+  addr2:
+  buildingName: 381-383 Western Avenue
+- buildingID: 06174
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 472-474 Broadway
+  addr2:
+  buildingName: 472-474 Broadway
+- buildingID: 06175
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 27 Everett St
+  addr2:
+  buildingName: 27 Everett Street Garage
+- buildingID: 06178
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 18 Prescott St
+  addr2:
+  buildingName: 18 Prescott Street Garage
+- buildingID: 06179
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 18 Prescott St
+  addr2:
+  buildingName: 18 Prescott Street
+- buildingID: 06180
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Prescott St
+  addr2:
+  buildingName: 16 Prescott Street
+- buildingID: 06181
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 20 Prescott St
+  addr2:
+  buildingName: 20-20A Prescott Street
+- buildingID: 06182
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 22 Prescott St
+  addr2:
+  buildingName: 22-24 Prescott Street
+- buildingID: 06183
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 85-95 Prescott St
+  addr2:
+  buildingName: 85-95 Prescott Street
+- buildingID: 06185
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 9-13A Ware St
+  addr2:
+  buildingName: 9-13A Ware Street
+- buildingID: 06186
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 15 Ware St
+  addr2:
+  buildingName: 15 Ware Street Garage
+- buildingID: 06187
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 15 Ware St
+  addr2:
+  buildingName: 15 Ware Street
+- buildingID: 06188
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 17 Ware St
+  addr2:
+  buildingName: 17 Ware Street
+- buildingID: 06189
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 19 Ware St
+  addr2:
+  buildingName: 19 Ware Street
+- buildingID: 06193
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 48 Trowbridge St
+  addr2:
+  buildingName: Doebele House Addition
+- buildingID: 06196
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 26 Robinson St
+  addr2:
+  buildingName: Botanic Gardens Childcare Center
+- buildingID: 06197
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 204-206 North Harvard St
+  addr2:
+  buildingName: 204-206 North Harvard Street
+- buildingID: 06199
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 16 Grant St
+  addr2:
+  buildingName: 16 Grant Street
+- buildingID: 06200
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 273 Western Ave
+  addr2:
+  buildingName: 273 Western Avenue
+- buildingID: 06202
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 400 Soldiers Field Rd
+  addr2:
+  buildingName: 400 Soldiers Field Road Hotel
+- buildingID: 06204
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 2 Arrow St
+  addr2:
+  buildingName: Oberon
+- buildingID: 06205
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 1033 Massachusetts Ave
+  addr2:
+  buildingName: 1033 Massachusetts Avenue
+- buildingID: 06206
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 400 Soldiers Field Rd
+  addr2:
+  buildingName: 400 Soldiers Field Road Garage
+- buildingID: 06208
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 30 Hingham St
+  addr2:
+  buildingName: 30 Hingham Street
+- buildingID: 06211
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 14 Story St
+  addr2:
+  buildingName: 14 Story Street
+- buildingID: 06212
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Sumner Rd
+  addr2:
+  buildingName: 3 Sumner Road
+- buildingID: 06217
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 27 Everett St
+  addr2:
+  buildingName: 27 Everett Street
+- buildingID: 06219
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 90 Mt Auburn St
+  addr2:
+  buildingName: 90 Mount Auburn Street
+- buildingID: 06220
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 1 Western Ave
+  addr2:
+  buildingName: One Western Avenue
+- buildingID: 06222
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 288 North Harvard St
+  addr2:
+  buildingName: 288 North Harvard Street
+- buildingID: 06225
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 60 Oxford St
+  addr2:
+  buildingName: 60 Oxford Street
+- buildingID: 06226
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 9 Travis St
+  addr2:
+  buildingName: 9 Travis Street
+- buildingID: 06228
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 224 Western Ave
+  addr2:
+  buildingName: 224 Western Avenue
+- buildingID: 06244
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 15 Speedway Ave
+  addr2:
+  buildingName: 15 Speedway Avenue
+- buildingID: 06246
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 114 Western Ave
+  addr2:
+  buildingName: 114 Western Avenue
+- buildingID: 06249
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 84 Seattle St
+  addr2:
+  buildingName: 84 Seattle Street
+- buildingID: 06250
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 108-120 Holton St
+  addr2:
+  buildingName: 108-120 Holton Street
+- buildingID: 06251
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 153-155 Mt Auburn St
+  addr2:
+  buildingName: 153-155 Mount Auburn Street
+- buildingID: 06254
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 387 Western Ave
+  addr2:
+  buildingName: 387 Western Avenue
+- buildingID: 06255
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 1284 Soldiers Field Rd
+  addr2:
+  buildingName: 1284 Soldiers Field Road
+- buildingID: 06256
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 1330 Soldiers Field Rd
+  addr2:
+  buildingName: 1330 Soldiers Field Road
+- buildingID: 06257
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 14 Rena St
+  addr2:
+  buildingName: 14 Rena Street
+- buildingID: 06258
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 449-451 Western Ave
+  addr2:
+  buildingName: 449-451 Western Avenue
+- buildingID: 06259
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 1300 Soldiers Field Rd
+  addr2:
+  buildingName: 1300 Soldiers Field Road
+- buildingID: 06260
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 1320 Soldiers Field Rd
+  addr2:
+  buildingName: 1320 Soldiers Field Road
+- buildingID: 06261
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 135 Western Ave
+  addr2:
+  buildingName: 135 Western Avenue
+- buildingID: 06262
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 267 Western Ave
+  addr2:
+  buildingName: 267 Western Avenue
+- buildingID: 06263
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 253-269 Western Ave
+  addr2:
+  buildingName: 267A Western Avenue
+- buildingID: 06264
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 253-269 Western Ave
+  addr2:
+  buildingName: 267B Western Avenue
+- buildingID: 06265
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 90 Seattle St
+  addr2:
+  buildingName: 90 Seattle St
+- buildingID: 06266
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 206-208 Everett St
+  addr2:
+  buildingName: 206-208 Everett Street
+- buildingID: 06267
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 59 Banks St
+  addr2:
+  buildingName: 59 Banks Street
+- buildingID: 06268
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 1380 Soldiers Field Rd
+  addr2:
+  buildingName: 1380 Soldiers Field Road
+- buildingID: 06269
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11 Kirkland Pl
+  addr2:
+  buildingName: 11 Kirkland Place
+- buildingID: 06270
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 210 North Harvard St
+  addr2:
+  buildingName: 210 North Harvard Street
+- buildingID: 06271
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 277-279 Western Ave
+  addr2:
+  buildingName: 277-279 Western Avenue
+- buildingID: 06272
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 283 Western Ave
+  addr2:
+  buildingName: 283 Western Avenue
+- buildingID: 06273
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 415 Western Ave
+  addr2:
+  buildingName: 415 Western Avenue
+- buildingID: 06274
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 501-505 Western Ave
+  addr2:
+  buildingName: 501-505 Western Avenue
+- buildingID: 06275
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 176 Lincoln St
+  addr2:
+  buildingName: 176 Lincoln Street
+- buildingID: 06277
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02139
+  addr1: 5 Cowperthwaite St
+  addr2:
+  buildingName: 5 Cowperthwaite Street
+- buildingID: 06278
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg F
+- buildingID: 06279
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg X
+- buildingID: 06280
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg Y
+- buildingID: 06281
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 900 Memorial Dr
+  addr2:
+  buildingName: Peabody Terrace Bldg Z
+- buildingID: 06282
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 37-39 Banks St
+  addr2:
+  buildingName: 37-39 Banks Street
+- buildingID: 06283
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 69 Bank St
+  addr2:
+  buildingName: 69 Banks Street
+- buildingID: 06284
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 3 Grant St
+  addr2:
+  buildingName: 3 Grant Street
+- buildingID: 06285
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 5 Grant St
+  addr2:
+  buildingName: 5 Grant Street
+- buildingID: 06286
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 7 Grant St
+  addr2:
+  buildingName: 7 Grant Street
+- buildingID: 06287
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 9 Grant St
+  addr2:
+  buildingName: 9 Grant Street
+- buildingID: 06288
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 11 Grant St
+  addr2:
+  buildingName: 11 Grant Street
+- buildingID: 06289
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 182 Western Ave
+  addr2:
+  buildingName: 182 Western Avenue
+- buildingID: 06290
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 28 Hingham St
+  addr2:
+  buildingName: 28 Hingham Street
+- buildingID: 06291
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 445-447 Western Ave
+  addr2:
+  buildingName: 445-447 Western Avenue
+- buildingID: 06292
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 8A Mt Auburn St
+  addr2:
+  buildingName: 8A Mount Auburn Street
+- buildingID: 06293
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 153-155 Mt Auburn St
+  addr2:
+  buildingName: 153-155 Mount Auburn Street Carriage House
+- buildingID: 06294
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 273R Western Ave
+  addr2:
+  buildingName: 273 Rear Western Avenue
+- buildingID: 06295
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 304 Western Ave
+  addr2:
+  buildingName: 304 Western Avenue
+- buildingID: 06298
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 55 Antwerp St
+  addr2:
+  buildingName: 55 Antwerp Street
+- buildingID: 06299
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 1340 Soldiers Field Rd
+  addr2:
+  buildingName: 1340 Soldiers Field Road
+- buildingID: 06301
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 90 Antwerp St
+  addr2:
+  buildingName: 90 Antwerp Street
+- buildingID: 06302
+  country: US
+  stateProvence: MA
+  city: Cambridge
+  postalCode: 02138
+  addr1: 15 Hawthorn St
+  addr2:
+  buildingName: 15 Hawthorne Street
+- buildingID: 06304
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02134
+  addr1: 65-79 Seattle St
+  addr2:
+  buildingName: 65-79 Seattle Street
+- buildingID: 06316
+  country: US
+  stateProvence: MA
+  city: Allston
+  postalCode: 02135
+  addr1: 360 Western Avenue
+  addr2:
+  buildingName: 360 Western Avenue
+- buildingID: 07252
+  country: US
+  stateProvence: MA
+  city: Boston
+  postalCode: 02120
+  addr1: 600 Atlantic Ave
+  addr2:
+  buildingName: Federal Reserve Building

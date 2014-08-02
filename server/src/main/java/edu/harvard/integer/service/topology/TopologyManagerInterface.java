@@ -42,6 +42,7 @@ import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.Path;
 import edu.harvard.integer.common.topology.TopologyElement;
+import edu.harvard.integer.common.user.Location;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
@@ -107,14 +108,15 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 			throws IntegerException;
 
 	/**
-	 * Get the TopologyElements for the given service element ID. 
+	 * Get the TopologyElements for the given service element ID.
 	 * 
 	 * @param serviceElementId
 	 * @return TopologyElement[] for the ServiceElement ID.
 	 * @throws IntegerException
 	 */
-	public TopologyElement[] getTopologyElementsByServiceElement(ID serviceElementId) throws IntegerException;
-	
+	public TopologyElement[] getTopologyElementsByServiceElement(
+			ID serviceElementId) throws IntegerException;
+
 	/**
 	 * Update the path in the database. If this is a new object then the
 	 * identifier will be set on the returned Path object.
@@ -151,19 +153,20 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 	 * @return
 	 * @throws IntegerException
 	 */
-	InterDeviceLink[] getInterDeviceLinksBySourceDestAddress(Address sourceAddress,
-			Address destAddress) throws IntegerException;
+	InterDeviceLink[] getInterDeviceLinksBySourceDestAddress(
+			Address sourceAddress, Address destAddress) throws IntegerException;
 
 	/**
-	 * Get the NetworkInformation for the entire network. This includes
-	 * the List of Netowrk's and the list of InterNetowrkLink's 
+	 * Get the NetworkInformation for the entire network. This includes the List
+	 * of Netowrk's and the list of InterNetowrkLink's
+	 * 
 	 * @return NetworkInformation for the entier network.
 	 * @throws IntegerException
 	 */
 	NetworkInformation getNetworkInformation() throws IntegerException;
 
 	/**
-	 * Get the links between the source and destination end points. 
+	 * Get the links between the source and destination end points.
 	 * 
 	 * @param sourceAddress
 	 * @param destAddress
@@ -174,7 +177,7 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 			ID sourceAddress, ID destAddress) throws IntegerException;
 
 	/**
-	 * Get the links between the source and destination end points. 
+	 * Get the links between the source and destination end points.
 	 * 
 	 * @param sourceAddress
 	 * @param destAddress
@@ -186,10 +189,38 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * Find the network with the given address.
+	 * 
 	 * @param networkAddress
 	 * @return
-	 * @throws IntegerException 
+	 * @throws IntegerException
 	 */
 	Network getNetworkByAddress(Address networkAddress) throws IntegerException;
+
+	/**
+	 * Get a list of all locations in the database.
+	 * 
+	 * @return Location[] of all locations in the database.
+	 * @throws IntegerException
+	 */
+	Location[] getAllLocations() throws IntegerException;
+
+	/**
+	 * Update / Save the location in the database.
+	 * 
+	 * @param location
+	 * @return Location that has been updated in the database. The identifier
+	 *         will be set on the Location object returned.
+	 * @throws IntegerException
+	 */
+	Location updateLocation(Location location) throws IntegerException;
+
+	/**
+	 * Get the location with the given ID.
+	 * 
+	 * @param locationId
+	 * @return Location for the given ID.
+	 * @throws IntegerException
+	 */
+	Location getLocationById(ID locationId) throws IntegerException;
 
 }

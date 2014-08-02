@@ -59,14 +59,14 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * @param content
-	 * @return
+	 * @return String status of the import.
 	 * @throws IntegerException
 	 */
 	String loadServiceElementType(String content) throws IntegerException;
 
 	/**
 	 * @param content
-	 * @return
+	 * @return String status of the import.
 	 * @throws IntegerException
 	 */
 	String loadVendorContainment(String content) throws IntegerException;
@@ -75,8 +75,17 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 
 	/**
 	 * @param content
-	 * @return
+	 * @return String status of the import.
 	 * @throws IntegerException
 	 */
 	String importService(String content) throws IntegerException;
+
+	/**
+	 * Import a YAML string of location data.
+	 * 
+	 * @param content
+	 * @return String status of the import.
+	 * @throws IntegerException
+	 */
+	String importLocation(String content) throws IntegerException;
 }
