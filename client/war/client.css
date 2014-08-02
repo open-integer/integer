@@ -177,6 +177,11 @@ h4 {
     width: 1000px;
 }
 
+.HvPanel {
+  	margin: 5px;
+  	padding: 2px, 20px;
+}
+
 .dialogVPanel {
   margin: 15px;
   padding: 2px, 20px;
