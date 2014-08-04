@@ -55,6 +55,7 @@ import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.RelationMappingTypeEnum;
+import edu.harvard.integer.common.discovery.SnmpAssociation;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
@@ -73,6 +74,7 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -85,6 +87,8 @@ import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
@@ -102,6 +106,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	/** The logger. */
     private static Logger logger = LoggerFactory.getLogger(SnmpServiceElementDiscover.class);
 
+
+	/** The discovery node. */
+	protected DiscoverNode discNode;
     
     /** The discovery manager. */
 	protected ServiceElementDiscoveryManagerInterface discMgr;
@@ -166,92 +173,154 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
 			                                     ServiceElement se, 
 			                                     ServiceElementType set,
-			                                     String instOid ) throws IntegerException {
+			                                     String instOid,
+			                                     SNMPTable contextSnmp ) throws IntegerException {
+	
 		
-		if ( set.getAttributeIds() != null && set.getAttributeIds().size() > 0 ) {
+		List<ID> attributeIds = set.getAttributeIds();
+		if ( attributeIds == null ) {
+			return;
+		}
+		
+		List<SNMP> accessSnmps = new ArrayList<>();
+		List<SNMP> nonAccessSnmps = new ArrayList<>();
+		
+		for ( ID id : attributeIds ) {
 			
-			PDU pdu = new PDU();
-			List<VariableBinding> vbs = new ArrayList<>();
+			SNMP s = (SNMP) capMgr.getManagementObjectById(id);
+			if ( s.getMaxAccess() == null || s.getMaxAccess() == MaxAccess.NotAccessible ) {
+				nonAccessSnmps.add(s);
+			}
+			else {
+				accessSnmps.add(s);
+			}
+		}
+		PDU pdu = new PDU();
+		List<VariableBinding> vbs = new ArrayList<>();
+		
+		for ( SNMP snmp : accessSnmps ) {
+			OID vbOid = new OID(snmp.getOid());
+			vbOid.append(instOid);					
+			vbs.add(new VariableBinding(vbOid));	
+		}
+		
+		
+		PDU rpdu = null;
+		if ( vbs.size() > 0 ) {
 			
-			/**
-			 * Walk through the attribute SEMO list to construct a PDU to retrieve data from a device
-			 */
-			List<ID>  attributeIds =  set.getAttributeIds();		
-			for ( ID id : attributeIds ) {
+			pdu.addAll(vbs);
+			logger.info("Get value for SET " + set.getName() + " from " + ePoint.getIpAddress() + " Starting oid " 
+			                      +  pdu.getVariableBindings().get(0).getOid().toString() + " size " + set.getAttributeIds().size() );			
+		    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
+		    List<ManagementObjectValue> attributes = se.getAttributeValues();
+			if ( attributes == null )
+			{
+				attributes = new ArrayList<>();
+				se.setAttributeValues(attributes);
+			}
+			List<ServiceElementProtocolInstanceIdentifier> insts = se.getValues();
+			if ( insts == null ) {
+				insts = new ArrayList<>();
+				se.setValues(insts);
+			}
+		}
+		
+		List<IndexSNMPValue> indexVals = new ArrayList<>();
+		if ( nonAccessSnmps.size() > 0  && contextSnmp != null ) {
+			
+			SNMPTable snmpTbl = (SNMPTable) contextSnmp;
+			List<SNMP> indexs =  snmpTbl.getIndex();
+			for ( SNMP ss : nonAccessSnmps ) {
 				
-				ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
-				if ( mrgObj instanceof SNMP ) {
+				//
+				// If index size is 1, we know the whole part of table index is
+				// the non access SNMP value.
+				//
+				if ( indexs.size() == 1 ) {
+					SNMP is = indexs.get(0);
+					if ( is.getOid().equals(ss.getOid()) ) {
 					
-					SNMP snmp = (SNMP) mrgObj;
-					OID vbOid = new OID(snmp.getOid());
-					vbOid.append(instOid);					
-					vbs.add(new VariableBinding(vbOid));					
+						IndexSNMPValue indexVal = new IndexSNMPValue();
+						indexVal.indexSNMP = is;
+						indexVal.indexVal = instOid;
+						
+						indexVals.add(indexVal);
+						
+					}
+				}
+				else {
+					
+					OID o = new OID(instOid);
+					for ( int j=0; j<indexs.size(); j++ ) {
+						
+						SNMP is = indexs.get(j);
+						if ( is.getOid().equals(ss.getOid()) ) {
+						
+							IndexSNMPValue indexVal = new IndexSNMPValue();
+							indexVal.indexSNMP = is;
+							indexVal.indexVal =  Integer.toString(o.get(j));
+							indexVals.add(indexVal);
+						}
+					}
 				}
 			}
-			PDU rpdu = null;
-			if ( vbs.size() > 0 ) {
+		}
+		   
+		for ( ID id : attributeIds ) {
 				
-				pdu.addAll(vbs);
-				logger.info("Get value for SET " + set.getName() + " from " + ePoint.getIpAddress() + " Starting oid " 
-				                      +  pdu.getVariableBindings().get(0).getOid().toString() + " size " + set.getAttributeIds().size() );			
-			    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
-			    List<ManagementObjectValue> attributes = se.getAttributeValues();
-				if ( attributes == null )
-				{
-					attributes = new ArrayList<>();
-					se.setAttributeValues(attributes);
-				}
-				List<ServiceElementProtocolInstanceIdentifier> insts = se.getValues();
-				if ( insts == null ) {
-					insts = new ArrayList<>();
-					se.setValues(insts);
-				}
-				
-				/**
-				 * Store retrieved SEMO values in the Service Element.
-				 */
-			    for ( ID id : attributeIds ) {
+			ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
+			if ( mrgObj instanceof SNMP ) {
 					
-					ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
-					if ( mrgObj instanceof SNMP ) {
+				SNMP snmp = (SNMP) mrgObj;
+				VariableBinding vb = findMatchVB(snmp, rpdu);
+				if ( vb != null ) {
+					
+					if ( vb.getVariable() instanceof UnsignedInteger32 ||
+							vb.getVariable() instanceof Integer32 ) {
 						
-						SNMP snmp = (SNMP) mrgObj;
+					    ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
 						
-						if ( snmp.getOid().equals("1.3.6.1.4.1.9.9.23.1.2.1.1.4") ) {
-							System.out.println("Break in here. ");
-						}
-						VariableBinding vb = findMatchVB(snmp, rpdu);
+					    iv.setName(snmp.getName());
+					    iv.setValue(vb.getVariable().toInt());
+					    iv.setManagementObject(snmp.getID());
 						
-						if ( vb.getVariable() instanceof UnsignedInteger32 ||
-								vb.getVariable() instanceof Integer32 ) {
+					    se.getAttributeValues().add(iv);
+					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+			            inst.setValue(instOid);
+			            se.getValues().add(inst);
+				    }
+				    else {
+					
+					    ManagementObjectStringValue sv = new ManagementObjectStringValue();
+                        sv.setValue(vb.getVariable().toString());
+                        sv.setManagementObject(snmp.getID());
+                  
+					    se.getAttributeValues().add(sv);
+					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+			            inst.setValue(instOid);
+			            se.getValues().add(inst);
+				    }			
+				}
+				else {
+				
+					for ( IndexSNMPValue indexVal : indexVals ) {
+						
+						if ( indexVal.indexSNMP.getIdentifier().longValue() == snmp.getIdentifier().longValue() ) {
 							
-							ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
-							
-							iv.setName(snmp.getName());
-							iv.setValue(vb.getVariable().toInt());
-							iv.setManagementObject(snmp.getID());
-							
-							se.getAttributeValues().add(iv);
-							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+						    ManagementObjectStringValue sv = new ManagementObjectStringValue();
+	                        sv.setValue(indexVal.indexVal);
+	                        sv.setManagementObject(snmp.getID());
+	                     
+						    se.getAttributeValues().add(sv);
+						    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
 				            inst.setValue(instOid);
 				            se.getValues().add(inst);
+							break;
 						}
-						else {
-						
-							ManagementObjectStringValue sv = new ManagementObjectStringValue();
-                            sv.setValue(vb.getVariable().toString());
-                            sv.setManagementObject(snmp.getID());
-                            
-							se.getAttributeValues().add(sv);
-							ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
-				            inst.setValue(instOid);
-				            se.getValues().add(inst);
-						}						
 					}
 				}				
-			}	
-			
-		}
+			}
+		}			
 	}
 	
     
@@ -664,8 +733,10 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 * @return the service element
 	 * @throws IntegerException the integer exception
 	 */
-	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  ServiceElementType set,
-			                                            String instOid ) throws IntegerException {
+	public ServiceElement createServiceElementFromType( DiscoverNode discNode,  
+			                                            ServiceElementType set,
+			                                            String instOid,
+			                                            SNMPTable contextSnmp ) throws IntegerException {
 		
 		/**
 		 * Setting the general information to the Service Element.
@@ -707,7 +778,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		/**
 		 * Retrieve the attributes of the service element.
 		 */
-		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, instOid);
+		discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, instOid, contextSnmp);
 		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
 		
 		if ( set.getName().equals("cdpCache")) {
@@ -1006,8 +1077,14 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 */
 	public ServiceElement updateServiceElement( ServiceElement se, 
 			                                    ServiceElementType set, 
-			                                    ServiceElement parentSe ) throws IntegerException {
-		
+			                                    ServiceElement parentSe,
+			                                    SnmpLevelOID levelOid ) throws IntegerException {
+			
+		String instKey = "0";
+		if ( se.getValues() != null ) {
+			ServiceElementProtocolInstanceIdentifier sep = se.getValues().get(0);
+			instKey = set.getName() + ":" +  sep.getValue();
+		}		
 		/**
     	 * Check if the discovered service element has been discovered or not.
     	 * If it is, do not update it in database but just update its parent id.
@@ -1031,7 +1108,14 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     			 ServiceElement dupSe = getCheckingUniqueSE( set.getName(), sb.toString());
     			 if ( dupSe != null ) {
     				 dupSe.addParentId(parentSe.getID());
+    				 
     				 dupSe = accessMgr.updateServiceElement(dupSe);
+    				 
+    				 /**
+    				  * Update the updated SE on the association list.
+    				  */
+    				 discNode.updateAssociationSe(instKey, dupSe);
+    				 discNode.bookDiscoveredSE(instKey, se);
     				 return dupSe;
     			 }    
     			 else {
@@ -1040,18 +1124,74 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     				 dupSe = accessMgr.updateServiceElement(se);
     				 putCheckingUniqueSE( set.getName(), sb.toString(), dupSe);
     				 
+    				 /**
+    			    	 * Store association if exist for later to link up the association with other service element.
+    			    	 */
+    					if ( set.getAssociations() != null && set.getAssociations().size() > 0 ) {
+    						
+    						AssociationInfo asInfo = new AssociationInfo(se);
+    						PersistenceManagerInterface persistanceManager = DistributionManager.getManager(ManagerTypeEnum.PersistenceManager);
+    						ServiceElementAssociationTypeDAO associationTypeDao = persistanceManager.getServiceElementAssociationTypeDAO();
+    						
+    						for ( ID id : set.getAssociations() ) {
+    							
+    							ServiceElementAssociationType associtateType = associationTypeDao.findById(id);				
+    							if ( levelOid.getAssociations() != null ) {
+    								for ( SnmpAssociation association : levelOid.getAssociations() ) {
+    									
+    									if ( association.getAssociationTypeId().getIdentifier().longValue() 
+    											                   == associtateType.getIdentifier().longValue() ) {
+    										
+    										asInfo.addAssociaton(association);
+    										break;
+    									}
+    								}
+    							}
+    						}
+    						discNode.addAssociationInfo(instKey, asInfo);
+    					}
+    				 
+    				 /**
+    				  * Update the updated SE on the association list.
+    				  */
+    				 discNode.updateAssociationSe(instKey, dupSe);
+    				 discNode.bookDiscoveredSE(instKey, se);
     				 return dupSe;
     			 }
     		 }
     	}
     	se.setParentId(parentSe.getID());
+    	se = accessMgr.updateServiceElement(se);
     	
-    	try {
-	         return accessMgr.updateServiceElement(se);
-    	}
-    	catch ( IntegerException ie ) {
-    		throw ie;
-    	}
+    	/**
+    	 * Store association if exist for later to link up the association with other service element.
+    	 */
+		if ( set.getAssociations() != null && set.getAssociations().size() > 0 ) {
+			
+			AssociationInfo asInfo = new AssociationInfo(se);
+			PersistenceManagerInterface persistanceManager = DistributionManager.getManager(ManagerTypeEnum.PersistenceManager);
+			ServiceElementAssociationTypeDAO associationTypeDao = persistanceManager.getServiceElementAssociationTypeDAO();
+			
+			for ( ID id : set.getAssociations() ) {
+				
+				ServiceElementAssociationType associtateType = associationTypeDao.findById(id);				
+				if ( levelOid.getAssociations() != null ) {
+					for ( SnmpAssociation association : levelOid.getAssociations() ) {
+						
+						if ( association.getAssociationTypeId().getIdentifier().longValue() 
+								                   == associtateType.getIdentifier().longValue() ) {
+							
+							asInfo.addAssociaton(association);
+							break;
+						}
+					}
+				}
+			}
+			discNode.addAssociationInfo(instKey, asInfo);
+		}
+		
+		discNode.bookDiscoveredSE(instKey, se);
+    	return se;
 	}
 	
 	
@@ -1068,8 +1208,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			                     ServiceElement parentSe,
 			                     String parentConext,
 			                     String parentIndex,
-			                     String foundInstance,
-			                     DiscoverNode discNode ) throws IntegerException {
+			                     String foundInstance ) throws IntegerException {
 		
 
 		String instOid = foundInstance;		
@@ -1213,7 +1352,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			            ServiceElement levelSe = null;
 			        	try {
 			        		
-			        		levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
+			        		levelSe = createServiceElementFromType(discNode, levelSetType, instOid, (SNMPTable)levelOid.getContextOID());
 			        	}
 			        	catch ( Exception e ) {
 			        		continue;
@@ -1221,10 +1360,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			        	if ( levelSe.getName() == null ) {    		
 			        		levelSe.setName(levelSetType.getName() + " " + instOid);
 			        	}
-			        	if ( levelSe.getName().equals("interface 85")) {
-			        		System.out.println("Break in here.... ");
-			        	}
-			        	levelSe = updateServiceElement(levelSe, levelSetType, parentSe);
+			        	levelSe = updateServiceElement(levelSe, levelSetType, parentSe, levelOid);
 			        	
 			        	LevelDiscoveredSE lds = new LevelDiscoveredSE();
 			        	lds.instOid = instOid;
@@ -1365,7 +1501,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					}
 					
 					ServiceElement se = createServiceElementFromType(discNode, set, tblEvent, indexVals);
-					se = updateServiceElement(se, set, discNode.getAccessElement());
+					se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					
 					LevelDiscoveredSE lds = new LevelDiscoveredSE();
 					lds.instOid = tblEvent.getIndex().toString();
@@ -1380,20 +1516,18 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
 					
 					ServiceElementType levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
-					ServiceElement levelSe = createServiceElementFromType(discNode, levelSetType, instOid);
+					ServiceElement levelSe = createServiceElementFromType(discNode, levelSetType, instOid, (SNMPTable)levelOid.getContextOID());
 					if ( levelSe.getName() == null ) {    		
 		        		levelSe.setName(levelSetType.getName() + " " + instOid);
 		        	}
 					
-					levelSe = updateServiceElement(levelSe, levelSetType, parentSe );
+					levelSe = updateServiceElement(levelSe, levelSetType, parentSe, levelOid );
 					LevelDiscoveredSE lds = new LevelDiscoveredSE();
 					lds.instOid = instOid;
 					lds.levelSe = levelSe;
 					lds.levelSetType = levelSetType;
 					
 					discoveredInstOids.add(lds);
-					
-					
 	                if ( levelSetType.getCategory().getName().equals("Network") ) {
 						
 						TopologyElement te = new TopologyElement();
@@ -1451,7 +1585,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 								 }
 								 else {
 								     levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
-						        		  nextLevel.getContextOID().getOid(), lds.instOid, mval.getValue().toString(), discNode );
+						        		  nextLevel.getContextOID().getOid(), lds.instOid, mval.getValue().toString() );
 								 }
 							 }
 							 else {
@@ -1497,7 +1631,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 						    	 ParentChildMappingIndex pcmi = findMappingIndex(indexTable,  lds.instOid, indexLocation);
 							     if ( pcmi != null ) {
 							          levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
-							        		  nextLevel.getContextOID().getOid(), lds.instOid, null, discNode );
+							        		  nextLevel.getContextOID().getOid(), lds.instOid, null );
 							     }
 						    }
 						}
@@ -1538,7 +1672,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							if ( indexLocation == 0 ) {
 								if ( i.startsWith(lds.instOid) ) {
 									 levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
-											 levelOid.getContextOID().getOid(), lds.instOid, i, discNode );
+											 levelOid.getContextOID().getOid(), lds.instOid, i );
 									break;
 								}
 							}

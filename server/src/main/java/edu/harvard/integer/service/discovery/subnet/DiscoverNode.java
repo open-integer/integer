@@ -35,7 +35,9 @@ package edu.harvard.integer.service.discovery.subnet;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
@@ -43,6 +45,7 @@ import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.LinkCapability;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.service.discovery.snmp.AssociationInfo;
 import edu.harvard.integer.service.discovery.snmp.DeviceTopologyInfo;
 import edu.harvard.integer.service.discovery.snmp.NetworkConnection;
 import edu.harvard.integer.service.discovery.snmp.TopologyNode;
@@ -135,11 +138,24 @@ public class DiscoverNode extends ElementAccess {
 	private DeviceTopologyInfo topologyInfo = new DeviceTopologyInfo();
 
 	/**
-	 * 
+	 * Used for identify the top level of service element.
 	 */
 	private List<Identify>  identifies;
 	
+	/**
+	 * Map to store discovered service elements, it is used for final stage to link the association
+	 * between service elements.
+	 * The key for the MAP is service element type plus the instance OID of the service element.
+	 */
+	private Map<String, ServiceElement>  instSeMap = new HashMap<String, ServiceElement>();
+
+	/**
+	 * Map to store association information, it is used to final stage to link the association
+	 * between service elements.
+	 */
+	private Map<String, AssociationInfo> associationInfos = new HashMap<>();
 	
+
 	/**
 	 * Boolean used to indicate whether the current discovered node can forward packages
 	 * or not.
@@ -467,20 +483,79 @@ public class DiscoverNode extends ElementAccess {
 
 
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<DiscoverNet> getOtherSubnet() {
 		return otherSubnet;
 	}
 
 
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSysNamn() {
 		return sysNamn;
 	}
 
 
+	/**
+	 * 
+	 * @param sysNamn
+	 */
 	public void setSysNamn(String sysNamn) {
 		this.sysNamn = sysNamn;
 	}
 
+	/**
+	 * 
+	 * @param instKey
+	 * @param se
+	 */
+	public void bookDiscoveredSE( String instKey, ServiceElement se ) {		
+		instSeMap.put(instKey, se);
+	}
+	
+	/**
+	 * 
+	 * @param instKey
+	 * @return
+	 */
+	public ServiceElement getDiscoveredSE( String instKey ) {		
+		return instSeMap.get(instKey);
+	}
+	
+	/**
+	 * 
+	 * @param asInfo
+	 */
+	public void addAssociationInfo( String instKey, AssociationInfo asInfo ) {
+		associationInfos.put( instKey, asInfo);
+	}
+	
+	/**
+	 * Update the association service element if 
+	 * @param instKey
+	 * @param se
+	 */
+	public void updateAssociationSe( String instKey, ServiceElement se ) {
+		
+		AssociationInfo asInfo = associationInfos.get(instKey);
+		if ( asInfo != null ) {
+			asInfo.setAssociationSe(se);
+		}
+	}
+	
+	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Map<String, AssociationInfo> getAssociationInfos() {
+		return associationInfos;
+	}
 
 }

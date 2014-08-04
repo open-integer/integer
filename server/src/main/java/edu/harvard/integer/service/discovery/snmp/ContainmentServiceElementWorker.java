@@ -101,6 +101,8 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 			throws IntegerException {
 		
 		logger.info("In ContainmentServiceElementWorker discover ");
+		
+		this.discNode = discNode;
 		ElementEndPoint endPoint = discNode.getElementEndPoint();
 		
 		List<SnmpLevelOID> levelOids = sc.getSnmpLevels();
@@ -126,8 +128,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toString());
-						se = updateServiceElement(se, set, discNode.getAccessElement());
+						ServiceElement se =  createServiceElementFromType(discNode, set, 
+								             te.getIndex().toString(), (SNMPTable)levelOid.getContextOID());
+						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					}
 				}
 			}
@@ -139,8 +142,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toString());						
-						se = updateServiceElement(se, set, discNode.getAccessElement());
+						ServiceElement se =  createServiceElementFromType(discNode, set, 
+								                 te.getIndex().toString(), (SNMPTable)levelOid.getContextOID());						
+						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					}
 				}
 				else {
@@ -150,8 +154,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 					
 					for ( TableEvent de : deviceEvents ) {
 						
-						ServiceElement se =  createServiceElementFromType(discNode, set, de.getIndex().toString());
-						se = updateServiceElement(se, set, discNode.getAccessElement());
+						ServiceElement se =  createServiceElementFromType(discNode, set, 
+								                          de.getIndex().toString(), (SNMPTable)levelOid.getContextOID() );
+						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					}
 				}
 			}
@@ -248,8 +253,8 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
         	 					if ( contRel.getMappingType() != null || contRel.getMappingType() == RelationMappingTypeEnum.InstanceOnly ) {
         	 						
         	 						for ( String inst : rmi.getChildInstances() ) {
-        	 							ServiceElement se =  createServiceElementFromType(discNode, set, inst);						
-            	 						se = updateServiceElement(se, set, discNode.getAccessElement());
+        	 							ServiceElement se =  createServiceElementFromType(discNode, set, inst, (SNMPTable)levelOid.getContextOID());						
+            	 						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
             	 						
             	 						SEAndSETPair discComp = new SEAndSETPair();
             	 						discComp.set = set;
@@ -281,8 +286,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
         	 									insta[i] = fullOID.get(i);
         	 								}
         	 								OID inst = new OID(insta);
-        	 								ServiceElement se =  createServiceElementFromType(discNode, set, inst.toString());						
-                	 						se = updateServiceElement(se, set, discNode.getAccessElement());
+        	 								ServiceElement se =  createServiceElementFromType(discNode, set, 
+        	 										                        inst.toString(), (SNMPTable)levelOid.getContextOID() );						
+                	 						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
                 	 						
                 	 						SEAndSETPair discComp = new SEAndSETPair();
                 	 						discComp.set = set;
@@ -408,8 +414,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
     				List<TableEvent> tes = findTableEventRow(deviceEvents, discrimatorSnmp.getOid(), discriminator.getDiscriminatorValue());
     				for ( TableEvent te : tes ) {
     					ServiceElementType matchSet = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-    					ServiceElement se =  createServiceElementFromType(discNode, matchSet, te.getIndex().toString() );						
-    					se = updateServiceElement(se, matchSet, parentSe);
+    					ServiceElement se =  createServiceElementFromType(discNode, matchSet, 
+    							                                        te.getIndex().toString(), (SNMPTable)levelOid.getContextOID() );						
+    					se = updateServiceElement(se, matchSet, parentSe, levelOid);
     					
     					for ( SnmpLevelOID snmpLevel : levelOid.getChildren() ) {
     						
@@ -432,8 +439,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
     				List<TableEvent> tes = findTableEventRow(deviceEvents, discrimatorSnmp.getOid(), discriminator.getDiscriminatorValue());
     				for ( TableEvent te : tes ) {
     					ServiceElementType matchSet = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-    					ServiceElement se =  createServiceElementFromType(discNode, matchSet, te.getIndex().toString());						
-    					se = updateServiceElement(se, matchSet, parentSe);
+    					ServiceElement se =  createServiceElementFromType(discNode, matchSet, 
+    							                                      te.getIndex().toString(), (SNMPTable)levelOid.getContextOID());						
+    					se = updateServiceElement(se, matchSet, parentSe, levelOid);
     					
                      for ( SnmpLevelOID snmpLevel : levelOid.getChildren() ) {
     						
@@ -451,8 +459,9 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
     				ServiceElementType matchSet = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
     				for ( TableEvent te : deviceEvents ) {
     					
-    					ServiceElement se =  createServiceElementFromType(discNode, matchSet, te.getIndex().toString());
-    					se = updateServiceElement(se, matchSet, parentSe);
+    					ServiceElement se =  createServiceElementFromType(discNode, matchSet, 
+    							                                      te.getIndex().toString(), (SNMPTable)levelOid.getContextOID());
+    					se = updateServiceElement(se, matchSet, parentSe, levelOid);
     					
                         for ( SnmpLevelOID snmpLevel : levelOid.getChildren() ) {
     						
@@ -578,7 +587,6 @@ public class ContainmentServiceElementWorker extends SnmpServiceElementDiscover 
 		}
 		return children;
 	}
-	
 	
 	
 	/**

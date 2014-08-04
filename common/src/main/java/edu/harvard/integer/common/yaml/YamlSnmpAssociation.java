@@ -40,6 +40,7 @@ import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpContainmentRela
  */
 public class YamlSnmpAssociation {
 
+	private String name;
 	private String associationName;
 	
 	/**
@@ -66,5 +67,15 @@ public class YamlSnmpAssociation {
 			YamlSnmpContainmentRelation containmentRelationship) {
 		this.containmentRelationship = containmentRelationship;
 	}
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	
 }

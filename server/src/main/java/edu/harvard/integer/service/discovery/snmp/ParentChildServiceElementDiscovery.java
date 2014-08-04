@@ -87,8 +87,6 @@ public class ParentChildServiceElementDiscovery extends
 	/** The logger. */
     private static Logger logger = LoggerFactory.getLogger(EntityMibServiceElementDiscovery.class);
     
-	/** The discovery node. */
-	private DiscoverNode discNode;
 	
 	/** The containment class which the child context OID and which SNMP object holds the relation. */
 	private SnmpContainment containment;
@@ -137,7 +135,7 @@ public class ParentChildServiceElementDiscovery extends
 						if ( snmpLevel.getRelationToParent() == null ) {	
 							
 							levelDiscovery(snmpLevel, discNode.getTopServiceElementType(), 
-								           discNode.getAccessElement(), null, null, null, discNode);
+								           discNode.getAccessElement(), null, null, null );
 							
 							/*
 							if ( snmpLevel.getDescriminatorOID() == null ) {
@@ -246,8 +244,8 @@ public class ParentChildServiceElementDiscovery extends
 						SnmpServiceElementTypeDiscriminator discriminator = snmpLevel.getDisriminators().get(0);
 						
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, "0");						
-						se = updateServiceElement(se, set, discNode.getAccessElement());
+						ServiceElement se =  createServiceElementFromType(discNode, set, "0", null);						
+						se = updateServiceElement(se, set, discNode.getAccessElement(), snmpLevel );
 					}
 				}
 				else if ( snmpLevel.getRelationToParent() != null && snmpLevel.getRelationToParent() instanceof SnmpParentChildRelationship ) {
@@ -293,7 +291,7 @@ public class ParentChildServiceElementDiscovery extends
 					 * Call this method to discover components on each level.
 					 */
 					try {
-					    recursiveDiscovery(topEntity);
+					    recursiveDiscovery(topEntity, snmpLevel);
 					}
 					catch ( Exception e ) {
 						e.printStackTrace();
@@ -318,7 +316,7 @@ public class ParentChildServiceElementDiscovery extends
 	 * @param row the row
 	 * @throws IntegerException the integer exception
 	 */
-	private void recursiveDiscovery( ParentChildRelationNode row ) throws IntegerException {
+	private void recursiveDiscovery( ParentChildRelationNode row, SnmpLevelOID snmpLevel ) throws IntegerException {
 		
 		/**
 		 * Check if an associated service element being discovered for current Physical Entity row or not.
@@ -362,7 +360,8 @@ public class ParentChildServiceElementDiscovery extends
 			
 			if ( set != null ) {
 				
-				ServiceElement se = createAndDiscoverServiceElement(set, row, vif, discNode.getTopServiceElementType().getVendor());
+				ServiceElement se = createAndDiscoverServiceElement(set, row, vif, 
+						                         discNode.getTopServiceElementType().getVendor(), snmpLevel );
 				
 				ee = new EntityElement();
 				ee.index = row.getIndex();
@@ -390,7 +389,7 @@ public class ParentChildServiceElementDiscovery extends
 				for ( SnmpLevelOID levelOid : containment.getSnmpLevels() ) {
 					
 					if ( levelOid.getCategory() != null && levelOid.getCategory().getID().equals(set.getCategory().getID())  ) {
-						levelDiscovery(levelOid, set, se, row.getContextOid(), row.getIndex(), null, discNode);
+						levelDiscovery(levelOid, set, se, row.getContextOid(), row.getIndex(), null);
 					}
 				}
 			}		
@@ -404,7 +403,7 @@ public class ParentChildServiceElementDiscovery extends
 			return;			
 		}		
 		for ( ParentChildRelationNode pr : containRows ) {		
-			recursiveDiscovery(pr);
+			recursiveDiscovery(pr, snmpLevel);
 		}		
 	}
 	
@@ -439,7 +438,8 @@ public class ParentChildServiceElementDiscovery extends
 	public ServiceElement createAndDiscoverServiceElement( ServiceElementType set, 
 			                                               ParentChildRelationNode row,
 			                                               VendorIdentifier vif,
-			                                               String vendor ) throws IntegerException {
+			                                               String vendor,
+			                                               SnmpLevelOID snmpLevel ) throws IntegerException {
 		
 
 		String description = null;
@@ -513,7 +513,7 @@ public class ParentChildServiceElementDiscovery extends
 	     * Discover more detail for that service element.
 	     */
 		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
-	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, row.getIndex() );
+	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, row.getIndex(), (SNMPTable)snmpLevel.getContextOID() );
 	    
 	    if ( se.getName() == null ) {
 			se.setName(seName);
@@ -522,7 +522,7 @@ public class ParentChildServiceElementDiscovery extends
 	    /**
 	     * Create service element in the database.
 	     */
-	    se = updateServiceElement(se, set, parentSe);
+	    se = updateServiceElement(se, set, parentSe, snmpLevel );
 	    return se;
 	}
 	
@@ -536,7 +536,9 @@ public class ParentChildServiceElementDiscovery extends
 	 * @return the service element
 	 * @throws IntegerException the integer exception
 	 */
-	public ServiceElement createAndDiscoverServiceElement( ServiceElementType set, ParentChildRelationNode row ) throws IntegerException {
+	public ServiceElement createAndDiscoverServiceElement( ServiceElementType set, 
+			                                               ParentChildRelationNode row,
+			                                               SnmpLevelOID snmpLevel) throws IntegerException {
 		
 		ServiceElement se = new ServiceElement();
 		se.setCategory(set.getCategory());
@@ -567,7 +569,7 @@ public class ParentChildServiceElementDiscovery extends
 	     * Discover more detail for that service element.
 	     */
 		findUIDForServiceElement(set, se, discNode.getElementEndPoint());
-	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, row.getIndex() );
+	    discoverServiceElementAttribute(discNode.getElementEndPoint(), se, set, row.getIndex(), (SNMPTable)snmpLevel.getContextOID() );
 	    
 	    if ( se.getName() == null ) {
 	    	
@@ -579,10 +581,11 @@ public class ParentChildServiceElementDiscovery extends
 	    }
 	    
 	    
+	    
 	    /**
 	     * Create service element in the database.
 	     */
-	    se = updateServiceElement(se, set, parentSe);
+	    se = updateServiceElement(se, set, parentSe, snmpLevel );
 	    return se;
 	}
 	
@@ -649,7 +652,7 @@ public class ParentChildServiceElementDiscovery extends
 			for ( SNMP snmp : snmps ) {
 				attributeIds.add(snmp.getID());
 			}
-			set.setApplicabilities(attributeIds);;
+			set.setAttributeIds(attributeIds);;
 		}
 		catch ( IntegerException ie ) {
 			logger.warn("Fail to add attribute on ServiceElementType");

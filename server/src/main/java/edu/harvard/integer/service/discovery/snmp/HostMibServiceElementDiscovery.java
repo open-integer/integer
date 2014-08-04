@@ -51,6 +51,7 @@ import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
@@ -99,6 +100,8 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 
 		logger.info("In HostMibServiceElementDiscovery discover ");
 		ElementEndPoint endPoint = discNode.getElementEndPoint();
+		
+		this.discNode = discNode;
 		/*
 		 * Set up the if mapping table to create mapping for port if.
 		 */
@@ -146,8 +149,9 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toDottedString());						
-						se = updateServiceElement(se, set, discNode.getAccessElement());
+						ServiceElement se =  createServiceElementFromType(discNode, set, 
+								                     te.getIndex().toDottedString(), (SNMPTable)levelOid.getContextOID());						
+						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					}
 				}
 			}
@@ -159,8 +163,9 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-						ServiceElement se =  createServiceElementFromType(discNode, set, te.getIndex().toString());						
-						se = updateServiceElement(se, set, discNode.getAccessElement());
+						ServiceElement se =  createServiceElementFromType(discNode, set, 
+								                                      te.getIndex().toString(), (SNMPTable)levelOid.getContextOID());						
+						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					}
 				}
 				else {
@@ -170,8 +175,9 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 					
 					for ( TableEvent de : deviceEvents ) {
 						
-						ServiceElement se =  createServiceElementFromType(discNode, set, de.getIndex().toString());
-						se = updateServiceElement(se, set, discNode.getAccessElement());
+						ServiceElement se =  createServiceElementFromType(discNode, set, 
+								                                   de.getIndex().toString(), (SNMPTable)levelOid.getContextOID());
+						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					}
 				}
 			}

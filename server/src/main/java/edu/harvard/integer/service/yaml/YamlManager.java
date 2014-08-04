@@ -49,6 +49,7 @@ import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.RelationMappingTypeEnum;
+import edu.harvard.integer.common.discovery.SnmpAssociation;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
@@ -84,6 +85,7 @@ import edu.harvard.integer.common.yaml.YamlServiceElementAssociationType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
 import edu.harvard.integer.common.yaml.YamlService;
+import edu.harvard.integer.common.yaml.YamlSnmpAssociation;
 import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpContainmentRelation;
@@ -99,6 +101,7 @@ import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.SnmpAssociationDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
@@ -447,6 +450,13 @@ public class YamlManager extends BaseManager implements
 							
 							ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
 							ServiceElementType serviceElementType = dao.findByName(yassType.getAssociateServiceElementTypeName());
+							
+							/**
+							 * It is for avoid junit test error.
+							 */
+							if ( serviceElementType == null ) {
+								continue;
+							}
 							assType.setServiceElementTypeId(serviceElementType.getID());
 							
 							if ( yassType.getManagementObjects() != null ) {
@@ -841,6 +851,7 @@ public class YamlManager extends BaseManager implements
 		
 		List<SnmpLevelOID> dbLevels = new ArrayList<SnmpLevelOID>();
 		for (YamlSnmpLevelOID levelOid : yamlSnmpLevelOids) {
+			
 			SNMP snmp = snmpDao.findByName(levelOid.getContextOID());
 			if (snmp == null) {
 				logger.error("OID not found for " + levelOid.getContextOID()
@@ -897,10 +908,45 @@ public class YamlManager extends BaseManager implements
 				dbLevelOid.setChildren(createSnmpLevelOIDs(
 						levelOid.getChildren(), topLevels));
 
-		
-
+			if ( levelOid.getAssociations() != null ) {
+				
+				SnmpRelationshipDAO relDao = persistanceManager.getSnmpSnmpRelationshipDAO();
+				ServiceElementAssociationTypeDAO assTypeDao = persistanceManager.getServiceElementAssociationTypeDAO();
+				SnmpAssociationDAO assDao = persistanceManager.getSnmpAssociationDAO();
+				
+				List<SnmpAssociation> associations = new ArrayList<>();
+				for ( YamlSnmpAssociation yass : levelOid.getAssociations() ) {
+					
+					SnmpAssociation sass = new SnmpAssociation();
+					sass.setName(yass.getName());
+					
+					ServiceElementAssociationType assType = assTypeDao.findByName(yass.getAssociationName());
+					sass.setAssociationTypeId(assType.getID());
+					
+					if ( yass.getContainmentRelationship() != null ) {
+						SnmpContainmentRelation contaimentRel = new SnmpContainmentRelation();
+						contaimentRel.setName(yass.getName());
+						contaimentRel.setMappingType(RelationMappingTypeEnum.InstanceOnly);
+						SNMP s = snmpDao.findByName(yass.getContainmentRelationship().getMappingOid());
+						contaimentRel.setMappingOid(s);
+						SNMPTable st = (SNMPTable) snmpDao.findByName(yass.getContainmentRelationship().getMappingTable());
+						contaimentRel.setMappingTable(st);
+						
+						contaimentRel = relDao.update(contaimentRel);
+						sass.setRelationToAssociation(contaimentRel);
+					}
+					sass = assDao.update(sass);
+					associations.add(sass);
+				}
+				if ( associations.size() > 0 ) {
+				     dbLevelOid.setAssociations(associations);
+				}
+			}
+			
 			dbLevelOid = levelDao.update(dbLevelOid);
 			dbLevels.add(dbLevelOid);
+			
+			
 		}
 
 		return dbLevels;

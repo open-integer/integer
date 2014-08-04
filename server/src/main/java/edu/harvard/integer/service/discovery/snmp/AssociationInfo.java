@@ -30,37 +30,43 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
+package edu.harvard.integer.service.discovery.snmp;
 
-package edu.harvard.integer.service.persistance.dao.topology;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.topology.ServiceElementAssociationType;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.common.discovery.SnmpAssociation;
+import edu.harvard.integer.common.topology.ServiceElement;
 
 /**
- * @author David Taylor
+ * @author dchan
  *
  */
-public class ServiceElementAssociationTypeDAO extends BaseDAO {
+public class AssociationInfo {
 
-	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
-	 */
-	public ServiceElementAssociationTypeDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, ServiceElementAssociationType.class);
+	private ServiceElement associationSe;
+	private List<SnmpAssociation> associations = new ArrayList<>();
+
+
+	public AssociationInfo( ServiceElement se ) {
 		
+		this.associationSe = se;
+	}
+	
+	
+	public ServiceElement getAssociationSe() {
+		return associationSe;
 	}
 
-	/**
-	 * @param name
-	 * @return
-	 */
-	public ServiceElementAssociationType findByName(String name) {
-		return findByStringField(name, "name", ServiceElementAssociationType.class);
+	public List<SnmpAssociation> getAssociation() {
+		return associations;
+	}
+	
+	public void addAssociaton( SnmpAssociation association ) {
+		associations.add(association);
+	}
+	
+	public void setAssociationSe(ServiceElement associationSe) {
+		this.associationSe = associationSe;
 	}
 }
