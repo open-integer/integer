@@ -13,8 +13,6 @@ import edu.harvard.integer.client.widget.HvCheckBoxTreePanel;
 import edu.harvard.integer.client.widget.HvCheckListPanel;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.selection.Filter;
-import edu.harvard.integer.common.topology.Category;
-import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**

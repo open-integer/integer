@@ -100,10 +100,12 @@ public class HvCheckBoxTreePanel extends SimplePanel {
 		List<ChildNodeItem> subCategoryList = subCategoryProvider.getList();
 		
 		for (FilterNode node : childNodeList) {
-			if (node.getChildren() == null || node.getChildren().isEmpty())
+			if (node.getChildren() == null) // || node.getChildren().isEmpty())
 				techItemList.add(createLeaveItem(node.getItemId().getIdentifier(), parentNode.getName(), node.getItemId().getName()));
 			else {
-				subCategoryList.add(new ChildNodeItem(parentNode.getName(), node.getItemId().getName()));
+				ChildNodeItem childNode = new ChildNodeItem(parentNode.getName(), node.getItemId().getName());
+				childNode.setNumChildren(node.getChildren().size());
+				subCategoryList.add(childNode);
 				generateProviderItems(node.getItemId(), node.getChildren());
 			}
 		}
