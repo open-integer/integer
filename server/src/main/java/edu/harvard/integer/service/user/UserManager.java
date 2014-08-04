@@ -51,6 +51,8 @@ import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.common.user.Role;
 import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.common.user.authentication.AuthInfo;
+import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.user.AccessPolicyDAO;
 import edu.harvard.integer.service.persistance.dao.user.ContactDAO;
@@ -66,17 +68,22 @@ import edu.harvard.integer.service.persistance.dao.user.UserDAO;
  * 
  */
 @Stateless
-public class UserManager implements UserManagerInterface {
+public class UserManager extends BaseManager implements UserManagerLocalInterface, UserManagerRemoteInterface {
+	
+
 	@Inject
 	private Logger logger;
 
 	@Inject
 	private PersistenceManagerInterface dbm;
-
+	
+	/**
+	 * @param managerType
+	 */
 	public UserManager() {
-
+		super(ManagerTypeEnum.UserManager);	
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.user.UserManagerInterface#addUser(edu.harvard.integer.common.user.User)
@@ -191,13 +198,20 @@ public class UserManager implements UserManagerInterface {
 		return b.toString();
 	}
 
-	/**
-	 * Create or update an instance of organization or create a new instance in
-	 * the DB.
-	 * 
-	 * @param organization
-	 * @return
-	 * @throws IntegerException
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.user.UserManagerInterface#getAllOrganizations()
+	 */
+	@Override
+	public Organization[] getAllOrganizations() throws IntegerException {
+		OrganizationDAO dao = dbm.getOrganizationDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.user.UserManagerInterface#updateOrganization(edu.harvard.integer.common.user.Organization)
 	 */
 	@Override
 	public Organization updateOrganization(Organization organization)

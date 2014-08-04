@@ -38,9 +38,12 @@ import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -76,9 +79,11 @@ public class FilterNode extends BaseEntity {
 
 	private Boolean selected = null;
 
-	@OneToMany
+	@ElementCollection(fetch=FetchType.EAGER)
+	@OrderColumn(name = "idx")
 	private List<FilterNode> children = null;
 
+	
 	/**
 	 * @return the itemId
 	 */

@@ -43,7 +43,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
@@ -56,6 +55,7 @@ import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.user.Location;
+import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
@@ -65,6 +65,7 @@ import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
+import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
 
 /**
  * 
@@ -82,7 +83,7 @@ public class SelectionManager extends BaseManager implements
 
 	@Inject
 	private Logger logger;
-	
+
 	public SelectionManager() {
 		super(ManagerTypeEnum.SelectionManager);
 	}
@@ -117,7 +118,7 @@ public class SelectionManager extends BaseManager implements
 
 		if (technologies != null && technologies.length > 0) {
 			Technology[] children = dao.findByParentId(technologies[0].getID());
-	
+
 			for (Technology technology : children) {
 				FilterNode node = new FilterNode();
 				node.setItemId(technology.getID());
@@ -131,10 +132,10 @@ public class SelectionManager extends BaseManager implements
 			}
 
 		}
-		
+
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
-		
+
 		ServiceDAO serviceDao = persistenceManager.getServiceDAO();
 		Service[] allServices = serviceDao.findAll();
 		List<ID> serviceIds = new ArrayList<ID>();
@@ -142,8 +143,11 @@ public class SelectionManager extends BaseManager implements
 			serviceIds.add(service.getID());
 		}
 		filter.setServices(serviceIds);
-		
+
 		filter.setTechnologies(nodes);
+		logger.info("Technologies: "
+				+ printFilterNode(new StringBuffer(), "  ",
+						filter.getTechnologies()));
 
 		CategoryDAO categoryDAO = persistenceManager.getCategoryDAO();
 		Category[] categories = categoryDAO.findAllTopLevel();
@@ -152,7 +156,21 @@ public class SelectionManager extends BaseManager implements
 		filter.setCriticalities(Arrays.asList(CriticalityEnum.values()));
 		filter.setLinkTechnologies(routing);
 
-		filter.setLocations(createLocationList((Location[]) persistenceManager.getLocationDAO().findAll()));
+		filter.setLocations(createLocationList((Location[]) persistenceManager
+				.getLocationDAO().findAll()));
+
+		OrganizationDAO organizationDAO = persistenceManager
+				.getOrganizationDAO();
+		Organization[] allOrganizations = organizationDAO
+				.getTopLevelOrganizations();
+		filter.setOrginizations(createOrganizationList(organizationDAO,
+				allOrganizations));
+		logger.info("Added "
+				+ filter.getOrginizations().size()
+				+ " Organizations \n"
+				+ printFilterNode(new StringBuffer(), "  ",
+						filter.getOrginizations()));
+
 		List<Filter> filters = new ArrayList<Filter>();
 		filters.add(filter);
 
@@ -162,63 +180,139 @@ public class SelectionManager extends BaseManager implements
 		return selection;
 	}
 
+	private StringBuffer printFilterNode(StringBuffer b, String indent,
+			List<FilterNode> nodes) {
+
+		if (nodes != null) {
+			for (FilterNode filterNode : nodes) {
+				b.append(indent).append("Node: ").append(filterNode.getName())
+						.append('\n');
+				if (filterNode.getChildren() != null
+						&& filterNode.getChildren().size() > 0)
+					printFilterNode(b, indent + "  ", filterNode.getChildren());
+			}
+		}
+
+		return b;
+	}
+
+	private List<FilterNode> createOrganizationList(
+			OrganizationDAO organizationDAO, Organization[] organizations)
+			throws IntegerException {
+		List<FilterNode> nodes = new ArrayList<FilterNode>();
+
+		if (organizations != null && organizations.length > 0) {
+			for (Organization organization : organizations) {
+				FilterNode node = new FilterNode();
+				node.setIdentifier(organization.getIdentifier());
+				node.setName(organization.getName());
+				node.setItemId(organization.getID());
+
+				
+				node.setChildren(createOrganizationList(organizationDAO,
+						organization.getChildOrginizations()));
+
+				nodes.add(node);
+			}
+		}
+
+		return nodes;
+	}
+
+	/**
+	 * @param childOrginizations
+	 * @return
+	 * @throws IntegerException
+	 */
+	private List<FilterNode> createOrganizationList(
+			OrganizationDAO organizationDAO, List<ID> childOrginizations)
+			throws IntegerException {
+		List<FilterNode> nodes = new ArrayList<FilterNode>();
+
+		if (childOrginizations != null && childOrginizations.size() > 0) {
+			for (ID organization : childOrginizations) {
+				FilterNode node = new FilterNode();
+				node.setName(organization.getName());
+				node.setItemId(organization);
+
+				Organization dbOrganization = organizationDAO
+						.findById(organization);
+
+			
+				node.setChildren(createOrganizationList(organizationDAO,
+						dbOrganization.getChildOrginizations()));
+
+				nodes.add(node);
+			}
+		}
+
+		return nodes;
+	}
+
 	/**
 	 * @param findAll
 	 * @return
 	 */
 	private List<ID> createLocationList(Location[] locations) {
 		List<ID> ids = new ArrayList<ID>();
-		 for (Location location : locations) {
+		for (Location location : locations) {
 			ids.add(location.getID());
 		}
+
+		logger.info("Return " + ids.size() + " Locations!");
 		return ids;
 	}
 
-	private List<FilterNode> createCategoryList(Category[] categories) throws IntegerException {
+	private List<FilterNode> createCategoryList(Category[] categories)
+			throws IntegerException {
 		List<FilterNode> categoryNodes = new ArrayList<FilterNode>();
-		
+
 		CategoryDAO dao = persistenceManager.getCategoryDAO();
-		
+
 		for (Category category : categories) {
 			FilterNode node = new FilterNode();
 			node.setIdentifier(category.getIdentifier());
 			node.setItemId(category.getID());
 			node.setName(category.getName());
-			
-			node.setChildren(createChildCategoryList(dao, category.getChildIds()));
-			
+
+			node.setChildren(createChildCategoryList(dao,
+					category.getChildIds()));
+
 			categoryNodes.add(node);
 		}
-		
+
 		return categoryNodes;
 	}
-	
+
 	/**
 	 * @param childIds
 	 * @return
-	 * @throws IntegerException 
+	 * @throws IntegerException
 	 */
-	private List<FilterNode> createChildCategoryList(CategoryDAO dao, List<ID> childIds) throws IntegerException {
+	private List<FilterNode> createChildCategoryList(CategoryDAO dao,
+			List<ID> childIds) throws IntegerException {
 		List<FilterNode> categoryNodes = new ArrayList<FilterNode>();
-		
+
 		for (ID id : childIds) {
 			FilterNode node = new FilterNode();
 			node.setIdentifier(id.getIdentifier());
 			node.setItemId(id);
 			node.setName(id.getName());
-			
-			logger.info("Find category " + id.toDebugString());
+
+			if (logger.isDebugEnabled())
+				logger.debug("Find category " + id.toDebugString());
+
 			Category category = dao.findById(id);
-			
+
 			if (category.getChildIds() != null)
-				node.setChildren(createChildCategoryList(dao, category.getChildIds()));
-			
+				node.setChildren(createChildCategoryList(dao,
+						category.getChildIds()));
+
 			categoryNodes.add(node);
 		}
-		
+
 		return categoryNodes;
 	}
-
 
 	private List<FilterNode> findChildren(TechnologyDAO dao, ID parentId)
 			throws IntegerException {

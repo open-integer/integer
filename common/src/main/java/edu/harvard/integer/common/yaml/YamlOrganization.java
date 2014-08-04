@@ -31,33 +31,79 @@
  *      
  */
 
-package edu.harvard.integer.common.persistence;
+package edu.harvard.integer.common.yaml;
 
+import java.util.List;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public enum PreloadFileType {
-	TechnologyTreeYaml("yaml"),
-	TechnologyYaml("yaml"),
-	ServiceElementTypeYaml("yaml"),
-	MIB("mibs"),
-	ProductMIB("mibs"),
-	VendorContainmentYaml("yaml"),
-	CategoryYaml("yaml"),
-	SQL("sql"), 
-	Service("yaml"),
-	Location("yaml"),
-	Organization("yaml");
-	
-	String dataSubDir = null;
-	
-	private PreloadFileType(String subDir) {
-		this.dataSubDir = subDir;
+public class YamlOrganization {
+	private String name = null;
+	private String description = null;
+	private String parent = null;
+
+	private List<YamlOrganization> organizations;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	
-	public String getDataSubDir() {
-		return dataSubDir;
+
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public String getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent
+	 *            the parent to set
+	 */
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return the organizations
+	 */
+	public List<YamlOrganization> getOrganizations() {
+		return organizations;
+	}
+
+	/**
+	 * @param organizations
+	 *            the organizations to set
+	 */
+	public void setOrganizations(List<YamlOrganization> organizations) {
+		this.organizations = organizations;
+	}
+
 }

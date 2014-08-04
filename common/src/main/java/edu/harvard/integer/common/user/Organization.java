@@ -35,11 +35,7 @@ package edu.harvard.integer.common.user;
 
 import java.util.List;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OrderColumn;
 
@@ -62,6 +58,8 @@ public class Organization extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String description = null;
+	
 	/**
 	 * This is a list of the IDs instances associated with location objects for
 	 * this organization. Generally an organization will have several locations
@@ -79,21 +77,18 @@ public class Organization extends BaseEntity {
 	private String orginizationType = null;
 
 	/**
-	 * Authentication methods to use for this organization.
+	 * List of the parent organizational unit.
 	 */
 	@ElementCollection
 	@OrderColumn(name = "idx")
-	private List<ID> authenticationMethods = null;
+	private List<ID> parentOrganizations = null;
 
 	/**
-	 * ID of the parent organization or this organization.
+	 * List of the sub-organization units of this element of an organization.
 	 */
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "identifier", column = @Column(name = "parentOrganizationId")),
-			@AttributeOverride(name = "idType.classType", column = @Column(name = "parentOrganizationType")),
-			@AttributeOverride(name = "name", column = @Column(name = "parentOrganizationName")) })
-	private ID parentOrganizationId = null;
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> childOrginizations = null;
 
 	/**
 	 * @return the locations
@@ -126,33 +121,47 @@ public class Organization extends BaseEntity {
 	}
 
 	/**
-	 * @return the authenticationMethods
+	 * @return the parentOrganizations
 	 */
-	public List<ID> getAuthenticationMethods() {
-		return authenticationMethods;
+	public List<ID> getParentOrganizations() {
+		return parentOrganizations;
 	}
 
 	/**
-	 * @param authenticationMethods
-	 *            the authenticationMethods to set
+	 * @param parentOrganizations
+	 *            the parentOrganizations to set
 	 */
-	public void setAuthenticationMethods(List<ID> authenticationMethods) {
-		this.authenticationMethods = authenticationMethods;
+	public void setParentOrganizations(List<ID> parentOrganizations) {
+		this.parentOrganizations = parentOrganizations;
 	}
 
 	/**
-	 * @return the parentOrganizationId
+	 * @return the childOrginizations
 	 */
-	public ID getParentOrganizationId() {
-		return parentOrganizationId;
+	public List<ID> getChildOrginizations() {
+		return childOrginizations;
 	}
 
 	/**
-	 * @param parentOrganizationId
-	 *            the parentOrganizationId to set
+	 * @param childOrginizations
+	 *            the childOrginizations to set
 	 */
-	public void setParentOrganizationId(ID parentOrganizationId) {
-		this.parentOrganizationId = parentOrganizationId;
+	public void setChildOrginizations(List<ID> childOrginizations) {
+		this.childOrginizations = childOrginizations;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

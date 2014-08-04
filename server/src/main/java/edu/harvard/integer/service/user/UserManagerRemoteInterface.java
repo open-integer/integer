@@ -31,33 +31,15 @@
  *      
  */
 
-package edu.harvard.integer.common.persistence;
+package edu.harvard.integer.service.user;
 
+import javax.ejb.Remote;
 
 /**
  * @author David Taylor
  *
  */
-public enum PreloadFileType {
-	TechnologyTreeYaml("yaml"),
-	TechnologyYaml("yaml"),
-	ServiceElementTypeYaml("yaml"),
-	MIB("mibs"),
-	ProductMIB("mibs"),
-	VendorContainmentYaml("yaml"),
-	CategoryYaml("yaml"),
-	SQL("sql"), 
-	Service("yaml"),
-	Location("yaml"),
-	Organization("yaml");
-	
-	String dataSubDir = null;
-	
-	private PreloadFileType(String subDir) {
-		this.dataSubDir = subDir;
-	}
-	
-	public String getDataSubDir() {
-		return dataSubDir;
-	}
+@Remote
+public interface UserManagerRemoteInterface extends UserManagerInterface {
+
 }

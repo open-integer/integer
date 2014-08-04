@@ -142,7 +142,10 @@ public class DataPreLoadFile extends BaseEntity {
 	 * @param errorMessage the errorMessage to set
 	 */
 	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+		if (errorMessage != null && errorMessage.length() > 250)
+			this.errorMessage = errorMessage.substring(0, 250);
+		else
+			this.errorMessage = errorMessage;
 	}
 
 	/**

@@ -44,6 +44,7 @@ import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.common.user.Role;
 import edu.harvard.integer.common.user.User;
 import edu.harvard.integer.common.user.authentication.AuthInfo;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * * The user contact and role manager controls addition, creation and
@@ -73,8 +74,8 @@ import edu.harvard.integer.common.user.authentication.AuthInfo;
  * 
  */
 @Local
-public interface UserManagerInterface {
-	
+public interface UserManagerInterface extends BaseManagerInterface {
+
 	/**
 	 * Add one user to the system. The user will be saved into the database. All
 	 * setup for the user will be done after the call completes.
@@ -117,7 +118,8 @@ public interface UserManagerInterface {
 	public User[] getAllUsers() throws IntegerException;
 
 	/**
-	 * Get a HTML String that can be used for display. 
+	 * Get a HTML String that can be used for display.
+	 * 
 	 * @return HTML Sting of users in the system.s
 	 * @throws IntegerException
 	 */
@@ -125,7 +127,9 @@ public interface UserManagerInterface {
 
 	/**
 	 * Update/save the Contact in the database
-	 * @param contact. Contact to save
+	 * 
+	 * @param contact
+	 *            . Contact to save
 	 * @return Contact that has been saved.
 	 * @throws IntegerException
 	 */
@@ -133,14 +137,18 @@ public interface UserManagerInterface {
 
 	/**
 	 * Delete the Contact
-	 * @param contact. Contact to deleted.
+	 * 
+	 * @param contact
+	 *            . Contact to deleted.
 	 * @throws IntegerException
 	 */
 	void deleteContact(Contact contact) throws IntegerException;
 
 	/**
 	 * Update/save the Organization in the database.
-	 * @param organization. Origanization to update.
+	 * 
+	 * @param organization
+	 *            . Origanization to update.
 	 * 
 	 * @return Organization. The updated Organization.
 	 * @throws IntegerException
@@ -150,7 +158,9 @@ public interface UserManagerInterface {
 
 	/**
 	 * Delete the Organization with the given ID.
-	 * @param id. ID of the Organization to delete.
+	 * 
+	 * @param id
+	 *            . ID of the Organization to delete.
 	 * 
 	 * @throws IntegerException
 	 */
@@ -158,7 +168,9 @@ public interface UserManagerInterface {
 
 	/**
 	 * Delete the Organization.
-	 * @param organization. Organization to delete.
+	 * 
+	 * @param organization
+	 *            . Organization to delete.
 	 * 
 	 * @throws IntegerException
 	 */
@@ -166,7 +178,9 @@ public interface UserManagerInterface {
 
 	/**
 	 * Update the AccessPolicy in the database.
-	 * @param policy. AccessPolcy to be updated
+	 * 
+	 * @param policy
+	 *            . AccessPolcy to be updated
 	 * @return AccessPolicy. The updated AccessPolicy.
 	 * @throws IntegerException
 	 */
@@ -175,7 +189,9 @@ public interface UserManagerInterface {
 
 	/**
 	 * Delete the AccessPolicy with the given ID.
-	 * @param id. ID of the AccessPolicy to delete.
+	 * 
+	 * @param id
+	 *            . ID of the AccessPolicy to delete.
 	 * 
 	 * @throws IntegerException
 	 */
@@ -183,7 +199,9 @@ public interface UserManagerInterface {
 
 	/**
 	 * Delete the AccessPolicy.
-	 * @param policy. AccessPolicy to delete.
+	 * 
+	 * @param policy
+	 *            . AccessPolicy to delete.
 	 * 
 	 * @throws IntegerException
 	 */
@@ -192,7 +210,8 @@ public interface UserManagerInterface {
 	/**
 	 * Update/save the AuthInfo in the database.
 	 * 
-	 * @param authInfo. AuthInfo to update.
+	 * @param authInfo
+	 *            . AuthInfo to update.
 	 * @return AuthInfo. The updated AuthInfo
 	 * 
 	 * @throws IntegerException
@@ -201,7 +220,9 @@ public interface UserManagerInterface {
 
 	/**
 	 * Update/save the Location in the database.
-	 * @param location. Location to be updated.
+	 * 
+	 * @param location
+	 *            . Location to be updated.
 	 * @return Location. The update Location.
 	 * 
 	 * @throws IntegerException
@@ -211,7 +232,8 @@ public interface UserManagerInterface {
 	/**
 	 * Delete the Location with the give ID.
 	 * 
-	 * @param id. ID of the Location to delete.
+	 * @param id
+	 *            . ID of the Location to delete.
 	 * 
 	 * @throws IntegerException
 	 */
@@ -219,10 +241,20 @@ public interface UserManagerInterface {
 
 	/**
 	 * Update/save the Role in the database.
-	 * @param role. Role to be updated.
+	 * 
+	 * @param role
+	 *            . Role to be updated.
 	 * @return Role. The updated Role
 	 * @throws IntegerException
 	 */
 	Role updateRole(Role role) throws IntegerException;
+
+	/**
+	 * Get a list of all Organizations in the database.
+	 * 
+	 * @return Organization[] of all Organizations in the database.
+	 * @throws IntegerException
+	 */
+	Organization[] getAllOrganizations() throws IntegerException;
 
 }
