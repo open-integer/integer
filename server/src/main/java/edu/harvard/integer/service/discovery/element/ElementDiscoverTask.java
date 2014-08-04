@@ -109,7 +109,6 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	private ManagementObjectCapabilityManagerInterface capMgr;
 	private ServiceElementAccessManagerInterface accessMgr;
 	
-	
 	/*
 	 * Element discover task.
 	 */
@@ -380,7 +379,6 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 				logger.info("Created SnmpContainment " + updateSnmpContainment.getID());
 				
 		    }
-		    
 		    List<ID> cids = set.getUniqueIdentifierCapabilities();
 		    List<String>  identifyDefs = new ArrayList<>();
 		    if ( cids != null ) {
@@ -419,7 +417,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		     if ( discover != null ) {
 		 	    	
 		 	     discover.findUIDForServiceElement(set, se, discoverNode.getElementEndPoint());
-		 	     discover.discoverServiceElementAttribute(discoverNode.getElementEndPoint(), se, set, "0");
+		 	     discover.discoverServiceElementAttribute(discoverNode.getElementEndPoint(), se, set, "0", null);
 		 	}
 		  
 		    logger.info("call update service element " + se.getName());

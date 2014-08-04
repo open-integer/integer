@@ -33,15 +33,21 @@ snmpContainment:
             mappingOid: entAliasMappingIdentifier
             mappingType: FullOid
           disriminators:
-             - serviceElementTypeName: interface
+             - serviceElementTypeName: vlanInterface
                globaldiscriminatorValue: false
                discriminatorValue: false
-             - serviceElementTypeName: interface
+             - serviceElementTypeName: vlanInterface
                globaldiscriminatorValue: true
                discriminatorValue: false
              - serviceElementTypeName: cdpInterface
                globaldiscriminatorValue: true
                discriminatorValue: true
+          associations:
+             - name: ifVlanAssociation
+               associationName: ifVlanAssociation
+               containmentRelationship: 
+                   mappingTable: vmMembershipEntry
+                   mappingOid: vmVlan
           children:
              - name: cdpCacheMapping
                contextOID: cdpCacheEntry
