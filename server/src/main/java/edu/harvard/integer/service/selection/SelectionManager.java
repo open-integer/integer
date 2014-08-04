@@ -43,6 +43,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
@@ -171,6 +172,8 @@ public class SelectionManager extends BaseManager implements
 				+ printFilterNode(new StringBuffer(), "  ",
 						filter.getOrginizations()));
 
+		filter.setProviders(createProviderList(allOrganizations, new ArrayList<ID>(), organizationDAO));
+		
 		List<Filter> filters = new ArrayList<Filter>();
 		filters.add(filter);
 
@@ -180,6 +183,44 @@ public class SelectionManager extends BaseManager implements
 		return selection;
 	}
 
+	/**
+	 * @param allOrganizations
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private List<ID> createProviderList(Organization[] allOrganizations, List<ID> providerIds, OrganizationDAO dao) throws IntegerException {
+		
+		for (Organization organization : allOrganizations) {
+			if (organization.getBusinessServices() != null && organization.getBusinessServices().size() > 0)
+				providerIds.add(organization.getID());
+			
+			if (organization.getChildOrginizations() != null)
+				createProviderList(organization.getChildOrginizations(),  providerIds, dao); 
+		}
+		
+		return providerIds;
+	}
+
+	/**
+	 * @param childOrginizations
+	 * @param providerIds
+	 * @throws IntegerException 
+	 */
+	private void createProviderList(List<ID> childOrginizations,
+			List<ID> providerIds, OrganizationDAO dao) throws IntegerException {
+		
+		for (ID id : childOrginizations) {
+			Organization organization = dao.findById(id);
+			if (organization.getBusinessServices() != null && organization.getBusinessServices().size() > 0)
+				providerIds.add(organization.getID());
+			
+			if (organization.getChildOrginizations() != null)
+				createProviderList(organization.getChildOrginizations(),  providerIds, dao); 
+		}
+		
+	}
+
+	
 	private StringBuffer printFilterNode(StringBuffer b, String indent,
 			List<FilterNode> nodes) {
 

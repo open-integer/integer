@@ -59,7 +59,33 @@ public class Organization extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	private String description = null;
-	
+
+	/**
+	 * A list of business services offered by the organization. These should
+	 * correspond to defined business services in the BusinessService class
+	 * instances. Note that one is considered a provider if either the
+	 * businessServices or technologyServices attributes are not null.
+	 * <p/>
+	 * This is a high-level list. The actual list is known for each location by
+	 * the serviceElements in that location.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> businessServices = null;
+
+	/**
+	 * A list of technology services offered by the organization. These should
+	 * correspond to defined technology services in the TechnologyService class
+	 * instances. Note that one is considered a provider if either the
+	 * businessServices or technologyServices attributes are not null.
+	 * <p/>
+	 * This is a high-level list. The actual list is known for each location by
+	 * the serviceElements in that location.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> technologies = null;
+
 	/**
 	 * This is a list of the IDs instances associated with location objects for
 	 * this organization. Generally an organization will have several locations
@@ -158,10 +184,41 @@ public class Organization extends BaseEntity {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the businessServices
+	 */
+	public List<ID> getBusinessServices() {
+		return businessServices;
+	}
+
+	/**
+	 * @param businessServices
+	 *            the businessServices to set
+	 */
+	public void setBusinessServices(List<ID> businessServices) {
+		this.businessServices = businessServices;
+	}
+
+	/**
+	 * @return the technologies
+	 */
+	public List<ID> getTechnologies() {
+		return technologies;
+	}
+
+	/**
+	 * @param technologies
+	 *            the technologies to set
+	 */
+	public void setTechnologies(List<ID> technologies) {
+		this.technologies = technologies;
 	}
 
 }

@@ -6,18 +6,18 @@
 name: organization-tree
 description: organization-tree
 parent: root
-organization:
+organizations:
       - name: Harvard
         description:  harvard
         parent: organization-tree
 
 #Schools
 
-        organization:
+        organizations:
         - name: Schools
           description: schools
           parent: harvard
-          organization:
+          organizations:
             - name: Harvard College
               description: harvard college
               parent: schools
@@ -41,11 +41,11 @@ organization:
             - name: Harvard Medical School
               description: harvard medical school
               parent: schools
-              organization:
+              organizations:
                 - name: HMS Affiliates
                   description: hms affiliates
                   parent: harvard medical school
-                  organization:
+                  organizations:
                   - name: Beth Israel Deaconess Medical Center
                     description: beth israel deaconess medical center
                     parent: hms affiliates
@@ -148,11 +148,10 @@ organization:
 
 #Allied Institutions
 
-        organization:
         - name: Allied Institutions
           description: allied institutions
           parent: harvard
-          organization:
+          organizations:
             - name: American Repertory Theater
               description: american repertory theater
               parent: allied instituions
@@ -180,39 +179,38 @@ organization:
 #Harvard University Information Technology
 #Left out a lot of the organization structure above this
 
-        organization:
         - name: Harvard University Information Technology
           description: Harvard University Information Technology
           parent: harvard
-          organization:
+          organizations:
             - name: Infrastructure 
               description: infrastructure
               parent: harvard university information technology
-              organization:
+              organizations:
                 - name: Network
                   description: network
                   parent: infrastructure
-                  technology services: [ Networking ]                                              
+                  technologyServices: [ Networking ]                                              
                  
                 - name: Unified Communications
                   description: unified communications
                   parent: infrastructure
-                  business services: [ Email, Collaboration ]
+                  businessServices: [ Email, Collaboration ]
                                                                             
                 - name: Enterprise Computing
                   description: enterprise computing
                   parent: infrastructure
-                  technology services: [ Servers, Virtualization ]
+                  technologyServices: [ Servers, Virtualization ]
                                                                             
                 - name: Storage
                   description: storage
                   parent: infrastructure
-                  technology services: [ Storage ]
+                  technologyServices: [ Storage ]
 
             - name: Service delivery 
               description: service delivery
               parent: harvard university information technology
-              organization:                                                                          
+              organizations:                                                                          
                 - name: Academic Technology Services
                   description: academic technology services
                   parent: service delivery
@@ -228,27 +226,27 @@ organization:
                 - name: Administrative Technology Services
                   description: library technology services
                   parent: service delivery
-                  business services: [ Payroll, Human Resources ]
+                  businessServices: [ Payroll, Human Resources ]
                   
                 - name: Student Information Systems
                   description: student information systems
                   parent: service delivery
-                  business services: [ Student Information System ]
+                  businessServices: [ Student Information System ]
                               
                 - name: Identity and Access Management 
                   description: identity and access management
                   parent: service delivery
-                  business services: [ Identity and Access Management ]
+                  businessServices: [ Identity and Access Management ]
                   
                 - name: Teaching and Learning Technologies
                   description: teaching and learning technologies
                   parent: service delivery
-                  business services: [ Teachning and Learning Systems ]
+                  businessServices: [ Teachning and Learning Systems ]
                   
                 - name: Library Resources
                   description: library resources
                   parent: service delivery
-                  business services: [ Library Resources ]   
+                  businessServices: [ Library Resources ]   
                                                                                  
                  
                  

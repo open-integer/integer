@@ -37,7 +37,7 @@ package edu.harvard.integer.common.yaml;
  * @author David Taylor
  * 
  */
-public class YamlLocation {
+public class YamlLocation implements YamlBaseInfoInterface {
 
 	private String buildingID = null;
 	private String country = null;

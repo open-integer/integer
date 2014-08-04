@@ -38,19 +38,21 @@ import java.util.List;
 
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.technology.Service;
+import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.common.yaml.YamlOrganization;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.technology.TechnologyManagerInterface;
 import edu.harvard.integer.service.user.UserManagerInterface;
 
 /**
  * @author David Taylor
  * 
  */
-public class YamlOrganizationParser implements YamlParserInterface {
-
-	private YamlOrganization yamlOrganization = null;
+public class YamlOrganizationParser implements YamlParserInterface<YamlOrganization> {
+	
 	private Organization[] allOrginazations = null;
 
 	private UserManagerInterface userManager = null;
@@ -58,16 +60,17 @@ public class YamlOrganizationParser implements YamlParserInterface {
 	/**
 	 * @param yamlOrganization
 	 */
-	public YamlOrganizationParser(YamlOrganization yamlOrganization) {
-		this.yamlOrganization = yamlOrganization;
+	public YamlOrganizationParser() {
+		
 	}
 
 	/**
 	 * @return
 	 * @throws IntegerException
 	 */
-	public String parse() throws IntegerException {
-
+	@Override
+	public String parse(YamlOrganization yamlOrganization) throws IntegerException {
+	
 		if (yamlOrganization == null)
 			return "NoData";
 
@@ -95,6 +98,12 @@ public class YamlOrganizationParser implements YamlParserInterface {
 						.getName());
 				organization.setDescription(yamlOrganization.getDescription());
 
+				if (yamlOrganization.getBusinessServices() != null) 
+					organization.setBusinessServices(createBusinessServiceIDs(yamlOrganization.getBusinessServices()));
+				
+				if (yamlOrganization.getTechnologyServices() != null)
+					organization.setTechnologies(createTechnologyIDs(yamlOrganization.getTechnologyServices()));
+				
 				if (yamlOrganization.getOrganizations() != null)
 					organization
 					.setChildOrginizations(parseChildOrganizations(yamlOrganization
@@ -105,6 +114,46 @@ public class YamlOrganizationParser implements YamlParserInterface {
 			}
 		}
 
+		return ids;
+	}
+
+	/**
+	 * @param businessServices
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private List<ID> createBusinessServiceIDs(List<String> businessServices) throws IntegerException {
+		List<ID> ids = new ArrayList<ID>();
+		
+		TechnologyManagerInterface technologyManager = DistributionManager.getManager(ManagerTypeEnum.TechnologyManager);
+		
+		for (String name : businessServices) {
+			Service service = technologyManager.getServiceByName(name);
+			
+			if (service != null)
+				ids.add(service.getID());
+		}
+		
+		return ids;
+	}
+
+	/**
+	 * @param businessServices
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private List<ID> createTechnologyIDs(List<String> technologies) throws IntegerException {
+		List<ID> ids = new ArrayList<ID>();
+		
+		TechnologyManagerInterface technologyManager = DistributionManager.getManager(ManagerTypeEnum.TechnologyManager);
+		
+		for (String name : technologies) {
+			Technology technology = technologyManager.getTechnologyByName(name);
+			
+			if (technology != null)
+				ids.add(technology.getID());
+		}
+		
 		return ids;
 	}
 

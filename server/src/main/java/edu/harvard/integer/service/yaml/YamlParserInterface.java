@@ -34,12 +34,13 @@
 package edu.harvard.integer.service.yaml;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 
 /**
  * @author David Taylor
  *
  */
-public interface YamlParserInterface {
+public interface YamlParserInterface<T extends YamlBaseInfoInterface> {
 
-	public String parse() throws IntegerException;
+	public String parse(T yamlObject) throws IntegerException;
 }

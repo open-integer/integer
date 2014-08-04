@@ -39,7 +39,7 @@ import java.util.List;
  * @author David Taylor
  * 
  */
-public class YamlService {
+public class YamlService implements YamlBaseInfoInterface {
 
 	private String name = null;
 

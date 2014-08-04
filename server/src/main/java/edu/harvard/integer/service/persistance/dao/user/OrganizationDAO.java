@@ -41,7 +41,6 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -80,4 +79,6 @@ public class OrganizationDAO extends BaseDAO {
 		return (Organization[]) resultList.toArray(new Organization[resultList
 				.size()]);
 	}
+	
+	
 }

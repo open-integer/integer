@@ -44,7 +44,7 @@ import edu.harvard.integer.service.topology.TopologyManagerInterface;
  * @author David Taylor
  * 
  */
-public class YamlLocationParser implements YamlParserInterface {
+public class YamlLocationParser {
 
 	private YamlLocation[] yamlLocations = null;
 	
