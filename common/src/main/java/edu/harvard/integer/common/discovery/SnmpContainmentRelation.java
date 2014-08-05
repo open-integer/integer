@@ -66,18 +66,9 @@ public class SnmpContainmentRelation extends SnmpRelationship {
 
 	@ManyToOne
 	private SNMP mappingOid = null;
-	
-	@ManyToOne
-	private SNMPTable mappingContext = null;
 
+	private Boolean valueIsParent = false;
 
-	public SNMPTable getMappingContext() {
-		return mappingContext;
-	}
-
-	public void setMappingContext(SNMPTable mappingContext) {
-		this.mappingContext = mappingContext;
-	}
 
 	/**
 	 * @return the childTable
@@ -122,6 +113,16 @@ public class SnmpContainmentRelation extends SnmpRelationship {
 	 */
 	public void setMappingOid(SNMP mappingOid) {
 		this.mappingOid = mappingOid;
+	}
+	
+
+
+	public Boolean getValueIsParent() {
+		return valueIsParent;
+	}
+
+	public void setValueIsParent(Boolean valueIsParent) {
+		this.valueIsParent = valueIsParent;
 	}
 
 }

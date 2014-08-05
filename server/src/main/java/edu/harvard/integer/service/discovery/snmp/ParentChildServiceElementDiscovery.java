@@ -218,6 +218,7 @@ public class ParentChildServiceElementDiscovery extends
 		 */
 		if ( discNode.getAssociationInfos().size() > 0 ) {
 			
+			String errAssocation = null;
 			Set<String> keys = discNode.getAssociationInfos().keySet();
 			for ( String key : keys ) {
 				
@@ -228,8 +229,6 @@ public class ParentChildServiceElementDiscovery extends
 				ServiceElement asSe = asInfo.getAssociationSe();
 				
 				ServiceElementType set = discMgr.getServiceElementTypeById(asSe.getServiceElementTypeId());
-				
-				String errAssocation = null;
 				for ( ID seatId : set.getAssociations() ) {
 					
 					ServiceElementAssociationType setat = discMgr.getServiceElementAssociationTypeById(seatId);

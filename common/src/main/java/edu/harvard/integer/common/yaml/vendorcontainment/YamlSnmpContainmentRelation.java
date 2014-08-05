@@ -51,16 +51,16 @@ public class YamlSnmpContainmentRelation extends YamlSnmpRelationship {
 	private String mappingOid = null;
 	
 	private String mappingType;
-	
-	private String mappingContext;
 
-	
-	public String getMappingContext() {
-		return mappingContext;
+	private String valueIsParent = "false";
+
+
+	public String getValueIsParent() {
+		return valueIsParent;
 	}
 
-	public void setMappingContext(String mappingContext) {
-		this.mappingContext = mappingContext;
+	public void setValueIsParent(String valueIsParent) {
+		this.valueIsParent = valueIsParent;
 	}
 
 	public String getMappingType() {
