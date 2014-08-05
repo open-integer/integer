@@ -242,7 +242,7 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		seed.setDescription("Default for " + subnet);
 		
 		seed.setSubnet(subnet);
-		seed.setRadius(Integer.valueOf(0));
+		seed.setRadius(Integer.valueOf(1));
 		
 		seed.setSnmpRetriesServiceElementDiscovery(Integer.valueOf(2));
 		seed.setSnmpTimeoutServiceElementDiscovery(Long.valueOf(800));
