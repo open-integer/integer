@@ -1051,11 +1051,13 @@ public class YamlManager extends BaseManager implements
 			containmentRelation.setChildTable(childSnmpLevel);
 		}
 		
-		if ( yamlSnmpRelationship.getMappingContext() != null ) {
-			containmentRelation.setMappingContext((SNMPTable) getSnmpOid(yamlSnmpRelationship
-						.getMappingContext()));
+		if ( yamlSnmpRelationship.getValueIsParent() != null ) {			
+			containmentRelation.setValueIsParent(Boolean.valueOf(yamlSnmpRelationship.getValueIsParent()));
 		}
-
+		else {
+			containmentRelation.setValueIsParent(false);
+		}
+		
 		if (yamlSnmpRelationship.getMappingType() != null) {
 
 			containmentRelation.setMappingType(RelationMappingTypeEnum
