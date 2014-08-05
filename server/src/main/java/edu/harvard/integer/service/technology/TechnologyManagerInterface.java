@@ -75,6 +75,14 @@ public interface TechnologyManagerInterface extends BaseManagerInterface {
 	Service getServiceById(ID service) throws IntegerException;
 
 	/**
+	 * Get the service for the given name.
+	 * @param name
+	 * @return Service with the name given.
+	 * @throws IntegerException
+	 */
+	Service getServiceByName(String name) throws IntegerException;
+	
+	/**
 	 * Get all the services that are in the database.
 	 * 
 	 * @return List of Services found in the database.

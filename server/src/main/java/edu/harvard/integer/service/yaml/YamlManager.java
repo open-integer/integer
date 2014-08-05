@@ -65,6 +65,7 @@ import edu.harvard.integer.common.discovery.VendorSignature;
 import edu.harvard.integer.common.discovery.VendorSignatureTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
+import edu.harvard.integer.common.persistence.PreloadFileType;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.technology.Technology;
@@ -77,9 +78,11 @@ import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.common.topology.ValueOpertorEnum;
+import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlLocation;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
+import edu.harvard.integer.common.yaml.YamlOrganization;
 import edu.harvard.integer.common.yaml.YamlServiceElementAssociationType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
@@ -1374,28 +1377,6 @@ public class YamlManager extends BaseManager implements
 	}
 
 	@Override
-	public String importService(String content) throws IntegerException {
-		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
-				YamlService.class, getClass().getClassLoader()));
-
-		YamlService yamlService = null;
-
-		try {
-			yamlService = (YamlService) yaml.load(content);
-		} catch (Throwable e) {
-			logger.error("Unexpected error reading in YAML! " + e.toString());
-			e.printStackTrace();
-			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
-		}
-
-		logger.info("YAML Object is " + yamlService.getClass().getName());
-		
-		YamlServiceParser parser = new YamlServiceParser(yamlService);
-		
-		return parser.parse();
-	}
-	
-	@Override
 	public String importLocation(String content) throws IntegerException {
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
 				YamlLocation[].class, getClass().getClassLoader()));
@@ -1415,5 +1396,26 @@ public class YamlManager extends BaseManager implements
 		YamlLocationParser parser = new YamlLocationParser(yamlLocations);
 		
 		return parser.parse();
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public String importYAML(String data, Class<? extends YamlBaseInfoInterface> objectType, YamlParserInterface parser) throws IntegerException {
+		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
+				objectType, getClass().getClassLoader()));
+
+		YamlBaseInfoInterface yamlObject = null;
+
+		try {
+			yamlObject = (YamlBaseInfoInterface) yaml.load(data);
+		} catch (Throwable e) {
+			logger.error("Unexpected error reading in YAML! " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
+		}
+
+		logger.info("YAML Object is " + yamlObject.getClass().getName());
+	
+		return parser.parse(yamlObject);
 	}
 }

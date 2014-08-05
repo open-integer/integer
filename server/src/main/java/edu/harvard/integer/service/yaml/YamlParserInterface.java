@@ -31,41 +31,16 @@
  *      
  */
 
-package edu.harvard.integer.service.persistance.dao.technology;
+package edu.harvard.integer.service.yaml;
 
-import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
-
-import edu.harvard.integer.common.technology.Service;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 
 /**
- *  The DAO is responsible for persisting the Service. All
- * queries will be done in this class. 
- *
  * @author David Taylor
  *
  */
-public class ServiceDAO extends BaseDAO {
+public interface YamlParserInterface<T extends YamlBaseInfoInterface> {
 
-	/**
-	 * @param entityManger
-	 * @param logger
-	 * @param clazz
-	 */
-	public ServiceDAO(EntityManager entityManger, Logger logger) {
-		super(entityManger, logger, Service.class);
-		
-	}
-
-	/**
-	 * @param name
-	 * @return
-	 */
-	public Service findByName(String name) {
-		
-		return findByStringField(name, "name", Service.class);
-	}
-
+	public String parse(T yamlObject) throws IntegerException;
 }

@@ -39,16 +39,16 @@ import java.util.List;
  * @author David Taylor
  * 
  */
-public class YamlService implements YamlBaseInfoInterface {
-
+public class YamlOrganization implements YamlBaseInfoInterface {
 	private String name = null;
-
 	private String description = null;
-
 	private String parent = null;
 
-	private List<YamlService> businessServices = null;
+	private List<YamlOrganization> organizations;
 
+	private List<String> technologyServices = null;
+	private List<String> businessServices = null;
+	
 	/**
 	 * @return the name
 	 */
@@ -95,9 +95,39 @@ public class YamlService implements YamlBaseInfoInterface {
 	}
 
 	/**
+	 * @return the organizations
+	 */
+	public List<YamlOrganization> getOrganizations() {
+		return organizations;
+	}
+
+	/**
+	 * @param organizations
+	 *            the organizations to set
+	 */
+	public void setOrganizations(List<YamlOrganization> organizations) {
+		this.organizations = organizations;
+	}
+
+	/**
+	 * @return the technologyServices
+	 */
+	public List<String> getTechnologyServices() {
+		return technologyServices;
+	}
+
+	/**
+	 * @param technologyServices
+	 *            the technologyServices to set
+	 */
+	public void setTechnologyServices(List<String> technologyServices) {
+		this.technologyServices = technologyServices;
+	}
+
+	/**
 	 * @return the businessServices
 	 */
-	public List<YamlService> getBusinessServices() {
+	public List<String> getBusinessServices() {
 		return businessServices;
 	}
 
@@ -105,7 +135,7 @@ public class YamlService implements YamlBaseInfoInterface {
 	 * @param businessServices
 	 *            the businessServices to set
 	 */
-	public void setBusinessServices(List<YamlService> businessServices) {
+	public void setBusinessServices(List<String> businessServices) {
 		this.businessServices = businessServices;
 	}
 

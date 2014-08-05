@@ -96,6 +96,17 @@ public class TechnologyManager extends BaseManager implements TechnologyManagerL
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getServiceByName(java.lang.String)
+	 */
+	@Override
+	public Service getServiceByName(String name) throws IntegerException {
+		ServiceDAO dao = persistenceManager.getServiceDAO();
+		
+		return dao.findByName(name);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.technology.TechnologyManagerInterface#getAllServices()
 	 */
 	@Override

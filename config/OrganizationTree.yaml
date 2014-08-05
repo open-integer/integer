@@ -1,0 +1,257 @@
+#This is the  Integer Organization-tree place holder for Harvard. It is possible to change this, but it may have
+#unexpected side effects. The initial letter of each name element is in capitols. The exception
+#is for hyphenated words. This is the element that the user interface presents for selections.
+#This will be revised over time
+
+name: organization-tree
+description: organization-tree
+parent: root
+organizations:
+      - name: Harvard
+        description:  harvard
+        parent: organization-tree
+
+#Schools
+
+        organizations:
+        - name: Schools
+          description: schools
+          parent: harvard
+          organizations:
+            - name: Harvard College
+              description: harvard college
+              parent: schools
+              
+            - name: Harvard School of Dental Medicine
+              description: harvard school of dental medicine
+              parent: schools
+              
+            - name: Harvard Divinity School
+              description: harvard divinity school
+              parent: schools
+              
+            - name: School of Engineering and Applied Sciences
+              description: school of engineering and applied sciences
+              parent: schools
+              
+            - name: Graduate School of Arts and Sciences
+              description: graduate school of arts and sciences
+              parent: schools
+              
+            - name: Harvard Medical School
+              description: harvard medical school
+              parent: schools
+              organizations:
+                - name: HMS Affiliates
+                  description: hms affiliates
+                  parent: harvard medical school
+                  organizations:
+                  - name: Beth Israel Deaconess Medical Center
+                    description: beth israel deaconess medical center
+                    parent: hms affiliates
+
+                  - name: Boston Children's Hospital
+                    description: boston children's hospital
+                    parent: hms affiliates
+          
+                  - name: Brigham and Women's Hospital
+                    description: brigham and Women's Hospital
+                    parent: hms affiliates
+          
+                  - name: Cambridge Health Alliance
+                    description: cambridge health alliance
+                    parent: hms affiliates
+          
+                  - name: Dana-Farber Cancer Institute
+                    description: dana-farber cancer institute
+                    parent: hms affiliates                     
+ 
+                  - name: Harvard Pilgrim Health Care Institute
+                    description: harvard pilgrim health care institute
+                    parent: hms affiliates
+          
+                  - name: Hebrew SeniorLive
+                    description: hebrew seniorlife
+                    parent: hms affiliates
+          
+                  - name: Joslin Diabetes Center
+                    description: joslin diabetes center
+                    parent: hms affiliates
+          
+                  - name: Judge Baker's Children's Center
+                    description: judge baker's children's center
+                    parent: hms affiliates
+          
+                  - name: Massachusetts Eye and Ear
+                    description: massachusetts eye and ear
+                    parent: hms affiliates
+          
+                  - name: Massachusetts General Hospital
+                    description: massachusetts general hospital
+                    parent: hms affiliates
+          
+                  - name: McLean Hospital
+                    description: mclean hospital
+                    parent: hms affiliates
+          
+                  - name: Mount Auburn Hospital
+                    description: mount auburn hospital
+                    parent: hms affiliates
+
+                  - name: Schepens Eye Research Institute
+                    description: schepens eye research institute
+                    parent: hms affiliates
+          
+                  - name: Spaulding Rehabilitation Hospital
+                    description: spaulding rehabilitation hospital
+                    parent: hms affiliates
+          
+                  - name: VA Boston Healthcare System
+                    description: va boston healthcare system
+                    parent: hms affiliates
+                       
+            - name: Radcliffe Institue for Advanced Study
+              description: radcliffe institue for advanced study
+              parent: schools
+              
+            - name: Harvard Business School
+              description: harvard business school
+              parent: schools
+              
+            - name: Division of Continuing Education
+              description: division of continuing education
+              parent: schools
+              
+            - name: Faculty of Arts and Sciences
+              description: faculty of arts and sciences
+              parent: schools            
+                     
+            - name: Graduate School of Design
+              description: graduate school of design
+              parent: schools            
+                 
+            - name: Harvard Graduate School of Education
+              description: harvard graduate school of education
+              parent: schools            
+                 
+            - name: Harvard Kennedy School
+              description: harvard kennedy school
+              parent: schools            
+                 
+            - name: Harvard Law School
+              description: harvard law school
+              parent: schools            
+                 
+            - name: Harvard School of Public Health
+              description: harvard school of public health
+              parent: schools            
+
+#Allied Institutions
+
+        - name: Allied Institutions
+          description: allied institutions
+          parent: harvard
+          organizations:
+            - name: American Repertory Theater
+              description: american repertory theater
+              parent: allied instituions
+  
+            - name: Arnold Arboretum
+              description: arnold arboretum
+              parent: allied instituions
+ 
+            - name: Harvard Art Museums
+              description: harvard art museums
+              parent: allied instituions
+    
+            - name: Harvard University Press
+              description: harvard university press
+              parent: allied instituions
+                                                            
+            - name: Nieman Foundation
+              description: nieman foundation 
+              parent: allied instituions
+                                                            
+            - name: Villa I Tatti
+              description: villa i tatti
+              parent: allied instituions
+                                                            
+#Harvard University Information Technology
+#Left out a lot of the organization structure above this
+
+        - name: Harvard University Information Technology
+          description: Harvard University Information Technology
+          parent: harvard
+          organizations:
+            - name: Infrastructure 
+              description: infrastructure
+              parent: harvard university information technology
+              organizations:
+                - name: Network
+                  description: network
+                  parent: infrastructure
+                  technologyServices: [ Networking ]                                              
+                 
+                - name: Unified Communications
+                  description: unified communications
+                  parent: infrastructure
+                  businessServices: [ Email, Collaboration ]
+                                                                            
+                - name: Enterprise Computing
+                  description: enterprise computing
+                  parent: infrastructure
+                  technologyServices: [ Servers, Virtualization ]
+                                                                            
+                - name: Storage
+                  description: storage
+                  parent: infrastructure
+                  technologyServices: [ Storage ]
+
+            - name: Service delivery 
+              description: service delivery
+              parent: harvard university information technology
+              organizations:                                                                          
+                - name: Academic Technology Services
+                  description: academic technology services
+                  parent: service delivery
+                                                                            
+                - name: Support Services
+                  description: support services
+                  parent: service delivery
+                  
+                - name: Information Security
+                  description: information security
+                  parent: service delivery
+                  
+                - name: Administrative Technology Services
+                  description: library technology services
+                  parent: service delivery
+                  businessServices: [ Payroll, Human Resources ]
+                  
+                - name: Student Information Systems
+                  description: student information systems
+                  parent: service delivery
+                  businessServices: [ Student Information System ]
+                              
+                - name: Identity and Access Management 
+                  description: identity and access management
+                  parent: service delivery
+                  businessServices: [ Identity and Access Management ]
+                  
+                - name: Teaching and Learning Technologies
+                  description: teaching and learning technologies
+                  parent: service delivery
+                  businessServices: [ Teachning and Learning Systems ]
+                  
+                - name: Library Resources
+                  description: library resources
+                  parent: service delivery
+                  businessServices: [ Library Resources ]   
+                                                                                 
+                 
+                 
+                 
+                 
+                 
+                 
+    

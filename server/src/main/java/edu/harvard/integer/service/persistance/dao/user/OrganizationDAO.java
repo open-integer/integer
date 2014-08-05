@@ -33,10 +33,14 @@
 
 package edu.harvard.integer.service.persistance.dao.user;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -58,4 +62,23 @@ public class OrganizationDAO extends BaseDAO {
 		super(entityManger, logger, Organization.class);
 	}
 
+	public Organization[] getTopLevelOrganizations() throws IntegerException {
+		
+		StringBuffer b = new StringBuffer();
+		
+		b.append("select o.* ").append('\n');
+		b.append("from Organization o ").append('\n');
+		b.append(" where not exists (select * from  Organization_childOrginizations oc ").append('\n');
+		b.append("where oc.identifier = o.identifier)");
+		
+		Query query = getEntityManager().createNativeQuery(b.toString(), Organization.class);
+		
+		@SuppressWarnings("unchecked")
+		List<Organization> resultList = query.getResultList();
+		
+		return (Organization[]) resultList.toArray(new Organization[resultList
+				.size()]);
+	}
+	
+	
 }

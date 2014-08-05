@@ -72,4 +72,5 @@ VALUES
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/HostResourcesContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/ParentChildContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Location Info', 'location.yaml', 'Location', NULL, NULL, NULL),
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Organization Info', 'OrganizationTree.yaml', 'Organization', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Table Index', 'CreateIndex.sql', 'SQL', NULL, NULL, NULL);

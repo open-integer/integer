@@ -34,26 +34,30 @@
 package edu.harvard.integer.service.yaml;
 
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.persistence.PreloadFileType;
+import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * The YamlManager is used to import a YAML file. The current YAML file types
  * supported are Technology Tree, VendorContianment and VendorIdentifier
+ * 
  * @author David Taylor
- *
+ * 
  */
 public interface YamlManagerInterface extends BaseManagerInterface {
 
 	/**
-	 * Read in the YAML in the passed in string. 
-	 * Create a Technology instance for every technology found. If the 
-	 * technology already exists in the database then the technology 
-	 * will be update with new information found in the YAML. The YAML is
-	 * passed in as a string so the YAML file can be loaded from the GUI. 
+	 * Read in the YAML in the passed in string. Create a Technology instance
+	 * for every technology found. If the technology already exists in the
+	 * database then the technology will be update with new information found in
+	 * the YAML. The YAML is passed in as a string so the YAML file can be
+	 * loaded from the GUI.
 	 * 
-	 * @param content. YAML file passed in as a string. 
-	 * @return Status of the load. 
-	 * @throws IntegerException. 
+	 * @param content
+	 *            . YAML file passed in as a string.
+	 * @return Status of the load.
+	 * @throws IntegerException.
 	 */
 	String loadTechnologyTree(String content) throws IntegerException;
 
@@ -74,18 +78,23 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 	public String loadCategory(String content) throws IntegerException;
 
 	/**
-	 * @param content
-	 * @return String status of the import.
-	 * @throws IntegerException
-	 */
-	String importService(String content) throws IntegerException;
-
-	/**
 	 * Import a YAML string of location data.
 	 * 
 	 * @param content
-	 * @return String status of the import.
+	 * @return String. status of the import.
 	 * @throws IntegerException
 	 */
 	String importLocation(String content) throws IntegerException;
+
+	/**
+	 * Import the YAML data passed in. The imported data must be of the type
+	 * specified in the objetType. The data will be parsed by the
+	 * YamlParserInteface object.
+	 * 
+	 * @param data
+	 * @param fileType
+	 */
+	String importYAML(String data,
+			Class<? extends YamlBaseInfoInterface> objectType,
+			YamlParserInterface parser) throws IntegerException;
 }

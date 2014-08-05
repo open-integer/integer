@@ -198,7 +198,7 @@ public class CheckBoxTreeViewModel implements TreeViewModel {
 		}
 		else if (value instanceof ChildNodeItem) {
 			ChildNodeItem subCategory = (ChildNodeItem) value;
-
+			
 			List<LeaveItem> techItems = queryTechItemsByCategory(subCategory);
 
 			ListDataProvider<LeaveItem> technologyProvider = new ListDataProvider<LeaveItem>(
@@ -250,7 +250,11 @@ public class CheckBoxTreeViewModel implements TreeViewModel {
 	 * @see com.google.gwt.view.client.TreeViewModel#isLeaf(java.lang.Object)
 	 */
 	public boolean isLeaf(Object value) {
-		return value instanceof LeaveItem;
+		if (value instanceof ChildNodeItem && ((ChildNodeItem) value).getNumChildren() == 0)
+			return true;
+		
+		return (value instanceof LeaveItem);
+		
 	}
 
 }

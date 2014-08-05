@@ -46,17 +46,15 @@ import edu.harvard.integer.service.technology.TechnologyManagerInterface;
  * @author David Taylor
  *
  */
-public class YamlServiceParser {
-
-	private YamlService yamlService = null;
+public class YamlServiceParser implements YamlParserInterface<YamlService>{
 	
 	private Service[] allServices = null;
 	
-	public YamlServiceParser(YamlService servie) {
-		this.yamlService = servie;
+	public YamlServiceParser() {
+		
 	}
 	
-	public String parse() throws IntegerException {
+	public String parse(YamlService yamlService) throws IntegerException {
 		
 		if (yamlService == null)
 			return "NoData";

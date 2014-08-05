@@ -34,6 +34,7 @@
 package edu.harvard.integer.common.persistence;
 
 
+
 /**
  * @author David Taylor
  *
@@ -48,9 +49,10 @@ public enum PreloadFileType {
 	CategoryYaml("yaml"),
 	SQL("sql"), 
 	Service("yaml"),
-	Location("yaml");
+	Location("yaml"),
+	Organization("yaml");
 	
-	String dataSubDir = null;
+	private String dataSubDir = null;
 	
 	private PreloadFileType(String subDir) {
 		this.dataSubDir = subDir;

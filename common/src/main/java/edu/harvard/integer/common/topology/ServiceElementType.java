@@ -286,7 +286,8 @@ public class ServiceElementType extends BaseEntity {
 				if (signature.getValueOperators() != null) {
 					boolean foundValue = false;
 					for (SignatureValueOperator valueOperator : signature.getValueOperators()) {
-						if (valueOperator.getValue().equals(value)) {
+						if (valueOperator != null && valueOperator.getValue() != null && 
+								valueOperator.getValue().equals(value)) {
 							foundValue = true;
 							break;
 						}

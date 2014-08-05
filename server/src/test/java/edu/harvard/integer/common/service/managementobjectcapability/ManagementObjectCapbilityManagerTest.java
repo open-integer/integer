@@ -35,6 +35,7 @@ package edu.harvard.integer.common.service.managementobjectcapability;
 
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -325,13 +326,15 @@ public class ManagementObjectCapbilityManagerTest {
 
 	@Test
 	public void exportJasonCapabilityManagementObjects() {
+		String jsonFile = "capabilites.json";
+		
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
 														// org.codehaus.jackson.mapper.MappingJsonFactory
 		JsonGenerator jsongenerator = null;
 		try {
 
 			jsongenerator = jsonFactory.createGenerator(new FileOutputStream(
-					"capabilites.json"), JsonEncoding.UTF8);
+					jsonFile), JsonEncoding.UTF8);
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -374,6 +377,13 @@ public class ManagementObjectCapbilityManagerTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
+		
+		File jsonDataFile = new File(jsonFile);
+		assert(jsonDataFile.exists());
+		assert(jsonDataFile.length() > 0);
+		
+		assert(jsonDataFile.delete());
+		
 	}
 
 	@Test

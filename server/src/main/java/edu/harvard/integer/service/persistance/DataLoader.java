@@ -45,15 +45,22 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.common.persistence.PersistenceStepStatusEnum;
+import edu.harvard.integer.common.persistence.PreloadFileType;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
+import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
+import edu.harvard.integer.common.yaml.YamlOrganization;
+import edu.harvard.integer.common.yaml.YamlService;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
+import edu.harvard.integer.service.yaml.YamlOrganizationParser;
+import edu.harvard.integer.service.yaml.YamlParserInterface;
+import edu.harvard.integer.service.yaml.YamlServiceParser;
 import edu.harvard.integer.util.FileUtil;
 import edu.harvard.integer.util.Resource;
 
@@ -86,7 +93,7 @@ public class DataLoader implements DataLoaderInterface {
 		switch (dataPreLoadFile.getFileType()) {
 
 		case Service:
-			loadService(dataPreLoadFile);
+			loadYAMLData(dataPreLoadFile, YamlService.class, new YamlServiceParser());
 			break;
 			
 		case TechnologyTreeYaml:
@@ -122,11 +129,55 @@ public class DataLoader implements DataLoaderInterface {
 			loadLocationData(dataPreLoadFile);
 			break;
 			
+		case Organization:
+			loadYAMLData(dataPreLoadFile, YamlOrganization.class, new YamlOrganizationParser());
+			break;
+			
 		default:
 			logger.error("Unknown data file type "
 					+ dataPreLoadFile.getFileType() + " Can not load!!");
 		}
 
+	}
+
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException 
+	 */
+	private void loadYAMLData(DataPreLoadFile dataPreLoadFile, Class<? extends YamlBaseInfoInterface> objectType, YamlParserInterface parser) throws IntegerException {
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+			return;
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
+			return;
+		}
+
+		String data = FileUtil.readInMIB(file);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
+		
+		if (manager != null) {
+			try {
+				manager.importYAML(data, objectType, parser);
+
+				dataPreLoadFile.setTimeLoaded(new Date());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+
+			} catch (IntegerException e) {
+			
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			}
+		}
+		
+	
 	}
 
 
@@ -167,47 +218,6 @@ public class DataLoader implements DataLoaderInterface {
 		}
 		
 	}
-
-
-	/**
-	 * @param dataPreLoadFile
-	 * @throws IntegerException 
-	 */
-	private void loadService(DataPreLoadFile dataPreLoadFile) throws IntegerException {
-
-		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
-			return;
-
-		File file = getFile(dataPreLoadFile);
-		if (file == null) {
-			logger.error("Unable to get data file "
-					+ dataPreLoadFile.getDataFile());
-			return;
-		}
-
-		String data = FileUtil.readInMIB(file);
-
-		YamlManagerInterface manager = DistributionManager
-				.getManager(ManagerTypeEnum.YamlManager);
-		
-		if (manager != null) {
-			try {
-				manager.importService(data);
-
-				dataPreLoadFile.setTimeLoaded(new Date());
-				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
-
-			} catch (IntegerException e) {
-				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
-				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
-			} catch (Throwable e) {
-				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
-				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
-			}
-		}
-	
-	}
-
 
 	/**
 	 * @param dataPreLoadFile
