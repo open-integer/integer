@@ -503,8 +503,16 @@ public class YamlManager extends BaseManager implements
 						serviceElementType.setName(typeTranslate.getName());
 						serviceElementType.setDescription(yamlServiceElementType.getDescription());	
 					}
+					
+					serviceElementType.setAssociations(exemplarSet.getAssociations());
 					if ( associationIds.size() > 0 ) {
-						serviceElementType.setAssociations(associationIds);
+						
+						if ( serviceElementType.getAssociations() == null ) {
+							serviceElementType.setAssociations(new ArrayList<ID>());
+						}
+						for ( ID id : associationIds ) {
+							serviceElementType.getAssociations().add(id);
+						}
 					}
 					
 					serviceElementType.addSignatureValue(null, SignatureTypeEnum.Vendor,
@@ -639,7 +647,14 @@ public class YamlManager extends BaseManager implements
 						}
 						uniqueIds.add(id);
 					}
-				}			
+				}
+				serviceElementType.setAssociations(new ArrayList<ID>());
+				if ( extendSet.getAssociations() != null && extendSet.getAssociations().size() > 0) {
+				
+					for ( ID id : extendSet.getAssociations() ) {
+						serviceElementType.getAssociations().add(id);
+					}
+				}
 			}
 		}
 		
