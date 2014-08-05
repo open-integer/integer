@@ -67,6 +67,7 @@ import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 import edu.harvard.integer.service.yaml.YamlOrganizationParser;
 import edu.harvard.integer.service.yaml.YamlServiceParser;
+import edu.harvard.integer.service.yaml.YamlTechnologyParser;
 
 
 /**
@@ -112,7 +113,7 @@ public class TechnologyLoadTest {
 		
 		logger.info("Technology read in: " + yaml.dump(load));
 		
-		yamlManager.loadTechnologyTree(content);
+		yamlManager.importYAML(content, YamlTechnology.class, new YamlTechnologyParser());
 	}
 	
 	
@@ -163,13 +164,12 @@ public class TechnologyLoadTest {
 		
 		Object load = yaml.load(content);
 		System.out.println("YAML Object is " + load.getClass().getName());
-//		System.out.println("YAML: " + load.toString());
 		
 		System.out.println("Technology read in: " + yaml.dump(load));
 		
 
 		try {
-			yamlManager.loadTechnologyTree(content);
+			yamlManager.importYAML(content, YamlTechnology.class, new YamlTechnologyParser());
 		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());

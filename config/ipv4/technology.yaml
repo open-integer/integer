@@ -4,7 +4,7 @@
 # by David Chan, 2014-06-14
 
 technologies:
-    - name: ipv4
+    - name: IPv4
       provides: [ ipv4Address ]
       description: Discoverable ipv4 address.
       mechanisms:

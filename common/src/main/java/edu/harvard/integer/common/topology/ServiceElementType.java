@@ -52,6 +52,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -99,6 +100,7 @@ public class ServiceElementType extends BaseEntity {
 	
 	private String iconName = null;
 
+	@Size(max=2000)
 	private String description = null;
 
 	/**
