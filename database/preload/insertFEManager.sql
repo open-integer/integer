@@ -17,6 +17,7 @@ VALUES
 	(9, 'edu.harvard.integer.common.distribution.DistributedManager', 'DiscoveryManager', 'DiscoveryManager', 2),
 	(10, 'edu.harvard.integer.common.distribution.DistributedManager', 'EventManager', 'EventManager', 2),
 	(11, 'edu.harvard.integer.common.distribution.DistributedManager', 'YamlManager', 'YamlManager', 2),
-	(12, 'edu.harvard.integer.common.distribution.DistributedManager', 'TopologyManager', 'TopologyManager', 2);
+	(12, 'edu.harvard.integer.common.distribution.DistributedManager', 'TopologyManager', 'TopologyManager', 2),
+	(13, 'edu.harvard.integer.common.distribution.DistributedManager', 'UserManager', 'UserManager', 2);
 
 

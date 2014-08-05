@@ -147,70 +147,7 @@ public class YamlManager extends BaseManager implements
 		super(ManagerTypeEnum.YamlManager);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.service.yaml.YamlManagerInterface#loadTechnologyTree
-	 * (java.lang.String)
-	 */
-//	@Override
-//	public String loadTechnologyTree(String content) throws IntegerException {
-//
-//		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
-//				YamlTechnology.class, getClass().getClassLoader()));
-//
-//		YamlTechnology load = null;
-//
-//		try {
-//			load = (YamlTechnology) yaml.load(content);
-//		} catch (Throwable e) {
-//			logger.error("Unexpected error reading in YAML! " + e.toString());
-//			e.printStackTrace();
-//			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
-//		}
-//
-//		logger.info("YAML Object is " + load.getClass().getName());
-//
-//		try {
-//			Technology[] root = technologyManager.getTopLevelTechnology();
-//
-//			Technology rootTech = null;
-//			if (root == null || root.length == 0) {
-//				rootTech = new Technology();
-//				rootTech.setName("root");
-//				rootTech = technologyManager.updateTechnology(rootTech);
-//
-//			} else {// Take first root. There should be only one!
-//
-//				rootTech = root[0];
-//			}
-//
-//			YamlTechnologyParser parser = new YamlTechnologyParser();
-//			
-//			
-//			parser.parseTechnologyTree(rootTech, load.getTechnologies());
-//
-//			root = technologyManager.getTopLevelTechnology();
-//			if (root != null) {
-//				String dump = yaml.dump(root);
-//				logger.info("Technology: " + dump);
-//			}
-//		} catch (IntegerException e) {
-//			logger.error("Error reading in YAML file! " + e.toString()
-//					+ " Conent " + content);
-//			e.printStackTrace();
-//			throw e;
-//		} catch (Throwable e) {
-//			logger.error("Unexpected Error reading in YAML file! "
-//					+ e.toString() + " Conent " + content);
-//			e.printStackTrace();
-//		}
-//
-//		return "Success";
-//	}
-//
-//	
+	
 	
 
 	/**

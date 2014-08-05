@@ -6,7 +6,7 @@
 technologies:
     # Cisco VLAN 
     # 
-    - name: vlan
+    - name: VLAN Tagging Protocols
     #  provides: [ vlan-discovery ]
       parent: vlan discovery
       description: VLAN 

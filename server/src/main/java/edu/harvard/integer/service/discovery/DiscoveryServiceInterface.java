@@ -82,16 +82,15 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * @throws IntegerException
 	 */
 	void discoveryComplete(DiscoveryId dicoveryId) throws IntegerException;
-	
-	
+
 	/**
 	 * This method is called by the discovery process to notify the
-	 * DiscoveryService that the topology discovery specified by the DiscoveryId has
-	 * complete. This is only to be called by the discovery manager.
+	 * DiscoveryService that the topology discovery specified by the DiscoveryId
+	 * has complete. This is only to be called by the discovery manager.
+	 * 
 	 * @throws IntegerException
 	 */
 	void discoveryTopologyComplete() throws IntegerException;
-	
 
 	/**
 	 * This method is called by the discovery process to report an error that
@@ -125,9 +124,9 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 			ServiceElement serviceElement, String ipAddress);
 
 	/**
-	 * This is called from the discovery process when a service element
-	 * has been successfully discovered. This call will then save the
-	 * service element into the database.
+	 * This is called from the discovery process when a service element has been
+	 * successfully discovered. This call will then save the service element
+	 * into the database.
 	 * 
 	 * @param accessElement
 	 */
@@ -153,9 +152,8 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * @param task
 	 */
 	Future<Ipv4Range> submitSubnetDiscovery(DiscoverSubnetAsyncTask task);
-	
-	
-	Future<Void> submitSubnetTopologyDiscovery( DiscoverCdpTopologyTask task );
+
+	Future<Void> submitSubnetTopologyDiscovery(DiscoverCdpTopologyTask task);
 
 	/**
 	 * @param serviceElementId
@@ -164,4 +162,12 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 */
 	DiscoveryCompleteEvent[] getDiscoveryStatus(ID serviceElementId)
 			throws IntegerException;
+
+	/**
+	 * Get a list of the Discoveries that are currently running.
+	 * 
+	 * @return List of the DiscoveryId for the running discoveries.
+	 * @throws IntegerException
+	 */
+	DiscoveryId[] getRunningDiscoveries() throws IntegerException;
 }

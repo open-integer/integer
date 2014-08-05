@@ -100,7 +100,8 @@ public class RunningDiscovery {
 	}
 
 	/**
-	 * 
+	 * Stop the discovery. This will stop all NetworkDiscoveries this disovery
+	 * is running
 	 */
 	public void stopDiscovery() {
 		

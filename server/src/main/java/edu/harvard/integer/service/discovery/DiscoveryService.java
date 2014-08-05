@@ -319,6 +319,11 @@ public class DiscoveryService extends BaseService implements
 		logger.info("Found ServiceElemet " + accessElement);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#getRunningDiscoveries()
+	 */
+	@Override
 	public DiscoveryId[] getRunningDiscoveries() throws IntegerException {
 		List<DiscoveryId> discoveries = new ArrayList<DiscoveryId>();
 		for (DiscoveryId discoveryId : runningDiscoveries.keySet()) {

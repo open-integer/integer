@@ -68,6 +68,16 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 			throws IntegerException;
 
 	/**
+	 * Start a discovery with the given discovery rule ID.
+	 * 
+	 * @param ruleId
+	 *            . ID of the discovery rule to start.
+	 * @return DiscoveryId that identifies this instance of a discovery.
+	 * @throws IntegerException
+	 */
+	public DiscoveryId startDiscovery(ID ruleId) throws IntegerException;
+
+	/**
 	 * Get all DiscoveryRule's in the database.
 	 * 
 	 * @return DiscoveryRule[] of all disovery rules.
@@ -173,4 +183,24 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 	 */
 	IpTopologySeed updateIpTopologySeed(IpTopologySeed seed)
 			throws IntegerException;
+
+	/**
+	 * Get a list of the running discoveries. The list is the DiscoverId for
+	 * that discovery.
+	 * 
+	 * @return List of the DiscoveryId for the running discoveries.
+	 * @throws IntegerException
+	 */
+	DiscoveryId[] getRunningDiscoveries() throws IntegerException;
+
+	/**
+	 * Stop the discovery for the given discoveryId. If the discovery is not
+	 * found then an exception will be thrown. NOTE: this invokes the stop. The
+	 * discovery may still be running for a short time after this call returns
+	 * to clean up.
+	 * 
+	 * @param discoverId
+	 * @throws IntegerException
+	 */
+	void stopDiscovery(DiscoveryId discoverId) throws IntegerException;
 }

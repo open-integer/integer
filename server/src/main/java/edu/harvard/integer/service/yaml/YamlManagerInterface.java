@@ -34,7 +34,6 @@
 package edu.harvard.integer.service.yaml;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.persistence.PreloadFileType;
 import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -47,19 +46,6 @@ import edu.harvard.integer.service.BaseManagerInterface;
  */
 public interface YamlManagerInterface extends BaseManagerInterface {
 
-	/**
-	 * Read in the YAML in the passed in string. Create a Technology instance
-	 * for every technology found. If the technology already exists in the
-	 * database then the technology will be update with new information found in
-	 * the YAML. The YAML is passed in as a string so the YAML file can be
-	 * loaded from the GUI.
-	 * 
-	 * @param content
-	 *            . YAML file passed in as a string.
-	 * @return Status of the load.
-	 * @throws IntegerException.
-	 */
-//	String loadTechnologyTree(String content) throws IntegerException;
 
 	/**
 	 * @param content

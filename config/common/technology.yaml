@@ -4,7 +4,7 @@
 # by David Chan, 2014-06-14
 
 technologies:
-    - name: interface
+    - name: Networking
       provides: [ interface ]
       description: Discoverable interface elements. 
       mechanisms:
@@ -35,7 +35,7 @@ technologies:
                 - name: interface-OperStatus
                   description: Operation status
                   
-    - name: system
+    - name: Servers
       provides: [ system ]
       description: Discoverable system elements. 
       mechanisms:

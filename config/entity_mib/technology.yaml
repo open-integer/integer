@@ -22,7 +22,7 @@
 
 
 technologies:
-    - name: physical
+    - name: Servers
       provides: [ entity, hardware ]
       description: > 
           Discoverable hardware elements, including chassis, slots, linecards,

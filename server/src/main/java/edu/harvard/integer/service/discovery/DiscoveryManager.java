@@ -40,7 +40,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -93,6 +92,16 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#startDiscovery(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public DiscoveryId startDiscovery(ID ruleId) throws IntegerException {
+		
+		return startDiscovery(getDiscoveryRuleById(ruleId));
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#startDiscovery(java.util.List)
 	 */
 	@Override
@@ -110,8 +119,22 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 		return discoveryIds;
 	}
 	
-	public void stopDiscoveryByDiscoveryRuleId(ID discoveryRuleId) throws IntegerException {
-		
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#stopDiscovery(edu.harvard.integer.common.discovery.DiscoveryId)
+	 */
+	@Override
+	public void stopDiscovery(DiscoveryId discoverId) throws IntegerException {
+		discoveryService.stopDiscovery(discoverId);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getRunningDiscoveries()
+	 */
+	@Override
+	public DiscoveryId[] getRunningDiscoveries() throws IntegerException {
+		return discoveryService.getRunningDiscoveries();
 	}
 	
 	/*
