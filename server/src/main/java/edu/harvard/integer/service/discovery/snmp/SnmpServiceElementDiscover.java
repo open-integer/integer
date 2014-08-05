@@ -994,9 +994,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			                                    ServiceElement parentSe,
 			                                    SnmpLevelOID levelOid ) throws IntegerException {
 	
-		if ( set.getName().equals("ciscoVtpVlan")) {
-			System.out.println("Break in here.");
-		}
 		
 		/**
 		 * Since Integer Service Element operating is based on unique id but not the instance OID.
@@ -1099,7 +1096,15 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     		 }
     	}
     	se.setParentId(parentSe.getID());
-    	se = accessMgr.updateServiceElement(se);
+    	
+    	try {
+    	     se = accessMgr.updateServiceElement(se); 
+    	}
+    	catch ( Exception e ) {
+    		
+    		logger.info("Exception on update service element " + se.getName() + " " + e.getMessage());
+    		return null;
+    	}
     	
     	/**
     	 * Store association if exist for later to link up the association with other service element.
@@ -1278,6 +1283,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			        		levelSe.setName(levelSetType.getName() + " " + instOid);
 			        	}
 			        	levelSe = updateServiceElement(levelSe, levelSetType, parentSe, levelOid);
+			        	if ( levelSe == null ) {
+			        		continue;
+			        	}
 			        	
 			        	LevelDiscoveredSE lds = new LevelDiscoveredSE();
 			        	lds.instOid = instOid;

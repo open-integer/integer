@@ -53,17 +53,27 @@ public class DiscoverNet implements Serializable {
 
 	private SubnetUtils utils;
 	
-	private int startIpi;
-	private int endIpi;
+	private long startIpi;
+	private long endIpi;
 	
 
 
 	public DiscoverNet( String ipnet, String mask ) {
 		
-		utils = new SubnetUtils(ipnet, mask);
-		startIpi = utils.getInfo().asInteger( utils.getInfo().getLowAddress() );
-		endIpi = utils.getInfo().asInteger( utils.getInfo().getHighAddress() );
-		
+		/**
+		 * 255.255.255.255 is special case.  In this case it only point to one address.
+		 */
+		if ( mask.equalsIgnoreCase("255.255.255.255")) {
+			
+			startIpi = ipToInt(ipnet);
+			endIpi = ipToInt(ipnet);
+			
+		}
+		else {
+			utils = new SubnetUtils(ipnet, mask);
+			startIpi = utils.getInfo().asInteger( utils.getInfo().getLowAddress() );
+			endIpi = utils.getInfo().asInteger( utils.getInfo().getHighAddress() );
+		}
 	}
 	
 	public DiscoverNet( String cidr ) 
@@ -78,6 +88,10 @@ public class DiscoverNet implements Serializable {
 	 * @return the network
 	 */
 	public String getIpAddress() {
+		
+		if ( utils == null ) {
+			return longToIp(startIpi);
+		}
 		return utils.getInfo().getAddress();
 	}
 	
@@ -89,7 +103,11 @@ public class DiscoverNet implements Serializable {
 	 * @return the netmask Specify the netmask on the network. 
 	 */
 	public String getNetmask() {
-		return utils.getInfo().getNetmask();
+		
+		if ( utils != null )
+		     return utils.getInfo().getNetmask();
+		
+		return "255.255.255.255";
 	}
 	
 	
@@ -100,14 +118,25 @@ public class DiscoverNet implements Serializable {
 	 */
 	public boolean isInRange( String remoteAddr )  {
 		
-	    int address = utils.getInfo().asInteger( remoteAddr );
-	    return startIpi <= address && address <= endIpi;
+		if ( utils != null ) {
+			 int address = utils.getInfo().asInteger( remoteAddr );
+			 return startIpi <= address && address <= endIpi;
+		}
+		
+		if ( remoteAddr.equals(longToIp(startIpi) ) )  {
+			return true;
+		}
+		return false;
+	   
 	}
 	
 	
 	public int getIpInteger( String addr )
 	{
-		return utils.getInfo().asInteger( addr );
+		if ( utils != null )
+		   return utils.getInfo().asInteger( addr );
+		
+		return (int) startIpi;
 	}
 	
 	
@@ -115,7 +144,7 @@ public class DiscoverNet implements Serializable {
 	 * 
 	 * @return
 	 */
-	public int getStartIpi() {
+	public long getStartIpi() {
 		return startIpi;
 	}
 
@@ -123,21 +152,70 @@ public class DiscoverNet implements Serializable {
 	 * 
 	 * @return
 	 */
-	public int getEndIpi() {
+	public long getEndIpi() {
 		return endIpi;
 	}
 	
 	
 	public String getStartIp() {
+		
+		if ( utils == null ) {
+			return longToIp(startIpi);
+		}
 		return utils.getInfo().getLowAddress();
 	}
 	
 	public String getEndIp() {
 		
+		if ( utils == null ) {
+			return longToIp(startIpi);
+		}
 		return utils.getInfo().getHighAddress();
 	}
 	
 	public String getNetworkAddress() {
+		
+		if ( utils == null ) {
+			return longToIp(startIpi);
+		}
 		return utils.getInfo().getNetworkAddress();
+	}
+	
+	
+	/**
+	 * '
+	 * @param ipAddress
+	 * @return
+	 */
+	public static long ipToInt(String ipAddress) {
+		 
+		String[] ipAddressInArray = ipAddress.split("\\.");
+	 
+		long result = 0;
+		for (int i = 0; i < ipAddressInArray.length; i++) {
+	 
+			int power = 3 - i;
+			int ip = Integer.parseInt(ipAddressInArray[i]);
+			result += ip * Math.pow(256, power);
+	 
+		}
+	 
+		return result;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
+	public static String longToIp(long i) {
+		 
+		return ((i >> 24) & 0xFF) + 
+                   "." + ((i >> 16) & 0xFF) + 
+                   "." + ((i >> 8) & 0xFF) + 
+                   "." + (i & 0xFF);
+ 
 	}
 }

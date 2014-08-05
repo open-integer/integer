@@ -198,8 +198,14 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
 				
 				try {
-					@SuppressWarnings("unchecked")
-					DiscoverSubnetAsyncTask<ElementAccess> subTask = new DiscoverSubnetAsyncTask(this, discoverSeed, true);
+					
+					DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
+					if ( discoverSeed.getRadius() == 0 ) {
+						subTask = new DiscoverSubnetAsyncTask(this, discoverSeed, false);
+					}
+					else {
+						subTask = new DiscoverSubnetAsyncTask(this, discoverSeed, true);
+					}
 	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
 					
 					Future<Ipv4Range> v = discoveryService.submitSubnetDiscovery(subTask);

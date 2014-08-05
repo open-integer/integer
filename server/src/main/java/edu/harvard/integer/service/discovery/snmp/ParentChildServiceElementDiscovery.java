@@ -228,11 +228,16 @@ public class ParentChildServiceElementDiscovery extends
 				ServiceElement asSe = asInfo.getAssociationSe();
 				
 				ServiceElementType set = discMgr.getServiceElementTypeById(asSe.getServiceElementTypeId());
+				
+				String errAssocation = null;
 				for ( ID seatId : set.getAssociations() ) {
 					
 					ServiceElementAssociationType setat = discMgr.getServiceElementAssociationTypeById(seatId);
 					for ( SnmpAssociation association : asInfo.getAssociation() ) {
 						
+						if ( errAssocation != null && association.getName().equals(errAssocation) ) {
+							continue;
+						}
 						if ( association.getAssociationTypeId().getIdentifier().longValue() 
 				                                           == setat.getIdentifier().longValue() ) {
 							
@@ -240,7 +245,18 @@ public class ParentChildServiceElementDiscovery extends
 									     association.getRelationToAssociation() instanceof SnmpContainmentRelation  ) {
 								
 								SnmpContainmentRelation containmentRel = (SnmpContainmentRelation) association.getRelationToAssociation();
-								List<ParentChildMappingIndex> indexTable = findParentChildRelationIndexes(containmentRel);
+								List<ParentChildMappingIndex> indexTable = null;
+								
+								try {
+									indexTable = findParentChildRelationIndexes(containmentRel);
+								}
+								catch ( Exception e ) {
+									logger.info("SNMP error on gettng VLAN Information.  The device may not contains this association "
+								                      + association.getName() + " information " + discNode.getIpAddress());
+									
+									errAssocation = association.getName();
+									break;
+								}
 								
 								
 								ParentChildMappingIndex pcmi = findMappingIndex(indexTable,  seInstOid, 0);
@@ -329,6 +345,10 @@ public class ParentChildServiceElementDiscovery extends
 				
 				ServiceElement se = createAndDiscoverServiceElement(set, row, vif, 
 						                         discNode.getTopServiceElementType().getVendor(), snmpLevel );
+				
+				if ( se == null ) {
+					return;
+				}
 				
 				ee = new EntityElement();
 				ee.index = row.getIndex();

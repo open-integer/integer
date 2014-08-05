@@ -225,7 +225,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		if ( endIp == null ) {
 			endIp = seed.getDiscoverNet().getEndIp();
 		}
-		logger.debug("Discover subnet startip " + startIp + " endip " + endIp );
+		logger.info("Discover subnet startip " + startIp + " endip " + endIp );
         Ipv4Range range = new Ipv4Range(startIp, endIp);
         
         try {
@@ -236,7 +236,8 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
     				logger.info("Discover being stop " );
     				break;
     			}
-    			String ip = range.next();  
+    			String ip = range.next();      	
+    			logger.info("Scan IP address " + ip);
     			
     			DiscoverNode dn = new DiscoverNode(ip, searchNextSubnet, seed.getDiscoverNet() );
     			dn.setSubnetId(seed.getSeedId());
@@ -284,7 +285,9 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		 * Alawys cancel async request when response has been received otherwise a memory leak is created.
 		 */
 		((Snmp)event.getSource()).cancel(event.getRequest(), this);
-		DiscoverNode dn = discoverMap.get((String) event.getUserObject());			
+		DiscoverNode dn = discoverMap.get((String) event.getUserObject());		
+		
+		logger.info("SNMP scan response on " + dn.getIpAddress());
 		try {
 			SnmpService.assertPDU(event);
 		} 
@@ -349,11 +352,13 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		try {
 			SnmpSysInfo sysInfo = new SnmpSysInfo(response);
 			if ( netDisc.alreadyDiscovered(sysInfo.getSysName(), dn) ) {
-				
 				netDisc.removeAliasIp(dn, dn.getSubnetId());
+				
+				logger.info("Found IPAddress associated device is already in discovery " + dn.getIpAddress());
 				return;
 			}
 			
+			logger.info("Start discovery on IP " + dn.getIpAddress());
 			dn.setSysNamn(sysInfo.getSysName());
 			elmTask = new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));
 			DiscoveryServiceInterface service = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
