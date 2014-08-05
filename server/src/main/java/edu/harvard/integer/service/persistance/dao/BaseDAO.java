@@ -49,6 +49,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.exception.DataException;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
@@ -140,6 +141,15 @@ public class BaseDAO {
 					DatabaseErrorCodes.EntityAlreadyExists);
 		} catch (Throwable e) {
 			e.printStackTrace();
+			
+			if (e instanceof DataException) {
+				logger.info("Saving " + printEntity(entity));
+				
+				throw new IntegerException(e, DatabaseErrorCodes.DataTruncationError,
+						new DisplayableInterface[] { new SQLStatement("update "
+								+ entity.getID().toDebugString()) });
+			}
+			
 			throw new IntegerException(e, DatabaseErrorCodes.ErrorSavingData,
 					new DisplayableInterface[] { new SQLStatement("update "
 							+ entity.getID().toDebugString()) });
@@ -148,6 +158,49 @@ public class BaseDAO {
 		return entity;
 	}
 
+	private <T extends BaseEntity> String printEntity(T entitiy) {
+		if (entitiy == null)
+			return "";
+		
+		StringBuffer b = new StringBuffer();
+		
+		for (Method method : entitiy.getClass().getMethods()) {
+			if (!method.getName().startsWith("get"))
+				continue;
+			
+			b.append(method.getName());
+			
+			try {
+				
+				Object value = method.invoke(entitiy);
+				
+				if (value != null) {
+					if (value instanceof String) {
+						b.append(" size ").append(((String) value).length());		
+					} 
+						
+					b.append(" = ").append(value);
+				} else
+					b.append(" = null");
+				
+			} catch (IllegalAccessException e) {
+				
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				
+				e.printStackTrace();
+			} catch (Throwable e ) {
+				logger.error("Unexpected error printing enity "+ e.toString());
+			}
+		}
+		
+		
+		return b.toString();
+	}
+	
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
 

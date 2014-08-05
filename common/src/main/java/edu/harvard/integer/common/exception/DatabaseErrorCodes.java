@@ -46,7 +46,9 @@ public enum DatabaseErrorCodes implements ErrorCodeInterface {
 	UnableToCreateCleanCopySecurityException("Unable to create clean copy! Security Exception"),
 	UnableToCreateCleanCopy("Unable to create clean copy"),
 	ErrorSavingData("Error saving data. SQL {0}"),
-	ErrorExecutingSQL("Error executing SQL {0}");
+	ErrorExecutingSQL("Error executing SQL {0}"),
+	DataTruncationError("Data Truncation of {0}");
+	
 
 	private String errorCode = null;
 	

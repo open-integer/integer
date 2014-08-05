@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.distribution.DistributedManager;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.technology.Mechanism;
 import edu.harvard.integer.common.technology.Technology;
@@ -46,6 +47,8 @@ import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.yaml.YamlCapability;
 import edu.harvard.integer.common.yaml.YamlMechanismType;
 import edu.harvard.integer.common.yaml.YamlTechnology;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
@@ -55,7 +58,7 @@ import edu.harvard.integer.service.technology.TechnologyManagerInterface;
  * @author David Taylor
  *
  */
-public class YamlTechnologyParser {
+public class YamlTechnologyParser implements YamlParserInterface<YamlTechnology>{
 
 	private List<Technology> technologies = null;
 	
@@ -63,17 +66,19 @@ public class YamlTechnologyParser {
 	
 	private PersistenceManagerInterface persistenceManager = null;
 	
+	private Technology rootTech = null;
 	
-	public YamlTechnologyParser(TechnologyManagerInterface technologyManager, 
-			PersistenceManagerInterface persistenceManager) {
-		this.technologyManager = technologyManager;
-		this.persistenceManager = persistenceManager;
+	public YamlTechnologyParser() {
+		
 		
 		this.technologies = new ArrayList<Technology>();
 		
 	}
 	
 	public void init() throws IntegerException {
+
+		this.technologyManager = DistributionManager.getManager(ManagerTypeEnum.TechnologyManager);
+		this.persistenceManager = DistributionManager.getManager(ManagerTypeEnum.PersistenceManager);
 		
 		TechnologyDAO technologyDAO = persistenceManager.getTechnologyDAO();
 		Technology[] alltechnologies = technologyDAO.findAll();
@@ -81,8 +86,28 @@ public class YamlTechnologyParser {
 		for (Technology technology : alltechnologies) {
 			technologies.add(technology);
 		}
+		
+		Technology[] root = technologyManager.getTopLevelTechnology();
+
+		rootTech = null;
+		if (root == null || root.length == 0) {
+			rootTech = new Technology();
+			rootTech.setName("root");
+			rootTech = technologyManager.updateTechnology(rootTech);
+
+		} else {// Take first root. There should be only one!
+
+			rootTech = root[0];
+		}
 	}
 	
+	public String parse(YamlTechnology rootTechnology) throws IntegerException {
+		init();
+		
+		parseTechnologyTree(rootTech, rootTechnology.getTechnologies());
+		
+		return "Success";
+	}
 	/**
 	 * Parse the Technology tree. This method is called recursively to process
 	 * all sub "TechnologyTree" elements. The current Technology is passed in so
@@ -109,7 +134,7 @@ public class YamlTechnologyParser {
 			Technology parent = getTechnology(node.getParent());
 			if (parent != null)
 				technology.setParentId(parent.getID());
-			else
+			else if (technology.getParentId() == null)
 				technology.setParentId(parentTechnology.getID());
 			
 			technology.setDescription(node.getDescription());

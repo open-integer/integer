@@ -40,7 +40,7 @@ serviceElementTypes:
       serviceElementTypeTranslates:
           - name: vlanInterface
             mapping: direct
-            category: interface
+            category: Interface
       associations:
          - name: ifVlanAssociation
            associateServiceElementTypeName: ciscoVtpVlan
@@ -68,7 +68,7 @@ serviceElementTypes:
       serviceElementTypeTranslates:
           - name: cdpInterface
             mapping: direct
-            category: interface
+            category: Interface
       managementObjects:
           - name: cdpInterfaceEnable
             uri: cdpInterfaceEnable

@@ -54,6 +54,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderColumn;
+import javax.validation.constraints.Size;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
@@ -84,6 +85,7 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private NetworkLayer networkLayer = null;
 
+	@Size(max=2000)
 	private String description = null;
 
 	@Embedded

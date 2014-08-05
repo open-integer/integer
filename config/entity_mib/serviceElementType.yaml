@@ -14,34 +14,34 @@ serviceElementTypes:
       serviceElementTypeTranslates:
          - name: cevChassis 
            mapping: subObjIdentify
-           category: chassis
+           category: Chassis
          - name: cevBackplane
            mapping: subObjIdentify
-           category: backplane
+           category: Backplane
          - name: cevContainer
            mapping: subObjIdentify
-           category: container
+           category: Container
          - name: cevPowerSupply
            mapping: subObjIdentify
-           category: power supply
+           category: Power Supply
          - name: cevFan
            mapping: subObjIdentify
-           category: fan
+           category: Fan
          - name: cevSensor
            mapping: subObjIdentify
-           category: sensor
+           category: Sensor
          - name: cevModule
            mapping: subObjIdentify
-           category: module
+           category: Module
          - name: cevPort
            mapping: subObjIdentify
-           category: port
+           category: Port
          - name: cevStack
            mapping: subObjIdentify
-           category: stack
+           category: Stack
          - name: cevMidplane
            mapping: subObjIdentify
-           category: midplane
+           category: Midplane
               
       managementObjects:
           - name: entPhysicalDescr

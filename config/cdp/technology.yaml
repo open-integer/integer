@@ -6,7 +6,7 @@
 technologies:
     # CDP, the Cisco Discovery Protocol.
     # 3 mechanism types: cdp-global, cdp-interface, cdp-cache (cache entry).
-    - name: cdp
+    - name: CDP
     #  provides: [ neighbor-discovery ]
       parent: neighbor discovery
       description: Cisco Discovery Protocol
