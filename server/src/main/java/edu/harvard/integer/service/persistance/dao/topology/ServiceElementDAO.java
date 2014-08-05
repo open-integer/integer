@@ -130,7 +130,7 @@ public class ServiceElementDAO extends BaseDAO {
 		
 		b.append("select se.* ").append('\n');
 		b.append("from ServiceElement se ").append('\n');
-		b.append(" where not exists (select * from  ServiceElement_parentids sep ").append('\n');
+		b.append(" where not exists (select * from  ServiceElement_parentIds sep ").append('\n');
 		b.append("where sep.ServiceElement_identifier = se.identifier)");
 		
 		Query query = getEntityManager().createNativeQuery(b.toString(), ServiceElement.class);
@@ -140,25 +140,7 @@ public class ServiceElementDAO extends BaseDAO {
 		
 		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList
 				.size()]);
-//		
-//		CriteriaBuilder criteriaBuilder = getEntityManager()
-//				.getCriteriaBuilder();
-//
-//		CriteriaQuery<ServiceElement> query = criteriaBuilder
-//				.createQuery(ServiceElement.class);
-//
-//		Root<ServiceElement> from = query.from(ServiceElement.class);
-//		query.select(from);
-//
-//		query.select(from).where(criteriaBuilder.isNull(from.get("parentIds")));
-//
-//		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(
-//				query);
-//
-//		List<ServiceElement> resultList = typeQuery.getResultList();
-//
-//		return (ServiceElement[]) resultList
-//				.toArray(new ServiceElement[resultList.size()]);
+
 	}
 
 	/**
@@ -178,6 +160,7 @@ public class ServiceElementDAO extends BaseDAO {
 		query.setParameter("parent", parent.getIdentifier());
 		
 		
+		@SuppressWarnings("unchecked")
 		List<ServiceElement> resultList = query.getResultList();
 		
 		return (ServiceElement[]) resultList.toArray(new ServiceElement[resultList
@@ -190,7 +173,7 @@ public class ServiceElementDAO extends BaseDAO {
 	 * @return
 	 */
 	public ServiceElement findByIdAndValue(ID parentId,
-			ID serviceElementTypeId, ManagementObjectValue value) {
+			ID serviceElementTypeId, @SuppressWarnings("rawtypes") ManagementObjectValue value) {
 		CriteriaBuilder criteriaBuilder = getEntityManager()
 				.getCriteriaBuilder();
 
@@ -220,6 +203,7 @@ public class ServiceElementDAO extends BaseDAO {
 		typeQuery.setParameter(idParam, parentId.getIdentifier());
 		typeQuery.setParameter(serviceElementTypeParam, serviceElementTypeId);
 
+		@SuppressWarnings("unused")
 		List<ServiceElement> resultList = typeQuery.getResultList();
 
 		return null;
