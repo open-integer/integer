@@ -28,7 +28,6 @@ snmpContainment:
           descriminatorOID: cdpInterfaceEnable
           globalDescriminatorOID: cdpGlobalRun
           containmentRelationship:
-            mappingContext: ifEntry
             mappingTable: entAliasMappingEntry
             mappingOid: entAliasMappingIdentifier
             mappingType: FullOid
@@ -59,6 +58,7 @@ snmpContainment:
                   mappingTable: ipAddrEntry
                   mappingOid: ipAdEntIfIndex
                   mappingType: InstanceOnly
+                  valueIsParent: true
                disriminators:
                   - serviceElementTypeName: ipv4Address  
                                                   
@@ -77,7 +77,6 @@ snmpContainment:
              - name: vlanVurtualIfMapping
                contextOID: ifEntry
                containmentRelationship:
-                  mappingContext: ifEntry
                   mappingTable:  vtpVlanEntry
                   mappingOid: vtpVlanIfIndex
                   mappingType: InstanceOnly

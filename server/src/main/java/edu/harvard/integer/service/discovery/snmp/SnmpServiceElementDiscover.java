@@ -1488,8 +1488,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			
 			for ( LevelDiscoveredSE lds : discoveredInstOids ) {
 				
-				for ( SnmpLevelOID nextLevel : levelOid.getChildren() ) {
+				for ( int i=0; i<levelOid.getChildren().size(); i++ )  {
 					
+					if ( lds.instOid.equals("49") ) {
+						System.out.println("Break in here.");
+					}
+					SnmpLevelOID nextLevel = levelOid.getChildren().get(i);
 					if ( nextLevel.getRelationToParent() != null && nextLevel.getRelationToParent() instanceof SnmpContainmentRelation ) {
 						SnmpContainmentRelation sRelation = (SnmpContainmentRelation) nextLevel.getRelationToParent();
 						
@@ -1572,12 +1576,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					        }							        	
 					        indexLocation++;
 					    }
-						for ( String i : instances ) {
+						for ( String inst : instances ) {
 							
 							if ( indexLocation == 0 ) {
-								if ( i.startsWith(lds.instOid) ) {
+								if ( inst.startsWith(lds.instOid) ) {
 									 levelDiscovery( nextLevel, lds.levelSetType, lds.levelSe, 
-											 levelOid.getContextOID().getOid(), lds.instOid, i );
+											 levelOid.getContextOID().getOid(), lds.instOid, inst );
 									break;
 								}
 							}
@@ -1658,13 +1662,16 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
 			
 			for ( TableEvent te : tblEvents ) {
-				
-				String mappingTblIndex = te.getIndex().toString();
-				String childIndex = te.getColumns()[0].getVariable().toString();
-				
-				ParentChildMappingIndex pcmi = new ParentChildMappingIndex(mappingTblIndex, sRelation.getMappingType());
-				pcmi.setChildIndex(childIndex);
-				
+								
+				ParentChildMappingIndex pcmi = null;
+				if ( sRelation.getValueIsParent() ) {
+					pcmi = new ParentChildMappingIndex(te.getColumns()[0].getVariable().toString(), sRelation.getMappingType());
+					pcmi.setChildIndex(te.getIndex().toString());
+				}
+				else {
+					pcmi = new ParentChildMappingIndex(te.getIndex().toString(), sRelation.getMappingType());
+					pcmi.setChildIndex(te.getColumns()[0].getVariable().toString());
+				}
 				indexs.add(pcmi);
 			}
 			addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexs);									
