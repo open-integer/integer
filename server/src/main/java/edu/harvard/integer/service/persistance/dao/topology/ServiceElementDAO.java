@@ -153,7 +153,7 @@ public class ServiceElementDAO extends BaseDAO {
 		
 		b.append("select se.* ").append('\n');
 		b.append("from ServiceElement se ").append('\n');
-		b.append("   join ServiceElement_parentids sep on (sep.ServiceElement_identifier = se.identifier) ").append('\n');
+		b.append("   join ServiceElement_parentIds sep on (sep.ServiceElement_identifier = se.identifier) ").append('\n');
 		b.append("where sep.identifier = :parent");
 		
 		Query query = getEntityManager().createNativeQuery(b.toString(), ServiceElement.class);
