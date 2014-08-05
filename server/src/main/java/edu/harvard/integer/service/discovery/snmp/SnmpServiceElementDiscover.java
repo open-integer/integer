@@ -74,6 +74,7 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementAssociation;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
@@ -273,52 +274,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					
 				SNMP snmp = (SNMP) mrgObj;
 				VariableBinding vb = findMatchVB(snmp, rpdu);
-				if ( vb != null ) {
-					
-					if ( vb.getVariable() instanceof UnsignedInteger32 ||
-							vb.getVariable() instanceof Integer32 ) {
-						
-					    ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
-						
-					    iv.setName(snmp.getName());
-					    iv.setValue(vb.getVariable().toInt());
-					    iv.setManagementObject(snmp.getID());
-						
-					    se.getAttributeValues().add(iv);
-					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
-			            inst.setValue(instOid);
-			            se.getValues().add(inst);
-				    }
-				    else {
-					
-					    ManagementObjectStringValue sv = new ManagementObjectStringValue();
-                        sv.setValue(vb.getVariable().toString());
-                        sv.setManagementObject(snmp.getID());
-                  
-					    se.getAttributeValues().add(sv);
-					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
-			            inst.setValue(instOid);
-			            se.getValues().add(inst);
-				    }			
-				}
-				else {
-				
-					for ( IndexSNMPValue indexVal : indexVals ) {
-						
-						if ( indexVal.indexSNMP.getIdentifier().longValue() == snmp.getIdentifier().longValue() ) {
-							
-						    ManagementObjectStringValue sv = new ManagementObjectStringValue();
-	                        sv.setValue(indexVal.indexVal);
-	                        sv.setManagementObject(snmp.getID());
-	                     
-						    se.getAttributeValues().add(sv);
-						    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
-				            inst.setValue(instOid);
-				            se.getValues().add(inst);
-							break;
-						}
-					}
-				}				
+				addSEValue(vb, snmp, se, instOid, indexVals);
 			}
 		}			
 	}
@@ -671,49 +627,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					
 				SNMP snmp = (SNMP) mrgObj;
 				VariableBinding vb = findMatchVB(snmp, tblEvent);
-				if ( vb != null ) {
-					
-					if ( vb.getVariable() instanceof UnsignedInteger32 ||
-							vb.getVariable() instanceof Integer32 ) {
-						
-					    ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
-						
-					    iv.setName(snmp.getName());
-					    iv.setValue(vb.getVariable().toInt());
-					    iv.setManagementObject(snmp.getID());
-						
-					    se.getAttributeValues().add(iv);
-					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
-			            inst.setValue(tblEvent.getIndex().toString());
-			            se.getValues().add(inst);
-				    }
-				    else {
-					
-					    ManagementObjectStringValue sv = new ManagementObjectStringValue();
-                        sv.setValue(vb.getVariable().toString());
-                        sv.setManagementObject(snmp.getID());
-                     
-					    se.getAttributeValues().add(sv);
-					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
-			            inst.setValue(tblEvent.getIndex().toString());
-			            se.getValues().add(inst);
-				    }			
-				}
-				else {
-				
-					for ( IndexSNMPValue indexVal : indexSNMPValues ) {
-						
-						if ( indexVal.indexSNMP.getIdentifier() == snmp.getIdentifier() ) {
-							
-						    ManagementObjectStringValue sv = new ManagementObjectStringValue();
-	                        sv.setValue(indexVal.toString());
-	                        sv.setManagementObject(snmp.getID());
-	                     
-						    se.getAttributeValues().add(sv);
-							break;
-						}
-					}
-				}				
+				addSEValue(vb, snmp, se, tblEvent.getIndex().toString(), indexSNMPValues);
 			}
 		}		
 		return se;
@@ -1079,12 +993,41 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			                                    ServiceElementType set, 
 			                                    ServiceElement parentSe,
 			                                    SnmpLevelOID levelOid ) throws IntegerException {
+	
+		if ( set.getName().equals("ciscoVtpVlan")) {
+			System.out.println("Break in here.");
+		}
+		
+		/**
+		 * Since Integer Service Element operating is based on unique id but not the instance OID.
+		 * unique key is only care the service element has unique key values and it (they) is not null. 
+		 */
+		String uniqueKey = null;
+		if ( set.getUniqueIdentifierCapabilities() != null && set.getUniqueIdentifierCapabilities().size() > 0 ) {
 			
-		String instKey = "0";
-		if ( se.getValues() != null ) {
-			ServiceElementProtocolInstanceIdentifier sep = se.getValues().get(0);
-			instKey = set.getName() + ":" +  sep.getValue();
-		}		
+			StringBuffer sb = new StringBuffer();
+			for ( ID id : set.getUniqueIdentifierCapabilities() ) {
+			
+				SNMP snmp = (SNMP) capMgr.getManagementObjectById(id);
+				for ( ManagementObjectValue<?> mov : se.getAttributeValues() ) {
+					
+					if ( mov.getManagementObject().getIdentifier().longValue() == snmp.getIdentifier().longValue() ) {
+						
+						if ( sb.length() == 0 ) {
+							sb.append(mov.getValue().toString());
+						}
+						else {
+							sb.append(":" + mov.getValue().toString());
+						}
+						break;
+					}
+				}					
+			}
+			if ( sb.toString().length() > 0 ) {
+				uniqueKey = set.getName() + ":" +  sb.toString();
+			}
+		}
+		
 		/**
     	 * Check if the discovered service element has been discovered or not.
     	 * If it is, do not update it in database but just update its parent id.
@@ -1114,8 +1057,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     				 /**
     				  * Update the updated SE on the association list.
     				  */
-    				 discNode.updateAssociationSe(instKey, dupSe);
-    				 discNode.bookDiscoveredSE(instKey, se);
+    				 discNode.updateAssociationSe(uniqueKey, dupSe);
+    				 discNode.bookDiscoveredSE(uniqueKey, dupSe.getID());
     				 return dupSe;
     			 }    
     			 else {
@@ -1135,7 +1078,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     						
     						for ( ID id : set.getAssociations() ) {
     							
-    							ServiceElementAssociationType associtateType = associationTypeDao.findById(id);				
+    							ServiceElementAssociationType associtateType = associationTypeDao.findById(id);	
     							if ( levelOid.getAssociations() != null ) {
     								for ( SnmpAssociation association : levelOid.getAssociations() ) {
     									
@@ -1148,14 +1091,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     								}
     							}
     						}
-    						discNode.addAssociationInfo(instKey, asInfo);
+    						discNode.addAssociationInfo(uniqueKey, asInfo);
     					}
-    				 
-    				 /**
-    				  * Update the updated SE on the association list.
-    				  */
-    				 discNode.updateAssociationSe(instKey, dupSe);
-    				 discNode.bookDiscoveredSE(instKey, se);
+    				    discNode.bookDiscoveredSE(uniqueKey, dupSe.getID());
     				 return dupSe;
     			 }
     		 }
@@ -1174,7 +1112,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			
 			for ( ID id : set.getAssociations() ) {
 				
-				ServiceElementAssociationType associtateType = associationTypeDao.findById(id);				
+				ServiceElementAssociationType associtateType = associationTypeDao.findById(id);	
 				if ( levelOid.getAssociations() != null ) {
 					for ( SnmpAssociation association : levelOid.getAssociations() ) {
 						
@@ -1187,10 +1125,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					}
 				}
 			}
-			discNode.addAssociationInfo(instKey, asInfo);
+			discNode.addAssociationInfo(uniqueKey, asInfo);
 		}
-		
-		discNode.bookDiscoveredSE(instKey, se);
+		discNode.bookDiscoveredSE(uniqueKey, se.getID());
     	return se;
 	}
 	
@@ -1243,28 +1180,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			if ( levelOid.getRelationToParent() instanceof SnmpContainmentRelation ) {
 			
 				SnmpContainmentRelation sRelation = (SnmpContainmentRelation) levelOid.getRelationToParent();
-				List<ParentChildMappingIndex> indexTable = getIndexMapping(discNode.getIpAddress() + ":" +  sRelation.getMappingTable().getOid());
-				if ( indexTable == null ) {
+				List<ParentChildMappingIndex> indexTable = findParentChildRelationIndexes(sRelation);
 					
-					indexTable = new ArrayList<>();
-					
-					OID[] aliasMap = new OID[1];
-					aliasMap[0] = new OID(sRelation.getMappingOid().getOid());
-					List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
-					
-					for ( TableEvent te : tblEvents ) {
-						
-						String mappingTblIndex = te.getIndex().toString();
-						String childIndex = te.getColumns()[0].getVariable().toString();
-						
-						ParentChildMappingIndex pcmi = new ParentChildMappingIndex(mappingTblIndex, sRelation.getMappingType());
-						pcmi.setChildIndex(childIndex);
-						
-						indexTable.add(pcmi);
-					}
-					addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexTable);									
-				}	
-				
 			    for ( SnmpServiceElementTypeDiscriminator disc : levelOid.getDisriminators() ) {
 			    
 			    	ServiceElementType levelSetType = discMgr.getServiceElementTypeById(disc.getServiceElementTypeId());
@@ -1481,7 +1398,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 									indexVal.indexVal = tblEvent.getIndex().toString();
 									
 									indexVals.add(indexVal);
-									
 								}
 							}
 							else {
@@ -1593,27 +1509,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							 }
 						}
 						else {
-							List<ParentChildMappingIndex> indexTable = getIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid());
-							if ( indexTable == null ) {
-								
-								indexTable = new ArrayList<>();
-								
-								OID[] aliasMap = new OID[1];
-								aliasMap[0] = new OID(sRelation.getMappingOid().getOid());
-								List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
-								
-								for ( TableEvent te : tblEvents ) {
-									
-									String childIndex = te.getIndex().toString();
-									String mappingTblIndex = te.getColumns()[0].getVariable().toString();
-									
-									ParentChildMappingIndex pcmi = new ParentChildMappingIndex(mappingTblIndex, sRelation.getMappingType());
-									pcmi.setChildIndex(childIndex);
-									
-									indexTable.add(pcmi);
-								}
-								addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexTable);									
-							}	
+							
+							List<ParentChildMappingIndex> indexTable = findParentChildRelationIndexes(sRelation);
 							List<SNMP> indexSnmps = sRelation.getMappingTable().getIndex();
 							int indexLocation = 0;	
 						    for ( SNMP snmp : indexSnmps ) {
@@ -1694,7 +1591,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 * @param indexPosition the index position
 	 * @return the parent child mapping index
 	 */
-	private ParentChildMappingIndex findMappingIndex(  List<ParentChildMappingIndex> mappingIndexList,
+	protected ParentChildMappingIndex findMappingIndex(  List<ParentChildMappingIndex> mappingIndexList,
 			                                                       String lookingInst, int indexPosition ) {
 		
 		if ( indexPosition == 0 ) {
@@ -1731,6 +1628,196 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		}
 		
 		return null;
+	}
+	
+	
+	
+	/**
+	 * Find all parent and child relation mapping OID indexes.
+	 * 
+	 * @param sRelation
+	 * @throws IntegerException
+	 */
+	public List<ParentChildMappingIndex> findParentChildRelationIndexes( SnmpContainmentRelation sRelation ) throws IntegerException {
+		
+		List<ParentChildMappingIndex> indexs = getIndexMapping(discNode.getIpAddress() + ":" +  sRelation.getMappingTable().getOid());
+		if ( indexs == null ) {
+			
+			indexs = new ArrayList<>();
+			
+			OID[] aliasMap = new OID[1];
+			aliasMap[0] = new OID(sRelation.getMappingOid().getOid());
+			List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), aliasMap);
+			
+			for ( TableEvent te : tblEvents ) {
+				
+				String mappingTblIndex = te.getIndex().toString();
+				String childIndex = te.getColumns()[0].getVariable().toString();
+				
+				ParentChildMappingIndex pcmi = new ParentChildMappingIndex(mappingTblIndex, sRelation.getMappingType());
+				pcmi.setChildIndex(childIndex);
+				
+				indexs.add(pcmi);
+			}
+			addIndexMapping(discNode.getIpAddress() + ":" +sRelation.getMappingTable().getOid(), indexs);									
+		}	
+		
+		return indexs;
+	}
+	
+	
+	/**
+	 * Add attribute value which is stored in a variable binding to Service element. 
+	 * 
+	 * @param vb
+	 * @param snmp
+	 * @param se
+	 * @param instOid
+	 */
+	private void addSEValue( VariableBinding vb, SNMP snmp, 
+			                 ServiceElement se, String instOid,
+			                 List<IndexSNMPValue> indexSNMPValues ) {
+		
+		if ( vb != null ) {
+			
+			if ( vb.getVariable() instanceof UnsignedInteger32 ||
+					vb.getVariable() instanceof Integer32 ) {
+				
+			    ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+				
+			    iv.setName(snmp.getName());
+			    iv.setValue(vb.getVariable().toInt());
+			    iv.setManagementObject(snmp.getID());
+				
+			    se.getAttributeValues().add(iv);
+			    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+	            inst.setValue(instOid);
+	            se.getValues().add(inst);
+		    }
+		    else {
+			
+			    ManagementObjectStringValue sv = new ManagementObjectStringValue();
+                sv.setValue(vb.getVariable().toString());
+                sv.setManagementObject(snmp.getID());
+          
+			    se.getAttributeValues().add(sv);
+			    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+	            inst.setValue(instOid);
+	            se.getValues().add(inst);
+		    }			
+		}
+		else {
+		
+			for ( IndexSNMPValue indexVal : indexSNMPValues ) {
+				
+				if ( indexVal.indexSNMP.getIdentifier().longValue() == snmp.getIdentifier().longValue() ) {
+					
+				    ManagementObjectStringValue sv = new ManagementObjectStringValue();
+                    sv.setValue(indexVal.indexVal);
+                    sv.setManagementObject(snmp.getID());
+                 
+				    se.getAttributeValues().add(sv);
+				    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+		            inst.setValue(instOid);
+		            se.getValues().add(inst);
+					break;
+				}
+			}
+		}			
+	}
+	
+	
+	/**
+	 * Discover association attributes.
+	 * 
+	 * @param ePoint
+	 * @param seat
+	 * @param ses
+	 * @param instOid
+	 * @throws IntegerException
+	 */
+	public void discoverAssociationAttributes( ElementEndPoint ePoint, 
+                                              ServiceElementAssociationType seat, 
+                                              ServiceElementAssociation ses,
+                                              String instOid  ) throws IntegerException {
+		
+		List<SNMP> accessSnmps = new ArrayList<>();		
+		for ( ID id : seat.getAttributeIds() ) {
+			
+			SNMP s = (SNMP) capMgr.getManagementObjectById(id);
+			if ( s.getMaxAccess() != null || s.getMaxAccess() != MaxAccess.NotAccessible ) {
+				accessSnmps.add(s);
+			}
+			
+		}
+		
+		PDU pdu = new PDU();
+		List<VariableBinding> vbs = new ArrayList<>();
+		
+		for ( SNMP snmp : accessSnmps ) {
+			OID vbOid = new OID(snmp.getOid());
+			vbOid.append(instOid);					
+			vbs.add(new VariableBinding(vbOid));	
+		}
+		
+		
+		PDU rpdu = null;
+		if ( vbs.size() > 0 ) {
+			
+			pdu.addAll(vbs);
+			logger.info("Get value for SEAT " + seat.getName() + " from " + ePoint.getIpAddress() + " Starting oid " 
+			                      +  pdu.getVariableBindings().get(0).getOid().toString() + " size " + seat.getAttributeIds().size() );			
+		    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
+		    List<ManagementObjectValue<?>> attributes = ses.getAttributeValues();
+		    
+			if ( attributes == null )
+			{
+				attributes = new ArrayList<>();
+				ses.setAttributeValues(attributes);
+			}
+			List<ServiceElementProtocolInstanceIdentifier> insts = ses.getValues();
+			if ( insts == null ) {
+				insts = new ArrayList<>();
+				ses.setValues(insts);
+			}
+			
+			for ( ID id : seat.getAttributeIds() ) {
+				
+				ServiceElementManagementObject mrgObj = capMgr.getManagementObjectById(id);
+				if ( mrgObj instanceof SNMP ) {
+						
+					SNMP snmp = (SNMP) mrgObj;
+					VariableBinding vb = findMatchVB(snmp, rpdu);
+					
+					if ( vb.getVariable() instanceof UnsignedInteger32 ||
+							vb.getVariable() instanceof Integer32 ) {
+						
+					    ManagementObjectIntegerValue iv = new ManagementObjectIntegerValue();
+						
+					    iv.setName(snmp.getName());
+					    iv.setValue(vb.getVariable().toInt());
+					    iv.setManagementObject(snmp.getID());
+						
+					    ses.getAttributeValues().add(iv);
+					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+			            inst.setValue(instOid);
+			            ses.getValues().add(inst);
+				    }
+				    else {
+					
+					    ManagementObjectStringValue sv = new ManagementObjectStringValue();
+		                sv.setValue(vb.getVariable().toString());
+		                sv.setManagementObject(snmp.getID());
+		          
+					    ses.getAttributeValues().add(sv);
+					    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
+			            inst.setValue(instOid);
+			            ses.getValues().add(inst);
+				    }			
+				}
+			}		
+			
+		}
 	}
 	
 	

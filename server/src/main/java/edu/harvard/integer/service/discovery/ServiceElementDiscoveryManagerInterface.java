@@ -44,6 +44,7 @@ import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
+import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -197,6 +198,19 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	ServiceElementType getServiceElementTypeByName(String name)
 			throws IntegerException;
+	
+	
+	/**
+	 * Find Service Element Association Type by id.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws IntegerException
+	 */
+	ServiceElementAssociationType getServiceElementAssociationTypeById( ID id )
+			throws IntegerException;
+	
+	
 
 	/**
 	 * This method is called by the DiscoveryService to start a discovery on the

@@ -19,6 +19,7 @@ serviceElementTypes:
           - name: vtpVlanIndex
             uri: vtpVlanIndex
             capability: vtpVlanIndex
+            unique: 1
 
           - name: vtpVlanState
             uri: vtpVlanState

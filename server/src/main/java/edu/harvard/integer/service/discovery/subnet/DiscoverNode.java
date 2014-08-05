@@ -43,6 +43,7 @@ import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.LinkCapability;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.snmp.AssociationInfo;
@@ -145,13 +146,13 @@ public class DiscoverNode extends ElementAccess {
 	/**
 	 * Map to store discovered service elements, it is used for final stage to link the association
 	 * between service elements.
-	 * The key for the MAP is service element type plus the instance OID of the service element.
+	 * The key for the MAP is service element type plus the uniqueKeyValue of the service element.
 	 */
-	private Map<String, ServiceElement>  instSeMap = new HashMap<String, ServiceElement>();
+	private Map<String, ID>  instSeMap = new HashMap<String, ID>();
 
 	/**
 	 * Map to store association information, it is used to final stage to link the association
-	 * between service elements.
+	 * between service elements.  The key for the MAP is service element type plus the uniqueKeyValue of the service element.
 	 */
 	private Map<String, AssociationInfo> associationInfos = new HashMap<>();
 	
@@ -514,8 +515,8 @@ public class DiscoverNode extends ElementAccess {
 	 * @param instKey
 	 * @param se
 	 */
-	public void bookDiscoveredSE( String instKey, ServiceElement se ) {		
-		instSeMap.put(instKey, se);
+	public void bookDiscoveredSE( String instKey, ID seId ) {		
+		instSeMap.put(instKey, seId);
 	}
 	
 	/**
@@ -523,7 +524,7 @@ public class DiscoverNode extends ElementAccess {
 	 * @param instKey
 	 * @return
 	 */
-	public ServiceElement getDiscoveredSE( String instKey ) {		
+	public ID getDiscoveredSE( String instKey ) {		
 		return instSeMap.get(instKey);
 	}
 	
@@ -531,8 +532,12 @@ public class DiscoverNode extends ElementAccess {
 	 * 
 	 * @param asInfo
 	 */
-	public void addAssociationInfo( String instKey, AssociationInfo asInfo ) {
-		associationInfos.put( instKey, asInfo);
+	public void addAssociationInfo( String uniqueKeyValue, AssociationInfo asInfo ) {
+		
+		if ( uniqueKeyValue == null ) {
+			return;
+		}
+		associationInfos.put( uniqueKeyValue, asInfo);
 	}
 	
 	/**
@@ -540,9 +545,13 @@ public class DiscoverNode extends ElementAccess {
 	 * @param instKey
 	 * @param se
 	 */
-	public void updateAssociationSe( String instKey, ServiceElement se ) {
+	public void updateAssociationSe( String uniqueKeyValue, ServiceElement se ) {
 		
-		AssociationInfo asInfo = associationInfos.get(instKey);
+		if ( uniqueKeyValue == null ) {
+			return;
+		}
+		
+		AssociationInfo asInfo = associationInfos.get(uniqueKeyValue);
 		if ( asInfo != null ) {
 			asInfo.setAssociationSe(se);
 		}

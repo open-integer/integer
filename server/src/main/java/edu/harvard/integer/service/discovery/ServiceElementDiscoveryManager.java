@@ -54,12 +54,14 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
+import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
@@ -88,6 +90,7 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		ServiceElementDiscoveryManagerLocalInterface,
 		ServiceElementDiscoveryManagerRemoteInterface {
 
+	
 	@Inject
 	private Logger logger;
 
@@ -558,5 +561,17 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	public ServiceElementType[] getServiceElementTypeBySelection(Selection selection) throws IntegerException {
 		
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementAssociationTypeById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ServiceElementAssociationType getServiceElementAssociationTypeById(
+			ID id) throws IntegerException {
+		
+		ServiceElementAssociationTypeDAO associationTypeDao = dbm.getServiceElementAssociationTypeDAO();
+		ServiceElementAssociationType setat = associationTypeDao.findById(id);
+		return setat;
 	}
 }

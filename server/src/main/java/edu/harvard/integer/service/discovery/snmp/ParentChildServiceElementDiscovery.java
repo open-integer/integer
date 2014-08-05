@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +47,12 @@ import org.snmp4j.smi.Variable;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
+import edu.harvard.integer.access.snmp.ParentChildMappingIndex;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.SnmpAssociation;
 import edu.harvard.integer.common.discovery.SnmpContainment;
+import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDescriminatorIntegerValue;
@@ -62,6 +66,8 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementAssociation;
+import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
@@ -69,6 +75,9 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
+import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 
 /**
  * The Class ParentChildServiceElementDiscovery is used to discover IP nodes which their
@@ -136,108 +145,7 @@ public class ParentChildServiceElementDiscovery extends
 							
 							levelDiscovery(snmpLevel, discNode.getTopServiceElementType(), 
 								           discNode.getAccessElement(), null, null, null );
-							
-							/*
-							if ( snmpLevel.getDescriminatorOID() == null ) {
-						
-								SnmpServiceElementTypeDiscriminator ssetd = snmpLevel.getDisriminators().get(0);
-								ServiceElementType set = discMgr.getServiceElementTypeById(ssetd.getServiceElementTypeId());
-								
-								List<ID> ids = set.getAttributeIds();
-								List<SNMP> accessSnmps = new ArrayList<>();
-								List<SNMP> nonAccessSnmps = new ArrayList<>();
-								
-								for ( ID id : ids ) {
-									
-									SNMP s = (SNMP) capMgr.getManagementObjectById(id);
-									if ( s.getMaxAccess() == null || s.getMaxAccess() == MaxAccess.NotAccessible ) {
-										nonAccessSnmps.add(s);
-									}
-									else {
-										accessSnmps.add(s);
-									}
-								}
-								
-								OID[] oidColumns = new OID[accessSnmps.size()];
-								for ( int i=0; i<accessSnmps.size(); i++ ) {
-									
-									SNMP s = accessSnmps.get(i);
-									oidColumns[i] = new OID(s.getOid());
-								}
-								
-								List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), oidColumns);
-								for ( TableEvent tblEvent : tblEvents ) {
-									
-									List<IndexSNMPValue> indexVals = new ArrayList<>();
-									if ( nonAccessSnmps.size() > 0 ) {
-										
-										SNMPTable snmpTbl = (SNMPTable) contextSnmp;
-										List<SNMP> indexs =  snmpTbl.getIndex();
-										for ( SNMP ss : nonAccessSnmps ) {
-											
-											//
-											// If index size is 1, we know the whole part of table index is
-											// the non access SNMP value.
-											//
-											if ( indexs.size() == 1 ) {
-												SNMP is = indexs.get(0);
-												if ( is.getOid().equals(ss.getOid()) ) {
-												
-													IndexSNMPValue indexVal = new IndexSNMPValue();
-													indexVal.indexSNMP = is;
-													indexVal.indexVal = tblEvent.getIndex().toString();
-													
-													indexVals.add(indexVal);
-													
-												}
-											}
-											else {
-												
-												for ( int j=0; j<indexs.size(); j++ ) {
-													
-													SNMP is = indexs.get(j);
-													if ( is.getOid().equals(ss.getOid()) ) {
-													
-														IndexSNMPValue indexVal = new IndexSNMPValue();
-														indexVal.indexSNMP = is;
-														indexVal.indexVal =  Integer.toString(tblEvent.getIndex().get(j));
-														indexVals.add(indexVal);
-													}
-												}
-											}
-										}
-									}
-									ServiceElement se = createServiceElementFromType(discNode, set, tblEvent, indexVals);
-									se = updateServiceElement(se, set, discNode.getAccessElement());
-								}
-							}
-							else {
-								
-								SNMP snmp = snmpLevel.getDescriminatorOID();
-								OID[] oids = new OID[1];
-								oids[0] = new OID(snmp.getOid());
-								
-								List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), oids);
-								for ( TableEvent tblEvent : tblEvents ) {
-									
-									VariableBinding vb = tblEvent.getColumns()[0];
-									SnmpServiceElementTypeDiscriminator ssetd = findDiscriminator(vb.getVariable(), snmpLevel);
-									if ( ssetd != null ) {
-										
-										
-									}
-									else {
-										
-										ssetd = findDefaultDiscriminator(snmpLevel);
-										if ( ssetd != null ) {
-											
-										}
-									}									
-								}
-							}
-							*/
-						}
-						
+						}						
 					}
 					else {
 					
@@ -304,7 +212,66 @@ public class ParentChildServiceElementDiscovery extends
 				e.printStackTrace();
 				throw e;
 			}
-		}		
+		}	
+		/**
+		 * The last stage is to build the association between service elements.
+		 */
+		if ( discNode.getAssociationInfos().size() > 0 ) {
+			
+			Set<String> keys = discNode.getAssociationInfos().keySet();
+			for ( String key : keys ) {
+				
+				String[] ss = key.split(":");
+				String seInstOid = ss[1];
+				
+				AssociationInfo asInfo = discNode.getAssociationInfos().get(key);
+				ServiceElement asSe = asInfo.getAssociationSe();
+				
+				ServiceElementType set = discMgr.getServiceElementTypeById(asSe.getServiceElementTypeId());
+				for ( ID seatId : set.getAssociations() ) {
+					
+					ServiceElementAssociationType setat = discMgr.getServiceElementAssociationTypeById(seatId);
+					for ( SnmpAssociation association : asInfo.getAssociation() ) {
+						
+						if ( association.getAssociationTypeId().getIdentifier().longValue() 
+				                                           == setat.getIdentifier().longValue() ) {
+							
+							if ( association.getRelationToAssociation() != null && 
+									     association.getRelationToAssociation() instanceof SnmpContainmentRelation  ) {
+								
+								SnmpContainmentRelation containmentRel = (SnmpContainmentRelation) association.getRelationToAssociation();
+								List<ParentChildMappingIndex> indexTable = findParentChildRelationIndexes(containmentRel);
+								
+								
+								ParentChildMappingIndex pcmi = findMappingIndex(indexTable,  seInstOid, 0);
+							    if ( pcmi != null ) {
+							    	ServiceElementType targetSet = discMgr.getServiceElementTypeById(setat.getServiceElementTypeId());
+							    	String associateTargetKey = targetSet.getName() + ":" + pcmi.getChildIndex();
+							    	
+							    	ID associatedTargetId =  discNode.getDiscoveredSE(associateTargetKey);
+							    	if ( associatedTargetId != null ) {
+							    		ServiceElementAssociation sea = new ServiceElementAssociation();
+							    		sea.setServiceElementId(associatedTargetId);
+							    								    		
+							    		if ( asSe.getAssociations() == null ) {
+							    			asSe.setAssociations(new ArrayList<ServiceElementAssociation>());
+							    		}
+							    		discoverAssociationAttributes(discNode.getElementEndPoint(), setat, sea, pcmi.getParentIndex());
+							    		asSe.getAssociations().add(sea);
+							    	}
+							    }
+							}
+							break;
+						}
+					}
+				}
+				if ( asSe.getAssociations() != null && asSe.getAssociations().size() > 0 ) {
+					asSe = accessMgr.updateServiceElement(asSe);
+				}
+				
+			}
+			
+		}
 		return discNode.getAccessElement();
 	}
 

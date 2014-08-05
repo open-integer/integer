@@ -69,21 +69,6 @@ serviceElementTypes:
           - name: cdpInterface
             mapping: direct
             category: interface
-      associations:
-         - name: ifVlanAssociation
-           associateServiceElementTypeName: ciscoVtpVlan
-           managementObjects:
-              - name: vmVlanType
-                uri: vmVlanType
-                capability: vmVlanType
-                       
-              - name: vmVlan
-                uri: vmVlan
-                capability: vmVlan
-                       
-              - name: vmPortStatus
-                uri: vmPortStatus
-                capability: vmPortStatus
       managementObjects:
           - name: cdpInterfaceEnable
             uri: cdpInterfaceEnable
