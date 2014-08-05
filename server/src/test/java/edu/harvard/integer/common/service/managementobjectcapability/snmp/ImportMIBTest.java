@@ -403,13 +403,14 @@ public class ImportMIBTest {
 
 	@After
 	public void exportSNMPObjects() {
+		String jsonFile = "managementObject.json";
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
 														// org.codehaus.jackson.mapper.MappingJsonFactory
 		JsonGenerator jg = null;
 		try {
 
 			jg = jsonFactory.createGenerator(new FileOutputStream(
-					"managementObject.json"), JsonEncoding.UTF8);
+					jsonFile), JsonEncoding.UTF8);
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail(e.toString());
@@ -451,6 +452,11 @@ public class ImportMIBTest {
 			fail(e.toString());
 		}
 
+		File jsonDataFile = new File(jsonFile);
+		assert(jsonDataFile.exists());
+		assert(jsonDataFile.length() > 0);
+		
+		assert(jsonDataFile.delete());
 	}
 	
 
