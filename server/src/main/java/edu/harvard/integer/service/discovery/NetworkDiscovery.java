@@ -199,6 +199,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				
 				try {
 					
+					logger.info("Discover radius " + discoverSeed.getRadius());
 					DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
 					if ( discoverSeed.getRadius() == 0 ) {
 						subTask = new DiscoverSubnetAsyncTask(this, discoverSeed, false);
@@ -384,6 +385,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				    	
 				    	IpDiscoverySeed discoverSeed = new IpDiscoverySeed( discoverSeeds.get(0).getAuths(), dnet );
 				    	try {
+				    		logger.info("Found another subnet " + dnet.getStartIp() + ":" + dnet.getEndIp());
+				    		
 							DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed, false);
 			                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), subTask);
 							discoveryService.submitSubnetDiscovery(foundSubTask);
