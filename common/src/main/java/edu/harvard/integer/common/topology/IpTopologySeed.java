@@ -159,7 +159,7 @@ public class IpTopologySeed extends BaseEntity {
 	 * List of technologies that are included or excluded based on the value in
 	 * the technologyIncludeExclude attribute.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> technologys = null;
 
@@ -193,7 +193,7 @@ public class IpTopologySeed extends BaseEntity {
 	@CollectionTable(name = "IpTopologySeed_Credentials")
 	private List<Credential> credentials = null;
 
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<Integer> alternateSNMPports = null;
 	

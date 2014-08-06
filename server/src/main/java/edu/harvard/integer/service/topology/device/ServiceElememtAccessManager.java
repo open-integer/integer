@@ -40,17 +40,20 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 
 /**
  * @see ServiceElementAccessManagerInterface
@@ -87,6 +90,13 @@ public class ServiceElememtAccessManager extends BaseManager implements
 
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 
+		ServiceElement dbServiceElement = getDatabaseServiceElement(serviceElement);
+		if (dbServiceElement != null) {
+			logger.info("Found existing service element: " + dbServiceElement.getID().toDebugString() + " Will update instead of create new ");
+			
+			serviceElement = serviceElementDAO.copyFields(dbServiceElement, serviceElement);
+		}
+		
 		serviceElement = serviceElementDAO.update(serviceElement);
 
 		if (logger.isDebugEnabled())
@@ -95,6 +105,23 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		return serviceElement;
 	}
 
+	
+	private ServiceElement getDatabaseServiceElement(ServiceElement serviceElement) throws IntegerException {
+		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
+
+		if (serviceElement.getParentIds() != null && serviceElement.getParentIds().size() > 0) {
+			for (ID parentId : serviceElement.getParentIds()) {
+				ServiceElement[] dbServiceElement = serviceElementDAO.findByParentIdAndName(parentId, serviceElement.getName());
+				if (dbServiceElement != null && dbServiceElement.length > 0)
+					return dbServiceElement[0];
+			}
+			return null;
+			
+		} else
+			return serviceElementDAO.findByName(serviceElement.getName());
+	
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -263,7 +290,17 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	@Override
 	public ServiceElement getServiceElementByIpAddress(String ipAddress)
 			throws IntegerException {
-		// TODO Auto-generated method stub
+		
+		ServiceElementDAO dao = dbm.getServiceElementDAO();
+		TopologyElementDAO topologyElementDao = dbm.getTopologyElementDAO();
+		
+		TopologyElement[] findByAddress = topologyElementDao.findByAddress(ipAddress);
+		for (TopologyElement topologyElement : findByAddress) {
+			ServiceElement serviceElement = dao.findById(topologyElement.getServiceElementId());
+			if (serviceElement != null)
+				return serviceElement;
+		}
+		
 		return null;
 	}
 	

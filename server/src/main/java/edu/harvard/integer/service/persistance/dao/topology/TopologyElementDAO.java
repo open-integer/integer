@@ -33,11 +33,25 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.common.topology.Category;
+import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.Signature;
+import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -66,6 +80,37 @@ public class TopologyElementDAO extends BaseDAO {
 	public TopologyElement[] findByServiceElementID(ID serviceElementId) {
 
 		return findByIDField(serviceElementId, "serviceElementId", TopologyElement.class);
+	}
+
+	/**
+	 * @param ipAddress
+	 */
+	public TopologyElement[] findByAddress(String ipAddress) {
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+		
+		CriteriaQuery<TopologyElement> query = criteriaBuilder.createQuery(TopologyElement.class);
+
+		Root<TopologyElement> from = query.from(TopologyElement.class);
+		query.select(from);
+
+		Join<TopologyElement, Address> addresses = from.join("address");
+			
+		ParameterExpression<String> addressParam = criteriaBuilder
+				.parameter(String.class);
+		
+		
+		query.select(from).where(
+				criteriaBuilder.equal(addresses.get("address"), addressParam));
+
+		TypedQuery<TopologyElement> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(addressParam, ipAddress);
+
+		List<TopologyElement> resultList = typeQuery.getResultList();
+
+		return (TopologyElement[]) resultList
+				.toArray(new TopologyElement[resultList.size()]);
+		
 	}
 
 }

@@ -50,7 +50,6 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.AccessTypeEnum;
-import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.DiscoveryStatusEnum;
@@ -72,7 +71,6 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
 import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
 
 /**
