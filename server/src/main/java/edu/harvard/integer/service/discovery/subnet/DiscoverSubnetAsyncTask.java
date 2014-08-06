@@ -108,6 +108,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	/** The net disc. */
 	private NetworkDiscovery  netDisc;
 	
+	private List<DiscoverNode>  discoveringNodes = new ArrayList<>();
 	
 	
 	/**
@@ -172,6 +173,38 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		if ( seed.getEndIp() != null && !seed.getDiscoverNet().isInRange(seed.getEndIp()) ) {
 			throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
 		}
+		String startIp = seed.getStartIp();
+		if ( startIp == null ) {
+			startIp = seed.getDiscoverNet().getStartIp(); 
+		}
+		
+		String endIp = seed.getEndIp(); 
+		if ( endIp == null ) {
+			endIp = seed.getDiscoverNet().getEndIp();
+		}
+		logger.info("Discover subnet startip " + startIp + " endip " + endIp );
+        Ipv4Range range = new Ipv4Range(startIp, endIp);
+        
+        while ( range.hasNext() ) {
+        	
+        	if ( netDisc.isStopDiscovery() ) {
+				logger.info("Discover being stop " );
+				break;
+			}
+			String ip = range.next();    
+			if ( netDisc.findDiscoveredIpAddresses(ip) != null ) {
+				logger.info("This node with the IP address is already in discovering ");
+				continue;
+			}
+			logger.info("Scan IP address " + ip);
+			
+			DiscoverNode dn = new DiscoverNode(ip, searchNextSubnet, seed.getDiscoverNet() );
+			dn.setSubnetId(seed.getSeedId());
+			dn.setAccess(accesses.get(0));
+
+			discoverMap.put(dn.getIpAddress(), dn);
+			discoveringNodes.add(dn);
+        }
 	}
 	
 	
@@ -215,44 +248,18 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	 */
 	@Override
 	public Ipv4Range call() throws Exception {
-				
-		String startIp = seed.getStartIp();
-		if ( startIp == null ) {
-			startIp = seed.getDiscoverNet().getStartIp(); 
-		}
 		
-		String endIp = seed.getEndIp(); 
-		if ( endIp == null ) {
-			endIp = seed.getDiscoverNet().getEndIp();
+		try {
+		   for ( DiscoverNode dn : discoveringNodes ) {
+			
+			PDU pdu = new PDU();
+			pdu.addAll(netDisc.getTopLevelVBs());
+			SnmpService.instance().getAsyncPdu(dn.getElementEndPoint(), pdu, this, dn.getIpAddress());
+		   }
 		}
-		logger.info("Discover subnet startip " + startIp + " endip " + endIp );
-        Ipv4Range range = new Ipv4Range(startIp, endIp);
-        
-        try {
-        	while ( range.hasNext() ) {
-        		
-    			if ( netDisc.isStopDiscovery() ) {
-    				
-    				logger.info("Discover being stop " );
-    				break;
-    			}
-    			String ip = range.next();      	
-    			logger.info("Scan IP address " + ip);
-    			
-    			DiscoverNode dn = new DiscoverNode(ip, searchNextSubnet, seed.getDiscoverNet() );
-    			dn.setSubnetId(seed.getSeedId());
-    			dn.setAccess(accesses.get(0));
-  
-    			discoverMap.put(dn.getIpAddress(), dn);
-    					
-    			PDU pdu = new PDU();
-    			pdu.addAll(netDisc.getTopLevelVBs());
-    			SnmpService.instance().getAsyncPdu(dn.getElementEndPoint(), pdu, this, ip);
-    		}
-        }
-        catch ( IntegerException ie ) {
-        
-             if ( ie.getErrorCode() instanceof NetworkErrorCodes ) {
+		catch ( IntegerException ie ) {
+	        
+            if ( ie.getErrorCode() instanceof NetworkErrorCodes ) {
 				
 				NetworkErrorCodes nec = (NetworkErrorCodes) ie.getErrorCode();
 				if ( nec == NetworkErrorCodes.StopByRequest ) {
@@ -260,12 +267,13 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 					return null;
 				}
 			}
-        }        
-        catch ( Exception e ) {
-        	e.printStackTrace();
-        	throw e;
-        }
-		return range;
+       }        
+       catch ( Exception e ) {
+       	   e.printStackTrace();
+       	   throw e;
+       }
+	   return null; 
+		   
 	}
 
 
@@ -357,9 +365,9 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 				logger.info("Found IPAddress associated device is already in discovery " + dn.getIpAddress());
 				return;
 			}
-			
-			logger.info("Start discovery on IP " + dn.getIpAddress());
 			dn.setSysNamn(sysInfo.getSysName());
+			logger.info("Start discovery on IP " + dn.getIpAddress() + " " + dn.getSysNamn()); 
+			 
 			elmTask = new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));
 			DiscoveryServiceInterface service = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
 			service.submitElementDiscoveryTask(elmTask);

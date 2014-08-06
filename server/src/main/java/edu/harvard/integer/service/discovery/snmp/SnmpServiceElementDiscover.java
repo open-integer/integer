@@ -1780,7 +1780,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		if ( vbs.size() > 0 ) {
 			
 			pdu.addAll(vbs);
-			logger.info("Get value for SEAT " + seat.getName() + " from " + ePoint.getIpAddress() + " Starting oid " 
+			logger.info("Get value for SEAT " + seat.getName() + " from " + ePoint.getIpAddress() + " " + discNode.getSysNamn() + " Starting oid " 
 			                      +  pdu.getVariableBindings().get(0).getOid().toString() + " size " + seat.getAttributeIds().size() );			
 		    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
 		    List<ManagementObjectValue<?>> attributes = ses.getAttributeValues();

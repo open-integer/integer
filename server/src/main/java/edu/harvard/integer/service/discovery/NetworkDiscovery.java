@@ -231,7 +231,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 */
 	public void removeAliasIp(DiscoverNode discoverNode, String subnetId) {
 		
-		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
+		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId);
 		if ( subnetComplete ) {
 			logger.info("Subnet discovery complete " + subnetId);
 		}
@@ -262,7 +262,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			addConnectionNode(subnetId, discoverNode);
 		}
 		
-		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, true);
+		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId);
 		if ( subnetComplete ) {
 			logger.info("Subnet discovery complete " + subnetId);
 		}
@@ -324,11 +324,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			e.printStackTrace();
 			logger.error("Unable to call Service Manager to mark no response on a service element !! " + e.toString());
 		}
-		
-		boolean subnetComplete = removeIpAddressFromSubnet(ipAddress, subnetId, false);
-		if ( subnetComplete ) {
-			
-		}
+		removeIpAddressFromSubnet(ipAddress, subnetId);
 	}
 	
 	
@@ -354,7 +350,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 * @throws  
 	 */
 	@SuppressWarnings("unchecked")
-	private boolean removeIpAddressFromSubnet( String ip, String subnetid, boolean elmComplete )  {
+	private synchronized boolean removeIpAddressFromSubnet( String ip, String subnetid )  {
 		
 		DiscoveryServiceInterface discoveryService = null;
 		/**
@@ -378,7 +374,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				if ( subTask.discoveryNodeCount() == 0 ) {
 					
 					subnetTasks.remove(subnetid);
-					logger.debug("Discovered subnet **** " + subnetid);
+					logger.info("Discovered subnet **** " + subnetid);
 				}
 				if ( subnetTasks.size() == 0 ) {
 				    for ( DiscoverNet dnet : foundSubnets.values() ) {
@@ -408,7 +404,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					if ( subTask.discoveryNodeCount() == 0 ) {
 						
 						foundSubnetTask.remove(subnetid);
-						logger.debug("Discovered subnet **** " + subnetid);
+						logger.info("Discovered on new found subnet **** " + subnetid);
 					}
 			   }
 			}
@@ -417,11 +413,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			
 			if ( linkLayerConnections.size() > 0 ) {
 				
-				logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
-				if ( linkLayerConnections.size() == 1 ) {
-					logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());
-				}
-				
+				logger.info("Linklayer connection node count  **** " + linkLayerConnections.size());				
 				DiscoverCdpTopologyTask task = new DiscoverCdpTopologyTask(linkLayerConnections, this);
 				task.call();
 			}
@@ -502,6 +494,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		boolean found = true;
 		if ( foundSubnets.get(rangeKey) == null ) {
 			
+			logger.info("Found another subnet during discovery " + dnet.getNetworkAddress() + " " + dnet.getNetmask());
 			foundSubnets.put(rangeKey, dnet);
 			found = false;
 		}
@@ -536,5 +529,6 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		discoverdSystems.put(sysName, dnode);
 		return false;
 	}
+	
 	
 }
