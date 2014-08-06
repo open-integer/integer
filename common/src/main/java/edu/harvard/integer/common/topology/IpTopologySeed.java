@@ -193,6 +193,10 @@ public class IpTopologySeed extends BaseEntity {
 	@CollectionTable(name = "IpTopologySeed_Credentials")
 	private List<Credential> credentials = null;
 
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<Integer> alternateSNMPports = null;
+	
 	/**
 	 * @return the description
 	 */
@@ -405,6 +409,20 @@ public class IpTopologySeed extends BaseEntity {
 	 */
 	public void setCredentials(List<Credential> credentials) {
 		this.credentials = credentials;
+	}
+
+	/**
+	 * @return the alternateSNMPports
+	 */
+	public List<Integer> getAlternateSNMPports() {
+		return alternateSNMPports;
+	}
+
+	/**
+	 * @param alternateSNMPports the alternateSNMPports to set
+	 */
+	public void setAlternateSNMPports(List<Integer> alternateSNMPports) {
+		this.alternateSNMPports = alternateSNMPports;
 	}
 
 }

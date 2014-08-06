@@ -48,6 +48,9 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.access.AccessPort;
+import edu.harvard.integer.access.AccessTypeEnum;
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.DiscoveryStatusEnum;
@@ -60,6 +63,7 @@ import edu.harvard.integer.common.properties.LongPropertyNames;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.IpTopologySeed;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.Subnet;
 import edu.harvard.integer.common.type.displayable.DisplayableInterface;
 import edu.harvard.integer.service.BaseService;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
@@ -173,8 +177,7 @@ public class DiscoveryService extends BaseService implements
 	@Override
 	public DiscoveryId startDiscovery(DiscoveryRule rule)
 			throws IntegerException {
-	
-			
+
 		DiscoveryId id = new DiscoveryId();
 		id.setServerId(IntegerProperties.getInstance().getLongProperty(
 				LongPropertyNames.ServerId));
@@ -188,9 +191,10 @@ public class DiscoveryService extends BaseService implements
 
 		case Topology:
 			startTopologyDiscovery(rule.getTopologySeeds());
-			
+
 		case None:
-			logger.error("NO discovery type specifed! Discovery will not run for rule " + rule.getName());
+			logger.error("NO discovery type specifed! Discovery will not run for rule "
+					+ rule.getName());
 		}
 
 		return id;
@@ -259,20 +263,68 @@ public class DiscoveryService extends BaseService implements
 	 */
 	private IpDiscoverySeed createIpDiscoverySeed(IpTopologySeed ipTopologySeed) {
 
-		DiscoverNet net = new DiscoverNet(ipTopologySeed.getSubnet()
-				.getAddress().getAddress(), ipTopologySeed.getSubnet()
-				.getAddress().getMask());
+		DiscoverNet net = createDiscoverNet(ipTopologySeed.getSubnet());
 
 		IpDiscoverySeed seed = new IpDiscoverySeed(net,
 				ipTopologySeed.getCredentials());
 
+		seed.setRadius(ipTopologySeed.getRadius());
+
+		if (ipTopologySeed.getSnmpRetriesServiceElementDiscovery() != null)
+			seed.setSnmpRetries(ipTopologySeed
+					.getSnmpRetriesServiceElementDiscovery().intValue());
+
+		if (ipTopologySeed.getSnmpRetriesServiceElementDiscovery() != null)
+			seed.setSnmpTimeout(ipTopologySeed
+					.getSnmpTimeoutServiceElementDiscovery().intValue());
+
+		seed.setNotDiscoverNet(createDiscoverNets(ipTopologySeed.getNetExclustions()));
+
+		seed.setPorts(createAccessPorts(ipTopologySeed.getAlternateSNMPports()));
+
 		return seed;
 	}
 
+	private List<DiscoverNet> createDiscoverNets(List<Subnet> subnets) {
+		List<DiscoverNet> notDiscoverNets = new ArrayList<DiscoverNet>();
+
+		if (subnets != null) {
+			for (Subnet subnet : subnets) {
+				notDiscoverNets.add(createDiscoverNet(subnet));
+			}
+		}
+
+		return notDiscoverNets;
+	}
+
+	private List<AccessPort> createAccessPorts(List<Integer> ports) {
+		List<AccessPort> accessPorts = new ArrayList<AccessPort>();
+
+		if (ports != null) {
+			for (Integer integer : ports) {
+
+				AccessPort accessPort = new AccessPort(integer,
+						AccessTypeEnum.SNMPv2c);
+				accessPorts.add(accessPort);
+			}
+		}
+
+		return accessPorts;
+	}
+
+	private DiscoverNet createDiscoverNet(Subnet subnet) {
+
+		DiscoverNet net = new DiscoverNet(subnet.getAddress().getAddress(),
+				subnet.getAddress().getMask());
+
+		return net;
+	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#discoveryComplete(edu.harvard.integer.common.discovery.DiscoveryId)
+	 * 
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#
+	 * discoveryComplete(edu.harvard.integer.common.discovery.DiscoveryId)
 	 */
 	@Override
 	public void discoveryComplete(DiscoveryId discoveryId)
@@ -295,10 +347,13 @@ public class DiscoveryService extends BaseService implements
 		dao.update(discoveryComplete);
 	}
 
-	
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#discoveryError(edu.harvard.integer.common.discovery.DiscoveryId, edu.harvard.integer.common.exception.ErrorCodeInterface, edu.harvard.integer.common.util.DisplayableInterface[])
+	 * 
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#
+	 * discoveryError(edu.harvard.integer.common.discovery.DiscoveryId,
+	 * edu.harvard.integer.common.exception.ErrorCodeInterface,
+	 * edu.harvard.integer.common.util.DisplayableInterface[])
 	 */
 	@Override
 	public void discoveryError(DiscoveryId id, ErrorCodeInterface errorCode,
@@ -321,24 +376,30 @@ public class DiscoveryService extends BaseService implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#getRunningDiscoveries()
+	 * 
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#
+	 * getRunningDiscoveries()
 	 */
 	@Override
 	public DiscoveryId[] getRunningDiscoveries() throws IntegerException {
 		List<DiscoveryId> discoveries = new ArrayList<DiscoveryId>();
 		for (DiscoveryId discoveryId : runningDiscoveries.keySet()) {
-			RunningDiscovery runningDiscovery = runningDiscoveries.get(discoveryId);
+			RunningDiscovery runningDiscovery = runningDiscoveries
+					.get(discoveryId);
 			if (runningDiscovery != null)
 				discoveries.add(discoveryId);
 		}
-		
-		return (DiscoveryId[]) discoveries
-				.toArray(new DiscoveryId[discoveries.size()]);
+
+		return (DiscoveryId[]) discoveries.toArray(new DiscoveryId[discoveries
+				.size()]);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#stopDiscovery(edu.harvard.integer.common.discovery.DiscoveryId)
+	 * 
+	 * @see
+	 * edu.harvard.integer.service.discovery.DiscoveryServiceInterface#stopDiscovery
+	 * (edu.harvard.integer.common.discovery.DiscoveryId)
 	 */
 	@Override
 	public void stopDiscovery(DiscoveryId id) {
@@ -355,7 +416,9 @@ public class DiscoveryService extends BaseService implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#getDiscoveryStatus(edu.harvard.integer.common.ID)
+	 * 
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#
+	 * getDiscoveryStatus(edu.harvard.integer.common.ID)
 	 */
 	@Override
 	public DiscoveryCompleteEvent[] getDiscoveryStatus(ID serviceElementId)
@@ -382,24 +445,31 @@ public class DiscoveryService extends BaseService implements
 
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#submitSubnetTopologyDiscovery(edu.harvard.integer.service.discovery.snmp.DiscoverSubnetTopologyTask)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#
+	 * submitSubnetTopologyDiscovery
+	 * (edu.harvard.integer.service.discovery.snmp.DiscoverSubnetTopologyTask)
 	 */
 	@Override
 	public Future<Void> submitSubnetTopologyDiscovery(
 			DiscoverCdpTopologyTask task) {
-		
+
 		return subPool.submit(task);
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#discoveryTopologyComplete()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#
+	 * discoveryTopologyComplete()
 	 */
 	@Override
 	public void discoveryTopologyComplete() throws IntegerException {
-		
+
 		logger.info("Complete topology discovery. ");
-		
+
 	}
 
 }
