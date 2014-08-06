@@ -55,7 +55,7 @@ public class MainClient implements EntryPoint {
 	public static final int WINDOW_HEIGHT = 800;
 	
 	/** The Constant SPLITTER_SIZE. */
-	public static final int SPLITTER_SIZE = 8;
+	public static final int SPLITTER_SIZE = 12;
 	
 	/** The current widget. */
 	public static Widget currentWidget = null;
