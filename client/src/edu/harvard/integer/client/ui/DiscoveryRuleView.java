@@ -78,8 +78,8 @@ public class DiscoveryRuleView extends HvTableViewPanel {
 			String description = rule.getDescription();
 			String type = rule.getDiscoveryType().name();
 			int seedsCount = rule.getTopologySeeds().size();
-			String created = rule.getCreated() != null ? rule.getCreated().toString() : "";
-			String modified = rule.getModified() != null ? rule.getModified().toString() : "";
+			String created = rule.getCreated() != null ? DeviceDetailsPanel.DATE_FORMAT.format(rule.getCreated()) : "";
+			String modified = rule.getModified() != null ? DeviceDetailsPanel.DATE_FORMAT.format(rule.getModified()) : "";
 			
 			Object[] rowData = { name, description, type, seedsCount, created, modified};
 			flexTable.addRow(rowData);
