@@ -42,7 +42,7 @@ public class YamlServiceElementTypeTranslate {
 	private String category;
 	private String name = null;
 	private String defaultNameCabability = null;
-	
+	private String iconName = null;
 
 	public String getDefaultNameCabability() {
 		return defaultNameCabability;
@@ -76,6 +76,20 @@ public class YamlServiceElementTypeTranslate {
 
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	/**
+	 * @return the iconName
+	 */
+	public String getIconName() {
+		return iconName;
+	}
+
+	/**
+	 * @param iconName the iconName to set
+	 */
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
 	}
 
 

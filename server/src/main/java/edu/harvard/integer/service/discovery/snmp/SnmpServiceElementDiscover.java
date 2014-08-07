@@ -1319,11 +1319,11 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							TopologyNode tn = new TopologyNode(te, ifIndex);
 							discNode.addTopologyNode(tn);
 							
-							if ( discNode.isSearchNextSubnet() ) {
+							if ( discNode.getDiscoverNet().getRadiusCountDown() > 0 ) {
 								
 								if (  !"255.255.255.255".equals(mask) && !discNode.getDiscoverNet().isInRange(ipaddr) ) {
 									
-									DiscoverNet dn = new DiscoverNet(ipaddr, mask);
+									DiscoverNet dn = new DiscoverNet(ipaddr, mask, discNode.getDiscoverNet().getRadiusCountDown());
 									/*
 									 * Skip the IP address which is not net class C.
 									 */
@@ -1490,9 +1490,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				
 				for ( int i=0; i<levelOid.getChildren().size(); i++ )  {
 					
-					if ( lds.instOid.equals("49") ) {
-						System.out.println("Break in here.");
-					}
 					SnmpLevelOID nextLevel = levelOid.getChildren().get(i);
 					if ( nextLevel.getRelationToParent() != null && nextLevel.getRelationToParent() instanceof SnmpContainmentRelation ) {
 						SnmpContainmentRelation sRelation = (SnmpContainmentRelation) nextLevel.getRelationToParent();

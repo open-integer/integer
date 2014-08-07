@@ -65,7 +65,7 @@ public class IpDiscoverySeed {
 	/** The icmp retries. */
 	private int icmpRetries;
 	
-	private int radius;
+	private int radius = 0;
 	
 	private DiscoverNet discoverNet;
 	

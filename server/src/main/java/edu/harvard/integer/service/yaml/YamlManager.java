@@ -441,7 +441,8 @@ public class YamlManager extends BaseManager implements
 						serviceElementType = new ServiceElementType();
 						serviceElementType.setCategory(managementObjectManager.getCategoryByName(typeTranslate.getCategory()));
 						serviceElementType.setName(typeTranslate.getName());
-						serviceElementType.setDescription(yamlServiceElementType.getDescription());	
+						serviceElementType.setDescription(yamlServiceElementType.getDescription());
+						serviceElementType.setIconName(typeTranslate.getIconName());
 					}
 					
 					serviceElementType.setAssociations(exemplarSet.getAssociations());
@@ -875,7 +876,8 @@ public class YamlManager extends BaseManager implements
 					sass.setName(yass.getName());
 					
 					ServiceElementAssociationType assType = assTypeDao.findByName(yass.getAssociationName());
-					sass.setAssociationTypeId(assType.getID());
+					if (assType != null)
+						sass.setAssociationTypeId(assType.getID());
 					
 					if ( yass.getContainmentRelationship() != null ) {
 						SnmpContainmentRelation contaimentRel = new SnmpContainmentRelation();

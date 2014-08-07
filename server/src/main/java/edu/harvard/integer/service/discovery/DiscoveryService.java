@@ -261,7 +261,7 @@ public class DiscoveryService extends BaseService implements
 	 */
 	private IpDiscoverySeed createIpDiscoverySeed(IpTopologySeed ipTopologySeed) {
 
-		DiscoverNet net = createDiscoverNet(ipTopologySeed.getSubnet());
+		DiscoverNet net = createDiscoverNet(ipTopologySeed.getSubnet(), ipTopologySeed.getRadius());
 
 		IpDiscoverySeed seed = new IpDiscoverySeed(net,
 				ipTopologySeed.getCredentials());
@@ -276,19 +276,23 @@ public class DiscoveryService extends BaseService implements
 			seed.setSnmpTimeout(ipTopologySeed
 					.getSnmpTimeoutServiceElementDiscovery().intValue());
 
-		seed.setNotDiscoverNet(createDiscoverNets(ipTopologySeed.getNetExclustions()));
-
+		seed.setNotDiscoverNet(createDiscoverNets(ipTopologySeed.getNetExclustions(), 0));
 		seed.setPorts(createAccessPorts(ipTopologySeed.getAlternateSNMPports()));
 
 		return seed;
 	}
 
-	private List<DiscoverNet> createDiscoverNets(List<Subnet> subnets) {
+	/**
+	 * 
+	 * @param subnets
+	 * @return
+	 */
+	private List<DiscoverNet> createDiscoverNets(List<Subnet> subnets, int radius) {
 		List<DiscoverNet> notDiscoverNets = new ArrayList<DiscoverNet>();
 
 		if (subnets != null) {
 			for (Subnet subnet : subnets) {
-				notDiscoverNets.add(createDiscoverNet(subnet));
+				notDiscoverNets.add(createDiscoverNet(subnet, radius));
 			}
 		}
 
@@ -310,10 +314,10 @@ public class DiscoveryService extends BaseService implements
 		return accessPorts;
 	}
 
-	private DiscoverNet createDiscoverNet(Subnet subnet) {
+	private DiscoverNet createDiscoverNet(Subnet subnet, int radius) {
 
 		DiscoverNet net = new DiscoverNet(subnet.getAddress().getAddress(),
-				subnet.getAddress().getMask());
+				subnet.getAddress().getMask(), radius);
 
 		return net;
 	}

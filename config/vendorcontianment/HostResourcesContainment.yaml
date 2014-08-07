@@ -2,6 +2,7 @@ name: hostMibContainment
 
 snmpContainment: 
     containmentType: HostResourcesMib
+    serviceElementTypeName: hostSystem
     snmpLevels:
     - contextOID: hrDeviceEntry
       name: HostResourcesMIbContainment
