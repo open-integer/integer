@@ -317,7 +317,7 @@ public class SelectionManager extends BaseManager implements
 
 	private List<FilterNode> createLocationTree(int index, Location[] locations, int level, String[] levelNames) {
 		LocationTreeBuilder builder = new LocationTreeBuilder(locations, levelNames, logger);
-		return builder.createLocationTree(0);
+		return builder.createLocationTree();
 	}
 	
 	private List<FilterNode> createCategoryList(Category[] categories)
