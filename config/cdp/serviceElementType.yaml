@@ -88,6 +88,7 @@ serviceElementTypes:
          - name: ciscoSystem
            mapping: direct
            category: System
+           iconName: grayRouter.jpg
       managementObjects:
 
     - name: cisco-cdp-cache

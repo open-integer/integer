@@ -93,6 +93,17 @@ serviceElementTypes:
          - name: unknownSystem
            mapping: direct
            category: System
+           iconName: unknownHost.jpg
+
+    - name: hostSystem
+      description: The Service element a host system.
+      accessMethod:
+          protocol: NONE
+      serviceElementTypeTranslates:
+          - name: hostSystem
+            mapping: direct
+            category: System
+            iconName: server.jpg
 
     - name: connectionEndPort
       description: The Service element type for connection end port which contain by an unknown system.

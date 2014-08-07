@@ -46,6 +46,8 @@ public class YamlServiceElementType {
 	private String description = null;
 	private String defaultNameCabability = null;
 	private String category = null;
+	private String iconName = null;
+	
 	private List<String> uniqueIdentifierCapabilities = null;
 	private List<String> attributes = null;
 	
@@ -153,6 +155,20 @@ public class YamlServiceElementType {
 	 */
 	public void setAttributes(List<String> attributes) {
 		this.attributes = attributes;
+	}
+
+	/**
+	 * @return the iconName
+	 */
+	public String getIconName() {
+		return iconName;
+	}
+
+	/**
+	 * @param iconName the iconName to set
+	 */
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
 	}
 
 }

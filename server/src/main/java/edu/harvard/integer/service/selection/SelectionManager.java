@@ -191,7 +191,14 @@ public class SelectionManager extends BaseManager implements
 	private List<ID> createProviderList(Organization[] allOrganizations, List<ID> providerIds, OrganizationDAO dao) throws IntegerException {
 		
 		for (Organization organization : allOrganizations) {
+			logger.info("Organization " + organization.getName()
+					+ " has " + organization.getBusinessServices().size()
+					+ " Bus and " + organization.getTechnologies().size()
+					+ " techs");
 			if (organization.getBusinessServices() != null && organization.getBusinessServices().size() > 0)
+				providerIds.add(organization.getID());
+			
+			if (organization.getTechnologies() != null && organization.getTechnologies().size() > 0)
 				providerIds.add(organization.getID());
 			
 			if (organization.getChildOrginizations() != null)
@@ -212,6 +219,9 @@ public class SelectionManager extends BaseManager implements
 		for (ID id : childOrginizations) {
 			Organization organization = dao.findById(id);
 			if (organization.getBusinessServices() != null && organization.getBusinessServices().size() > 0)
+				providerIds.add(organization.getID());
+			
+			if (organization.getTechnologies() != null && organization.getTechnologies().size() > 0)
 				providerIds.add(organization.getID());
 			
 			if (organization.getChildOrginizations() != null)
