@@ -53,12 +53,30 @@ public class DiscoverNet implements Serializable {
 
 	private SubnetUtils utils;
 	
+	/**
+	 * Starting Subnet IP address in long format
+	 */
 	private long startIpi;
+	
+	/**
+	 * Ending Subnet IP address in long format.
+	 */
 	private long endIpi;
 	
+	/**
+	 * Radius count down to keep track for next subnet discovery.
+	 * If this value is equal to 0, no more next subnet discovery.
+	 */
+	private int radiusCountDown = 0;
 
 
-	public DiscoverNet( String ipnet, String mask ) {
+	/**
+	 * 
+	 * @param ipnet
+	 * @param mask
+	 * @param radiusCount
+	 */
+	public DiscoverNet( String ipnet, String mask, int radiusCount ) {
 		
 		/**
 		 * 255.255.255.255 is special case.  In this case it only point to one address.
@@ -74,11 +92,23 @@ public class DiscoverNet implements Serializable {
 			startIpi = utils.getInfo().asInteger( utils.getInfo().getLowAddress() );
 			endIpi = utils.getInfo().asInteger( utils.getInfo().getHighAddress() );
 		}
+		
+		this.radiusCountDown = radiusCount;
 	}
 	
-	public DiscoverNet( String cidr ) 
+	
+	/**
+	 * 
+	 * @param cidr
+	 * @param radiusCount
+	 */
+	public DiscoverNet( String cidr, int radiusCount ) 
 	{
 		utils = new SubnetUtils(cidr);
+		startIpi = utils.getInfo().asInteger( utils.getInfo().getLowAddress() );
+		endIpi = utils.getInfo().asInteger( utils.getInfo().getHighAddress() );
+		
+		this.radiusCountDown = radiusCount;
 	}
 	
 
@@ -203,6 +233,18 @@ public class DiscoverNet implements Serializable {
 		return result;
 	}
 	
+	/**
+	 * Get CIDR of the network.  If the mask is "255.255.255.255" 
+	 * return null.
+	 * @return
+	 */
+	public String getCidr() {
+		
+		if ( utils != null ) {
+			return utils.getInfo().getCidrSignature();					
+		}
+		return null;
+	}
 	
 	
 	/**
@@ -217,5 +259,19 @@ public class DiscoverNet implements Serializable {
                    "." + ((i >> 8) & 0xFF) + 
                    "." + (i & 0xFF);
  
+	}
+	
+	
+	
+	public int radiusCountDownDecrease() {
+		if ( radiusCountDown > 0 ) {
+			radiusCountDown--;
+		}
+		return radiusCountDown;
+	}
+	
+	
+	public int getRadiusCountDown() {
+		return radiusCountDown;
 	}
 }

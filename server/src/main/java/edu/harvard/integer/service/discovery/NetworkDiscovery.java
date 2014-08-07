@@ -201,12 +201,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					
 					logger.info("Discover radius " + discoverSeed.getRadius());
 					DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
-					if ( discoverSeed.getRadius() == 0 ) {
-						subTask = new DiscoverSubnetAsyncTask(this, discoverSeed, false);
-					}
-					else {
-						subTask = new DiscoverSubnetAsyncTask(this, discoverSeed, true);
-					}
+					
+					subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
 	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
 					
 					Future<Ipv4Range> v = discoveryService.submitSubnetDiscovery(subTask);
@@ -383,7 +379,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				    	try {
 				    		logger.info("Found another subnet " + dnet.getStartIp() + ":" + dnet.getEndIp());
 				    		
-							DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed, false);
+							DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
 			                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), subTask);
 							discoveryService.submitSubnetDiscovery(foundSubTask);
 							
@@ -479,6 +475,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	}
 	
 	
+	
 	/**
 	 * Store a found subnet into foundSubnet map and mark IPAddress as discovered address.
 	 * 
@@ -486,9 +483,12 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 * @param mask
 	 * @return
 	 */
-	public boolean putFoundSubNet( String ip, String mask ) {
+	public boolean putFoundSubNet( String ip, String mask, int preRadius ) {
 		
-		DiscoverNet dnet = new DiscoverNet(ip, mask);
+		if ( preRadius == 0 ) {
+			return false;
+		}
+        DiscoverNet dnet = new DiscoverNet(ip, mask, --preRadius);
 		String rangeKey = dnet.getStartIp() + ":" + dnet.getEndIp();
 		
 		boolean found = true;

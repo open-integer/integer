@@ -66,7 +66,7 @@ public class SubnetRangeTest {
 		String netIp = "192.168.0.200";
 		String mask = "255.255.255.248";   // Expect 8 address and usable address is 6.
 		
-		DiscoverNet net = new DiscoverNet(netIp, mask);
+		DiscoverNet net = new DiscoverNet(netIp, mask, 0);
 		List<Credential> creds = new ArrayList<>();
 		
 		IpDiscoverySeed seed = new IpDiscoverySeed(net, creds);
@@ -79,7 +79,7 @@ public class SubnetRangeTest {
 		
 		try {
 			NetworkDiscovery netDisc = null;
-			DiscoverSubnetAsyncTask<ElementAccess> task = new DiscoverSubnetAsyncTask<>(netDisc, seed, false);
+			DiscoverSubnetAsyncTask<ElementAccess> task = new DiscoverSubnetAsyncTask<>(netDisc, seed);
 		    if ( task.isInRange(outTestip) ) {
 		    	fail("It should be out of range " + outTestip + " with given ip " + netIp + " mask " + mask );
 		    }

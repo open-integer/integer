@@ -99,10 +99,7 @@ public class DiscoverNode extends ElementAccess {
 		Stop
 	}
 	
-	/**
-	 * If true do not discover next subnet.
-	 */
-	private boolean searchNextSubnet = false;
+
 	
     /**
      * The subnet that belong to this discovered node.
@@ -175,23 +172,19 @@ public class DiscoverNode extends ElementAccess {
 	public DiscoverNode( String ipAddress ) {
 		
 		this.ipAddress = ipAddress;
-		this.searchNextSubnet = false;
-		
-		DiscoverNet dnet = new DiscoverNet(ipAddress, "255.255.255.0");
+		DiscoverNet dnet = new DiscoverNet(ipAddress, "255.255.255.0", 0);
 		this.discoverNet = dnet;
 	}
 	
 	
-
 	/**
 	 * Instantiates a new discover node.
 	 *
 	 * @param ipAddress the ip address
 	 */
-	public DiscoverNode( String ipAddress, boolean searchNextSubnet, DiscoverNet discoverNet ) {
+	public DiscoverNode( String ipAddress,  DiscoverNet discoverNet ) {
 		
 		this.ipAddress = ipAddress;
-		this.searchNextSubnet = searchNextSubnet;
 		this.discoverNet = discoverNet;
 	}
 	
@@ -472,11 +465,6 @@ public class DiscoverNode extends ElementAccess {
 	}
 
 	
-
-	public boolean isSearchNextSubnet() {
-		return searchNextSubnet;
-	}
-
 
 	public DiscoverNet getDiscoverNet() {
 		return discoverNet;

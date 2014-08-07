@@ -449,7 +449,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		finally {
 			
 			for ( DiscoverNet dnet : discoverNode.getOtherSubnet() ) {
-				netDiscover.putFoundSubNet(dnet.getIpAddress(), dnet.getNetmask());
+				netDiscover.putFoundSubNet(dnet.getIpAddress(), dnet.getNetmask(), dnet.getRadiusCountDown());
 			}
 			netDiscover.discoveredElement(discoverNode, discoverNode.getSubnetId());
 		}

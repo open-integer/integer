@@ -177,7 +177,7 @@ public class ElementDiscoverTest {
 		String netIp = "10.251.41.172";
 		String mask = "255.255.255.248";   // Expect 8 address and usable address is 6.
 		
-		DiscoverNet dNet = new DiscoverNet(netIp, mask);
+		DiscoverNet dNet = new DiscoverNet(netIp, mask, 0);
 		List<Credential> creds = new ArrayList<>();
 		creds.add(snmpV2c);
 		
@@ -221,7 +221,6 @@ public class ElementDiscoverTest {
 		discNode.setAccess(ac);;
 		
 		NetworkDiscovery discovery = new NetworkDiscovery(seed, vbs, id);
-		System.out.println("After creation element discover task *********************************************************** ");
 		
 		try {
 			ElementDiscoverTask<ElementAccess> discTask = new ElementDiscoverTask<>(discovery, discNode);

@@ -91,7 +91,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	/** If it is true, done with discovery. */
 	private boolean doneDiscovery;
 
-	private boolean searchNextSubnet = false;
 
 	/** The accesses. */
 	private List<Access> accesses = new ArrayList<>();  
@@ -119,12 +118,10 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	 * @throws IntegerException the integer exception
 	 */
 	public DiscoverSubnetAsyncTask( NetworkDiscovery dis,
-			                        IpDiscoverySeed seed,
-			                        boolean searchNextSubnet ) throws IntegerException {
+			                        IpDiscoverySeed seed ) throws IntegerException {
 		
 		this.seed = seed;
 		netDisc = dis;
-		this.searchNextSubnet = searchNextSubnet;
 		
 		/**
 		 * First create an access list and sort them.
@@ -185,7 +182,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		logger.info("Discover subnet startip " + startIp + " endip " + endIp );
         Ipv4Range range = new Ipv4Range(startIp, endIp);
         
-        while ( range.hasNext() ) {
+        while ( range.hasNext() && netDisc != null ) {
         	
         	if ( netDisc.isStopDiscovery() ) {
 				logger.info("Discover being stop " );
@@ -198,7 +195,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 			}
 			logger.info("Scan IP address " + ip);
 			
-			DiscoverNode dn = new DiscoverNode(ip, searchNextSubnet, seed.getDiscoverNet() );
+			DiscoverNode dn = new DiscoverNode(ip, seed.getDiscoverNet() );
 			dn.setSubnetId(seed.getSeedId());
 			dn.setAccess(accesses.get(0));
 
@@ -392,7 +389,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	}
 	
 	
-	
 	/**
 	 * Adds the access port.
 	 *
@@ -471,11 +467,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		return discoverMap.remove(ip);
 	}
 	
-
-	
-	public boolean isSearchNextSubnet() {
-		return searchNextSubnet;
-	}
 
 	
 }
