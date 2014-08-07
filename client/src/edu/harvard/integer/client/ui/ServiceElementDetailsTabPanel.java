@@ -19,6 +19,12 @@ import edu.harvard.integer.common.topology.ServiceElementType;
  */
 public class ServiceElementDetailsTabPanel extends TabLayoutPanel {
 
+	/** The Constant TABPANEL_WIDTH. */
+	public static final int TABPANEL_WIDTH = 500;
+	
+	/** The Constant TABPANEL_HEIGHT. */
+	public static final int TABPANEL_HEIGHT = 300;
+	
 	/** The headers. */
 	final String[] headers = {"Name", "Description"};
 	
@@ -40,7 +46,7 @@ public class ServiceElementDetailsTabPanel extends TabLayoutPanel {
 	public ServiceElementDetailsTabPanel() {
 		super(2.0, Unit.EM);
 		setAnimationDuration(500);
-	    getElement().getStyle().setMargin(1.0, Unit.PX);
+	    //getElement().getStyle().setMargin(1.0, Unit.PX);
 	    
 	    // General Tab
 	    add(generalPanel, "General");

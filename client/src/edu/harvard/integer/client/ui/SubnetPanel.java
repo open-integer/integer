@@ -79,7 +79,7 @@ public class SubnetPanel extends VerticalPanel {
 		});
 		
 		subnetSplitPanel.setSize("100%", SystemSplitViewPanel.CONTENT_HEIGHT+"px");
-		subnetSplitPanel.addEast(containedSplitPanel, 300);
+		subnetSplitPanel.addEast(containedSplitPanel, ServiceElementDetailsTabPanel.TABPANEL_WIDTH);
 	    subnetSplitPanel.setWidgetHidden(containedSplitPanel, true);
 	    subnetSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
 	    subnetSplitPanel.add(subnetMapPanel);
@@ -116,7 +116,7 @@ public class SubnetPanel extends VerticalPanel {
 		ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
 		final ContainedTreeView containedTreeView = new ContainedTreeView("Device Details", containedSplitPanel, detailsTabPanel);
 	    
-	    containedSplitPanel.addSouth(detailsTabPanel, 300);
+	    containedSplitPanel.addSouth(detailsTabPanel, ServiceElementDetailsTabPanel.TABPANEL_HEIGHT);
 	    containedSplitPanel.setWidgetHidden(detailsTabPanel, true);
 	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
 	    containedSplitPanel.add(containedTreeView);

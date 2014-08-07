@@ -82,9 +82,8 @@ public class ContainedTreeView extends ScrollPanel {
 
 						for (ServiceElement se : serviceElements) {
 							TreeItem item = new TreeItem();
-							item.setText(se.getName());
-							if (se.getHasChildren())
-								item.setText(se.getName() + " (*)");
+							String title = getServiceElementTitle(se);
+							item.setText(title);
 							item.setUserObject(se);
 							treeItem.addItem(item);
 						}
@@ -114,8 +113,9 @@ public class ContainedTreeView extends ScrollPanel {
 	    
 	    for (ServiceElement se : elements) {
 	    	TreeItem item = new TreeItem();
+	    	String title = getServiceElementTitle(se);
 	    	item.setUserObject(se);
-	    	item.setText(se.getName());
+	    	item.setText(title);
 	    	root.addItem(item);
 	    }
 	    
@@ -140,6 +140,21 @@ public class ContainedTreeView extends ScrollPanel {
 	 */
 	public long getSelectedTimestamp() {
 		return selectedTimestamp;
+	}
+	
+	private String getServiceElementTitle(ServiceElement se) {
+		StringBuffer title = new StringBuffer();
+		title.append(se.getName());
+		
+		title.append(" (").append(se.getDescription());
+		if (se.getCategory() != null)
+			title.append(" - ").append(se.getCategory().getName());
+		title.append(")");
+		
+		if (se.getHasChildren())
+			title.append(" *");
+		
+		return title.toString();
 	}
 
 }
