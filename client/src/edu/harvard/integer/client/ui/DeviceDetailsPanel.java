@@ -26,6 +26,11 @@ import edu.harvard.integer.common.topology.DeviceDetails;
  */
 public class DeviceDetailsPanel extends FormPanel {
 	
+	/** The date format.
+	 * 
+	 * see details at http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+	 * 
+	 */
 	public static DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat("MMM-dd-yyyy HH:mm:ss z");
 	
 	/**
