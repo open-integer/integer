@@ -58,7 +58,6 @@ snmpContainment:
       children:
     - contextOID: hrSWInstalledEntry
       name: HostMibSWInstalled
-      descriminatorOID: hrSWInstalledName
       disriminators:
       - serviceElementType:
           name: Software
@@ -67,11 +66,9 @@ snmpContainment:
           defaultNameCabability: hrSWInstalledName
           category: software
           uniqueIdentifierCapabilities: [ hrSWInstalledIndex ]
-          attributes: [ hrSWInstalledID, hrSWInstalledType, hrSWInstalledDate, hrSWInstalledIndex ]
-        discriminatorValue: 
+          attributes: [ hrSWInstalledID, hrSWInstalledType, hrSWInstalledDate, hrSWInstalledIndex, hrSWInstalledName ]
     - contextOID: hrStorageEntry
       name: HostMibStorage
-      descriminatorOID: hrStorageDescr
       disriminators:
       - serviceElementType:
           name: Storage

@@ -32,15 +32,15 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
-import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
@@ -52,6 +52,7 @@ import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
+import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -126,20 +127,23 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 		List<SnmpLevelOID> levelOids = sc.getSnmpLevels();
 		for (SnmpLevelOID levelOid : levelOids) {
 
-			SNMP doid = levelOid.getDescriminatorOID();
-			OID[] oids = new OID[1];
-	        oids[0] = new OID(doid.getOid());
+			List<TableEvent> snmpTblEvents = null; 
+			SNMP doid = null;
+			if ( levelOid.getDescriminatorOID() != null ) {
+				
+				doid = levelOid.getDescriminatorOID();
+				OID[] oids = new OID[1];
+		        oids[0] = new OID(doid.getOid());
+				snmpTblEvents = SnmpService.instance().getTablePdu( endPoint, oids);
+				logger.info("Number of table event " + snmpTblEvents.size());
+			}
 	        
-	        logger.info("get descriminator table " + doid.getOid());
-	        	        
-	        List<TableEvent> deviceEvents = SnmpService.instance().getTablePdu( endPoint, oids);
-	        logger.info("Number of table event " + deviceEvents.size());
 	        
 			if (levelOid.getDisriminators() != null && levelOid.getDisriminators().size() > 1 ) {
 
 				for (SnmpServiceElementTypeDiscriminator discriminator : levelOid.getDisriminators()) {
 
-					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
+					List<TableEvent> tes = findTableEventRow(snmpTblEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
 						ServiceElement se =  createServiceElementFromType(discNode, set, 
@@ -193,9 +197,9 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 			else if ( levelOid.getDisriminators() != null && levelOid.getDisriminators().size() == 1 ) {
 				
 				SnmpServiceElementTypeDiscriminator discriminator = levelOid.getDisriminators().get(0);
-				if ( discriminator.getDiscriminatorValue() != null ) {
+				if ( levelOid.getDescriminatorOID() != null ) {
 					
-					List<TableEvent> tes = findTableEventRow(deviceEvents, doid.getOid(), discriminator.getDiscriminatorValue());
+					List<TableEvent> tes = findTableEventRow(snmpTblEvents, doid.getOid(), discriminator.getDiscriminatorValue());
 					for ( TableEvent te : tes ) {
 						ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
 						ServiceElement se =  createServiceElementFromType(discNode, set, 
@@ -255,12 +259,66 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 				else {
 					
 					ServiceElementType set = discMgr.getServiceElementTypeById(discriminator.getServiceElementTypeId());
-					logger.info("found this SET " + set.getCategory() + " " + set.getName());
+					List<ID> attributeIds = set.getAttributeIds();
 					
-					for ( TableEvent de : deviceEvents ) {
+					List<SNMP> accessSnmps = new ArrayList<>();
+					List<SNMP> nonAccessSnmps = new ArrayList<>();
+					
+					for ( ID id : attributeIds ) {
 						
-						ServiceElement se =  createServiceElementFromType(discNode, set, 
-								                                   de.getIndex().toString(), (SNMPTable)levelOid.getContextOID());
+						SNMP s = (SNMP) capMgr.getManagementObjectById(id);
+						if ( s.getMaxAccess() == null || s.getMaxAccess() == MaxAccess.NotAccessible ) {
+							nonAccessSnmps.add(s);
+						}
+						else {
+							accessSnmps.add(s);
+						}
+					}
+					OID[] tblOids = new OID[accessSnmps.size()];
+					for ( int z=0; z<accessSnmps.size(); z++ ) {
+						tblOids[z] = new OID(accessSnmps.get(z).getOid());
+					}
+					
+					try {
+					    snmpTblEvents = SnmpService.instance().getTablePdu(endPoint, tblOids);
+					}
+					catch ( Exception e ) {
+						
+						/**
+						 * This is a bug on net-snmp. In general make a sleep and it will work again.
+						 */
+						try {
+							TimeUnit.SECONDS.sleep(5);
+							snmpTblEvents = SnmpService.instance().getTablePdu(endPoint, tblOids);
+						} catch (InterruptedException e1) 
+						{ 
+							continue;
+						}
+						
+					}
+					for ( TableEvent snmpTblEvent : snmpTblEvents ) {
+						
+						ServiceElement se = createServiceElementFromType(discNode, set, snmpTblEvent, null);
+						if ( set.getCategory().getName().equals("Software")) {
+							SNMP nameAttr = snmpMgr.getSNMPByName("hrSWInstalledName");
+							for ( ManagementObjectValue<?> mval : se.getAttributeValues() ) {
+								
+								SNMP snmp =  (SNMP) capMgr.getManagementObjectById(mval.getManagementObject());
+								 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {									
+									  se.setName(mval.getValue().toString());
+								 }	
+							}
+						}
+						else if ( set.getCategory().getName().equals("Storage") ) {
+							SNMP nameAttr = snmpMgr.getSNMPByName("hrStorageDescr");
+							for ( ManagementObjectValue<?> mval : se.getAttributeValues() ) {
+								
+								SNMP snmp =  (SNMP) capMgr.getManagementObjectById(mval.getManagementObject());
+								 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {									
+									  se.setName(mval.getValue().toString());
+								 }	
+							}
+						}
 						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
 					}
 				}
