@@ -33,6 +33,9 @@
 
 package edu.harvard.integer.service.selection;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -43,7 +46,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
@@ -158,7 +160,7 @@ public class SelectionManager extends BaseManager implements
 		filter.setLinkTechnologies(routing);
 
 		filter.setLocations(createLocationList((Location[]) persistenceManager
-				.getLocationDAO().findAll()));
+				.getLocationDAO().getAllByStateCityZip()));
 
 		OrganizationDAO organizationDAO = persistenceManager
 				.getOrganizationDAO();
@@ -231,7 +233,7 @@ public class SelectionManager extends BaseManager implements
 	}
 
 	
-	private StringBuffer printFilterNode(StringBuffer b, String indent,
+	static StringBuffer printFilterNode(StringBuffer b, String indent,
 			List<FilterNode> nodes) {
 
 		if (nodes != null) {
@@ -304,16 +306,20 @@ public class SelectionManager extends BaseManager implements
 	 * @param findAll
 	 * @return
 	 */
-	private List<ID> createLocationList(Location[] locations) {
-		List<ID> ids = new ArrayList<ID>();
-		for (Location location : locations) {
-			ids.add(location.getID());
-		}
-
-		logger.info("Return " + ids.size() + " Locations!");
-		return ids;
+	private List<FilterNode> createLocationList(Location[] locations) {
+		List<FilterNode> locationTree = createLocationTree(0, locations, 0, new String[] { "State", "City", "PostalCode"} );
+		
+		StringBuffer b = printFilterNode(new StringBuffer(), "", locationTree);
+		logger.info("Location Tree " + b.toString());
+		
+		return locationTree;
 	}
 
+	private List<FilterNode> createLocationTree(int index, Location[] locations, int level, String[] levelNames) {
+		LocationTreeBuilder builder = new LocationTreeBuilder(locations, levelNames, logger);
+		return builder.createLocationTree(0);
+	}
+	
 	private List<FilterNode> createCategoryList(Category[] categories)
 			throws IntegerException {
 		List<FilterNode> categoryNodes = new ArrayList<FilterNode>();
