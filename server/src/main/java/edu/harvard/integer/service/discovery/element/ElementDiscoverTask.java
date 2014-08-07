@@ -185,6 +185,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    		sysId.trim(extra);
 		    	}
 		    	VendorIdentifier identify = discMgr.getVendorIdentifier(sysInfo.getSysObjectID());
+		    	if ( identify == null ) {
+		    		identify = discMgr.getVendorIdentifier(sysId.toString());
+		    	}
+		    	
 		    	if ( identify != null ) {
 		    		 template = discMgr.getSnmpVendorDiscoveryTemplateByVendor(identify.getID());
 		    	}
@@ -204,6 +208,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    if ( template == null ) {
 		    	template = new SnmpVendorDiscoveryTemplate();
 				VendorIdentifier vendorIdentifier = discMgr.getVendorIdentifier(sysInfo.getSysObjectID());
+				if ( vendorIdentifier == null ) {
+					vendorIdentifier = discMgr.getVendorIdentifier(sysId.toString());
+				}
+				
 				if (vendorIdentifier != null) {					
 					template.setVendorId(vendorIdentifier.getID());
 				}

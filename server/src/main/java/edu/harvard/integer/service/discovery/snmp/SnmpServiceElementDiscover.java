@@ -296,7 +296,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	public void discoverServiceElementAttribute( ElementEndPoint ePoint, 
 			                                     ServiceElement se, 
 			                                     ServiceElementType set,
-			                                     Map<String, TableRowIndex> discoveredTableIndexMap) throws IntegerException {
+			                                     Map<String, TableRowIndex> discoveredTableIndexMap ) throws IntegerException {
 		
 		
 		if ( set.getAttributeIds() != null && set.getAttributeIds().size() > 0 ) {
@@ -503,14 +503,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			VariableBinding[] vbs = event.getColumns();
 			for ( VariableBinding vb : vbs ) {
 				
-				if ( vb == null ) {
-					
-					logger.info( "vb is null *** " + attrOid + " " + event.getErrorMessage() );
-				}
-				else if ( vb.getOid() == null ) {
-					logger.info( "vb Oid is null *** " +  event.getErrorMessage() + " " + attrOid );
-				}
-				logger.info(vb.getOid().toString() + " *** " + attrOid );
 				if ( vb.getOid().toString().indexOf(attrOid) >= 0 ) {
 					
 					if ( value instanceof SnmpServiceElementTypeDescriminatorIntegerValue ) {
@@ -627,7 +619,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					
 				SNMP snmp = (SNMP) mrgObj;
 				VariableBinding vb = findMatchVB(snmp, tblEvent);
-				addSEValue(vb, snmp, se, tblEvent.getIndex().toString(), indexSNMPValues);
+				if ( vb != null ) {
+				     addSEValue(vb, snmp, se, tblEvent.getIndex().toString(), indexSNMPValues);
+				}
 			}
 		}		
 		return se;
@@ -664,7 +658,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		}
 		
 		se.setServiceElementTypeId(set.getID());
-        se.setDescription(discNode.getTopServiceElementType().getVendor() + " " + set.getName());
+		
+		if ( discNode.getTopServiceElementType().getVendor() != null ) {
+             se.setDescription(discNode.getTopServiceElementType().getVendor() + " " + set.getName());
+		}
+		else {
+			se.setDescription(set.getName());
+		}
 		
 		/**
 		 * Retrieve the name to identify the service element.
@@ -1718,7 +1718,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	            se.getValues().add(inst);
 		    }			
 		}
-		else {
+		else if ( indexSNMPValues != null ){
 		
 			for ( IndexSNMPValue indexVal : indexSNMPValues ) {
 				
