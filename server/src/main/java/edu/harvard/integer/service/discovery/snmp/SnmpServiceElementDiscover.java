@@ -664,7 +664,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		}
 		
 		se.setServiceElementTypeId(set.getID());
-        se.setDescription(discNode.getTopServiceElementType().getVendor() + " " + set.getName());
+		
+		if ( discNode.getTopServiceElementType().getVendor() != null ) {
+             se.setDescription(discNode.getTopServiceElementType().getVendor() + " " + set.getName());
+		}
+		else {
+			se.setDescription(set.getName());
+		}
 		
 		/**
 		 * Retrieve the name to identify the service element.

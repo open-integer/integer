@@ -1048,6 +1048,11 @@ public class YamlManager extends BaseManager implements
 					}
 					dbDiscriminator.setServiceElementTypeId(dbSet.getID());
 				}
+				else if ( yamlSnmpServiceElementTypeDiscriminator.getServiceElementType() != null ) {
+					edu.harvard.integer.common.yaml.vendorcontainment.YamlServiceElementType yset =  yamlSnmpServiceElementTypeDiscriminator.getServiceElementType();	
+					ID sid = createServiceElement(yset);
+					dbDiscriminator.setServiceElementTypeId(sid);
+				}
 				
 				if ( yamlSnmpServiceElementTypeDiscriminator.getGlobaldiscriminatorValue() != null ) {
 					
@@ -1124,9 +1129,10 @@ public class YamlManager extends BaseManager implements
 
 		if (capability != null)
 			return capability.getID();
-		else
+		else {
 			logger.error("Capability not found with name "
 					+ defaultNameCabability);
+		}
 
 		return null;
 	}

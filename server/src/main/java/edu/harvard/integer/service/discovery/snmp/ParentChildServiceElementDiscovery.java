@@ -61,7 +61,6 @@ import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorS
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
@@ -75,9 +74,6 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationDAO;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 
 /**
  * The Class ParentChildServiceElementDiscovery is used to discover IP nodes which their

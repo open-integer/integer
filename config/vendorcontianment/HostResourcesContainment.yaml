@@ -1,4 +1,8 @@
 name: hostMibContainment
+signatures:
+      - name: Vendor
+        operator: Equal
+        value: net-snmp
 
 snmpContainment: 
     containmentType: HostResourcesMib
@@ -24,16 +28,16 @@ snmpContainment:
           defaultNameCabability: hrDeviceDescr
           category: printer
           uniqueIdentifierCapabilities: [ hrDeviceIndex ]
-          attributes: [ hrDeviceDescr, hrDeviceID, hrPrinterDetectedErrorState, hrProcessorLoad ]
+          attributes: [ hrDeviceDescr, hrDeviceID, hrPrinterDetectedErrorState ]
         discriminatorValue: 1.3.6.1.2.1.25.3.1.5
       - serviceElementType:
           name: PortIf
           fieldReplaceableUnit: false
           description: 
           defaultNameCabability: hrDeviceDescr
-          category: portIf
+          category: port
           uniqueIdentifierCapabilities: [ hrDeviceIndex ]
-          attributes: [ hrDeviceDescr, hrDeviceID, hrNetworkIfIndex, hrProcessorLoad ]
+          attributes: [ hrDeviceDescr, hrDeviceID, hrNetworkIfIndex ]
         discriminatorValue: 1.3.6.1.2.1.25.3.1.4
       - serviceElementType:
           name: Disk
