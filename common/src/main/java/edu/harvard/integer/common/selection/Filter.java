@@ -159,7 +159,7 @@ public class Filter extends BaseEntity {
 	 */
 	@ElementCollection
 	@OrderColumn(name = "idx")
-	private List<ID> locations = null;
+	private List<FilterNode> locations = null;
 
 	/**
 	 * Restricts the filter to service elements associated with a specific
@@ -303,7 +303,7 @@ public class Filter extends BaseEntity {
 	/**
 	 * @return the locations
 	 */
-	public List<ID> getLocations() {
+	public List<FilterNode> getLocations() {
 		return locations;
 	}
 
@@ -311,7 +311,7 @@ public class Filter extends BaseEntity {
 	 * @param locations
 	 *            the locations to set
 	 */
-	public void setLocations(List<ID> locations) {
+	public void setLocations(List<FilterNode> locations) {
 		this.locations = locations;
 	}
 

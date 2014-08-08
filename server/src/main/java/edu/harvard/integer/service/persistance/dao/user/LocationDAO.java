@@ -33,10 +33,17 @@
 
 package edu.harvard.integer.service.persistance.dao.user;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.user.Location;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
@@ -59,4 +66,22 @@ public class LocationDAO extends BaseDAO {
 		
 	}
 
+	public Location[] getAllByStateCityZip() throws IntegerException {
+
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		CriteriaQuery<Location> query = (CriteriaQuery<Location>) criteriaBuilder
+				.createQuery(Location.class);
+		Root<Location> from = (Root<Location>) query.from(Location.class);
+
+		query.select(from);
+		
+		query.orderBy(criteriaBuilder.asc(from.get("state")), 
+				criteriaBuilder.asc(from.get("city")), 
+				criteriaBuilder.asc(from.get("postalCode")));
+		
+		List<Location> resultList = getEntityManager().createQuery(query).getResultList();
+
+		return resultList.toArray((Location[]) Array.newInstance(Location.class, 0));
+	}
 }

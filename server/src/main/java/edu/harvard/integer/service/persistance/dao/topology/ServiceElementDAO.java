@@ -361,24 +361,24 @@ public class ServiceElementDAO extends BaseDAO {
 
 			}
 
-			if (filter.getLocations() != null
-					&& filter.getLocations().size() > 0) {
-				b.append('\n').append(" union ").append('\n');
-
-				b.append("select se.* ").append('\n');
-				b.append("from ServiceElement se ").append('\n');
-
-				addedOne = false;
-				for (ID locationId : filter.getLocations()) {
-					if (addedOne)
-						b.append(" and ");
-					else
-						addedOne = true;
-
-					b.append(" se.primaryLocationId == ")
-							.append(locationId.getIdentifier()).append('\n');
-				}
-			}
+//			if (filter.getLocations() != null
+//					&& filter.getLocations().size() > 0) {
+//				b.append('\n').append(" union ").append('\n');
+//
+//				b.append("select se.* ").append('\n');
+//				b.append("from ServiceElement se ").append('\n');
+//
+//				addedOne = false;
+//				for (ID locationId : filter.getLocations()) {
+//					if (addedOne)
+//						b.append(" and ");
+//					else
+//						addedOne = true;
+//
+//					b.append(" se.primaryLocationId == ")
+//							.append(locationId.getIdentifier()).append('\n');
+//				}
+//			}
 		}
 
 		b.append(" group by se.identifier");

@@ -747,6 +747,11 @@ public class YamlManager extends BaseManager implements
 		if ( load.getSnmpContainment().getServiceElementTypeName() != null ) {
 			ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
 			ServiceElementType serviceElementType = dao.findByName(load.getSnmpContainment().getServiceElementTypeName());
+			if (serviceElementType == null) {
+				logger.error("ServiceElementType (" + load.getSnmpContainment().getServiceElementTypeName() + ") not found!! "
+						+ " Vendor Containment " + load.getName() + " will not be loaded");
+				return;
+			}
 			snmpContainment.setServiceElementTypeId(serviceElementType.getID());
 		}
 		else {

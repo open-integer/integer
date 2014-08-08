@@ -419,6 +419,7 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    se.setUpdated(new Date());
 		    se.setCreated(new Date());
 		    se.setCategory(set.getCategory());
+		    se.setIconName(set.getIconName());
 		    
 		    logger.info("call update service element " + se.getName());
 		 

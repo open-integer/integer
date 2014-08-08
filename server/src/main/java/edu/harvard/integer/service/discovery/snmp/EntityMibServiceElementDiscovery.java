@@ -411,6 +411,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 									 iset = new ServiceElementType();
 									 ise.setCategory(set.getCategory());
 									 iset.setCategory(category);
+									 iset.setIconName(set.getIconName());
 									 iset.addSignatureValue(null, SignatureTypeEnum.Vendor, discNode.getTopServiceElementType().getVendor());
 									 iset.setVendorSpecificSubType(ifSubType);
 									 
@@ -701,6 +702,7 @@ public class EntityMibServiceElementDiscovery extends SnmpServiceElementDiscover
 		
 		ServiceElement se = new ServiceElement();
 		se.setCategory(set.getCategory());
+		se.setIconName(set.getIconName());
 		
 		if ( discNode.getExistingSE() == null ) {
 			se.setCreated(new Date());

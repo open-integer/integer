@@ -37,7 +37,7 @@ public class FilterPanel extends DockPanel {
 	private ListDataProvider<CriticalityEnum> criticalityProvider = new ListDataProvider<CriticalityEnum>();
 	
 	/** The location provider. */
-	private ListDataProvider<ID> locationProvider = new ListDataProvider<ID>();
+	private ListDataProvider<LeaveItem> locationProvider = new ListDataProvider<LeaveItem>();
 	
 	/** The service provider. */
 	private ListDataProvider<ID> serviceProvider = new ListDataProvider<ID>();
@@ -99,7 +99,8 @@ public class FilterPanel extends DockPanel {
 			selectionPanel.add(new HvCheckListPanel<CriticalityEnum>(criticalityProvider, filter.getCriticalities()), "Criticality", 3);
 		
 		if (filter.getLocations() != null && !filter.getLocations().isEmpty())
-			selectionPanel.add(new HvCheckListPanel<ID>(locationProvider, filter.getLocations()), "Location", 3);
+			selectionPanel.add(new HvCheckBoxTreePanel(locationProvider, filter.getLocations()), "Location", 3);
+			//selectionPanel.add(new HvCheckListPanel<ID>(locationProvider, filter.getLocations()), "Location", 3);
 		
 		if (filter.getLinkTechnologies() != null && !filter.getLinkTechnologies().isEmpty())
 			selectionPanel.add(new HvCheckBoxTreePanel(technologyLinkProvider, filter.getLinkTechnologies()), "Technology Links", 3);

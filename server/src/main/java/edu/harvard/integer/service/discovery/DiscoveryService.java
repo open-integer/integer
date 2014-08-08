@@ -71,6 +71,7 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
 import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
 
 /**
@@ -120,6 +121,8 @@ public class DiscoveryService extends BaseService implements
 
 	private Map<DiscoveryId, RunningDiscovery> runningDiscoveries = new ConcurrentHashMap<DiscoveryId, RunningDiscovery>();
 
+	private Map<ID, List<DiscoveryId>> runningDiscoveryRules = new ConcurrentHashMap<ID, List<DiscoveryId>>();
+	
 	/**
 	 * Called after service has been created. Initialize of the discovery
 	 * service is done here.
@@ -181,6 +184,13 @@ public class DiscoveryService extends BaseService implements
 				LongPropertyNames.ServerId));
 		id.setDiscoveryId(discoverySeqId++);
 
+		List<DiscoveryId> runningDiscoveryids = runningDiscoveryRules.get(rule.getID());
+		if (runningDiscoveryids == null)
+			runningDiscoveryids = new ArrayList<DiscoveryId>();
+		
+		runningDiscoveryids.add(id);
+		runningDiscoveryRules.put(rule.getID(), runningDiscoveryids);
+		
 		switch (rule.getDiscoveryType()) {
 		case Both:
 		case ServiceElement:
@@ -253,6 +263,7 @@ public class DiscoveryService extends BaseService implements
 
 	}
 
+	
 	/**
 	 * Create a IpDescoverySeed from the IpToplogySeed.
 	 * 
@@ -385,6 +396,7 @@ public class DiscoveryService extends BaseService implements
 	@Override
 	public DiscoveryId[] getRunningDiscoveries() throws IntegerException {
 		List<DiscoveryId> discoveries = new ArrayList<DiscoveryId>();
+		
 		for (DiscoveryId discoveryId : runningDiscoveries.keySet()) {
 			RunningDiscovery runningDiscovery = runningDiscoveries
 					.get(discoveryId);
@@ -396,6 +408,40 @@ public class DiscoveryService extends BaseService implements
 				.size()]);
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#getRunningDiscoverieRules()
+	 */
+	@Override
+	public DiscoveryRule[] getRunningDiscoverieRules() throws IntegerException {
+		DiscoveryRuleDAO dao = persistenceManager.getDiscoveryRuleDAO();
+		
+		List<DiscoveryRule> running = new ArrayList<DiscoveryRule>();
+		
+		for(ID runingRuleId : runningDiscoveryRules.keySet()) {
+			DiscoveryRule rule = dao.findById(runingRuleId);
+			if (rule != null)
+				running.add(rule);
+		}
+		
+		return (DiscoveryRule[]) running.toArray(new DiscoveryRule[running.size()]);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#stopDiscovery(edu.harvard.integer.common.topology.DiscoveryRule)
+	 */
+	@Override
+	public void stopDiscovery(DiscoveryRule rule) throws IntegerException {
+		List<DiscoveryId> runningDiscovryIds = runningDiscoveryRules.remove(rule.getID());
+		if (runningDiscovryIds == null)
+			return;
+		
+		for (DiscoveryId discoveryId : runningDiscovryIds) {
+			stopDiscovery(discoveryId);
+		}
+		
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -406,7 +452,7 @@ public class DiscoveryService extends BaseService implements
 	@Override
 	public void stopDiscovery(DiscoveryId id) {
 
-		RunningDiscovery runningDiscovery = runningDiscoveries.get(id);
+		RunningDiscovery runningDiscovery = runningDiscoveries.remove(id);
 		if (runningDiscovery != null) {
 
 			System.out.println("Call Discovery " + id.toString());

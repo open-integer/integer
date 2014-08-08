@@ -485,7 +485,6 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	
 
 	
-	
 	/**
 	 * Find a table event row from a TableEvent list which its attribute oid matched with "attrOid" and
 	 * the value is matched with pass in "SnmpServiceElementTypeDiscriminatorValue".
@@ -549,11 +548,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			ServiceElement se = new ServiceElement();	
 			se.setCategory(set.getCategory());
 			se.setUpdated(new Date());
+			se.setIconName(set.getIconName());
 			
 			if ( discNode.getExistingSE() == null ) {
 				se.setCreated(new Date());
+
 			}
-			
 			se.setServiceElementTypeId(set.getID());
 			
 			if ( discNode.getTopServiceElementType().getVendor() != null ) {
@@ -667,6 +667,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		ServiceElement se = new ServiceElement();
 		se.setCategory(set.getCategory());
 		se.setUpdated(new Date());
+		se.setIconName(set.getIconName());
 		
 		if ( discNode.getExistingSE() == null ) {
 			se.setCreated(new Date());

@@ -283,6 +283,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			if ( nodeSe == null ) {
 				nodeSe = new ServiceElement();
 				nodeSe.setCategory(set.getCategory());
+				nodeSe.setIconName(set.getIconName());
 				nodeSe.setUpdated(new Date());
 				nodeSe.setServiceElementTypeId(set.getID());
 				
@@ -302,7 +303,8 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			se.setUpdated(new Date());
 			se.setServiceElementTypeId(set.getID());			
 			se.setName(cdpConn.getRemotePort());
-			se.setDescription("IPAddress: " + cdpConn.getRemoteIpAddress());				
+			se.setDescription("IPAddress: " + cdpConn.getRemoteIpAddress());
+			se.setIconName(set.getIconName());
 			se = accessMgr.updateServiceElement(se);
 			
             InterDeviceLink upLink = new InterDeviceLink();
