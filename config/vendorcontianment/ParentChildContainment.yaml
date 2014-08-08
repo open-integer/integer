@@ -60,7 +60,7 @@ snmpContainment:
                   mappingType: InstanceOnly
                   valueIsParent: true
                disriminators:
-                  - serviceElementTypeName: ipv4Address  
+                  - serviceElementTypeName: ciscoIpv4Addr  
                                                   
         - name: cdpGlobalLevel
           category: System
