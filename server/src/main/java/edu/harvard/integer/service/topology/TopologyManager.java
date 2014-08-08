@@ -270,6 +270,7 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 			linkDao.update(link);
 		}
 	}
+	
 	/**
 	 * @param sourceServiceElementId
 	 * @param sourceNetwork
@@ -277,7 +278,8 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	 */
 	private void addServiceElementToNetwork(ID sourceServiceElementId,
 			Network sourceNetwork) throws IntegerException {
-		
+
+
 		if (sourceServiceElementId == null)
 			return;
 		
@@ -287,16 +289,24 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		ServiceElementDAO dao = persistenceManager.getServiceElementDAO();
 		ServiceElement serviceElement = dao.findById(sourceServiceElementId);
 		
+		addServiceElementToNetwork(serviceElement, sourceNetwork);
+	}
+
+	private void addServiceElementToNetwork(ServiceElement serviceElement,
+			Network sourceNetwork) throws IntegerException {
+
+		if (serviceElement == null)
+			return;
+		
 		boolean foundIt = false;
 		for (ServiceElement netServieElement : sourceNetwork.getServiceElements()) {
-			if (netServieElement.getID().equals(sourceServiceElementId)) {
+			if (netServieElement.getID().equals(serviceElement.getID())) {
 				foundIt = true;
 				break;
 			}
 		}
 		if (!foundIt)
-			sourceNetwork.getServiceElements().add(serviceElement);
-		
+			sourceNetwork.getServiceElements().add(serviceElement);	
 	}
 
 	/**
@@ -364,6 +374,16 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	@Override
 	public TopologyElement updateTopologyElement(TopologyElement topologyElement) throws IntegerException {
 		TopologyElementDAO dao = persistenceManager.getTopologyElementDAO();
+		NetworkDAO networkDao = persistenceManager.getNetworkDAO();
+		
+		if (topologyElement.getAddress() != null) {
+			for (Address address : topologyElement.getAddress()) {
+				String sourceNetworkName = Network.createName(address);
+				Network network = networkDao.findByName(sourceNetworkName);
+				addServiceElementToNetwork(topologyElement.getServiceElementId(), network);
+			}
+		}
+		
 		return dao.update(topologyElement);
 	}
 	
