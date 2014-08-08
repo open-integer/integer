@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.net.util.SubnetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snmp4j.PDU;
@@ -64,7 +63,6 @@ import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.TopologyElement;
-import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
@@ -223,7 +221,6 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 								
 								ifSe.setParentId(se.getID());
 								ifSe = updateServiceElement(ifSe, ifSet, se, levelOid);
-								System.out.println("ifSe " + ifSe.getName());
 								
 								ServiceElementType addrSet = discMgr.getServiceElementTypeByName("ipv4Address");
 								if ( addrTblEvents == null ) {
