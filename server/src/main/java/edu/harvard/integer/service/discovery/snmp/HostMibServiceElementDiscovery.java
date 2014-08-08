@@ -33,18 +33,23 @@
 package edu.harvard.integer.service.discovery.snmp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.net.util.SubnetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
+import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
 import edu.harvard.integer.access.element.ElementEndPoint;
 import edu.harvard.integer.access.snmp.SnmpService;
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
@@ -55,8 +60,11 @@ import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
+import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
+import edu.harvard.integer.common.topology.TopologyElement;
+import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 
 /**
@@ -75,6 +83,9 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 	 * Map for mapping device table index to ifIndex.
 	 */
 	private Map<Integer, String> ifIndexMap = new HashMap<Integer, String>();
+	
+	
+	private List<TableEvent>  addrTblEvents;
 
 	/**
 	 * Instantiates a new host mib service element discovery.
@@ -191,6 +202,95 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 							
 						}
 						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
+						if ( set.getCategory().getName().equals("Port") ) {
+							
+							SNMP ifsnmp = snmpMgr.getSNMPByName("hrNetworkIfIndex");
+							SNMPTable ifTable = (SNMPTable) snmpMgr.getSNMPByName("ifEntry");
+							
+							PDU pdu = new PDU();
+							OID oid = new OID(ifsnmp.getOid() + "." + te.getIndex().toString()); 
+							pdu.add(new VariableBinding(oid));
+							
+							try {
+								PDU rpdu = SnmpService.instance().getPdu(endPoint, pdu);
+								ServiceElementType ifSet = discMgr.getServiceElementTypeByName("interface");
+								
+								String ifIndex = rpdu.get(0).getVariable().toString();
+								ServiceElement ifSe =  createServiceElementFromType(discNode, ifSet, ifIndex, ifTable);	
+								if ( ifSe.getName() == null ) {
+									ifSe.setName(ifSet.getCategory().getName() + " " + ifIndex);
+								}
+								
+								ifSe.setParentId(se.getID());
+								ifSe = updateServiceElement(ifSe, ifSet, se, levelOid);
+								System.out.println("ifSe " + ifSe.getName());
+								
+								ServiceElementType addrSet = discMgr.getServiceElementTypeByName("ipv4Address");
+								if ( addrTblEvents == null ) {
+									
+									List<ID> ids =  addrSet.getAttributeIds();
+									OID[] colOids = new OID[ids.size()];
+									
+									for ( int i=0; i<ids.size(); i++ ) {
+										
+										ID id = ids.get(i);
+										SNMP tmpSnmp = (SNMP) capMgr.getManagementObjectById(id);
+										colOids[i] = new OID(tmpSnmp.getOid());
+									}
+									addrTblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), colOids);									
+								}
+								
+								TableEvent matchTbl = null;
+								SNMP addrIf = snmpMgr.getSNMPByName("ipAdEntIfIndex");
+							    for ( TableEvent tblEvent : addrTblEvents ) {
+							    	
+							    	if ( tblEvent.getIndex().equals("127.0.0.1") ) {
+							    		continue;
+							    	}
+							    	for ( VariableBinding vb : tblEvent.getColumns() ) {
+							    		if ( vb.getOid().toString().indexOf(addrIf.getOid()) >= 0  &&
+							    				vb.getVariable().toString().equals(ifIndex))  {
+							    			matchTbl = tblEvent;
+							    			break;
+							    		}
+							    	}
+							    	if ( matchTbl != null ) {
+							    		break;
+							    	}
+							    }
+								if ( matchTbl != null ) {
+								
+									ServiceElement addrSe = createServiceElementFromType(discNode, addrSet, matchTbl, null);
+									addrSe.setParentId(ifSe.getID());
+									if ( addrSe.getName() == null ) {
+										addrSe.setName(matchTbl.getIndex().toString());
+									}
+									addrSe = updateServiceElement(addrSe, addrSet, ifSe, levelOid);
+									
+									TopologyElement topoElm = new TopologyElement();
+									
+									String ipaddr = getIpAddressFromSE(addrSe);
+									String mask = getIpMaskFromSE(addrSe);
+									
+									Address a = new Address();
+									a.setAddress(ipaddr);
+									a.setMask(mask);					
+									topoElm.setName(ipaddr);
+									
+									if ( topoElm.getAddress() == null ) {
+										topoElm.setAddress(new ArrayList<Address>());
+									}
+									topoElm.getAddress().add(a);
+									topoElm.setCreated(new Date());
+									topoElm.setServiceElementId(addrSe.getID());
+									topoElm.setLayer(LayerTypeEnum.Three);
+									
+									topoElm = topologyMgr.updateTopologyElement(topoElm);
+									logger.info("Create topologyElement " + topoElm.getName());
+								}							    
+							}
+							catch ( Exception e ) {}
+						}		
 					}
 				}
 			}
@@ -253,7 +353,7 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 								}
 							}
 						}
-						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);
+						se = updateServiceElement(se, set, discNode.getAccessElement(), levelOid);	
 					}
 				}
 				else {
