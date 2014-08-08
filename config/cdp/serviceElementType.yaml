@@ -90,6 +90,21 @@ serviceElementTypes:
            category: System
            iconName: grayRouter.jpg
       managementObjects:
+      
+    - name: cisco-ipv4Addr
+      description: Cisco IP v4 Address
+      vendor: cisco
+      extendServiceElementType: ipv4Address
+      accessMethod:
+          protocol: SNMP
+      serviceElementTypeTranslates:
+         - name: ciscoIpv4Addr
+           mapping: direct
+           category: Network
+      managementObjects:
+         - name: ipAdEntReasmMaxSize
+           uri: ipAdEntReasmMaxSize
+           capability: ipReasmMaxSize
 
     - name: cisco-cdp-cache
       description: Cisco enterprise CDP MIB, device cache per interface.
