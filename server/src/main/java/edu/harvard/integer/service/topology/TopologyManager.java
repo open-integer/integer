@@ -214,7 +214,6 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	 */
 	private void checkNetworks(InterDeviceLink interDeviceLink) throws IntegerException {
 
-		InterNetworkLinkDAO linkDao = persistenceManager.getInterNetworkLinkDAO();
 		NetworkDAO networkDao = persistenceManager.getNetworkDAO();
 		
 		if (logger.isDebugEnabled())
@@ -281,6 +280,9 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 
 
 		if (sourceServiceElementId == null)
+			return;
+		
+		if (sourceNetwork == null)
 			return;
 		
 		if (sourceNetwork.getServiceElements() == null)
