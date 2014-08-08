@@ -32,9 +32,6 @@ serviceElementTypes:
             uri: ipAdEntBcastAddr
             capability: ipBraodcastAddress
             
-          - name: ipAdEntReasmMaxSize
-            uri: ipAdEntReasmMaxSize
-            capability: ipReasmMaxSize
 
     - name: ipv4IpToPhysical
       description: The service element contains IPv4 address to physical mapping.
