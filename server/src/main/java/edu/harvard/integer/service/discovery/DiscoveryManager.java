@@ -130,11 +130,25 @@ public class DiscoveryManager  extends BaseManager implements DiscoveryManagerLo
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#stopDiscovery(edu.harvard.integer.common.topology.DiscoveryRule)
+	 */
+	@Override
+	public void stopDiscovery(DiscoveryRule rule) throws IntegerException {
+		discoveryService.stopDiscovery(rule);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.discovery.DiscoveryManagerInterface#getRunningDiscoveries()
 	 */
 	@Override
 	public DiscoveryId[] getRunningDiscoveries() throws IntegerException {
 		return discoveryService.getRunningDiscoveries();
+	}
+	
+	@Override
+	public DiscoveryRule[] getRunningDiscoveryRules() throws IntegerException {
+		return discoveryService.getRunningDiscoverieRules();
 	}
 	
 	/*

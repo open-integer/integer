@@ -194,6 +194,16 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 	DiscoveryId[] getRunningDiscoveries() throws IntegerException;
 
 	/**
+	 * Get a list of the running discoveries. The list is the DiscoverRule that
+	 * are running.
+	 * 
+	 * @return List of the DiscoveryRule's that are currently running.
+	 * 
+	 * @throws IntegerException
+	 */
+	DiscoveryRule[] getRunningDiscoveryRules() throws IntegerException;
+
+	/**
 	 * Stop the discovery for the given discoveryId. If the discovery is not
 	 * found then an exception will be thrown. NOTE: this invokes the stop. The
 	 * discovery may still be running for a short time after this call returns
@@ -203,4 +213,15 @@ public interface DiscoveryManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	void stopDiscovery(DiscoveryId discoverId) throws IntegerException;
+
+	/**
+	 * Stop the discovery for the given discovery rule. If the discovery is not
+	 * found then an exception will be thrown. NOTE: this invokes the stop. The
+	 * discovery may still be running for a short time after this call returns
+	 * to clean up.
+	 * 
+	 * @param rule
+	 * @throws IntegerException
+	 */
+	void stopDiscovery(DiscoveryRule rule) throws IntegerException;
 }

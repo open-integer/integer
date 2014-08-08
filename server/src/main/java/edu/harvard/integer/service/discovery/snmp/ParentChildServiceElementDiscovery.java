@@ -491,6 +491,8 @@ public class ParentChildServiceElementDiscovery extends
 		
 	    se.setServiceElementTypeId(set.getID());
 	    se.setCategory(set.getCategory());
+	    se.setIconName(set.getIconName());
+	    
 	    /**
 	     * Discover more detail for that service element.
 	     */
@@ -524,6 +526,7 @@ public class ParentChildServiceElementDiscovery extends
 		
 		ServiceElement se = new ServiceElement();
 		se.setCategory(set.getCategory());
+		se.setIconName(set.getIconName());
 		 
 		if ( discNode.getExistingSE() == null ) {
 			se.setCreated(new Date());
@@ -561,8 +564,6 @@ public class ParentChildServiceElementDiscovery extends
 			}
 			se.setName(seName);
 	    }
-	    
-	    
 	    
 	    /**
 	     * Create service element in the database.
