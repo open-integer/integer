@@ -36,6 +36,7 @@ package edu.harvard.integer.discovery;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.TestUtil;
+import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SnmpGlobalReadCredential;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
@@ -100,6 +102,22 @@ public class DiscoveryManagerTest {
 	 */
 	@Test
 	public void addDiscoveryRule() {
+
+		try {
+			DiscoveryRule rule = createDiscoveryRuleRule();
+			assert(rule.getIdentifier() != null);
+			
+		} catch (IntegerException e) {
+		
+			e.printStackTrace();
+			fail(e.toString());
+		} catch (Throwable e ) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+
+	private DiscoveryRule createDiscoveryRuleRule() throws IntegerException {
 		IpTopologySeed seed = new IpTopologySeed();
 		Subnet subnet = new Subnet();
 		subnet.setAddress(new Address("1.2.3.0", "255.255.255.0" ));
@@ -111,13 +129,13 @@ public class DiscoveryManagerTest {
 		
 		SnmpV2cCredentail credential = new SnmpV2cCredentail();
 		credential.setReadCommunity("integer");
-		credential.setWriteCommunity("integerrw");;
+		credential.setWriteCommunity("integerrw");
 		
 		credentials.add(credential);
 		
 		credential = new SnmpV2cCredentail();
 		credential.setReadCommunity("recorded/solaris-system");
-		credential.setWriteCommunity("integerrw");;
+		credential.setWriteCommunity("integerrw");
 		credentials.add(credential);
 		
 		seed.setCredentials(credentials);
@@ -140,8 +158,116 @@ public class DiscoveryManagerTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
-	}
 
+		return rule;
+	}
+	
+	@Test
+	public void startDiscoveryRule() {
+		
+		DiscoveryRule rule = null;
+		try {
+			rule = createDiscoveryRuleRule();
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		try {
+			DiscoveryId startDiscovery = discoveryManager.startDiscovery(rule);
+			DiscoveryId[] runningDiscoveries = discoveryManager.getRunningDiscoveries();
+			assert (runningDiscoveries != null);
+			
+			boolean foundIt = false;
+			for (DiscoveryId discoveryId : runningDiscoveries) {
+				if (discoveryId.equals(startDiscovery))
+					foundIt = true;
+			}
+			
+			assert(foundIt == true);
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void stopDiscoveryRule() {
+		DiscoveryRule rule = null;
+		try {
+			rule = createDiscoveryRuleRule();
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		try {
+			DiscoveryId startDiscovery = discoveryManager.startDiscovery(rule);
+			assert(startDiscovery != null);
+			
+			DiscoveryRule[] runningDiscoveries = discoveryManager.getRunningDiscoveryRules();
+			
+			assert (runningDiscoveries != null);
+			
+			boolean foundIt = false;
+			for (DiscoveryRule discovery : runningDiscoveries) {
+				if (discovery.getID().equals(rule.getID()))
+					foundIt = true;
+			}
+			
+			assert(foundIt == true);
+			
+			discoveryManager.stopDiscovery(rule);
+			
+			runningDiscoveries = discoveryManager.getRunningDiscoveryRules();
+			
+			if (runningDiscoveries != null) {
+				foundIt = false;
+				for (DiscoveryRule discovery : runningDiscoveries) {
+					if (discovery.getID().equals(rule.getID()))
+						foundIt = true;
+				}
+				
+				assert(foundIt == false);
+			}
+			
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	public void getRunningDiscoveryRules() {
+		DiscoveryRule rule = null;
+		try {
+			rule = createDiscoveryRuleRule();
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		try {
+			discoveryManager.startDiscovery(rule);
+		
+			DiscoveryRule[] runningDiscoveries = discoveryManager.getRunningDiscoveryRules();
+			assert(runningDiscoveries != null);
+			
+			for (DiscoveryRule discoveryRule : runningDiscoveries) {
+				if (discoveryRule.getID().equals(rule.getID()))
+					return;
+			}
+			
+			fail("Discovery rule " + rule.getID().toDebugString() + " Not found in running disoverie rules "
+					+ Arrays.toString(runningDiscoveries));
+			
+		} catch( Exception e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
 	@Test
 	public void addGlobalCredentails() {
 		List<Credential> credentials = new ArrayList<Credential>();

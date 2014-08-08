@@ -133,6 +133,13 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	void discoveredServiceElement(ServiceElement accessElement);
 
 	/**
+	 * Stop the discovery for this discovery rule. 
+	 * @param rule. DiscoveryRule to stop. 
+	 * @throws IntegerException
+	 */
+	public void stopDiscovery(DiscoveryRule rule) throws IntegerException;
+	
+	/**
 	 * Stop the running discovery specified by the DiscoveryId
 	 * 
 	 * @param id
@@ -170,4 +177,12 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * @throws IntegerException
 	 */
 	DiscoveryId[] getRunningDiscoveries() throws IntegerException;
+	
+	/**
+	 * Get a list of the Discovery rules that are currently running.
+	 * 
+	 * @return List of the DiscoveryRules for the running discoveries.
+	 * @throws IntegerException
+	 */
+	DiscoveryRule[] getRunningDiscoverieRules() throws IntegerException;
 }
