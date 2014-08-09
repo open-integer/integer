@@ -42,4 +42,7 @@ public interface NetworkConnection {
 
 	public NetworkLayer getNetworkLayer();
 	public int getIfIndex();
+	
+	public String getRemoteAddress();
+	public String getRemotePort();
 }

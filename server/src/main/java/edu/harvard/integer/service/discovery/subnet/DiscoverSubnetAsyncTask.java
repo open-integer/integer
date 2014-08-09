@@ -190,7 +190,7 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 			}
 			String ip = range.next();    
 			if ( netDisc.findDiscoveredIpAddresses(ip) != null ) {
-				logger.info("This node with the IP address is already in discovering ");
+				logger.info("This node with the IP address is already in discovering " + ip);
 				continue;
 			}
 			logger.info("Scan IP address " + ip);
@@ -359,7 +359,8 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 			if ( netDisc.alreadyDiscovered(sysInfo.getSysName(), dn) ) {
 				netDisc.removeAliasIp(dn, dn.getSubnetId());
 				
-				logger.info("Found IPAddress associated device is already in discovery " + dn.getIpAddress());
+				logger.info("Found IPAddress associated device is already in discovery " 
+				                + dn.getIpAddress() + " " + dn.getSysNamn() );
 				return;
 			}
 			dn.setSysNamn(sysInfo.getSysName());

@@ -99,16 +99,14 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 	 */
 	@Override
 	public Void call()  {
-		
+	
 		try {
-			try {
-				discoverNodeLink();
-			} 
-			catch (IntegerException e) {
+			discoverNodeLink();
+		} 
+		catch (IntegerException e) {
 				
-				e.printStackTrace();
-				logger.error("Cdp discovery error on network discover id " + netDiscover.getDiscoverId().toString() + " " + e.getLocalizedMessage());
-			}
+			e.printStackTrace();
+			logger.error("Cdp discovery error on network discover id " + netDiscover.getDiscoverId().toString() + " " + e.getLocalizedMessage());
 		}
 		finally {
 			netDiscover.discoverTopologyComplete();
@@ -147,6 +145,8 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		 * If the next level nodes are not empty, find the next level links.
 		 */
 		if ( nextLevelNodes.size() > 0 ) {
+			
+			logger.info("find link on next level " + nextLevelNodes.size());
 			findNextLevelLinks(nextLevelNodes);
 		}
 		
@@ -258,7 +258,6 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			sourceTe.getInterDeviceLinks().add(upLink);
 			topologyMgr.updateTopologyElement(sourceTe);
 			
-			
             InterDeviceLink downLink = new InterDeviceLink();
 			downLink.setCreated(new Date());
 			downLink.setDestinationAddress(foundTn.getTopologyElm().getAddress().get(0));
@@ -273,37 +272,48 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 				destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
 			}
 			destTe.getInterDeviceLinks().add(downLink);
+			
+			logger.info("Update topology element after create link downlink and up link " + destTe.getName());
 			topologyMgr.updateTopologyElement(destTe);
 		}
 		else {
 			
-			ServiceElementType set = discMgr.getServiceElementTypeByName("unknownSystem");
-			ServiceElement nodeSe = netDiscover.getUnknownServiceElement(cdpConn.getRemoteDeviceId());
+			/**
+			 * Cannot find the connection.  First check if there is such system exist on DB by search on name.
+			 * On CDP, the remote device id is same as the system name in general.
+			 */
+			ServiceElement nodeSe = accessMgr.getServiceElementByName(cdpConn.getRemoteDeviceId());
 			
 			if ( nodeSe == null ) {
-				nodeSe = new ServiceElement();
-				nodeSe.setCategory(set.getCategory());
-				nodeSe.setIconName(set.getIconName());
-				nodeSe.setUpdated(new Date());
-				nodeSe.setServiceElementTypeId(set.getID());
 				
-				nodeSe.setName(cdpConn.getRemoteDeviceId());
-				StringBuffer sb = new StringBuffer();
+				ServiceElementType set = discMgr.getServiceElementTypeByName("unknownSystem");
+				nodeSe = netDiscover.getUnknownServiceElement(cdpConn.getRemoteDeviceId());
 				
-				sb.append("System Platform: " + cdpConn.getRemotePlatform());
-				sb.append("System version: " + cdpConn.getRemoteVersion());			
-				nodeSe.setDescription(sb.toString());
-				
-				nodeSe = accessMgr.updateServiceElement(nodeSe);
-				netDiscover.addUnknownServiceElement(cdpConn.getRemoteDeviceId(), nodeSe);
+				if ( nodeSe == null ) {
+					nodeSe = new ServiceElement();
+					nodeSe.setCategory(set.getCategory());
+					nodeSe.setIconName(set.getIconName());
+					nodeSe.setUpdated(new Date());
+					nodeSe.setServiceElementTypeId(set.getID());
+					
+					nodeSe.setName(cdpConn.getRemoteDeviceId());
+					StringBuffer sb = new StringBuffer();
+					
+					sb.append("System Platform: " + cdpConn.getRemotePlatform());
+					sb.append("System version: " + cdpConn.getRemoteVersion());			
+					nodeSe.setDescription(sb.toString());
+					
+					nodeSe = accessMgr.updateServiceElement(nodeSe);
+					netDiscover.addUnknownServiceElement(cdpConn.getRemoteDeviceId(), nodeSe);
+				}
 			}
-            
-			set = discMgr.getServiceElementTypeByName("connectionEndPort");
+			
+			ServiceElementType set = discMgr.getServiceElementTypeByName("connectionEndPort");
 			ServiceElement se = new ServiceElement();		
 			se.setUpdated(new Date());
 			se.setServiceElementTypeId(set.getID());			
 			se.setName(cdpConn.getRemotePort());
-			se.setDescription("IPAddress: " + cdpConn.getRemoteIpAddress());
+			se.setDescription("IPAddress: " + cdpConn.getRemoteAddress());
 			se.setIconName(set.getIconName());
 			se = accessMgr.updateServiceElement(se);
 			
@@ -311,7 +321,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			upLink.setCreated(new Date());
 			upLink.setSourceAddress(foundTn.getTopologyElm().getAddress().get(0));
 			Address addr = new Address();
-			addr.setAddress(cdpConn.getRemoteIpAddress());	
+			addr.setAddress(cdpConn.getRemoteAddress());	
 			upLink.setDestinationAddress(addr);
 			upLink.setSourceServiceElementId(dn.getAccessElement().getID());
 			upLink.setDestinationServiceElementId(nodeSe.getID());
@@ -327,7 +337,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
 			
 			Address remoteAddr = new Address();
-			remoteAddr.setAddress(cdpConn.getRemoteIpAddress());
+			remoteAddr.setAddress(cdpConn.getRemoteAddress());
 			destTe.getAddress().add(remoteAddr);
 			destTe.setServiceElementId(se.getID());
 			
@@ -344,7 +354,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			destTe.getInterDeviceLinks().add(downLink);
 			destTe = topologyMgr.updateTopologyElement(destTe);
 			
-			logger.info("Create link for remote ip address " + cdpConn.getRemoteIpAddress());
+			logger.info("Create link for remote ip address " + cdpConn.getRemoteAddress());
 		}				
 		
 	}
@@ -369,7 +379,11 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 				
 				List<Address> addrs = tn.getTopologyElm().getAddress();
 				for ( Address addr : addrs ) {					
-					if ( cdpConn.getRemoteIpAddress().equals(addr) ) {
+					if ( cdpConn.getRemoteAddress().equals(addr.getAddress()) ) {
+						
+						logger.info("Find a match address on passing conn list on this IP device " + dn.getIpAddress() 
+		                          + " with cdp connection address " + cdpConn.getRemoteAddress() 
+		                          + " " + cdpConn.getRemotePort() );
 						
 						CdpConnectionNode cdpConnNode = new CdpConnectionNode();
 						cdpConnNode.associatedNode = dn;
@@ -398,8 +412,13 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			for ( TopologyNode tn : dn.getTopologyInfo().getTopoNodes() ) {
 		
 				List<Address> addrs = tn.getTopologyElm().getAddress();
-				for ( Address addr : addrs ) {					
-					if ( cdpConn.getRemoteIpAddress().equals(addr) ) {
+				for ( Address addr : addrs ) {	
+					
+					if ( cdpConn.getRemoteAddress().equals(addr.getAddress()) ) {
+						
+						logger.info("Find a match address this IP device " + dn.getIpAddress() 
+								                          + " with cdp connection address " + cdpConn.getRemoteAddress() 
+								                          + " " + cdpConn.getRemotePort() );
 						CdpConnectionNode cdpConnNode = new CdpConnectionNode();
 						cdpConnNode.associatedNode = dn;
 						cdpConnNode.associatedTn = tn;

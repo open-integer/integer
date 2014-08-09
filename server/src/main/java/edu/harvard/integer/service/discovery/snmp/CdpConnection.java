@@ -32,7 +32,6 @@
  */
 package edu.harvard.integer.service.discovery.snmp;
 
-import org.snmp4j.smi.IpAddress;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
@@ -102,10 +101,12 @@ public class CdpConnection implements NetworkConnection {
 	}
 	
 
-	public String getRemoteIpAddress() {
+	@Override
+	public String getRemoteAddress() {
 		return remoteIpAddress;
 	}
 
+	@Override
 	public String getRemotePort() {
 		return remotePort;
 	}

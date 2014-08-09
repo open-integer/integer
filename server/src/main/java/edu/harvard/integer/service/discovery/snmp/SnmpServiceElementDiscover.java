@@ -723,6 +723,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			OID o = new OID(instOid);
 			cdpConnection.setConnifIndex(o.get(0));
 			
+			se.setName("cdpConnection " + instOid);
 			try {
 				if ( addrTblEvents == null ) {
 					
@@ -740,7 +741,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				}
 				if ( !hasLocalIp ) {
 					
-					logger.info("Found a connection endpoint with local IP.  Remote IP: " + cdpConnection.getRemoteIpAddress());
+					logger.info("Found a connection endpoint with local if. " +
+					             cdpConnection.getIfIndex() + " Remote IP: " + cdpConnection.getRemoteAddress());
 					TopologyElement te = new TopologyElement();
 					
 					te.setCreated(new Date());
@@ -751,30 +753,27 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					/**
 					 * Try to find a net mask from the remote device.
 					 */
-					if ( cdpConnection.getRemoteIpAddress() != null ) {
+					if ( cdpConnection.getRemoteAddress() != null ) {
 						
 						SNMP maskSnmp = snmpMgr.getSNMPByName("ipAdEntNetMask");
-						ElementEndPoint remoteEpt = new ElementEndPoint(cdpConnection.getRemoteIpAddress(), 
+						ElementEndPoint remoteEpt = new ElementEndPoint(cdpConnection.getRemoteAddress(), 
 								             discNode.getElementEndPoint().getAccessPort(), discNode.getElementEndPoint().getAuth());
 						
 						PDU pdu = new PDU();
-						pdu.add(new VariableBinding(new OID(maskSnmp.getOid() + "." + cdpConnection.getRemoteIpAddress())));
+						pdu.add(new VariableBinding(new OID(maskSnmp.getOid() + "." + cdpConnection.getRemoteAddress())));
 							
-						PDU rpdu = SnmpService.instance().getPdu(remoteEpt, pdu);
-						if ( discNode.getDiscoverNet().getRadiusCountDown() > 0 ) {
-								
-							String mask = rpdu.get(0).getVariable().toString();
-							logger.info("Found the mask for " + mask + " for remote ip " + remoteEpt.getIpAddress());
+						PDU rpdu = SnmpService.instance().getPdu(remoteEpt, pdu);		
+						String mask = rpdu.get(0).getVariable().toString();
+						logger.info("Found the mask " + mask + " for remote ip " + remoteEpt.getIpAddress());
 							
-							DiscoverNet dn = new DiscoverNet(remoteEpt.getIpAddress(), 
+						DiscoverNet dn = new DiscoverNet(remoteEpt.getIpAddress(), 
 										               mask, discNode.getDiscoverNet().getRadiusCountDown());
-							SubnetUtils sutils = new SubnetUtils(remoteEpt.getIpAddress(), mask);
-							String cidr = sutils.getInfo().getCidrSignature();
+						SubnetUtils sutils = new SubnetUtils(remoteEpt.getIpAddress(), mask);
+						String cidr = sutils.getInfo().getCidrSignature();
 								
-							String[] cc = cidr.split("/");
-							if ( Integer.parseInt(cc[1]) >= 24 ) {
-								  discNode.getOtherSubnet().add(dn);
-							}	
+						String[] cc = cidr.split("/");
+						if ( Integer.parseInt(cc[1]) >= 24 ) {
+						      discNode.getOtherSubnet().add(dn);
 						}
 									
 					}
@@ -789,11 +788,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				e.printStackTrace();
 				logger.info(e.getMessage());
 			}
-			
-			
 			discNode.addNetConnection(cdpConnection);
 		}
-		
 		return se;
 	}
 	

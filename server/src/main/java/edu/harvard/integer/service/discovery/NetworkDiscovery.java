@@ -255,6 +255,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		 * If the discovered node contains protocol connection, store it 
 		 */
 		if ( discoverNode.hasProtocolConnection() && discoverNode.isFwdNode() ) {		
+			
+			logger.info("Store node contain connectionns " + discoverNode.getIpAddress() + " " + discoverNode.getSysNamn());
 			addConnectionNode(subnetId, discoverNode);
 		}
 		

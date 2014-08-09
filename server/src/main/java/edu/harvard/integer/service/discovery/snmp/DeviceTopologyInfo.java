@@ -35,6 +35,11 @@ package edu.harvard.integer.service.discovery.snmp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
+
 /**
  * The Class DeviceTopologyInfo.
  *
@@ -42,6 +47,9 @@ import java.util.List;
  */
 public class DeviceTopologyInfo {
 
+	/** The logger. */
+	private static Logger logger = LoggerFactory.getLogger(DeviceTopologyInfo.class);
+	
 	/** The topo nodes. */
 	private List<TopologyNode>  topoNodes = new ArrayList<>();
 	
@@ -114,6 +122,7 @@ public class DeviceTopologyInfo {
 				return;
 			}
 		}
+		logger.info("Add connection in the list ifIndex " + netConnection.getIfIndex() );
 	    netConnections.add(netConnection);	
 	}
 }
