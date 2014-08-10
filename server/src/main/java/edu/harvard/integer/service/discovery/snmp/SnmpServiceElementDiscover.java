@@ -751,6 +751,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					te.setLayer(LayerTypeEnum.Two);
 					
 					te = topologyMgr.updateTopologyElement(te);
+					TopologyNode tn = new TopologyNode(te, cdpConnection.getIfIndex());
+					discNode.addTopologyNode(tn);
+					
 					/**
 					 * Try to find a net mask from the remote device.
 					 */

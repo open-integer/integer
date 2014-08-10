@@ -280,7 +280,9 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			InterDeviceLink upLink = new InterDeviceLink();
 			
 			upLink.setCreated(new Date());
-			upLink.setSourceAddress(foundTn.getTopologyElm().getAddress().get(0));
+			if ( foundTn.getTopologyElm().getAddress() != null && foundTn.getTopologyElm().getAddress().size() > 0 ) {
+			      upLink.setSourceAddress(foundTn.getTopologyElm().getAddress().get(0));
+			}
 			upLink.setDestinationAddress(connNode.destAddress);
 			upLink.setSourceServiceElementId(dn.getAccessElement().getID());
 			upLink.setDestinationServiceElementId(connNode.associatedNode.getAccessElement().getID());
@@ -292,7 +294,10 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			
             InterDeviceLink downLink = new InterDeviceLink();
 			downLink.setCreated(new Date());
-			downLink.setDestinationAddress(foundTn.getTopologyElm().getAddress().get(0));
+			
+			if ( foundTn.getTopologyElm().getAddress() != null && foundTn.getTopologyElm().getAddress().size() > 0 ) {
+			     downLink.setDestinationAddress(foundTn.getTopologyElm().getAddress().get(0));
+			}
 			downLink.setSourceAddress(connNode.destAddress);
 			downLink.setDestinationServiceElementId(dn.getAccessElement().getID());
 			downLink.setSourceServiceElementId(connNode.associatedNode.getAccessElement().getID());
@@ -351,7 +356,9 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			
             InterDeviceLink upLink = new InterDeviceLink();
 			upLink.setCreated(new Date());
-			upLink.setSourceAddress(foundTn.getTopologyElm().getAddress().get(0));
+			if ( foundTn.getTopologyElm().getAddress() != null && foundTn.getTopologyElm().getAddress().size() > 0 ) {
+			     upLink.setSourceAddress(foundTn.getTopologyElm().getAddress().get(0));
+			}
 			Address addr = new Address();
 			addr.setAddress(cdpConn.getRemoteAddress());	
 			upLink.setDestinationAddress(addr);
@@ -375,7 +382,10 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			
             InterDeviceLink downLink = new InterDeviceLink();
 			downLink.setCreated(new Date());
-			downLink.setDestinationAddress(foundTn.getTopologyElm().getAddress().get(0));
+			
+			if ( foundTn.getTopologyElm().getAddress() != null && foundTn.getTopologyElm().getAddress().size() > 0 ) {
+			    downLink.setDestinationAddress(foundTn.getTopologyElm().getAddress().get(0));
+			}
 			
 			downLink.setSourceAddress(addr);
 			downLink.setDestinationServiceElementId(dn.getAccessElement().getID());
