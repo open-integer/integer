@@ -441,9 +441,6 @@ public class DiscoverNode extends ElementAccess {
 	 * @param netConnection the net connection
 	 */
 	public void addNetConnection( NetworkConnection netConnection ) {
-		
-		logger.info("Try to add connection on " + getIpAddress() + " remote port " + netConnection.getRemotePort() + 
-				     " remote address" + netConnection.getRemoteAddress() + " localIf " + netConnection.getIfIndex());
 	    topologyInfo.addNetConnection(netConnection);	
 	}
 	
@@ -494,7 +491,7 @@ public class DiscoverNode extends ElementAccess {
 	 * 
 	 * @return
 	 */
-	public String getSysNamn() {
+	public String getSysName() {
 		return sysNamn;
 	}
 

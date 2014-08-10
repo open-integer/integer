@@ -256,7 +256,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		 */
 		if ( discoverNode.hasProtocolConnection() && discoverNode.isFwdNode() ) {		
 			
-			logger.info("Store node contain connectionns " + discoverNode.getIpAddress() + " " + discoverNode.getSysNamn());
+			logger.info("Store node contain connectionns " + discoverNode.getIpAddress() + " " + discoverNode.getSysName());
 			addConnectionNode(subnetId, discoverNode);
 		}
 		
@@ -525,10 +525,12 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 */
 	public synchronized boolean alreadyDiscovered( String sysName, DiscoverNode dnode ) {
 		
-		if ( discoverdSystems.get(sysName) != null ) {
+		if ( discoverdSystems.get(sysName.trim()) != null ) {
 			return true;
 		}
-		discoverdSystems.put(sysName, dnode);
+		
+		logger.info("Store a system in discoveredSystems " + sysName);
+		discoverdSystems.put(sysName.trim(), dnode);
 		return false;
 	}
 	

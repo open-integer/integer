@@ -360,11 +360,11 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 				netDisc.removeAliasIp(dn, dn.getSubnetId());
 				
 				logger.info("Found IPAddress associated device is already in discovery " 
-				                + dn.getIpAddress() + " " + dn.getSysNamn() );
+				                + dn.getIpAddress() + " " + sysInfo.getSysName() );
 				return;
 			}
 			dn.setSysNamn(sysInfo.getSysName());
-			logger.info("Start discovery on IP " + dn.getIpAddress() + " " + dn.getSysNamn()); 
+			logger.info("Start discovery on IP " + dn.getIpAddress() + " " + dn.getSysName()); 
 			 
 			elmTask = new ElementDiscoverTask<E>((NetworkDiscovery) netDisc, dn, new SnmpSysInfo(response));
 			DiscoveryServiceInterface service = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);

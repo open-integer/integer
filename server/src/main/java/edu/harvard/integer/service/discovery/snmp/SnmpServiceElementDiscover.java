@@ -736,12 +736,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				for ( TableEvent tblEvent : addrTblEvents ) {
 					if ( tblEvent.getColumns()[0].getVariable().toInt() == cdpConnection.getIfIndex() ) {
 						hasLocalIp = true;
+						cdpConnection.setLocalAddress(tblEvent.getIndex().toDottedString());
 						break;
 					}
 				}
 				if ( !hasLocalIp ) {
 					
-					logger.info("Found a connection endpoint with local if. " +
+					logger.info("Found a connection endpoint without local if. " +
 					             cdpConnection.getIfIndex() + " Remote IP: " + cdpConnection.getRemoteAddress());
 					TopologyElement te = new TopologyElement();
 					
@@ -774,10 +775,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 						String[] cc = cidr.split("/");
 						if ( Integer.parseInt(cc[1]) >= 24 ) {
 						      discNode.getOtherSubnet().add(dn);
-						}
-									
-					}
-					
+						}		
+					}					
+				}
+				else {
+					logger.info("Found connection on " + discNode.getSysName() + 
+							" localIP " + cdpConnection.getLocalAddress() + " remoteIP " + cdpConnection.getRemoteAddress());
 				}
 			}
 			catch ( Exception e ) 
@@ -788,6 +791,9 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 				e.printStackTrace();
 				logger.info(e.getMessage());
 			}
+			logger.info("Try to add connection on " + discNode.getIpAddress() + " remote port " + cdpConnection.getRemotePort() + 
+				     " remote address" + cdpConnection.getRemoteAddress() + " " +
+				cdpConnection.getRemoteDeviceId() + " localIf " + cdpConnection.getIfIndex());
 			discNode.addNetConnection(cdpConnection);
 		}
 		return se;
@@ -1863,7 +1869,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		if ( vbs.size() > 0 ) {
 			
 			pdu.addAll(vbs);
-			logger.info("Get value for SEAT " + seat.getName() + " from " + ePoint.getIpAddress() + " " + discNode.getSysNamn() + " Starting oid " 
+			logger.info("Get value for SEAT " + seat.getName() + " from " + ePoint.getIpAddress() + " " + discNode.getSysName() + " Starting oid " 
 			                      +  pdu.getVariableBindings().get(0).getOid().toString() + " size " + seat.getAttributeIds().size() );			
 		    rpdu = SnmpService.instance().getPdu(ePoint, pdu);
 		    List<ManagementObjectValue<?>> attributes = ses.getAttributeValues();

@@ -49,7 +49,8 @@ import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityMa
 public class CdpConnection implements NetworkConnection {
 	
 	private int connifIndex;
-
+    private String localAddress;
+	
 	private String remoteIpAddress;
 	private String remotePort;
 	private String remoteDeviceId;
@@ -147,5 +148,15 @@ public class CdpConnection implements NetworkConnection {
 	public void setConnifIndex(int connifIndex) {
 		this.connifIndex = connifIndex;
 	}
+	
+	public String getLocalAddress() {
+		return localAddress;
+	}
+
+
+	public void setLocalAddress(String localAddress) {
+		this.localAddress = localAddress;
+	}
+
 
 }

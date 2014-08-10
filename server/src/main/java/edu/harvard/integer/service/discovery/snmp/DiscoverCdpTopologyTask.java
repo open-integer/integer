@@ -131,14 +131,11 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		DeviceTopologyInfo deviceInfo =  dn.getTopologyInfo();
 		List<NetworkConnection> conns = deviceInfo.getNetConnections();
 	
+		logger.info("Discover links on " + dn.getIpAddress() + " " + dn.getSysName() + " link count " + conns.size());
 		List<CdpConnectionNode> nextLevelNodes = new ArrayList<>();		
-		for ( NetworkConnection conn : conns ) {
-			
-			if ( conn instanceof CdpConnection ) {
-				
-				CdpConnection cdpConn = (CdpConnection) conn;
-				discoverLink(dn, cdpConn, deviceInfo, nextLevelNodes);
-			}
+		for ( int i=0; i<conns.size(); i++ ) {
+			CdpConnection cdpConn = (CdpConnection) conns.get(i);
+			discoverLink(dn, cdpConn, deviceInfo, nextLevelNodes);
 		}
 		
 		/**
@@ -146,7 +143,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		 */
 		if ( nextLevelNodes.size() > 0 ) {
 			
-			logger.info("find link on next level " + nextLevelNodes.size());
+			logger.info("find next level link on first level " + nextLevelNodes.size());
 			findNextLevelLinks(nextLevelNodes);
 		}
 		
@@ -179,20 +176,29 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			DeviceTopologyInfo deviceInfo =  dn.getTopologyInfo();
 			List<NetworkConnection> conns = deviceInfo.getNetConnections();
 			
-			for ( NetworkConnection conn : conns ) {
+			logger.info("Discover links on * " + dn.getIpAddress() + " " + dn.getSysName() + " link count " + conns.size());
+			
+			for ( int i=0; i<conns.size(); i++ ) {
 				
-				if ( conn instanceof CdpConnection ) {
+				CdpConnection cdpConn = (CdpConnection) conns.get(i);
+				try {
+				    discoverLink(dn, cdpConn, deviceInfo, nextLevelNodes);
+				}
+				catch ( Exception e ) {
 					
-					CdpConnection cdpConn = (CdpConnection) conn;
-					discoverLink(dn, cdpConn, deviceInfo, nextLevelNodes);				
+					logger.info("Continue on exception " + e.getMessage());
+					e.printStackTrace();
 				}
 			}
+			
 		}
 		
 		/**
 		 * If the next level nodes are not empty, continue next level discover.
 		 */
 		if ( nextLevelNodes.size() > 0 ) {
+			
+			logger.info("find links on next level * " + nextLevelNodes.size());
 			findNextLevelLinks(nextLevelNodes);
 		}
 	}
@@ -226,12 +232,23 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			}
 		}
 		if ( foundTn.isFoundConnection() ) {
+			
+			logger.info("Connection is already found " + dn.getIpAddress() + " " + dn.getSysName()
+					+ " " + cdpConn.getIfIndex() + " " + cdpConn.getLocalAddress() + " " + cdpConn.getRemoteAddress() );
 			return;
+		}
+		else {
+			logger.info("Connection is found " + dn.getIpAddress() + " " + dn.getSysName()
+					+ " " + cdpConn.getIfIndex() + " " + cdpConn.getLocalAddress() + " " + cdpConn.getRemoteAddress() );
 		}
 		
 		foundTn.setFoundConnection(true);
 		CdpConnectionNode connNode = findAssociatedConnection(cdpConn);
 		if ( connNode == null ) {
+			
+			/*
+			 * Find the same connection in same level if any.
+			 */
 			connNode = findAssociatedConnection(nextLevelNodes, cdpConn);
 		}
 		else {
@@ -416,7 +433,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 					
 					if ( cdpConn.getRemoteAddress().equals(addr.getAddress()) ) {
 						
-						logger.info("Find a match address this IP device " + dn.getIpAddress() 
+						logger.info("Find a match address this IP device * " + dn.getIpAddress() 
 								                          + " with cdp connection address " + cdpConn.getRemoteAddress() 
 								                          + " " + cdpConn.getRemotePort() );
 						CdpConnectionNode cdpConnNode = new CdpConnectionNode();
