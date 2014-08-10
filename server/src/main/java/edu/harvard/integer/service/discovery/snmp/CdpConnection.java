@@ -158,5 +158,10 @@ public class CdpConnection implements NetworkConnection {
 		this.localAddress = localAddress;
 	}
 
+	public String toString() {
+		
+		return "Lip " + localAddress + " if " + connifIndex + " rlip " + remoteIpAddress 
+				+ " rid " + remoteDeviceId + " rport " + remotePort; 
+	}
 
 }

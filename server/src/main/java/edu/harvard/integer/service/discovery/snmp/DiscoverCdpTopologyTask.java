@@ -231,6 +231,21 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 				break;
 			}
 		}
+		if ( foundTn == null ) {
+			
+			logger.info("Can not found topologyNode " + cdpConn.toString() + " on " + dn.getSysName() + " " + dn.getIpAddress());
+			StringBuffer sb = new StringBuffer();
+			
+			try {
+			    for ( TopologyNode tn : deviceInfo.getTopoNodes() ) {			
+				      sb.append(tn.getIfIndex() + " " + tn.getTopologyElm().getAddress().get(0));
+			}	
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
 		if ( foundTn.isFoundConnection() ) {
 			
 			logger.info("Connection is already found " + dn.getIpAddress() + " " + dn.getSysName()
