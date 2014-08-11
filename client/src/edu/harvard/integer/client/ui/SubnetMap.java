@@ -36,13 +36,26 @@ import edu.harvard.integer.common.topology.ServiceElement;
  */
 public class SubnetMap extends IntegerMap {
 
+	/** The subnet panel. */
 	private SubnetPanel subnetPanel;
+	
+	/** The diff networks map. */
 	protected Map<ID, Point> diffNetworksMap = new HashMap<ID, Point>();
 	
+	/**
+	 * Instantiates a new subnet map.
+	 *
+	 * @param parentPanel the parent panel
+	 */
 	public SubnetMap(SubnetPanel parentPanel) {
 		subnetPanel = parentPanel;
 	}
 
+	/**
+	 * Update network.
+	 *
+	 * @param network the network
+	 */
 	public void updateNetwork(Network network) {
 		entityMap.clear();
 		diffNetworksMap.clear();
@@ -59,12 +72,15 @@ public class SubnetMap extends IntegerMap {
 		updateInterDeviceDiffNetworks(network.getInterDeviceLinks());
 		
 		drawLinks(network.getInterDeviceLinks());
+		
+		drawServiceElements(network.getServiceElements());
 	}
 
 	/**
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
 	 * @param list the result
+	 * @param layout_position the layout_position
 	 */
 	public void updateServiceElements(List<ServiceElement> list, int layout_position) {
 		this.layout_position = layout_position;
@@ -77,9 +93,7 @@ public class SubnetMap extends IntegerMap {
 		
 		for (final ServiceElement entity : list) {
 			Point point = calculatePoint(list.size(), i++, angle);
-			entityMap.put(entity.getID(), point);
-			//pointList.add(point);
-			
+			entityMap.put(entity.getID(), point);		
 			image = Resources.IMAGES.grayRouter();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
@@ -94,15 +108,32 @@ public class SubnetMap extends IntegerMap {
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, subnetPanel);
-        	icon.draw((int)point.getX(), (int)point.getY());
-        	
-        	add(icon);
         	iconMap.put(entity.getID(), icon);
         	
         	angle += increment;
 		}
 	}
 	
+	/**
+	 * Draw service elements.
+	 *
+	 * @param serviceElements the service elements
+	 */
+	private void drawServiceElements(List<ServiceElement> serviceElements) {
+		for (ServiceElement serviceElement : serviceElements) {
+			ServiceElementWidget icon = iconMap.get(serviceElement.getID());
+			Point point = entityMap.get(serviceElement.getID());
+			icon.draw((int)point.getX(), (int)point.getY());
+			add(icon);
+		}
+	}
+	
+	/**
+	 * Update lower networks.
+	 *
+	 * @param list the list
+	 * @param layout_position the layout_position
+	 */
 	private void updateLowerNetworks(List<Network> list, int layout_position) {
 		this.layout_position = layout_position;
 		init_layout(list.size());
@@ -129,7 +160,7 @@ public class SubnetMap extends IntegerMap {
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, null);
-        	icon.draw((int)point.getX(), (int)point.getY());
+        	//icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
         	iconMap.put(entity.getID(), icon);
@@ -138,6 +169,11 @@ public class SubnetMap extends IntegerMap {
 		}
 	}
 	
+	/**
+	 * Update inter device diff networks.
+	 *
+	 * @param list the list
+	 */
 	private void updateInterDeviceDiffNetworks(List<InterDeviceLink> list) {
 		layout_type = ELLIPSE_LAYOUT;
 		
@@ -258,6 +294,7 @@ public class SubnetMap extends IntegerMap {
 	 * @param link the link
 	 * @param p1 the p1
 	 * @param p2 the p2
+	 * @return the line
 	 */
 	private Line drawLink(final InterDeviceLink link, Point p1, Point p2) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();
