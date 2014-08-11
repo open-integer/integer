@@ -441,7 +441,10 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		}
 		catch ( IntegerException e ) {
 		
-			e.printStackTrace();
+			if ( !e.getErrorCode().getErrorCode().equals("SNMPNoSuchError") ) {
+				e.printStackTrace();
+			}
+			
 			boolean skipErrorReport = false;
 			logger.info("Exception during discovery.  "+ e.getMessage() );
 			if ( e.getErrorCode() instanceof NetworkErrorCodes ) {
