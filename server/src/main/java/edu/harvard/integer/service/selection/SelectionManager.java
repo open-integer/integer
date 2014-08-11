@@ -138,36 +138,34 @@ public class SelectionManager extends BaseManager implements
 		filter.setCreated(new Date());
 
 		ServiceDAO serviceDao = persistenceManager.getServiceDAO();
-		
-		Service userServices = serviceDao.findByName("User Services");
-		FilterNode userNode = new FilterNode();
-		userNode.setIdentifier(userServices.getIdentifier());
-		userNode.setName(userServices.getName());
-		userNode.setItemId(userServices.getID());
-		
-		userNode.setChildren(createBusinessServiceNodes(userServices.getUserServices()));
-		
-		Service providerServices = serviceDao.findByName("Provider Services");
-		FilterNode providerNode = new FilterNode();
-		providerNode.setIdentifier(providerServices.getIdentifier());
-		providerNode.setName(providerServices.getName());
-		providerNode.setItemId(providerNode.getID());
-		providerNode.setChildren(createBusinessServiceNodes(providerServices.getProviderServices()));
-		
-		List<FilterNode> services = new ArrayList<FilterNode>();
-		FilterNode rootNode = new FilterNode();
-		rootNode.setIdentifier(Long.valueOf(0));
-		rootNode.setName("Business Services");
-		rootNode.setItemId(new ID(Long.valueOf(0), rootNode.getName(), new IDType(Service.class.getName())));
-		
+
 		List<FilterNode> children = new ArrayList<FilterNode>();
 		
-		children.add(userNode);
-		children.add(providerNode);
+		Service userServices = serviceDao.findByName("User Services");
+		if (userServices != null) {
+	
+			FilterNode userNode = new FilterNode();
 		
-		rootNode.setChildren(children);
+			userNode.setIdentifier(userServices.getIdentifier());
+			userNode.setName(userServices.getName());
+			userNode.setItemId(userServices.getID());
 		
-		services.add(rootNode);
+			userNode.setChildren(createBusinessServiceNodes(userServices.getUserServices()));
+			
+			children.add(userNode);
+		}
+		
+		Service providerServices = serviceDao.findByName("Provider Services");
+		if (providerServices != null) {
+			FilterNode providerNode = new FilterNode();
+			
+			providerNode.setIdentifier(providerServices.getIdentifier());
+			providerNode.setName(providerServices.getName());
+			providerNode.setItemId(providerNode.getID());
+			providerNode.setChildren(createBusinessServiceNodes(providerServices.getProviderServices()));
+			children.add(providerNode);
+
+		}
 		
 		filter.setServices( children );
 		logger.info("Buisness Services: "
