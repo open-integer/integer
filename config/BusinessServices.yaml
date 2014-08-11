@@ -6,30 +6,34 @@ name: Business Service-tree
 description: business service-tree
 parent: root
 businessServices:
-      - name: IAM
-        description:  Identity and Access Management
+      - name: User Services
+        description:  user services
         parent: business service-tree
+        user services:
+        - name: Email
+          description:  email
+          parent: user services
+          
+        - name: Human Resource Management Systems
+          description:  human resource management systems
+          parent: user services
+          
+        - name: Payroll
+          description: payroll 
+          parent: user services
+          
+        - name: Student Information System
+          description:  student information system
+          parent: user services
+                    
+        - name: Library Resources
+          description:  library resources
+          parent: user services
 
-      - name: Email
-        description:  email
+      - name: Provider Services
+        description:  provider services
         parent: business service-tree
-        
-      - name: Human Resources
-        description:  human resources
-        parent: business service-tree
-        
-      - name: Payroll
-        description: payroll 
-        parent: business service-tree
-        
-      - name: Student Information System
-        description:  student information system
-        parent: business service-tree
-        
-      - name: Collaboration
-        description:  collaboration
-        parent: business service-tree
-        
-      - name: Library Resources
-        description:  library resources
-        parent: business service-tree
+        provider services:
+        - name: IAM
+          description:  Identity and Access Management
+          parent: provider services
