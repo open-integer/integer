@@ -574,4 +574,14 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 		ServiceElementAssociationType setat = associationTypeDao.findById(id);
 		return setat;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#updateServiceElementAssociationType(edu.harvard.integer.common.topology.ServiceElementAssociationType)
+	 */
+	@Override
+	public ServiceElementAssociationType updateServiceElementAssociationType(ServiceElementAssociationType serviceElementAssociationType) throws IntegerException {
+		ServiceElementAssociationTypeDAO associationTypeDao = dbm.getServiceElementAssociationTypeDAO();
+		return associationTypeDao.update(serviceElementAssociationType);
+	}
 }

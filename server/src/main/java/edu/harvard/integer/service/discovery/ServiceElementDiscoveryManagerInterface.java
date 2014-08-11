@@ -47,6 +47,7 @@ import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 
 /**
  * The service element discovery manager is responsible for both initial
@@ -367,6 +368,17 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @throws IntegerException
 	 */
 	public SnmpContainment updateSnmpContainment(SnmpContainment snmpContainment)
+			throws IntegerException;
+
+	/**
+	 * Update/save the ServiceElementAssociationType in the database.
+	 * 
+	 * @param serviceElementAssociationType
+	 * @return The updated ServiceElementAssociationType
+	 * @throws IntegerException
+	 */
+	ServiceElementAssociationType updateServiceElementAssociationType(
+			ServiceElementAssociationType serviceElementAssociationType)
 			throws IntegerException;
 
 }

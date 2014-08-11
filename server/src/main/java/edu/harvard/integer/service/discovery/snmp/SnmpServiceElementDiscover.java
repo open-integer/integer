@@ -80,6 +80,7 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.TopologyElement;
+import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
@@ -89,7 +90,6 @@ import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
-import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
@@ -785,9 +785,15 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					logger.info("Found connection on " + discNode.getSysName() + 
 							" localIP " + cdpConnection.getLocalAddress() + " remoteIP " + cdpConnection.getRemoteAddress());
 				}
-			}
-			catch ( Exception e ) 
-			{
+			
+			} catch (IntegerException e ) {
+				if (e.getErrorCode().equals(NetworkErrorCodes.CannotReach))
+					logger.info("Can not reach " + discNode.getIpAddress());
+				else {
+					e.printStackTrace();
+					logger.info(e.getMessage());
+				}
+			} catch ( Exception e )	{
 				/**
 				 * Skip the subnet if not cannot connect to the remote device though SNMP.
 				 */
@@ -1165,12 +1171,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
     					if ( set.getAssociations() != null && set.getAssociations().size() > 0 ) {
     						
     						AssociationInfo asInfo = new AssociationInfo(se);
-    						PersistenceManagerInterface persistanceManager = DistributionManager.getManager(ManagerTypeEnum.PersistenceManager);
-    						ServiceElementAssociationTypeDAO associationTypeDao = persistanceManager.getServiceElementAssociationTypeDAO();
+    						
+    						ServiceElementDiscoveryManagerInterface serviceElementDiscoveryManager = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
     						
     						for ( ID id : set.getAssociations() ) {
     							
-    							ServiceElementAssociationType associtateType = associationTypeDao.findById(id);	
+    							ServiceElementAssociationType associtateType = serviceElementDiscoveryManager.getServiceElementAssociationTypeById(id);
+    							
     							if ( levelOid.getAssociations() != null ) {
     								for ( SnmpAssociation association : levelOid.getAssociations() ) {
     									
@@ -1207,12 +1214,12 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		if ( set.getAssociations() != null && set.getAssociations().size() > 0 ) {
 			
 			AssociationInfo asInfo = new AssociationInfo(se);
-			PersistenceManagerInterface persistanceManager = DistributionManager.getManager(ManagerTypeEnum.PersistenceManager);
-			ServiceElementAssociationTypeDAO associationTypeDao = persistanceManager.getServiceElementAssociationTypeDAO();
+	
+			ServiceElementDiscoveryManagerInterface serviceElementAccessManager = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
 			
 			for ( ID id : set.getAssociations() ) {
 				
-				ServiceElementAssociationType associtateType = associationTypeDao.findById(id);	
+				ServiceElementAssociationType associtateType = serviceElementAccessManager.getServiceElementAssociationTypeById(id);
 				if ( levelOid.getAssociations() != null ) {
 					for ( SnmpAssociation association : levelOid.getAssociations() ) {
 						
