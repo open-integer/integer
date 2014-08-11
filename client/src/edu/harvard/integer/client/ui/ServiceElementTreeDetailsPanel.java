@@ -6,8 +6,16 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.common.topology.ServiceElement;
 
+/**
+ * The Class ServiceElementTreeDetailsPanel.
+ */
 public class ServiceElementTreeDetailsPanel extends SplitLayoutPanel {
 	
+	/**
+	 * Instantiates a new service element tree details panel.
+	 *
+	 * @param serviceElement the service element
+	 */
 	public ServiceElementTreeDetailsPanel(final ServiceElement serviceElement) {
 		super(MainClient.SPLITTER_SIZE);
 

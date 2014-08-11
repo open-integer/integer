@@ -6,13 +6,10 @@ package edu.harvard.integer.client.widget;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -26,9 +23,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @version 1.0, May 2014
  */
 public class HvDialogBox extends DialogBox {
-	
-	/** The form panel. */
-	private Panel panel;
 	
 	/** The button panel. */
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -65,7 +59,6 @@ public class HvDialogBox extends DialogBox {
 	 */
 	public HvDialogBox(String title, Panel panel, boolean autoHide, boolean modal) {
 		super(autoHide, modal);
-		this.panel = panel;
 		setText(title);
 		setGlassEnabled(false);
 	    setAnimationEnabled(true);
