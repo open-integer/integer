@@ -33,8 +33,11 @@
 
 package edu.harvard.integer.service.yaml;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.technology.Service;
 import edu.harvard.integer.common.yaml.YamlService;
@@ -50,10 +53,13 @@ public class YamlServiceParser implements YamlParserInterface<YamlService>{
 	
 	private Service[] allServices = null;
 	
+	private TechnologyManagerInterface technologyManager = null;
+	
 	public YamlServiceParser() {
 		
 	}
 	
+
 	public String parse(YamlService yamlService) throws IntegerException {
 		
 		if (yamlService == null)
@@ -62,10 +68,24 @@ public class YamlServiceParser implements YamlParserInterface<YamlService>{
 		if (yamlService.getBusinessServices() == null)
 			return "NoData";
 		
-		TechnologyManagerInterface technologyManager = DistributionManager.getManager(ManagerTypeEnum.TechnologyManager);
+		technologyManager = DistributionManager.getManager(ManagerTypeEnum.TechnologyManager);
 		allServices = technologyManager.getAllServices();
 		
-		for (YamlService service : yamlService.getBusinessServices()) {
+		parseChildren(yamlService.getBusinessServices());
+		
+		return "success";
+	}
+	
+	/**
+	 * @param businessServices
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private List<ID> parseChildren(List<YamlService> businessServices) throws IntegerException {
+		
+		List<ID> serviceIds = new ArrayList<ID>();
+		
+		for (YamlService service : businessServices) {
 			Service dbService = getServiceByName(service.getName());
 			
 			if (dbService.getIdentifier() == null) {
@@ -77,14 +97,20 @@ public class YamlServiceParser implements YamlParserInterface<YamlService>{
 				dbService.setDescription(service.getDescription());
 				dbService.setLastModified(new Date());
 				
-				technologyManager.updateService(dbService);
+				Service businessService = technologyManager.updateService(dbService);
+				serviceIds.add(businessService.getID());
 			}
 			
+			if (service.getProviderServices() != null)
+				dbService.setProviderServices(parseChildren(service.getProviderServices()));
+			
+			if (service.getUserServices() != null)
+				dbService.setUserServices(parseChildren(service.getUserServices()));
 		}
 		
-		return "success";
+		return serviceIds;
 	}
-	
+
 	private Service getServiceByName(String name) {
 		for (Service service : allServices) {
 			if (service.getName().equals(name))

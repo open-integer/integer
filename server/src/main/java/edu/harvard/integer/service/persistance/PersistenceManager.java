@@ -75,6 +75,7 @@ import edu.harvard.integer.service.persistance.dao.technology.MechanismDAO;
 import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
+import edu.harvard.integer.service.persistance.dao.topology.EnvironmentLevelDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterNetworkLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
@@ -546,5 +547,10 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public SnmpAssociationDAO getSnmpAssociationDAO() {
 		return new SnmpAssociationDAO(em, logger);
+	}
+	
+	@Override
+	public EnvironmentLevelDAO getEnvironmentLevelDAO() {
+		return new EnvironmentLevelDAO(em, logger);
 	}
 }

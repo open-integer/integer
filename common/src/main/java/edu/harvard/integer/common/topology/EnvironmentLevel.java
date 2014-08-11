@@ -31,17 +31,38 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.common.topology;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
+import javax.persistence.Entity;
+
+import edu.harvard.integer.common.BaseEntity;
 
 /**
  * @author David Taylor
  *
  */
-public interface YamlParserInterface<T extends YamlBaseInfoInterface> {
+@Entity
+public class EnvironmentLevel extends BaseEntity {
 
-	public String parse(T yamlObject) throws IntegerException;
+	/**
+	 * Serial Verion UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String description = null;
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
 }

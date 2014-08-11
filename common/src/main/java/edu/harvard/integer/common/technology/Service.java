@@ -47,8 +47,8 @@ import edu.harvard.integer.common.ID;
 /**
  * A business service is the highest level of abstraction in this hierarchy and
  * is the think that is most visible to customers. Examples include Payroll,
- * Personnel, Learning Management, and student information. These services
- * will be comprised of potentially many technologies required to realize the
+ * Personnel, Learning Management, and student information. These services will
+ * be comprised of potentially many technologies required to realize the
  * service.
  * 
  * @author David Taylor
@@ -94,6 +94,14 @@ public class Service extends BaseEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> technologies = null;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	private List<ID> userServices = null;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn(name = "idx")
+	private List<ID> providerServices = null;
 
 	/**
 	 * @return the created
@@ -168,6 +176,35 @@ public class Service extends BaseEntity {
 	 */
 	public void setTechnologies(List<ID> technologies) {
 		this.technologies = technologies;
+	}
+
+
+	/**
+	 * @return the userServices
+	 */
+	public List<ID> getUserServices() {
+		return userServices;
+	}
+
+	/**
+	 * @param userServices the userServices to set
+	 */
+	public void setUserServices(List<ID> userServices) {
+		this.userServices = userServices;
+	}
+
+	/**
+	 * @return the providerServices
+	 */
+	public List<ID> getProviderServices() {
+		return providerServices;
+	}
+
+	/**
+	 * @param providerServices the providerServices to set
+	 */
+	public void setProviderServices(List<ID> providerServices) {
+		this.providerServices = providerServices;
 	}
 
 }

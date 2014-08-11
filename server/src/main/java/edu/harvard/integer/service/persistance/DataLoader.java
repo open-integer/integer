@@ -51,6 +51,7 @@ import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
 import edu.harvard.integer.common.snmp.MIBImportResult;
 import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
+import edu.harvard.integer.common.yaml.YamlEnvironment;
 import edu.harvard.integer.common.yaml.YamlOrganization;
 import edu.harvard.integer.common.yaml.YamlService;
 import edu.harvard.integer.common.yaml.YamlTechnology;
@@ -58,6 +59,8 @@ import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.persistance.dao.persistance.DataPreLoadFileDAO;
+import edu.harvard.integer.service.yaml.YamlEnvironmentParser;
+import edu.harvard.integer.service.yaml.YamlListParserInterface;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 import edu.harvard.integer.service.yaml.YamlOrganizationParser;
 import edu.harvard.integer.service.yaml.YamlParserInterface;
@@ -135,6 +138,10 @@ public class DataLoader implements DataLoaderInterface {
 			loadYAMLData(dataPreLoadFile, YamlOrganization.class, new YamlOrganizationParser());
 			break;
 			
+		case Environment:
+			loadYAMLData(dataPreLoadFile, YamlEnvironment.class, new YamlEnvironmentParser());
+			break;
+			
 		default:
 			logger.error("Unknown data file type "
 					+ dataPreLoadFile.getFileType() + " Can not load!!");
@@ -147,6 +154,45 @@ public class DataLoader implements DataLoaderInterface {
 	 * @throws IntegerException 
 	 */
 	private void loadYAMLData(DataPreLoadFile dataPreLoadFile, Class<? extends YamlBaseInfoInterface> objectType, YamlParserInterface parser) throws IntegerException {
+		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
+			return;
+
+		File file = getFile(dataPreLoadFile);
+		if (file == null) {
+			logger.error("Unable to get data file "
+					+ dataPreLoadFile.getDataFile());
+			return;
+		}
+
+		String data = FileUtil.readInMIB(file);
+
+		YamlManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.YamlManager);
+		
+		if (manager != null) {
+			try {
+				manager.importYAML(data, objectType, parser);
+
+				dataPreLoadFile.setTimeLoaded(new Date());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.Loaded);
+
+			} catch (IntegerException e) {
+			
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			} catch (Throwable e) {
+				dataPreLoadFile.setErrorMessage(e.getLocalizedMessage());
+				dataPreLoadFile.setStatus(PersistenceStepStatusEnum.NotLoaded);
+			}
+		}
+		
+	
+	}
+	/**
+	 * @param dataPreLoadFile
+	 * @throws IntegerException 
+	 */
+	private void loadYAMLData(DataPreLoadFile dataPreLoadFile, Class<? extends YamlBaseInfoInterface> objectType, YamlListParserInterface parser) throws IntegerException {
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
 			return;
 

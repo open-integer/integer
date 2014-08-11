@@ -59,11 +59,13 @@ import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
 import edu.harvard.integer.common.yaml.YamlDomainData;
+import edu.harvard.integer.common.yaml.YamlEnvironment;
 import edu.harvard.integer.common.yaml.YamlOrganization;
 import edu.harvard.integer.common.yaml.YamlService;
 import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment;
+import edu.harvard.integer.service.yaml.YamlEnvironmentParser;
 import edu.harvard.integer.service.yaml.YamlManagerInterface;
 import edu.harvard.integer.service.yaml.YamlOrganizationParser;
 import edu.harvard.integer.service.yaml.YamlServiceParser;
@@ -350,6 +352,30 @@ public class TechnologyLoadTest {
 			
 		try {
 			yamlManager.importYAML(content, YamlOrganization.class, new YamlOrganizationParser());
+		} catch (IntegerException e) {
+			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
+				logger.warn("OID not found! ParentChildContainment not read!!");
+			else
+				fail(e.toString());
+		}
+	}
+	
+	
+	public void readEnvironment() {
+
+		File techTree = new File("../config/Environment.yaml");
+		String content = null;
+		try {
+			content = new String(Files.readAllBytes(techTree.toPath()));
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail("Error loading YAML: " + e.getMessage());
+		}
+			
+		try {
+			yamlManager.importYAML(content, YamlEnvironment.class, new YamlEnvironmentParser());
 		} catch (IntegerException e) {
 			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
 				logger.warn("OID not found! ParentChildContainment not read!!");

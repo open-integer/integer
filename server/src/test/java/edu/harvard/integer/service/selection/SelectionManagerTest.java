@@ -129,7 +129,7 @@ public class SelectionManagerTest {
 
 		Filter filter = new Filter();
 		filter.setCreated(new Date());
-		filter.setServices(TestUtil.createIdList(5, Service.class, "Service"));
+//		filter.setServices(TestUtil.createIdList(5, Service.class, "Service"));
 
 		filter.setTechnologies(getTechnologyTree());
 

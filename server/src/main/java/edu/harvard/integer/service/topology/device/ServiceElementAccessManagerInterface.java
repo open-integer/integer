@@ -37,6 +37,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
+import edu.harvard.integer.common.topology.EnvironmentLevel;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.BaseManagerInterface;
 
@@ -51,8 +52,7 @@ import edu.harvard.integer.service.BaseManagerInterface;
  * <p>
  * Ex.
  * <p>
- *  ServiceElementAccessManagerInterface manager =
- * DistributionManager.getManager
+ * ServiceElementAccessManagerInterface manager = DistributionManager.getManager
  * (DistributedManager.ServiceElementAccessManager);
  * <p>
  * Selection seletion = // create selection ServiceElement[] serviceElements =
@@ -123,7 +123,9 @@ public interface ServiceElementAccessManagerInterface extends
 	 * Ex. A ServiceElement for a port that has child ServiceElement for an
 	 * interface would also delete the ServiceElement for the interface.
 	 * <p>
-	 * @param ids of the ServiceElements to delete. 
+	 * 
+	 * @param ids
+	 *            of the ServiceElements to delete.
 	 * 
 	 * @throws IntegerException
 	 */
@@ -156,7 +158,7 @@ public interface ServiceElementAccessManagerInterface extends
 			throws IntegerException;
 
 	/**
-	 * Find the ServiceElement with the given name. If more than one 
+	 * Find the ServiceElement with the given name. If more than one
 	 * ServiceElement has this name. Then the first one will be returned.
 	 * 
 	 * @param name
@@ -167,6 +169,7 @@ public interface ServiceElementAccessManagerInterface extends
 
 	/**
 	 * Get all the service elements that match the given selection.
+	 * 
 	 * @param selection
 	 * @return ServiceElement[] that match the selection.
 	 * @throws IntegerException
@@ -176,10 +179,31 @@ public interface ServiceElementAccessManagerInterface extends
 
 	/**
 	 * Get all the top level service elements that match the give selection.
+	 * 
 	 * @param selection
-	 * @return ServiceElement[] of the top level service elements that match the selection.
+	 * @return ServiceElement[] of the top level service elements that match the
+	 *         selection.
 	 * @throws IntegerException
 	 */
 	ServiceElement[] getTopLevelServicesElementsBySelection(Selection selection)
+			throws IntegerException;
+
+	/**
+	 * Get a list of all EnvironmentLevels in the database.
+	 * 
+	 * @return EnvironmentLevel[] found in the database.
+	 * @throws IntegerException
+	 */
+	EnvironmentLevel[] getAllEnvironmentLevels() throws IntegerException;
+
+	/**
+	 * Update/Save the environment level.
+	 * 
+	 * @param environmentLevel
+	 * @return The update EnvironmentLevel. This will have the identifier set if
+	 *         this is a new object.
+	 * @throws IntegerException
+	 */
+	EnvironmentLevel updateEnvironmentLevel(EnvironmentLevel environmentLevel)
 			throws IntegerException;
 }

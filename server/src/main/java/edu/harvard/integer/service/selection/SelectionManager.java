@@ -33,9 +33,6 @@
 
 package edu.harvard.integer.service.selection;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,6 +44,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
@@ -140,13 +138,42 @@ public class SelectionManager extends BaseManager implements
 		filter.setCreated(new Date());
 
 		ServiceDAO serviceDao = persistenceManager.getServiceDAO();
-		Service[] allServices = serviceDao.findAll();
-		List<ID> serviceIds = new ArrayList<ID>();
-		for (Service service : allServices) {
-			serviceIds.add(service.getID());
-		}
-		filter.setServices(serviceIds);
-
+		
+		Service userServices = serviceDao.findByName("User Services");
+		FilterNode userNode = new FilterNode();
+		userNode.setIdentifier(userServices.getIdentifier());
+		userNode.setName(userServices.getName());
+		userNode.setItemId(userServices.getID());
+		
+		userNode.setChildren(createBusinessServiceNodes(userServices.getUserServices()));
+		
+		Service providerServices = serviceDao.findByName("Provider Services");
+		FilterNode providerNode = new FilterNode();
+		providerNode.setIdentifier(providerServices.getIdentifier());
+		providerNode.setName(providerServices.getName());
+		providerNode.setItemId(providerNode.getID());
+		providerNode.setChildren(createBusinessServiceNodes(providerServices.getProviderServices()));
+		
+		List<FilterNode> services = new ArrayList<FilterNode>();
+		FilterNode rootNode = new FilterNode();
+		rootNode.setIdentifier(Long.valueOf(0));
+		rootNode.setName("Business Services");
+		rootNode.setItemId(new ID(Long.valueOf(0), rootNode.getName(), new IDType(Service.class.getName())));
+		
+		List<FilterNode> children = new ArrayList<FilterNode>();
+		
+		children.add(userNode);
+		children.add(providerNode);
+		
+		rootNode.setChildren(children);
+		
+		services.add(rootNode);
+		
+		filter.setServices( children );
+		logger.info("Buisness Services: "
+				+ printFilterNode(new StringBuffer(), "  ",
+						filter.getServices()));
+		
 		filter.setTechnologies(nodes);
 		logger.info("Technologies: "
 				+ printFilterNode(new StringBuffer(), "  ",
@@ -185,6 +212,21 @@ public class SelectionManager extends BaseManager implements
 		return selection;
 	}
 
+	private List<FilterNode> createBusinessServiceNodes(List<ID> ids) {
+		List<FilterNode> nodes = new ArrayList<FilterNode>();
+		
+		for (ID id : ids) {
+			FilterNode node = new FilterNode();
+			node.setIdentifier(id.getIdentifier());
+			node.setName(id.getName());
+			node.setItemId(id);
+			
+			nodes.add(node);
+		}
+		
+		return nodes;
+	}
+	
 	/**
 	 * @param allOrganizations
 	 * @return

@@ -65,7 +65,6 @@ import edu.harvard.integer.common.discovery.VendorSignature;
 import edu.harvard.integer.common.discovery.VendorSignatureTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.YamlParserErrrorCodes;
-import edu.harvard.integer.common.persistence.PreloadFileType;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.technology.Technology;
@@ -82,13 +81,10 @@ import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 import edu.harvard.integer.common.yaml.YamlDomainData;
 import edu.harvard.integer.common.yaml.YamlLocation;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
-import edu.harvard.integer.common.yaml.YamlOrganization;
 import edu.harvard.integer.common.yaml.YamlServiceElementAssociationType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
 import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
-import edu.harvard.integer.common.yaml.YamlService;
 import edu.harvard.integer.common.yaml.YamlSnmpAssociation;
-import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpContainmentRelation;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpLevelOID;
@@ -1360,6 +1356,27 @@ public class YamlManager extends BaseManager implements
 
 		try {
 			yamlObject = (YamlBaseInfoInterface) yaml.load(data);
+		} catch (Throwable e) {
+			logger.error("Unexpected error reading in YAML! " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, YamlParserErrrorCodes.ParsingError);
+		}
+
+		logger.info("YAML Object is " + yamlObject.getClass().getName());
+	
+		return parser.parse(yamlObject);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public String importYAML(String data, Class<? extends YamlBaseInfoInterface> objectType, YamlListParserInterface parser) throws IntegerException {
+		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
+				objectType, getClass().getClassLoader()));
+
+		YamlBaseInfoInterface[] yamlObject = null;
+
+		try {
+			yamlObject = (YamlBaseInfoInterface[]) yaml.load(data);
 		} catch (Throwable e) {
 			logger.error("Unexpected error reading in YAML! " + e.toString());
 			e.printStackTrace();

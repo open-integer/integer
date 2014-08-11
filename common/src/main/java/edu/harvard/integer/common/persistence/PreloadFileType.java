@@ -50,7 +50,8 @@ public enum PreloadFileType {
 	SQL("sql"), 
 	Service("yaml"),
 	Location("yaml"),
-	Organization("yaml");
+	Organization("yaml"), 
+	Environment("yaml");
 	
 	private String dataSubDir = null;
 	

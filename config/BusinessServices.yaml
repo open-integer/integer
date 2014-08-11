@@ -9,31 +9,31 @@ businessServices:
       - name: User Services
         description:  user services
         parent: business service-tree
-        user services:
-        - name: Email
-          description:  email
-          parent: user services
-          
-        - name: Human Resource Management Systems
-          description:  human resource management systems
-          parent: user services
-          
-        - name: Payroll
-          description: payroll 
-          parent: user services
-          
-        - name: Student Information System
-          description:  student information system
-          parent: user services
-                    
-        - name: Library Resources
-          description:  library resources
-          parent: user services
+        userServices:
+          - name: Email
+            description:  email
+            parent: user services
+            
+          - name: Human Resource Management Systems
+            description:  human resource management systems
+            parent: user services
+            
+          - name: Payroll
+            description: payroll 
+            parent: user services
+            
+          - name: Student Information System
+            description:  student information system
+            parent: user services
+                      
+          - name: Library Resources
+            description:  library resources
+            parent: user services
 
       - name: Provider Services
         description:  provider services
         parent: business service-tree
-        provider services:
-        - name: IAM
-          description:  Identity and Access Management
-          parent: provider services
+        providerServices:
+          - name: IAM
+            description:  Identity and Access Management
+            parent: provider services

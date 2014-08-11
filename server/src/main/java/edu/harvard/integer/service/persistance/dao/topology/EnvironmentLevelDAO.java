@@ -31,17 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
+package edu.harvard.integer.service.persistance.dao.topology;
 
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.topology.EnvironmentLevel;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public interface YamlParserInterface<T extends YamlBaseInfoInterface> {
+public class EnvironmentLevelDAO extends BaseDAO {
 
-	public String parse(T yamlObject) throws IntegerException;
-	
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public EnvironmentLevelDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, EnvironmentLevel.class);
+
+	}
+
 }

@@ -46,12 +46,14 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.DeviceDetails;
+import edu.harvard.integer.common.topology.EnvironmentLevel;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
+import edu.harvard.integer.service.persistance.dao.topology.EnvironmentLevelDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 
@@ -65,6 +67,8 @@ import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 public class ServiceElememtAccessManager extends BaseManager implements
 		ServiceElementAccessManagerLocalInterface,
 		ServiceElementAccessManagerRemoteInterface {
+
+	
 
 	@Inject
 	private Logger logger;
@@ -353,5 +357,25 @@ public class ServiceElememtAccessManager extends BaseManager implements
 			return getTopLevel(parent, dao);
 		} else
 			return serviceElement;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getAllEnvironmentLevels()
+	 */
+	@Override
+	public EnvironmentLevel[] getAllEnvironmentLevels() throws IntegerException {
+		EnvironmentLevelDAO dao = dbm.getEnvironmentLevelDAO();
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#updateEnvironmentLevel(edu.harvard.integer.common.topology.EnvironmentLevel)
+	 */
+	@Override
+	public EnvironmentLevel updateEnvironmentLevel(EnvironmentLevel environmentLevel) throws IntegerException {
+		EnvironmentLevelDAO dao = dbm.getEnvironmentLevelDAO();
+		
+		return dao.update(environmentLevel);
 	}
 }

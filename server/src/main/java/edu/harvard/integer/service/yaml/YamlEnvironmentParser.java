@@ -34,14 +34,48 @@
 package edu.harvard.integer.service.yaml;
 
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
+import edu.harvard.integer.common.topology.EnvironmentLevel;
+import edu.harvard.integer.common.yaml.YamlEnvironment;
+import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface;
 
 /**
  * @author David Taylor
  *
  */
-public interface YamlParserInterface<T extends YamlBaseInfoInterface> {
+public class YamlEnvironmentParser implements YamlListParserInterface<YamlEnvironment> {
 
-	public String parse(T yamlObject) throws IntegerException;
 	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.yaml.YamlParserInterface#parse(edu.harvard.integer.common.yaml.YamlBaseInfoInterface[])
+	 */
+	@Override
+	public String parse(YamlEnvironment[] yamlObject) throws IntegerException {
+		ServiceElementAccessManagerLocalInterface serviceElementManager = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+		
+		EnvironmentLevel[] dbEnvironmentLevels = serviceElementManager.getAllEnvironmentLevels();
+		
+		for (YamlEnvironment yamlEnvironment : yamlObject) {
+			EnvironmentLevel envLevel = findEnvironmentLevel(yamlEnvironment.getName(), dbEnvironmentLevels);
+			envLevel.setDescription(yamlEnvironment.getDescription());
+			
+			serviceElementManager.updateEnvironmentLevel(envLevel);
+		}
+		
+		return null;
+	}
+	
+	private EnvironmentLevel findEnvironmentLevel(String name, EnvironmentLevel[] dbEnvironmentLevels) {
+		for (EnvironmentLevel environmentLevel : dbEnvironmentLevels) {
+			if (environmentLevel.getName().equals(environmentLevel.getName()))
+					return environmentLevel;
+		}
+		
+		EnvironmentLevel envLevel = new EnvironmentLevel();
+		envLevel.setName(name);
+		
+		return envLevel;
+	}
+
 }

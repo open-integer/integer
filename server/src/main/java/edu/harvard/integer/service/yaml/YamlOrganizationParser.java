@@ -64,6 +64,7 @@ public class YamlOrganizationParser implements YamlParserInterface<YamlOrganizat
 		
 	}
 
+
 	/**
 	 * @return
 	 * @throws IntegerException

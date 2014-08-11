@@ -46,6 +46,7 @@ import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.yaml.YamlCapability;
 import edu.harvard.integer.common.yaml.YamlMechanismType;
+import edu.harvard.integer.common.yaml.YamlService;
 import edu.harvard.integer.common.yaml.YamlTechnology;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -100,6 +101,7 @@ public class YamlTechnologyParser implements YamlParserInterface<YamlTechnology>
 			rootTech = root[0];
 		}
 	}
+	
 	
 	public String parse(YamlTechnology rootTechnology) throws IntegerException {
 		init();

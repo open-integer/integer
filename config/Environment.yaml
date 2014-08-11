@@ -2,15 +2,15 @@
 #unexpected side effects. The initial letter of each name element is in capitols. The exception
 #is for hyphenated words. This is the element that the user interface presents for selections.
 
-environmentServices:
-      - name: Production
-        description:  production
 
-      - name: Stage
-        description:  stage
+- name: Production
+  description:  production
+
+- name: Stage
+  description:  stage
         
-      - name: Test
-        description:  test
+- name: Test
+  description:  test
         
-      - name: Development
+- name: Development
         

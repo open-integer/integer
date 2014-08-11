@@ -49,21 +49,22 @@ import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
 
 /**
  * A filter is the way users tell the system the range of ServiceElements they
  * want to select for some purpose.
  * 
- * <p>Note that the selections attributes (e.g., technology, provider, etc.) are
+ * <p>
+ * Note that the selections attributes (e.g., technology, provider, etc.) are
  * AND. For example if the technology is routing AND a provider is acme service
  * company, then only service elements from the acme service company will be the
  * output of the filter. If one of the attributes like location or service is
  * null, then it is as if the user had selected all possibilities to which they
  * have access.
  * 
- * <P.Also not that within a selector such as technology, users are able to select
+ * <P
+ * .Also not that within a selector such as technology, users are able to select
  * multiples. This means that they could select routing and DNS. In this event,
  * these are treated as OR.
  * 
@@ -122,13 +123,13 @@ public class Filter extends BaseEntity {
 	 */
 	@ElementCollection
 	@OrderColumn(name = "idx")
-	private List<ID> services = null;
+	private List<FilterNode> services = null;
 
 	/**
 	 * List of technologies included in this filter.
 	 */
 	@ElementCollection
-	@JoinTable(name="FilterTechnologies")
+	@JoinTable(name = "FilterTechnologies")
 	@OrderColumn(name = "idx")
 	private List<FilterNode> technologies = null;
 
@@ -136,9 +137,9 @@ public class Filter extends BaseEntity {
 	 * The list of Categories to include in this filter.
 	 */
 	@ElementCollection
-	@OrderColumn(name = "idx")	
+	@OrderColumn(name = "idx")
 	private List<FilterNode> categories = null;
-	
+
 	/**
 	 * Providers selects for the filter.
 	 */
@@ -166,7 +167,7 @@ public class Filter extends BaseEntity {
 	 * organization
 	 */
 	@ElementCollection
-	@JoinTable(name="FilterOrginizations")
+	@JoinTable(name = "FilterOrginizations")
 	@OrderColumn(name = "idx")
 	private List<FilterNode> orginizations = null;
 
@@ -176,9 +177,17 @@ public class Filter extends BaseEntity {
 	 * do want included, for example CDP, or OSPF.
 	 */
 	@ElementCollection
-	@JoinTable(name="FilterLinkTechnologies")
+	@JoinTable(name = "FilterLinkTechnologies")
 	@OrderColumn(name = "idx")
 	private List<FilterNode> linkTechnologies = null;
+
+	/**
+	 * List of the environment levels to be included in the filter, for example
+	 * production, stage, test and development.
+	 */
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ID> environmentLevel = null;
 
 	/**
 	 * @return the description
@@ -318,7 +327,7 @@ public class Filter extends BaseEntity {
 	/**
 	 * @return the services
 	 */
-	public List<ID> getServices() {
+	public List<FilterNode> getServices() {
 		return services;
 	}
 
@@ -326,7 +335,7 @@ public class Filter extends BaseEntity {
 	 * @param services
 	 *            the services to set
 	 */
-	public void setServices(List<ID> services) {
+	public void setServices(List<FilterNode> services) {
 		this.services = services;
 	}
 
@@ -368,10 +377,25 @@ public class Filter extends BaseEntity {
 	}
 
 	/**
-	 * @param categories the categories to set
+	 * @param categories
+	 *            the categories to set
 	 */
 	public void setCategories(List<FilterNode> categories) {
 		this.categories = categories;
+	}
+
+	/**
+	 * @return the environmentLevel
+	 */
+	public List<ID> getEnvironmentLevel() {
+		return environmentLevel;
+	}
+
+	/**
+	 * @param environmentLevel the environmentLevel to set
+	 */
+	public void setEnvironmentLevel(List<ID> environmentLevel) {
+		this.environmentLevel = environmentLevel;
 	}
 
 }

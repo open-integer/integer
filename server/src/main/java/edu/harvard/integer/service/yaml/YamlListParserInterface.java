@@ -40,8 +40,7 @@ import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
  * @author David Taylor
  *
  */
-public interface YamlParserInterface<T extends YamlBaseInfoInterface> {
-
-	public String parse(T yamlObject) throws IntegerException;
+public interface YamlListParserInterface<T extends YamlBaseInfoInterface> {
 	
+	public String parse(T[] yamlObject) throws IntegerException;
 }

@@ -221,7 +221,10 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 					+ " and " + interDeviceLink.getSourceAddress().getMask());
 		
 		String sourceNetworkName = Network.createName(interDeviceLink.getSourceAddress());
-		String destNetworkName = Network.createName(interDeviceLink.getDestinationAddress());
+		if (sourceNetworkName == null || sourceNetworkName.equals("N/A"))
+			return;
+		
+		
 		Network sourceNetwork = networkDao.findByName(sourceNetworkName);
 		if (sourceNetwork == null)
 			sourceNetwork = networkDao.update(createNetwork(interDeviceLink.getSourceAddress()));
@@ -229,13 +232,16 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 		addInterDeviceLinkToNetwork(interDeviceLink, sourceNetwork);
 		addServiceElementToNetwork(interDeviceLink.getSourceServiceElementId(), sourceNetwork);
 		
+		String destNetworkName = Network.createName(interDeviceLink.getDestinationAddress());
+		if (destNetworkName == null || destNetworkName.equals("N/A"))
+			return;
+
 		Network destNetwork = networkDao.findByName(destNetworkName);
 		if (destNetwork == null)
 			destNetwork = networkDao.update(createNetwork(interDeviceLink.getDestinationAddress()));
 		
 		addServiceElementToNetwork(interDeviceLink.getDestinationServiceElementId(), destNetwork);
 		
-
 		interDeviceLink.setSourceNetworkId(sourceNetwork.getID());
 		interDeviceLink.setDestinationNetworkId(destNetwork.getID());
 		

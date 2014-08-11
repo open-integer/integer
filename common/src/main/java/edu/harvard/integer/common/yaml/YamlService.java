@@ -48,6 +48,10 @@ public class YamlService implements YamlBaseInfoInterface {
 	private String parent = null;
 
 	private List<YamlService> businessServices = null;
+	
+	private List<YamlService> userServices = null;
+	
+	private List<YamlService> providerServices = null;
 
 	/**
 	 * @return the name
@@ -95,6 +99,34 @@ public class YamlService implements YamlBaseInfoInterface {
 	}
 
 	/**
+	 * @return the userServices
+	 */
+	public List<YamlService> getUserServices() {
+		return userServices;
+	}
+
+	/**
+	 * @param userServices the userServices to set
+	 */
+	public void setUserServices(List<YamlService> userServices) {
+		this.userServices = userServices;
+	}
+
+	/**
+	 * @return the providerServices
+	 */
+	public List<YamlService> getProviderServices() {
+		return providerServices;
+	}
+
+	/**
+	 * @param providerServices the providerServices to set
+	 */
+	public void setProviderServices(List<YamlService> providerServices) {
+		this.providerServices = providerServices;
+	}
+
+	/**
 	 * @return the businessServices
 	 */
 	public List<YamlService> getBusinessServices() {
@@ -102,11 +134,12 @@ public class YamlService implements YamlBaseInfoInterface {
 	}
 
 	/**
-	 * @param businessServices
-	 *            the businessServices to set
+	 * @param businessServices the businessServices to set
 	 */
 	public void setBusinessServices(List<YamlService> businessServices) {
 		this.businessServices = businessServices;
 	}
+
+	
 
 }

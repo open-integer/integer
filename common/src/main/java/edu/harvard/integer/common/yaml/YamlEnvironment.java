@@ -31,17 +31,44 @@
  *      
  */
 
-package edu.harvard.integer.service.yaml;
-
-import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
+package edu.harvard.integer.common.yaml;
 
 /**
  * @author David Taylor
  *
  */
-public interface YamlParserInterface<T extends YamlBaseInfoInterface> {
+public class YamlEnvironment implements YamlBaseInfoInterface {
 
-	public String parse(T yamlObject) throws IntegerException;
+	private String name = null;
+	
+	private String description = null;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
 }

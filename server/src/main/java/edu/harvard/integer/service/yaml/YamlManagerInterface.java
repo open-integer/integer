@@ -77,10 +77,28 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 	 * specified in the objetType. The data will be parsed by the
 	 * YamlParserInteface object.
 	 * 
+	 * This import is to be use when the YAML represents a single object.
+	 * 
 	 * @param data
 	 * @param fileType
 	 */
 	String importYAML(String data,
 			Class<? extends YamlBaseInfoInterface> objectType,
 			YamlParserInterface parser) throws IntegerException;
+
+	/**
+	 * Import the YAML data passed in. The imported data must be of the type
+	 * specified in the objetType. The data will be parsed by the
+	 * YamlParserInteface object.
+	 * This import is to be used when the YAML represents a list of objects.
+	 * 
+	 * @param data
+	 * @param objectType
+	 * @param parser
+	 * @return
+	 * @throws IntegerException
+	 */
+	String importYAML(String data,
+			Class<? extends YamlBaseInfoInterface> objectType,
+			YamlListParserInterface parser) throws IntegerException;
 }
