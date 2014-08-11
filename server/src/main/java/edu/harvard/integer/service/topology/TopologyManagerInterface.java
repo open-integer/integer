@@ -223,4 +223,12 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 	 */
 	Location getLocationById(ID locationId) throws IntegerException;
 
+	/**
+	 * @param topologyElement
+	 * @return
+	 * @throws IntegerException
+	 */
+	TopologyElement updateTopologyElementForHost(TopologyElement topologyElement)
+			throws IntegerException;
+
 }

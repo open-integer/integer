@@ -432,4 +432,18 @@ public class ServiceElementDAO extends BaseDAO {
 		return findByStringField(name, "name", ServiceElement.class);
 	}
 
+	/**
+	 * @param childId
+	 * @throws IntegerException 
+	 */
+	public ServiceElement findParent(ID childId) throws IntegerException {
+		ServiceElement child = findById(childId);
+		
+		if (child.getParentIds()  != null && child.getParentIds().size() > 0)
+			return findById(child.getParentIds().get(0));
+	
+		return null;
+	}
+
+
 }

@@ -292,7 +292,7 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 									topoElm.setServiceElementId(addrSe.getID());
 									topoElm.setLayer(LayerTypeEnum.Three);
 									
-									topoElm = topologyMgr.updateTopologyElement(topoElm);
+									topoElm = topologyMgr.updateTopologyElementForHost(topoElm);
 									logger.info("Create topologyElement " + topoElm.getName());
 								}							    
 							}
