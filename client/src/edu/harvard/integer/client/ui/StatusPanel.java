@@ -6,8 +6,8 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class StatusPanel extends HorizontalPanel {
 	
-	public static int STATUS_WIDTH = 600;
-	public static int STATUS_HEIGHT = 26;
+	public static int STATUS_WIDTH = 800;
+	public static int STATUS_HEIGHT = 18;
 	private TextBox statusBox = new TextBox();
 	
 	public StatusPanel() {

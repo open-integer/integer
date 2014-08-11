@@ -13,6 +13,9 @@ import edu.harvard.integer.client.widget.HvTableViewPanel;
  */
 public class EventView extends HvTableViewPanel {
 	
+	/** The Constant EVENT_VIEW_HEIGHT. */
+	public static final int EVENT_VIEW_HEIGHT = 120;
+	
 	/**
 	 * Instantiates a new capability view.
 	 *
@@ -21,12 +24,13 @@ public class EventView extends HvTableViewPanel {
 	 */
 	public EventView(String title, String[] headers) {
 		super(title, headers);
+		setTableSize("100%", EVENT_VIEW_HEIGHT+"px");
+		setSize("100%", "100%");
 		addButton.setVisible(false);
 		flexTable.insertRow(1);
 		flexTable.insertRow(2);
 		
 		flexTable.applyDataRowStyles();
-		flexTable.getVisualPanel().setSize("100%", "150px");
 	}
 
 	/**

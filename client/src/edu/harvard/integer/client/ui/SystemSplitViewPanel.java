@@ -24,16 +24,17 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public static final int CONTENT_WIDTH = 1200;
 	
 	/** The Constant CONTENT_HEIGHT. */
-	public static final int CONTENT_HEIGHT = 600;
+	public static final int CONTENT_HEIGHT = 800;
 	
 	/** The Constant WESTPANEL_WIDTH. */
 	public static final int WESTPANEL_WIDTH = 250;
 
 	/** The east panel. */
-	public static DockPanel eastPanel = null;
+	//public static DockPanel eastPanel = null;
+	private static SplitLayoutPanel eastPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
 	
 	/** The contained tree view. */
-	public static ContainedTreeView containedTreeView = null;
+	//public static ContainedTreeView containedTreeView = null;
 
 	/** The network panel. */
 	private NetworkPanel networkPanel = new NetworkPanel();
@@ -55,23 +56,20 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         // Event View
 		EventView eventView = createEventView();
 		
-		eastPanel = new DockPanel();
-		eastPanel.setBorderWidth(1);
 		eastPanel.setSize("100%", "100%");
 
-	    
 	    // tabPanel
-		tabPanel.setSize("100%", CONTENT_HEIGHT+"px");
+		tabPanel.setSize("100%", "100%");
 	    tabPanel.setAnimationDuration(500);
-	    tabPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 	    tabPanel.add(networkPanel, "Network Map");
 
-		eastPanel.add(tabPanel, DockPanel.CENTER);
-		eastPanel.add(eventView, DockPanel.SOUTH);
+		eastPanel.addSouth(eventView, EventView.EVENT_VIEW_HEIGHT);
+		eastPanel.add(tabPanel);
+		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
+		eastPanel.setWidgetHidden(eventView, false);
 		
 		final FilterPanel filterPanel = new FilterPanel();
-		//filterPanel.setHeight("100%");
-		filterPanel.setSize("100%", "100%");
+		filterPanel.setSize("100%", SystemSplitViewPanel.CONTENT_HEIGHT+"px");
 		
 		addWest(filterPanel, WESTPANEL_WIDTH);
 		setWidgetToggleDisplayAllowed(filterPanel, true);

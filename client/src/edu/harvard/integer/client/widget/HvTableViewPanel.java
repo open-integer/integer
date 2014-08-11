@@ -107,6 +107,10 @@ public class HvTableViewPanel extends VerticalPanel {
 		setSize("100%", "100%");
 	}
 	
+	public void setTableSize(String width, String height) {
+		splitPanel.setSize(width, height);
+	}
+	
 	/**
 	 * Sets the action panel visible.
 	 *

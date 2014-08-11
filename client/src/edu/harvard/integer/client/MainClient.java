@@ -52,7 +52,7 @@ public class MainClient implements EntryPoint {
 	public static final int WINDOW_WIDTH = 1200;
 	
 	/** The Constant WINDOW_HEIGHT. */
-	public static final int WINDOW_HEIGHT = 800;
+	public static final int WINDOW_HEIGHT = 900;
 	
 	/** The Constant SPLITTER_SIZE. */
 	public static final int SPLITTER_SIZE = 12;

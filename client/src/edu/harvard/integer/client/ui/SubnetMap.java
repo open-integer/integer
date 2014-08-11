@@ -16,12 +16,15 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -104,7 +107,27 @@ public class SubnetMap extends IntegerMap {
         			selectedEntity = entity;
         			//selectedTimestamp = System.currentTimeMillis();
         			
-        			subnetPanel.showContainedTreeView(entity);
+        			//subnetPanel.showContainedTreeView(entity);
+        			
+        			MainClient.integerService.getDeviceDetails(
+    						entity.getID(),
+    						new AsyncCallback<DeviceDetails>() {
+
+    							@Override
+    							public void onFailure(Throwable caught) {
+    								MainClient.statusPanel.showAlert("Failed to receive detail information of " + selectedEntity.getName());
+    							}
+
+    							@Override
+    							public void onSuccess(DeviceDetails deviceDetails) {
+    								DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedEntity.getName(), deviceDetails);
+    								HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
+    								detailsDialog.enableOkButton(false);
+    								detailsDialog.setSize("400px", "150px");
+    								detailsDialog.center();
+    								detailsDialog.show();
+    							}
+    						});
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, subnetPanel);

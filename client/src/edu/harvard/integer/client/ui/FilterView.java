@@ -26,7 +26,8 @@ public class FilterView extends HvTableViewPanel {
 				headers);
 		addButton.setVisible(false);
 
-		flexTable.setSize("250px", "200px");
+		//flexTable.setSize("250px", "200px");
+		setTableSize("100%", "100%");
 	}
 
 	/**
