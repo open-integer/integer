@@ -248,9 +248,16 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			StringBuffer sb = new StringBuffer();
 			
 			try {
-			    for ( TopologyNode tn : deviceInfo.getTopoNodes() ) {			
-				      sb.append(tn.getIfIndex() + " " + tn.getTopologyElm().getAddress().get(0));
-			}	
+			    for ( TopologyNode tn : deviceInfo.getTopoNodes() ) {	
+			    	
+			    	if ( tn.getTopologyElm().getAddress() != null ) {
+				         sb.append(tn.getIfIndex() + " " + tn.getTopologyElm().getAddress().get(0));
+			    	}
+			    	else {
+			    		sb.append(tn.getIfIndex() + " no ip address ");
+			    	}
+			    }	
+			    logger.info("If index for that node " + sb.toString());
 			}
 			catch (Exception e) {
 				// TODO: handle exception
@@ -432,6 +439,9 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			for ( TopologyNode tn : dn.getTopologyInfo().getTopoNodes() ) {
 				
 				List<Address> addrs = tn.getTopologyElm().getAddress();
+				if ( addrs == null ) {
+					continue;
+				}
 				for ( Address addr : addrs ) {					
 					if ( cdpConn.getRemoteAddress().equals(addr.getAddress()) ) {
 						
@@ -466,6 +476,13 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			for ( TopologyNode tn : dn.getTopologyInfo().getTopoNodes() ) {
 		
 				List<Address> addrs = tn.getTopologyElm().getAddress();
+				if ( addrs == null ) {
+					
+					/*
+					 * Skip this topology node is no IP address found.
+					 */
+				    continue;	
+				}				
 				for ( Address addr : addrs ) {	
 					
 					if ( cdpConn.getRemoteAddress().equals(addr.getAddress()) ) {
