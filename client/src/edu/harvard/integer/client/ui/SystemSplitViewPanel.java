@@ -31,7 +31,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 
 	/** The east panel. */
 	//public static DockPanel eastPanel = null;
-	private static SplitLayoutPanel eastPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
+	private SplitLayoutPanel eastPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
 	
 	/** The contained tree view. */
 	//public static ContainedTreeView containedTreeView = null;
