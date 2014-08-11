@@ -1397,10 +1397,16 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			        	
 		                if ( levelSetType.getCategory().getName().equals("Network") ) {
 							
-							TopologyElement te = new TopologyElement();
-							
 							String ipaddr = getIpAddressFromSE(levelSe);
 							String mask = getIpMaskFromSE(levelSe);
+							
+							/**
+							 * Skip the local host IP address.
+							 */
+							if ( ipaddr.equals("127.0.0.1")) {
+								break;
+							}
+							TopologyElement te = new TopologyElement();
 							
 							Address a = new Address();
 							a.setAddress(ipaddr);
