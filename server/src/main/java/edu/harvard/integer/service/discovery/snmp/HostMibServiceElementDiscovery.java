@@ -174,7 +174,11 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 									SNMP snmp =  (SNMP) capMgr.getManagementObjectById(mval.getManagementObject());
 									 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {
 										 
-										 se.setName(mval.getValue().toString());
+										 String nameVal = mval.getValue().toString();
+										 if ( nameVal.length() > 49 ) {
+											 nameVal = set.getCategory().getName() + " " + te.getIndex().toString();
+										 }
+										 se.setName(nameVal);
 										 break;
 									 }	
 								}
@@ -189,10 +193,17 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 								 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {
 									 
 									 if ( set.getCategory().getName().equals("CPU") ) {
-										 se.setName(mval.getValue().toString() + " " + te.getIndex().toString());
+										 
+										 String nameVal = set.getCategory().getName() + " " + te.getIndex().toString();
+										 se.setName(nameVal);
 									 }
 									 else {
-									     se.setName(mval.getValue().toString());
+										 
+										 String nameVal = mval.getValue().toString();
+										 if ( nameVal.length() > 49 ) {
+											 nameVal = set.getCategory().getName() + " " + te.getIndex().toString();
+										 }
+									     se.setName(nameVal);
 									 }
 									 break;
 								 }	
@@ -321,10 +332,15 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 										 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {
 											 
 											 if ( set.getCategory().getName().equals("CPU") ) {
-												 se.setName(mval.getValue().toString() + " " + te.getIndex().toString());
+												 se.setName(set.getCategory().getName() + " " + te.getIndex().toString());
 											 }
 											 else {
-											     se.setName(mval.getValue().toString());
+												 
+												 String nameVal = mval.getValue().toString();
+												 if ( nameVal.length() > 49 ) {
+													 nameVal = set.getCategory().getName() + " " + te.getIndex().toString();
+												 }
+											     se.setName(nameVal);
 											 }
 											 break;
 										 }	
@@ -340,10 +356,15 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 									 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {
 										 
 										 if ( set.getCategory().getName().equals("CPU") ) {
-											 se.setName(mval.getValue().toString() + " " + te.getIndex().toString());
+											 se.setName(set.getCategory().getName() + " " + te.getIndex().toString());
 										 }
 										 else {
-										     se.setName(mval.getValue().toString());
+											 
+											 String nameVal = mval.getValue().toString();
+											 if ( nameVal.length() > 49 ) {
+												 nameVal = set.getCategory().getName() + " " + te.getIndex().toString();
+											 }
+										     se.setName(nameVal);
 										 }
 										 break;
 									 }	
@@ -401,8 +422,13 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 							for ( ManagementObjectValue<?> mval : se.getAttributeValues() ) {
 								
 								SNMP snmp =  (SNMP) capMgr.getManagementObjectById(mval.getManagementObject());
-								 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {									
-									  se.setName(mval.getValue().toString());
+								 if ( snmp.getIdentifier().longValue() == nameAttr.getIdentifier().longValue() ) {		
+									 
+									  String nameVal = mval.getValue().toString();
+									  if ( nameVal.length() > 50 ) {
+										  nameVal = nameVal.substring(0, 49);
+									  }
+									  se.setName(nameVal);
 								 }	
 							}
 						}
