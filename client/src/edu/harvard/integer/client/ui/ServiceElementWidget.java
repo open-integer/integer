@@ -26,11 +26,15 @@ import com.emitrom.lienzo.client.core.types.Shadow;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
 import com.google.gwt.touch.client.Point;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.utils.HvLink;
+import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -307,7 +311,16 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 			SystemSplitViewPanel.showServiceElementMap((Network)entity);
 		else if (entity instanceof ServiceElement) {
 			subnetPanel.setSelectedEntity(entity);
-			subnetPanel.showContainedTreeView((ServiceElement)entity);
+			//subnetPanel.showContainedTreeView((ServiceElement)entity);
+			ServiceElement serviceElement = (ServiceElement)entity;
+			
+			ServiceElementTreeDetailsPanel detailsPanel = new ServiceElementTreeDetailsPanel(serviceElement);
+			HvDialogBox detailsDialog = new HvDialogBox(serviceElement.getName(), detailsPanel);
+			detailsDialog.enableOkButton(false);
+			detailsDialog.setSize("600px", "700px");
+			detailsDialog.center();
+			detailsDialog.show();
+						
 		}
 		setHighLighted(true); // highlighted whenever it gets clicked for now
 	}

@@ -6,10 +6,13 @@ package edu.harvard.integer.client.widget;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -25,7 +28,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class HvDialogBox extends DialogBox {
 	
 	/** The form panel. */
-	private FormPanel formPanel;
+	private Panel panel;
 	
 	/** The button panel. */
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -48,8 +51,8 @@ public class HvDialogBox extends DialogBox {
 	 * @param title the title
 	 * @param formPanel the form panel
 	 */
-	public HvDialogBox(String title, FormPanel formPanel) {
-		this(title, formPanel, false, false);
+	public HvDialogBox(String title, Panel panel) {
+		this(title, panel, false, false);
 	}
 	
 	/**
@@ -60,9 +63,9 @@ public class HvDialogBox extends DialogBox {
 	 * @param autoHide the auto hide
 	 * @param modal the modal
 	 */
-	public HvDialogBox(String title, FormPanel formPanel, boolean autoHide, boolean modal) {
+	public HvDialogBox(String title, Panel panel, boolean autoHide, boolean modal) {
 		super(autoHide, modal);
-		this.formPanel = formPanel;
+		this.panel = panel;
 		setText(title);
 		setGlassEnabled(false);
 	    setAnimationEnabled(true);
@@ -95,7 +98,7 @@ public class HvDialogBox extends DialogBox {
 	    rightButtonPanel.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
 	    
 	    
-		dialogContents.add(formPanel);
+		dialogContents.add(panel);
 		dialogContents.add(buttonPanel);
 		
 	}
@@ -110,8 +113,6 @@ public class HvDialogBox extends DialogBox {
 	/** The ok handler. */
 	private ClickHandler okHandler = new ClickHandler() {
 		public void onClick(ClickEvent event) {
-			if (formPanel != null)
-				formPanel.submit();
 			
 			hide();
 		}
