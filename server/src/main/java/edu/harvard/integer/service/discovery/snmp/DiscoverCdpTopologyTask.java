@@ -135,7 +135,19 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		List<CdpConnectionNode> nextLevelNodes = new ArrayList<>();		
 		for ( int i=0; i<conns.size(); i++ ) {
 			CdpConnection cdpConn = (CdpConnection) conns.get(i);
-			discoverLink(dn, cdpConn, deviceInfo, nextLevelNodes);
+			logger.info("Discover link on " + cdpConn.getLocalAddress() + " " + cdpConn.getRemoteAddress());
+			try {
+			     discoverLink(dn, cdpConn, deviceInfo, nextLevelNodes);
+			}
+			catch ( IntegerException ie ) {
+				ie.printStackTrace();
+				throw ie;
+			}
+			catch (Exception e) {
+				
+				e.printStackTrace();
+				throw e;
+			}
 		}
 		
 		/**
@@ -190,7 +202,6 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 					e.printStackTrace();
 				}
 			}
-			
 		}
 		
 		/**
@@ -276,6 +287,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		}
 		if ( connNode != null ) {
 			
+			logger.info("Found connection node " + connNode.associatedNode.getSysName());
 			connNode.associatedTn.setFoundConnection(true);
 			InterDeviceLink upLink = new InterDeviceLink();
 			
@@ -315,12 +327,12 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		}
 		else {
 			
+			logger.info("No connection node found " + cdpConn.getRemoteAddress() + " " + dn.getSysName());
 			/**
 			 * Cannot find the connection.  First check if there is such system exist on DB by search on name.
 			 * On CDP, the remote device id is same as the system name in general.
 			 */
-			ServiceElement nodeSe = accessMgr.getServiceElementByName(cdpConn.getRemoteDeviceId());
-			
+			ServiceElement nodeSe = accessMgr.getServiceElementByName(cdpConn.getRemoteDeviceId());			
 			if ( nodeSe == null ) {
 				
 				ServiceElementType set = discMgr.getServiceElementTypeByName("unknownSystem");
