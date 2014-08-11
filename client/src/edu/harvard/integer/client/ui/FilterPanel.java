@@ -27,6 +27,8 @@ public class FilterPanel extends DockPanel {
 	/** The category provider. */
 	private ListDataProvider<LeaveItem> categoryProvider = new ListDataProvider<LeaveItem>();
 	
+	private ListDataProvider<ID> environmentProvider = new ListDataProvider<ID>();
+	
 	/** The technology provider. */
 	private ListDataProvider<LeaveItem> technologyProvider = new ListDataProvider<LeaveItem>();
 	
@@ -88,6 +90,9 @@ public class FilterPanel extends DockPanel {
 		
 		if (filter.getCategories() != null && !filter.getCategories().isEmpty())
 			selectionPanel.add(new HvCheckBoxTreePanel(categoryProvider, filter.getCategories()), "Categories", 3);
+		
+		if (filter.getEnvironmentLevel() != null && !filter.getEnvironmentLevel().isEmpty())
+			selectionPanel.add(new HvCheckListPanel<ID>(environmentProvider, filter.getEnvironmentLevel()), "Environment", 3);
 		
 		if (filter.getTechnologies() != null && !filter.getTechnologies().isEmpty())
 			selectionPanel.add(new HvCheckBoxTreePanel(technologyProvider, filter.getTechnologies()), "Service Technologies", 3);
