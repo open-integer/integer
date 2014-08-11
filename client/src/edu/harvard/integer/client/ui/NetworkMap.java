@@ -90,6 +90,11 @@ public class NetworkMap extends IntegerMap {
 		}
 	}
 	
+	/**
+	 * Draw devices.
+	 *
+	 * @param networks the networks
+	 */
 	private void drawDevices(Network[] networks) {
 		for (Network network : networks) {
 			ServiceElementWidget icon = iconMap.get(network.getID());
@@ -140,6 +145,7 @@ public class NetworkMap extends IntegerMap {
 	 * @param link the link
 	 * @param p1 the p1
 	 * @param p2 the p2
+	 * @return the line
 	 */
 	private Line drawLink(final InterNetworkLink link, Point p1, Point p2) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();

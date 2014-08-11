@@ -36,13 +36,26 @@ import edu.harvard.integer.common.topology.ServiceElement;
  */
 public class SubnetMap extends IntegerMap {
 
+	/** The subnet panel. */
 	private SubnetPanel subnetPanel;
+	
+	/** The diff networks map. */
 	protected Map<ID, Point> diffNetworksMap = new HashMap<ID, Point>();
 	
+	/**
+	 * Instantiates a new subnet map.
+	 *
+	 * @param parentPanel the parent panel
+	 */
 	public SubnetMap(SubnetPanel parentPanel) {
 		subnetPanel = parentPanel;
 	}
 
+	/**
+	 * Update network.
+	 *
+	 * @param network the network
+	 */
 	public void updateNetwork(Network network) {
 		entityMap.clear();
 		diffNetworksMap.clear();
@@ -67,6 +80,7 @@ public class SubnetMap extends IntegerMap {
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
 	 * @param list the result
+	 * @param layout_position the layout_position
 	 */
 	public void updateServiceElements(List<ServiceElement> list, int layout_position) {
 		this.layout_position = layout_position;
@@ -100,6 +114,11 @@ public class SubnetMap extends IntegerMap {
 		}
 	}
 	
+	/**
+	 * Draw service elements.
+	 *
+	 * @param serviceElements the service elements
+	 */
 	private void drawServiceElements(List<ServiceElement> serviceElements) {
 		for (ServiceElement serviceElement : serviceElements) {
 			ServiceElementWidget icon = iconMap.get(serviceElement.getID());
@@ -109,6 +128,12 @@ public class SubnetMap extends IntegerMap {
 		}
 	}
 	
+	/**
+	 * Update lower networks.
+	 *
+	 * @param list the list
+	 * @param layout_position the layout_position
+	 */
 	private void updateLowerNetworks(List<Network> list, int layout_position) {
 		this.layout_position = layout_position;
 		init_layout(list.size());
@@ -144,6 +169,11 @@ public class SubnetMap extends IntegerMap {
 		}
 	}
 	
+	/**
+	 * Update inter device diff networks.
+	 *
+	 * @param list the list
+	 */
 	private void updateInterDeviceDiffNetworks(List<InterDeviceLink> list) {
 		layout_type = ELLIPSE_LAYOUT;
 		
@@ -264,6 +294,7 @@ public class SubnetMap extends IntegerMap {
 	 * @param link the link
 	 * @param p1 the p1
 	 * @param p2 the p2
+	 * @return the line
 	 */
 	private Line drawLink(final InterDeviceLink link, Point p1, Point p2) {
 		final HvMapIconPopup tooltip = new HvMapIconPopup();
