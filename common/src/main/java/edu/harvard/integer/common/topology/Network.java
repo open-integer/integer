@@ -207,7 +207,10 @@ public class Network extends BaseEntity {
 	 */
 	public static String createName(Address sourceAddress) {
 		
-		return Address.getSubNet(sourceAddress.getAddress(), sourceAddress.getMask());
+		if (sourceAddress != null)
+			return Address.getSubNet(sourceAddress.getAddress(), sourceAddress.getMask());
+		else
+			return "N/A";
 	}
 
 	/**
