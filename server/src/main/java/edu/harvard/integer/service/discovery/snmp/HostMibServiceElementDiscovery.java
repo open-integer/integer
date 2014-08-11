@@ -252,9 +252,6 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 								SNMP addrIf = snmpMgr.getSNMPByName("ipAdEntIfIndex");
 							    for ( TableEvent tblEvent : addrTblEvents ) {
 							    	
-							    	if ( tblEvent.getIndex().equals("127.0.0.1") ) {
-							    		continue;
-							    	}
 							    	for ( VariableBinding vb : tblEvent.getColumns() ) {
 							    		if ( vb.getOid().toString().indexOf(addrIf.getOid()) >= 0  &&
 							    				vb.getVariable().toString().equals(ifIndex))  {
@@ -274,12 +271,14 @@ public class HostMibServiceElementDiscovery extends SnmpServiceElementDiscover {
 										addrSe.setName(matchTbl.getIndex().toString());
 									}
 									addrSe = updateServiceElement(addrSe, addrSet, ifSe, levelOid);
-									
-									TopologyElement topoElm = new TopologyElement();
-									
 									String ipaddr = getIpAddressFromSE(addrSe);
 									String mask = getIpMaskFromSE(addrSe);
 									
+									if ( ipaddr.equals("127.0.0.1") ) {
+										continue;
+									}
+									
+									TopologyElement topoElm = new TopologyElement();																		
 									Address a = new Address();
 									a.setAddress(ipaddr);
 									a.setMask(mask);					
