@@ -43,6 +43,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -54,10 +55,12 @@ import edu.harvard.integer.common.technology.Service;
 import edu.harvard.integer.common.technology.Technology;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CriticalityEnum;
+import edu.harvard.integer.common.topology.EnvironmentLevel;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
 import edu.harvard.integer.common.user.Location;
 import edu.harvard.integer.common.user.Organization;
 import edu.harvard.integer.service.BaseManager;
+import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.FilterDAO;
@@ -67,6 +70,7 @@ import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface;
 
 /**
  * 
@@ -201,6 +205,11 @@ public class SelectionManager extends BaseManager implements
 
 		filter.setProviders(createProviderList(allOrganizations, new ArrayList<ID>(), organizationDAO));
 		
+		ServiceElementAccessManagerLocalInterface serviceElementManaeger = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+		EnvironmentLevel[] allEnvironmentLevels = serviceElementManaeger.getAllEnvironmentLevels();
+		
+		filter.setEnvironmentLevel(createIDList(allEnvironmentLevels));
+		
 		List<Filter> filters = new ArrayList<Filter>();
 		filters.add(filter);
 
@@ -208,6 +217,20 @@ public class SelectionManager extends BaseManager implements
 		selection.setFilters(filters);
 
 		return selection;
+	}
+	
+	private List<ID> createIDList(BaseEntity[] entities) {
+		List<ID> ids = new ArrayList<ID>();
+		
+		if (entities == null)
+			return ids;
+		
+		for (BaseEntity baseEntity : entities) {
+			
+			ids.add(baseEntity.getID());
+		}
+		
+		return ids;
 	}
 
 	private List<FilterNode> createBusinessServiceNodes(List<ID> ids) {

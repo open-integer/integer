@@ -66,7 +66,7 @@ VALUES
  	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Category', 'technology/category.yaml', 'CategoryYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Location Info', 'location.yaml', 'Location', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Organization Info', 'OrganizationTree.yaml', 'Organization', NULL, NULL, NULL),
- --	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Environment Level', 'Environment.yaml', 'Environment', NULL, NULL, NULL),
+ 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Environment Level', 'Environment.yaml', 'Environment', NULL, NULL, NULL),
 
 	
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Interface Technology', 'common/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),

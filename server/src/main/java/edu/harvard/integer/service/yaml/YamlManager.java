@@ -79,6 +79,7 @@ import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.common.topology.ValueOpertorEnum;
 import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 import edu.harvard.integer.common.yaml.YamlDomainData;
+import edu.harvard.integer.common.yaml.YamlEnvironment;
 import edu.harvard.integer.common.yaml.YamlLocation;
 import edu.harvard.integer.common.yaml.YamlManagementObject;
 import edu.harvard.integer.common.yaml.YamlServiceElementAssociationType;
@@ -1371,7 +1372,7 @@ public class YamlManager extends BaseManager implements
 	@Override
 	public String importYAML(String data, Class<? extends YamlBaseInfoInterface> objectType, YamlListParserInterface parser) throws IntegerException {
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
-				objectType, getClass().getClassLoader()));
+				YamlEnvironment[].class, getClass().getClassLoader()));
 
 		YamlBaseInfoInterface[] yamlObject = null;
 
