@@ -149,6 +149,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			} catch (IntegerException ie) {
 				ie.printStackTrace();
 				throw ie;
+				
 			} catch (Exception e) {
 
 				e.printStackTrace();
@@ -261,16 +262,22 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			StringBuffer sb = new StringBuffer();
 
 			try {
-				for (TopologyNode tn : deviceInfo.getTopoNodes()) {
-					if (tn.getTopologyElm() != null &&
-							tn.getTopologyElm().getAddress() != null) {
-						
-						sb.append(tn.getIfIndex() + " "
-								+ tn.getTopologyElm().getAddress().get(0));
-					}
-				}
-			} catch (Exception e) {
+				
+			    for ( TopologyNode tn : deviceInfo.getTopoNodes() ) {	
+			    	
+			    	if ( tn.getTopologyElm() != null && tn.getTopologyElm().getAddress() != null ) {
+				         sb.append(tn.getIfIndex() + " " + tn.getTopologyElm().getAddress().get(0));
+			    	}
+			    	else {
+			    		sb.append(tn.getIfIndex() + " no ip address ");
+			    	}
+			    }	
+			    logger.info("If index for that node " + sb.toString());
+			}
+			catch (Exception e) {
+				// TODO: Handle this error!
 				logger.error("Exception found looking for toplogy node! " + e.toString());
+
 			}
 		}
 
@@ -468,29 +475,27 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		for (CdpConnectionNode connNode : connNodes) {
 
 			DiscoverNode dn = connNode.associatedNode;
-			for (TopologyNode tn : dn.getTopologyInfo().getTopoNodes()) {
 
-				if (tn.getTopologyElm() != null
-						&& tn.getTopologyElm().getAddress() != null) {
-					List<Address> addrs = tn.getTopologyElm().getAddress();
-					
-					for (Address addr : addrs) {
-						if (cdpConn.getRemoteAddress()
-								.equals(addr.getAddress())) {
+			for ( TopologyNode tn : dn.getTopologyInfo().getTopoNodes() ) {
+				
+				List<Address> addrs = tn.getTopologyElm().getAddress();
+				if ( addrs == null ) {
+					continue;
+				}
 
-							logger.info("Find a match address on passing conn list on this IP device "
-									+ dn.getIpAddress()
-									+ " with cdp connection address "
-									+ cdpConn.getRemoteAddress()
-									+ " "
-									+ cdpConn.getRemotePort());
+				for ( Address addr : addrs ) {					
+					if ( cdpConn.getRemoteAddress().equals(addr.getAddress()) ) {
+						
+						logger.info("Find a match address on passing conn list on this IP device " + dn.getIpAddress() 
+		                          + " with cdp connection address " + cdpConn.getRemoteAddress() 
+		                          + " " + cdpConn.getRemotePort() );
+						
+						CdpConnectionNode cdpConnNode = new CdpConnectionNode();
+						cdpConnNode.associatedNode = dn;
+						cdpConnNode.associatedTn = tn;
+						cdpConnNode.destAddress = addr;
+						return cdpConnNode;
 
-							CdpConnectionNode cdpConnNode = new CdpConnectionNode();
-							cdpConnNode.associatedNode = dn;
-							cdpConnNode.associatedTn = tn;
-							cdpConnNode.destAddress = addr;
-							return cdpConnNode;
-						}
 					}
 				}
 			}
@@ -514,26 +519,29 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 
 				List<Address> addrs = tn.getTopologyElm().getAddress();
 
-				if (addrs != null) {
-					for (Address addr : addrs) {
+				if ( addrs == null ) {
+					
+					/*
+					 * Skip this topology node is no IP address found.
+					 */
+				    continue;	
+				}	
+				
+				for ( Address addr : addrs ) {	
+					
+					if ( cdpConn.getRemoteAddress().equals(addr.getAddress()) ) {
+						
+						logger.info("Find a match address this IP device * " + dn.getIpAddress() 
+								                          + " with cdp connection address " + cdpConn.getRemoteAddress() 
+								                          + " " + cdpConn.getRemotePort() );
+						CdpConnectionNode cdpConnNode = new CdpConnectionNode();
+						cdpConnNode.associatedNode = dn;
+						cdpConnNode.associatedTn = tn;
+						cdpConnNode.destAddress = addr;
+						
+						discNodes.remove(i);
+						return cdpConnNode;
 
-						if (cdpConn.getRemoteAddress()
-								.equals(addr.getAddress())) {
-
-							logger.info("Find a match address this IP device * "
-									+ dn.getIpAddress()
-									+ " with cdp connection address "
-									+ cdpConn.getRemoteAddress()
-									+ " "
-									+ cdpConn.getRemotePort());
-							CdpConnectionNode cdpConnNode = new CdpConnectionNode();
-							cdpConnNode.associatedNode = dn;
-							cdpConnNode.associatedTn = tn;
-							cdpConnNode.destAddress = addr;
-
-							discNodes.remove(i);
-							return cdpConnNode;
-						}
 					}
 				}
 			}
