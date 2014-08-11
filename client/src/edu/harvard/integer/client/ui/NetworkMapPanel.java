@@ -32,11 +32,10 @@ public class NetworkMapPanel extends LienzoPanel {
 					}
 				});
 
-		// networkMapPanel.setSize("100%", "100%");
 		add(networkMap);
 
 		getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-		getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_RIGHT));
+		getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_LEFT));
 
 		LienzoPanel.enableWindowMouseWheelScroll(true);
 	}
