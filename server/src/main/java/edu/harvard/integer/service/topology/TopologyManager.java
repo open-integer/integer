@@ -387,10 +387,14 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 			for (Address address : topologyElement.getAddress()) {
 				String sourceNetworkName = Network.createName(address);
 				Network network = networkDao.findByName(sourceNetworkName);
-				if (network == null)
+				
+				if (network == null) {
 					network = createNetwork(address);
+					network = networkDao.update(network);
+				}
 				
 				addServiceElementToNetwork(topologyElement.getServiceElementId(), network);
+				networkDao.update(network);
 			}
 		}
 		
