@@ -278,7 +278,6 @@ public class TopologyManager extends BaseManager implements TopologyManagerLocal
 	private void addServiceElementToNetwork(ID sourceServiceElementId,
 			Network sourceNetwork) throws IntegerException {
 
-
 		if (sourceServiceElementId == null)
 			return;
 		
