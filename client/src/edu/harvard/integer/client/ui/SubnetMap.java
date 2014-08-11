@@ -59,6 +59,8 @@ public class SubnetMap extends IntegerMap {
 		updateInterDeviceDiffNetworks(network.getInterDeviceLinks());
 		
 		drawLinks(network.getInterDeviceLinks());
+		
+		drawServiceElements(network.getServiceElements());
 	}
 
 	/**
@@ -77,9 +79,7 @@ public class SubnetMap extends IntegerMap {
 		
 		for (final ServiceElement entity : list) {
 			Point point = calculatePoint(list.size(), i++, angle);
-			entityMap.put(entity.getID(), point);
-			//pointList.add(point);
-			
+			entityMap.put(entity.getID(), point);		
 			image = Resources.IMAGES.grayRouter();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
@@ -94,12 +94,18 @@ public class SubnetMap extends IntegerMap {
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, subnetPanel);
-        	icon.draw((int)point.getX(), (int)point.getY());
-        	
-        	add(icon);
         	iconMap.put(entity.getID(), icon);
         	
         	angle += increment;
+		}
+	}
+	
+	private void drawServiceElements(List<ServiceElement> serviceElements) {
+		for (ServiceElement serviceElement : serviceElements) {
+			ServiceElementWidget icon = iconMap.get(serviceElement.getID());
+			Point point = entityMap.get(serviceElement.getID());
+			icon.draw((int)point.getX(), (int)point.getY());
+			add(icon);
 		}
 	}
 	
@@ -129,7 +135,7 @@ public class SubnetMap extends IntegerMap {
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, null);
-        	icon.draw((int)point.getX(), (int)point.getY());
+        	//icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
         	iconMap.put(entity.getID(), icon);

@@ -49,6 +49,7 @@ public class NetworkMap extends IntegerMap {
 		removeAll();
 		updateNetworks(networkkInfo.getNetworks());
 		drawLinks(networkkInfo.getLinks());
+		drawDevices(networkkInfo.getNetworks());
 	}
 
 	/**
@@ -83,12 +84,18 @@ public class NetworkMap extends IntegerMap {
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, network, null);
-        	icon.draw((int)point.getX(), (int)point.getY());
-        	
-        	add(icon);
         	iconMap.put(network.getID(), icon);
         	
         	angle += increment;
+		}
+	}
+	
+	private void drawDevices(Network[] networks) {
+		for (Network network : networks) {
+			ServiceElementWidget icon = iconMap.get(network.getID());
+			Point point = entityMap.get(network.getID());
+			icon.draw((int)point.getX(), (int)point.getY());
+			add(icon);
 		}
 	}
 	
