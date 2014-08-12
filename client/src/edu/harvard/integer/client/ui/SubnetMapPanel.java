@@ -27,7 +27,7 @@ public class SubnetMapPanel extends LienzoPanel {
 		add(subnetMap);
 
 		getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-		getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_LEFT));
+		getViewport().pushMediator(new MousePanMediator(EventFilter.SHIFT));
 
 		LienzoPanel.enableWindowMouseWheelScroll(true);
 	}
