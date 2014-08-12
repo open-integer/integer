@@ -55,6 +55,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
@@ -118,6 +120,54 @@ public class TopologyManagerTest {
 			assert (topologyElements.length > 0);
 		} catch (IntegerException e) {
 			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void updateMapItemPostition() {
+		
+		addMapItemPosition();
+	}
+	
+	private MapItemPosition addMapItemPosition() {
+		MapItemPosition position = new MapItemPosition();
+		position.setIconName("MyIcon");
+		position.setItemId(new ID(Long.valueOf(1), "MyItem", new IDType("IDType")));
+		position.setMapId(new ID(Long.valueOf(2), "MyMap", new IDType("IDType")));
+		position.setUserId(new ID(Long.valueOf(3), "MyUser", new IDType("IDType")));
+		position.setXposition(3);
+		position.setYposition(5);
+		
+		try {
+			position = topologyManager.updateMapItemPosition(position);
+			
+			assert (position != null);
+			assert (position.getIdentifier() != null);
+			return position;
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		return null;
+	}
+	
+	@Test
+	public void getAllNetworkPositions() {
+		
+		try {
+			MapItemPosition[] allNetworkPositions = topologyManager.getAllNetworkPositions();
+			if (allNetworkPositions == null || allNetworkPositions.length == 0)
+				addMapItemPosition();
+			
+			allNetworkPositions = topologyManager.getAllNetworkPositions();
+			assert(allNetworkPositions != null);
+			assert(allNetworkPositions.length > 0);
+			
+		} catch (IntegerException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}

@@ -38,6 +38,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.InterNetworkLink;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.Path;
@@ -229,6 +230,37 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	TopologyElement updateTopologyElementForHost(TopologyElement topologyElement)
+			throws IntegerException;
+
+	/**
+	 * Get the list of positions for the network view.
+	 * 
+	 * @return MapItemPosition[] of all the networks in the database.
+	 * @throws IntegerException
+	 */
+	MapItemPosition[] getAllNetworkPositions() throws IntegerException;
+
+	/**
+	 * Get the list of MapItemPositions for a map.
+	 * 
+	 * @param mapId
+	 *            . ID of the network map or a subnet to get the positions for.
+	 * 
+	 * @return MapItemPosition[] for the map specified.
+	 * @throws IntegerException
+	 */
+	MapItemPosition[] getPositionsByMap(ID mapId) throws IntegerException;
+
+	/**
+	 * Update / save the MapItemPosition in the database.
+	 * 
+	 * @param position
+	 *            . The MapItemPosition to update.
+	 * @return the updated MapItemPosition. The returned object will have the
+	 *         identifier set when the object is being created.
+	 * @throws IntegerException
+	 */
+	MapItemPosition updateMapItemPosition(MapItemPosition position)
 			throws IntegerException;
 
 }

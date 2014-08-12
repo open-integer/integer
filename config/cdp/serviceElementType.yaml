@@ -88,7 +88,7 @@ serviceElementTypes:
          - name: ciscoSystem
            mapping: direct
            category: System
-           iconName: grayRouter.jpg
+           iconName: Router
       managementObjects:
       
     - name: cisco-ipv4Addr

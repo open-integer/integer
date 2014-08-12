@@ -360,7 +360,7 @@ public class TechnologyLoadTest {
 		}
 	}
 	
-	
+	@Test
 	public void readEnvironment() {
 
 		File techTree = new File("../config/Environment.yaml");
@@ -375,7 +375,7 @@ public class TechnologyLoadTest {
 		}
 			
 		try {
-			yamlManager.importYAML(content, YamlEnvironment.class, new YamlEnvironmentParser());
+			yamlManager.importYAML(content, YamlEnvironment[].class, new YamlEnvironmentParser());
 		} catch (IntegerException e) {
 			if (YamlParserErrrorCodes.ContextOidNotFound.equals(e.getErrorCode()))
 				logger.warn("OID not found! ParentChildContainment not read!!");

@@ -47,6 +47,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.InterNetworkLink;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.Path;
@@ -58,6 +59,7 @@ import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterNetworkLinkDAO;
+import edu.harvard.integer.service.persistance.dao.topology.MapItemPositionDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
@@ -585,5 +587,40 @@ public class TopologyManager extends BaseManager implements
 		LocationDAO dao = persistenceManager.getLocationDAO();
 
 		return dao.findById(locationId);
+	}
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getAllNetworkPositions()
+	 */
+	@Override
+	public MapItemPosition[] getAllNetworkPositions() throws IntegerException {
+		MapItemPositionDAO dao = persistenceManager.getMapItemPositionDAO();
+		
+		return dao.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#getPositionsByMap(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public MapItemPosition[] getPositionsByMap(ID mapId) throws IntegerException {
+		MapItemPositionDAO dao = persistenceManager.getMapItemPositionDAO();
+		MapItemPosition[] positions = dao.findByMapId(mapId);
+		
+		return positions;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#updateMapItemPosition(edu.harvard.integer.common.topology.MapItemPosition)
+	 */
+	@Override
+	public MapItemPosition updateMapItemPosition(MapItemPosition position) throws IntegerException {
+		MapItemPositionDAO dao = persistenceManager.getMapItemPositionDAO();
+		
+		return dao.update(position);
 	}
 }

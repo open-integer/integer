@@ -1347,7 +1347,7 @@ public class YamlManager extends BaseManager implements
 		return parser.parse();
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public String importYAML(String data, Class<? extends YamlBaseInfoInterface> objectType, YamlParserInterface parser) throws IntegerException {
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
@@ -1370,9 +1370,9 @@ public class YamlManager extends BaseManager implements
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public String importYAML(String data, Class<? extends YamlBaseInfoInterface> objectType, YamlListParserInterface parser) throws IntegerException {
+	public String importYAML(String data, Class<? extends YamlBaseInfoInterface[]> objectType, YamlListParserInterface parser) throws IntegerException {
 		Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
-				YamlEnvironment[].class, getClass().getClassLoader()));
+				objectType, getClass().getClassLoader()));
 
 		YamlBaseInfoInterface[] yamlObject = null;
 

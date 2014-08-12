@@ -45,7 +45,6 @@ import org.slf4j.Logger;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.common.persistence.PersistenceStepStatusEnum;
-import edu.harvard.integer.common.persistence.PreloadFileType;
 import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -139,7 +138,7 @@ public class DataLoader implements DataLoaderInterface {
 			break;
 			
 		case Environment:
-			loadYAMLData(dataPreLoadFile, YamlEnvironment.class, new YamlEnvironmentParser());
+			loadYAMLData(dataPreLoadFile, YamlEnvironment[].class, new YamlEnvironmentParser());
 			break;
 			
 		default:
@@ -153,7 +152,7 @@ public class DataLoader implements DataLoaderInterface {
 	 * @param dataPreLoadFile
 	 * @throws IntegerException 
 	 */
-	private void loadYAMLData(DataPreLoadFile dataPreLoadFile, Class<? extends YamlBaseInfoInterface> objectType, YamlParserInterface parser) throws IntegerException {
+	private void loadYAMLData(DataPreLoadFile dataPreLoadFile, Class<? extends YamlBaseInfoInterface> objectType, YamlParserInterface<? extends YamlBaseInfoInterface> parser) throws IntegerException {
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
 			return;
 
@@ -192,7 +191,7 @@ public class DataLoader implements DataLoaderInterface {
 	 * @param dataPreLoadFile
 	 * @throws IntegerException 
 	 */
-	private void loadYAMLData(DataPreLoadFile dataPreLoadFile, Class<? extends YamlBaseInfoInterface> objectType, YamlListParserInterface parser) throws IntegerException {
+	private void loadYAMLData(DataPreLoadFile dataPreLoadFile, Class<? extends YamlBaseInfoInterface[]> objectType, YamlListParserInterface<? extends YamlBaseInfoInterface> parser) throws IntegerException {
 		if (!DistributionManager.isLocalManager(ManagerTypeEnum.YamlManager))
 			return;
 

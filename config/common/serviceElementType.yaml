@@ -93,7 +93,7 @@ serviceElementTypes:
          - name: unknownSystem
            mapping: direct
            category: System
-           iconName: unknownHost.jpg
+           iconName: Unknown
 
     - name: hostSystem
       description: The Service element a host system.
@@ -103,7 +103,7 @@ serviceElementTypes:
           - name: hostSystem
             mapping: direct
             category: System
-            iconName: server.jpg
+            iconName: Server
 
     - name: connectionEndPort
       description: The Service element type for connection end port which contain by an unknown system.

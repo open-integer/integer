@@ -78,6 +78,7 @@ import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.EnvironmentLevelDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterDeviceLinkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.InterNetworkLinkDAO;
+import edu.harvard.integer.service.persistance.dao.topology.MapItemPositionDAO;
 import edu.harvard.integer.service.persistance.dao.topology.NetworkDAO;
 import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationDAO;
@@ -552,5 +553,10 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public EnvironmentLevelDAO getEnvironmentLevelDAO() {
 		return new EnvironmentLevelDAO(em, logger);
+	}
+	
+	@Override
+	public MapItemPositionDAO getMapItemPositionDAO() {
+		return new MapItemPositionDAO(em, logger);
 	}
 }

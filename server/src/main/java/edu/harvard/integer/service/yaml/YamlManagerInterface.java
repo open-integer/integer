@@ -84,7 +84,7 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 	 */
 	String importYAML(String data,
 			Class<? extends YamlBaseInfoInterface> objectType,
-			YamlParserInterface parser) throws IntegerException;
+			@SuppressWarnings("rawtypes") YamlParserInterface parser) throws IntegerException;
 
 	/**
 	 * Import the YAML data passed in. The imported data must be of the type
@@ -99,6 +99,6 @@ public interface YamlManagerInterface extends BaseManagerInterface {
 	 * @throws IntegerException
 	 */
 	String importYAML(String data,
-			Class<? extends YamlBaseInfoInterface> objectType,
-			YamlListParserInterface parser) throws IntegerException;
+			Class<? extends YamlBaseInfoInterface[]> objectType,
+			@SuppressWarnings("rawtypes") YamlListParserInterface parser) throws IntegerException;
 }
