@@ -9,31 +9,18 @@ public interface Resources {
 	Icons ICONS = GWT.create(Icons.class);
 	
 	public interface Images extends ClientBundle {
-
-		@Source("/images/grayRouter.jpg")
-		ImageResource grayRouter();
-		
-		@Source("/images/graySwitch.jpg")
-		ImageResource graySwitch();
-		
-		@Source("/images/greenRouter.jpg")
-		ImageResource greenRouter();
-		
-		@Source("/images/redRouter.jpg")
-		ImageResource redRouter();
-		
-		@Source("/images/pcom.jpg")
-		ImageResource pcom();
-		
-		@Source("/images/wirelessRouter80.jpg")
-		ImageResource wirelessRouter80();
-		
-		@Source("/images/wirelessRouter128.jpg")
-		ImageResource wirelessRoute128();
 		
 		@Source("/images/Network.jpg")
 		ImageResource network();
 
+		@Source("/images/Server.png")
+		ImageResource server();
+		
+		@Source("/images/Router.png")
+		ImageResource router();
+		
+		@Source("/images/Unknown.png")
+		ImageResource unknown();
 	}
 	
 	public interface Icons extends ClientBundle {

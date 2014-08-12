@@ -90,27 +90,35 @@ public class SubnetMap extends IntegerMap {
 		init_layout(list.size());
 		
 		int i = 0;
-		ImageResource image = Resources.IMAGES.graySwitch();
+		ImageResource image = Resources.IMAGES.router();
 		double angle = 0;
 		double increment = DOUBLE_PI / list.size();
 		
-		for (final ServiceElement entity : list) {
+		for (final ServiceElement serviceElement : list) {
 			Point point = calculatePoint(list.size(), i++, angle);
-			entityMap.put(entity.getID(), point);		
-			image = Resources.IMAGES.grayRouter();
+			entityMap.put(serviceElement.getID(), point);
+			
+			if (serviceElement.getIconName() == null)
+				image = Resources.IMAGES.unknown();
+			else if (serviceElement.getIconName().equalsIgnoreCase("server"))
+				image = Resources.IMAGES.server();
+			else if (serviceElement.getIconName().equalsIgnoreCase("router"))
+				image = Resources.IMAGES.router();
+			else
+				image = Resources.IMAGES.unknown();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
-        			selectedEntity = entity;
+        			selectedEntity = serviceElement;
         			//selectedTimestamp = System.currentTimeMillis();
         			
         			//subnetPanel.showContainedTreeView(entity);
         			
         			MainClient.integerService.getDeviceDetails(
-    						entity.getID(),
+    						serviceElement.getID(),
     						new AsyncCallback<DeviceDetails>() {
 
     							@Override
@@ -130,8 +138,8 @@ public class SubnetMap extends IntegerMap {
     						});
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, subnetPanel);
-        	iconMap.put(entity.getID(), icon);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, serviceElement, subnetPanel);
+        	iconMap.put(serviceElement.getID(), icon);
         	
         	angle += increment;
 		}
@@ -169,9 +177,6 @@ public class SubnetMap extends IntegerMap {
 		for (final Network entity : list) {
 			Point point = calculatePoint(list.size(), i++, angle);
 			entityMap.put(entity.getID(), point);
-			//pointList.add(point);
-			
-			image = Resources.IMAGES.pcom();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
@@ -213,7 +218,7 @@ public class SubnetMap extends IntegerMap {
 		}
 
 		int i = 0;
-		ImageResource image = Resources.IMAGES.grayRouter();
+		ImageResource image = Resources.IMAGES.router();
 		double angle = 0;
 		double increment = DOUBLE_PI / list.size();
 			
