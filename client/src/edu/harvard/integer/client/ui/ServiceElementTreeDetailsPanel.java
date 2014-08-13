@@ -19,7 +19,7 @@ public class ServiceElementTreeDetailsPanel extends SplitLayoutPanel {
 	public ServiceElementTreeDetailsPanel(final ServiceElement serviceElement) {
 		super(MainClient.SPLITTER_SIZE);
 
-		setSize("600px", "700px");
+		setSize("600px", "600px");
 		
 		ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
 		final ContainedTreeView containedTreeView = new ContainedTreeView("Device Details", this, detailsTabPanel);

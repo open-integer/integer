@@ -25,6 +25,8 @@ import com.emitrom.lienzo.client.core.types.Point2DArray;
 import com.emitrom.lienzo.client.core.types.Shadow;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.emitrom.lienzo.shared.core.types.TextAlign;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.touch.client.Point;
 
 import edu.harvard.integer.client.utils.HvLink;
@@ -308,15 +310,18 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 			SystemSplitViewPanel.showServiceElementMap((Network)entity);
 		else if (entity instanceof ServiceElement) {
 			subnetPanel.setSelectedEntity(entity);
-			//subnetPanel.showContainedTreeView((ServiceElement)entity);
 			ServiceElement serviceElement = (ServiceElement)entity;
 			
 			ServiceElementTreeDetailsPanel detailsPanel = new ServiceElementTreeDetailsPanel(serviceElement);
-			HvDialogBox detailsDialog = new HvDialogBox(serviceElement.getName(), detailsPanel);
+			final HvDialogBox detailsDialog = new HvDialogBox(serviceElement.getName(), detailsPanel);
 			detailsDialog.enableOkButton(false);
-			detailsDialog.setSize("600px", "700px");
-			detailsDialog.center();
-			detailsDialog.show();
+
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			    public void execute() {
+			    	detailsDialog.center();
+			    	detailsDialog.show();
+			    }
+			});
 						
 		}
 		setHighLighted(true); // highlighted whenever it gets clicked for now
