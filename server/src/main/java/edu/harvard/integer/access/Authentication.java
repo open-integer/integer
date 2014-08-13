@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.access;
 
+import edu.harvard.integer.common.ID;
+
 /**
  * The Authentication is an interface used for authentication to access topology node.
  *
@@ -41,5 +43,11 @@ public interface Authentication  {
 	
 	public AccessTypeEnum getAccessType();
 	public boolean isSame( Authentication auth );
+	
+	/**
+	 * Return authentication ID associated with credential for this authentication.
+	 * @return
+	 */
+	public ID getCredentailID();
 	
 }

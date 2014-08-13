@@ -38,6 +38,7 @@ import org.snmp4j.mp.SnmpConstants;
 
 import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.common.ID;
 
 /**
  * The Class SnmpSecureAccess contains SNMPv3 access information.
@@ -167,6 +168,19 @@ public class SnmpSecureAuth extends SnmpAuthentication {
 			}
 		}
 		return false;
+	}
+
+
+	/* 
+	 * No SNMPV3 Credential implemented yet.
+	 *  
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.access.Authentication#getCredentailID()
+	 */
+	@Override
+	public ID getCredentailID() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
