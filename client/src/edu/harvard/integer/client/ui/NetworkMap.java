@@ -19,6 +19,7 @@ import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.InterNetworkLink;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 
@@ -55,10 +56,10 @@ public class NetworkMap extends IntegerMap {
 	/**
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
-	 * @param result the result
+	 * @param networks the result
 	 */
-	private void updateNetworks(Network[] result) {
-		int n = result.length;
+	private void updateNetworks(Network[] networks) {
+		int n = networks.length;
 		init_layout(n);
 		
 		int i = 0;
@@ -66,11 +67,12 @@ public class NetworkMap extends IntegerMap {
 		double angle = 0;
 		double increment = DOUBLE_PI / n;
 		
-		for (final Network network : result) {
+		for (final Network network : networks) {
+			MapItemPosition mapItemPosition = positionMap.get(network.getID());
 			if (i >= n)
 				break;
 			
-			Point point = n == 1 ? getCenterPoint() : calculatePoint(n, i, angle);
+			Point point = n == 1 ? getCenterPoint() : calculatePoint(n, i++, angle);
 			
 			entityMap.put(network.getID(), point);
 			
@@ -83,7 +85,7 @@ public class NetworkMap extends IntegerMap {
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, network, null);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, network, mapItemPosition, null);
         	iconMap.put(network.getID(), icon);
         	
         	angle += increment;

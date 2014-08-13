@@ -28,12 +28,16 @@ import com.emitrom.lienzo.shared.core.types.TextAlign;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.touch.client.Point;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.IDType;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -52,6 +56,9 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	
 	/** The service element. */
 	private BaseEntity entity;
+	
+	/** The map item position. */
+	private MapItemPosition mapItemPosition;
 	
 	/** The point position of this widget */
 	private Point point;
@@ -85,11 +92,13 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 	 *
 	 * @param picture the picture
 	 * @param entity the entity
+	 * @param mapItemPosition 
 	 * @param subnetPanel the click handler
 	 */
-	public ServiceElementWidget(Picture picture, BaseEntity entity, SubnetPanel subnetPanel) {
+	public ServiceElementWidget(Picture picture, BaseEntity entity, MapItemPosition mapItemPosition, SubnetPanel subnetPanel) {
 		this.picture = picture;
 		this.entity = entity;
+		this.mapItemPosition = mapItemPosition;
 		this.subnetPanel = subnetPanel;
 		
 		setDraggable(true);
@@ -171,6 +180,27 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 		
 		// clear to finish
 		clearDragLinks();
+		
+		if (mapItemPosition == null) {
+			mapItemPosition = new MapItemPosition();
+			mapItemPosition.setItemId(entity.getID());
+		}
+		mapItemPosition.setXposition(event.getX());
+		mapItemPosition.setYposition(event.getY());
+		
+		MainClient.integerService.updateMapItemPosition(mapItemPosition, new AsyncCallback<Void>()  {
+
+			@Override
+			public void onFailure(Throwable caught) {	
+				MainClient.statusPanel.updateStatus("Failed to save position for " + entity.getName());
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				MainClient.statusPanel.updateStatus("New position saved for " + entity.getName());
+			}
+			
+		});
 	}
 
 	/* (non-Javadoc)

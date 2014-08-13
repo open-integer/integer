@@ -11,6 +11,7 @@ import com.google.gwt.touch.client.Point;
 import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.topology.MapItemPosition;
 
 /**
  * The Class IntegerMap represents a map object of Integer.
@@ -117,6 +118,9 @@ public class IntegerMap extends Layer {
 	
 	/** The service element icon map. */
 	protected Map<ID, ServiceElementWidget> iconMap = new HashMap<ID, ServiceElementWidget>();
+	
+	/** The position map. */
+	protected Map<ID, MapItemPosition> positionMap = new HashMap<ID, MapItemPosition>();
 	
 	/** The list of Link in map **/
 	protected List<HvLink> linkList = new ArrayList<HvLink>();
