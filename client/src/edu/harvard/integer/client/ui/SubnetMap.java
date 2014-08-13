@@ -16,15 +16,13 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.topology.DeviceDetails;
+
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -108,36 +106,7 @@ public class SubnetMap extends IntegerMap {
 				image = Resources.IMAGES.defaultDevice();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
-        	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
-        		@Override
-        		public void onNodeMouseClick(NodeMouseClickEvent event) {
-        			selectedEntity = serviceElement;
-        			//selectedTimestamp = System.currentTimeMillis();
-        			
-        			//subnetPanel.showContainedTreeView(entity);
-        			
-        			MainClient.integerService.getDeviceDetails(
-    						serviceElement.getID(),
-    						new AsyncCallback<DeviceDetails>() {
-
-    							@Override
-    							public void onFailure(Throwable caught) {
-    								MainClient.statusPanel.showAlert("Failed to receive detail information of " + selectedEntity.getName());
-    							}
-
-    							@Override
-    							public void onSuccess(DeviceDetails deviceDetails) {
-    								DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedEntity.getName(), deviceDetails);
-    								HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
-    								detailsDialog.enableOkButton(false);
-    								detailsDialog.setSize("400px", "150px");
-    								detailsDialog.center();
-    								detailsDialog.show();
-    							}
-    						});
-        		} 		
-        	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, serviceElement, subnetPanel);
         	iconMap.put(serviceElement.getID(), icon);
         	
@@ -188,8 +157,7 @@ public class SubnetMap extends IntegerMap {
         		} 		
         	};
         	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, null);
-        	//icon.draw((int)point.getX(), (int)point.getY());
-        	
+
         	add(icon);
         	iconMap.put(entity.getID(), icon);
         	
@@ -234,7 +202,6 @@ public class SubnetMap extends IntegerMap {
 			
 			if (p1 == null || p2 == null) {
 				point = calculatePoint(counterDiffNetwork, i++, angle);
-				//pointList.add(point);
 				fakeSe.setIdentifier((long) i);
 				
 				if (p1 == null) {
@@ -260,14 +227,7 @@ public class SubnetMap extends IntegerMap {
 				continue;
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
-        	/*NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
-        		@Override
-        		public void onNodeMouseClick(NodeMouseClickEvent event) {
-        			selectedEntity = fakeSe;
-        			selectedTimestamp = System.currentTimeMillis();
-        		} 		
-        	};*/
         	ServiceElementWidget icon = new ServiceElementWidget(picture, fakeSe, null);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
@@ -334,12 +294,6 @@ public class SubnetMap extends IntegerMap {
 		
 		Line line = new Line(x1, y1, x2, y2);
 		ColorName colorName = ColorName.BLUE;
-//		if (linkStatus == null)
-//			colorName = ColorName.GREY;
-//		else if (linkStatus.equalsIgnoreCase("up"))
-//			colorName = ColorName.GREEN;
-//		else if (linkStatus.equalsIgnoreCase("down"));
-//			colorName = ColorName.RED;
 			
         line.setStrokeColor(colorName).setStrokeWidth(line_width).setFillColor(colorName);
         
