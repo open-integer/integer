@@ -17,6 +17,7 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.IpTopologySeed;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -170,5 +171,22 @@ public interface IntegerServiceAsync {
 	 * @return the all ip topology seeds
 	 */
 	void getAllIpTopologySeeds(AsyncCallback<IpTopologySeed[]> callback);
+
+	/**
+	 * Gets the positions by network.
+	 *
+	 * @param networkId the network id
+	 * @param callback the callback
+	 * @return the positions by network
+	 */
+	void getPositionsByNetwork(ID networkId, AsyncCallback<MapItemPosition[]> callback);
+
+	/**
+	 * Update map item position.
+	 *
+	 * @param position the position
+	 * @param callback the callback
+	 */
+	void updateMapItemPosition(MapItemPosition position, AsyncCallback<Void> callback);
 	
 }

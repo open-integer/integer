@@ -16,14 +16,16 @@ import com.emitrom.lienzo.client.core.shape.Picture;
 import com.emitrom.lienzo.shared.core.types.ColorName;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.touch.client.Point;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import edu.harvard.integer.client.MainClient;
 import edu.harvard.integer.client.resources.Resources;
 import edu.harvard.integer.client.utils.HvLink;
 import edu.harvard.integer.client.widget.HvDialogBox;
 import edu.harvard.integer.client.widget.HvMapIconPopup;
 import edu.harvard.integer.common.ID;
-
 import edu.harvard.integer.common.topology.InterDeviceLink;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.ServiceElement;
 
@@ -57,58 +59,85 @@ public class SubnetMap extends IntegerMap {
 	 *
 	 * @param network the network
 	 */
-	public void updateNetwork(Network network) {
+	public void updateNetwork(final Network network) {
 		entityMap.clear();
 		diffNetworksMap.clear();
 		iconMap.clear();
 		removeAll();
 		
-		if (network.getLowerNetworks() == null || network.getLowerNetworks().isEmpty())
-			updateServiceElements(network.getServiceElements(), LAYOUT_CENTER);
-		else {
-			updateServiceElements(network.getServiceElements(), LAYOUT_LEFT);
-			updateLowerNetworks(network.getLowerNetworks(), LAYOUT_RIGHT);
-		}
+		MainClient.integerService.getPositionsByNetwork(network.getID(), new AsyncCallback<MapItemPosition[]>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(MapItemPosition[] positions) {
+				if (positions == null || positions.length == 0)
+					return;
+				
+				if (network.getLowerNetworks() == null || network.getLowerNetworks().isEmpty())
+					updateServiceElements(positions, LAYOUT_CENTER);
+				else {
+					updateServiceElements(positions, LAYOUT_LEFT);
+					updateLowerNetworks(network.getLowerNetworks(), LAYOUT_RIGHT);
+				}
+				
+				updateInterDeviceDiffNetworks(network.getInterDeviceLinks());
+				
+				drawLinks(network.getInterDeviceLinks());
+				
+				drawServiceElements(network.getServiceElements());
+			}
+			
+		});
 		
-		updateInterDeviceDiffNetworks(network.getInterDeviceLinks());
 		
-		drawLinks(network.getInterDeviceLinks());
-		
-		drawServiceElements(network.getServiceElements());
 	}
 
 	/**
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
-	 * @param list the result
+	 * @param positions the positions
 	 * @param layout_position the layout_position
 	 */
-	public void updateServiceElements(List<ServiceElement> list, int layout_position) {
+	public void updateServiceElements(MapItemPosition[] positions, int layout_position) {
 		this.layout_position = layout_position;
-		init_layout(list.size());
+		init_layout(positions.length);
 		
 		int i = 0;
-		ImageResource image = Resources.IMAGES.router();
+		ImageResource image = Resources.IMAGES.defaultDevice();
 		double angle = 0;
-		double increment = DOUBLE_PI / list.size();
+		double increment = DOUBLE_PI / positions.length;
+		Point point;
 		
-		for (final ServiceElement serviceElement : list) {
-			Point point = calculatePoint(list.size(), i++, angle);
-			entityMap.put(serviceElement.getID(), point);
+		System.out.println("position total: " + positions.length);
+		
+		for (final MapItemPosition position : positions) {
+			System.out.println("position: " + position.getItemId().getName());
 			
-			if (serviceElement.getIconName() == null || serviceElement.getIconName().equalsIgnoreCase("unknown"))
-				image = Resources.IMAGES.unknown();
-			else if (serviceElement.getIconName().equalsIgnoreCase("server"))
-				image = Resources.IMAGES.server();
-			else if (serviceElement.getIconName().equalsIgnoreCase("router"))
-				image = Resources.IMAGES.router();
+			Integer xposition = position.getXposition();
+			Integer yposition = position.getYposition();
+			if (xposition != null && yposition != null)
+				point = new Point(xposition.doubleValue(), yposition.doubleValue());
 			else
-				image = Resources.IMAGES.defaultDevice();
+				point = calculatePoint(positions.length, i, angle);
+			
+			i++;
+			
+			entityMap.put(position.getItemId(), point);
+			
+			if (position.getIconName() == null || position.getIconName().equalsIgnoreCase("unknown"))
+				image = Resources.IMAGES.unknown();
+			else if (position.getIconName().equalsIgnoreCase("server"))
+				image = Resources.IMAGES.server();
+			else if (position.getIconName().equalsIgnoreCase("router"))
+				image = Resources.IMAGES.router();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
 
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, serviceElement, subnetPanel);
-        	iconMap.put(serviceElement.getID(), icon);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, position, subnetPanel);
+        	iconMap.put(position.getID(), icon);
         	
         	angle += increment;
 		}
