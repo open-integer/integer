@@ -53,12 +53,14 @@ import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.snmp.SnmpAuthentication;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
 import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
+import edu.harvard.integer.service.discovery.snmp.ExclusiveNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
@@ -190,9 +192,23 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 			}
 			String ip = range.next();    
 			if ( netDisc.findDiscoveredIpAddresses(ip) != null ) {
-				logger.info("This node with the IP address is already in discovering " + ip);
+				logger.info("This node " + ip  + " is already in discovering " + ip);
 				continue;
 			}
+			if ( netDisc.getExclusiveNodes() != null ) {
+				
+				for ( ExclusiveNode excNode : netDisc.getExclusiveNodes() ) {
+					for ( Address addr : excNode.getNodeAddress() ) {
+						
+						if ( addr.getAddress().equals(ip) ) {
+							
+							logger.info("This node " + ip + " is in exclusive list." );
+							continue;
+						}
+					}
+				}
+			}
+			
 			logger.info("Scan IP address " + ip);
 			
 			DiscoverNode dn = new DiscoverNode(ip, seed.getDiscoverNet() );

@@ -38,8 +38,11 @@ import java.util.List;
 import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.Authentication;
 import edu.harvard.integer.access.snmp.CommunityAuth;
+import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
+import edu.harvard.integer.common.topology.Subnet;
+import edu.harvard.integer.service.discovery.snmp.ExclusiveNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 
 /**
@@ -50,11 +53,18 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
  */
 public class IpDiscoverySeed {
 
+	
+	/**
+	 * Default SNMP Time out and retry
+	 */
+	public static final int SNMPTIMEOUT = 3000;
+	public static final int SNMPRETRY = 2;
+	
 	/** The snmp timeout in million second. */
-	private int snmpTimeout = 5000;
+	private int snmpTimeout = SNMPTIMEOUT;
 	
 	/** The snmp retries. */
-	private int snmpRetries = 2;
+	private int snmpRetries = SNMPRETRY;
 	
 	/** The use icmp. */
 	private boolean useIcmp = true;
@@ -69,8 +79,17 @@ public class IpDiscoverySeed {
 	
 	private DiscoverNet discoverNet;
 	
-	private List<DiscoverNet>  exclusiveNet = new ArrayList<>();
-	
+	/**
+	 * Exclusive net on discover.
+	 */
+	private List<Subnet>  exclusiveNet = new ArrayList<>();
+
+	/**
+	 * Exclusive node on discover.
+	 */
+	private List<ExclusiveNode>  exclusiveNodes = new ArrayList<>();
+
+
 	/**
 	 * Optional. If specify it will start to discovery from this IP address 
 	 */
@@ -155,12 +174,15 @@ public class IpDiscoverySeed {
 	}
 	
 	/**
-	 * Sets the snmp timeout.
+	 * Sets the snmp timeout.  Make sure it is in the range of 1000 to 10000
 	 *
 	 * @param snmpTimeout the new snmp timeout
 	 */
 	public void setSnmpTimeout(int snmpTimeout) {
-		this.snmpTimeout = snmpTimeout;
+		
+		if ( snmpTimeout > 1000 && snmpTimeout < 10000 ) {
+			this.snmpTimeout = snmpTimeout;
+		}
 	}
 	
 	/**
@@ -178,7 +200,17 @@ public class IpDiscoverySeed {
 	 * @param snmpRetries the new snmp retries
 	 */
 	public void setSnmpRetries(int snmpRetries) {
-		this.snmpRetries = snmpRetries;
+		
+		/**
+		 * Using default it if retry is less or equal to 0.
+		 */
+		if ( snmpRetries <= 0 ) {
+			
+			this.snmpRetries = SNMPRETRY;
+		}
+		else {
+		    this.snmpRetries = snmpRetries;
+		}
 	}
 	
 	/**
@@ -272,20 +304,12 @@ public class IpDiscoverySeed {
 		return radius;
 	}
 
-	/**
-	 * 
-	 */
-	private List<DiscoverNet> notDiscoverNet;
 	
 
 
 	public String getStartIp() {
 		return startIp;
 	}
-
-
-
-
 
 
 
@@ -308,18 +332,6 @@ public class IpDiscoverySeed {
 
 
 
-	public List<DiscoverNet> getNotDiscoverNet() {
-		return notDiscoverNet;
-	}
-
-
-
-	public void setNotDiscoverNet(List<DiscoverNet> notDiscoverNet) {
-		this.notDiscoverNet = notDiscoverNet;
-	}
-
-
-
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
@@ -331,12 +343,41 @@ public class IpDiscoverySeed {
 
 
 	
-	public List<DiscoverNet> getExclusiveNet() {
+	public List<Subnet> getExclusiveNet() {
 		return exclusiveNet;
 	}
 
 	
 	public String getSeedId() {
 		return discoverNet.getNetworkAddress() + "/" + discoverNet.getNetmask();
+	}
+	
+	
+	public void setExclusiveNet(List<Subnet> exclusiveNet) {
+		this.exclusiveNet = exclusiveNet;
+	}
+	
+
+	public List<ExclusiveNode> getExclusiveNodes() {
+		return exclusiveNodes;
+	}
+
+
+	/**
+	 * 
+	 * @param exclusuionList
+	 */
+	public void addExclusiveNode( List<Address> exclusuionList ) {
+		
+		if ( exclusuionList == null ) {
+			return;
+		}
+		for ( Address addr : exclusuionList ) {
+			
+			ExclusiveNode exnode = new ExclusiveNode();
+			exnode.getNodeAddress().add(addr);
+			
+			this.exclusiveNodes.add(exnode);
+		}
 	}
 }
