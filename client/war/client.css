@@ -183,12 +183,12 @@ h4 {
 }
 
 .dialogVPanel {
-  margin: 15px;
-  padding: 2px, 20px;
+  margin: 5px;
+  padding: 2px, 2px;
 }
 
 .dialogVPanel.padding {
-  padding: 2px 20px;
+  padding: 2px 2px;
 }
 
 .serverResponseLabelError {

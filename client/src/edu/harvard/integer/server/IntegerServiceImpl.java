@@ -28,6 +28,7 @@ import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.DiscoveryTypeEnum;
 import edu.harvard.integer.common.topology.IpTopologySeed;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -485,5 +486,38 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			throw new Exception(e.getMessage());
 		}
 		return ipTopologySeeds;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#getPositionsByNetwork()
+	 */
+	@Override
+	public MapItemPosition[] getPositionsByNetwork(ID networkId) throws Exception {
+		MapItemPosition[] mapItemPositions = null;
+		
+		try {
+			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
+			mapItemPositions = topologyService.getPositionsByMap(networkId);
+			System.out.println("getPositionsByNetwork return " + mapItemPositions.length + " mapItemPositions for " + networkId.getName());
+		}
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return mapItemPositions;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.client.IntegerService#updateMapItemPosition(edu.harvard.integer.common.topology.MapItemPosition)
+	 */
+	@Override
+	public void updateMapItemPosition(MapItemPosition position) throws Exception {
+		try {
+			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
+			topologyService.updateMapItemPosition(position);
+		}
+		catch (IntegerException e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 }

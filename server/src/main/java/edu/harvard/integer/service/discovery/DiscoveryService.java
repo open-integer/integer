@@ -287,28 +287,15 @@ public class DiscoveryService extends BaseService implements
 			seed.setSnmpTimeout(ipTopologySeed
 					.getSnmpTimeoutServiceElementDiscovery().intValue());
 
-		seed.setNotDiscoverNet(createDiscoverNets(ipTopologySeed.getNetExclustions(), 0));
+		seed.setExclusiveNet(ipTopologySeed.getNetExclustions());
 		seed.setPorts(createAccessPorts(ipTopologySeed.getAlternateSNMPports()));
+		
+		seed.addExclusiveNode(ipTopologySeed.getGatewayExclusuions());
 
 		return seed;
 	}
 
-	/**
-	 * 
-	 * @param subnets
-	 * @return
-	 */
-	private List<DiscoverNet> createDiscoverNets(List<Subnet> subnets, int radius) {
-		List<DiscoverNet> notDiscoverNets = new ArrayList<DiscoverNet>();
-
-		if (subnets != null) {
-			for (Subnet subnet : subnets) {
-				notDiscoverNets.add(createDiscoverNet(subnet, radius));
-			}
-		}
-
-		return notDiscoverNets;
-	}
+	
 
 	private List<AccessPort> createAccessPorts(List<Integer> ports) {
 		List<AccessPort> accessPorts = new ArrayList<AccessPort>();

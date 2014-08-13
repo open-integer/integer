@@ -10,6 +10,9 @@ public interface Resources {
 	
 	public interface Images extends ClientBundle {
 		
+		@Source("/images/DefaultDevice.png")
+		ImageResource defaultDevice();
+		
 		@Source("/images/Network.jpg")
 		ImageResource network();
 

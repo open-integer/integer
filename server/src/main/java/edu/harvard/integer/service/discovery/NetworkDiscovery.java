@@ -49,11 +49,14 @@ import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.Subnet;
 import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
+import edu.harvard.integer.service.discovery.snmp.ExclusiveNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
+import edu.harvard.integer.service.discovery.subnet.SubnetUtil;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
@@ -79,6 +82,7 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
  * @author dchan
  * @param <T> the generic type
  */
+@SuppressWarnings("rawtypes")
 public class NetworkDiscovery  implements NetworkDiscoveryBase {
 
 	public static String IPIDENTIFY = "IpIdentify";
@@ -89,6 +93,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	/**
 	 * Map to keep track of each seed subnet tasks.  The key is the subnet id.
 	 */
+	
 	private ConcurrentHashMap<String, DiscoverSubnetAsyncTask>  subnetTasks = new ConcurrentHashMap<>();
 	
 	
@@ -146,13 +151,16 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	private Map<String, DiscoverNode>  discoverdSystems = new HashMap<>();
 	
 
-
 	/**
 	 * Discovery id to keep track of discovery.
 	 */
 	private final DiscoveryId discoverId;
 	
+	private final List<Subnet>  exclusiveSubnets;
 	
+	private final List<ExclusiveNode>  exclusiveNodes;
+	
+
 	/**
 	 * Create a discovery  
 	 * 
@@ -161,6 +169,18 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 * @param id
 	 */
 	public NetworkDiscovery(IpDiscoverySeed seed, List<VariableBinding> toplevelVarBinds, DiscoveryId id)  {
+		
+		if ( seed != null ) {
+		      
+			 exclusiveSubnets = seed.getExclusiveNet();
+		     this.exclusiveNodes = seed.getExclusiveNodes(); 
+		}
+		else {
+			
+			exclusiveNodes = null;
+			exclusiveSubnets = null;
+		}
+		
 		this.discoverId = id;
 		List<IpDiscoverySeed> seeds = new ArrayList<IpDiscoverySeed>();
 		seeds.add(seed);
@@ -174,8 +194,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 * The subnet information is contained in each IpDiscoverySeed
 	 * @throws  
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	@SuppressWarnings("rawtypes")
 	public List<Future<Ipv4Range>> discoverNetwork()  {
 		
 		logger.debug("In discoverNetwork ");
@@ -196,6 +216,18 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			}
 		
 			for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
+			
+				/**
+				 * It is possible that discover seed contains exclusive subnets including itself.
+				 * In this case, log it as an warning and go on.
+				 */
+				if ( exclusiveSubnets != null ) {
+					
+					if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
+						logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
+						continue;
+					}
+				}
 				
 				try {
 					
@@ -364,7 +396,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		}
 		
 		if ( subnetid != null ) {
-			@SuppressWarnings("unchecked")
+			
 			DiscoverSubnetAsyncTask<ElementAccess> subTask = subnetTasks.get(subnetid);		
 			if ( subTask != null ) {
 				
@@ -380,6 +412,14 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				    	IpDiscoverySeed discoverSeed = new IpDiscoverySeed( discoverSeeds.get(0).getAuths(), dnet );
 				    	try {
 				    		logger.info("Found another subnet " + dnet.getStartIp() + ":" + dnet.getEndIp());
+				    		
+				    		if ( exclusiveSubnets != null ) {
+								
+								if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
+									logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
+									continue;
+								}
+							}
 				    		
 							DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
 			                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), subTask);
@@ -534,5 +574,10 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		return false;
 	}
 	
+
+	
+	public List<ExclusiveNode> getExclusiveNodes() {
+		return exclusiveNodes;
+	}
 	
 }

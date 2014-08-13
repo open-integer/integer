@@ -15,6 +15,7 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.DiscoveryRule;
 import edu.harvard.integer.common.topology.IpTopologySeed;
+import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -184,4 +185,20 @@ public interface IntegerService extends RemoteService {
 	 * @throws Exception the exception
 	 */
 	IpTopologySeed[] getAllIpTopologySeeds() throws Exception;
+	
+	/**
+	 * Gets the positions by network.
+	 *
+	 * @return the positions by network
+	 * @throws Exception the exception
+	 */
+	MapItemPosition[] getPositionsByNetwork(ID networkId) throws Exception;
+	
+	/**
+	 * Update map item position.
+	 *
+	 * @param position the position
+	 * @throws Exception the exception
+	 */
+	void updateMapItemPosition(MapItemPosition position) throws Exception;
 }
