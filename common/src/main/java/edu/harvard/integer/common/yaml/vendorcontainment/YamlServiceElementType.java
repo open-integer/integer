@@ -51,6 +51,8 @@ public class YamlServiceElementType {
 	private List<String> uniqueIdentifierCapabilities = null;
 	private List<String> attributes = null;
 	
+	private YamlServiceElementInstanceUniqueSignature uniqueInstanceSignature = null;
+			
 	/**
 	 * @return the name
 	 */
@@ -169,6 +171,20 @@ public class YamlServiceElementType {
 	 */
 	public void setIconName(String iconName) {
 		this.iconName = iconName;
+	}
+
+	/**
+	 * @return the uniqueInstanceSignature
+	 */
+	public YamlServiceElementInstanceUniqueSignature getUniqueInstanceSignature() {
+		return uniqueInstanceSignature;
+	}
+
+	/**
+	 * @param uniqueInstanceSignature the uniqueInstanceSignature to set
+	 */
+	public void setUniqueInstanceSignature(YamlServiceElementInstanceUniqueSignature uniqueInstanceSignature) {
+		this.uniqueInstanceSignature = uniqueInstanceSignature;
 	}
 
 }

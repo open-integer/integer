@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2013 Harvard University and the persons
+ *  Copyright (c) 2014 Harvard University and the persons
  *  identified as authors of the code.  All rights reserved. 
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -30,88 +30,83 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.common;
 
-import java.io.Serializable;
+package edu.harvard.integer.common.yaml.vendorcontainment;
 
-import javax.persistence.Embeddable;
+import java.util.List;
+
+import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 
 /**
- * This class encapsulates the type of object. This is part of the ID for an
- * object. This is used to identify the type of object an ID represents. This
- * also has the database table name the object is stored in.
- * 
  * @author David Taylor
  * 
  */
+public class YamlServiceElementInstanceUniqueSignature implements
+		YamlBaseInfoInterface {
 
-@Embeddable
-public class IDType implements Serializable {
+	private String name = null;
+	private String description = null;
+	private List<String> uniqueSemos = null;
+	private List<String> changeSemos = null;
 
 	/**
-	 * 
+	 * @return the name
 	 */
-	private static final long serialVersionUID = 1L;
-	
-	private String classType = null;
-
-	private transient String tableName = null;
-
-	// Default constructor to make GWT happy.
-	public IDType() {
-		super();
-	}
-	
-	public IDType(String clazz) {
-		this.classType = clazz;
+	public String getName() {
+		return name;
 	}
 
-	public IDType(String clazz, String tableName) {
-		this.classType = clazz;
-		this.tableName = tableName;
-	}
-
-	public String getClassType() {
-	
-		return classType;
-	}
-	
-	public void setClassType(String clazz) {
-		this.classType = clazz;
-	}
-	
 	/**
-	 * @return the tableName
+	 * @param name
+	 *            the name to set
 	 */
-	public String getTableName() {
-		return tableName;
-	}
-	
-	public void setTableName(String name) {
-		this.tableName = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the description
 	 */
-	@Override
-	public String toString() {
-		if (classType != null)
-			return classType;
-		else
-			return "";
+	public String getDescription() {
+		return description;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * @param description
+	 *            the description to set
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		
-		return toString().equals(obj);
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the uniqueSemos
+	 */
+	public List<String> getUniqueSemos() {
+		return uniqueSemos;
+	}
+
+	/**
+	 * @param uniqueSemos
+	 *            the uniqueSemos to set
+	 */
+	public void setUniqueSemos(List<String> uniqueSemos) {
+		this.uniqueSemos = uniqueSemos;
+	}
+
+	/**
+	 * @return the changeSemos
+	 */
+	public List<String> getChangeSemos() {
+		return changeSemos;
+	}
+
+	/**
+	 * @param changeSemos
+	 *            the changeSemos to set
+	 */
+	public void setChangeSemos(List<String> changeSemos) {
+		this.changeSemos = changeSemos;
 	}
 
 }

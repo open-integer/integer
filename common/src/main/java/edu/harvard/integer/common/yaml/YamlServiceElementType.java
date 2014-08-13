@@ -35,11 +35,13 @@ package edu.harvard.integer.common.yaml;
 
 import java.util.List;
 
+import edu.harvard.integer.common.yaml.vendorcontainment.YamlServiceElementInstanceUniqueSignature;
+
 /**
  * @author David Taylor
  * 
  */
-public class YamlServiceElementType {
+public class YamlServiceElementType implements YamlBaseInfoInterface {
 
 	private String vendor = null;
 	private String name = null;
@@ -57,7 +59,8 @@ public class YamlServiceElementType {
  	
  	private List<YamlServiceElementAssociationType> associations;
 	
-
+ 	private YamlServiceElementInstanceUniqueSignature uniqueInstanceSignature = null;
+ 	
 	public List<YamlServiceElementAssociationType> getAssociations() {
 		return associations;
 	}
@@ -151,6 +154,20 @@ public class YamlServiceElementType {
 
 	public void setExtendServiceElementType(String extendServiceElementType) {
 		this.extendServiceElementType = extendServiceElementType;
+	}
+
+	/**
+	 * @return the uniqueInstanceSignature
+	 */
+	public YamlServiceElementInstanceUniqueSignature getUniqueInstanceSignature() {
+		return uniqueInstanceSignature;
+	}
+
+	/**
+	 * @param uniqueInstanceSignature the uniqueInstanceSignature to set
+	 */
+	public void setUniqueInstanceSignature(YamlServiceElementInstanceUniqueSignature uniqueInstanceSignature) {
+		this.uniqueInstanceSignature = uniqueInstanceSignature;
 	}
 
 
