@@ -41,6 +41,8 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
+import edu.harvard.integer.common.snmp.SNMP;
+
 /**
  * @author David Taylor
  *
@@ -60,6 +62,15 @@ public class TestUtil {
 			ids.add(new ID(Long.valueOf(i), name + i, new IDType(clazz.getName())));
 
 		return ids;
+	}
+	
+	public static SNMP createOid(String name, String oidString) {
+		SNMP oid = new SNMP();
+		oid.setName(name);
+		oid.setDisplayName(name);
+		oid.setOid(oidString);
+
+		return oid;
 	}
 	
 	public static Archive<?> createTestArchive(String warName) {
@@ -105,5 +116,7 @@ public class TestUtil {
 				// Deploy our test data source
 				.addAsWebInfResource("test-mysql-ds.xml");
 	}
+	
+	
 	
 }

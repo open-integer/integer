@@ -45,6 +45,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
+import edu.harvard.integer.common.topology.ServiceElementInstanceUniqueSignature;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
@@ -84,7 +85,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 
 	/**
 	 * Get the SnmpContainment hierarchy for the VendorContainmentSelector.
-	 * <p> 
+	 * <p>
 	 * NOTE: this will return the first match.
 	 * 
 	 * @param selector
@@ -98,7 +99,8 @@ public interface ServiceElementDiscoveryManagerInterface extends
 			throws IntegerException;
 
 	/**
-	 * Get all the SnmpContainment's hierarchy for the VendorContainmentSelector.
+	 * Get all the SnmpContainment's hierarchy for the
+	 * VendorContainmentSelector.
 	 * 
 	 * @param selector
 	 *            . The VendorContainmanetSelector to the the SnmpContainment
@@ -109,15 +111,16 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	public SnmpContainment[] getSnmpContainments(
 			VendorContainmentSelector selector) throws IntegerException;
-	
+
 	/**
 	 * Get all the SnmpContainments that are in the database.
+	 * 
 	 * @return SnmpContainment[] of all SnmpContainments.
 	 * 
 	 * @throws IntegerException
 	 */
 	SnmpContainment[] getAllSnmpContainments() throws IntegerException;
-	
+
 	/**
 	 * Gets the top level polls. On IP network topology discovery, the list
 	 * should be a list of SNMP objects in the system group.
@@ -199,8 +202,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 */
 	ServiceElementType getServiceElementTypeByName(String name)
 			throws IntegerException;
-	
-	
+
 	/**
 	 * Find Service Element Association Type by id.
 	 * 
@@ -208,10 +210,8 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @return
 	 * @throws IntegerException
 	 */
-	ServiceElementAssociationType getServiceElementAssociationTypeById( ID id )
+	ServiceElementAssociationType getServiceElementAssociationTypeById(ID id)
 			throws IntegerException;
-	
-	
 
 	/**
 	 * This method is called by the DiscoveryService to start a discovery on the
@@ -240,8 +240,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	 * @throws IntegerException
 	 */
 	ServiceElementType[] getServiceElementTypesByCategoryAndVendor(
-			Category catetory, String vendorType)
-			throws IntegerException;
+			Category catetory, String vendorType) throws IntegerException;
 
 	/**
 	 * Find the ServiceElementTypes for the given vendorSubType and vendor.
@@ -315,7 +314,7 @@ public interface ServiceElementDiscoveryManagerInterface extends
 
 	/**
 	 * Get the list of OIDs that are used to retrieve the Entity MIB Physical
-	 * table. 
+	 * table.
 	 * 
 	 * @return List of SNMP OIDs used to discover the entityPhysicalTable.
 	 */
@@ -380,5 +379,49 @@ public interface ServiceElementDiscoveryManagerInterface extends
 	ServiceElementAssociationType updateServiceElementAssociationType(
 			ServiceElementAssociationType serviceElementAssociationType)
 			throws IntegerException;
+
+	/**
+	 * Update / save the ServiceElementInstanceUniqueSignature in the database.
+	 * 
+	 * @param signature
+	 * @return The updated ServiceElementInstanceUniqueSignature. The identifier
+	 *         will be set on the returned object.
+	 * @throws IntegerException
+	 */
+	ServiceElementInstanceUniqueSignature updateServiceElementInstanceUniqueSignature(
+			ServiceElementInstanceUniqueSignature signature)
+			throws IntegerException;
+
+	/**
+	 * Find the ServiceElementInstanceUniqueSignature with the given ID.
+	 * 
+	 * @param id
+	 *            . ID of the ServiceElementInstanceUniqueSignature to find in
+	 *            the database.
+	 * @return ServiceElementInstanceUniqueSignature found in the databse or
+	 *         null if not found.
+	 * @throws IntegerException
+	 */
+	ServiceElementInstanceUniqueSignature getServiceElementInstanceUniqueSignatureById(
+			ID id) throws IntegerException;
+
+	/**
+	 * Get all the ServiceElementInstanceUniqueSignature found in the database.
+	 * 
+	 * @return ServiceElementInstanceUniqueSignature[] of all
+	 *         ServiceElementInstanceUniqueSignature in the database.
+	 * @throws IntegerException
+	 */
+	ServiceElementInstanceUniqueSignature[] getAllServiceElementInstanceUniqueSignature()
+			throws IntegerException;
+
+	/**
+	 * Get all ServiceElementInstanceUniqueSignature for the given service element type ID
+	 * @param id. ID of the service element type to get the ServiceElementInstanceUniqueSignature for.
+	 * @return ServiceElementInstanceUniqueSignature found for the service element type
+	 * @throws IntegerException
+	 */
+	ServiceElementInstanceUniqueSignature[] getServiceElementInstanceUniqueSignatureByServiceElementTypeId(
+			ID id) throws IntegerException;
 
 }

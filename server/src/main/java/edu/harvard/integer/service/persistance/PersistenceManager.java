@@ -84,6 +84,7 @@ import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementInstanceUniqueSignatureDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
@@ -558,5 +559,10 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public MapItemPositionDAO getMapItemPositionDAO() {
 		return new MapItemPositionDAO(em, logger);
+	}
+	
+	@Override
+	public ServiceElementInstanceUniqueSignatureDAO getServiceElementInstanceUniqueSignatureDAO() {
+		return new ServiceElementInstanceUniqueSignatureDAO(em, logger);
 	}
 }

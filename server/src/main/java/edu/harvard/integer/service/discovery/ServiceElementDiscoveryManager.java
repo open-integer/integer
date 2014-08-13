@@ -55,6 +55,7 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
+import edu.harvard.integer.common.topology.ServiceElementInstanceUniqueSignature;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -62,6 +63,7 @@ import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.discovery.VendorIdentifierDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementInstanceUniqueSignatureDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpContainmentDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpVendorDiscoveryTemplateDAO;
@@ -583,5 +585,45 @@ public class ServiceElementDiscoveryManager extends BaseManager implements
 	public ServiceElementAssociationType updateServiceElementAssociationType(ServiceElementAssociationType serviceElementAssociationType) throws IntegerException {
 		ServiceElementAssociationTypeDAO associationTypeDao = dbm.getServiceElementAssociationTypeDAO();
 		return associationTypeDao.update(serviceElementAssociationType);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#updateServiceElementInstanceUniqueSignature(edu.harvard.integer.common.topology.ServiceElementInstanceUniqueSignature)
+	 */
+	@Override
+	public ServiceElementInstanceUniqueSignature updateServiceElementInstanceUniqueSignature(ServiceElementInstanceUniqueSignature signature) throws IntegerException {
+		ServiceElementInstanceUniqueSignatureDAO dao = dbm.getServiceElementInstanceUniqueSignatureDAO();
+		
+		return dao.update(signature);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getServiceElementInstanceUniqueSignatureById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ServiceElementInstanceUniqueSignature getServiceElementInstanceUniqueSignatureById(ID id ) throws IntegerException {
+		ServiceElementInstanceUniqueSignatureDAO dao = dbm.getServiceElementInstanceUniqueSignatureDAO();
+		
+		return dao.findById(id);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface#getAllServiceElementInstanceUniqueSignature()
+	 */
+	@Override
+	public ServiceElementInstanceUniqueSignature[] getAllServiceElementInstanceUniqueSignature() throws IntegerException {
+		ServiceElementInstanceUniqueSignatureDAO dao = dbm.getServiceElementInstanceUniqueSignatureDAO();
+		
+		return dao.findAll();
+	}
+	
+	@Override
+	public ServiceElementInstanceUniqueSignature[] getServiceElementInstanceUniqueSignatureByServiceElementTypeId(ID id) throws IntegerException {
+		ServiceElementInstanceUniqueSignatureDAO dao = dbm.getServiceElementInstanceUniqueSignatureDAO();
+		
+		return dao.findByServiceElementTypeId(id);
 	}
 }

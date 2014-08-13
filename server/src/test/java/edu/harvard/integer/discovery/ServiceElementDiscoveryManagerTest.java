@@ -73,6 +73,7 @@ import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.CategoryTypeEnum;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
+import edu.harvard.integer.common.topology.ServiceElementInstanceUniqueSignature;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
@@ -124,14 +125,7 @@ public class ServiceElementDiscoveryManagerTest {
 		// org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
 	}
 
-	private SNMP createOid(String name, String oidString) {
-		SNMP oid = new SNMP();
-		oid.setName(name);
-		oid.setDisplayName(name);
-		oid.setOid(oidString);
-
-		return oid;
-	}
+	
 
 	@Test
 	public void getTopLevelPolls() {
@@ -147,13 +141,13 @@ public class ServiceElementDiscoveryManagerTest {
 			// Running with H2 db. so need to create the data.
 
 			try {
-				snmpMaager.updateSNMP(createOid("sysName",
+				snmpMaager.updateSNMP(TestUtil.createOid("sysName",
 						CommonSnmpOids.sysName));
-				snmpMaager.updateSNMP(createOid("sysDescr",
+				snmpMaager.updateSNMP(TestUtil.createOid("sysDescr",
 						CommonSnmpOids.sysDescr));
-				snmpMaager.updateSNMP(createOid("sysLocation",
+				snmpMaager.updateSNMP(TestUtil.createOid("sysLocation",
 						CommonSnmpOids.sysLocation));
-				snmpMaager.updateSNMP(createOid("sysObjectID",
+				snmpMaager.updateSNMP(TestUtil.createOid("sysObjectID",
 						CommonSnmpOids.sysObjectID));
 
 				topLevelPolls = serviceElementDiscoveryManger
@@ -588,7 +582,7 @@ public class ServiceElementDiscoveryManagerTest {
 		SnmpLevelOID level = new SnmpLevelOID();
 		SNMP snmp = null;
 		try {
-			snmp = snmpMaager.updateSNMP(createOid("hrDeviceEntry",
+			snmp = snmpMaager.updateSNMP(TestUtil.createOid("hrDeviceEntry",
 					CommonSnmpOids.hrDeviceEntry));
 		} catch (IntegerException e1) {
 			
@@ -600,7 +594,7 @@ public class ServiceElementDiscoveryManagerTest {
 		level.setContextOID(snmp);
 		level.setName("level 1");
 		try {
-			snmp = snmpMaager.updateSNMP(createOid("hrDeviceType",
+			snmp = snmpMaager.updateSNMP(TestUtil.createOid("hrDeviceType",
 					CommonSnmpOids.hrDeviceType));
 		} catch (IntegerException e1) {
 			
@@ -967,4 +961,59 @@ public class ServiceElementDiscoveryManagerTest {
 
 	}
 
+	@Test
+	public void addServiceElementInstanceUniqueSignature() {
+		ServiceElementInstanceUniqueSignature signature = new ServiceElementInstanceUniqueSignature();
+		signature.setDescription("A Description");
+		
+		List<ServiceElementManagementObject> uniqueSemos = new ArrayList<ServiceElementManagementObject>();
+		try {
+			uniqueSemos.add(snmpMaager.updateSNMP(TestUtil.createOid("sysName", CommonSnmpOids.sysName)));
+		
+			uniqueSemos.add(snmpMaager.updateSNMP(TestUtil.createOid("sysOid", CommonSnmpOids.sysObjectID)));
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		List<ServiceElementManagementObject> changedSemos = new ArrayList<ServiceElementManagementObject>();
+		try {
+			changedSemos.add(snmpMaager.updateSNMP(TestUtil.createOid("sysContact", CommonSnmpOids.sysContact)));
+		
+			changedSemos.add(snmpMaager.updateSNMP(TestUtil.createOid("sysDescr", CommonSnmpOids.sysDescr)));
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		try {
+			serviceElementDiscoveryManger.updateServiceElementInstanceUniqueSignature(signature);
+		} catch (IntegerException e) {
+		
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
+	
+	@Test
+	public void getAllServiceElementInstanceUniqueSignatures() {
+		try {
+			ServiceElementInstanceUniqueSignature[] signatures = serviceElementDiscoveryManger.getAllServiceElementInstanceUniqueSignature();
+			if (signatures == null || signatures.length == 0) { 
+				addServiceElementInstanceUniqueSignature();
+			
+				signatures = serviceElementDiscoveryManger.getAllServiceElementInstanceUniqueSignature();
+			}
+			
+			assert(signatures != null);
+			assert(signatures.length > 0);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+	}
 }

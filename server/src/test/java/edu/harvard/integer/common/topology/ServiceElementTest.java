@@ -51,6 +51,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
+import edu.harvard.integer.access.snmp.CommonSnmpOids;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.TestUtil;
@@ -58,6 +59,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.snmp.SNMP;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 /**
@@ -71,7 +73,10 @@ public class ServiceElementTest {
 
 	@Inject
 	private Logger logger;
-
+	
+	@Inject
+	private SnmpManagerInterface snmpMaager;
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return TestUtil.createTestArchive("ServiceElementTest.war");
@@ -210,6 +215,7 @@ public class ServiceElementTest {
 		
 	}
 	
+	@Test
 	public void getServiceElementByID() {
 		try {
 			ServiceElement[] serviceElements = serviceElementManager.getAllServiceElements();
@@ -230,4 +236,5 @@ public class ServiceElementTest {
 			fail(e.toString());
 		}
 	}
+	
 }
