@@ -98,14 +98,14 @@ public class SubnetMap extends IntegerMap {
 			Point point = calculatePoint(list.size(), i++, angle);
 			entityMap.put(serviceElement.getID(), point);
 			
-			if (serviceElement.getIconName() == null)
+			if (serviceElement.getIconName() == null || serviceElement.getIconName().equalsIgnoreCase("unknown"))
 				image = Resources.IMAGES.unknown();
 			else if (serviceElement.getIconName().equalsIgnoreCase("server"))
 				image = Resources.IMAGES.server();
 			else if (serviceElement.getIconName().equalsIgnoreCase("router"))
 				image = Resources.IMAGES.router();
 			else
-				image = Resources.IMAGES.unknown();
+				image = Resources.IMAGES.defaultDevice();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
