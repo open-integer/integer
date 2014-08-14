@@ -69,6 +69,7 @@ serviceElementTypes:
           - name: cdpInterface
             mapping: direct
             category: Interface
+            networkLayer: Layer2_5
       managementObjects:
           - name: cdpInterfaceEnable
             uri: cdpInterfaceEnable

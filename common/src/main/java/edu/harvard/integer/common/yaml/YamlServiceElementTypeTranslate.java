@@ -43,6 +43,15 @@ public class YamlServiceElementTypeTranslate {
 	private String name = null;
 	private String defaultNameCabability = null;
 	private String iconName = null;
+	private String networkLayer = null;
+	
+	public String getNetworkLayer() {
+		return networkLayer;
+	}
+
+	public void setNetworkLayer(String networkLayer) {
+		this.networkLayer = networkLayer;
+	}
 
 	public String getDefaultNameCabability() {
 		return defaultNameCabability;
