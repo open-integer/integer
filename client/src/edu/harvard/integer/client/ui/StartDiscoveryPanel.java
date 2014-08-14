@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.client.IntegerServiceAsync;
+import edu.harvard.integer.client.MainClient;
 
 /**
  * The Class DiscoveryRulePanel represents a panel to configure Discovery Rule of Integer.
@@ -62,12 +63,12 @@ public class StartDiscoveryPanel extends FormPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert("Discovery failed");
+						MainClient.statusPanel.showAlert("Discovery failed");
 					}
 
 					@Override
 					public void onSuccess(Void result) {
-						Window.alert("Discovery  completed");
+						MainClient.statusPanel.showAlert("Discovery started ...");
 					}
 					
 				});
