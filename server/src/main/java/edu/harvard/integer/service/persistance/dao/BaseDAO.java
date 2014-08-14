@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service.persistance.dao;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -125,7 +126,7 @@ public class BaseDAO {
 		try {
 
 			preSave(entity);
-
+			
 			if (entity.getIdentifier() == null)
 				getEntityManager().persist(entity);
 			else if (!getEntityManager().contains(entity))
@@ -158,6 +159,7 @@ public class BaseDAO {
 		return entity;
 	}
 
+	
 	private <T extends BaseEntity> String printEntity(T entitiy) {
 		if (entitiy == null)
 			return "";
@@ -430,6 +432,20 @@ public class BaseDAO {
 		return resultList.toArray((T[]) Array.newInstance(clazz, 0));
 	}
 
+	/**
+	 * Return the first value found or null if the list is null or empty.
+	 * 
+	 * @param values
+	 * @return The first item in the list.
+	 */
+	protected <T extends BaseEntity> T returnFirst(List<T> values) {
+	
+		if (values != null && values.size() > 0)
+			return values.get(0);
+		else
+			return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected <T extends BaseEntity> T[] findByNullField(String fieldName,
 			Class<T> clazz) throws IntegerException {

@@ -33,7 +33,14 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
@@ -66,4 +73,38 @@ public class MapItemPositionDAO extends BaseDAO {
 		return findByIDField(mapId, "mapId", MapItemPosition.class);
 	}
 
+	/**
+	 * @param mapId
+	 * @param itemId
+	 * @return
+	 */
+	public MapItemPosition findByMapIdAndItemId(ID mapId, ID itemId) {
+		if (mapId == null || itemId == null) {
+			getLogger().error("MapId ItemId are required fields!! Unable to lookup MapItemPostiong for map " + mapId + " item " + itemId);
+			return null;
+		}
+		CriteriaBuilder criteriaBuilder = getEntityManager()
+				.getCriteriaBuilder();
+
+		CriteriaQuery<MapItemPosition> query = criteriaBuilder.createQuery(MapItemPosition.class);
+
+		Root<MapItemPosition> from = query.from(MapItemPosition.class);
+		query.select(from);
+
+		ParameterExpression<ID> mapIdField = criteriaBuilder.parameter(ID.class);
+		ParameterExpression<ID> itemIdField = criteriaBuilder.parameter(ID.class);
+		query.select(from).where(criteriaBuilder.and(
+				criteriaBuilder.equal(from.get("mapId"), mapIdField),
+				criteriaBuilder.equal(from.get("itemId"), itemIdField)));
+
+		TypedQuery<MapItemPosition> typeQuery = getEntityManager().createQuery(query);
+		typeQuery.setParameter(mapIdField, mapId);
+		typeQuery.setParameter(itemIdField, itemId);
+
+		List<MapItemPosition> resultList = typeQuery.getResultList();
+
+		return returnFirst(resultList);
+	}
+
+	
 }

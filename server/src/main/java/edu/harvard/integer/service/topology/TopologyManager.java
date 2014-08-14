@@ -621,6 +621,12 @@ public class TopologyManager extends BaseManager implements
 	public MapItemPosition updateMapItemPosition(MapItemPosition position) throws IntegerException {
 		MapItemPositionDAO dao = persistenceManager.getMapItemPositionDAO();
 		
+		MapItemPosition dbPosition = dao.findByMapIdAndItemId(position.getMapId(), position.getItemId());
+		if (dbPosition == null) 
+			dbPosition = position;
+		else
+			dao.copyFields(dbPosition, position);
+		
 		return dao.update(position);
 	}
 }
