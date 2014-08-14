@@ -79,13 +79,13 @@ public class SubnetMap extends IntegerMap {
 						positionMap.put(position.getItemId(), position);
 				
 				if (network.getLowerNetworks() == null || network.getLowerNetworks().isEmpty())
-					updateServiceElements(network.getServiceElements(), LAYOUT_CENTER);
+					updateServiceElements(network.getID(), network.getServiceElements(), LAYOUT_CENTER);
 				else {
-					updateServiceElements(network.getServiceElements(), LAYOUT_LEFT);
-					updateLowerNetworks(network.getLowerNetworks(), LAYOUT_RIGHT);
+					updateServiceElements(network.getID(), network.getServiceElements(), LAYOUT_LEFT);
+					updateLowerNetworks(network.getID(), network.getLowerNetworks(), LAYOUT_RIGHT);
 				}
 				
-				updateInterDeviceDiffNetworks(network.getInterDeviceLinks());
+				updateInterDeviceDiffNetworks(network.getID(), network.getInterDeviceLinks());
 				
 				drawLinks(network.getInterDeviceLinks());
 				
@@ -99,11 +99,12 @@ public class SubnetMap extends IntegerMap {
 
 	/**
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
+	 * @param networkId 
 	 *
 	 * @param positions the positions
 	 * @param layout_position the layout_position
 	 */
-	public void updateServiceElements(List<ServiceElement> list, int layout_position) {
+	public void updateServiceElements(ID networkId, List<ServiceElement> list, int layout_position) {
 		this.layout_position = layout_position;
 		
 		int total = list.size();
@@ -118,10 +119,14 @@ public class SubnetMap extends IntegerMap {
 		for (final ServiceElement serviceElement : list) {
 			MapItemPosition mapItemPosition = positionMap.get(serviceElement.getID());
 			
-			if (mapItemPosition == null) 
-				point = calculatePoint(total, i, angle);
-			else
+			if (mapItemPosition != null)
 				point = new Point(mapItemPosition.getXposition().doubleValue(), mapItemPosition.getYposition().doubleValue());
+			else {
+				point = calculatePoint(total, i, angle);
+				mapItemPosition = new MapItemPosition();
+				mapItemPosition.setMapId(networkId);
+				mapItemPosition.setItemId(serviceElement.getID());
+			}
 
 			i++;
 			
@@ -163,7 +168,7 @@ public class SubnetMap extends IntegerMap {
 	 * @param list the list
 	 * @param layout_position the layout_position
 	 */
-	private void updateLowerNetworks(List<Network> list, int layout_position) {
+	private void updateLowerNetworks(ID parentNetworkId, List<Network> list, int layout_position) {
 		this.layout_position = layout_position;
 		init_layout(list.size());
 		
@@ -171,11 +176,20 @@ public class SubnetMap extends IntegerMap {
 		ImageResource image = Resources.IMAGES.network();
 		double angle = 0;
 		double increment = DOUBLE_PI / list.size();
+		Point point = null;
 		
 		for (final Network network : list) {
 			MapItemPosition mapItemPosition = positionMap.get(network.getID());
 			
-			Point point = calculatePoint(list.size(), i++, angle);
+			if (mapItemPosition != null)
+				point = calculatePoint(list.size(), i++, angle);
+			else {
+				mapItemPosition = new MapItemPosition();
+				mapItemPosition.setMapId(parentNetworkId);
+				mapItemPosition.setItemId(network.getID());
+			}
+			
+			// Point point = calculatePoint(list.size(), i++, angle);
 			entityMap.put(network.getID(), point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
@@ -201,7 +215,7 @@ public class SubnetMap extends IntegerMap {
 	 *
 	 * @param list the list
 	 */
-	private void updateInterDeviceDiffNetworks(List<InterDeviceLink> list) {
+	private void updateInterDeviceDiffNetworks(ID parentNetworkId, List<InterDeviceLink> list) {
 		layout_type = ELLIPSE_LAYOUT;
 		
 		// find all the networks not in this subnet
@@ -217,7 +231,7 @@ public class SubnetMap extends IntegerMap {
 		}
 
 		int i = 0;
-		ImageResource image = Resources.IMAGES.router();
+		ImageResource image = Resources.IMAGES.network();
 		double angle = 0;
 		double increment = DOUBLE_PI / list.size();
 			
