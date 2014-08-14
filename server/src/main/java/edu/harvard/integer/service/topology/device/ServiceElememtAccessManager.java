@@ -40,7 +40,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;

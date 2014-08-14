@@ -63,6 +63,7 @@ import edu.harvard.integer.service.persistance.dao.selection.FilterNodeDAO;
 import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.selection.ViewDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
@@ -519,6 +520,11 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public IpTopologySeedDAO getIpTopologySeedDAO() {
 		return new IpTopologySeedDAO(em, logger);
+	}
+	
+	@Override
+	public CredentialDAO getCredentialDAO() {
+		return new CredentialDAO(em, logger);
 	}
 	
 	@Override

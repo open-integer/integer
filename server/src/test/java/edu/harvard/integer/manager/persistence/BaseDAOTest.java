@@ -48,6 +48,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.util.LoggerUtil;
 
@@ -156,4 +157,6 @@ public class BaseDAOTest {
 		
 		
 	}
+	
+	
 }

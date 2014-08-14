@@ -58,6 +58,7 @@ import edu.harvard.integer.service.persistance.dao.selection.FilterNodeDAO;
 import edu.harvard.integer.service.persistance.dao.selection.LayerDAO;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.selection.ViewDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPIndexDAO;
@@ -414,6 +415,14 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 */
 	IpTopologySeedDAO getIpTopologySeedDAO();
 
+	/**
+	 * Get the CredentailDAO. This is the base class for SnmpV2Credentail and SnmpV3Credentail.
+	 * So this DAO can retrieve either SnmpV2Credentail and SnmpV3Credentail.
+	 * 
+	 * @return CredentailDAO
+	 */
+	public CredentialDAO getCredentialDAO();
+	
 	/**
 	 * @return
 	 */

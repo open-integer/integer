@@ -157,6 +157,7 @@ public class TopologyManagerTest {
 		return null;
 	}
 	
+	@Test
 	public void getMapItemPosition() {
 		
 		
@@ -375,7 +376,6 @@ public class TopologyManagerTest {
 		assert(links.length > 0);
 	}
 	
-	@Test
 	public void createFakeData() {
 
 		File deviceFile = new File("/Users/dtaylor/topology");
@@ -604,6 +604,29 @@ public class TopologyManagerTest {
 			e.printStackTrace();
 			fail(e.toString());
 		}
+	}
+	
+	@Test
+	public void setEntityName() {
+		
+		String shortName = "Fred";
+		String longName = "Freds full long name is this";
+		String tooLongName = "Fred56789012345678901234567890123456789012345678901234567890";
+		String truncatedName = "Fred567890123456789012345678901234567890123456789";
+		
+		ServiceElement serviceElement = new ServiceElement();
+		serviceElement.setName(shortName);
+		
+		assert(shortName.equals(serviceElement.getName()));
+		
+		serviceElement.setName(longName);
+		assert(longName.equals(serviceElement.getName()));
+		
+		serviceElement.setName(tooLongName);
+		assert(!tooLongName.equals(serviceElement));
+		
+		assert(truncatedName.equals(serviceElement.getName()));
+		
 	}
 }
 

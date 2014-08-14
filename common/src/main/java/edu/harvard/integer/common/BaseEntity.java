@@ -102,6 +102,9 @@ public abstract class BaseEntity implements IDInterface, Serializable {
 	 *            the name to set
 	 */
 	public void setName(String name) {
+		if (name != null && name.length() > 50)
+			name = name.substring(0,  49);
+		
 		this.name = name;
 	}
 
