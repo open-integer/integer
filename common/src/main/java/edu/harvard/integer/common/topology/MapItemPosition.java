@@ -79,8 +79,8 @@ public class MapItemPosition extends BaseEntity {
 
 	private String iconName = null;
 
-	private Integer xposition = null;
-	private Integer yposition = null;
+	private Double xposition = null;
+	private Double yposition = null;
 
 	/**
 	 * @return the userId
@@ -145,7 +145,7 @@ public class MapItemPosition extends BaseEntity {
 	/**
 	 * @return the xposition
 	 */
-	public Integer getXposition() {
+	public Double getXposition() {
 		return xposition;
 	}
 
@@ -153,14 +153,14 @@ public class MapItemPosition extends BaseEntity {
 	 * @param xposition
 	 *            the xposition to set
 	 */
-	public void setXposition(Integer xposition) {
+	public void setXposition(Double xposition) {
 		this.xposition = xposition;
 	}
 
 	/**
 	 * @return the yposition
 	 */
-	public Integer getYposition() {
+	public Double getYposition() {
 		return yposition;
 	}
 
@@ -168,7 +168,7 @@ public class MapItemPosition extends BaseEntity {
 	 * @param yposition
 	 *            the yposition to set
 	 */
-	public void setYposition(Integer yposition) {
+	public void setYposition(Double yposition) {
 		this.yposition = yposition;
 	}
 

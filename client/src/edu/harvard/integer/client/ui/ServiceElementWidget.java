@@ -181,12 +181,8 @@ public class ServiceElementWidget extends Group implements NodeMouseClickHandler
 		// clear to finish
 		clearDragLinks();
 		
-		if (mapItemPosition == null) {
-			mapItemPosition = new MapItemPosition();
-			mapItemPosition.setItemId(entity.getID());
-		}
-		mapItemPosition.setXposition(event.getX());
-		mapItemPosition.setYposition(event.getY());
+		mapItemPosition.setXposition(Double.valueOf(event.getX()));
+		mapItemPosition.setYposition(Double.valueOf(event.getY()));
 		
 		MainClient.integerService.updateMapItemPosition(mapItemPosition, new AsyncCallback<Void>()  {
 
