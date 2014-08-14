@@ -116,6 +116,8 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 					+ netDiscover.getDiscoverId().toString() + " "
 					+ e.getLocalizedMessage());
 		} finally {
+			
+			logger.info("CDP Based Topology Discover Complete.  " + netDiscover.getDiscoverId().toString());
 			netDiscover.discoverTopologyComplete();
 		}
 		return null;

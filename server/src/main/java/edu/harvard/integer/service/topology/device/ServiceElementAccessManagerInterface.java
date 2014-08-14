@@ -36,6 +36,7 @@ package edu.harvard.integer.service.topology.device;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.EnvironmentLevel;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -206,6 +207,16 @@ public interface ServiceElementAccessManagerInterface extends
 	 */
 	EnvironmentLevel updateEnvironmentLevel(EnvironmentLevel environmentLevel)
 			throws IntegerException;
+	
+	
+	/**
+	 * Get Credential by ID.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws IntegerException
+	 */
+	Credential getCredentialById( ID id ) throws IntegerException;
 
 	/**
 	 * Get the TopLevel (device) service element for the given ip address.

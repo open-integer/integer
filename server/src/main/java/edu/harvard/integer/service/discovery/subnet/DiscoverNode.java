@@ -39,9 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
@@ -51,7 +48,6 @@ import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.service.discovery.snmp.AssociationInfo;
 import edu.harvard.integer.service.discovery.snmp.DeviceTopologyInfo;
-import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
 import edu.harvard.integer.service.discovery.snmp.NetworkConnection;
 import edu.harvard.integer.service.discovery.snmp.TopologyNode;
 
@@ -103,9 +99,6 @@ public class DiscoverNode extends ElementAccess {
 		Stop
 	}
 	
-	/** The logger. */
-    private static Logger logger = LoggerFactory.getLogger(DiscoverNode.class);
-
 	
     /**
      * The subnet that belong to this discovered node.
@@ -137,8 +130,12 @@ public class DiscoverNode extends ElementAccess {
 	/**  The ip address of the node. */
 	final private String ipAddress;
 	
+	/**
+	 * The access currently uses to make request to device.
+	 */
 	private Access access;
 	
+
 	private DeviceTopologyInfo topologyInfo = new DeviceTopologyInfo();
 
 	/**
@@ -552,7 +549,6 @@ public class DiscoverNode extends ElementAccess {
 	}
 	
 	
-
 	/**
 	 * 
 	 * @return
@@ -560,5 +556,5 @@ public class DiscoverNode extends ElementAccess {
 	public Map<String, AssociationInfo> getAssociationInfos() {
 		return associationInfos;
 	}
-
+	
 }

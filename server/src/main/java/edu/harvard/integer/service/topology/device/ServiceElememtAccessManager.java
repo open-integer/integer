@@ -44,6 +44,7 @@ import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.selection.Selection;
+import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.EnvironmentLevel;
 import edu.harvard.integer.common.topology.ServiceElement;
@@ -52,9 +53,11 @@ import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.topology.EnvironmentLevelDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
+import edu.harvard.integer.service.persistance.dao.user.AuthInfoDAO;
 
 /**
  * @see ServiceElementAccessManagerInterface
@@ -386,5 +389,15 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		EnvironmentLevelDAO dao = dbm.getEnvironmentLevelDAO();
 		
 		return dao.update(environmentLevel);
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getCredentialById(edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public Credential getCredentialById(ID id) throws IntegerException {
+		
+		SnmpV2CredentialDAO dao =  dbm.getSnmpV2cCredentailDAO();
+		return dao.findById(id);
 	}
 }
