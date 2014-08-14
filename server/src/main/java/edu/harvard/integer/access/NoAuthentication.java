@@ -32,6 +32,8 @@
  */
 package edu.harvard.integer.access;
 
+import edu.harvard.integer.common.ID;
+
 
 /**
  * The Class NoAuthentication is used for accessing IP nodes without 
@@ -73,6 +75,17 @@ public class NoAuthentication implements Authentication {
 			return true;
 		}
 		return false;
+	}
+
+	/* 
+	 * Return null is OK in here, since it is really no such Credential created in database.
+	 * 
+	 * (non-Javadoc)
+	 * @see edu.harvard.integer.access.Authentication#getCredentailID()
+	 */
+	@Override
+	public ID getCredentailID() {
+		return null;
 	}
 
 }

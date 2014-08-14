@@ -34,6 +34,7 @@ package edu.harvard.integer.access.snmp;
 
 import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.access.Authentication;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 
 import org.snmp4j.mp.SnmpConstants;
@@ -45,7 +46,6 @@ import org.snmp4j.mp.SnmpConstants;
  */
 public class CommunityAuth extends SnmpAuthentication {
 
-	
 	private SnmpV2cCredentail credentail;
 	
 	public CommunityAuth( SnmpV2cCredentail credentail ) {
@@ -143,6 +143,16 @@ public class CommunityAuth extends SnmpAuthentication {
 		}
 		
 		return community != null ? community : "public";
+	}
+
+
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.access.Authentication#getCredentailID()
+	 */
+	@Override
+	public ID getCredentailID() {
+		
+		return credentail.getID();
 	}
 	
 }

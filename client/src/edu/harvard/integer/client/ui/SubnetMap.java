@@ -62,6 +62,7 @@ public class SubnetMap extends IntegerMap {
 	public void updateNetwork(final Network network) {
 		entityMap.clear();
 		diffNetworksMap.clear();
+		positionMap.clear();
 		iconMap.clear();
 		removeAll();
 		
@@ -73,13 +74,14 @@ public class SubnetMap extends IntegerMap {
 
 			@Override
 			public void onSuccess(MapItemPosition[] positions) {
-				if (positions == null || positions.length == 0)
-					return;
+				if (positions != null && positions.length > 0)
+					for (MapItemPosition position : positions)
+						positionMap.put(position.getItemId(), position);
 				
 				if (network.getLowerNetworks() == null || network.getLowerNetworks().isEmpty())
-					updateServiceElements(positions, LAYOUT_CENTER);
+					updateServiceElements(network.getServiceElements(), LAYOUT_CENTER);
 				else {
-					updateServiceElements(positions, LAYOUT_LEFT);
+					updateServiceElements(network.getServiceElements(), LAYOUT_LEFT);
 					updateLowerNetworks(network.getLowerNetworks(), LAYOUT_RIGHT);
 				}
 				
@@ -101,43 +103,41 @@ public class SubnetMap extends IntegerMap {
 	 * @param positions the positions
 	 * @param layout_position the layout_position
 	 */
-	public void updateServiceElements(MapItemPosition[] positions, int layout_position) {
+	public void updateServiceElements(List<ServiceElement> list, int layout_position) {
 		this.layout_position = layout_position;
-		init_layout(positions.length);
+		
+		int total = list.size();
+		init_layout(total);
 		
 		int i = 0;
 		ImageResource image = Resources.IMAGES.defaultDevice();
 		double angle = 0;
-		double increment = DOUBLE_PI / positions.length;
+		double increment = DOUBLE_PI / total;
 		Point point;
 		
-		System.out.println("position total: " + positions.length);
-		
-		for (final MapItemPosition position : positions) {
-			System.out.println("position: " + position.getItemId().getName());
+		for (final ServiceElement serviceElement : list) {
+			MapItemPosition mapItemPosition = positionMap.get(serviceElement.getID());
 			
-			Integer xposition = position.getXposition();
-			Integer yposition = position.getYposition();
-			if (xposition != null && yposition != null)
-				point = new Point(xposition.doubleValue(), yposition.doubleValue());
+			if (mapItemPosition == null) 
+				point = calculatePoint(total, i, angle);
 			else
-				point = calculatePoint(positions.length, i, angle);
-			
+				point = new Point(mapItemPosition.getXposition().doubleValue(), mapItemPosition.getYposition().doubleValue());
+
 			i++;
 			
-			entityMap.put(position.getItemId(), point);
+			entityMap.put(serviceElement.getID(), point);
 			
-			if (position.getIconName() == null || position.getIconName().equalsIgnoreCase("unknown"))
+			if (serviceElement.getIconName() == null || serviceElement.getIconName().equalsIgnoreCase("unknown"))
 				image = Resources.IMAGES.unknown();
-			else if (position.getIconName().equalsIgnoreCase("server"))
+			else if (serviceElement.getIconName().equalsIgnoreCase("server"))
 				image = Resources.IMAGES.server();
-			else if (position.getIconName().equalsIgnoreCase("router"))
+			else if (serviceElement.getIconName().equalsIgnoreCase("router"))
 				image = Resources.IMAGES.router();
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
 
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, position, subnetPanel);
-        	iconMap.put(position.getID(), icon);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, serviceElement, mapItemPosition, subnetPanel);
+        	iconMap.put(serviceElement.getID(), icon);
         	
         	angle += increment;
 		}
@@ -172,23 +172,25 @@ public class SubnetMap extends IntegerMap {
 		double angle = 0;
 		double increment = DOUBLE_PI / list.size();
 		
-		for (final Network entity : list) {
+		for (final Network network : list) {
+			MapItemPosition mapItemPosition = positionMap.get(network.getID());
+			
 			Point point = calculatePoint(list.size(), i++, angle);
-			entityMap.put(entity.getID(), point);
+			entityMap.put(network.getID(), point);
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
         	NodeMouseClickHandler mouseClickHandler = new NodeMouseClickHandler() {
 
         		@Override
         		public void onNodeMouseClick(NodeMouseClickEvent event) {
-        			selectedEntity = entity;
+        			selectedEntity = network;
         			selectedTimestamp = System.currentTimeMillis();
         		} 		
         	};
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, entity, null);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, network, mapItemPosition, null);
 
         	add(icon);
-        	iconMap.put(entity.getID(), icon);
+        	iconMap.put(network.getID(), icon);
         	
         	angle += increment;
 		}
@@ -257,7 +259,7 @@ public class SubnetMap extends IntegerMap {
 			
         	Picture picture = new Picture(image, icon_width, icon_height, true, null);
 
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, fakeSe, null);
+        	ServiceElementWidget icon = new ServiceElementWidget(picture, fakeSe, null, null);
         	icon.draw((int)point.getX(), (int)point.getY());
         	
         	add(icon);
