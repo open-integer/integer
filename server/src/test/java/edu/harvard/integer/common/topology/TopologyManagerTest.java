@@ -81,6 +81,8 @@ public class TopologyManagerTest {
 	private static Address sourceAddress = new Address("1.2.3.4", "255.255.255.0");
 	private static Address destAddress = new Address("2.3.4.5", "255.255.255.0");
 	
+	private ID mapId = new ID(Long.valueOf(2), "MyMap", new IDType("IDType"));
+	
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return TestUtil.createTestArchive("TopologyManagerTest.war");
@@ -135,10 +137,10 @@ public class TopologyManagerTest {
 		MapItemPosition position = new MapItemPosition();
 		position.setIconName("MyIcon");
 		position.setItemId(new ID(Long.valueOf(1), "MyItem", new IDType("IDType")));
-		position.setMapId(new ID(Long.valueOf(2), "MyMap", new IDType("IDType")));
+		position.setMapId(mapId);
 		position.setUserId(new ID(Long.valueOf(3), "MyUser", new IDType("IDType")));
-		position.setXposition(3);
-		position.setYposition(5);
+		position.setXposition(Double.valueOf(3));
+		position.setYposition(Double.valueOf(5));
 		
 		try {
 			position = topologyManager.updateMapItemPosition(position);
@@ -153,6 +155,29 @@ public class TopologyManagerTest {
 		}
 		
 		return null;
+	}
+	
+	public void getMapItemPosition() {
+		
+		
+		try {
+			MapItemPosition[] positionsByMap = topologyManager.getPositionsByMap(mapId);
+			if (positionsByMap == null || positionsByMap.length == 0) {
+				addMapItemPosition();
+				positionsByMap = topologyManager.getPositionsByMap(mapId);
+			}
+			
+			assert(positionsByMap != null);
+			assert(positionsByMap.length > 0);
+			
+			for (MapItemPosition mapItemPosition : positionsByMap) {
+				assert(mapItemPosition.getMapId().equals(mapId));
+			}
+			
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
 	}
 	
 	@Test
