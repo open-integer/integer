@@ -313,6 +313,16 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	
 	/*
 	 * (non-Javadoc)
+	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getTopLevelServiceElementByIpAddress(java.lang.String)
+	 */
+	@Override
+	public ServiceElement getTopLevelServiceElementByIpAddress(String ipAddress) throws IntegerException {
+		ServiceElementDAO dao = dbm.getServiceElementDAO();
+		return getTopLevel(getServiceElementByIpAddress(ipAddress), dao);
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface#getServiceElementsBySelection(edu.harvard.integer.common.selection.Selection)
 	 */
 	@Override

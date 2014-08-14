@@ -218,4 +218,15 @@ public interface ServiceElementAccessManagerInterface extends
 	 */
 	Credential getCredentialById( ID id ) throws IntegerException;
 
+	/**
+	 * Get the TopLevel (device) service element for the given ip address.
+	 * 
+	 * @param ipAddress
+	 *            that will identify the service element (device)
+	 * @return ServiceElement that has the ip address attached to it.
+	 * @throws IntegerException
+	 */
+	ServiceElement getTopLevelServiceElementByIpAddress(String ipAddress)
+			throws IntegerException;
+
 }

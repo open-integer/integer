@@ -35,7 +35,7 @@ public class NetworkMapPanel extends LienzoPanel {
 		add(networkMap);
 
 		getViewport().pushMediator(new MouseWheelZoomMediator(EventFilter.ANY));
-		getViewport().pushMediator(new MousePanMediator(EventFilter.BUTTON_LEFT));
+		getViewport().pushMediator(new MousePanMediator(EventFilter.SHIFT)); 
 
 		LienzoPanel.enableWindowMouseWheelScroll(true);
 	}

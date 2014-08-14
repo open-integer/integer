@@ -37,6 +37,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.Size;
 
 /**
  * Hold a String value of a management object.
@@ -49,6 +50,7 @@ public class ManagementObjectStringValue extends ManagementObjectValue<String>
 		implements Serializable {
 
 	@Column(name = "stringValue")
+	@Size(max = 2000)
 	private String value = null;
 
 	/**
