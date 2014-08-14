@@ -165,6 +165,8 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		snmpMgr = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
 		discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
 		topologyMgr = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
+		
+		
 	}
 	
     

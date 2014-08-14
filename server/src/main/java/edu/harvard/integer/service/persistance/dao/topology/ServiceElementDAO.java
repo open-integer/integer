@@ -57,6 +57,7 @@ import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
 
 /**
  * The DAO is responsible for persisting the ServiceElement. All queries will be
@@ -118,7 +119,6 @@ public class ServiceElementDAO extends BaseDAO {
 			serviceElement.setAssociations(dao.update(serviceElement
 					.getAssociations()));
 		}
-
 		super.preSave(entity);
 	}
 

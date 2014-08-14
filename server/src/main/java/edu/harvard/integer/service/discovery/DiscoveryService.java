@@ -291,7 +291,6 @@ public class DiscoveryService extends BaseService implements
 		seed.setPorts(createAccessPorts(ipTopologySeed.getAlternateSNMPports()));
 		
 		seed.addExclusiveNode(ipTopologySeed.getGatewayExclusuions());
-
 		return seed;
 	}
 

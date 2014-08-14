@@ -50,12 +50,15 @@ import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.AccessUtil;
 import edu.harvard.integer.access.Authentication;
 import edu.harvard.integer.access.ElementAccess;
+import edu.harvard.integer.access.snmp.CommunityAuth;
 import edu.harvard.integer.access.snmp.SnmpAuthentication;
 import edu.harvard.integer.access.snmp.SnmpService;
 import edu.harvard.integer.access.snmp.SnmpSysInfo;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
+import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
 import edu.harvard.integer.service.discovery.NetworkDiscovery;
@@ -63,7 +66,10 @@ import edu.harvard.integer.service.discovery.element.ElementDiscoverTask;
 import edu.harvard.integer.service.discovery.snmp.ExclusiveNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
 import edu.harvard.integer.service.distribution.DistributionManager;
+import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
+import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 
 /**
@@ -125,26 +131,63 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		this.seed = seed;
 		netDisc = dis;
 		
+		ServiceElementAccessManagerInterface accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+		
 		/**
-		 * First create an access list and sort them.
+		 * This is a special case that IP is in DNS name form.
 		 */
-		List<SnmpAuthentication>  auth = new ArrayList<>();
+		Authentication defaultAuth = null;
+		if ( seed.getDiscoverNet().getNetmask().equals("255.255.255.255") ) {		
+			if ( !SubnetUtil.validateIPAddress(seed.getDiscoverNet().getIpAddress() ) ) {
+						
+				ServiceElement topServiceElement = accessMgr.getServiceElementByName(seed.getDiscoverNet().getIpAddress());
+				if ( topServiceElement != null && topServiceElement.getCredentials() != null && topServiceElement.getCredentials().size() > 0) {
+					
+					 SnmpV2cCredentail credential = (SnmpV2cCredentail) accessMgr.getCredentialById(topServiceElement.getCredentials().get(0)) ;
+					 CommunityAuth auth = new CommunityAuth(credential);
+					 auth.setVersionV2c(true);
+					 auth.setTimeOut(seed.getSnmpTimeout());
+					 auth.setTryCount(seed.getSnmpRetries());
+					 defaultAuth = auth;
+				}
+			}
+		}
+		
+		/**
+		 * Create an access list and sort them so that the request access be in order.
+		 */
+		List<SnmpAuthentication>  snmpAuths = new ArrayList<>();
 		for ( Authentication a : seed.getAuths() ) {
 			if ( a instanceof SnmpAuthentication ) {
 				
 				SnmpAuthentication snmpauth = (SnmpAuthentication) a;
+				if ( defaultAuth != null && 
+						defaultAuth.getCredentailID().getIdentifier().longValue() == snmpauth.getCredentailID().getIdentifier().longValue() ) {
+					continue;
+				}
 				snmpauth.setTimeOut(seed.getSnmpTimeout());
 				snmpauth.setTryCount(seed.getSnmpRetries());
-				
-				auth.add(snmpauth);
+				snmpAuths.add(snmpauth);
 			}
 		}
-		if ( auth.size() == 0 ) {
+		if ( snmpAuths.size() == 0 && defaultAuth == null ) {
 			throw new IntegerException(null, NetworkErrorCodes.NoAuthentication);
 		}
-		Collections.sort(auth);
+		Collections.sort(snmpAuths);
+		if ( defaultAuth != null ) {
+			List<AccessPort> ports = seed.getPorts();
+			for ( AccessPort port : ports ) {
+        		if ( port.isAccessSupport(defaultAuth.getAccessType())) {
+        			Access ac = new Access(port.getPort(), defaultAuth);
+        			accesses.add(ac);
+        		}
+        	}	
+		}
 		
-		for ( SnmpAuthentication a : auth ) {
+		/**
+		 * Assign different ports to each access.
+		 */
+		for ( SnmpAuthentication a : snmpAuths ) {
 			
 			if ( seed.getPorts() != null && seed.getPorts().size() > 0 ) {
 			
@@ -162,62 +205,102 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 			}
 		}
 		
+		
 		/**
-		 * Verify the start ip and end ip address.
+		 * Ready to create Discover Node, first we need to take care the special case "255.255.255.255" and ip is in DNS forms.
+		 * 
 		 */
-		if ( seed.getStartIp() != null && ! seed.getDiscoverNet().isInRange(seed.getStartIp()) ) {
-			throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
-		}
-		
-		if ( seed.getEndIp() != null && !seed.getDiscoverNet().isInRange(seed.getEndIp()) ) {
-			throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
-		}
-		String startIp = seed.getStartIp();
-		if ( startIp == null ) {
-			startIp = seed.getDiscoverNet().getStartIp(); 
-		}
-		
-		String endIp = seed.getEndIp(); 
-		if ( endIp == null ) {
-			endIp = seed.getDiscoverNet().getEndIp();
-		}
-		logger.info("Discover subnet startip " + startIp + " endip " + endIp );
-        Ipv4Range range = new Ipv4Range(startIp, endIp);
-        
-        while ( range.hasNext() && netDisc != null ) {
-        	
-        	if ( netDisc.isStopDiscovery() ) {
-				logger.info("Discover being stop " );
-				break;
-			}
-			String ip = range.next();    
-			if ( netDisc.findDiscoveredIpAddresses(ip) != null ) {
-				logger.info("This node " + ip  + " is already in discovering " + ip);
-				continue;
-			}
-			if ( netDisc.getExclusiveNodes() != null ) {
-				
-				for ( ExclusiveNode excNode : netDisc.getExclusiveNodes() ) {
-					for ( Address addr : excNode.getNodeAddress() ) {
-						
-						if ( addr.getAddress().equals(ip) ) {
-							
-							logger.info("This node " + ip + " is in exclusive list." );
-							continue;
-						}
-					}
-				}
-			}
+		if ( seed.getDiscoverNet().getNetmask().equals("255.255.255.255") && !SubnetUtil.validateIPAddress(seed.getDiscoverNet().getIpAddress()) ) {	
 			
-			logger.info("Scan IP address " + ip);
-			
-			DiscoverNode dn = new DiscoverNode(ip, seed.getDiscoverNet() );
+			DiscoverNode dn = new DiscoverNode(seed.getDiscoverNet().getIpAddress(), seed.getDiscoverNet() );
 			dn.setSubnetId(seed.getSeedId());
 			dn.setAccess(accesses.get(0));
 
 			discoverMap.put(dn.getIpAddress(), dn);
 			discoveringNodes.add(dn);
-        }
+		}
+		else {
+
+			/**
+			 * Verify the start ip and end ip address.
+			 */
+			if ( seed.getStartIp() != null && ! seed.getDiscoverNet().isInRange(seed.getStartIp()) ) {
+				throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
+			}
+			
+			if ( seed.getEndIp() != null && !seed.getDiscoverNet().isInRange(seed.getEndIp()) ) {
+				throw new IntegerException(null, NetworkErrorCodes.OutOfSubnetRangeError);
+			}
+			String startIp = seed.getStartIp();
+			if ( startIp == null ) {
+				startIp = seed.getDiscoverNet().getStartIp(); 
+			}
+			
+			String endIp = seed.getEndIp(); 
+			if ( endIp == null ) {
+				endIp = seed.getDiscoverNet().getEndIp();
+			}
+			logger.info("Discover subnet startip " + startIp + " endip " + endIp );
+	        Ipv4Range range = new Ipv4Range(startIp, endIp);
+	        
+	        while ( range.hasNext() && netDisc != null ) {
+	        	
+	        	if ( netDisc.isStopDiscovery() ) {
+					logger.info("Discover being stop " );
+					break;
+				}
+				String ip = range.next();    
+				if ( netDisc.findDiscoveredIpAddresses(ip) != null ) {
+					logger.info("This node " + ip  + " is already in discovering " + ip);
+					continue;
+				}
+				if ( netDisc.getExclusiveNodes() != null ) {
+					
+					for ( ExclusiveNode excNode : netDisc.getExclusiveNodes() ) {
+						for ( Address addr : excNode.getNodeAddress() ) {
+							
+							if ( addr.getAddress().equals(ip) ) {
+								logger.info("This node " + ip + " is in exclusive list." );
+								continue;
+							}
+						}
+					}
+				}		
+				
+				DiscoverNode dn = new DiscoverNode(ip, seed.getDiscoverNet() );
+				
+				ServiceElement se = accessMgr.getServiceElementByIpAddress(ip);				
+				Access defaultAccess = null; 
+				try {
+					if ( se != null && se.getCredentials() != null && se.getCredentials().size() > 0 ) {
+						
+						 SnmpV2cCredentail credential = (SnmpV2cCredentail) accessMgr.getCredentialById(se.getCredentials().get(0)) ;
+						 CommunityAuth auth = new CommunityAuth(credential);
+						 auth.setVersionV2c(true);
+						 auth.setTimeOut(seed.getSnmpTimeout());
+						 auth.setTryCount(seed.getSnmpRetries());
+						 defaultAccess = new Access( AccessUtil.getDefaultPort(auth.getAccessType()), auth);
+					}			
+				}
+				catch ( Exception e ) {
+					e.printStackTrace();
+				}
+					
+				logger.info("Scan IP address " + ip );
+				
+				dn.setSubnetId(seed.getSeedId());
+				
+				if ( defaultAccess != null ) {
+					dn.setAccess(defaultAccess);
+				}
+				else {
+					dn.setAccess(accesses.get(0));
+				}
+				
+				discoverMap.put(dn.getIpAddress(), dn);
+				discoveringNodes.add(dn);
+	        }
+		}
 	}
 	
 	
@@ -324,14 +407,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 				for ( int i=0; i< accesses.size(); i++ ) {
 					
 					Access a = accesses.get(i);
-					try {
-						if ( dn.getAccess().equal(a) && i < ( accesses.size() - 1 ) ) {
-							
-						}
-					}
-					catch ( Exception es ) {
-						es.printStackTrace();
-					}
 					
 					if ( dn.getAccess().equal(a) && i < ( accesses.size() - 1 ) ) {
 						

@@ -430,6 +430,14 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		 	}
 		  
 		    logger.info("call update service element " + se.getName());
+		    if ( discoverNode.getAccess().getAuth().getCredentailID() != null ) {
+		    	 List<ID> cid = se.getCredentials();
+		    	 if ( cid == null ) {
+		    		 se.setCredentials(new ArrayList<ID>());
+		    	 }		    	 
+		    	 se.getCredentials().add(discoverNode.getAccess().getAuth().getCredentailID());
+		    }
+		    
 		    se = accessMgr.updateServiceElement(se);
 		    
 		    discoverNode.setAccessElement(se);

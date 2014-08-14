@@ -112,4 +112,36 @@ public class SubnetUtil {
 		}
 		return false;
 	}
+	
+	
+	
+	/**
+	 * Validate a string is in IP Address or not.
+	 * 
+	 * @param ipAddress
+	 * @return
+	 */
+	public static boolean validateIPAddress( String ipAddress ) {
+		
+		String[] tokens = ipAddress.split("\\.");
+		if ( tokens.length != 4 ) {
+			return false;
+		}
+		
+		for ( String str : tokens ) {
+			
+			try {
+				int i = Integer.parseInt(str);
+				if ( (i<0) || (i>255) ) {
+					return false;
+				}
+			}
+			catch ( Exception e ) {
+				return false;
+			}
+			
+		}
+		
+		return true;
+	}
 }

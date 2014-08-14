@@ -167,7 +167,7 @@ public class ServiceElement extends BaseEntity implements Serializable {
 	 * set up and later used by the ServiceElementAccessManager will have this
 	 * information.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<ID> credentials = null;
 
