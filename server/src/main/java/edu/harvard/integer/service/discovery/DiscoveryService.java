@@ -269,7 +269,8 @@ public class DiscoveryService extends BaseService implements
 		IntegerServer server = DistributionManager.getIntegerServer(id.getServerId());
 		
 		b = new StringBuffer();
-		b.append("Discovery for ").append(ruleId.getName());
+		if (ruleId != null)
+			b.append("Discovery for ").append(ruleId.getName());
 		
 		if (serviceElementId != null) 
 			b.append(" ").append(serviceElementId);
