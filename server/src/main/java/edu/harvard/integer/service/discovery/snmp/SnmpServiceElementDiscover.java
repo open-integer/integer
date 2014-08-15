@@ -80,7 +80,6 @@ import edu.harvard.integer.common.topology.ServiceElementManagementObject;
 import edu.harvard.integer.common.topology.ServiceElementProtocolInstanceIdentifier;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.TopologyElement;
-import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
@@ -90,7 +89,6 @@ import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
 import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
-import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
 import edu.harvard.integer.service.topology.TopologyManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
@@ -762,35 +760,41 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					 */
 					if ( cdpConnection.getRemoteAddress() != null  ) {
 						
-						SNMP maskSnmp = snmpMgr.getSNMPByName("ipAdEntNetMask");
-						ElementEndPoint remoteEpt = new ElementEndPoint(cdpConnection.getRemoteAddress(), 
-								             discNode.getElementEndPoint().getAccessPort(), discNode.getElementEndPoint().getAuth());
-						
-						PDU pdu = new PDU();
-						pdu.add(new VariableBinding(new OID(maskSnmp.getOid() + "." + cdpConnection.getRemoteAddress())));
+						try {
+							SNMP maskSnmp = snmpMgr.getSNMPByName("ipAdEntNetMask");
+							ElementEndPoint remoteEpt = new ElementEndPoint(cdpConnection.getRemoteAddress(), 
+									             discNode.getElementEndPoint().getAccessPort(), discNode.getElementEndPoint().getAuth());
 							
-						PDU rpdu = SnmpService.instance().getPdu(remoteEpt, pdu);		
-						String mask = rpdu.get(0).getVariable().toString();
-						
-						/**
-						 * Only care if the mask is valid IP Address format.
-						 */
-						if ( SubnetUtil.validateIPAddress(mask) ) {
+							PDU pdu = new PDU();
+							pdu.add(new VariableBinding(new OID(maskSnmp.getOid() + "." + cdpConnection.getRemoteAddress())));
+								
+							PDU rpdu = SnmpService.instance().getPdu(remoteEpt, pdu);		
+							String mask = rpdu.get(0).getVariable().toString();
 							
-							logger.info("Found the mask " + mask + " for remote ip " + remoteEpt.getIpAddress());
-							DiscoverNet dn = new DiscoverNet(remoteEpt.getIpAddress(), 
-											               mask, discNode.getDiscoverNet().getRadiusCountDown());
-							SubnetUtils sutils = new SubnetUtils(remoteEpt.getIpAddress(), mask);
-							String cidr = sutils.getInfo().getCidrSignature();
-									
-							String[] cc = cidr.split("/");
-							if ( Integer.parseInt(cc[1]) >= 24 ) {
-							      discNode.getOtherSubnet().add(dn);
-							}	
+							/**
+							 * Only care if the mask is valid IP Address format.
+							 */
+							if ( SubnetUtil.validateIPAddress(mask) ) {
+								
+								logger.info("Found the mask " + mask + " for remote ip " + remoteEpt.getIpAddress());
+								DiscoverNet dn = new DiscoverNet(remoteEpt.getIpAddress(), 
+												               mask, discNode.getDiscoverNet().getRadiusCountDown());
+								SubnetUtils sutils = new SubnetUtils(remoteEpt.getIpAddress(), mask);
+								String cidr = sutils.getInfo().getCidrSignature();
+										
+								String[] cc = cidr.split("/");
+								if ( Integer.parseInt(cc[1]) >= 24 ) {
+								      discNode.getOtherSubnet().add(dn);
+								}	
+							}
+							else {
+								logger.info("Remote mask is not valid " + mask);
+							}
 						}
-						else {
-							logger.info("Remote mask is not valid " + mask);
-						}
+						catch ( Exception e ) {
+						
+							logger.info("Exception to contact the cdp connection remote device " + cdpConnection.getRemoteAddress() );
+						}						
 					}					
 				}
 				else {
