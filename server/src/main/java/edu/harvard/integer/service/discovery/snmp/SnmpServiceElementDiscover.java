@@ -45,6 +45,7 @@ import org.snmp4j.PDU;
 import org.snmp4j.smi.Integer32;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.UnsignedInteger32;
+import org.snmp4j.smi.Variable;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
@@ -73,6 +74,7 @@ import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
+import edu.harvard.integer.common.topology.NetworkLayer;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementAssociation;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
@@ -710,6 +712,10 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			pdu.add(new VariableBinding(o));
 			PDU rpdu = SnmpService.instance().getPdu(discNode.getElementEndPoint(), pdu);
 			se.setName(rpdu.get(0).getVariable().toString());
+		}
+		
+		if ( set.getNetworkLayer() != null ) {
+			se.setNetworkLayer(set.getNetworkLayer());
 		}
 		
 		/**
@@ -1991,6 +1997,40 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 		ServiceElementType levelSetType = null;
 		ServiceElement levelSe =  null;
 	}
+	
+	/**
+	 * Find discrimination from a SNMP  variable.
+	 * @param v
+	 * @param snmpLevel
+	 * @return
+	 */
+	public static SnmpServiceElementTypeDiscriminator findDiscriminator( Variable v, SnmpLevelOID snmpLevel ) {
+		
+		for ( SnmpServiceElementTypeDiscriminator ssetd : snmpLevel.getDisriminators() ) {
+			
+			 SnmpServiceElementTypeDiscriminatorValue<?> ssetdv = ssetd.getDiscriminatorValue();
+			 if ( ssetdv != null ) {
+				  
+				 if ( ssetdv instanceof SnmpServiceElementTypeDescriminatorIntegerValue ) {
+					  
+					 Integer iv = (Integer) ssetdv.getValue();
+					 if ( v.toInt() == iv ) {
+						  return ssetd;
+					 }
+				 }
+				 else if ( ssetdv instanceof SnmpServiceElementTypeDiscriminatorStringValue ) {
+					  
+					 String sv = (String) ssetdv.getValue();
+					 if ( sv.equals(v.toString()) ) {
+						 return ssetd;
+					 }
+				 }
+			 }			
+		}
+		return null;
+	}
+	
+	
 	
 	
 

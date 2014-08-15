@@ -110,8 +110,6 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 		try {
 			discoverNodeLink();
 		} catch (IntegerException e) {
-
-			e.printStackTrace();
 			logger.error("Cdp discovery error on network discover id "
 					+ netDiscover.getDiscoverId().toString() + " "
 					+ e.getLocalizedMessage());
@@ -206,7 +204,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 				CdpConnection cdpConn = (CdpConnection) conns.get(i);
 				try {
 					discoverLink(dn, cdpConn, deviceInfo, nextLevelNodes);
-				} catch (Exception e) {
+				} catch (RuntimeException e) {
 
 					logger.info("Continue on exception " + e.getMessage());
 					e.printStackTrace();

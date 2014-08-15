@@ -43,7 +43,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
-import org.snmp4j.smi.Variable;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.util.TableEvent;
 
@@ -55,16 +54,12 @@ import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentRelation;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
-import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDescriminatorIntegerValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
-import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
-import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
-import edu.harvard.integer.common.topology.NetworkLayer;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementAssociation;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
@@ -91,7 +86,7 @@ public class ParentChildServiceElementDiscovery extends
 		SnmpServiceElementDiscover {
 
 	/** The logger. */
-    private static Logger logger = LoggerFactory.getLogger(EntityMibServiceElementDiscovery.class);
+    private static Logger logger = LoggerFactory.getLogger(ParentChildServiceElementDiscovery.class);
     
 	
 	/** The containment class which the child context OID and which SNMP object holds the relation. */
@@ -504,6 +499,10 @@ public class ParentChildServiceElementDiscovery extends
 			se.setName(seName);
 	    }
 	    
+	    if ( set.getNetworkLayer() != null ) {
+	    	se.setNetworkLayer(set.getNetworkLayer());
+	    }
+	    
 	    /**
 	     * Create service element in the database.
 	     */
@@ -641,51 +640,12 @@ public class ParentChildServiceElementDiscovery extends
 		catch ( IntegerException ie ) {
 			logger.warn("Fail to add attribute on ServiceElementType");
 		}	
+		 
 		set = capMgr.updateServiceElementType(set);
 		return set;
 	}
 	
-	
-	private SnmpServiceElementTypeDiscriminator findDiscriminator( Variable v, SnmpLevelOID snmpLevel ) {
-		
-		for ( SnmpServiceElementTypeDiscriminator ssetd : snmpLevel.getDisriminators() ) {
-			
-			 SnmpServiceElementTypeDiscriminatorValue<?> ssetdv = ssetd.getDiscriminatorValue();
-			 if ( ssetdv != null ) {
-				  
-				 if ( ssetdv instanceof SnmpServiceElementTypeDescriminatorIntegerValue ) {
-					  
-					 Integer iv = (Integer) ssetdv.getValue();
-					 if ( v.toInt() == iv ) {
-						  return ssetd;
-					 }
-				 }
-				 else if ( ssetdv instanceof SnmpServiceElementTypeDiscriminatorStringValue ) {
-					  
-					 String sv = (String) ssetdv.getValue();
-					 if ( sv.equals(v.toString()) ) {
-						 return ssetd;
-					 }
-				 }
-			 }			
-		}
-		return null;
-	}
-	
-	
-    private SnmpServiceElementTypeDiscriminator findDefaultDiscriminator( SnmpLevelOID snmpLevel ) {
-		
-		for ( SnmpServiceElementTypeDiscriminator ssetd : snmpLevel.getDisriminators() ) {
-			
-			SnmpServiceElementTypeDiscriminatorValue<?> ssetdv = ssetd.getDiscriminatorValue();
-			if ( ssetdv == null ) {
-				 return ssetd;
-			}			 
-		}
-		return null;
-	}
-	
-	
+
 	
 	/**
 	 * The Class EntityElement.
