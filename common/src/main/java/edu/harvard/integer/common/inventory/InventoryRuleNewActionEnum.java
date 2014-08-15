@@ -31,20 +31,18 @@
  *      
  */
 
-package edu.harvard.integer.common.audit;
+package edu.harvard.integer.common.inventory;
 
 /**
+ * An enumerated list of actions to take: 
+ * <ol>
+ * <li>Add - not notification 
+ * <li>Add and notify
+ * 
+ * 
  * @author David Taylor
- *
+ * 
  */
-public enum AuditLogTypeEnum {
-	DeviceAdded,
-	DeviceDeleted,
-	ServerStarted,
-	UserLoggin,
-	DiscoveryStarted,
-	DiscoveryComplete,
-	DiscoveryCompleteServiceElement,
-	DiscoveryCompleteTopology,
-	DiscoveryCompleteWithError;
+public enum InventoryRuleNewActionEnum {
+	AddAndNotify, Add, NotifyOnly;
 }

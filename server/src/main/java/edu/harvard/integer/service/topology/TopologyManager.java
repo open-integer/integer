@@ -627,6 +627,6 @@ public class TopologyManager extends BaseManager implements
 		else
 			dao.copyFields(dbPosition, position);
 		
-		return dao.update(position);
+		return dao.update(dbPosition);
 	}
 }

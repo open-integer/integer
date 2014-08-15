@@ -41,6 +41,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
@@ -79,8 +81,9 @@ public class ServiceElementInstanceUniqueSignature extends BaseEntity {
 	 * List of the SEMOs the system will use to uniquely identify an instance of
 	 * a service element of the type to which this class is associated.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name="idx")
+	@JoinTable(name="ServiceElementInstanceUniqueSignature_SEMO")
 	private List<ServiceElementManagementObject> uniqueSemos = null;
 
 	/**
@@ -90,8 +93,9 @@ public class ServiceElementInstanceUniqueSignature extends BaseEntity {
 	 * serviceElementManagementObjects that are used for comparison from one
 	 * discovery run to another.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@OrderColumn(name="idx")
+	@JoinTable(name="ServiceElementInstanceUniqueSignature_ChangeSEMO")
 	private List<ServiceElementManagementObject> changeSemos = null;
 
 	/**

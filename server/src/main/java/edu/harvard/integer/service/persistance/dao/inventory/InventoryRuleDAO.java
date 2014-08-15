@@ -31,20 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.common.audit;
+package edu.harvard.integer.service.persistance.dao.inventory;
+
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.inventory.InventoryRule;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public enum AuditLogTypeEnum {
-	DeviceAdded,
-	DeviceDeleted,
-	ServerStarted,
-	UserLoggin,
-	DiscoveryStarted,
-	DiscoveryComplete,
-	DiscoveryCompleteServiceElement,
-	DiscoveryCompleteTopology,
-	DiscoveryCompleteWithError;
+public class InventoryRuleDAO extends BaseDAO {
+
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public InventoryRuleDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, InventoryRule.class);
+
+	}
+
 }

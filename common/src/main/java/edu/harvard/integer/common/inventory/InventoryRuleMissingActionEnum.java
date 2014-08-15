@@ -31,20 +31,23 @@
  *      
  */
 
-package edu.harvard.integer.common.audit;
+package edu.harvard.integer.common.inventory;
 
 /**
+ * An enumerated list of actions to take when an object has been determined to
+ * be 'missing'"
+ * <ol>
+ * <li>delete
+ * <li>delete and notify
+ * <li>Warn
+ * <li>Warn and notify
+ * 
  * @author David Taylor
- *
+ * 
  */
-public enum AuditLogTypeEnum {
-	DeviceAdded,
-	DeviceDeleted,
-	ServerStarted,
-	UserLoggin,
-	DiscoveryStarted,
-	DiscoveryComplete,
-	DiscoveryCompleteServiceElement,
-	DiscoveryCompleteTopology,
-	DiscoveryCompleteWithError;
+public enum InventoryRuleMissingActionEnum {
+	Delete,
+	DeleteAndNotify,
+	Warn,
+	WarnAndNotify;
 }

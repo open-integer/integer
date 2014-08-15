@@ -45,6 +45,9 @@ import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemot
 import edu.harvard.integer.service.event.EventManager;
 import edu.harvard.integer.service.event.EventManagerLocalInterface;
 import edu.harvard.integer.service.event.EventManagerRemoteInterface;
+import edu.harvard.integer.service.inventory.InventoryManager;
+import edu.harvard.integer.service.inventory.InventoryManagerLocalInterface;
+import edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManager;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface;
@@ -109,7 +112,8 @@ public enum ManagerTypeEnum implements DistributedManagerInterface {
     EventManager(EventManager.class, EventManagerLocalInterface.class, EventManagerRemoteInterface.class),
     YamlManager(YamlManager.class, YamlManagerLocalInterface.class, YamlManagerRemoteInterface.class),
     TopologyManager(TopologyManager.class, TopologyManagerLocalInterface.class, TopologyManagerRemoteInterface.class),
-    UserManager(UserManager.class, UserManagerLocalInterface.class, UserManagerRemoteInterface.class);
+    UserManager(UserManager.class, UserManagerLocalInterface.class, UserManagerRemoteInterface.class),
+    InventoryManager(InventoryManager.class, InventoryManagerLocalInterface.class, InventoryManagerRemoteInterface.class);
 	
 	Class<? extends BaseManager> mgrClazz;
 	Class<? extends BaseManagerInterface> remoteIntfClazz;

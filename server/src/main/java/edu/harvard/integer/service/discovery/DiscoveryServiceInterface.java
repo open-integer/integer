@@ -74,23 +74,12 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 
 	/**
 	 * This method is called by the discovery process to notify the
-	 * DiscoveryService that the discovery specified by the DiscoveryId has
-	 * complete. This is only to be called by the discovery manager.
-	 * 
-	 * @param dicoveryId
-	 *            . Id of the discovery process that has completed.
-	 * @throws IntegerException
-	 */
-	void discoveryComplete(DiscoveryId dicoveryId) throws IntegerException;
-
-	/**
-	 * This method is called by the discovery process to notify the
 	 * DiscoveryService that the topology discovery specified by the DiscoveryId
 	 * has complete. This is only to be called by the discovery manager.
 	 * 
 	 * @throws IntegerException
 	 */
-	void discoveryTopologyComplete() throws IntegerException;
+	void discoveryTopologyComplete(DiscoveryId dicoveryId) throws IntegerException;
 
 	/**
 	 * This method is called by the discovery process to report an error that
@@ -127,10 +116,11 @@ public interface DiscoveryServiceInterface extends BaseServiceInterface {
 	 * This is called from the discovery process when a service element has been
 	 * successfully discovered. This call will then save the service element
 	 * into the database.
+	 * @param discoverId 
 	 * 
 	 * @param accessElement
 	 */
-	void discoveredServiceElement(ServiceElement accessElement);
+	void discoveredServiceElement(DiscoveryId discoverId, ServiceElement accessElement);
 
 	/**
 	 * Stop the discovery for this discovery rule. 

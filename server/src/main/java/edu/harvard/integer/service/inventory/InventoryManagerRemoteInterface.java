@@ -31,20 +31,15 @@
  *      
  */
 
-package edu.harvard.integer.common.audit;
+package edu.harvard.integer.service.inventory;
+
+import javax.ejb.Remote;
 
 /**
  * @author David Taylor
  *
  */
-public enum AuditLogTypeEnum {
-	DeviceAdded,
-	DeviceDeleted,
-	ServerStarted,
-	UserLoggin,
-	DiscoveryStarted,
-	DiscoveryComplete,
-	DiscoveryCompleteServiceElement,
-	DiscoveryCompleteTopology,
-	DiscoveryCompleteWithError;
+@Remote
+public interface InventoryManagerRemoteInterface extends InventoryManagerInterface {
+
 }

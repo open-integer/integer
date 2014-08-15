@@ -50,6 +50,8 @@ import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.Subnet;
+import edu.harvard.integer.common.type.displayable.DisplayableInterface;
+import edu.harvard.integer.common.type.displayable.NonLocaleErrorMessage;
 import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
 import edu.harvard.integer.service.discovery.snmp.ExclusiveNode;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
@@ -278,7 +280,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		DiscoveryServiceInterface discoveryService = null;
 		try {
 			discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
-			discoveryService.discoveredServiceElement(discoverNode.getAccessElement());
+			discoveryService.discoveredServiceElement(discoverId, discoverNode.getAccessElement());
 		} 
 		catch (IntegerException e) {
 			logger.error("Error saveing ServiceElement " + discoverNode.getAccessElement());
@@ -307,7 +309,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 */
 	public void discoverErrorOccur( ErrorCodeInterface errorCode, String msg ) {
 		try {
-			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryError(discoverId, errorCode, null);
+			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryError(discoverId, errorCode, 
+					new DisplayableInterface[]  { new NonLocaleErrorMessage(msg) } );
 		} catch (IntegerException e) {
 			
 			logger.error("Error sending error " + errorCode + " args " + msg);
@@ -321,7 +324,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	public void discoverTopologyComplete() {
 		
 		try {
-			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryTopologyComplete();
+			((DiscoveryServiceInterface) DistributionManager.getService(ServiceTypeEnum.DiscoveryService)).discoveryTopologyComplete(discoverId);
 		} catch (IntegerException e) {
 			
 			logger.error("Error sending error " + e.getLocalizedMessage());

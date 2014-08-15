@@ -31,20 +31,29 @@
  *      
  */
 
-package edu.harvard.integer.common.audit;
+package edu.harvard.integer.service.persistance.dao.auditlog;
+
+import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+
+import edu.harvard.integer.common.audit.AuditLog;
+import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
  * @author David Taylor
  *
  */
-public enum AuditLogTypeEnum {
-	DeviceAdded,
-	DeviceDeleted,
-	ServerStarted,
-	UserLoggin,
-	DiscoveryStarted,
-	DiscoveryComplete,
-	DiscoveryCompleteServiceElement,
-	DiscoveryCompleteTopology,
-	DiscoveryCompleteWithError;
+public class AuditLogDAO extends BaseDAO {
+
+	/**
+	 * @param entityManger
+	 * @param logger
+	 * @param clazz
+	 */
+	public AuditLogDAO(EntityManager entityManger, Logger logger) {
+		super(entityManger, logger, AuditLog.class);
+
+	}
+
 }

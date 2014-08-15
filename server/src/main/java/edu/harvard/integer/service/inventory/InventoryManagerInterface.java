@@ -31,20 +31,52 @@
  *      
  */
 
-package edu.harvard.integer.common.audit;
+package edu.harvard.integer.service.inventory;
+
+import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.inventory.InventoryRule;
+import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
  * @author David Taylor
- *
+ * 
  */
-public enum AuditLogTypeEnum {
-	DeviceAdded,
-	DeviceDeleted,
-	ServerStarted,
-	UserLoggin,
-	DiscoveryStarted,
-	DiscoveryComplete,
-	DiscoveryCompleteServiceElement,
-	DiscoveryCompleteTopology,
-	DiscoveryCompleteWithError;
+public interface InventoryManagerInterface extends BaseManagerInterface {
+
+	/**
+	 * Update/Save the inventory rule.
+	 * 
+	 * @param rule
+	 * @return The updated InventoryRule. This will have the identifier set when
+	 *         the object is created.
+	 * @throws IntegerException
+	 */
+	InventoryRule updateInventoryRule(InventoryRule rule)
+			throws IntegerException;
+
+	/**
+	 * Get the InventoryRule for the given ID.
+	 * 
+	 * @param ruleId
+	 * @return InventoryRule with the given ID.
+	 * @throws IntegerException
+	 */
+	InventoryRule getInventoryRuleById(ID ruleId) throws IntegerException;
+
+	/**
+	 * Check inventory rule for this service element.
+	 * 
+	 * @param dbServiceElment
+	 *            . ServiceElement that was found previously.
+	 * @param newServiceElement
+	 *            . The new ServiceElement discovered.
+	 * @return The updated dbServiceElement to store in the database for the
+	 *         current state of the ServiceElement
+	 * @throws IntegerException
+	 */
+	ServiceElement checkServiceElement(ServiceElement dbServiceElment,
+			ServiceElement newServiceElement) throws IntegerException;
+
 }

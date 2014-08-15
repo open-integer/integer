@@ -33,7 +33,10 @@
 
 package edu.harvard.integer.service.discovery;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,8 +54,11 @@ import org.slf4j.Logger;
 import edu.harvard.integer.access.AccessPort;
 import edu.harvard.integer.access.AccessTypeEnum;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.audit.AuditLog;
+import edu.harvard.integer.common.audit.AuditLogTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.discovery.DiscoveryStatusEnum;
+import edu.harvard.integer.common.distribution.IntegerServer;
 import edu.harvard.integer.common.event.DiscoveryCompleteEvent;
 import edu.harvard.integer.common.exception.ErrorCodeInterface;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -70,7 +76,9 @@ import edu.harvard.integer.service.discovery.snmp.DiscoverCdpTopologyTask;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 import edu.harvard.integer.service.discovery.subnet.Ipv4Range;
+import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.persistance.PersistenceManagerInterface;
+import edu.harvard.integer.service.persistance.dao.auditlog.AuditLogDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
 import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
 
@@ -180,6 +188,8 @@ public class DiscoveryService extends BaseService implements
 			throws IntegerException {
 
 		DiscoveryId id = new DiscoveryId();
+		id.setDiscoveryRuleId(rule.getID());
+		
 		id.setServerId(IntegerProperties.getInstance().getLongProperty(
 				LongPropertyNames.ServerId));
 		id.setDiscoveryId(discoverySeqId++);
@@ -205,9 +215,91 @@ public class DiscoveryService extends BaseService implements
 					+ rule.getName());
 		}
 
+		createDiscoveryAuditLog(rule.getID(), id, AuditLogTypeEnum.DiscoveryStarted);
+		
 		return id;
 	}
+	
+	private AuditLog createDiscoveryAuditLog(ID ruleId, DiscoveryId id, AuditLogTypeEnum type) throws IntegerException {
+		
+		return createDiscoveryAuditLog(ruleId, id, null, type);
+	}
+	
+	private AuditLog createDiscoveryAuditLog(ID ruleId, DiscoveryId id, String errorMessage, AuditLogTypeEnum type) throws IntegerException {
+		return createDiscoveryAuditLog(ruleId, id, null, errorMessage, type);
+	}
+	
+	private AuditLog createDiscoveryAuditLog(ID ruleId, DiscoveryId id, ID serviceElementId, 
+			String errorMessage, AuditLogTypeEnum type) throws IntegerException {
+		AuditLog auditLog = new AuditLog();
+		auditLog.setAuditType(type);
+		auditLog.setEntityId(ruleId);
+		
+		StringBuffer b = new StringBuffer(ruleId.getName());
+		switch (type) {
+		case DiscoveryStarted:
+			b.append("Started discovery");
+			break;
 
+		case DiscoveryComplete:
+			b.append(" Complete discovery");
+			break;
+			
+		case DiscoveryCompleteServiceElement:
+			b.append(" Complete service element discovery");
+			break;
+			
+		case DiscoveryCompleteTopology:
+			b.append(" Complete topology discovery");
+			break;
+			
+		case DiscoveryCompleteWithError:
+			b.append(" Complete with errors");
+			break;
+			
+		default:
+			break;
+		}
+		
+		auditLog.setName(b.toString());
+		
+		IntegerServer server = DistributionManager.getIntegerServer(id.getServerId());
+		
+		b = new StringBuffer();
+		b.append("Discovery for ").append(ruleId.getName());
+		
+		if (serviceElementId != null) 
+			b.append(" ").append(serviceElementId);
+		
+		b.append(" DiscoveryId ").append( id.getDiscoveryId() );
+		b.append(" on server ");
+		if (server != null) {
+			if (server.getName() != null)
+				b.append(server.getName());
+			else
+				b.append(server.getServerAddress());
+		} else
+			b.append(id.getServerId());
+		
+		if (errorMessage != null) {
+			b.append(" Error: "); 
+			
+			if (255 - b.length() > errorMessage.length())
+				b.append(errorMessage);
+			else
+				b.append(errorMessage.substring(0, 255 - b.length()));
+		}
+		
+		 auditLog.setMessage(b.toString());
+		 
+		 auditLog.setTime(new Date());
+		 
+		 AuditLogDAO auditDao = persistenceManager.getAuditLogDAO();
+	
+		 return auditDao.update(auditLog);
+		 
+	}
+	
 	/**
 	 * Start a topology discovery using the list of topology seeds. This
 	 * discovery assumes that the service element discovery for the networks
@@ -319,31 +411,28 @@ public class DiscoveryService extends BaseService implements
 		return net;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * This method is called by the discovery process to notify the
+	 * DiscoveryService that the discovery specified by the DiscoveryId has
+	 * complete. This is only to be called by the discovery manager.
 	 * 
-	 * @see edu.harvard.integer.service.discovery.DiscoveryServiceInterface#
-	 * discoveryComplete(edu.harvard.integer.common.discovery.DiscoveryId)
+	 * @param dicoveryId
+	 *            . Id of the discovery process that has completed.
+	 * @throws IntegerException
 	 */
-	@Override
-	public void discoveryComplete(DiscoveryId discoveryId)
+	public void discoveryComplete(DiscoveryId discoveryId, AuditLogTypeEnum type)
 			throws IntegerException {
 		RunningDiscovery runningDiscovery = runningDiscoveries.get(discoveryId);
 
-		if (runningDiscovery != null)
+		if (runningDiscovery != null) {
 			logger.info("Discovery complete for "
 					+ discoveryId.getDiscoveryId());
-		else
+			
+			createDiscoveryAuditLog(discoveryId.getDiscoveryRuleId(), discoveryId, type);
+			
+		} else
 			logger.warn("Discovery " + discoveryId.getDiscoveryId()
 					+ " not running. Unable to mark as complete!");
-
-		DiscoveryCompleteEvent discoveryComplete = new DiscoveryCompleteEvent();
-		discoveryComplete.setDiscoveryStatus(DiscoveryStatusEnum.Complete);
-		discoveryComplete.setName("Discovery Complete");
-
-		DiscoveryCompleteEventDAO dao = persistenceManager
-				.getDiscoveryCompleteEventDAO();
-		dao.update(discoveryComplete);
 	}
 
 	/*
@@ -359,6 +448,25 @@ public class DiscoveryService extends BaseService implements
 			DisplayableInterface[] args) {
 		logger.error("Error during discovery " + id + " Error " + errorCode);
 
+
+		MessageFormat mf = new MessageFormat(errorCode.getErrorCode());
+		String message = null;
+		
+		try {
+			message = mf.format(args);
+		} catch (Throwable e) {
+			logger.error("Error createing message from " + errorCode + " args " + Arrays.toString(args));
+			message = errorCode.getErrorCode();
+		}
+		
+		try {
+			createDiscoveryAuditLog(id.getDiscoveryRuleId(), id, null,
+					 message, AuditLogTypeEnum.DiscoveryCompleteServiceElement);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			logger.error("Error createing audit log message " + e.toString());
+		}
+		
 	}
 
 	/*
@@ -369,7 +477,19 @@ public class DiscoveryService extends BaseService implements
 	 * (edu.harvard.integer.common.topology.ServiceElement)
 	 */
 	@Override
-	public void discoveredServiceElement(ServiceElement accessElement) {
+	public void discoveredServiceElement(DiscoveryId discoveryId, ServiceElement accessElement) {
+		try {
+			createDiscoveryAuditLog(discoveryId.getDiscoveryRuleId(), discoveryId, accessElement.getID(),
+					null, AuditLogTypeEnum.DiscoveryCompleteServiceElement);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			logger.error("Error saving a discovery complete audit log!! DiscoveryId " + discoveryId
+					+ " Service element " + accessElement.getName()
+					+ " Error " + e.toString());
+		}
+		
 		logger.info("Found ServiceElemet " + accessElement);
 	}
 
@@ -500,8 +620,10 @@ public class DiscoveryService extends BaseService implements
 	 * discoveryTopologyComplete()
 	 */
 	@Override
-	public void discoveryTopologyComplete() throws IntegerException {
+	public void discoveryTopologyComplete(DiscoveryId dicoveryId) throws IntegerException {
 
+		discoveryComplete(dicoveryId, AuditLogTypeEnum.DiscoveryCompleteTopology);
+		
 		logger.info("Complete topology discovery. ");
 
 	}

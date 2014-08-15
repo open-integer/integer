@@ -43,6 +43,7 @@ import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.persistence.DataPreLoadFile;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
+import edu.harvard.integer.service.persistance.dao.auditlog.AuditLogDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.DiscoveryRuleDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.IpTopologySeedDAO;
 import edu.harvard.integer.service.persistance.dao.discovery.SnmpAssociationDAO;
@@ -52,6 +53,7 @@ import edu.harvard.integer.service.persistance.dao.distribtued.DistributedServic
 import edu.harvard.integer.service.persistance.dao.distribtued.IntegerServerDAO;
 import edu.harvard.integer.service.persistance.dao.event.DiscoveryCompleteEventDAO;
 import edu.harvard.integer.service.persistance.dao.event.EventDAO;
+import edu.harvard.integer.service.persistance.dao.inventory.InventoryRuleDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ApplicabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.CapabilityDAO;
 import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
@@ -570,5 +572,15 @@ public class PersistenceManager extends BaseManager implements
 	@Override
 	public ServiceElementInstanceUniqueSignatureDAO getServiceElementInstanceUniqueSignatureDAO() {
 		return new ServiceElementInstanceUniqueSignatureDAO(em, logger);
+	}
+	
+	@Override
+	public InventoryRuleDAO getInventoryRuleDAO() {
+		return new InventoryRuleDAO(em, logger);
+	}
+	
+	@Override
+	public AuditLogDAO getAuditLogDAO() {
+		return new AuditLogDAO(em, logger);
 	}
 }

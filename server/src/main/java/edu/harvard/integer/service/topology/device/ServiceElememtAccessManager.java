@@ -57,7 +57,6 @@ import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.topology.EnvironmentLevelDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
-import edu.harvard.integer.service.persistance.dao.user.AuthInfoDAO;
 
 /**
  * @see ServiceElementAccessManagerInterface

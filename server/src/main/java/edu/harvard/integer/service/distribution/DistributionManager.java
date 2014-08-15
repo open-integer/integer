@@ -234,10 +234,11 @@ public class DistributionManager {
 			if (server.getServerId().equals(serverId)) {
 				String hostUrl = server.getServerAddress().getAddress() + ":"
 						+ server.getPort();
-				
+
 				if (logger.isDebugEnabled())
-					logger.debug("Using " + hostUrl + " for serverId " + serverId);
-				
+					logger.debug("Using " + hostUrl + " for serverId "
+							+ serverId);
+
 				return hostUrl;
 			}
 		}
@@ -496,19 +497,23 @@ public class DistributionManager {
 	}
 
 	/**
-	 * Get a reference to a manager. This call is used when the caller knows where the 
-	 * manager is running and there is more than one instance of the manager running in 
-	 * the system. <p>
+	 * Get a reference to a manager. This call is used when the caller knows
+	 * where the manager is running and there is more than one instance of the
+	 * manager running in the system.
+	 * <p>
 	 * 
 	 * Ex:
 	 * <p>
-	 * Long serverId = CoreServerId;<p>
+	 * Long serverId = CoreServerId;
+	 * <p>
 	 * DiscoveryManager discoveryManager =
 	 * DistributionManger.getManager(serverid, ManagerTypeEnum.DiscoveryManager)
 	 * 
 	 * 
-	 * @param serverId. The server id of the server where the manager is running.
-	 * @param managerType. Manager type of the manager that is desired.
+	 * @param serverId
+	 *            . The server id of the server where the manager is running.
+	 * @param managerType
+	 *            . Manager type of the manager that is desired.
 	 * @return A reference to a manager.
 	 * 
 	 * @throws IntegerException
@@ -541,8 +546,10 @@ public class DistributionManager {
 	/**
 	 * Get the lookup name for this manager when running on the local server.
 	 * 
-	 * @param moduleName. Name of module that is to be looked up.
-	 * @param managerType. Manager to lookup.
+	 * @param moduleName
+	 *            . Name of module that is to be looked up.
+	 * @param managerType
+	 *            . Manager to lookup.
 	 * @return lookup string to find this manager.
 	 */
 	private static String getLocalManagerName(String moduleName,
@@ -562,8 +569,10 @@ public class DistributionManager {
 	/**
 	 * Get the remote lookup string to find the manager in the given module.
 	 * 
-	 * @param moduleName. Name of module that is to be looked up.
-	 * @param managerType. Manager to lookup.
+	 * @param moduleName
+	 *            . Name of module that is to be looked up.
+	 * @param managerType
+	 *            . Manager to lookup.
 	 * @return lookup string to find this manager.
 	 * @return
 	 */
@@ -584,7 +593,8 @@ public class DistributionManager {
 	/**
 	 * Get the lookup name for this manager when running on the local server.
 	 * 
-	 * @param managerType. Manager to lookup.
+	 * @param managerType
+	 *            . Manager to lookup.
 	 * @return lookup string to find this manager.
 	 */
 	private static String getLocalManagerName(ManagerTypeEnum managerType) {
@@ -599,10 +609,12 @@ public class DistributionManager {
 	}
 
 	/**
-	 * Lookup the manager in the local server. 
+	 * Lookup the manager in the local server.
 	 * 
-	 * @param hostName. Name of the localhost.
-	 * @param managerName. Lookup string for the manager to be looked up.
+	 * @param hostName
+	 *            . Name of the localhost.
+	 * @param managerName
+	 *            . Lookup string for the manager to be looked up.
 	 * @return manager. A reference to a manager
 	 * @throws IntegerException
 	 */
@@ -644,12 +656,14 @@ public class DistributionManager {
 		}
 
 	}
-	
+
 	/**
-	 * Lookup the manager in the remote server. 
+	 * Lookup the manager in the remote server.
 	 * 
-	 * @param hostName. Name of the remote host.
-	 * @param managerName. Lookup string for the manager to be looked up.
+	 * @param hostName
+	 *            . Name of the remote host.
+	 * @param managerName
+	 *            . Lookup string for the manager to be looked up.
 	 * @return manager. A reference to a manager
 	 * @throws IntegerException
 	 */
@@ -685,8 +699,8 @@ public class DistributionManager {
 			}
 
 			if (logger.isDebugEnabled())
-				logger.debug("Got bean " + managerName + " from host " + hostName
-						+ " with context " + env.toString());
+				logger.debug("Got bean " + managerName + " from host "
+						+ hostName + " with context " + env.toString());
 
 			return manager;
 
@@ -703,12 +717,15 @@ public class DistributionManager {
 	}
 
 	/**
-	 * This method is used to lookup a bean (manager or service) in the given context.
-	 * This will be used for both managers and services the lookup is the same.
-	 *  
-	 * @param beanName. Name of the bean to lookup.
-	 * @param ctx. Context to lookup the bean in. 
-	 * @return bean. The bean will be either a manager or service. 
+	 * This method is used to lookup a bean (manager or service) in the given
+	 * context. This will be used for both managers and services the lookup is
+	 * the same.
+	 * 
+	 * @param beanName
+	 *            . Name of the bean to lookup.
+	 * @param ctx
+	 *            . Context to lookup the bean in.
+	 * @return bean. The bean will be either a manager or service.
 	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T lookupBean(String managerName, InitialContext ctx) {
@@ -737,8 +754,9 @@ public class DistributionManager {
 	}
 
 	/**
-	 * Return the list of managers that are known to the system. This is the complete
-	 * list of managers <b>NOT</b> just what is running on the local server.
+	 * Return the list of managers that are known to the system. This is the
+	 * complete list of managers <b>NOT</b> just what is running on the local
+	 * server.
 	 * 
 	 * @return list of the managers in the system.
 	 */
@@ -747,8 +765,9 @@ public class DistributionManager {
 	}
 
 	/**
-	 * Set the list of managers that are valid for the complete system <b>NOT</b>
-	 * just what is valid on the local server.
+	 * Set the list of managers that are valid for the complete system
+	 * <b>NOT</b> just what is valid on the local server.
+	 * 
 	 * @param managers
 	 *            the managers to set
 	 */
@@ -757,17 +776,20 @@ public class DistributionManager {
 	}
 
 	/**
-	 * Return the list of services that are known to the system. This is the complete
-	 * list of services <b>NOT</b> just what is running on the local server.
+	 * Return the list of services that are known to the system. This is the
+	 * complete list of services <b>NOT</b> just what is running on the local
+	 * server.
 	 * 
 	 * @return list of the managers in the system.
 	 */
 	public static DistributedService[] getServices() {
 		return services;
 	}
+
 	/**
-	 * Set the list of services that are valid for the complete system <b>NOT</b>
-	 * just what is valid on the local server.
+	 * Set the list of services that are valid for the complete system
+	 * <b>NOT</b> just what is valid on the local server.
+	 * 
 	 * @param services
 	 *            the managers to set
 	 */
@@ -777,6 +799,7 @@ public class DistributionManager {
 
 	/**
 	 * Get the list of servers in the system.s
+	 * 
 	 * @return the servers
 	 */
 	public static IntegerServer[] getServers() {
@@ -786,10 +809,27 @@ public class DistributionManager {
 	/**
 	 * 
 	 * Set the list of servers in the system.s
+	 * 
 	 * @param servers
 	 *            the servers to set
 	 */
 	public static void setServers(IntegerServer[] servers) {
 		DistributionManager.servers = servers;
+	}
+
+	/**
+	 * Return the IntegerServer for the given server ID.
+	 * 
+	 * @param serverId
+	 *            . Server Id to get the IntegerServer object for.
+	 * @return IntgerServer with the given ID.
+	 */
+	public static IntegerServer getIntegerServer(Long serverId) {
+		for (IntegerServer server : getServers()) {
+			if (server.getServerId().equals(serverId))
+				return server;
+		}
+
+		return null;
 	}
 }

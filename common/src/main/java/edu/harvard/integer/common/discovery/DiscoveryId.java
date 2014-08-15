@@ -35,6 +35,8 @@ package edu.harvard.integer.common.discovery;
 
 import java.io.Serializable;
 
+import edu.harvard.integer.common.ID;
+
 /**
  * @author David Taylor
  * 
@@ -50,6 +52,8 @@ public class DiscoveryId implements Serializable {
 
 	private Long discoveryId = null;
 
+	private ID discoveryRuleId = null;
+	
 	public DiscoveryId() {
 	}
 	
@@ -91,6 +95,20 @@ public class DiscoveryId implements Serializable {
 	 */
 	public void setDiscoveryId(Long discoveryId) {
 		this.discoveryId = discoveryId;
+	}
+
+	/**
+	 * @return the discoveryRuleId
+	 */
+	public ID getDiscoveryRuleId() {
+		return discoveryRuleId;
+	}
+
+	/**
+	 * @param discoveryRuleId the discoveryRuleId to set
+	 */
+	public void setDiscoveryRuleId(ID discoveryRuleId) {
+		this.discoveryRuleId = discoveryRuleId;
 	}
 
 }
