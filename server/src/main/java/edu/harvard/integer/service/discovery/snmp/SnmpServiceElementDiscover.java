@@ -85,6 +85,7 @@ import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInter
 import edu.harvard.integer.service.discovery.element.ElementDiscoveryBase;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNet;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
+import edu.harvard.integer.service.discovery.subnet.SubnetUtil;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerInterface;
@@ -759,7 +760,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					/**
 					 * Try to find a net mask from the remote device.
 					 */
-					if ( cdpConnection.getRemoteAddress() != null ) {
+					if ( cdpConnection.getRemoteAddress() != null  ) {
 						
 						SNMP maskSnmp = snmpMgr.getSNMPByName("ipAdEntNetMask");
 						ElementEndPoint remoteEpt = new ElementEndPoint(cdpConnection.getRemoteAddress(), 
@@ -770,17 +771,26 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 							
 						PDU rpdu = SnmpService.instance().getPdu(remoteEpt, pdu);		
 						String mask = rpdu.get(0).getVariable().toString();
-						logger.info("Found the mask " + mask + " for remote ip " + remoteEpt.getIpAddress());
+						
+						/**
+						 * Only care if the mask is valid IP Address format.
+						 */
+						if ( SubnetUtil.validateIPAddress(mask) ) {
 							
-						DiscoverNet dn = new DiscoverNet(remoteEpt.getIpAddress(), 
-										               mask, discNode.getDiscoverNet().getRadiusCountDown());
-						SubnetUtils sutils = new SubnetUtils(remoteEpt.getIpAddress(), mask);
-						String cidr = sutils.getInfo().getCidrSignature();
-								
-						String[] cc = cidr.split("/");
-						if ( Integer.parseInt(cc[1]) >= 24 ) {
-						      discNode.getOtherSubnet().add(dn);
-						}		
+							logger.info("Found the mask " + mask + " for remote ip " + remoteEpt.getIpAddress());
+							DiscoverNet dn = new DiscoverNet(remoteEpt.getIpAddress(), 
+											               mask, discNode.getDiscoverNet().getRadiusCountDown());
+							SubnetUtils sutils = new SubnetUtils(remoteEpt.getIpAddress(), mask);
+							String cidr = sutils.getInfo().getCidrSignature();
+									
+							String[] cc = cidr.split("/");
+							if ( Integer.parseInt(cc[1]) >= 24 ) {
+							      discNode.getOtherSubnet().add(dn);
+							}	
+						}
+						else {
+							logger.info("Remote mask is not valid " + mask);
+						}
 					}					
 				}
 				else {
