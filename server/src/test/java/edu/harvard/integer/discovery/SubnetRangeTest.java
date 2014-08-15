@@ -38,10 +38,15 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.snmp.CommunityAuth;
+import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
 import edu.harvard.integer.common.topology.Credential;
@@ -54,9 +59,15 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask;
 /**
  * @author dchan
  */
+@RunWith(Arquillian.class)
 public class SubnetRangeTest {
 
-	
+	@Deployment
+	public static Archive<?> createTestArchive() {
+		return TestUtil
+				.createTestArchive("SubnetRangeTest.war");
+	}
+
 	@Test
 	public void testSubnetRangeIp() {
 		
