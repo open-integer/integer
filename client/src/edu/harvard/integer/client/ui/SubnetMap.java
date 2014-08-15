@@ -85,7 +85,7 @@ public class SubnetMap extends IntegerMap {
 					updateLowerNetworks(network.getID(), network.getLowerNetworks(), LAYOUT_RIGHT);
 				}
 				
-				updateInterDeviceDiffNetworks(network.getID(), network.getInterDeviceLinks());
+				updateAdjacentNetworkNodes(network.getID(), network.getInterDeviceLinks());
 				
 				drawLinks(network.getInterDeviceLinks());
 				
@@ -211,15 +211,15 @@ public class SubnetMap extends IntegerMap {
 	}
 	
 	/**
-	 * Update inter device diff networks.
+	 * Find, save and update adjacent network nodes
 	 *
 	 * @param list the list
 	 */
-	private void updateInterDeviceDiffNetworks(ID parentNetworkId, List<InterDeviceLink> list) {
+	private void updateAdjacentNetworkNodes(ID parentNetworkId, List<InterDeviceLink> list) {
 		layout_type = ELLIPSE_LAYOUT;
 		
-		// find all the networks not in this subnet
-		int counterDiffNetwork = 0;
+		// find all adjacent network nodes associated the links
+		int adjacentNetworkCounter = 0;
 		for (final InterDeviceLink link : list) {
 			ID id1 = link.getSourceServiceElementId();
 			ID id2 = link.getDestinationServiceElementId();
@@ -227,13 +227,12 @@ public class SubnetMap extends IntegerMap {
 			Point p2 = entityMap.get(id2);
 			
 			if (p1 == null || p2 == null) 
-				counterDiffNetwork++;
+				adjacentNetworkCounter++;
 		}
 
-		int i = 0;
 		ImageResource image = Resources.IMAGES.network();
 		double angle = 0;
-		double increment = DOUBLE_PI / list.size();
+		double increment = DOUBLE_PI / adjacentNetworkCounter;
 			
 		for (final InterDeviceLink link : list) {
 			ID id1 = link.getSourceServiceElementId();
@@ -243,41 +242,35 @@ public class SubnetMap extends IntegerMap {
 			Point point = null;
 			ID networkId = null;
 			
-			final ServiceElement fakeSe = new ServiceElement();
+			ServiceElement adjacentNetwork = new ServiceElement();
 			
 			if (p1 == null || p2 == null) {
-				point = calculatePoint(counterDiffNetwork, i++, angle);
-				fakeSe.setIdentifier((long) i);
+				point = calculateEllipseLayoutPoint(angle);
 				
-				if (p1 == null) {
+				// source is adjacent network if it cannot be found  
+				if (p1 == null)
 					networkId = link.getSourceNetworkId();
-					fakeSe.setName(id1.getName());
-					fakeSe.setIdentifier(id1.getIdentifier());
-				}
-				else {
+				else
 					networkId = link.getDestinationNetworkId();
-					fakeSe.setName(id2.getName());
-					fakeSe.setIdentifier(id2.getIdentifier());
-				}
 				
-				if (networkId != null)
+				if (networkId != null) {
+					adjacentNetwork.setName(networkId.getName());
+					adjacentNetwork.setIdentifier(networkId.getIdentifier());
+					adjacentNetwork.setIconName("network");
 					entityMap.put(networkId, point);
-				else {
-					// fake for test
-					entityMap.put(fakeSe.getID(), point);
-				}
 					
+					Picture picture = new Picture(image, icon_width, icon_height, true, null);
+					MapItemPosition mapItemPosition = new MapItemPosition();
+					mapItemPosition.setItemId(networkId);
+					mapItemPosition.setMapId(parentNetworkId);
+	
+		        	ServiceElementWidget icon = new ServiceElementWidget(picture, adjacentNetwork, mapItemPosition, null);
+		        	icon.draw((int)point.getX(), (int)point.getY());
+		        	
+		        	add(icon);
+		        	iconMap.put(networkId, icon);
+				}
 			}
-			else
-				continue;
-			
-        	Picture picture = new Picture(image, icon_width, icon_height, true, null);
-
-        	ServiceElementWidget icon = new ServiceElementWidget(picture, fakeSe, null, null);
-        	icon.draw((int)point.getX(), (int)point.getY());
-        	
-        	add(icon);
-        	iconMap.put(fakeSe.getID(), icon);
         	
         	angle += increment;
 		}
@@ -290,13 +283,16 @@ public class SubnetMap extends IntegerMap {
 	 */
 	private void drawLinks(List<InterDeviceLink> list) {
 		for (final InterDeviceLink link : list) {
-			ID id1 = link.getSourceServiceElementId();
-			ID id2 = link.getDestinationServiceElementId();
-			
-			if (id1.equals(id2))
-				continue;
+			ID id1 = link.getSourceServiceElementId();			
+			if (entityMap.get(id1) == null)
+				id1 = link.getSourceNetworkId();
 			
 			Point p1 = entityMap.get(id1);
+			
+			ID id2 = link.getDestinationServiceElementId();
+			if (entityMap.get(id2) == null)
+				id2 = link.getDestinationNetworkId();
+			
 			Point p2 = entityMap.get(id2);
 			
 			if (p1 == null || p2 == null)
