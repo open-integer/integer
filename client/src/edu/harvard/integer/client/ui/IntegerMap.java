@@ -81,7 +81,7 @@ public class IntegerMap extends Layer {
 	protected int icon_height;
 	
 	/** The line_width. */
-	protected int line_width = 3;
+	protected int line_width = 4;
 	
 	/** The circle radius of Circular Layout **/
 	protected double radius;
@@ -202,9 +202,10 @@ public class IntegerMap extends Layer {
 		
 		
 		if (total > 50)
-			line_width = 1;
-		else if (total > 25)
 			line_width = 2;
+		else if (total > 25)
+			line_width = 3;
+		
 	}
 	
 	/**
