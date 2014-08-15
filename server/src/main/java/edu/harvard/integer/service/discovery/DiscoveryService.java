@@ -235,7 +235,10 @@ public class DiscoveryService extends BaseService implements
 		auditLog.setAuditType(type);
 		auditLog.setEntityId(ruleId);
 		
-		StringBuffer b = new StringBuffer(ruleId.getName());
+		StringBuffer b = new StringBuffer();
+		if (ruleId != null)
+			b.append(ruleId.getName());
+		
 		switch (type) {
 		case DiscoveryStarted:
 			b.append("Started discovery");
