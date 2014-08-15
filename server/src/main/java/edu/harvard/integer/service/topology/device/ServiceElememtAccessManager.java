@@ -364,6 +364,10 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	 * @throws IntegerException 
 	 */
 	private ServiceElement getTopLevel(ServiceElement serviceElement, ServiceElementDAO dao) throws IntegerException {
+		
+		if ( serviceElement == null ) {
+			return null;
+		}
 		if (serviceElement.getParentIds() != null && serviceElement.getParentIds().size() > 0) {
 			ServiceElement parent = dao.findById(serviceElement.getParentIds().get(0));
 			return getTopLevel(parent, dao);

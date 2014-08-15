@@ -193,6 +193,10 @@ public class ServiceElementType extends BaseEntity {
 	private List<ID> associations = null;
 
 
+	@Enumerated(EnumType.STRING)
+	private NetworkLayer networkLayer = null;
+	
+	
 
 	/**
 	 * @return the featureSet
@@ -536,4 +540,13 @@ public class ServiceElementType extends BaseEntity {
 		this.associations = associations;
 	}
 
+
+
+	public NetworkLayer getNetworkLayer() {
+		return networkLayer;
+	}
+
+	public void setNetworkLayer(NetworkLayer networkLayer) {
+		this.networkLayer = networkLayer;
+	}
 }

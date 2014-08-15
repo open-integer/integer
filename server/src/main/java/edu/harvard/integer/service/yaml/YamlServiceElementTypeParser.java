@@ -44,6 +44,7 @@ import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.Capability;
+import edu.harvard.integer.common.topology.NetworkLayer;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementInstanceUniqueSignature;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -139,6 +140,12 @@ public class YamlServiceElementTypeParser implements
 					ID nameID = getCapability(typeTranslate
 							.getDefaultNameCabability());
 					exemplarSet.setDefaultNameCababilityId(nameID);
+				}
+				
+				if ( typeTranslate.getNetworkLayer() != null ) {
+					
+					NetworkLayer netLayer = NetworkLayer.valueOf(typeTranslate.getNetworkLayer());
+					exemplarSet.setNetworkLayer(netLayer);
 				}
 
 				exemplarSet.setCategory(managementObjectManager
@@ -265,6 +272,10 @@ public class YamlServiceElementTypeParser implements
 						serviceElementType
 								.setDefaultNameCababilityId(exemplarSet
 										.getDefaultNameCababilityId());
+					}
+					
+					if (exemplarSet.getNetworkLayer() != null ) {
+						serviceElementType.setNetworkLayer(exemplarSet.getNetworkLayer());
 					}
 						
 					serviceElementType

@@ -58,6 +58,7 @@ import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SnmpV2cCredentail;
+import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.discovery.DiscoveryServiceInterface;
 import edu.harvard.integer.service.discovery.IpDiscoverySeed;
@@ -267,19 +268,21 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 					}
 				}		
 				
-				DiscoverNode dn = new DiscoverNode(ip, seed.getDiscoverNet() );
-				
-				ServiceElement se = accessMgr.getServiceElementByIpAddress(ip);				
+				DiscoverNode dn = new DiscoverNode(ip, seed.getDiscoverNet() );	
 				Access defaultAccess = null; 
 				try {
+					ServiceElement se = accessMgr.getTopLevelServiceElementByIpAddress(ip);			
 					if ( se != null && se.getCredentials() != null && se.getCredentials().size() > 0 ) {
 						
-						 SnmpV2cCredentail credential = (SnmpV2cCredentail) accessMgr.getCredentialById(se.getCredentials().get(0)) ;
-						 CommunityAuth auth = new CommunityAuth(credential);
-						 auth.setVersionV2c(true);
-						 auth.setTimeOut(seed.getSnmpTimeout());
-						 auth.setTryCount(seed.getSnmpRetries());
-						 defaultAccess = new Access( AccessUtil.getDefaultPort(auth.getAccessType()), auth);
+						 Credential credential = accessMgr.getCredentialById(se.getCredentials().get(0)) ;
+						 if ( credential instanceof SnmpV2cCredentail ) {
+							 
+							 CommunityAuth auth = new CommunityAuth((SnmpV2cCredentail) credential);
+							 auth.setVersionV2c(true);
+							 auth.setTimeOut(seed.getSnmpTimeout());
+							 auth.setTryCount(seed.getSnmpRetries());
+							 defaultAccess = new Access( AccessUtil.getDefaultPort(auth.getAccessType()), auth);
+						 }
 					}			
 				}
 				catch ( Exception e ) {
