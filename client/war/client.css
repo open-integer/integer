@@ -1,4 +1,10 @@
 /** Add css rules here for your application. */
+html, body {
+    height: 100%;
+}
+
+
+    
 #topBanner {
 	width: 90%;
 	height: 50px;

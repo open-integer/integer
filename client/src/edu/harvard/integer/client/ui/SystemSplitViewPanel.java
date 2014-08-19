@@ -2,7 +2,6 @@ package edu.harvard.integer.client.ui;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
@@ -21,20 +20,16 @@ import edu.harvard.integer.common.topology.Network;
 public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	/** The Constant CONTENT_WIDTH. */
-	public static final int CONTENT_WIDTH = 1200;
+	public static final int CONTENT_WIDTH = 1800;
 	
 	/** The Constant CONTENT_HEIGHT. */
-	public static final int CONTENT_HEIGHT = 800;
+	public static final int CONTENT_HEIGHT = 1100;
 	
 	/** The Constant WESTPANEL_WIDTH. */
 	public static final int WESTPANEL_WIDTH = 250;
 
 	/** The east panel. */
-	//public static DockPanel eastPanel = null;
 	private SplitLayoutPanel eastPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
-	
-	/** The contained tree view. */
-	//public static ContainedTreeView containedTreeView = null;
 
 	/** The network panel. */
 	private NetworkPanel networkPanel = new NetworkPanel();
@@ -50,8 +45,8 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         
 		// clean up tabPanel
 		tabPanel.clear();
-		
-        setSize("100%", MainClient.WINDOW_HEIGHT+"px");
+
+		setSize("100%", "100%");
         
         // Event View
 		EventView eventView = createEventView();
@@ -103,17 +98,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		String subTitle = "State - Campus Wide";
 		final String[] headers = {"Views", "Filters", "Manager"};
 		final FilterView filterView = new FilterView(title, subTitle, headers);
-		/*integerService.getEvents(new AsyncCallback<List<Object>>() {
-
-			@Override
-			public void onSuccess(List<Object> result) {
-				filterView.update(result);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});*/
 		return filterView;
 	}
 	
@@ -139,38 +123,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		});*/
 		return eventView;
 	}
-	
-	/**
-	 * Show contained tree view.
-	 *
-	 * @param se the se
-	 */
-	/*public static void showContainedTreeView(final ServiceElement se) {
-		SplitLayoutPanel containedSplitPanel = new SplitLayoutPanel(SPLITTER_SIZE);
-		ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
-		final ContainedTreeView containedTreeView = new ContainedTreeView(title, headers, containedSplitPanel, detailsTabPanel);
-		
-	    
-	    containedSplitPanel.addSouth(detailsTabPanel, 300);
-	    containedSplitPanel.setWidgetHidden(detailsTabPanel, true);
-	    containedSplitPanel.setWidgetToggleDisplayAllowed(detailsTabPanel, true);
-	    containedSplitPanel.add(containedTreeView);
-	    //tabPanel.add(containedSplitPanel, se.getName());
-		//tabPanel.selectTab(containedSplitPanel);
-		
-		MainClient.integerService.getServiceElementByParentId(se.getID(), new AsyncCallback<ServiceElement[]>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				MainClient.statusPanel.showAlert("Failed to receive contained service elements of " + se.getName());
-			}
-
-			@Override
-			public void onSuccess(ServiceElement[] serviceElements) {
-				containedTreeView.updateTree(se.getName(), serviceElements);
-			}
-		});
-	}*/
 
 
 	public static void showServiceElementMap(Network network) {
