@@ -57,6 +57,7 @@ import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
@@ -135,8 +136,18 @@ public class ParentChildServiceElementDiscovery extends
 					
 						if ( snmpLevel.getRelationToParent() == null ) {	
 							
-							levelDiscovery(snmpLevel, discNode.getTopServiceElementType(), 
-								           discNode.getAccessElement(), null, null, null );
+							try {
+								levelDiscovery(snmpLevel, discNode.getTopServiceElementType(), 
+								                    discNode.getAccessElement(), null, null, null );
+							}
+							catch ( IntegerException e ) {
+								
+								logger.info("Continue discover on error " + e.getErrorCode().getErrorCode());
+					            continue;			
+							}
+							catch (Exception e) {
+								throw e;
+							}
 						}						
 					}
 					else {

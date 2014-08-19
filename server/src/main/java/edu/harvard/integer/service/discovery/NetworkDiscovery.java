@@ -458,6 +458,9 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 				DiscoverCdpTopologyTask task = new DiscoverCdpTopologyTask(linkLayerConnections, this);
 				task.call();
 			}
+			else {
+				logger.info("No Linklayer connection found. discover complete.  ");
+			}
 		}
 		return false;
 	}

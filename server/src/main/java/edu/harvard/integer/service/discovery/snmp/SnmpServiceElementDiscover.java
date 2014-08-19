@@ -1513,7 +1513,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 					oidColumns[i] = new OID(s.getOid());
 				}
 				
-				List<TableEvent> tblEvents = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), oidColumns);
+				List<TableEvent> tblEvents  = SnmpService.instance().getTablePdu(discNode.getElementEndPoint(), oidColumns);
 				for ( TableEvent tblEvent : tblEvents ) {
 					
 					List<IndexSNMPValue> indexVals = new ArrayList<>();

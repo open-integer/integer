@@ -226,9 +226,33 @@ final public class SnmpService
     	for ( TableEvent te : tblEvents ) {
  
     		if ( te.isError() ) {
-    			logger.info("SNMP error " + te.getErrorMessage());
-    			throw new IntegerException(null, NetworkErrorCodes.SNMPError, 
- 	           		   new DisplayableInterface[] { new NonLocaleErrorMessage(te.getErrorMessage()) });
+    			
+    			StringBuffer sb = new StringBuffer();
+    			VariableBinding[] vbs = te.getColumns();
+    			for ( int i=0; i<vbs.length; i++ ) {
+    				
+    				VariableBinding vb = vbs[i];
+    				sb.append(vb.getOid().toDottedString() + " \n");
+    				if ( i > 5 ) {
+    					break;
+    				}
+    			}
+    			
+    			String errMsg = te.getErrorMessage();  			
+    			if ( errMsg.equals("No such name") ) 
+    			{
+    				logger.info("SNMP no such erro " );
+    				logger.info(sb.toString());
+    			    throw new IntegerException(null, NetworkErrorCodes.SNMPNoSuchError, 
+ 	           		         new DisplayableInterface[] { new NonLocaleErrorMessage(te.getErrorMessage()) });
+    			}
+    			else {
+    				
+    				logger.info("SNMP error " + te.getErrorMessage());
+    				logger.info(sb.toString());
+    			    throw new IntegerException(null, NetworkErrorCodes.SNMPError, 
+ 	           		         new DisplayableInterface[] { new NonLocaleErrorMessage(te.getErrorMessage()) });
+    			}
     			
     		}
     	}
