@@ -241,35 +241,46 @@ public class SubnetMap extends IntegerMap {
 			Point p2 = entityMap.get(id2);
 			Point point = null;
 			ID networkId = null;
-			
-			ServiceElement adjacentNetwork = new ServiceElement();
-			
+	
+			Network adjacentNetwork = new Network();
 			if (p1 == null || p2 == null) {
-				point = calculateEllipseLayoutPoint(angle);
-				
+					
 				// source is adjacent network if it cannot be found  
 				if (p1 == null)
 					networkId = link.getSourceNetworkId();
 				else
 					networkId = link.getDestinationNetworkId();
 				
-				if (networkId != null) {
-					adjacentNetwork.setName(networkId.getName());
-					adjacentNetwork.setIdentifier(networkId.getIdentifier());
-					adjacentNetwork.setIconName("network");
-					entityMap.put(networkId, point);
+				// ignore it if networkId is null
+				if (networkId == null)
+					continue;
+
+				// get position by networkId
+				MapItemPosition mapItemPosition = positionMap.get(networkId);
+				
+				// save new item
+				if (mapItemPosition != null)
+					point = new Point(mapItemPosition.getXposition(), mapItemPosition.getYposition());
+				else
+					point = calculateEllipseLayoutPoint(angle);
 					
-					Picture picture = new Picture(image, icon_width, icon_height, true, null);
-					MapItemPosition mapItemPosition = new MapItemPosition();
-					mapItemPosition.setItemId(networkId);
-					mapItemPosition.setMapId(parentNetworkId);
-	
-		        	ServiceElementWidget icon = new ServiceElementWidget(picture, adjacentNetwork, mapItemPosition, null);
-		        	icon.draw((int)point.getX(), (int)point.getY());
-		        	
-		        	add(icon);
-		        	iconMap.put(networkId, icon);
-				}
+				adjacentNetwork.setName(networkId.getName());
+				adjacentNetwork.setIdentifier(networkId.getIdentifier());
+				entityMap.put(networkId, point);
+					
+				// create icon
+				Picture picture = new Picture(image, icon_width, icon_height, true, null);
+				mapItemPosition = new MapItemPosition();
+				mapItemPosition.setItemId(networkId);
+				mapItemPosition.setMapId(parentNetworkId);
+
+				// draw icon
+				ServiceElementWidget icon = new ServiceElementWidget(picture, adjacentNetwork, mapItemPosition, null);
+				icon.draw((int) point.getX(), (int) point.getY());
+
+				// add icon
+				add(icon);
+				iconMap.put(networkId, icon);
 			}
         	
         	angle += increment;
