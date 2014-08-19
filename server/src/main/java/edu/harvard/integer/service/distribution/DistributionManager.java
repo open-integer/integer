@@ -280,7 +280,7 @@ public class DistributionManager {
 	 *            . Service type to look up
 	 * @return true if the service is running on the localhost.
 	 *         <p>
-	 *         flase if the service is not running on the localhost.
+	 *         False if the service is not running on the localhost.
 	 */
 	private static boolean isLocalhost(ServiceTypeEnum type) {
 		if (services == null) {
@@ -293,7 +293,7 @@ public class DistributionManager {
 			id = IntegerProperties.getInstance().getLongProperty(
 					LongPropertyNames.ServerId);
 		} catch (IntegerException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			return true;
 		}
@@ -434,6 +434,15 @@ public class DistributionManager {
 		return b.toString();
 	}
 
+	public static ManagerTypeEnum getManagerType(Class<? extends BaseManagerInterface> managerInterface) {
+		for (ManagerTypeEnum manager : ManagerTypeEnum.values()) {
+			if (managerInterface.isAssignableFrom(manager.getBeanLocalInterfaceClass()))
+				return manager;
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * This method is used to get a reference to a manager. The manager could be
 	 * running on this server or a remote server. The returned instance can be
@@ -726,9 +735,10 @@ public class DistributionManager {
 	 * @param ctx
 	 *            . Context to lookup the bean in.
 	 * @return bean. The bean will be either a manager or service.
+	 * @throws IntegerException 
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T lookupBean(String managerName, InitialContext ctx) {
+	private static <T> T lookupBean(String managerName, InitialContext ctx) throws IntegerException {
 		T manager = null;
 
 		try {
@@ -741,13 +751,20 @@ public class DistributionManager {
 			if (logger.isDebugEnabled())
 				logger.debug("Found manager " + managerName);
 
+//			if (manager instanceof BaseManagerInterface)
+//				((BaseManagerInterface) manager).setContext(ctx);
+			
 		} catch (NameNotFoundException ne) {
 			logger.info("Manager " + managerName + " not found!! " + ne);
+			throw new IntegerException(ne, SystemErrorCodes.ManagerNotFound);
 		} catch (NamingException e) {
 			logger.info("Name " + managerName + " Not found! " + e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
 		} catch (Throwable t) {
 			logger.info("Throwable error Name " + managerName + " Not found! "
 					+ t);
+			t.printStackTrace();
+			throw new IntegerException(t, SystemErrorCodes.UnknownException);
 		}
 
 		return manager;

@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.service;
 
+
 /**
  * Interface that all managers must implement.
  * 

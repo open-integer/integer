@@ -35,14 +35,23 @@ package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
 
+
 /**
  * @author David Taylor
  *
  */
 public class SQLStatement implements DisplayableInterface {
-	public String message = null;
+	private String message = null;
+	
+	public SQLStatement() {
+		
+	}
 	
 	public SQLStatement(String message) {
+		this.message = message;
+	}
+	
+	public void setMessage(String message) {
 		this.message = message;
 	}
 	
@@ -50,7 +59,7 @@ public class SQLStatement implements DisplayableInterface {
 	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
 	 */
 	@Override
-	public String toDisplayString(Locale local) {
+	public String toDisplayString(Locale locale) {
 		
 		return message;
 	}

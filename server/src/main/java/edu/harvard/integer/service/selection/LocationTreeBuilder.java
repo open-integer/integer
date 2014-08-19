@@ -111,7 +111,8 @@ public class LocationTreeBuilder {
 			
 			levelNodes[i] = node;
 			
-			logger.info("Create new level levelValue " + levelValues[i]);
+			if (logger.isDebugEnabled())
+				logger.debug("Create new level levelValue " + levelValues[i]);
 		}
 		
 		
@@ -124,7 +125,8 @@ public class LocationTreeBuilder {
 				currentLevels[i] = getValueFromLocation(locations[index], getMethods[i]);
 			}
 			
-			logger.info("Create leaf node " + location.getName() + " Levels " + Arrays.toString(levelValues) + " Current " + Arrays.toString(currentLevels));
+			if (logger.isDebugEnabled())
+				logger.debug("Create leaf node " + location.getName() + " Levels " + Arrays.toString(levelValues) + " Current " + Arrays.toString(currentLevels));
 			FilterNode levelNode = new FilterNode();
 			levelNode.setIdentifier(location.getIdentifier());
 			levelNode.setName(location.getName());
@@ -140,7 +142,8 @@ public class LocationTreeBuilder {
 						else
 							children.add(levelNodes[0]);
 
-						logger.info("Create new level " + (idx) + " currentValues " + currentLevels[idx]);
+						if (logger.isDebugEnabled())
+							logger.debug("Create new level " + (idx) + " currentValues " + currentLevels[idx]);
 						FilterNode node2 = new FilterNode();
 						node2.setName(currentLevels[idx]);
 						node2.setItemId(new ID(Long.valueOf(0), currentLevels[idx], new IDType(Location.class.getName())));

@@ -13,9 +13,10 @@ import edu.harvard.integer.client.IntegerService;
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.GWTWhitelist;
 import edu.harvard.integer.common.ID;
+import edu.harvard.integer.common.discovery.DiscoveryId;
 import edu.harvard.integer.common.event.Event;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.selection.Filter;
+import edu.harvard.integer.common.exception.SystemErrorCodes;
 import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.snmp.MIBImportInfo;
@@ -36,6 +37,7 @@ import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Subnet;
 import edu.harvard.integer.service.discovery.DiscoveryManagerInterface;
 import edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerInterface;
+import edu.harvard.integer.service.distribution.CallWithRetry;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.event.EventManagerInterface;
@@ -51,88 +53,132 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
 @ServletSecurity(@HttpConstraint(rolesAllowed = { "DirectUser", "CASUser" }))
 public class IntegerServiceImpl extends RemoteServiceServlet implements
 		IntegerService {
-	
+
 	/** Serial Version UID. */
 	private static final long serialVersionUID = 1L;
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#mibImport(java.lang.String, java.lang.String, boolean)
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.client.IntegerService#mibImport(java.lang.String,
+	 * java.lang.String, boolean)
 	 */
 	@Override
-	public String mibImport(String fileName, String mib, boolean standardMib)
-			throws IllegalArgumentException {
-		MIBImportInfo mibImportInfo = new MIBImportInfo();
-		mibImportInfo.setFileName(fileName);
-		mibImportInfo.setMib(mib);
-		mibImportInfo.setStandardMib(standardMib);
-		
-		ArrayList<MIBImportInfo> mibList = new ArrayList<MIBImportInfo>();
-		mibList.add(mibImportInfo);
-		try {
-			SnmpManagerInterface snmpService = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
-			snmpService.importMib(mibList.toArray(new MIBImportInfo[0]));
-		} catch (IntegerException e) {
-			e.printStackTrace();
-			return e.getMessage();
-		}
-		
+	public String mibImport(final String fileName, final String mib,
+			final boolean standardMib) throws IllegalArgumentException, Exception {
+
+		CallWithRetry<String, SnmpManagerInterface> callWithRetry = new CallWithRetry<String, SnmpManagerInterface>(
+				3, SnmpManagerInterface.class) {
+
+			@Override
+			public String call(SnmpManagerInterface snmpService)
+					throws IntegerException {
+				MIBImportInfo mibImportInfo = new MIBImportInfo();
+				mibImportInfo.setFileName(fileName);
+				mibImportInfo.setMib(mib);
+				mibImportInfo.setStandardMib(standardMib);
+
+				ArrayList<MIBImportInfo> mibList = new ArrayList<MIBImportInfo>();
+				mibList.add(mibImportInfo);
+
+				snmpService.importMib(mibList.toArray(new MIBImportInfo[0]));
+
+				return "";
+			}
+		};
+
+	
+		callWithRetry.invokeCall();
+	
 		return "";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getImportedMibs()
 	 */
 	@Override
 	public MIBInfo[] getImportedMibs() throws Exception {
-		MIBInfo[] results;
-		
-		try {
-			SnmpManagerInterface snmpService = DistributionManager.getManager(ManagerTypeEnum.SnmpManager);
-			
-			System.out.println("Enter getImportedMibs: snmpService: " + snmpService);
-			results = snmpService.getImportedMibs();
+		MIBInfo[] results = null;
 
-		}
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
-		
+		CallWithRetry<MIBInfo[], SnmpManagerInterface> callWithRetry = new CallWithRetry<MIBInfo[], SnmpManagerInterface>(
+				3, SnmpManagerInterface.class) {
+
+			@Override
+			public MIBInfo[] call(SnmpManagerInterface snmpService)
+					throws IntegerException {
+
+				MIBInfo[] results = null;
+
+				System.out.println("Enter getImportedMibs: snmpService: "
+						+ snmpService);
+				results = snmpService.getImportedMibs();
+
+				return results;
+			}
+		};
+
+		results = callWithRetry.invokeCall();
+
 		return results;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#getBaseEntity(edu.harvard.integer.common.BaseEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.client.IntegerService#getBaseEntity(edu.harvard.integer
+	 * .common.BaseEntity)
 	 */
 	@Override
 	public GWTWhitelist getGWTWhitelist(GWTWhitelist be) {
-		
+
 		return be;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getCapabilities()
 	 */
 	@Override
 	public List<Capability> getCapabilities() throws Exception {
-		List<Capability> capabilityList;
-		try {
-			ManagementObjectCapabilityManager managedObjectService = DistributionManager.getManager(ManagerTypeEnum.ManagementObjectCapabilityManager);
-			
-			capabilityList = managedObjectService.getCapabilities();
-		}
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
+
+		List<Capability> capabilityList = null;
+
+		CallWithRetry<List<Capability>, ManagementObjectCapabilityManager> callWithRetry = new CallWithRetry<List<Capability>, ManagementObjectCapabilityManager>(
+				3, ManagementObjectCapabilityManager.class) {
+
+			@Override
+			public List<Capability> call(
+					ManagementObjectCapabilityManager managedObjectService)
+					throws IntegerException {
+				List<Capability> capabilityList = null;
+
+				capabilityList = managedObjectService.getCapabilities();
+
+				return capabilityList;
+			}
+		};
+
+		capabilityList = callWithRetry.invokeCall();
+
 		return capabilityList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getEvents()
 	 */
 	@Override
 	public List<Object> getEvents() throws Exception {
-		EventManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.EventManager);
-		
+		EventManagerInterface manager = DistributionManager
+				.getManager(ManagerTypeEnum.EventManager);
+
 		List<Object> events = new ArrayList<Object>();
 		for (Event event : manager.getAllEvents()) {
 			events.add(event);
@@ -140,225 +186,272 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 		return events;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getTopLevelElements()
 	 */
 	@Override
 	public ServiceElement[] getTopLevelElements() throws Exception {
-		ServiceElement[] serviceElements;
-
-		try {
-			ServiceElementAccessManagerInterface serviceElementService = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-			
-			System.out.println("Enter getTopLevelElements: serviceElementService: " + serviceElementService);
-			
-			serviceElements = serviceElementService.getTopLevelServiceElements();
-			
-			System.out.println("Return " + serviceElements.length + " Top level services elememts");
-		} 
-		catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-		return serviceElements;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#getServiceElementByParentId(edu.harvard.integer.common.ID)
-	 */
-	@Override
-	public ServiceElement[] getServiceElementByParentId(ID id) throws Exception {
 		ServiceElement[] serviceElements = null;
 
-		try {
-			ServiceElementAccessManagerInterface serviceElementService = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-			
-			serviceElements = serviceElementService.getServiceElementByParentId(id);
-			System.out.println("Found " + serviceElements.length + " ServiceElements for " + id);
-		} 
-		catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+		CallWithRetry<ServiceElement[], ServiceElementAccessManagerInterface> callWithRetry = new CallWithRetry<ServiceElement[], ServiceElementAccessManagerInterface>(
+				3, ServiceElementAccessManagerInterface.class) {
+
+			@Override
+			public ServiceElement[] call(
+					ServiceElementAccessManagerInterface serviceElementService)
+					throws IntegerException {
+				ServiceElement[] serviceElements;
+
+				System.out
+						.println("Enter getTopLevelElements: serviceElementService: "
+								+ serviceElementService);
+
+				serviceElements = serviceElementService
+						.getTopLevelServiceElements();
+
+				System.out.println("Return " + serviceElements.length
+						+ " Top level services elememts");
+
+				return serviceElements;
+			}
+		};
+
+		serviceElements = callWithRetry.invokeCall();
 
 		return serviceElements;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.client.IntegerService#getServiceElementByParentId
+	 * (edu.harvard.integer.common.ID)
+	 */
+	@Override
+	public ServiceElement[] getServiceElementByParentId(final ID id)
+			throws Exception {
+		ServiceElement[] serviceElements = null;
+
+		CallWithRetry<ServiceElement[], ServiceElementAccessManagerInterface> callWithRetry = new CallWithRetry<ServiceElement[], ServiceElementAccessManagerInterface>(
+				3, ServiceElementAccessManagerInterface.class) {
+
+			@Override
+			public ServiceElement[] call(
+					ServiceElementAccessManagerInterface serviceElementService)
+					throws IntegerException {
+				ServiceElement[] serviceElements = null;
+
+				serviceElements = serviceElementService
+						.getServiceElementByParentId(id);
+
+				System.out.println("Found " + serviceElements.length
+						+ " ServiceElements for " + id);
+
+				return serviceElements;
+			}
+		};
+
+		serviceElements = callWithRetry.invokeCall();
+
+		return serviceElements;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#startDiscovery()
 	 */
 	@Override
 	public void startDiscovery() throws Exception {
-			
-			IpTopologySeed seed = new IpTopologySeed();
-			Subnet subnet = new Subnet();
-			Address address = new Address();
-			address.setAddress("10.240.127.0");
-			subnet.setAddress(new Address( "10.240.127.0", "255.255.255.0"));
-			
-			seed.setSubnet(subnet);
-			seed.setRadius(Integer.valueOf(0));
-			
-			List<Credential> credentials = new ArrayList<Credential>();
-			
-			SnmpV2cCredentail credential = new SnmpV2cCredentail();
-			credential.setReadCommunity("integerrw");
-			credential.setWriteCommunity("integerrw");;
-			
-			credentials.add(credential);
-			seed.setCredentials(credentials);
-			
-			List<IpTopologySeed> topologySeeds = new ArrayList<IpTopologySeed>();
-			topologySeeds.add(seed);
-			DiscoveryRule rule = new DiscoveryRule();
-			
-			rule.setTopologySeeds(topologySeeds);
-			rule.setDiscoveryType(DiscoveryTypeEnum.ServiceElement);
-			rule.setCreated(new Date());
-			
-			try {
-				DiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
-				
-				manager.startDiscovery(rule);
-			} catch (IntegerException e) {
-				throw new Exception(e.getMessage());
-			}
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#startDiscovery(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void startDiscovery(String address, String mask) throws Exception {
-		
-		DiscoveryManagerInterface manager = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
-		
-		IpTopologySeed seed = new IpTopologySeed();
-		
-		Subnet subnet = new Subnet();
-		subnet.setAddress(new Address(address, mask ));
-		
-		seed.setName("Subnet: " + subnet);
-		seed.setDescription("Default for " + subnet);
-		
-		seed.setSubnet(subnet);
-		seed.setRadius(Integer.valueOf(1));
-		
-		seed.setSnmpRetriesServiceElementDiscovery(Integer.valueOf(2));
-		seed.setSnmpTimeoutServiceElementDiscovery(Long.valueOf(800));
-		
-		seed.setSnmpRetriesTopologyDiscovery(Integer.valueOf(2));
-		seed.setSnmpTimeoutTopologyDiscovery(Long.valueOf(800));
-		
-		SnmpGlobalReadCredential[] globalCredentails = manager.getAllGlobalCredentails();
-		List<Credential> credentials = new ArrayList<Credential>();
-		
-		for (SnmpGlobalReadCredential snmpGlobalReadCredential : globalCredentails) {
-			credentials.addAll(snmpGlobalReadCredential.getCredentials());
-		}
 
+		IpTopologySeed seed = new IpTopologySeed();
+		Subnet subnet = new Subnet();
+		Address address = new Address();
+		address.setAddress("10.240.127.0");
+		subnet.setAddress(new Address("10.240.127.0", "255.255.255.0"));
+
+		seed.setSubnet(subnet);
+		seed.setRadius(Integer.valueOf(0));
+
+		List<Credential> credentials = new ArrayList<Credential>();
+
+		SnmpV2cCredentail credential = new SnmpV2cCredentail();
+		credential.setReadCommunity("integerrw");
+		credential.setWriteCommunity("integerrw");
+		;
+
+		credentials.add(credential);
 		seed.setCredentials(credentials);
-		
+
 		List<IpTopologySeed> topologySeeds = new ArrayList<IpTopologySeed>();
 		topologySeeds.add(seed);
 		DiscoveryRule rule = new DiscoveryRule();
-		
-		rule.setName("Subnet: " + subnet);
-		
+
 		rule.setTopologySeeds(topologySeeds);
 		rule.setDiscoveryType(DiscoveryTypeEnum.ServiceElement);
 		rule.setCreated(new Date());
-		
-		DiscoveryRule dbRule = manager.getDiscoveryRuleByName(rule.getName());
-		
-		if (dbRule == null)
-			dbRule = manager.updateDiscoveryRule(rule);
-		
+
 		try {
-			
-			manager.startDiscovery(dbRule);
-			
+			DiscoveryManagerInterface manager = DistributionManager
+					.getManager(ManagerTypeEnum.DiscoveryManager);
+
+			manager.startDiscovery(rule);
 		} catch (IntegerException e) {
 			throw new Exception(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#getDeviceDetails(edu.harvard.integer.common.ID)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.client.IntegerService#startDiscovery(java.lang.String
+	 * , java.lang.String)
 	 */
 	@Override
-	public DeviceDetails getDeviceDetails(ID id) throws Exception {
+	public void startDiscovery(final String address, final String mask)
+			throws Exception {
+
+		CallWithRetry<DiscoveryId, DiscoveryManagerInterface> callWithRetry = new CallWithRetry<DiscoveryId, DiscoveryManagerInterface>(
+				3, DiscoveryManagerInterface.class) {
+
+			@Override
+			public DiscoveryId call(DiscoveryManagerInterface manager)
+					throws IntegerException {
+
+				IpTopologySeed seed = new IpTopologySeed();
+
+				Subnet subnet = new Subnet();
+				subnet.setAddress(new Address(address, mask));
+
+				seed.setName("Subnet: " + subnet);
+				seed.setDescription("Default for " + subnet);
+
+				seed.setSubnet(subnet);
+				seed.setRadius(Integer.valueOf(1));
+
+				seed.setSnmpRetriesServiceElementDiscovery(Integer.valueOf(2));
+				seed.setSnmpTimeoutServiceElementDiscovery(Long.valueOf(800));
+
+				seed.setSnmpRetriesTopologyDiscovery(Integer.valueOf(2));
+				seed.setSnmpTimeoutTopologyDiscovery(Long.valueOf(800));
+
+				SnmpGlobalReadCredential[] globalCredentails = manager
+						.getAllGlobalCredentails();
+				List<Credential> credentials = new ArrayList<Credential>();
+
+				for (SnmpGlobalReadCredential snmpGlobalReadCredential : globalCredentails) {
+					credentials.addAll(snmpGlobalReadCredential
+							.getCredentials());
+				}
+
+				seed.setCredentials(credentials);
+
+				List<IpTopologySeed> topologySeeds = new ArrayList<IpTopologySeed>();
+				topologySeeds.add(seed);
+				DiscoveryRule rule = new DiscoveryRule();
+
+				rule.setName("Subnet: " + subnet);
+
+				rule.setTopologySeeds(topologySeeds);
+				rule.setDiscoveryType(DiscoveryTypeEnum.ServiceElement);
+				rule.setCreated(new Date());
+
+				DiscoveryRule dbRule = manager.getDiscoveryRuleByName(rule
+						.getName());
+
+				if (dbRule == null)
+					dbRule = manager.updateDiscoveryRule(rule);
+
+				manager.startDiscovery(dbRule);
+
+				return null;
+			}
+		};
+
+		callWithRetry.invokeCall();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.client.IntegerService#getDeviceDetails(edu.harvard
+	 * .integer.common.ID)
+	 */
+	@Override
+	public DeviceDetails getDeviceDetails(final ID id) throws Exception {
 		DeviceDetails deviceDetails = null;
 
-		try {
-			ServiceElementAccessManagerInterface serviceElementService = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
-			
-			deviceDetails = serviceElementService.getDeviceDetails(id);
-		} 
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
+		CallWithRetry<DeviceDetails, ServiceElementAccessManagerInterface> callWithRetry = new CallWithRetry<DeviceDetails, ServiceElementAccessManagerInterface>(
+				3, ServiceElementAccessManagerInterface.class) {
+
+			@Override
+			public DeviceDetails call(
+					ServiceElementAccessManagerInterface serviceElementService)
+					throws IntegerException {
+				DeviceDetails deviceDetails = null;
+
+				deviceDetails = serviceElementService.getDeviceDetails(id);
+
+				return deviceDetails;
+			}
+		};
+
+		deviceDetails = callWithRetry.invokeCall();
 
 		return deviceDetails;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getBlankSelection()
 	 */
 	@Override
 	public Selection getBlankSelection() throws Exception {
 		Selection selection = null;
-		
-		try {
-			SelectionManagerInterface selectionService = DistributionManager.getManager(ManagerTypeEnum.SelectionManager);
-			selection = selectionService.getBlankSelection();
-			
-//			
-//			StringBuffer b = new StringBuffer();
-//			for (Filter filter : selection.getFilters()) {
-//				
-//				b.append("Technologies: \n");
-//				for (FilterNode filterNode : filter.getTechnologies()) {
-//					printFilterNode(filterNode, b, "\tTechnology: ").append('\n');
-//				}
-//				b.append("Link:\n");
-//				for (FilterNode filterNode : filter.getLinkTechnologies()) {
-//					printFilterNode(filterNode, b, "\tLink Technology: ").append('\n');
-//				}
-//
-//				b.append("Categories: \n");
-//				for (FilterNode category : filter.getCategories())
-//					printFilterNode(category, b, "\tCategory: ").append('\n');
-//					//b.append("\tCategory: ").append(category.getName()).append('\n');
-//				
-//				b.append("Criticaliy\n");
-//				for (CriticalityEnum criticatlity :  filter.getCriticalities() )
-//					b.append("Criticatly: ").append(criticatlity).append('\n');
-//			}
-//			
-//			System.out.println("Return Blank selection " + b.toString());
-		}
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
-		
+
+		CallWithRetry<Selection, SelectionManagerInterface> callWithRetry = new CallWithRetry<Selection, SelectionManagerInterface>(
+				3, SelectionManagerInterface.class) {
+
+			@Override
+			public Selection call(SelectionManagerInterface selectionService)
+					throws IntegerException {
+				Selection selection = null;
+
+				selection = selectionService.getBlankSelection();
+
+				return selection;
+			}
+		};
+
+		selection = callWithRetry.invokeCall();
+
 		return selection;
 	}
 
 	/**
 	 * Prints the filter node.
-	 *
-	 * @param node the node
-	 * @param b the b
-	 * @param indent the indent
+	 * 
+	 * @param node
+	 *            the node
+	 * @param b
+	 *            the b
+	 * @param indent
+	 *            the indent
 	 * @return the string buffer
 	 */
-	private StringBuffer printFilterNode(FilterNode node, StringBuffer b, String indent) {
-		b.append(indent).append(node.getName()).append(":").append(node.getItemId().getIdentifier());
+	private StringBuffer printFilterNode(FilterNode node, StringBuffer b,
+			String indent) {
+		b.append(indent).append(node.getName()).append(":")
+				.append(node.getItemId().getIdentifier());
 		if (node.getChildren() != null) {
 			b.append('\n');
-			
+
 			for (FilterNode child : node.getChildren()) {
 				printFilterNode(child, b, indent + "  ");
 			}
@@ -366,158 +459,284 @@ public class IntegerServiceImpl extends RemoteServiceServlet implements
 			if (node.getChildren().size() > 0)
 				b.append('\n');
 		}
-			
-		
-		
+
 		return b;
 	}
-	
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#getServiceElementTypeById(edu.harvard.integer.common.ID)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.client.IntegerService#getServiceElementTypeById(edu
+	 * .harvard.integer.common.ID)
 	 */
 	@Override
-	public ServiceElementType getServiceElementTypeById(ID serviceElementTypeId) throws Exception {
+	public ServiceElementType getServiceElementTypeById(
+			final ID serviceElementTypeId) throws Exception {
 		ServiceElementType serviceElementType = null;
-		
-		try {
-			ServiceElementDiscoveryManagerInterface discMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementDiscoveryManager);
-			serviceElementType = discMgr.getServiceElementTypeById(serviceElementTypeId);
-		}
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
-		
+
+		CallWithRetry<ServiceElementType, ServiceElementDiscoveryManagerInterface> callWithRetry = new CallWithRetry<ServiceElementType, ServiceElementDiscoveryManagerInterface>(
+				3, ServiceElementDiscoveryManagerInterface.class) {
+
+			@Override
+			public ServiceElementType call(
+					ServiceElementDiscoveryManagerInterface discMgr)
+					throws IntegerException {
+
+				ServiceElementType serviceElementType = null;
+
+				serviceElementType = discMgr
+						.getServiceElementTypeById(serviceElementTypeId);
+
+				return serviceElementType;
+			}
+		};
+
+		serviceElementType = callWithRetry.invokeCall();
+
 		return serviceElementType;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getAllNetworks()
 	 */
 	@Override
 	public Network[] getAllNetworks() throws Exception {
-		Network[] networks;
+		Network[] networks = null;
 
-		try {
-			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
-			
-			networks = topologyService.getAllNetworks();
-			
-			System.out.println("getAllNetworks return " + networks.length + " netowrks");
-		} 
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
+		CallWithRetry<Network[], TopologyManagerInterface> callWithRetry = new CallWithRetry<Network[], TopologyManagerInterface>(
+				3, TopologyManagerInterface.class) {
+
+			@Override
+			public Network[] call(TopologyManagerInterface topologyService)
+					throws IntegerException {
+				Network[] networks = null;
+
+				try {
+
+					networks = topologyService.getAllNetworks();
+
+					System.out.println("getAllNetworks return "
+							+ networks.length + " netowrks");
+				} catch (IntegerException e) {
+					throw new IntegerException(
+							e,
+							SystemErrorCodes.UnknownException);
+				}
+
+				return networks;
+			}
+		};
+
+		networks = callWithRetry.invokeCall();
+
 		return networks;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getNetworkInformation()
 	 */
 	@Override
 	public NetworkInformation getNetworkInformation() throws Exception {
 		NetworkInformation networkInfo = null;
-		
-		try {
-			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
-			networkInfo = topologyService.getNetworkInformation();
-		}
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
-		
+
+		CallWithRetry<NetworkInformation, TopologyManagerInterface> callWithRetry = new CallWithRetry<NetworkInformation, TopologyManagerInterface>(
+				3, TopologyManagerInterface.class) {
+
+			@Override
+			public NetworkInformation call(
+					TopologyManagerInterface topologyService)
+					throws IntegerException {
+				NetworkInformation networkInfo = null;
+
+				networkInfo = topologyService.getNetworkInformation();
+
+				return networkInfo;
+
+			}
+		};
+
+		networkInfo = callWithRetry.invokeCall();
+
 		return networkInfo;
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getAllDiscoveryRules()
 	 */
 	@Override
 	public DiscoveryRule[] getAllDiscoveryRules() throws Exception {
-		DiscoveryRule[] discoveryRules;
+		DiscoveryRule[] discoveryRules = null;
 
-		try {
-			DiscoveryManagerInterface discoveryService = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
-			
-			discoveryRules = discoveryService.getAllDiscoveryRules();
-			
-			System.out.println("getAllDiscoveryRules return " + discoveryRules.length + " discoveryRules");
-		} 
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
+		CallWithRetry<DiscoveryRule[], DiscoveryManagerInterface> callWithRetry = new CallWithRetry<DiscoveryRule[], DiscoveryManagerInterface>(
+				3, DiscoveryManagerInterface.class) {
+
+			@Override
+			public DiscoveryRule[] call(
+					DiscoveryManagerInterface discoveryService)
+					throws IntegerException {
+				DiscoveryRule[] discoveryRules = null;
+
+				discoveryRules = discoveryService.getAllDiscoveryRules();
+
+				System.out.println("getAllDiscoveryRules return "
+						+ discoveryRules.length + " discoveryRules");
+				return discoveryRules;
+			}
+		};
+
+		discoveryRules = callWithRetry.invokeCall();
+
 		return discoveryRules;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getAllGlobalCredentails()
 	 */
 	@Override
-	public SnmpGlobalReadCredential[] getAllGlobalCredentails() throws Exception {
+	public SnmpGlobalReadCredential[] getAllGlobalCredentails()
+			throws Exception {
+
 		SnmpGlobalReadCredential[] snmpGlobalReadCredentials;
 
-		try {
-			DiscoveryManagerInterface discoveryService = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
-			
-			snmpGlobalReadCredentials = discoveryService.getAllGlobalCredentails();
-			
-			System.out.println("getAllGlobalCredentails return " + snmpGlobalReadCredentials.length + " snmpGlobalReadCredentials");
-		} 
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
+		CallWithRetry<SnmpGlobalReadCredential[], DiscoveryManagerInterface> callWithRetry = new CallWithRetry<SnmpGlobalReadCredential[], DiscoveryManagerInterface>(
+				3, DiscoveryManagerInterface.class) {
+
+			@Override
+			public SnmpGlobalReadCredential[] call(
+					DiscoveryManagerInterface discoveryService)
+					throws IntegerException {
+
+				SnmpGlobalReadCredential[] snmpGlobalReadCredentials;
+
+				snmpGlobalReadCredentials = discoveryService
+						.getAllGlobalCredentails();
+
+				System.out.println("getAllGlobalCredentails return "
+						+ snmpGlobalReadCredentials.length
+						+ " snmpGlobalReadCredentials");
+
+				return snmpGlobalReadCredentials;
+			}
+		};
+
+		snmpGlobalReadCredentials = callWithRetry.invokeCall();
+
 		return snmpGlobalReadCredentials;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getAllIpTopologySeeds()
 	 */
 	@Override
 	public IpTopologySeed[] getAllIpTopologySeeds() throws Exception {
-		IpTopologySeed[] ipTopologySeeds;
+		IpTopologySeed[] ipTopologySeeds = null;
 
-		try {
-			DiscoveryManagerInterface discoveryService = DistributionManager.getManager(ManagerTypeEnum.DiscoveryManager);
-			
-			ipTopologySeeds = discoveryService.getAllIpTopologySeeds();
-			
-			System.out.println("getAllIpTopologySeeds return " + ipTopologySeeds.length + " ipTopologySeeds");
-		} 
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
+		CallWithRetry<IpTopologySeed[], DiscoveryManagerInterface> callWithRetry = new CallWithRetry<IpTopologySeed[], DiscoveryManagerInterface>(
+				3, DiscoveryManagerInterface.class) {
+
+			@Override
+			public IpTopologySeed[] call(
+					DiscoveryManagerInterface discoveryService)
+					throws IntegerException {
+				IpTopologySeed[] ipTopologySeeds;
+
+				ipTopologySeeds = discoveryService.getAllIpTopologySeeds();
+
+				System.out.println("getAllIpTopologySeeds return "
+						+ ipTopologySeeds.length + " ipTopologySeeds");
+
+				return ipTopologySeeds;
+			}
+		};
+
+		callWithRetry.invokeCall();
+
 		return ipTopologySeeds;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see edu.harvard.integer.client.IntegerService#getPositionsByNetwork()
 	 */
 	@Override
-	public MapItemPosition[] getPositionsByNetwork(ID networkId) throws Exception {
+	public MapItemPosition[] getPositionsByNetwork(final ID networkId)
+			throws Exception {
+
 		MapItemPosition[] mapItemPositions = null;
-		
-		try {
-			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
-			mapItemPositions = topologyService.getPositionsByMap(networkId);
-			System.out.println("getPositionsByNetwork return " + mapItemPositions.length + " mapItemPositions for " + networkId.getName());
-		}
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
-		
+
+		CallWithRetry<MapItemPosition[], TopologyManagerInterface> callWithRetry = new CallWithRetry<MapItemPosition[], TopologyManagerInterface>(
+				3, TopologyManagerInterface.class) {
+
+			@Override
+			public MapItemPosition[] call(
+					TopologyManagerInterface topologyService)
+					throws IntegerException {
+
+				MapItemPosition[] mapItemPositions = null;
+
+				try {
+
+					mapItemPositions = topologyService
+							.getPositionsByMap(networkId);
+
+					System.out.println("getPositionsByNetwork return "
+							+ mapItemPositions.length
+							+ " mapItemPositions for " + networkId.getName());
+
+				} catch (IntegerException e) {
+					throw new IntegerException(
+							e,
+							SystemErrorCodes.UnknownException);
+				}
+
+				return mapItemPositions;
+			}
+		};
+
+		mapItemPositions = callWithRetry.invokeCall();
+
 		return mapItemPositions;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.harvard.integer.client.IntegerService#updateMapItemPosition(edu.harvard.integer.common.topology.MapItemPosition)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.harvard.integer.client.IntegerService#updateMapItemPosition(edu.harvard
+	 * .integer.common.topology.MapItemPosition)
 	 */
 	@Override
-	public void updateMapItemPosition(MapItemPosition position) throws Exception {
-		try {
-			TopologyManagerInterface topologyService = DistributionManager.getManager(ManagerTypeEnum.TopologyManager);
-			topologyService.updateMapItemPosition(position);
-		}
-		catch (IntegerException e) {
-			throw new Exception(e.getMessage());
-		}
+	public void updateMapItemPosition(final MapItemPosition position)
+			throws Exception {
+
+		CallWithRetry<MapItemPosition, TopologyManagerInterface> callWithRetry = new CallWithRetry<MapItemPosition, TopologyManagerInterface>(
+				3, TopologyManagerInterface.class) {
+
+			@Override
+			public MapItemPosition call(TopologyManagerInterface topologyService)
+					throws IntegerException {
+
+				MapItemPosition mapItemPosition = topologyService
+						.updateMapItemPosition(position);
+
+				return mapItemPosition;
+			}
+		};
+
+		callWithRetry.invokeCall();
+
 	}
 }

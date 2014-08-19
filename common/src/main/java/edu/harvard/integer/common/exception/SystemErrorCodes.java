@@ -42,14 +42,17 @@ public enum SystemErrorCodes implements ErrorCodeInterface {
 	ManagerNotFound("Mangager not found"),
 	PropertyFileNotFound("Property file {0} not found"),
 	InvalidIpAddress("Invalid IpAddress "),
-	InvalidIDNoType("No type specified for ID");
+	InvalidIDNoType("No type specified for ID"),
+	CommunicationError("Communication error in call {0}"),
+	UnknownException("Unknown Exception {0} found");
 
 	/** The error code. */
 	private String errorCode = null;
 	
 	private SystemErrorCodes(String description) {
-		
+		errorCode = description;
 	}
+	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.common.exception.ErrorCodeInterface#getErrorCode()
 	 */

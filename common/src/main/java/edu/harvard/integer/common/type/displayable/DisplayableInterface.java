@@ -35,6 +35,8 @@ package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
 
+
+
 /**
  * @author David Taylor
  *
@@ -44,5 +46,6 @@ import java.util.Locale;
  */
 public interface DisplayableInterface {
 
-	public String toDisplayString(Locale local);
+	public String toDisplayString(Locale locale);
+	
 }

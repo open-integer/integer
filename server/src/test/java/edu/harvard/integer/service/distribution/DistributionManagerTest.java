@@ -51,6 +51,7 @@ import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.BaseManagerInterface;
 import edu.harvard.integer.service.BaseServiceInterface;
+import edu.harvard.integer.service.managementobject.snmp.SnmpManagerInterface;
 
 /**
  * @author David Taylor
@@ -202,8 +203,12 @@ public class DistributionManagerTest {
 		}
 	}
 	
-	
-	
+	@Test
+	public void getSnmpManager() {
+		ManagerTypeEnum managerType = DistributionManager.getManagerType(SnmpManagerInterface.class);
+		assert(managerType != null);
+		System.out.println("Found manager " + managerType);
+	}
 	
 //	@Test
 //	public void getWebServerPort() {

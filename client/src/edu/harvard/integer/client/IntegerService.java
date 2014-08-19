@@ -40,9 +40,10 @@ public interface IntegerService extends RemoteService {
 	 * @return the string
 	 * @throws IllegalArgumentException
 	 *             the illegal argument exception
+	 * @throws IntegerException 
 	 */
 	String mibImport(String fileName, String mib, boolean standardMib)
-			throws IllegalArgumentException;
+			throws IllegalArgumentException, Exception;
 
 	/**
 	 * Gets the imported mibs.

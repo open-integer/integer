@@ -35,6 +35,7 @@ package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
 
+
 /**
  * @author David Taylor
  *
@@ -43,15 +44,23 @@ public class FilePathName implements DisplayableInterface {
 
 	private String filePath = null;
 	
+	public FilePathName() {
+		
+	}
+	
 	public FilePathName(String path) {
 		filePath = path;
+	}
+	
+	public void setMessage(String filePath) {
+		this.filePath = filePath;
 	}
 	
 	/* (non-Javadoc)
 	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
 	 */
 	@Override
-	public String toDisplayString(Locale local) {
+	public String toDisplayString(Locale locale) {
 		
 		return filePath;
 	}

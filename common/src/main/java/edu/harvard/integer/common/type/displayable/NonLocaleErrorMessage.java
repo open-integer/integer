@@ -35,6 +35,7 @@ package edu.harvard.integer.common.type.displayable;
 
 import java.util.Locale;
 
+
 /**
  * 
  * This is a wrapper around a String that can not be converted to a users locale. This should only be used 
@@ -45,9 +46,17 @@ import java.util.Locale;
  */
 public class NonLocaleErrorMessage implements DisplayableInterface {
 
-	public String message = null;
+	private String message = null;
+	
+	public NonLocaleErrorMessage() {
+		
+	}
 	
 	public NonLocaleErrorMessage(String message) {
+		this.message = message;
+	}
+	
+	public void setMessage(String message) {
 		this.message = message;
 	}
 	
@@ -55,7 +64,7 @@ public class NonLocaleErrorMessage implements DisplayableInterface {
 	 * @see edu.harvard.integer.common.util.DisplayableInterface#toDisplayString(java.util.Locale)
 	 */
 	@Override
-	public String toDisplayString(Locale local) {
+	public String toDisplayString(Locale locale) {
 		
 		return message;
 	}

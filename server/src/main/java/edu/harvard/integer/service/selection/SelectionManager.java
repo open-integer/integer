@@ -45,7 +45,6 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.selection.Filter;
 import edu.harvard.integer.common.selection.FilterNode;
@@ -172,14 +171,16 @@ public class SelectionManager extends BaseManager implements
 		}
 		
 		filter.setServices( children );
-		logger.info("Buisness Services: "
-				+ printFilterNode(new StringBuffer(), "  ",
-						filter.getServices()));
+		if (logger.isDebugEnabled())
+			logger.debug("Buisness Services: "
+					+ printFilterNode(new StringBuffer(), "  ",
+							filter.getServices()));
 		
 		filter.setTechnologies(nodes);
-		logger.info("Technologies: "
-				+ printFilterNode(new StringBuffer(), "  ",
-						filter.getTechnologies()));
+		if (logger.isDebugEnabled())
+			logger.debug("Technologies: "
+					+ printFilterNode(new StringBuffer(), "  ",
+							filter.getTechnologies()));
 
 		CategoryDAO categoryDAO = persistenceManager.getCategoryDAO();
 		Category[] categories = categoryDAO.findAllTopLevel();
@@ -197,11 +198,13 @@ public class SelectionManager extends BaseManager implements
 				.getTopLevelOrganizations();
 		filter.setOrginizations(createOrganizationList(organizationDAO,
 				allOrganizations));
-		logger.info("Added "
-				+ filter.getOrginizations().size()
-				+ " Organizations \n"
-				+ printFilterNode(new StringBuffer(), "  ",
-						filter.getOrginizations()));
+		
+		if (logger.isDebugEnabled())
+			logger.debug("Added "
+					+ filter.getOrginizations().size()
+					+ " Organizations \n"
+					+ printFilterNode(new StringBuffer(), "  ",
+							filter.getOrginizations()));
 
 		filter.setProviders(createProviderList(allOrganizations, new ArrayList<ID>(), organizationDAO));
 		
@@ -256,10 +259,13 @@ public class SelectionManager extends BaseManager implements
 	private List<ID> createProviderList(Organization[] allOrganizations, List<ID> providerIds, OrganizationDAO dao) throws IntegerException {
 		
 		for (Organization organization : allOrganizations) {
-			logger.info("Organization " + organization.getName()
-					+ " has " + organization.getBusinessServices().size()
-					+ " Bus and " + organization.getTechnologies().size()
-					+ " techs");
+			
+			if (logger.isDebugEnabled())
+				logger.debug("Organization " + organization.getName()
+						+ " has " + organization.getBusinessServices().size()
+						+ " Bus and " + organization.getTechnologies().size()
+						+ " techs");
+			
 			if (organization.getBusinessServices() != null && organization.getBusinessServices().size() > 0)
 				providerIds.add(organization.getID());
 			
@@ -372,8 +378,11 @@ public class SelectionManager extends BaseManager implements
 	private List<FilterNode> createLocationList(Location[] locations) {
 		List<FilterNode> locationTree = createLocationTree(0, locations, 0, new String[] { "State", "City", "PostalCode"} );
 		
-		StringBuffer b = printFilterNode(new StringBuffer(), "", locationTree);
-		logger.info("Location Tree " + b.toString());
+		if (logger.isDebugEnabled()) {
+			StringBuffer b = printFilterNode(new StringBuffer(), "", locationTree);
+		
+			logger.debug("Location Tree " + b.toString());
+		}
 		
 		return locationTree;
 	}

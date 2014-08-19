@@ -42,12 +42,15 @@ import edu.harvard.integer.service.distribution.ManagerTypeEnum;
  * @author David Taylor
  * 
  */
-public class BaseManager {
+public class BaseManager implements BaseManagerInterface {
 
 	public BaseManager(ManagerTypeEnum managerType) {
 		if (!managerType.getBeanClass().equals(getClass())) {
-			throw new IllegalArgumentException("Invalid manager type " + managerType + " for " + getClass());
+			throw new IllegalArgumentException("Invalid manager type "
+					+ managerType + " for " + getClass());
 		}
-				
+
 	}
-}
+
+
+	}

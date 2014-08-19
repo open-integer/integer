@@ -57,6 +57,7 @@ public class IntegerException extends Exception implements DisplayableInterface 
 	private ErrorCodeInterface errorCode = null;
 	private DisplayableInterface[] arguments = null;
 
+	
 	public IntegerException(Throwable cause, ErrorCodeInterface errorCode) {
 		super(cause);
 
@@ -78,7 +79,8 @@ public class IntegerException extends Exception implements DisplayableInterface 
 		this.arguments = arguments;
 		this.errorCode = errorCode;
 	}
-
+	
+	
 	/**
 	 * Create a localized message for this exception.
 	 */
@@ -90,8 +92,12 @@ public class IntegerException extends Exception implements DisplayableInterface 
 				&& errorCode.getErrorCode().indexOf("{0}") > 0) {
 			MessageFormat mf = new MessageFormat(errorCode.getErrorCode());
 			return mf.format(arguments);
-		} else
+		} else if (errorCode != null)
 			return errorCode.toString();
+		else  if (cause != null)
+			return cause.toString();
+		else
+			return this.getClass().getName();
 	}
 
 	/**

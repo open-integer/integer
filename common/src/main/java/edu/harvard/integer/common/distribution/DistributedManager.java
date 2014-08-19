@@ -33,14 +33,9 @@
 
 package edu.harvard.integer.common.distribution;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.ID;
 
 /**
  * @author David Taylor
