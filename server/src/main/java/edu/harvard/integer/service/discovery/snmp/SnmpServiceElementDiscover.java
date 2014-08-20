@@ -794,7 +794,11 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 								}	
 							}
 							else {
-								logger.info("Remote mask is not valid " + mask);
+								logger.info("Remote mask is not valid " + mask + " " + cdpConnection.getRemoteAddress());
+								
+								if ( discNode.getDiscoverNet().getRadiusCountDown() > 0 ) {
+									discNode.addUnknownMaskNodes(cdpConnection.getRemoteAddress());		
+								}					
 							}
 						}
 						catch ( Exception e ) {

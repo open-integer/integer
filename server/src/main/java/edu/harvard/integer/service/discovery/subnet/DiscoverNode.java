@@ -42,7 +42,6 @@ import java.util.Map;
 import edu.harvard.integer.access.Access;
 import edu.harvard.integer.access.ElementAccess;
 import edu.harvard.integer.access.element.ElementEndPoint;
-import edu.harvard.integer.access.snmp.LinkCapability;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementType;
@@ -115,9 +114,15 @@ public class DiscoverNode extends ElementAccess {
 
 	private boolean reachable = false;
 
+	/**
+	 * Subnet id associated the subnet which discovers this node.
+	 */
 	private String subnetId;
 
 
+	/**
+	 * Top Service Element associated with this node.
+	 */
 	private ServiceElementType topServiceElementType;
 	
 	/**
@@ -163,9 +168,18 @@ public class DiscoverNode extends ElementAccess {
 	 */
 	private boolean isFwdNode = true;
 
-	private List<LinkCapability>   linkCapabilities = new ArrayList<>();
-
-	private String sysNamn;
+	/**
+	 * The system name of the discovered node.
+	 */
+	private String sysName;
+	
+	
+	/**
+	 * This list holds remote nodes found from CDP discovery which subnet mask is unknown.  
+	 * It can not find locally or remotely.
+	 */
+	private List<DiscoverNode>  unknownMaskNodes;
+	
 	
 	/**
 	 * Instantiates a new discover node.
@@ -456,17 +470,6 @@ public class DiscoverNode extends ElementAccess {
 		this.isFwdNode = isFwdNode;
 	}
 
-
-
-	public List<LinkCapability> getLinkCapabilities() {
-		return linkCapabilities;
-	}
-
-
-	public void setLinkCapabilities(List<LinkCapability> linkCapabilities) {
-		this.linkCapabilities = linkCapabilities;
-	}
-
 	
 
 	public DiscoverNet getDiscoverNet() {
@@ -489,7 +492,7 @@ public class DiscoverNode extends ElementAccess {
 	 * @return
 	 */
 	public String getSysName() {
-		return sysNamn;
+		return sysName;
 	}
 
 
@@ -498,7 +501,7 @@ public class DiscoverNode extends ElementAccess {
 	 * @param sysNamn
 	 */
 	public void setSysNamn(String sysNamn) {
-		this.sysNamn = sysNamn;
+		this.sysName = sysNamn;
 	}
 
 	/**
@@ -555,6 +558,25 @@ public class DiscoverNode extends ElementAccess {
 	 */
 	public Map<String, AssociationInfo> getAssociationInfos() {
 		return associationInfos;
+	}
+	
+
+	
+	public List<DiscoverNode> getUnknownMaskNodes() {
+		return unknownMaskNodes;
+	}
+
+
+	public void addUnknownMaskNodes( String ipAddr ) {
+		
+		DiscoverNet dnet = new DiscoverNet(ipAddr, "255.255.255.255", discoverNet.getRadiusCountDown() - 1);
+		DiscoverNode dnode = new DiscoverNode(ipAddr, dnet);
+		
+		if ( unknownMaskNodes == null ) {
+			
+			unknownMaskNodes = new ArrayList<>();
+		}
+		unknownMaskNodes.add(dnode);
 	}
 	
 }

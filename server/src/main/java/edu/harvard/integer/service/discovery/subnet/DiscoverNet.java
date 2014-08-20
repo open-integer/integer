@@ -71,6 +71,14 @@ public class DiscoverNet implements Serializable {
 
 
 	/**
+	 * Boolean to indicate this subnet being discvoer or not.
+	 */
+	private boolean discoverYet = false;
+	
+
+
+
+	/**
 	 * 
 	 * @param ipnet
 	 * @param mask
@@ -274,4 +282,15 @@ public class DiscoverNet implements Serializable {
 	public int getRadiusCountDown() {
 		return radiusCountDown;
 	}
+	
+
+	public boolean isDiscoverYet() {
+		return discoverYet;
+	}
+
+
+	public void setDiscoverYet(boolean discoverYet) {
+		this.discoverYet = discoverYet;
+	}
+
 }

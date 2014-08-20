@@ -152,6 +152,10 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 */
 	private Map<String, DiscoverNode>  discoverdSystems = new HashMap<>();
 	
+	
+	private ConcurrentHashMap<String, DiscoverNode> missingMaskNodes = new ConcurrentHashMap<>();
+	
+	
 
 	/**
 	 * Discovery id to keep track of discovery.
@@ -236,6 +240,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					logger.info("Discover radius " + discoverSeed.getRadius());
 					DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
 					
+					discoverSeed.getDiscoverNet().setDiscoverYet(true);
 					subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
 	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
 					
@@ -261,7 +266,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 */
 	public void removeAliasIp(DiscoverNode discoverNode, String subnetId) {
 		
-		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId);
+		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, null);
 		if ( subnetComplete ) {
 			logger.info("Subnet discovery complete " + subnetId);
 		}
@@ -294,11 +299,30 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			addConnectionNode(subnetId, discoverNode);
 		}
 		
-		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId);
+		/**
+		 * Store the node with unknown mask 
+		 */
+		
+		List<DiscoverNode>  needDiscovers = new ArrayList<>();
+		if ( discoverNode.getUnknownMaskNodes() != null ) {
+			
+			for ( DiscoverNode dnode : discoverNode.getUnknownMaskNodes() ) {
+				
+				if ( missingMaskNodes.get(dnode.getIpAddress()) != null ) {
+					
+					needDiscovers.add(dnode);
+					missingMaskNodes.put(dnode.getIpAddress(), dnode);
+				}
+			}
+		}
+		
+		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, needDiscovers);
 		if ( subnetComplete ) {
 			logger.info("Subnet discovery complete " + subnetId);
 		}
+		
 	}
+	
 	
 	
 	/**
@@ -357,7 +381,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			e.printStackTrace();
 			logger.error("Unable to call Service Manager to mark no response on a service element !! " + e.toString());
 		}
-		removeIpAddressFromSubnet(ipAddress, subnetId);
+		removeIpAddressFromSubnet(ipAddress, subnetId, null);
 	}
 	
 	
@@ -383,8 +407,10 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 * @throws  
 	 */
 	@SuppressWarnings("unchecked")
-	private synchronized boolean removeIpAddressFromSubnet( String ip, String subnetid )  {
+	private synchronized boolean removeIpAddressFromSubnet( String ip, String subnetid,
+			                                                List<DiscoverNode> noMaskNodes )  {
 		
+		logger.info("Remove ip " + ip + " " + subnetid);
 		DiscoveryServiceInterface discoveryService = null;
 		/**
 		 * Scan though the new discovered subnet and discover them.
@@ -398,7 +424,12 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			return false;
 		}
 		
-		if ( subnetid != null ) {
+		DiscoverNode dnode = missingMaskNodes.remove(ip);
+		
+		/** 
+		 * If ip is not associated with unknowMaskNodes and subnetId is not null.
+		 */
+		if ( dnode == null && subnetid != null ) {
 			
 			DiscoverSubnetAsyncTask<ElementAccess> subTask = subnetTasks.get(subnetid);		
 			if ( subTask != null ) {
@@ -410,29 +441,38 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					logger.info("Discovered subnet **** " + subnetid);
 				}
 				if ( subnetTasks.size() == 0 ) {
+					
 				    for ( DiscoverNet dnet : foundSubnets.values() ) {
 				    	
-				    	IpDiscoverySeed discoverSeed = new IpDiscoverySeed( discoverSeeds.get(0).getAuths(), dnet );
-				    	try {
-				    		logger.info("Found another subnet " + dnet.getStartIp() + ":" + dnet.getEndIp());
+				    	if ( !dnet.isDiscoverYet() )  {
 				    		
-				    		if ( exclusiveSubnets != null ) {
-								
-								if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
-									logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
-									continue;
+				    		dnet.setDiscoverYet(true);
+				    		IpDiscoverySeed discoverSeed = new IpDiscoverySeed( discoverSeeds.get(0).getAuths(), dnet );
+					    	try {
+					    		logger.info("Found another subnet " + dnet.getStartIp() + ":" + dnet.getEndIp());
+					    		
+					    		if ( exclusiveSubnets != null ) {
+									
+									if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
+										logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
+										continue;
+									}
 								}
-							}
-				    		
-							DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
-			                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), subTask);
-							discoveryService.submitSubnetDiscovery(foundSubTask);
-							
-						} catch (IntegerException e) {
-							
-							logger.equals("Error on submit found subnet discover...  " + e.toString() );
-							e.printStackTrace();
-						} 
+					    		
+								DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+								
+								if ( foundSubTask.getDiscoveringNodes().size() > 0 ) {
+									logger.info("Store subnet task with id " + foundSubTask.getSeed().getSeedId());
+									
+					                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), foundSubTask);
+									discoveryService.submitSubnetDiscovery(foundSubTask);
+								}
+							} catch (IntegerException e) {
+								
+								logger.equals("Error on submit found subnet discover...  " + e.toString() );
+								e.printStackTrace();
+							} 
+				    	}
 				    }
 				}
 			}
@@ -445,11 +485,53 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 					if ( subTask.discoveryNodeCount() == 0 ) {
 						
 						foundSubnetTask.remove(subnetid);
-						logger.info("Discovered on new found subnet **** " + subnetid);
+						logger.info("Discovered on new found subnet ******************* " + subnetid);
 					}
 			   }
 			}
 		}
+		else if ( noMaskNodes != null ) {
+			
+			for ( DiscoverNode dn : noMaskNodes ) {
+				
+				IpDiscoverySeed discoverSeed = new IpDiscoverySeed( discoverSeeds.get(0).getAuths(), dn.getDiscoverNet() );
+		    	try {
+		    		logger.info("Found another subnet " + dn.getDiscoverNet() + ":" + dn.getDiscoverNet());
+		    		
+		    		if ( exclusiveSubnets != null ) {
+						
+						if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
+							logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
+							continue;
+						}
+					}
+		    		
+					DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+					
+					if ( foundSubTask.getDiscoveringNodes().size() > 0 ) {
+						logger.info("store in foundSubnetTask " + foundSubTask.getSeed().getSeedId());
+		                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), foundSubTask);
+						discoveryService.submitSubnetDiscovery(foundSubTask);
+					}
+					
+				} catch (IntegerException e) {
+					
+					logger.equals("Error on submit found subnet discover...  " + e.toString() );
+					e.printStackTrace();
+				} 
+			}
+		}
+		
+		logger.info("foundSubnetTasks size " + foundSubnetTask.size() + " subnetTasks size " + subnetTasks.size() );
+		if ( foundSubnetTask.size() == 1 ) {
+			
+			for ( DiscoverSubnetAsyncTask<ElementAccess> task :  foundSubnetTask.values() ) {
+				logger.info("Still contains " + task.getSeed().getSeedId() );
+			}
+			
+		}
+		
+		
 		if ( foundSubnetTask.size() == 0 && subnetTasks.size() == 0 ) {
 			
 			if ( linkLayerConnections.size() > 0 ) {

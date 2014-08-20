@@ -118,7 +118,10 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	
 	private List<DiscoverNode>  discoveringNodes = new ArrayList<>();
 	
-	
+
+
+
+
 	/**
 	 * Instantiates a new DiscoverSubnetAsyncTask object.
 	 *
@@ -131,6 +134,10 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		
 		this.seed = seed;
 		netDisc = dis;
+		
+		if ( seed.getSeedId().equals("192.168.252.8/255.255.255.252") ) {
+			System.out.println("break in here ");
+		}
 		
 		ServiceElementAccessManagerInterface accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 		
@@ -348,6 +355,10 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 	@Override
 	public Ipv4Range call() throws Exception {
 		
+
+		if ( seed.getSeedId().equals("192.168.252.8/255.255.255.252") ) {
+			System.out.println("break in here ");
+		}
 		try {
 		   for ( DiscoverNode dn : discoveringNodes ) {
 			
@@ -562,6 +573,12 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		return discoverMap.remove(ip);
 	}
 	
+
+	
+	public List<DiscoverNode> getDiscoveringNodes() {
+		return discoveringNodes;
+	}
+
 
 	
 }
