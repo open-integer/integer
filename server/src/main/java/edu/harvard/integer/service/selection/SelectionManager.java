@@ -69,6 +69,7 @@ import edu.harvard.integer.service.persistance.dao.technology.ServiceDAO;
 import edu.harvard.integer.service.persistance.dao.technology.TechnologyDAO;
 import edu.harvard.integer.service.persistance.dao.topology.CategoryDAO;
 import edu.harvard.integer.service.persistance.dao.user.OrganizationDAO;
+import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface;
 
 /**
@@ -208,7 +209,7 @@ public class SelectionManager extends BaseManager implements
 
 		filter.setProviders(createProviderList(allOrganizations, new ArrayList<ID>(), organizationDAO));
 		
-		ServiceElementAccessManagerLocalInterface serviceElementManaeger = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
+		ServiceElementAccessManagerInterface serviceElementManaeger = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 		EnvironmentLevel[] allEnvironmentLevels = serviceElementManaeger.getAllEnvironmentLevels();
 		
 		filter.setEnvironmentLevel(createIDList(allEnvironmentLevels));

@@ -192,8 +192,9 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		for (int i = 0; i < topLevel.length; i++) {
 
 			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
-			logger.info("Service element " + topLevel[i].getID() + " Parent "
-					+ parentId);
+			if (logger.isDebugEnabled())
+				logger.info("Service element " + topLevel[i].getID() + " Parent "
+						+ parentId);
 		}
 		return topLevel;
 	}
