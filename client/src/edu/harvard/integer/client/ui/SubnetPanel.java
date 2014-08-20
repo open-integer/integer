@@ -77,7 +77,7 @@ public class SubnetPanel extends VerticalPanel {
 			}
 		});
 		
-		subnetSplitPanel.setSize("100%", SystemSplitViewPanel.CONTENT_HEIGHT+"px");
+		subnetSplitPanel.setSize("100%", IntegerMap.MAP_HEIGHT+"px");
 		subnetSplitPanel.addEast(containedSplitPanel, ServiceElementDetailsTabPanel.TABPANEL_WIDTH);
 	    subnetSplitPanel.setWidgetHidden(containedSplitPanel, true);
 	    subnetSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);

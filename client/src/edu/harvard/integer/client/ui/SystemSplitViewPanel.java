@@ -20,10 +20,10 @@ import edu.harvard.integer.common.topology.Network;
 public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	/** The Constant CONTENT_WIDTH. */
-	public static final int CONTENT_WIDTH = 1800;
+	public static final int CONTENT_WIDTH = 1300;
 	
 	/** The Constant CONTENT_HEIGHT. */
-	public static final int CONTENT_HEIGHT = 1100;
+	public static final int CONTENT_HEIGHT = 600;
 	
 	/** The Constant WESTPANEL_WIDTH. */
 	public static final int WESTPANEL_WIDTH = 250;
@@ -46,15 +46,12 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		// clean up tabPanel
 		tabPanel.clear();
 
-		setSize("100%", "100%");
+		setSize("100%", CONTENT_HEIGHT+"px");
         
         // Event View
 		EventView eventView = createEventView();
-		
-		eastPanel.setSize("100%", "100%");
 
 	    // tabPanel
-		tabPanel.setSize("100%", "100%");
 	    tabPanel.setAnimationDuration(500);
 	    tabPanel.add(networkPanel, "Network Map");
 
@@ -64,7 +61,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.setWidgetHidden(eventView, false);
 		
 		final FilterPanel filterPanel = new FilterPanel();
-		filterPanel.setSize("100%", SystemSplitViewPanel.CONTENT_HEIGHT+"px");
 		
 		addWest(filterPanel, WESTPANEL_WIDTH);
 		setWidgetToggleDisplayAllowed(filterPanel, true);
@@ -84,9 +80,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 			}
 			
 		});
-		
 	}
-
 	
 	/**
 	 * Creates the filter view.

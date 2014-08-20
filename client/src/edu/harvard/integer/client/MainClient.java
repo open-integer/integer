@@ -4,10 +4,14 @@ import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -65,6 +69,9 @@ public class MainClient implements EntryPoint {
 	
 	/** The status panel. */
 	public static StatusPanel statusPanel = new StatusPanel();
+	
+	private boolean initWindow = true;
+	private boolean initResize = true;
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -138,6 +145,33 @@ public class MainClient implements EntryPoint {
 		
 		// Status Bar
 		RootPanel.get("status").add(statusPanel);
+		
+		Window.addResizeHandler(new ResizeHandler() {
+
+			@Override
+			public void onResize(ResizeEvent event) {
+				Scheduler.get().scheduleDeferred(
+		                new Scheduler.ScheduledCommand() {
+		                    public void execute() {
+		                    	if (initWindow) {
+		                    		int height = Window.getClientHeight();
+		                    		int contentHeight = height - 150;
+		                    		RootPanel.get("root").setHeight(contentHeight+"px");
+			                    	currentWidget.setSize("100%", contentHeight+"px");
+		                    		initWindow = false;
+		                    		return;
+		                    	}
+		                    	
+		                    	if (initResize) {
+		                    		initResize = false;
+		                    		RootPanel.get("root").setHeight("100%");
+			                    	currentWidget.setSize("100%", "100%");
+		                    	}
+		                    }
+		                });
+			}
+
+		});
 	}
 
 	/**

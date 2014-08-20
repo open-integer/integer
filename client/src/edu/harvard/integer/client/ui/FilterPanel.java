@@ -23,6 +23,8 @@ import edu.harvard.integer.common.topology.CriticalityEnum;
  * @version 1.0, May 2014
  */
 public class FilterPanel extends DockPanel {
+	public static final int FILTER_PANEL_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT - 10;
+	public static final int SELECTION_PANEL_HEIGHT = FILTER_PANEL_HEIGHT - 60;
 	
 	/** The category provider. */
 	private ListDataProvider<LeaveItem> categoryProvider = new ListDataProvider<LeaveItem>();
@@ -71,11 +73,13 @@ public class FilterPanel extends DockPanel {
 		
 		actionPanel.add(refreshButton);
 		
-		selectionPanel.setSize("100%", "700px");
+		selectionPanel.setSize("100%", SELECTION_PANEL_HEIGHT+"px");
 		
 		add(titlePanel, DockPanel.NORTH);
-		add(selectionPanel, DockPanel.CENTER);
 		add(actionPanel, DockPanel.SOUTH);
+		add(selectionPanel, DockPanel.CENTER);
+		
+		setSize("100%", FILTER_PANEL_HEIGHT+"px");
 	}
 	
 	

@@ -1,5 +1,6 @@
 package edu.harvard.integer.client.ui;
 
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class NetworkPanel extends VerticalPanel {
@@ -9,7 +10,10 @@ public class NetworkPanel extends VerticalPanel {
 	
 	public NetworkPanel() {
         //add(titlePanel);
-		add(networkMapPanel);
+		ScrollPanel scrollPanel = new ScrollPanel(networkMapPanel);
+		scrollPanel.setAlwaysShowScrollBars(true);
+		scrollPanel.setSize(IntegerMap.MAP_WIDTH+"px", IntegerMap.MAP_HEIGHT+"px");
+		add(scrollPanel);
 		setSize("100%", "100%");
 	}
 
