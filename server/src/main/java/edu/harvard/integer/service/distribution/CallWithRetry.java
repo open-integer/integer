@@ -36,11 +36,17 @@ package edu.harvard.integer.service.distribution;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.SystemErrorCodes;
+import edu.harvard.integer.common.properties.IntegerProperties;
+import edu.harvard.integer.common.properties.LongPropertyNames;
+import edu.harvard.integer.common.properties.StringPropertyNames;
 import edu.harvard.integer.service.BaseManagerInterface;
 
 /**
@@ -60,13 +66,31 @@ public abstract class CallWithRetry<T, M extends BaseManagerInterface> {
 	
 	private ManagerTypeEnum managerType = null;
 	
-	public CallWithRetry() {
-		
-	}
+	private InitialContext initialContext = null;
+	
+	private static Long serverId = null;
+	
+	private static String moduleName = null;
 	
 	public CallWithRetry(int numberOfTrys, Class<M> mgrClass) {
 		this.numberOfTrys = numberOfTrys;
-		this.managerType = DistributionManager.getManagerType(mgrClass);	
+		this.managerType = DistributionManager.getManagerType(mgrClass);
+		
+		if (serverId == null)
+			try {
+				serverId = IntegerProperties.getInstance().getLongProperty(
+						LongPropertyNames.ServerId);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+			}
+		
+		if (moduleName == null)
+			try {
+				moduleName = IntegerProperties.getInstance().getProperty(
+						StringPropertyNames.ModuleName);
+			} catch (IntegerException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	public int getNumberOfTrys() {
@@ -82,7 +106,7 @@ public abstract class CallWithRetry<T, M extends BaseManagerInterface> {
 		while (count++ < numberOfTrys) {
 			 try {
 				
-				 manager = DistributionManager.getManager(managerType);
+				 manager = getManager();
 				 
 				 retValue = call(manager);
 			
@@ -112,7 +136,25 @@ public abstract class CallWithRetry<T, M extends BaseManagerInterface> {
 				
 				e.printStackTrace();
 			 } finally {
-				 manager = null;
+				
+				 if (initialContext != null)
+					try {
+						
+						logger.info("Close InitialContext " + initialContext);
+						
+				
+						initialContext.close();
+						
+						initialContext = null;
+//						
+//					} catch (NamingException e) {
+//
+//						logger.error("NamingException cought closing " + managerType);
+//						e.printStackTrace();
+					} catch (Throwable e) {
+						logger.error("Unexpected cought closing " + managerType);
+						e.printStackTrace();
+					}
 			 }
 		}
 		
@@ -126,6 +168,40 @@ public abstract class CallWithRetry<T, M extends BaseManagerInterface> {
 		// Throw the last exception.
 		throw errors.get(0);
 		
+	}
+	
+	private M getManager() throws IntegerException {
+	
+		M manager = null;
+		
+		String managerName = null;
+		
+		Long managerServerId = DistributionManager.getServerId(managerType);
+		
+		if (managerServerId.equals(serverId)) {
+			initialContext = DistributionManager.getLocalContext(DistributionManager.getHostName(serverId));
+			
+			if (moduleName == null || moduleName.length() < 1)
+				managerName = DistributionManager.getLocalManagerName(managerType);
+			else
+				managerName = DistributionManager.getLocalManagerName(moduleName, managerType);
+		} else {
+			
+			initialContext = DistributionManager.getRemoteContext(DistributionManager.getHostName(managerServerId));
+			managerName = DistributionManager.getRemoteManagerName(moduleName, managerType);
+		}
+		
+		try {
+			logger.info("Call " + managerName + " with Context "+ initialContext.getNameInNamespace() + " " + initialContext);
+		} catch (NamingException e) {
+			logger.error("Error getting NameInNamespace on " + initialContext);
+			
+			e.printStackTrace();
+		}
+		
+		manager = DistributionManager.lookupBean(managerName, initialContext);
+		
+		return manager;
 	}
 	
 	public int getNumberOfDeadlocks() {

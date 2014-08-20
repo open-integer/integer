@@ -26,5 +26,5 @@ echo "create database Config" |  $mysqlCmd
 
 $mysqlConfigCmd < $BASEDIR/../preload/DataFilesToLoad.sql
 
-$BASEDIR/load_default_data.sh Core
+$BASEDIR/load_default_data.sh Core ${password}
 

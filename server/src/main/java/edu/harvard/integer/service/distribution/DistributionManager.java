@@ -33,6 +33,9 @@
 
 package edu.harvard.integer.service.distribution;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.naming.Context;
@@ -96,7 +99,8 @@ public class DistributionManager {
 	 * DistributionService.
 	 */
 	private static IntegerServer[] servers = null;
-
+	
+	
 	/**
 	 * This method is used to get a reference to a service. The service could be
 	 * running on this server or a remote service. The returned instance can be
@@ -463,8 +467,10 @@ public class DistributionManager {
 			ManagerTypeEnum managerType) throws IntegerException {
 
 		for (DistributedManager manager : managers) {
-			if (manager.getManagerType().equals(managerType.name()))
-				return getManager(manager.getServerId(), managerType);
+			if (manager.getManagerType().equals(managerType.name())) {
+				T managerInterface = getManager(manager.getServerId(), managerType);
+				return managerInterface;
+			}
 		}
 
 		System.out.println("Manager not found for " + managerType + " Types "
@@ -476,6 +482,22 @@ public class DistributionManager {
 		return null;
 	}
 
+	/**
+	 * Get the serverId that the manager is running on.
+	 * 
+	 * @param managerType
+	 * @return
+	 */
+	static Long getServerId(ManagerTypeEnum managerType) {
+		for (DistributedManager manager : managers) {
+			if (manager.getManagerType().equals(managerType.name())) {
+				return manager.getServerId();
+			}
+		}	
+		return null;
+	}
+	
+		
 	/**
 	 * Is the manager running on the localhost?
 	 * 
@@ -552,6 +574,7 @@ public class DistributionManager {
 		return null;
 	}
 
+	
 	/**
 	 * Get the lookup name for this manager when running on the local server.
 	 * 
@@ -561,7 +584,7 @@ public class DistributionManager {
 	 *            . Manager to lookup.
 	 * @return lookup string to find this manager.
 	 */
-	private static String getLocalManagerName(String moduleName,
+	 static String getLocalManagerName(String moduleName,
 			ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
@@ -576,6 +599,24 @@ public class DistributionManager {
 	}
 
 	/**
+	 * Get the lookup name for this manager when running on the local server.
+	 * 
+	 * @param managerType
+	 *            . Manager to lookup.
+	 * @return lookup string to find this manager.
+	 */
+	static String getLocalManagerName(ManagerTypeEnum managerType) {
+		StringBuffer b = new StringBuffer();
+
+		b.append("java:module/");
+		b.append(managerType.getBeanClass().getSimpleName());
+		b.append("!");
+		b.append(managerType.getBeanLocalInterfaceClass().getName());
+
+		return b.toString();
+	}
+	
+	/**
 	 * Get the remote lookup string to find the manager in the given module.
 	 * 
 	 * @param moduleName
@@ -585,7 +626,7 @@ public class DistributionManager {
 	 * @return lookup string to find this manager.
 	 * @return
 	 */
-	private static String getRemoteManagerName(String moduleName,
+	 static String getRemoteManagerName(String moduleName,
 			ManagerTypeEnum managerType) {
 		StringBuffer b = new StringBuffer();
 
@@ -595,24 +636,6 @@ public class DistributionManager {
 		b.append(managerType.getBeanClass().getSimpleName());
 		b.append("!");
 		b.append(managerType.getBeanRemoteInterfaceClass().getName());
-
-		return b.toString();
-	}
-
-	/**
-	 * Get the lookup name for this manager when running on the local server.
-	 * 
-	 * @param managerType
-	 *            . Manager to lookup.
-	 * @return lookup string to find this manager.
-	 */
-	private static String getLocalManagerName(ManagerTypeEnum managerType) {
-		StringBuffer b = new StringBuffer();
-
-		b.append("java:module/");
-		b.append(managerType.getBeanClass().getSimpleName());
-		b.append("!");
-		b.append(managerType.getBeanLocalInterfaceClass().getName());
 
 		return b.toString();
 	}
@@ -631,14 +654,9 @@ public class DistributionManager {
 	private static <T> T lookupLocalBean(String hostName, String managerName)
 			throws IntegerException {
 
-		InitialContext ctx = null;
+		InitialContext ctx = getLocalContext(hostName);
+		
 		try {
-
-			final Properties env = new Properties();
-			env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-			env.put("jboss.naming.client.ejb.context", true);
-
-			ctx = new InitialContext(env);
 
 			T manager = null;
 
@@ -680,6 +698,44 @@ public class DistributionManager {
 	private static <T> T lookupRemoteBean(String hostName, String managerName)
 			throws IntegerException {
 
+		InitialContext ctx = getRemoteContext(hostName);
+		try {
+
+			T manager = null;
+
+			manager = (T) lookupBean(managerName, ctx);
+			if (manager == null) {
+
+				throw new IntegerException(null,
+						SystemErrorCodes.ManagerNotFound);
+			}
+
+			if (logger.isDebugEnabled())
+				logger.debug("Got bean " + managerName + " from host "
+						+ hostName + " with context " + ctx.getEnvironment().toString());
+
+			return manager;
+
+		} catch (Exception e) {
+			logger.error("Error getting service " + managerName + " Error: "
+					+ e.toString(), e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+		} catch (Throwable e) {
+			logger.error("Error getting service " + managerName + " Error: "
+					+ e.toString(), e);
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+		}
+
+	}
+	
+	/**
+	 * Get the initial context for sending requests to the given host.
+	 * 
+	 * @param hostName
+	 * @return InitialContext for the given host
+	 * @throws IntegerException
+	 */
+	static InitialContext getRemoteContext(String hostName) throws IntegerException {
 		InitialContext ctx = null;
 		try {
 
@@ -697,33 +753,39 @@ public class DistributionManager {
 			env.put("jboss.naming.client.ejb.context", true);
 			//
 			ctx = new InitialContext(env);
-
-			T manager = null;
-
-			manager = (T) lookupBean(managerName, ctx);
-			if (manager == null) {
-
-				throw new IntegerException(null,
-						SystemErrorCodes.ManagerNotFound);
-			}
-
-			if (logger.isDebugEnabled())
-				logger.debug("Got bean " + managerName + " from host "
-						+ hostName + " with context " + env.toString());
-
-			return manager;
-
-		} catch (Exception e) {
-			logger.error("Error getting service " + managerName + " Error: "
+			
+			return ctx;
+			
+		} catch (NamingException e) {
+			logger.error("Error getting context for " + hostName + " Error: "
 					+ e.toString(), e);
 			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
 		} catch (Throwable e) {
-			logger.error("Error getting service " + managerName + " Error: "
+			logger.error("Error getting context for " + hostName + " Error: "
 					+ e.toString(), e);
 			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
 		}
-
 	}
+	
+	static InitialContext getLocalContext(String hostName) throws IntegerException {
+		InitialContext ctx = null;
+		
+		final Properties env = new Properties();
+		env.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+		env.put("jboss.naming.client.ejb.context", true);
+
+		try {
+			ctx = new InitialContext(env);
+		} catch (NamingException e) {
+			logger.error("Error gettting local context for " + hostName + " Error " + e.toString());
+			e.printStackTrace();
+			throw new IntegerException(e, SystemErrorCodes.ManagerNotFound);
+		}
+
+		return ctx;
+	}
+	
+
 
 	/**
 	 * This method is used to lookup a bean (manager or service) in the given
@@ -738,7 +800,7 @@ public class DistributionManager {
 	 * @throws IntegerException 
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T lookupBean(String managerName, InitialContext ctx) throws IntegerException {
+	static <T> T lookupBean(String managerName, InitialContext ctx) throws IntegerException {
 		T manager = null;
 
 		try {
@@ -751,6 +813,7 @@ public class DistributionManager {
 			if (logger.isDebugEnabled())
 				logger.debug("Found manager " + managerName);
 
+			
 //			if (manager instanceof BaseManagerInterface)
 //				((BaseManagerInterface) manager).setContext(ctx);
 			
