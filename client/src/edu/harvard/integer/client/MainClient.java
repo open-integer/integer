@@ -187,6 +187,8 @@ public class MainClient implements EntryPoint {
 				
 				currentWidget = new SystemSplitViewPanel(); // createHomePage();
 				RootPanel.get("root").add(currentWidget);
+				
+				adjustWindowSize();
 			}
 		});
 	}

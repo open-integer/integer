@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class NetworkPanel extends VerticalPanel {
 
-	private NetworkMapPanel networkMapPanel = new NetworkMapPanel(IntegerMap.MAP_WIDTH, IntegerMap.MAP_HEIGHT);
+	private NetworkMapPanel networkMapPanel = new NetworkMapPanel(IntegerMap.MAP_WIDTH, IntegerMap.MAX_MAP_HEIGHT);
 	
 	public NetworkPanel() {
 		add(networkMapPanel);

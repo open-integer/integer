@@ -38,6 +38,8 @@ public class IntegerMap extends Layer {
 	/** The Constant MAP_HEIGHT. */
 	public static final int MAP_HEIGHT = SystemSplitViewPanel.CONTENT_HEIGHT - EventView.EVENT_VIEW_HEIGHT;
 	
+	public static final int MAX_MAP_HEIGHT = 1500;
+	
 	/** The Constant LAYOUT_CENTER. */
 	public static final int LAYOUT_CENTER = 1;
 	

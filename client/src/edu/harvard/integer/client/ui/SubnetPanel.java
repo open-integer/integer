@@ -36,7 +36,7 @@ public class SubnetPanel extends VerticalPanel {
 	private SplitLayoutPanel subnetSplitPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
 	
 	/** The subnet map panel. */
-	private SubnetMapPanel subnetMapPanel = new SubnetMapPanel(this, IntegerMap.MAP_WIDTH, IntegerMap.MAP_HEIGHT);
+	private SubnetMapPanel subnetMapPanel = new SubnetMapPanel(this, IntegerMap.MAP_WIDTH, IntegerMap.MAX_MAP_HEIGHT);
 	
 	/** The details button. */
 	public HvIconButton detailsButton = new HvIconButton("Details");
@@ -48,44 +48,7 @@ public class SubnetPanel extends VerticalPanel {
 	 * Instantiates a new subnet panel.
 	 */
 	public SubnetPanel() {
-		toolbarPanel.setStyleName("toolbar");
-		toolbarPanel.add(detailsButton);
-		
-		detailsButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				MainClient.integerService.getDeviceDetails(
-						selectedEntity.getID(),
-						new AsyncCallback<DeviceDetails>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								MainClient.statusPanel.showAlert("Failed to receive detail information of " + selectedEntity.getName());
-							}
-
-							@Override
-							public void onSuccess(DeviceDetails deviceDetails) {
-								DeviceDetailsPanel detailsPanel = new DeviceDetailsPanel(selectedEntity.getName(), deviceDetails);
-								HvDialogBox detailsDialog = new HvDialogBox("Device Details", detailsPanel);
-								detailsDialog.enableOkButton(false);
-								detailsDialog.setSize("400px", "150px");
-								detailsDialog.center();
-								detailsDialog.show();
-							}
-						});
-			}
-		});
-		
-		subnetSplitPanel.setSize("100%", IntegerMap.MAP_HEIGHT+"px");
-		subnetSplitPanel.addEast(containedSplitPanel, ServiceElementDetailsTabPanel.TABPANEL_WIDTH);
-	    subnetSplitPanel.setWidgetHidden(containedSplitPanel, true);
-	    subnetSplitPanel.setWidgetToggleDisplayAllowed(containedSplitPanel, true);
-	    subnetSplitPanel.add(subnetMapPanel);
-	    
-        //add(titlePanel);
-        //add(toolbarPanel);
-		add(subnetSplitPanel);
+		add(subnetMapPanel);
 		setSize("100%", "100%");
 	}
 
