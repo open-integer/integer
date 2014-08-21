@@ -23,7 +23,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	public static final int CONTENT_WIDTH = 1300;
 	
 	/** The Constant CONTENT_HEIGHT. */
-	public static final int CONTENT_HEIGHT = 600;
+	public static final int CONTENT_HEIGHT = 550;
 	
 	/** The Constant WESTPANEL_WIDTH. */
 	public static final int WESTPANEL_WIDTH = 250;
@@ -36,6 +36,9 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	/** The tab panel. */
 	private static TabLayoutPanel tabPanel = new TabLayoutPanel(2.5, Unit.EM);
+	
+	/** The Filter panel */
+	private FilterPanel filterPanel = new FilterPanel();
 
 	/**
 	 * Instantiates a new system split view panel.
@@ -59,8 +62,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.add(tabPanel);
 		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
 		eastPanel.setWidgetHidden(eventView, false);
-		
-		final FilterPanel filterPanel = new FilterPanel();
 		
 		addWest(filterPanel, WESTPANEL_WIDTH);
 		setWidgetToggleDisplayAllowed(filterPanel, true);
@@ -118,6 +119,14 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		return eventView;
 	}
 
+
+	public static TabLayoutPanel getTabPanel() {
+		return tabPanel;
+	}
+
+	public FilterPanel getFilterPanel() {
+		return filterPanel;
+	}
 
 	public static void showServiceElementMap(Network network) {
 		if (network.getServiceElements() == null || network.getServiceElements().isEmpty()) {

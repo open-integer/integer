@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.view.client.ListDataProvider;
@@ -58,6 +59,8 @@ public class FilterPanel extends DockPanel {
 	/** The selection panel. */
 	private StackLayoutPanel selectionPanel = new StackLayoutPanel(Unit.EM);
 	
+	private ScrollPanel selectionScrollPanel = new ScrollPanel(selectionPanel);
+	
 	/** The action panel. */
 	private SimplePanel actionPanel = new SimplePanel();
 	
@@ -74,15 +77,25 @@ public class FilterPanel extends DockPanel {
 		actionPanel.add(refreshButton);
 		
 		selectionPanel.setSize("100%", SELECTION_PANEL_HEIGHT+"px");
+		selectionScrollPanel.setSize("100%", SELECTION_PANEL_HEIGHT+"px");
 		
 		add(titlePanel, DockPanel.NORTH);
 		add(actionPanel, DockPanel.SOUTH);
-		add(selectionPanel, DockPanel.CENTER);
+		add(selectionScrollPanel, DockPanel.CENTER);
 		
 		setSize("100%", FILTER_PANEL_HEIGHT+"px");
 	}
 	
 	
+	public StackLayoutPanel getSelectionPanel() {
+		return selectionPanel;
+	}
+
+	public void resetHeight(int height) {
+		setHeight(height+"px");
+		selectionScrollPanel.setHeight((height-70)+"px");
+	}
+
 	/**
 	 * Update method will refresh the filter panel with the given Filter object.
 	 *

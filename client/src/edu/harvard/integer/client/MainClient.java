@@ -67,6 +67,9 @@ public class MainClient implements EntryPoint {
 	/** The flex table. */
 	private HvFlexTable flexTable;
 	
+	/** System panel */
+	private SystemSplitViewPanel systemPanel = new SystemSplitViewPanel();
+	
 	/** The status panel. */
 	public static StatusPanel statusPanel = new StatusPanel();
 
@@ -137,11 +140,14 @@ public class MainClient implements EntryPoint {
 		// SnmpGlobalReadCredentials
 		createSnmpGlobalReadCredentials();
 		
-		currentWidget = new SystemSplitViewPanel();
+		currentWidget = systemPanel;
 		RootPanel.get("root").add(currentWidget);
 		
 		// Status Bar
 		RootPanel.get("status").add(statusPanel);
+		
+		// adjust Window Size 
+		adjustWindowSize();
 		
 		Window.addResizeHandler(new ResizeHandler() {
 
@@ -150,16 +156,20 @@ public class MainClient implements EntryPoint {
 				Scheduler.get().scheduleDeferred(
 		                new Scheduler.ScheduledCommand() {
 		                    public void execute() {
-								int height = Window.getClientHeight();
-								int contentHeight = height - 150;
-								RootPanel.get("root").setHeight(contentHeight + "px");
-								currentWidget.setSize("100%", contentHeight+ "px");
-		                    		
+								adjustWindowSize();
 		                    }
 		                });
 			}
 
 		});
+	}
+	
+	private void adjustWindowSize() {
+		int height = Window.getClientHeight();
+		int contentHeight = height - 150;
+		RootPanel.get("root").setHeight(contentHeight+"px");
+		currentWidget.setSize("100%", contentHeight+"px");
+		systemPanel.getFilterPanel().resetHeight(contentHeight-12);
 	}
 
 	/**
