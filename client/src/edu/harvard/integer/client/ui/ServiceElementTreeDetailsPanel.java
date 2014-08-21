@@ -39,9 +39,6 @@ public class ServiceElementTreeDetailsPanel extends SplitLayoutPanel {
 			public void onSuccess(ServiceElement[] serviceElements) {
 				MainClient.statusPanel.updateStatus("Received " + serviceElements.length + " contained service elements of " + serviceElement.getName());
 				containedTreeView.updateTree(serviceElement, serviceElements);
-				
-				// select root serviceElement and show it in general tab
-				// detailsTabPanel.update(serviceElement);
 			}
 		});
 	}

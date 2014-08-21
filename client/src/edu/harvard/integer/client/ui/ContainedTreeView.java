@@ -149,6 +149,9 @@ public class ContainedTreeView extends ScrollPanel {
 	    
 	    root.setState(true);
 	    tree.addItem(root);
+	    
+	    // select root initially
+	    tree.setSelectedItem(root);
 
 	}
 
