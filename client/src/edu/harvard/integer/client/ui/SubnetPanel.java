@@ -71,6 +71,7 @@ public class SubnetPanel extends VerticalPanel {
 		subnetMapPanel.getSubnetMap().updateNetwork(network);
 	}
 	
+	/* 
 	public void showContainedTreeView(final ServiceElement serviceElement) {
 		// clear containedSplitPanel first
 		containedSplitPanel.clear();
@@ -99,6 +100,7 @@ public class SubnetPanel extends VerticalPanel {
 			}
 		});
 	}
+	*/
 
 	public BaseEntity getSelectedEntity() {
 		return selectedEntity;

@@ -3,6 +3,8 @@
  */
 package edu.harvard.integer.client.ui;
 
+import com.google.gwt.event.logical.shared.OpenEvent;
+import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -22,6 +24,9 @@ import edu.harvard.integer.common.topology.ServiceElement;
  * @version 1.0, May 2014
  */
 public class ContainedTreeView extends ScrollPanel {
+	
+	/** The fake child node. */
+	public static String FAKE_CHILD_NODE = "Fake Child";
 	
 	/** The tree. */
 	private Tree tree = new Tree();
@@ -50,21 +55,22 @@ public class ContainedTreeView extends ScrollPanel {
 		
 		tree.setTitle(title);
 	    tree.setAnimationEnabled(true);
-		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
+	    
+	    tree.addOpenHandler(new OpenHandler<TreeItem>() {
 
 			@Override
-			public void onSelection(SelectionEvent<TreeItem> event) {
-				final TreeItem treeItem = event.getSelectedItem();
+			public void onOpen(OpenEvent<TreeItem> event) {
+				final TreeItem treeItem = event.getTarget();
 				
 				selectedServiceElement = (ServiceElement)treeItem.getUserObject();
 				
-				if (selectedServiceElement != null)
-					detailsTabPanel.update(selectedServiceElement);
+				// get first child of the treeItem
+				TreeItem firstChild = treeItem.getChild(0);
 				
-				selectedTimestamp = System.currentTimeMillis();
-				
-				// skip if children are already populated
-				if (treeItem.getChildCount() > 0)
+				// remove first child if it is a fake child
+				if (firstChild != null && firstChild.getText().equals(FAKE_CHILD_NODE))
+					treeItem.removeItem(firstChild);
+				else
 					return;
 				
 				MainClient.integerService.getServiceElementByParentId(selectedServiceElement.getID(), new AsyncCallback<ServiceElement[]>() {
@@ -85,10 +91,28 @@ public class ContainedTreeView extends ScrollPanel {
 							String title = getServiceElementTitle(se);
 							item.setText(title);
 							item.setUserObject(se);
+							
+							if (se.getHasChildren())
+								item.addTextItem(FAKE_CHILD_NODE);
 							treeItem.addItem(item);
 						}
 					}
 				});
+			}
+	    	
+	    });
+	    
+		tree.addSelectionHandler(new SelectionHandler<TreeItem>() {
+
+			@Override
+			public void onSelection(SelectionEvent<TreeItem> event) {
+				final TreeItem treeItem = event.getSelectedItem();
+				
+				selectedServiceElement = (ServiceElement)treeItem.getUserObject();
+				
+				if (selectedServiceElement != null)
+					detailsTabPanel.update(selectedServiceElement);
+				
 			}
 			
 		});
@@ -116,6 +140,10 @@ public class ContainedTreeView extends ScrollPanel {
 	    	String title = getServiceElementTitle(se);
 	    	item.setUserObject(se);
 	    	item.setText(title);
+	    	
+	    	if (se.getHasChildren())
+				item.addTextItem(FAKE_CHILD_NODE);
+	    	
 	    	root.addItem(item);
 	    }
 	    
@@ -150,9 +178,6 @@ public class ContainedTreeView extends ScrollPanel {
 		if (se.getCategory() != null)
 			title.append(" - ").append(se.getCategory().getName());
 		title.append(")");
-		
-		if (se.getHasChildren())
-			title.append(" *");
 		
 		return title.toString();
 	}

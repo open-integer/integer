@@ -1,6 +1,8 @@
 package edu.harvard.integer.client.ui;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
@@ -80,6 +82,15 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 				filterPanel.update(result.getFilters().get(0));			
 			}
 			
+		});
+		
+		tabPanel.addSelectionHandler( new SelectionHandler<Integer>() {
+
+			@Override
+			public void onSelection(SelectionEvent<Integer> event) {
+				int selectedIndex = tabPanel.getSelectedIndex();
+				tabPanel.getTabWidget(selectedIndex).setVisible(true);
+			}
 		});
 	}
 	

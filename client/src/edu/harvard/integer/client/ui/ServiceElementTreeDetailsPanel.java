@@ -21,7 +21,7 @@ public class ServiceElementTreeDetailsPanel extends SplitLayoutPanel {
 
 		setSize("600px", "600px");
 		
-		ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
+		final ServiceElementDetailsTabPanel detailsTabPanel = new ServiceElementDetailsTabPanel();
 		final ContainedTreeView containedTreeView = new ContainedTreeView("Device Details", this, detailsTabPanel);
 	    
 	    addSouth(detailsTabPanel, ServiceElementDetailsTabPanel.TABPANEL_HEIGHT);
@@ -39,6 +39,9 @@ public class ServiceElementTreeDetailsPanel extends SplitLayoutPanel {
 			public void onSuccess(ServiceElement[] serviceElements) {
 				MainClient.statusPanel.updateStatus("Received " + serviceElements.length + " contained service elements of " + serviceElement.getName());
 				containedTreeView.updateTree(serviceElement, serviceElements);
+				
+				// select root serviceElement and show it in general tab
+				// detailsTabPanel.update(serviceElement);
 			}
 		});
 	}
