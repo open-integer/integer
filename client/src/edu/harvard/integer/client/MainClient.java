@@ -69,9 +69,6 @@ public class MainClient implements EntryPoint {
 	
 	/** The status panel. */
 	public static StatusPanel statusPanel = new StatusPanel();
-	
-	private boolean initWindow = true;
-	private boolean initResize = true;
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -153,20 +150,11 @@ public class MainClient implements EntryPoint {
 				Scheduler.get().scheduleDeferred(
 		                new Scheduler.ScheduledCommand() {
 		                    public void execute() {
-		                    	if (initWindow) {
-		                    		int height = Window.getClientHeight();
-		                    		int contentHeight = height - 150;
-		                    		RootPanel.get("root").setHeight(contentHeight+"px");
-			                    	currentWidget.setSize("100%", contentHeight+"px");
-		                    		initWindow = false;
-		                    		return;
-		                    	}
-		                    	
-		                    	if (initResize) {
-		                    		initResize = false;
-		                    		RootPanel.get("root").setHeight("100%");
-			                    	currentWidget.setSize("100%", "100%");
-		                    	}
+								int height = Window.getClientHeight();
+								int contentHeight = height - 150;
+								RootPanel.get("root").setHeight(contentHeight + "px");
+								currentWidget.setSize("100%", contentHeight+ "px");
+		                    		
 		                    }
 		                });
 			}

@@ -16,9 +16,6 @@ public class NetworkMapPanel extends LienzoPanel {
 	public NetworkMapPanel(int width, int height) {
 		super(width, height);
 
-		//setSize(IntegerMap.MAP_WIDTH+"px", IntegerMap.MAP_HEIGHT+"px");
-		// Network Map
-		
 		MainClient.integerService
 				.getNetworkInformation(new AsyncCallback<NetworkInformation>() {
 
