@@ -103,8 +103,7 @@ public class HvTableViewPanel extends VerticalPanel {
 		splitPanel.setWidgetSnapClosedSize(detailsPanel, 30);
 
 		add(splitPanel);
-		
-		setSize("100%", "100%");
+
 	}
 	
 	public void setTableSize(String width, String height) {

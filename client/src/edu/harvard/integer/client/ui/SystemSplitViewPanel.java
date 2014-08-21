@@ -102,7 +102,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	 * @return the event view
 	 */
 	private EventView createEventView() {
-		String title = "Events";
+		String title = "Alerts";
 		final String[] headers = {"Type", "Severity", "Start Time", "Status", "Description"};
 		final EventView eventView = new EventView(title, headers);
 		/*integerService.getEvents(new AsyncCallback<List<Object>>() {
