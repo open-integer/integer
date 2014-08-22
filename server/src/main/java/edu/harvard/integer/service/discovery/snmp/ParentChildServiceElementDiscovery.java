@@ -57,7 +57,6 @@ import edu.harvard.integer.common.discovery.SnmpParentChildRelationship;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.exception.NetworkErrorCodes;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
@@ -67,6 +66,7 @@ import edu.harvard.integer.common.topology.ServiceElementAssociationType;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
 import edu.harvard.integer.common.topology.SignatureTypeEnum;
+import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.service.discovery.subnet.DiscoverNode;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -308,7 +308,7 @@ public class ParentChildServiceElementDiscovery extends
 		 */
 		EntityElement ee = elmMap.get(row.getIndex());
 		ServiceElementType set = null;
-		
+
 		/**
 		 * If EntityElement being create for this row index, skip the service element creation part.
 		 * Else create  service element.

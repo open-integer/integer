@@ -53,6 +53,8 @@ public class YamlSnmpContainment {
 	
 	private String contextOID = null;
 	
+	private List<YamlSnmpUniqueDescriminator>  uniqueDescriminators;
+	
 	/**
 	 * @return the containmentType
 	 */

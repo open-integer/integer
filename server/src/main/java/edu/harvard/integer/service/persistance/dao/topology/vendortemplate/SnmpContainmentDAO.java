@@ -43,8 +43,8 @@ import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpLevelOID;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.snmp.SnmpDisplayStringTC;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
+import edu.harvard.integer.service.persistance.dao.topology.SnmpUniqueDescriminatorDAO;
 
 /**
  *  The DAO is responsible for persisting the SnmpContainment. All
@@ -76,6 +76,9 @@ public class SnmpContainmentDAO extends BaseDAO {
 		
 		SnmpLevelOIDDAO levelDAO = new SnmpLevelOIDDAO(getEntityManager(), getLogger());
 		snmpContainment.setSnmpLevels(levelDAO.update(snmpContainment.getSnmpLevels()));
+		
+		SnmpUniqueDescriminatorDAO uniqueDao = new SnmpUniqueDescriminatorDAO(getEntityManager(), getLogger());
+	    snmpContainment.setUniqueDiscriminators(uniqueDao.update(snmpContainment.getUniqueDiscriminators()));
 		
 		super.preSave(entity);
 	}
