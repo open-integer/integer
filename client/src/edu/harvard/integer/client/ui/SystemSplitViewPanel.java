@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
@@ -65,8 +66,9 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.setWidgetToggleDisplayAllowed(eventView, true);
 		eastPanel.setWidgetHidden(eventView, false);
 		
-		addWest(filterPanel, WESTPANEL_WIDTH);
-		setWidgetToggleDisplayAllowed(filterPanel, true);
+		ScrollPanel filterScrollPanel = filterPanel.getScrollPanel();
+		addWest(filterScrollPanel, WESTPANEL_WIDTH);
+		setWidgetToggleDisplayAllowed(filterScrollPanel, true);
 		
 		add(eastPanel);
 		

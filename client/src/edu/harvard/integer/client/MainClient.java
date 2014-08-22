@@ -166,10 +166,10 @@ public class MainClient implements EntryPoint {
 	
 	private void adjustWindowSize() {
 		int height = Window.getClientHeight();
-		int contentHeight = height - 150;
+		int contentHeight = height - 128;
 		RootPanel.get("root").setHeight(contentHeight+"px");
-		currentWidget.setSize("100%", contentHeight+"px");
-		systemPanel.getFilterPanel().resetHeight(contentHeight-12);
+		systemPanel.setSize("100%", contentHeight+"px");
+		systemPanel.getFilterPanel().resetHeight(contentHeight);
 	}
 
 	/**
@@ -185,7 +185,8 @@ public class MainClient implements EntryPoint {
 				if (currentWidget != null)
 					RootPanel.get("root").remove(currentWidget);
 				
-				currentWidget = new SystemSplitViewPanel(); // createHomePage();
+				systemPanel = new SystemSplitViewPanel();
+				currentWidget = systemPanel;
 				RootPanel.get("root").add(currentWidget);
 				
 				adjustWindowSize();
