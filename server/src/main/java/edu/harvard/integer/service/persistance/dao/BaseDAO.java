@@ -43,6 +43,7 @@ import java.util.List;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.Table;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -79,6 +80,8 @@ public class BaseDAO {
 
 	private Class<? extends BaseEntity> clazz = null;
 
+	private List<String> changedFields = null;
+	
 	/**
 	 * Create the DAO for this class type. All entities that are stored in the
 	 * database must extend BaseEntity.
@@ -109,6 +112,27 @@ public class BaseDAO {
 		return clazz;
 	}
 
+	/**
+	 * Get the table name that this class is stored in.
+	 * @return
+	 */
+	public String getTableName() {
+		Annotation[] annotations = getPersistentClass().getAnnotations();
+		for (Annotation annotation : annotations) {
+			if (Table.class.equals(annotation.annotationType())) {
+				Table t = (Table) annotation;
+				
+				if (getLogger().isDebugEnabled()) {
+						getLogger().debug("Found table name " + t.name());
+				
+						return t.name();
+				}
+			}			
+		}	
+		
+		return getPersistentClass().getSimpleName();
+	}
+	
 	/**
 	 * Create or update the entity in the database. If the identifier is set and
 	 * this object is not currently managed by the database then this object
@@ -141,6 +165,7 @@ public class BaseDAO {
 			throw new IntegerException(ee,
 					DatabaseErrorCodes.EntityAlreadyExists);
 		} catch (Throwable e) {
+			logger.error("Unexpected Error updating " + entity.getID().toDebugString() + " Error " + e.toString());
 			e.printStackTrace();
 			
 			if (e instanceof DataException) {
@@ -713,6 +738,19 @@ public class BaseDAO {
 
 	}
 
+	public  <T extends Object> List<String> copyFieldsGetChanges(T toInstance, T fromInstance) throws IntegerException {
+		
+		List<String> changedFields = new ArrayList<String>();
+		
+		this.changedFields = changedFields;
+		
+		copyFields(toInstance, fromInstance);
+			
+		this.changedFields = null;
+		
+		return changedFields;
+	}
+	
 	/**
 	 * Copy the fields from the "fromInstance" to the "toInstance". The
 	 * identifier for the toInstnace will remain. Only data fields will be
@@ -765,6 +803,13 @@ public class BaseDAO {
 					getter.setAccessible(true);
 
 					Object value = getter.invoke(fromInstance);
+					if (changedFields != null) {
+						Object oldValue = getter.invoke(toInstance);
+
+						if (valuesDiffer(oldValue, value))
+							changedFields.add(getter.getName());
+					}
+					
 					if (value instanceof BaseEntity) {
 						value = createCleanCopy((BaseEntity) value);
 					}
@@ -816,6 +861,23 @@ public class BaseDAO {
 			((BaseEntity) toInstance).setIdentifier(identifier);
 
 		return toInstance;
+	}
+
+	/**
+	 * @param oldValue
+	 * @param value
+	 */
+	private boolean valuesDiffer(Object oldValue, Object value) {
+
+		if (value != null) {
+			if (!value.equals(oldValue))
+				return true;
+			
+		} else if (oldValue != null)
+			return true;
+		
+		return false;
+		
 	}
 
 	public <T extends Object> T[] copyArray(T[] values) throws IntegerException {
