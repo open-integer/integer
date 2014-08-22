@@ -24,9 +24,6 @@ public class HvFlexTable extends FlexTable {
 	
 	/** The headers. */
 	private String[] headers;
-	
-	/** The scroll panel. */
-	private ScrollPanel scrollPanel;
 
 	/**
 	 * Create a new HvFlexTable instance.
@@ -34,31 +31,14 @@ public class HvFlexTable extends FlexTable {
 	 * @param headers the headers
 	 */
 	public HvFlexTable(String[] headers) {
-		setWidth("100%");
+		setSize("100%", "100%");
+		
 		setCellSpacing(1);
 		addStyleName("flexTable");
 		
 		this.headers = headers;
 		addHeader();
-		
-		scrollPanel = new ScrollPanel(this);
-		scrollPanel.setSize("1800px", "800px");
-	}
 
-	/**
-	 * Gets the visual panel.
-	 *
-	 * @return the visual panel
-	 */
-	public Widget getVisualPanel() {
-		return scrollPanel;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.google.gwt.user.client.ui.UIObject#setSize(java.lang.String, java.lang.String)
-	 */
-	public void setSize(String width, String height) {
-		scrollPanel.setSize(width, height);
 	}
 
 	/**

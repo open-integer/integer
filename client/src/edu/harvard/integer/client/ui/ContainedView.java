@@ -26,7 +26,7 @@ public class ContainedView extends HvTableViewPanel {
 		addButton.setVisible(false);
 		
 		flexTable.applyDataRowStyles();
-		flexTable.getVisualPanel().setSize("250px", "500px");
+		flexTable.setSize("250px", "500px");
 	}
 
 	/**

@@ -237,7 +237,7 @@ public class MainClient implements EntryPoint {
 
 				if (currentWidget != null)
 					RootPanel.get("root").remove(currentWidget);
-				currentWidget = flexTable.getVisualPanel();
+				currentWidget = flexTable;
 				RootPanel.get("root").add(currentWidget);
 			}
 		});
@@ -270,7 +270,7 @@ public class MainClient implements EntryPoint {
 
 				if (currentWidget != null)
 					RootPanel.get("root").remove(currentWidget);
-				currentWidget = flexTable.getVisualPanel();
+				currentWidget = flexTable;
 				RootPanel.get("root").add(currentWidget);
 			}
 		});

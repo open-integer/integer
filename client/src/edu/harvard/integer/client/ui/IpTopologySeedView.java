@@ -33,6 +33,8 @@ public class IpTopologySeedView extends HvTableViewPanel {
 	 */
 	public IpTopologySeedView(String title, String[] headers) {
 		super(title, headers);
+		
+		setSize("100%", "100%");
 		addButton.setVisible(false);
 		
 		HvTitlePanel detailsTitlePanel = new HvTitlePanel("IP Topology Seed", topologySeedPanel);

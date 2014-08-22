@@ -24,8 +24,9 @@ public class SnmpGlobalReadCredentialView extends HvTableViewPanel {
 	 */
 	public SnmpGlobalReadCredentialView(String title, String[] headers) {
 		super(title, headers);
+		
+		setSize("100%", "100%");
 		addButton.setVisible(false);
-	
 	}
 
 	/**
