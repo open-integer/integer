@@ -71,6 +71,8 @@ public class HvTableViewPanel extends VerticalPanel {
 	 * @param headers the headers
 	 */
 	public HvTableViewPanel(String title, String subTitle, String[] headers) {
+		setSize("100%", "100%");
+		
 		addStyleName("HvPanel");
 		
 		if (title != null && !title.isEmpty()) {

@@ -31,7 +31,7 @@ public class HvFlexTable extends FlexTable {
 	 * @param headers the headers
 	 */
 	public HvFlexTable(String[] headers) {
-		setSize("100%", "100%");
+		setWidth("100%");
 		
 		setCellSpacing(1);
 		addStyleName("flexTable");
