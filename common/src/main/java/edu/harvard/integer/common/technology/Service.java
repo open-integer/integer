@@ -97,12 +97,8 @@ public class Service extends BaseEntity {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
-	private List<ID> userServices = null;
+	private List<ID> childServices = null;
 	
-	@ElementCollection(fetch = FetchType.EAGER)
-	@OrderColumn(name = "idx")
-	private List<ID> providerServices = null;
-
 	/**
 	 * @return the created
 	 */
@@ -178,33 +174,18 @@ public class Service extends BaseEntity {
 		this.technologies = technologies;
 	}
 
-
 	/**
-	 * @return the userServices
+	 * @return the childServices
 	 */
-	public List<ID> getUserServices() {
-		return userServices;
+	public List<ID> getChildServices() {
+		return childServices;
 	}
 
 	/**
-	 * @param userServices the userServices to set
+	 * @param childServices the childServices to set
 	 */
-	public void setUserServices(List<ID> userServices) {
-		this.userServices = userServices;
-	}
-
-	/**
-	 * @return the providerServices
-	 */
-	public List<ID> getProviderServices() {
-		return providerServices;
-	}
-
-	/**
-	 * @param providerServices the providerServices to set
-	 */
-	public void setProviderServices(List<ID> providerServices) {
-		this.providerServices = providerServices;
+	public void setChildServices(List<ID> childServices) {
+		this.childServices = childServices;
 	}
 
 }

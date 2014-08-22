@@ -33,11 +33,16 @@
 
 package edu.harvard.integer.service.persistance.dao.technology;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.technology.Service;
+import edu.harvard.integer.common.topology.ServiceElementFields;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -68,4 +73,26 @@ public class ServiceDAO extends BaseDAO {
 		return findByStringField(name, "name", Service.class);
 	}
 
+	public Service[] getTopLevelServices() throws IntegerException {
+		StringBuffer b = new StringBuffer();
+
+		String tableName = getTableName();
+		
+		b.append("select bs.* ").append('\n');
+		b.append("from ").append(tableName).append(" bs ").append('\n');
+		b.append(
+				" where not exists (select * from  ").append(tableName).append("_childServices sep ")
+				.append('\n');
+		b.append("where sep.identifier = bs.identifier)");
+
+		Query query = getEntityManager().createNativeQuery(b.toString(),
+				getPersistentClass());
+
+		@SuppressWarnings("unchecked")
+		List<ServiceElementFields> resultList = query.getResultList();
+
+		return (Service[]) resultList
+				.toArray(new Service[resultList.size()]);
+
+	}
 }

@@ -100,12 +100,9 @@ public class YamlServiceParser implements YamlParserInterface<YamlService>{
 				Service businessService = technologyManager.updateService(dbService);
 				serviceIds.add(businessService.getID());
 			}
-			
-			if (service.getProviderServices() != null)
-				dbService.setProviderServices(parseChildren(service.getProviderServices()));
-			
-			if (service.getUserServices() != null)
-				dbService.setUserServices(parseChildren(service.getUserServices()));
+						
+			if (service.getChildServices() != null)
+				dbService.setChildServices(parseChildren(service.getChildServices()));
 		}
 		
 		return serviceIds;

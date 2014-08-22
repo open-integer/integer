@@ -9,7 +9,7 @@ businessServices:
       - name: User Services
         description:  user services
         parent: business service-tree
-        userServices:
+        childServices:
           - name: Email
             description:  email
             parent: user services
@@ -33,7 +33,7 @@ businessServices:
       - name: IT Provider Services
         description:  provider services
         parent: business service-tree
-        providerServices:
+        childServices:
           - name: IAM
             description:  Identity and Access Management
             parent: provider services

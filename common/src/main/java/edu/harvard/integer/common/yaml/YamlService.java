@@ -49,10 +49,8 @@ public class YamlService implements YamlBaseInfoInterface {
 
 	private List<YamlService> businessServices = null;
 	
-	private List<YamlService> userServices = null;
+	private List<YamlService> childServices = null;
 	
-	private List<YamlService> providerServices = null;
-
 	/**
 	 * @return the name
 	 */
@@ -99,34 +97,6 @@ public class YamlService implements YamlBaseInfoInterface {
 	}
 
 	/**
-	 * @return the userServices
-	 */
-	public List<YamlService> getUserServices() {
-		return userServices;
-	}
-
-	/**
-	 * @param userServices the userServices to set
-	 */
-	public void setUserServices(List<YamlService> userServices) {
-		this.userServices = userServices;
-	}
-
-	/**
-	 * @return the providerServices
-	 */
-	public List<YamlService> getProviderServices() {
-		return providerServices;
-	}
-
-	/**
-	 * @param providerServices the providerServices to set
-	 */
-	public void setProviderServices(List<YamlService> providerServices) {
-		this.providerServices = providerServices;
-	}
-
-	/**
 	 * @return the businessServices
 	 */
 	public List<YamlService> getBusinessServices() {
@@ -140,6 +110,18 @@ public class YamlService implements YamlBaseInfoInterface {
 		this.businessServices = businessServices;
 	}
 
-	
+	/**
+	 * @return the childServices
+	 */
+	public List<YamlService> getChildServices() {
+		return childServices;
+	}
+
+	/**
+	 * @param childServices the childServices to set
+	 */
+	public void setChildServices(List<YamlService> childServices) {
+		this.childServices = childServices;
+	}
 
 }

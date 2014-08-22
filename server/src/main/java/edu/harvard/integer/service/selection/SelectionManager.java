@@ -143,33 +143,21 @@ public class SelectionManager extends BaseManager implements
 
 		ServiceDAO serviceDao = persistenceManager.getServiceDAO();
 
+		Service[] topLevelServices = serviceDao.getTopLevelServices();
+		
 		List<FilterNode> children = new ArrayList<FilterNode>();
 		
-		Service userServices = serviceDao.findByName("User Services");
-		if (userServices != null) {
-	
-			FilterNode userNode = new FilterNode();
-		
-			userNode.setIdentifier(userServices.getIdentifier());
-			userNode.setName(userServices.getName());
-			userNode.setItemId(userServices.getID());
-		
-			userNode.setChildren(createBusinessServiceNodes(userServices.getUserServices()));
+		for (Service service : topLevelServices) {
+			FilterNode node = new FilterNode();
 			
-			children.add(userNode);
+			node.setIdentifier(service.getIdentifier());
+			node.setName(service.getName());
+			node.setItemId(service.getID());
+			node.setChildren(createChildService(service.getChildServices(), serviceDao));
+			
+			children.add(node);
 		}
 		
-		Service providerServices = serviceDao.findByName("Provider Services");
-		if (providerServices != null) {
-			FilterNode providerNode = new FilterNode();
-			
-			providerNode.setIdentifier(providerServices.getIdentifier());
-			providerNode.setName(providerServices.getName());
-			providerNode.setItemId(providerNode.getID());
-			providerNode.setChildren(createBusinessServiceNodes(providerServices.getProviderServices()));
-			children.add(providerNode);
-
-		}
 		
 		filter.setServices( children );
 		if (logger.isDebugEnabled())
@@ -223,6 +211,30 @@ public class SelectionManager extends BaseManager implements
 		return selection;
 	}
 	
+	/**
+	 * @param childServices
+	 * @return
+	 * @throws IntegerException 
+	 */
+	private List<FilterNode> createChildService(List<ID> childServices, ServiceDAO dao) throws IntegerException {
+		List<FilterNode> children = new ArrayList<FilterNode>();
+		
+		for (ID id : childServices) {
+			Service service = dao.findById(id);
+		
+			FilterNode node = new FilterNode();
+
+			node.setIdentifier(service.getIdentifier());
+			node.setName(service.getName());
+			node.setItemId(service.getID());
+			node.setChildren(createChildService(service.getChildServices(), dao));
+			
+			children.add(node);
+		}
+		
+		return children;
+	}
+
 	private List<ID> createIDList(BaseEntity[] entities) {
 		List<ID> ids = new ArrayList<ID>();
 		
