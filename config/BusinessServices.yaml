@@ -30,7 +30,7 @@ businessServices:
             description:  library resources
             parent: user services
 
-      - name: Provider Services
+      - name: IT Provider Services
         description:  provider services
         parent: business service-tree
         providerServices:
