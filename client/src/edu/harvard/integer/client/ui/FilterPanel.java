@@ -93,7 +93,8 @@ public class FilterPanel extends DockPanel {
 
 	public void resetHeight(int height) {
 		setHeight(height+"px");
-		selectionScrollPanel.setHeight((height-70)+"px");
+		selectionPanel.setHeight((height-70)+"px");
+		selectionScrollPanel.setHeight((height-66)+"px");
 	}
 
 	/**
