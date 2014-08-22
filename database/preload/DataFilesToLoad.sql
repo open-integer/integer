@@ -74,17 +74,14 @@ VALUES
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Ipv4 Technology', 'ipv4/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Ipv4 ServiceElementType', 'ipv4/serviceElementType.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),
 	
-	
-	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'VLAN Technology', 'cisco/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Cisco Technology', 'cisco/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CISCO Common ServiceElementType', 'cisco/commonSET.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CISCO VLAN ServiceElementType', 'cisco/vlanSET.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),
  	
-	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CDP Technology', 'cdp/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),
-	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'CDP ServiceElementType', 'cdp/serviceElementType.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),
-	
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'EntityMib Technology', 'entity_mib/technology.yaml', 'TechnologyYaml', NULL, NULL, NULL),
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'EntityMib ServiceElementType', 'entity_mib/serviceElementType.yaml', 'ServiceElementTypeYaml', NULL, NULL, NULL),
 	
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/HostResourcesContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
-	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/ParentChildContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
+	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Host Resources Containment', 'vendorcontianment/CiscoEntityContainment.yaml', 'VendorContainmentYaml', NULL, NULL, NULL),
 	
 	('edu.harvard.integer.common.persistence.DataPreLoadFile', 'Table Index', 'CreateIndex.sql', 'SQL', NULL, NULL, NULL);

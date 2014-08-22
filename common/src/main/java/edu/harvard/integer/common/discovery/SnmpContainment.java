@@ -103,16 +103,16 @@ public class SnmpContainment extends BaseEntity {
 	private List<SnmpLevelOID> snmpLevels = null;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<SnmpUniqueDescriminator>  uniqueDiscriminators;
+	private List<SnmpUniqueDiscriminator>  uniqueDiscriminators;
 	
 	
 
-	public List<SnmpUniqueDescriminator> getUniqueDiscriminators() {
+	public List<SnmpUniqueDiscriminator> getUniqueDiscriminators() {
 		return uniqueDiscriminators;
 	}
 
 	public void setUniqueDiscriminators(
-			List<SnmpUniqueDescriminator> uniqueDiscriminators) {
+			List<SnmpUniqueDiscriminator> uniqueDiscriminators) {
 		this.uniqueDiscriminators = uniqueDiscriminators;
 	}
 

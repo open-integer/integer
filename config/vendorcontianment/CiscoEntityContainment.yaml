@@ -12,6 +12,12 @@ signatures:
 snmpContainment:
       containmentType: EntityMib
       serviceElementTypeName: ciscoSystem
+      uniqueDescriminators:
+        - name: ciscoSystemUniqueDescriminator
+          contaxtOID: entPhysicalEntry
+          discriminatorOID: entPhysicalClass
+          discriminatorValue: 3
+          uniqueIdentifierSemos: [entPhysicalSerialNum, entPhysicalModelName]
       snmpLevels:
         - name: entityParentChild
           contextOID: entPhysicalEntry
@@ -61,13 +67,7 @@ snmpContainment:
                   valueIsParent: true
                disriminators:
                   - serviceElementTypeName: ciscoIpv4Addr  
-                                                  
-        - name: cdpGlobalLevel
-          category: System
-          contextOID: cdpGlobalRun
-          disriminators:
-             - serviceElementTypeName: cdpGlobal
-             
+                                                               
         - name: ciscoVlanLevel
           category: System
           contextOID: vtpVlanEntry

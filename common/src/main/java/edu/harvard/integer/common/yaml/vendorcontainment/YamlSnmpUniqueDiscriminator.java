@@ -38,12 +38,13 @@ import java.util.List;
  * @author dchan
  *
  */
-public class YamlSnmpUniqueDescriminator {
+public class YamlSnmpUniqueDiscriminator {
 
+	private String name;
 	private String contaxtOID;
-	private String descriminatorOID;
+	private String discriminatorOID;
 	private List<String> uniqueIdentifierSemos;
-	private String descriminatorValue = null;
+	private String discriminatorValue = null;
 	
 	
 	public String getContaxtOID() {
@@ -52,11 +53,11 @@ public class YamlSnmpUniqueDescriminator {
 	public void setContaxtOID(String contaxtOID) {
 		this.contaxtOID = contaxtOID;
 	}
-	public String getDescriminatorOID() {
-		return descriminatorOID;
+	public String getDiscriminatorOID() {
+		return discriminatorOID;
 	}
-	public void setDescriminatorOID(String descriminatorOID) {
-		this.descriminatorOID = descriminatorOID;
+	public void setDiscriminatorOID(String discriminatorOID) {
+		this.discriminatorOID = discriminatorOID;
 	}
 	public List<String> getUniqueIdentifierSemos() {
 		return uniqueIdentifierSemos;
@@ -64,12 +65,18 @@ public class YamlSnmpUniqueDescriminator {
 	public void setUniqueIdentifierSemos(List<String> uniqueIdentifierSemos) {
 		this.uniqueIdentifierSemos = uniqueIdentifierSemos;
 	}
-	public String getDescriminatorValue() {
-		return descriminatorValue;
+	public String getDiscriminatorValue() {
+		return discriminatorValue;
 	}
-	public void setDescriminatorValue(String descriminatorValue) {
-		this.descriminatorValue = descriminatorValue;
+	public void setDiscriminatorValue(String discriminatorValue) {
+		this.discriminatorValue = discriminatorValue;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }

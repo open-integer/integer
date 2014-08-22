@@ -39,8 +39,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -59,8 +57,8 @@ import edu.harvard.integer.common.discovery.SnmpRelationship;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorStringValue;
 import edu.harvard.integer.common.discovery.SnmpServiceElementTypeDiscriminatorValue;
+import edu.harvard.integer.common.discovery.SnmpUniqueDiscriminator;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
-import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.discovery.VendorSignature;
 import edu.harvard.integer.common.discovery.VendorSignatureTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -72,25 +70,22 @@ import edu.harvard.integer.common.topology.Capability;
 import edu.harvard.integer.common.topology.Category;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
+import edu.harvard.integer.common.topology.ServiceElementInstanceUniqueSignature;
 import edu.harvard.integer.common.topology.ServiceElementType;
 import edu.harvard.integer.common.topology.Signature;
-import edu.harvard.integer.common.topology.SignatureTypeEnum;
 import edu.harvard.integer.common.topology.SignatureValueOperator;
 import edu.harvard.integer.common.topology.ValueOpertorEnum;
 import edu.harvard.integer.common.yaml.YamlBaseInfoInterface;
 import edu.harvard.integer.common.yaml.YamlDomainData;
-import edu.harvard.integer.common.yaml.YamlEnvironment;
 import edu.harvard.integer.common.yaml.YamlLocation;
-import edu.harvard.integer.common.yaml.YamlManagementObject;
-import edu.harvard.integer.common.yaml.YamlServiceElementAssociationType;
 import edu.harvard.integer.common.yaml.YamlServiceElementType;
-import edu.harvard.integer.common.yaml.YamlServiceElementTypeTranslate;
 import edu.harvard.integer.common.yaml.YamlSnmpAssociation;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpContainmentRelation;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpLevelOID;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpParentChildRelationship;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpServiceElementTypeDiscriminator;
+import edu.harvard.integer.common.yaml.vendorcontainment.YamlSnmpUniqueDiscriminator;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment;
 import edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorSignature;
 import edu.harvard.integer.service.BaseManager;
@@ -106,6 +101,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementInstanceUniqueSignatureDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDAO;
+import edu.harvard.integer.service.persistance.dao.topology.SnmpUniqueDiscriminatorDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpLevelOIDDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpRelationshipDAO;
 import edu.harvard.integer.service.technology.TechnologyManagerInterface;
@@ -426,9 +422,10 @@ public class YamlManager extends BaseManager implements
 				.getSnmpContainment().getSnmpLevels(), snmpContainment
 				.getSnmpLevels()));
 
+		ServiceElementType serviceElementType = null;
 		if ( load.getSnmpContainment().getServiceElementTypeName() != null ) {
 			ServiceElementTypeDAO dao = persistanceManager.getServiceElementTypeDAO();
-			ServiceElementType serviceElementType = dao.findByName(load.getSnmpContainment().getServiceElementTypeName());
+			serviceElementType = dao.findByName(load.getSnmpContainment().getServiceElementTypeName());
 			if (serviceElementType == null) {
 				logger.error("ServiceElementType (" + load.getSnmpContainment().getServiceElementTypeName() + ") not found!! "
 						+ " Vendor Containment " + load.getName() + " will not be loaded");
@@ -439,6 +436,91 @@ public class YamlManager extends BaseManager implements
 		else {
 			snmpContainment.setServiceElementTypeId(createServiceElement(load
 					.getSnmpContainment().getServiceElementType()));
+		}
+		
+		if ( load.getSnmpContainment().getUniqueDescriminators() != null ) {
+			
+			snmpContainment.setUniqueDiscriminators(new ArrayList<SnmpUniqueDiscriminator>());
+			
+			SNMPDAO snmpDao = persistanceManager.getSNMPDAO();
+			SnmpUniqueDiscriminatorDAO uniqueDao = persistanceManager.getSnmpUniqueDiscriminatorDAO();
+			for ( YamlSnmpUniqueDiscriminator yUniqueDescr : load.getSnmpContainment().getUniqueDescriminators() ) {
+				
+				SnmpUniqueDiscriminator uniqueDescr = new SnmpUniqueDiscriminator();
+				
+				uniqueDescr.setName(yUniqueDescr.getName());
+				if ( yUniqueDescr.getContaxtOID() != null ) {
+					SNMP snmp = snmpDao.findByName(yUniqueDescr.getContaxtOID());
+					if ( snmp == null ) {
+						logger.error("OID not found for " + yUniqueDescr.getContaxtOID()
+								+ " Unable to create SnmpUniqueDescriminator!");
+
+						throw new IntegerException(null,
+								YamlParserErrrorCodes.ContextOidNotFound);
+					}
+					uniqueDescr.setContextOID(snmp);
+				}
+				if ( yUniqueDescr.getDiscriminatorOID() != null ) {
+					SNMP snmp = snmpDao.findByName(yUniqueDescr.getDiscriminatorOID());
+					if ( snmp == null ) {
+						logger.error("OID not found for " + yUniqueDescr.getDiscriminatorOID()
+								+ " Unable to create SnmpUniqueDescriminator!");
+
+						throw new IntegerException(null,
+								YamlParserErrrorCodes.ParsingError);
+					}
+					uniqueDescr.setDescriminatorOID(snmp);
+					if ( yUniqueDescr.getDiscriminatorValue() == null ) {
+						logger.error("No descriminator value avaiable " + yUniqueDescr.getDiscriminatorOID()
+								+ " Unable to create SnmpUniqueDescriminator!");
+
+						throw new IntegerException(null,
+								YamlParserErrrorCodes.ParsingError);
+					}
+					
+					SnmpServiceElementTypeDiscriminatorStringValue stringValue = new SnmpServiceElementTypeDiscriminatorStringValue();
+					stringValue.setValue(yUniqueDescr.getDiscriminatorValue());
+					stringValue.setName(yUniqueDescr.getDiscriminatorValue());
+					uniqueDescr.setDescriminatorValue(stringValue);
+				}	
+				
+//				ServiceElementInstanceUniqueSignatureDAO signatureDAO = persistanceManager.getServiceElementInstanceUniqueSignatureDAO();
+//				ServiceElementInstanceUniqueSignature[] instSignagtures =  signatureDAO.findByServiceElementTypeId(serviceElementType.getID());
+				uniqueDescr.setUniqueIdentifierSemos(new ArrayList<ID>());
+				
+				for ( String attr : yUniqueDescr.getUniqueIdentifierSemos() ) {
+				
+					SNMP snmp = snmpDao.findByName(attr);
+					if ( snmp == null ) {
+						logger.error("OID not found for " + attr + " Unable to create SnmpUniqueDescriminator!");
+
+						throw new IntegerException(null,
+								YamlParserErrrorCodes.ParsingError);
+					}
+					/*
+					boolean found = false;
+					for ( ID id : uniqueIds ) {
+					
+						if ( id.getIdentifier().longValue() == snmp.getIdentifier().longValue() ) {
+							found = true;
+							break;
+						}
+					}
+					if ( found ) {
+						uniqueDescr.getUniqueIdentifierSemos().add(snmp.getID());
+					}
+					else {
+						logger.error("SEMO " + attr + " is not belong to " + serviceElementType.getName()  + " Unable to create SnmpUniqueDescriminator!");
+
+						throw new IntegerException(null,
+								YamlParserErrrorCodes.ParsingError);
+					}
+					*/
+					uniqueDescr.getUniqueIdentifierSemos().add(snmp.getID());
+				}
+				uniqueDao.update(uniqueDescr);
+				snmpContainment.getUniqueDiscriminators().add(uniqueDescr);
+			}
 		}
 
 		snmpContainment = discoveryManager.updateSnmpContainment(snmpContainment);

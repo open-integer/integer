@@ -4,6 +4,96 @@
 # by David Chan, 2014-07-23
 
 technologies:
+
+    # CDP, the Cisco Discovery Protocol.
+    # 3 mechanism types: cdp-global, cdp-interface, cdp-cache (cache entry).
+    - name: CDP
+    #  provides: [ neighbor-discovery ]
+      parent: neighbor discovery
+      description: Cisco Discovery Protocol
+      mechanisms:
+          - name: cdp-global
+            description: CDP global information on this device.
+            capabilities:
+                - name: cdp-global-run
+                  description: Whether CDP is running on this device.
+
+                - name: cdp-global-deviceId
+                  description: The global device ID being advertised via CDP.
+
+                - name: cdp-global-cdpGlobalHoldTime
+                  description: The time for the receiving device holds CDP message.
+
+                - name: cdp-global-cdpGlobalLastChange
+                  description: Indicates the time when the cache table was last changed.
+
+                - name: cdp-global-cdpGlobalDeviceIdFormatCpb
+                  description: Indicate the Device-Id format capability of the device.
+
+                - name: cdp-global-cdpGlobalDeviceIdFormat
+                  description: An indication of the format of Device-Id contained in the corresponding instance of cdpGlobalDeviceId.
+
+                - name: cdp-global-cdpGlobalMessageInterval
+                  description: The interval at which CDP messages are to be generated.
+        
+          - name: cdp-interface
+            index: [ cdp-interface-index ]
+            description: >
+                Each interface on the box that is capable of doing CDP has a
+                corresponding CDP interface service element (certain types of
+                physical interfaces only).
+            capabilities:
+                - name: cdp-interface-name
+                  description: The name of each interface as advertised by CDP.
+
+                - name: cdp-interface-enable
+                  description: Whether CDP is enabled on each interface.
+
+                - name: cdp-interface-cdpInterfaceExtendedTrust
+                  description: Indicates the value to be sent by Extended Trust TLV.
+
+                - name: cdp-interface-cdpInterfaceMessageInterval
+                  description: The interval at which CDP messages are to be generated on this interface.
+
+                - name: cdp-interface-cdpInterfaceCosForUntrustedPort
+                  description: Indicates the value to be sent by COS for Untrusted Ports TLV.
+                  
+                - name: vmVlanType
+                  description: The type of VLAN membership assigned to this port.
+                  
+                - name: vmVlan
+                  description: The VLAN id of the VLAN the port is assigned to when vmVlanType is set to static or dynamic.
+                  
+                - name: vmPortStatus
+                  description: An indication of the current VLAN status of the port.
+
+          - name: cdp-cache
+            index: [ cdp-cache-ifIndex, cdp-cache-deviceIndex ]
+            description: >
+                For every remote CDP neighbor on each interface, there is a
+                device entry in the local CDP cache.
+            capabilities:
+                - name: cdp-cache-addressType
+                  description: > 
+                      The type of address advertised by the remote device.
+                      (e.g. IP, IPv6, CLNS)
+
+                - name: cdp-cache-address
+                  description: The address advertised by the remote device.
+
+                - name: cdp-cache-version
+                  description: The OS version string advertised by the remote device.
+
+                - name: cdp-cache-deviceId
+                  description: The device ID of the remote device.
+
+                - name: cdp-cache-devicePort
+                  description: The port on the remote device that we're connected to.
+
+                - name: cdp-cache-platform
+                  description: The remote device's hardware platform.
+    
+
     # Cisco VLAN 
     # 
     - name: VLAN Tagging Protocols
