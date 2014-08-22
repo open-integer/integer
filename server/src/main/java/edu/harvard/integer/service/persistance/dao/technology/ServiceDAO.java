@@ -42,7 +42,6 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.technology.Service;
-import edu.harvard.integer.common.topology.ServiceElementFields;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 
 /**
@@ -89,7 +88,7 @@ public class ServiceDAO extends BaseDAO {
 				getPersistentClass());
 
 		@SuppressWarnings("unchecked")
-		List<ServiceElementFields> resultList = query.getResultList();
+		List<Service> resultList = query.getResultList();
 
 		return (Service[]) resultList
 				.toArray(new Service[resultList.size()]);
