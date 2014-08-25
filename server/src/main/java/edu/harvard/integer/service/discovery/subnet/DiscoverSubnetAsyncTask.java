@@ -69,7 +69,6 @@ import edu.harvard.integer.service.discovery.subnet.DiscoverNode.DiscoverStageE;
 import edu.harvard.integer.service.distribution.DistributionManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
 import edu.harvard.integer.service.distribution.ServiceTypeEnum;
-import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
 import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerInterface;
 
 
@@ -134,11 +133,6 @@ public class DiscoverSubnetAsyncTask <E extends ElementAccess>  implements Calla
 		
 		this.seed = seed;
 		netDisc = dis;
-		
-		if ( seed.getSeedId().equals("192.168.252.8/255.255.255.252") ) {
-			System.out.println("break in here ");
-		}
-		
 		ServiceElementAccessManagerInterface accessMgr = DistributionManager.getManager(ManagerTypeEnum.ServiceElementAccessManager);
 		
 		/**

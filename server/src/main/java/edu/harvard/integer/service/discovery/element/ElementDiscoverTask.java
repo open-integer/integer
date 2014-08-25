@@ -54,12 +54,14 @@ import edu.harvard.integer.common.discovery.DiscoveryParseElementTypeEnum;
 import edu.harvard.integer.common.discovery.DiscoveryParseString;
 import edu.harvard.integer.common.discovery.SnmpContainment;
 import edu.harvard.integer.common.discovery.SnmpContainmentType;
+import edu.harvard.integer.common.discovery.SnmpUniqueDiscriminator;
 import edu.harvard.integer.common.discovery.SnmpVendorDiscoveryTemplate;
 import edu.harvard.integer.common.discovery.VendorContainmentSelector;
 import edu.harvard.integer.common.discovery.VendorIdentifier;
 import edu.harvard.integer.common.discovery.VendorSignatureTypeEnum;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.exception.NetworkErrorCodes;
+import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.topology.FieldReplaceableUnitEnum;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementManagementObject;
@@ -247,8 +249,6 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 					
 					template.setVendorId(vendorIdentifier.getID());
 					logger.error("Unable to find vendor identifier for " + sysId.toDottedString());
-					
-					
 				}
 				
 		    	template.setDescription(sysInfo.getSysDescr());
@@ -421,6 +421,68 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		    se.setCategory(set.getCategory());
 		    se.setIconName(set.getIconName());
 		    
+		    if ( sc.getUniqueDiscriminators() != null ) {
+		    	
+		        for ( SnmpUniqueDiscriminator uniqueDiscriminator : sc.getUniqueDiscriminators() ) {
+		        	
+		        	if ( uniqueDiscriminator.getDescriminatorOID() != null ) {
+		        		
+		        		PDU pdu = new PDU();
+		        		pdu.add(new VariableBinding(new OID(uniqueDiscriminator.getDescriminatorOID().getOid())));
+		        		
+		        		boolean foundMatch = false;
+		        		PDU rpdu = SnmpService.instance().getNextPdu(discoverNode.getElementEndPoint(), pdu);
+		        		while ( !foundMatch ) {
+		        			
+		        			if ( rpdu.get(0).getOid().toString().indexOf(uniqueDiscriminator.getDescriminatorOID().getOid()) < 0) {
+		        				break;
+		        			}
+		        			String val = rpdu.get(0).getVariable().toString();
+		        			if ( val.equals(uniqueDiscriminator.getDescriminatorValue().getValue().toString())) {
+		        				foundMatch = true;
+		        				break;
+		        			}
+		        		}
+		        		if ( foundMatch ) {
+		        			
+		        			OID rOid = rpdu.get(0).getOid();
+		        			OID attrOid = new OID(uniqueDiscriminator.getDescriminatorOID().getOid());
+		        			
+		        			int instLen = rOid.size() - attrOid.size();
+		        			int[] insta = new int[instLen];
+		        			
+		        			for ( int i=(attrOid.size()); i<rOid.size(); i++ ) {
+		        				
+		        				insta[i-attrOid.size()] = rOid.get(i);
+		        			}
+		        			
+		        			pdu = new PDU();
+		        			OID inst = new OID(insta);		        			
+		        			List<ID> semoIds = uniqueDiscriminator.getUniqueIdentifierSemos();
+		        			for ( int j=0; j<semoIds.size(); j++ ) {
+		        				ID id = semoIds.get(j);
+		        				SNMP snmp = (SNMP) capMgr.getManagementObjectById(id);
+		        				attrOid = new OID(snmp.getOid() + "." + inst.toString());
+		        				pdu.add(new VariableBinding(attrOid));
+		        				
+		        				addSEUniqueIdentifierId(se, snmp.getID());
+		        			}
+		        				        			
+		        			rpdu = SnmpService.instance().getPdu(discoverNode.getElementEndPoint(), pdu);
+		        			for ( int j=0; j<rpdu.size(); j++ ) {
+		        			
+		        				ID id = semoIds.get(j);
+		        				SNMP snmp = (SNMP) capMgr.getManagementObjectById(id);
+		        				
+		        				VariableBinding vb = rpdu.get(j);
+		        				SnmpServiceElementDiscover.addSEValue(vb, snmp, se, inst.toString(), null);
+		        			}		        			
+		        		}
+		        	}
+		        	
+		        }
+		    }
+		    
 		    logger.info("call update service element " + se.getName());
 		 
 		     if ( discover != null ) {
@@ -526,6 +588,9 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Find the Vendor which is associated with a vendor oid.
 	 * For example: .1.3.6.1.4.1.9 is the Cisco specific OID.
@@ -568,6 +633,19 @@ public class ElementDiscoverTask <E extends ElementAccess> extends ElementAccess
 		return "Undefine:" + vendorOid;
 	}
 	
+    
+    /**
+     * 
+     * @param se
+     * @param id
+     */
+    private void addSEUniqueIdentifierId( ServiceElement se, ID id) {
+    	
+    	if ( se.getUniqueIdentifierIds() == null ) {
+    		se.setUniqueIdentifierIds(new ArrayList<ID>());
+    	}
+    	se.getUniqueIdentifierIds().add(id);
+    }
 	
 }
 	    

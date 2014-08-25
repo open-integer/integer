@@ -206,55 +206,61 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		
 		logger.debug("In discoverNetwork ");
 		
-		List<Future<Ipv4Range>> discFuture = new ArrayList<>();
-		/**
-		 * Create subnet tasks based on discover configuration subnet.
-		 */
-		if ( discoverSeeds != null ) {
-			
-			DiscoveryServiceInterface discoveryService = null;
-			try {
-				discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
-			} catch (IntegerException e1) {
+		try {
+			List<Future<Ipv4Range>> discFuture = new ArrayList<>();
+			/**
+			 * Create subnet tasks based on discover configuration subnet.
+			 */
+			if ( discoverSeeds != null ) {
 				
-				logger.error("Error getting DiscoveryService " + e1.toString(), e1);
-				return discFuture;
-			}
-		
-			for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
-			
-				/**
-				 * It is possible that discover seed contains exclusive subnets including itself.
-				 * In this case, log it as an warning and go on.
-				 */
-				if ( exclusiveSubnets != null ) {
-					
-					if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
-						logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
-						continue;
-					}
-				}
-				
+				DiscoveryServiceInterface discoveryService = null;
 				try {
+					discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+				} catch (IntegerException e1) {
 					
-					logger.info("Discover radius " + discoverSeed.getRadius());
-					DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
+					logger.error("Error getting DiscoveryService " + e1.toString(), e1);
+					return discFuture;
+				}
+			
+				for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
+				
+					/**
+					 * It is possible that discover seed contains exclusive subnets including itself.
+					 * In this case, log it as an warning and go on.
+					 */
+					if ( exclusiveSubnets != null ) {
+						
+						if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
+							logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
+							continue;
+						}
+					}
 					
-					discoverSeed.getDiscoverNet().setDiscoverYet(true);
-					subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
-	                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
-					
-					Future<Ipv4Range> v = discoveryService.submitSubnetDiscovery(subTask);
-					discFuture.add(v);
-					
-				} catch (IntegerException e) {
-					
-					logger.equals("Error on submit subnet discover...  " + e.toString() );
-					e.printStackTrace();
-				} 
+					try {
+						
+						logger.info("Discover radius " + discoverSeed.getRadius());
+						DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
+						
+						discoverSeed.getDiscoverNet().setDiscoverYet(true);
+						subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
+		                subnetTasks.put(subTask.getSeed().getSeedId(), subTask);
+						
+						Future<Ipv4Range> v = discoveryService.submitSubnetDiscovery(subTask);
+						discFuture.add(v);
+						
+					} catch (IntegerException e) {
+						
+						logger.equals("Error on submit subnet discover...  " + e.toString() );
+						e.printStackTrace();
+					} 
+				}
 			}
+			return discFuture;
 		}
-		return discFuture;
+		finally {
+			
+		}
+		
 	}
 
 

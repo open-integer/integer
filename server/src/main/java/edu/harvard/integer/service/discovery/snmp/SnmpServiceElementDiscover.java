@@ -74,7 +74,6 @@ import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
-import edu.harvard.integer.common.topology.NetworkLayer;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementAssociation;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;
@@ -1820,7 +1819,7 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	 * @param se
 	 * @param instOid
 	 */
-	private void addSEValue( VariableBinding vb, SNMP snmp, 
+	public static void addSEValue( VariableBinding vb, SNMP snmp, 
 			                 ServiceElement se, String instOid,
 			                 List<IndexSNMPValue> indexSNMPValues ) {
 		
@@ -1835,9 +1834,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 			    iv.setValue(vb.getVariable().toInt());
 			    iv.setManagementObject(snmp.getID());
 				
-			    se.getAttributeValues().add(iv);
+			    addManagementObjectValue(se, iv);
 			    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
 	            inst.setValue(instOid);
+	            if ( se.getValues() == null ) {
+	            	se.setValues(new ArrayList<ServiceElementProtocolInstanceIdentifier>());
+	            }
+	            
 	            se.getValues().add(inst);
 		    }
 		    else {
@@ -1846,9 +1849,13 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
                 sv.setValue(vb.getVariable().toString());
                 sv.setManagementObject(snmp.getID());
           
-			    se.getAttributeValues().add(sv);
+                addManagementObjectValue(se, sv);
 			    ServiceElementProtocolInstanceIdentifier inst = new ServiceElementProtocolInstanceIdentifier();        
 	            inst.setValue(instOid);
+	            if ( se.getValues() == null ) {
+	            	se.setValues(new ArrayList<ServiceElementProtocolInstanceIdentifier>());
+	            }
+	            
 	            se.getValues().add(inst);
 		    }			
 		}
@@ -2035,6 +2042,19 @@ public abstract class SnmpServiceElementDiscover implements ElementDiscoveryBase
 	}
 	
 	
+	private static void addManagementObjectValue( ServiceElement se, ManagementObjectValue<?> value ) {
+		
+		if ( se.getAttributeValues() == null ) {
+			
+			List<ManagementObjectValue> attributes = se.getAttributeValues();
+			if ( attributes == null )
+			{
+				attributes = new ArrayList<ManagementObjectValue>();
+				se.setAttributeValues(attributes);
+			}
+		}
+		se.getAttributeValues().add(value);
+	}
 	
 	
 
