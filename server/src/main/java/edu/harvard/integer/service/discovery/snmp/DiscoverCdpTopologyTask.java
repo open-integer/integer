@@ -403,7 +403,7 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			se.setUpdated(new Date());
 			se.setServiceElementTypeId(set.getID());
 			se.setName(cdpConn.getRemotePort());
-			se.setDescription("IPAddress: " + cdpConn.getRemoteAddress());
+			se.setDescription("Device Port: " + cdpConn.getRemotePort());
 			se.setIconName(set.getIconName());
 			se = accessMgr.updateServiceElement(se);
 
