@@ -150,7 +150,7 @@ public class TechnologyLoadTest {
 	
 	@Test
 	public void readCDPTechnology() {
-		File mibFile = new File("../config/cdp/technology.yaml");
+		File mibFile = new File("../config/cisco/technology.yaml");
 		
 		String content = null;
 		try {
@@ -181,7 +181,7 @@ public class TechnologyLoadTest {
 
 	@Test
 	public void readCDPServiceElementType() throws IntegerException {
-		File techTree = new File("../config/cdp/serviceElementType.yaml");
+		File techTree = new File("../config/cisco/commonSET.yaml");
 		String content = null;
 		try {
 			content = new String(Files.readAllBytes(techTree.toPath()));
@@ -255,7 +255,7 @@ public class TechnologyLoadTest {
 	
 	@Test
 	public void readVendorParentChildContainment() {
-		File techTree = new File("../config/vendorcontianment/ParentChildContainment.yaml");
+		File techTree = new File("../config/vendorcontianment/CiscoEntityContainment.yaml");
 		String content = null;
 		try {
 			content = new String(Files.readAllBytes(techTree.toPath()));

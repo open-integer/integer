@@ -37,7 +37,7 @@ import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
-import edu.harvard.integer.common.discovery.SnmpUniqueDescriminator;
+import edu.harvard.integer.common.discovery.SnmpUniqueDiscriminator;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.service.persistance.dao.BaseDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SNMPDAO;
@@ -47,15 +47,15 @@ import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.SnmpS
  * @author dchan
  *
  */
-public class SnmpUniqueDescriminatorDAO extends BaseDAO {
+public class SnmpUniqueDiscriminatorDAO extends BaseDAO {
 
 	/**
 	 * @param entityManger
 	 * @param logger
 	 * @param clazz
 	 */
-    public SnmpUniqueDescriminatorDAO(EntityManager entityManger, Logger logger) {
-		   super(entityManger, logger, SnmpUniqueDescriminator.class);
+    public SnmpUniqueDiscriminatorDAO(EntityManager entityManger, Logger logger) {
+		   super(entityManger, logger, SnmpUniqueDiscriminator.class);
 	}
 
 	/* (non-Javadoc)
@@ -65,7 +65,7 @@ public class SnmpUniqueDescriminatorDAO extends BaseDAO {
 	public <T extends BaseEntity> void preSave(T entity)
 			throws IntegerException {
 		
-		SnmpUniqueDescriminator descriminator = (SnmpUniqueDescriminator) entity;
+		SnmpUniqueDiscriminator descriminator = (SnmpUniqueDiscriminator) entity;
 		SNMPDAO snmpDao = new SNMPDAO(getEntityManager(), getLogger());
 		
 		descriminator.setContextOID(snmpDao.update(descriminator.getContextOID()));
@@ -75,5 +75,9 @@ public class SnmpUniqueDescriminatorDAO extends BaseDAO {
 		descriminator.setDescriminatorValue(dao.update(descriminator.getDescriminatorValue()));
 		
 		super.preSave(entity);
+	}
+	
+	SnmpUniqueDiscriminator findByName( String name ) {
+		return findByStringField(name, "name", SnmpUniqueDiscriminator.class);
 	}
 }

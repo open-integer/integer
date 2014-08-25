@@ -53,8 +53,9 @@ public class YamlSnmpContainment {
 	
 	private String contextOID = null;
 	
-	private List<YamlSnmpUniqueDescriminator>  uniqueDescriminators;
+	private List<YamlSnmpUniqueDiscriminator>  uniqueDescriminators;
 	
+
 	/**
 	 * @return the containmentType
 	 */
@@ -137,5 +138,13 @@ public class YamlSnmpContainment {
 		this.serviceElementTypeName = serviceElementTypeName;
 	}
 
+	public List<YamlSnmpUniqueDiscriminator> getUniqueDescriminators() {
+		return uniqueDescriminators;
+	}
+
+	public void setUniqueDescriminators(
+			List<YamlSnmpUniqueDiscriminator> uniqueDescriminators) {
+		this.uniqueDescriminators = uniqueDescriminators;
+	}
 	
 }

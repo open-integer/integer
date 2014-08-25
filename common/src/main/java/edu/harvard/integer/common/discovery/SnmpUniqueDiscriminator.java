@@ -56,7 +56,7 @@ import edu.harvard.integer.common.snmp.SNMP;
  */
 @Entity
 @DiscriminatorColumn(columnDefinition="varchar(50)")
-public class SnmpUniqueDescriminator extends BaseEntity {
+public class SnmpUniqueDiscriminator extends BaseEntity {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

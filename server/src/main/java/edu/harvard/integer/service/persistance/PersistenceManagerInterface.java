@@ -90,6 +90,7 @@ import edu.harvard.integer.service.persistance.dao.topology.ServiceElementTypeDA
 import edu.harvard.integer.service.persistance.dao.topology.SignatureDAO;
 import edu.harvard.integer.service.persistance.dao.topology.SignatureValueOperatorDAO;
 import edu.harvard.integer.service.persistance.dao.topology.SnmpServiceElementTypeOverrideDAO;
+import edu.harvard.integer.service.persistance.dao.topology.SnmpUniqueDiscriminatorDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.vendortemplate.DiscoveryParseStringDAO;
@@ -486,4 +487,6 @@ public interface PersistenceManagerInterface extends BaseManagerInterface {
 	 * @return
 	 */
 	ServiceElementHistoryDAO getServiceElementHistoryDAO();
+	
+	SnmpUniqueDiscriminatorDAO getSnmpUniqueDiscriminatorDAO();
 }

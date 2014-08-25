@@ -1,19 +1,23 @@
 ---
 
-# management definition for CDP
+# management definition for CISCO common Service Element Type.
 
 serviceElementTypes:
-    - name: cisco-cdp-global
-      description: Cisco enterprise CDP MIB, global variables.
+    - name: cisco-system
+      description: Cisco system
       vendor: cisco
-      accessMethod: 
+      extendServiceElementType: systemCommon
+      accessMethod:
           protocol: SNMP
-          mib: CISCO-CDP-MIB
-          index: null
       serviceElementTypeTranslates:
-         - name: cdpGlobal
+         - name: ciscoSystem
            mapping: direct
            category: System
+           iconName: Router
+      uniqueInstanceSignature:
+         name: ciscoSystemInstanceSignature
+         description: CISCO system Instance Signature.
+         uniqueSemos: [entPhysicalSerialNum, entPhysicalModelName]
       managementObjects:
           - name: cdpGlobalRun
             uri: cdpGlobalRun
@@ -78,19 +82,6 @@ serviceElementTypes:
           - name: cdpInterfaceName
             uri: cdpInterfaceName
             capability: cdp-interface-name
-
-    - name: cisco-system
-      description: Cisco system
-      vendor: cisco
-      extendServiceElementType: systemCommon
-      accessMethod:
-          protocol: SNMP
-      serviceElementTypeTranslates:
-         - name: ciscoSystem
-           mapping: direct
-           category: System
-           iconName: Router
-      managementObjects:
       
     - name: cisco-ipv4Addr
       description: Cisco IP v4 Address

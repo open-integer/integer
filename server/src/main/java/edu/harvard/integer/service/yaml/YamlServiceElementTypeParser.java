@@ -307,10 +307,13 @@ public class YamlServiceElementTypeParser implements
 		signature.setDescription(yamlSignature.getDescription());
 		signature.setServiceElementId(serviceElementType.getID());
 		
-		signature.setUniqueSemos(getSemosFromNames(yamlSignature.getUniqueSemos()));
+		if ( yamlSignature.getUniqueSemos() != null ) {
+		    signature.setUniqueSemos(getSemosFromNames(yamlSignature.getUniqueSemos()));
+		}
 		
-		signature.setChangeSemos(getSemosFromNames(yamlSignature.getChangeSemos()));
-		
+		if ( yamlSignature.getChangeSemos() != null ) {
+			signature.setChangeSemos(getSemosFromNames(yamlSignature.getChangeSemos()));
+		}
 		serviceElementInstanceUniqueSignatureDao.update(signature);	
 	}
 	
