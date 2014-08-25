@@ -483,6 +483,9 @@ public class DiscoveryService extends BaseService implements
 	@Override
 	public void discoveredServiceElement(DiscoveryId discoveryId, ServiceElement accessElement) {
 		try {
+			if (accessElement == null)
+				return;
+			
 			createDiscoveryAuditLog(discoveryId.getDiscoveryRuleId(), discoveryId, accessElement.getID(),
 					null, AuditLogTypeEnum.DiscoveryCompleteServiceElement);
 			
@@ -491,6 +494,11 @@ public class DiscoveryService extends BaseService implements
 			e.printStackTrace();
 			logger.error("Error saving a discovery complete audit log!! DiscoveryId " + discoveryId
 					+ " Service element " + accessElement.getName()
+					+ " Error " + e.toString());
+		} catch (Throwable e) {
+			e.printStackTrace();
+			logger.error("Error saving a discovery complete audit log!! DiscoveryId " + discoveryId
+					+ " Service element " + accessElement
 					+ " Error " + e.toString());
 		}
 		

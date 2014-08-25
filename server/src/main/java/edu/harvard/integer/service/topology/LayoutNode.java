@@ -31,73 +31,81 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
-
-import java.io.Serializable;
-import java.util.HashMap;
+package edu.harvard.integer.service.topology;
 
 import edu.harvard.integer.common.ID;
 
 /**
- * Helper class to get the Network's and InterDeviceLink's between the Network's in one
- * call.
- * 
  * @author David Taylor
  * 
  */
-public class NetworkInformation implements Serializable {
+public class LayoutNode {
 
-	/**
-	 * Serial Version UID 
-	 */
-	private static final long serialVersionUID = 1L;
+	private ID itemId = null;
 
-	private Network[] networks = null;
+	private String iconName = null;
 	
-	private InterNetworkLink[] links = null;
-	
-	private HashMap<ID, MapItemPosition> positions = null;
+	private double xposition = 0.0;
+
+	private double yposition = 0.0;
 
 	/**
-	 * @return the networks
+	 * @return the itemId
 	 */
-	public Network[] getNetworks() {
-		return networks;
+	public ID getItemId() {
+		return itemId;
 	}
 
 	/**
-	 * @param networks the networks to set
+	 * @param itemId
+	 *            the itemId to set
 	 */
-	public void setNetworks(Network[] networks) {
-		this.networks = networks;
+	public void setItemId(ID itemId) {
+		this.itemId = itemId;
 	}
 
 	/**
-	 * @return the links
+	 * @return the xposition
 	 */
-	public InterNetworkLink[] getLinks() {
-		return links;
+	public double getXposition() {
+		return xposition;
 	}
 
 	/**
-	 * @param links the links to set
+	 * @param xposition
+	 *            the xposition to set
 	 */
-	public void setLinks(InterNetworkLink[] links) {
-		this.links = links;
+	public void setXposition(double xposition) {
+		this.xposition = xposition;
 	}
 
 	/**
-	 * @return the positions
+	 * @return the yposition
 	 */
-	public HashMap<ID, MapItemPosition> getPositions() {
-		return positions;
+	public double getYposition() {
+		return yposition;
 	}
 
 	/**
-	 * @param positions the positions to set
+	 * @param yposition
+	 *            the yposition to set
 	 */
-	public void setPositions(HashMap<ID, MapItemPosition> positions) {
-		this.positions = positions;
+	public void setYposition(double yposition) {
+		this.yposition = yposition;
 	}
-	
+
+	/**
+	 * @return the iconName
+	 */
+	public String getIconName() {
+		return iconName;
+	}
+
+	/**
+	 * @param iconName the iconName to set
+	 */
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
+	}
+
 }

@@ -31,6 +31,7 @@
  *      
  */
 package edu.harvard.integer.common.topology;
+
 /**
  * @author David Taylor
  *
@@ -44,13 +45,16 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OrderColumn;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 
 @Entity
-public abstract class ServiceElementManagementObject extends BaseEntity implements Serializable {
+public abstract class ServiceElementManagementObject extends BaseEntity
+		implements Serializable {
 
 	/**
 	 * Serial version UID
@@ -61,27 +65,41 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	 * A list of the ServiceElementTypes that support this management object.
 	 */
 	@ElementCollection
-	@OrderColumn(name="idx")
+	@OrderColumn(name = "idx")
 	private List<ID> serviceElementTypes = null;
-
 
 	/*
 	 * The name space of the scopeName implemented in the object that realizes
 	 * this interface. For example Cisco CLI, SNMP, SNMP-Private vendor, etc.
 	 */
 	private String namespace = null;
-	
+
 	/*
 	 * A short name that can be used by the human interface to identify this
 	 * management object.
 	 */
 	private String displayName = null;
-	
+
 	private String specificAttribute = null;
 
+	/**
+	 * This attribute which can be null is an indicator of whether instances of
+	 * this ServiceElementManagementObject can be used for ServiceElement
+	 * discovery.
+	 */
+	private Boolean usedForServiceElementDiscovery = null;
 
 	/**
-	 * The ID of the capability that this protocol specific management object supports.
+	 * This attribute is an indicator of whether this
+	 * ServiceElementManagementObject could be used to discover topology. Four
+	 * types are supported: layer 2, layer 3, virtualization, or AWS.
+	 */
+	@Enumerated(EnumType.STRING)
+	private DiscoveryTopologyTypeEnum topologyDiscoveryUse = null;
+
+	/**
+	 * The ID of the capability that this protocol specific management object
+	 * supports.
 	 */
 	@Embedded
 	@AttributeOverrides({
@@ -89,11 +107,11 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 			@AttributeOverride(name = "idType.classType", column = @Column(name = "capabilityType")),
 			@AttributeOverride(name = "name", column = @Column(name = "capabilityName")) })
 	private ID capabilityId = null;
-	
+
 	public ServiceElementManagementObject() {
 		super();
 	}
-	
+
 	/**
 	 * @return the serviceElementTypes
 	 */
@@ -105,8 +123,7 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	 * @param serviceElementTypes
 	 *            the serviceElementTypes to set
 	 */
-	public void setServiceElementTypes(
-			List<ID> serviceElementTypes) {
+	public void setServiceElementTypes(List<ID> serviceElementTypes) {
 		this.serviceElementTypes = serviceElementTypes;
 	}
 
@@ -148,12 +165,12 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 	}
 
 	/**
-	 * @param capabilityId the capabilityId to set
+	 * @param capabilityId
+	 *            the capabilityId to set
 	 */
 	public void setCapabilityId(ID capabilityId) {
 		this.capabilityId = capabilityId;
 	}
-	
 
 	public String getSpecificAttribute() {
 		return specificAttribute;
@@ -163,4 +180,34 @@ public abstract class ServiceElementManagementObject extends BaseEntity implemen
 		this.specificAttribute = specificAttribute;
 	}
 
+	/**
+	 * @return the usedForServiceElementDiscovery
+	 */
+	public Boolean getUsedForServiceElementDiscovery() {
+		return usedForServiceElementDiscovery;
+	}
+
+	/**
+	 * @param usedForServiceElementDiscovery the usedForServiceElementDiscovery to set
+	 */
+	public void setUsedForServiceElementDiscovery(
+			Boolean usedForServiceElementDiscovery) {
+		this.usedForServiceElementDiscovery = usedForServiceElementDiscovery;
+	}
+
+	/**
+	 * @return the topologyDiscoveryUse
+	 */
+	public DiscoveryTopologyTypeEnum getTopologyDiscoveryUse() {
+		return topologyDiscoveryUse;
+	}
+
+	/**
+	 * @param topologyDiscoveryUse the topologyDiscoveryUse to set
+	 */
+	public void setTopologyDiscoveryUse(DiscoveryTopologyTypeEnum topologyDiscoveryUse) {
+		this.topologyDiscoveryUse = topologyDiscoveryUse;
+	}
+
+	
 }

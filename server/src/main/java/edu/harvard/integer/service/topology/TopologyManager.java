@@ -35,6 +35,8 @@ package edu.harvard.integer.service.topology;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -118,6 +120,14 @@ public class TopologyManager extends BaseManager implements
 		return networks;
 	}
 
+	@Override
+	public Network getNetworkByName(String name) throws IntegerException {
+		NetworkDAO dao = persistenceManager.getNetworkDAO();
+		
+		return dao.findByName(name);
+	}
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -137,16 +147,28 @@ public class TopologyManager extends BaseManager implements
 
 		logger.info("Found " + networkInfo.getNetworks().length + " networks "
 				+ networkInfo.getLinks().length + " Links");
-		for (Network network : networkInfo.getNetworks()) {
-			logger.info("Network: " + network.getName());
+		if (logger.isDebugEnabled()) {
+			for (Network network : networkInfo.getNetworks()) {
 
-			for (InterNetworkLink link : networkInfo.getLinks()) {
-				if (link.getSourceNetworkId() != null
-						&& link.getSourceNetworkId().equals(network.getID()))
-					logger.info("    Link: " + link.getName());
+				logger.debug("Network: " + network.getName());
+
+				for (InterNetworkLink link : networkInfo.getLinks()) {
+					if (link.getSourceNetworkId() != null
+							&& link.getSourceNetworkId().equals(network.getID()))
+						logger.debug("    Link: " + link.getName());
+				}
 			}
 		}
-
+		
+		LayoutGenerator generator = new LayoutGenerator();
+		networkInfo = generator.generatePositions(networkInfo);
+		
+		for (ID id : networkInfo.getPositions().keySet()) {
+			MapItemPosition mapItemPosition = networkInfo.getPositions().get(id);
+			if (mapItemPosition != null)
+				logger.info("MapItem " + mapItemPosition.getItemId() + " Xpos " + mapItemPosition.getXposition() + " Ypos " + mapItemPosition.getYposition());
+		}
+		
 		return networkInfo;
 	}
 
@@ -257,8 +279,24 @@ public class TopologyManager extends BaseManager implements
 
 		String sourceNetworkName = Network.createName(interDeviceLink
 				.getSourceAddress());
-		if (sourceNetworkName == null || sourceNetworkName.equals("N/A"))
-			return;
+		
+
+		String destNetworkName = Network.createName(interDeviceLink
+				.getDestinationAddress());
+		
+		if (sourceNetworkName == null || sourceNetworkName.equals("N/A")) {
+			if (destNetworkName != null && !destNetworkName.equals("N/A"))
+				sourceNetworkName = destNetworkName;
+			else
+				return;
+		}
+		
+		if (destNetworkName == null || destNetworkName.equals("N/A")) {
+			if (sourceNetworkName != null && !sourceNetworkName.equals("N/A"))
+				destNetworkName = sourceNetworkName;
+			else
+				return;
+		}
 
 		Network sourceNetwork = networkDao.findByName(sourceNetworkName);
 		if (sourceNetwork == null)
@@ -268,11 +306,6 @@ public class TopologyManager extends BaseManager implements
 		addInterDeviceLinkToNetwork(interDeviceLink, sourceNetwork);
 		addServiceElementToNetwork(interDeviceLink.getSourceServiceElementId(),
 				sourceNetwork);
-
-		String destNetworkName = Network.createName(interDeviceLink
-				.getDestinationAddress());
-		if (destNetworkName == null || destNetworkName.equals("N/A"))
-			return;
 
 		Network destNetwork = networkDao.findByName(destNetworkName);
 		if (destNetwork == null)
@@ -446,27 +479,6 @@ public class TopologyManager extends BaseManager implements
 	public TopologyElement updateTopologyElement(TopologyElement topologyElement)
 			throws IntegerException {
 		TopologyElementDAO dao = persistenceManager.getTopologyElementDAO();
-//		NetworkDAO networkDao = persistenceManager.getNetworkDAO();
-//		ServiceElementDAO serviceElementDao = persistenceManager
-//				.getServiceElementDAO();
-//
-//		if (topologyElement.getAddress() != null) {
-//			for (Address address : topologyElement.getAddress()) {
-//				String sourceNetworkName = Network.createName(address);
-//				Network network = networkDao.findByName(sourceNetworkName);
-//
-//				if (network == null) {
-//					network = createNetwork(address);
-//					network = networkDao.update(network);
-//				}
-//
-//				ServiceElement topLevelServiceElement = getTopLevelServiceElementFor(
-//						topologyElement.getServiceElementId(),
-//						serviceElementDao);
-//				addServiceElementToNetwork(topLevelServiceElement, network);
-//				networkDao.update(network);
-//			}
-//		}
 
 		return dao.update(topologyElement);
 	}
@@ -505,7 +517,7 @@ public class TopologyManager extends BaseManager implements
 		if (childId == null)
 			return null;
 		
-		ServiceElement parent = serviceElementDao.findParent(childId);
+		ServiceElement parent = (ServiceElement) serviceElementDao.findParent(childId);
 		
 		while (parent != null) {
 	
@@ -607,12 +619,64 @@ public class TopologyManager extends BaseManager implements
 	 */
 	@Override
 	public MapItemPosition[] getPositionsByMap(ID mapId) throws IntegerException {
+		HashMap<ID, MapItemPosition> mapPositions = null;
+		
 		MapItemPositionDAO dao = persistenceManager.getMapItemPositionDAO();
 		MapItemPosition[] positions = dao.findByMapId(mapId);
+		logger.info("Found " + positions.length + " for MapId " + mapId.toDebugString());
 		
-		return positions;
+		if (mapId.getIdType().getClassType().equals(Network.class.getName())) {
+			mapPositions = getSubnetPostitions(mapId);
+		}
+		
+		if (mapPositions == null) {
+			return positions;
+		}
+		
+		for (MapItemPosition pos : positions) {
+			mapPositions.put(pos.getItemId(), pos);
+		}
+		
+		List<MapItemPosition> positionList = new ArrayList<MapItemPosition>();
+		int i = 0;
+		for (ID id : mapPositions.keySet()) {
+			MapItemPosition position = mapPositions.get(id);
+			if (position != null) {
+				positionList.add(position);
+			
+				logger.info("MapId " + mapId.toDebugString() 
+						+ " Item " + position.getItemId().toDebugString()
+						+ " X: " + position.getXposition()
+						+ " Y: " + position.getYposition());
+			}
+		}
+
+		return (MapItemPosition[]) positionList
+				.toArray(new MapItemPosition[positionList.size()]);
 	}
 	
+	/**
+	 * @param mapPositions
+	 * @param mapId
+	 * @throws IntegerException 
+	 */
+	private HashMap<ID, MapItemPosition> getSubnetPostitions(ID mapId) throws IntegerException {
+		NetworkDAO dao = persistenceManager.getNetworkDAO();
+		Network network = dao.findById(mapId);
+		
+		HashMap<ID,MapItemPosition> generatePositions = null;
+		
+		if (network.getServiceElements() != null && network.getServiceElements().size() > 0) {
+		
+			LayoutGenerator layoutGenerator = new LayoutGenerator();
+			generatePositions = layoutGenerator.generatePositions(network);
+		} else 
+			generatePositions = new HashMap<ID, MapItemPosition>();
+		
+		return generatePositions;
+		
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see edu.harvard.integer.service.topology.TopologyManagerInterface#updateMapItemPosition(edu.harvard.integer.common.topology.MapItemPosition)

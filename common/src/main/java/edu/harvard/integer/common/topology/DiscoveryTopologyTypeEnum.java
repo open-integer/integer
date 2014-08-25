@@ -33,71 +33,24 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.io.Serializable;
-import java.util.HashMap;
-
-import edu.harvard.integer.common.ID;
-
 /**
- * Helper class to get the Network's and InterDeviceLink's between the Network's in one
- * call.
+ * 
+ * This attribute is an indicator of whether this ServiceElementManagementObject
+ * could be used to discover topology. Four types are supported:
+ *  <li>layer 2,
+ *  <li>layer 2.5
+ *  <li>layer 3,
+ *  <li>virtualization,
+ *  <li>AWS.
  * 
  * @author David Taylor
  * 
  */
-public class NetworkInformation implements Serializable {
-
-	/**
-	 * Serial Version UID 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private Network[] networks = null;
-	
-	private InterNetworkLink[] links = null;
-	
-	private HashMap<ID, MapItemPosition> positions = null;
-
-	/**
-	 * @return the networks
-	 */
-	public Network[] getNetworks() {
-		return networks;
-	}
-
-	/**
-	 * @param networks the networks to set
-	 */
-	public void setNetworks(Network[] networks) {
-		this.networks = networks;
-	}
-
-	/**
-	 * @return the links
-	 */
-	public InterNetworkLink[] getLinks() {
-		return links;
-	}
-
-	/**
-	 * @param links the links to set
-	 */
-	public void setLinks(InterNetworkLink[] links) {
-		this.links = links;
-	}
-
-	/**
-	 * @return the positions
-	 */
-	public HashMap<ID, MapItemPosition> getPositions() {
-		return positions;
-	}
-
-	/**
-	 * @param positions the positions to set
-	 */
-	public void setPositions(HashMap<ID, MapItemPosition> positions) {
-		this.positions = positions;
-	}
-	
+public enum DiscoveryTopologyTypeEnum {
+	None,
+	Layer2,
+	Layer2_5,
+	Layer3,
+	Viertulization,
+	AWS;
 }

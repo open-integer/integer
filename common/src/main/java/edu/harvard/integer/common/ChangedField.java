@@ -31,73 +31,76 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.common;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
-import edu.harvard.integer.common.ID;
+import javax.persistence.Embeddable;
 
 /**
- * Helper class to get the Network's and InterDeviceLink's between the Network's in one
- * call.
- * 
  * @author David Taylor
- * 
+ *
  */
-public class NetworkInformation implements Serializable {
+@Embeddable
+public class ChangedField implements Serializable {
 
 	/**
-	 * Serial Version UID 
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Network[] networks = null;
+	private String fieldName = null;
 	
-	private InterNetworkLink[] links = null;
+	private String oldValue = null;
 	
-	private HashMap<ID, MapItemPosition> positions = null;
+	private String newValue = null;
 
 	/**
-	 * @return the networks
+	 * @return the fieldName
 	 */
-	public Network[] getNetworks() {
-		return networks;
+	public String getFieldName() {
+		return fieldName;
 	}
 
 	/**
-	 * @param networks the networks to set
+	 * @param fieldName the fieldName to set
 	 */
-	public void setNetworks(Network[] networks) {
-		this.networks = networks;
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
 	}
 
 	/**
-	 * @return the links
+	 * @return the oldValue
 	 */
-	public InterNetworkLink[] getLinks() {
-		return links;
+	public String getOldValue() {
+		return oldValue;
 	}
 
 	/**
-	 * @param links the links to set
+	 * @param oldValue the oldValue to set
 	 */
-	public void setLinks(InterNetworkLink[] links) {
-		this.links = links;
+	public void setOldValue(String oldValue) {
+		if (oldValue != null && oldValue.length() > 255)
+			this.oldValue = oldValue.substring(0, 255);
+		else
+			this.oldValue = oldValue;
 	}
 
 	/**
-	 * @return the positions
+	 * @return the newValue
 	 */
-	public HashMap<ID, MapItemPosition> getPositions() {
-		return positions;
+	public String getNewValue() {
+		return newValue;
 	}
 
 	/**
-	 * @param positions the positions to set
+	 * @param newValue the newValue to set
 	 */
-	public void setPositions(HashMap<ID, MapItemPosition> positions) {
-		this.positions = positions;
+	public void setNewValue(String newValue) {
+		if (newValue != null && newValue.length() > 255)
+			this.newValue = newValue.substring(0, 255);
+		else
+			this.newValue = newValue;
 	}
 	
 }

@@ -23,6 +23,7 @@
       		<module name="org.jboss.remoting" slot="main" export="true" />
       		<module name="org.jboss.remoting3" slot="main" export="true" />
       		<module name="org.yaml.snakeyaml" slot="main" export="true"/>
+      		<module name="edu.uci.ics.jung" slot="main" export="true"/>
       		
 		</dependencies>
 	</deployment>

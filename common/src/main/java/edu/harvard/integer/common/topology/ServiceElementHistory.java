@@ -33,71 +33,69 @@
 
 package edu.harvard.integer.common.topology;
 
-import java.io.Serializable;
-import java.util.HashMap;
+import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.OrderColumn;
+
+import edu.harvard.integer.common.ChangedField;
 import edu.harvard.integer.common.ID;
 
 /**
- * Helper class to get the Network's and InterDeviceLink's between the Network's in one
- * call.
- * 
  * @author David Taylor
  * 
  */
-public class NetworkInformation implements Serializable {
+@Entity
+public class ServiceElementHistory extends ServiceElementFields {
 
 	/**
-	 * Serial Version UID 
+	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private Network[] networks = null;
 	
-	private InterNetworkLink[] links = null;
-	
-	private HashMap<ID, MapItemPosition> positions = null;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "identifier", column = @Column(name = "serviceElementId")),
+			@AttributeOverride(name = "idType.classType", column = @Column(name = "serviceElementType")),
+			@AttributeOverride(name = "name", column = @Column(name = "serviceElementName")) })
+	private ID serviceElementId = null;
+
+	@ElementCollection
+	@OrderColumn(name = "idx")
+	private List<ChangedField> changedFields = null;
 
 	/**
-	 * @return the networks
+	 * @return the serviceElementId
 	 */
-	public Network[] getNetworks() {
-		return networks;
+	public ID getServiceElementId() {
+		return serviceElementId;
 	}
 
 	/**
-	 * @param networks the networks to set
+	 * @param serviceElementId
+	 *            the serviceElementId to set
 	 */
-	public void setNetworks(Network[] networks) {
-		this.networks = networks;
+	public void setServiceElementId(ID serviceElementId) {
+		this.serviceElementId = serviceElementId;
 	}
 
 	/**
-	 * @return the links
+	 * @return the changedFields
 	 */
-	public InterNetworkLink[] getLinks() {
-		return links;
+	public List<ChangedField> getChangedFields() {
+		return changedFields;
 	}
 
 	/**
-	 * @param links the links to set
+	 * @param changedFields
+	 *            the changedFields to set
 	 */
-	public void setLinks(InterNetworkLink[] links) {
-		this.links = links;
+	public void setChangedFields(List<ChangedField> changedFields) {
+		this.changedFields = changedFields;
 	}
-
-	/**
-	 * @return the positions
-	 */
-	public HashMap<ID, MapItemPosition> getPositions() {
-		return positions;
-	}
-
-	/**
-	 * @param positions the positions to set
-	 */
-	public void setPositions(HashMap<ID, MapItemPosition> positions) {
-		this.positions = positions;
-	}
-	
 }

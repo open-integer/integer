@@ -31,73 +31,62 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
+package edu.harvard.integer.service.distribution;
 
-import java.io.Serializable;
-import java.util.HashMap;
-
-import edu.harvard.integer.common.ID;
+import javax.naming.Context;
 
 /**
- * Helper class to get the Network's and InterDeviceLink's between the Network's in one
- * call.
- * 
  * @author David Taylor
  * 
  */
-public class NetworkInformation implements Serializable {
+public class OpenContext {
+	private long createTime = 0;
+	private Context context = null;
+	private long identifier = 0;
 
 	/**
-	 * Serial Version UID 
+	 * @return the createTime
 	 */
-	private static final long serialVersionUID = 1L;
-
-	private Network[] networks = null;
-	
-	private InterNetworkLink[] links = null;
-	
-	private HashMap<ID, MapItemPosition> positions = null;
-
-	/**
-	 * @return the networks
-	 */
-	public Network[] getNetworks() {
-		return networks;
+	public long getCreateTime() {
+		return createTime;
 	}
 
 	/**
-	 * @param networks the networks to set
+	 * @param createTime
+	 *            the createTime to set
 	 */
-	public void setNetworks(Network[] networks) {
-		this.networks = networks;
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
 	}
 
 	/**
-	 * @return the links
+	 * @return the context
 	 */
-	public InterNetworkLink[] getLinks() {
-		return links;
+	public Context getContext() {
+		return context;
 	}
 
 	/**
-	 * @param links the links to set
+	 * @param context
+	 *            the context to set
 	 */
-	public void setLinks(InterNetworkLink[] links) {
-		this.links = links;
+	public void setContext(Context context) {
+		this.context = context;
 	}
 
 	/**
-	 * @return the positions
+	 * @return the identifier
 	 */
-	public HashMap<ID, MapItemPosition> getPositions() {
-		return positions;
+	public long getIdentifier() {
+		return identifier;
 	}
 
 	/**
-	 * @param positions the positions to set
+	 * @param identifier
+	 *            the identifier to set
 	 */
-	public void setPositions(HashMap<ID, MapItemPosition> positions) {
-		this.positions = positions;
+	public void setIdentifier(long identifier) {
+		this.identifier = identifier;
 	}
-	
+
 }

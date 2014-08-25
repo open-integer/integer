@@ -61,7 +61,7 @@ public class SnmpEnumValue extends BaseEntity implements Serializable {
 	}
 
 	public SnmpEnumValue(String name, Integer value) {
-		//setName(name);
+		setName(name);
 		setValue(value);
 	}
 

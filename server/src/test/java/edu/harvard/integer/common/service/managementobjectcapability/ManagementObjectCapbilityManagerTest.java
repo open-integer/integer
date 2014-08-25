@@ -117,19 +117,16 @@ public class ManagementObjectCapbilityManagerTest {
 //	}
 
 	public void addCapability() {
-		Capability capability = new Capability();
-		capability.setName("SystemGroup");
-		capability.setDescription("SNMP System Group");
-		List<FCAPSEnum> fcaps = new ArrayList<FCAPSEnum>();
-		fcaps.add(FCAPSEnum.Configuration);
-
-		capability.setFcaps(fcaps);
-
-		managementObjectManager.addCapability(capability);
+		createCapability("SystemGroup", "SNMP System Group", FCAPSEnum.Configuration);
+		
 	}
 
 	@Test
 	public void addCapabilitysysName() {
+		createCapability("SysNam", "System name", FCAPSEnum.Configuration);
+	}
+	
+	private Capability createCapability(String name, String description, FCAPSEnum type) {
 		Capability capability = new Capability();
 		capability.setName("SysName");
 		capability.setDescription("System name");
@@ -138,7 +135,7 @@ public class ManagementObjectCapbilityManagerTest {
 
 		capability.setFcaps(fcaps);
 
-		managementObjectManager.addCapability(capability);
+		return managementObjectManager.addCapability(capability);
 	}
 
 	@Test
@@ -174,13 +171,8 @@ public class ManagementObjectCapbilityManagerTest {
 	@Test
 	public void addManagementObjectToCapability() {
 
-		Capability capability = new Capability();
+		Capability capability = createCapability("Interface table", "SNMP Interface table", FCAPSEnum.Performance);
 		capability.setName("Interface table");
-		capability.setDescription("SNMP Interface table");
-		List<FCAPSEnum> fcaps = new ArrayList<FCAPSEnum>();
-		fcaps.add(FCAPSEnum.Performance);
-
-		capability = managementObjectManager.addCapability(capability);
 
 		List<ServiceElementManagementObject> systemOids = new ArrayList<ServiceElementManagementObject>();
 		SNMP oid = getSNMP("1.3.6.1.2.1.2.2.1.3", "ifType");
@@ -280,7 +272,7 @@ public class ManagementObjectCapbilityManagerTest {
 						.getManagemntObjectsForCapability(capability.getID());
 
 				logger.info("Found " + managementObjects.size()
-						+ " ManagementObjects for capabiliyt "
+						+ " ManagementObjects for capabiliy "
 						+ capability.getID());
 				for (ServiceElementManagementObject managementObject : managementObjects) {
 					logger.info("Found " + managementObject.getID());
@@ -534,7 +526,7 @@ public class ManagementObjectCapbilityManagerTest {
 		enumTc.setName("MyEnumTC");
 		
 		SNMP snmp = new SNMP();
-		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class.getName())));
+		snmp.setCapabilityId(createCapability("Capability name", "Description", FCAPSEnum.Accounting).getID());
 		snmp.setDescription("A good description");
 		snmp.setDisplayName("Hi");
 		snmp.setTextualConvetion("EnumList");
@@ -557,7 +549,7 @@ public class ManagementObjectCapbilityManagerTest {
 		stringTC.setMaximumValue(255);
 		
 		SNMP snmp = new SNMP();
-		snmp.setCapabilityId(new ID(Long.valueOf(1), "Name", new IDType(Capability.class.getName())));
+		snmp.setCapabilityId(createCapability("Capability name", "Description", FCAPSEnum.Accounting).getID());
 		snmp.setDescription("A good description");
 		snmp.setDisplayName("Hi");
 		snmp.setTextualConvetion("String");
@@ -578,7 +570,7 @@ public class ManagementObjectCapbilityManagerTest {
 		stringTC.setName("Integer Syntax");
 		
 		SNMP snmp = new SNMP();
-		snmp.setCapabilityId(new ID(Long.valueOf(2), "Name", new IDType(Capability.class.getName())));
+		snmp.setCapabilityId(createCapability("Capability name", "Description", FCAPSEnum.Accounting).getID());
 		snmp.setDescription("A good description");
 		snmp.setDisplayName("Hi");
 		snmp.setTextualConvetion("Integer");

@@ -21,7 +21,7 @@ public class NetworkMapPanel extends LienzoPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert("Failed to receive Networks from Integer");
+						Window.alert("Failed to receive Networks from Integer. Error " + caught.toString());
 					}
 
 					@Override

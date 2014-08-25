@@ -31,73 +31,65 @@
  *      
  */
 
-package edu.harvard.integer.common.topology;
-
-import java.io.Serializable;
-import java.util.HashMap;
+package edu.harvard.integer.service.topology;
 
 import edu.harvard.integer.common.ID;
 
 /**
- * Helper class to get the Network's and InterDeviceLink's between the Network's in one
- * call.
- * 
  * @author David Taylor
  * 
  */
-public class NetworkInformation implements Serializable {
+public class LayoutLink {
+
+	private ID linkId = null;
+
+	private ID sourceId = null;
+
+	private ID destId = null;
 
 	/**
-	 * Serial Version UID 
+	 * @return the sourceId
 	 */
-	private static final long serialVersionUID = 1L;
-
-	private Network[] networks = null;
-	
-	private InterNetworkLink[] links = null;
-	
-	private HashMap<ID, MapItemPosition> positions = null;
-
-	/**
-	 * @return the networks
-	 */
-	public Network[] getNetworks() {
-		return networks;
+	public ID getSourceId() {
+		return sourceId;
 	}
 
 	/**
-	 * @param networks the networks to set
+	 * @param sourceId
+	 *            the sourceId to set
 	 */
-	public void setNetworks(Network[] networks) {
-		this.networks = networks;
+	public void setSourceId(ID sourceId) {
+		this.sourceId = sourceId;
 	}
 
 	/**
-	 * @return the links
+	 * @return the destId
 	 */
-	public InterNetworkLink[] getLinks() {
-		return links;
+	public ID getDestId() {
+		return destId;
 	}
 
 	/**
-	 * @param links the links to set
+	 * @param destId
+	 *            the destId to set
 	 */
-	public void setLinks(InterNetworkLink[] links) {
-		this.links = links;
+	public void setDestId(ID destId) {
+		this.destId = destId;
 	}
 
 	/**
-	 * @return the positions
+	 * @return the linkId
 	 */
-	public HashMap<ID, MapItemPosition> getPositions() {
-		return positions;
+	public ID getLinkId() {
+		return linkId;
 	}
 
 	/**
-	 * @param positions the positions to set
+	 * @param linkId
+	 *            the linkId to set
 	 */
-	public void setPositions(HashMap<ID, MapItemPosition> positions) {
-		this.positions = positions;
+	public void setLinkId(ID linkId) {
+		this.linkId = linkId;
 	}
-	
+
 }
