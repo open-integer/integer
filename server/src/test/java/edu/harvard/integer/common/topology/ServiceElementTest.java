@@ -43,17 +43,11 @@ import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
-import edu.harvard.integer.access.snmp.CommonSnmpOids;
-import edu.harvard.integer.common.ID;
-import edu.harvard.integer.common.IDType;
 import edu.harvard.integer.common.TestUtil;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.managementobject.ManagementObjectIntegerValue;
@@ -91,6 +85,22 @@ public class ServiceElementTest {
 	public void addServiceElement() {
 
 		ServiceElement serviceElement = createServiceElement();
+		
+		ManagementObjectIntegerValue intValue = new ManagementObjectIntegerValue();
+		SNMP oid = TestUtil.createOid("MO Name", "1.2.3.4.5");
+		try {
+			oid = snmpMaager.updateSNMP(oid);
+		} catch (IntegerException e) {
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		intValue.setManagementObject(oid.getID());
+		intValue.setValue(Integer.valueOf(2));
+		intValue.setName("MO name value");
+		List<ManagementObjectValue> values = new ArrayList<ManagementObjectValue>();
+		values.add(intValue);
+		serviceElement.setAttributeValues(values);
+		
 		try {
 			serviceElementManager.updateServiceElement(serviceElement);
 
@@ -118,14 +128,6 @@ public class ServiceElementTest {
 		List<ServiceElementProtocolInstanceIdentifier> ids = new ArrayList<ServiceElementProtocolInstanceIdentifier>();
 		ids.add(identifier);
 		serviceElement.setValues(ids);
-
-		ManagementObjectIntegerValue intValue = new ManagementObjectIntegerValue();
-		intValue.setManagementObject(new ID(Long.valueOf(1), "MO name", new IDType(SNMP.class.getName())));
-		intValue.setValue(Integer.valueOf(2));
-		intValue.setName("MO name value");
-		List<ManagementObjectValue> values = new ArrayList<ManagementObjectValue>();
-		values.add(intValue);
-		serviceElement.setAttributeValues(values);
 
 		return serviceElement;
 	}

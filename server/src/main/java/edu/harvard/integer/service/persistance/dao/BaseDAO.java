@@ -56,6 +56,7 @@ import org.slf4j.Logger;
 
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.BaseEntity;
+import edu.harvard.integer.common.ChangedField;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.DatabaseErrorCodes;
 import edu.harvard.integer.common.exception.IntegerException;
@@ -80,7 +81,7 @@ public class BaseDAO {
 
 	private Class<? extends BaseEntity> clazz = null;
 
-	private List<String> changedFields = null;
+	private List<ChangedField> changedFields = null;
 	
 	/**
 	 * Create the DAO for this class type. All entities that are stored in the
@@ -738,9 +739,9 @@ public class BaseDAO {
 
 	}
 
-	public  <T extends Object> List<String> copyFieldsGetChanges(T toInstance, T fromInstance) throws IntegerException {
+	public  <T extends Object> List<ChangedField> copyFieldsGetChanges(T toInstance, T fromInstance) throws IntegerException {
 		
-		List<String> changedFields = new ArrayList<String>();
+		List<ChangedField> changedFields = new ArrayList<ChangedField>();
 		
 		this.changedFields = changedFields;
 		
@@ -806,8 +807,17 @@ public class BaseDAO {
 					if (changedFields != null) {
 						Object oldValue = getter.invoke(toInstance);
 
-						if (valuesDiffer(oldValue, value))
-							changedFields.add(getter.getName());
+						if (valuesDiffer(oldValue, value)) {
+							ChangedField change = new ChangedField();
+							change.setFieldName(getter.getName());
+							if (value != null)
+								change.setNewValue(value.toString());
+							
+							if (oldValue != null)
+								change.setOldValue(oldValue.toString());
+							
+							changedFields.add(change);
+						}
 					}
 					
 					if (value instanceof BaseEntity) {
@@ -848,6 +858,8 @@ public class BaseDAO {
 							e,
 							DatabaseErrorCodes.UnableToCreateCleanCopyIllegalAccess);
 				} catch (InvocationTargetException e) {
+					logger.info("Unable to copy " + fromInstance + " Method " + f + " Not found! " + e.toString());
+					e.printStackTrace();
 					throw new IntegerException(
 							e,
 							DatabaseErrorCodes.UnableToCreateCleanCopyNoSuchMethod);
@@ -869,17 +881,37 @@ public class BaseDAO {
 	 */
 	private boolean valuesDiffer(Object oldValue, Object value) {
 
-		if (value != null) {
+		if (isNull(value) && isNull(oldValue))
+			return false;
+		
+		if (!isNull(value)) {
 			if (!value.equals(oldValue))
 				return true;
 			
-		} else if (oldValue != null)
-			return true;
+		} else if (!isNull(oldValue)) {
+			if (oldValue.equals(value))
+				return false;
+			else
+				return true;
+		}
 		
 		return false;
 		
 	}
 
+	private boolean isNull(Object value) {
+		if (value == null)
+			return true;
+		
+		if (value.getClass().isArray() && ((Object[]) value).length == 0)
+			return true;
+		
+		if (value instanceof List && ((List) value).size() == 0)
+			return true;
+		
+		return false;
+	}
+	
 	public <T extends Object> T[] copyArray(T[] values) throws IntegerException {
 
 		if (values == null)

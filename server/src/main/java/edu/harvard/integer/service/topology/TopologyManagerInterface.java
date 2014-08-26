@@ -263,4 +263,13 @@ public interface TopologyManagerInterface extends BaseManagerInterface {
 	MapItemPosition updateMapItemPosition(MapItemPosition position)
 			throws IntegerException;
 
+	/**
+	 * Get the Network from the database that has the given name.
+	 * 
+	 * @param name
+	 * @return Network found in the database with the given name.
+	 * @throws IntegerException
+	 */
+	Network getNetworkByName(String name) throws IntegerException;
+
 }

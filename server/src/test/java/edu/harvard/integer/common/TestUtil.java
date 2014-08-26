@@ -88,6 +88,7 @@ public class TestUtil {
 				.addPackages(true, "org/jasypt")
 				.addPackages(true, "com.fasterxml.jackson")
 				.addPackages(true, "org.yaml")
+				.addPackages(true, "edu.uci.ics.jung")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -110,6 +111,7 @@ public class TestUtil {
 				.addPackages(true, "org/jasypt")
 				.addPackages(true, "com.fasterxml.jackson")
 				.addPackages(true, "org.yaml")
+				.addPackages(true, "edu.uci.ics.jung")
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")

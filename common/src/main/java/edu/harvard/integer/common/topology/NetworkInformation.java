@@ -34,6 +34,9 @@
 package edu.harvard.integer.common.topology;
 
 import java.io.Serializable;
+import java.util.HashMap;
+
+import edu.harvard.integer.common.ID;
 
 /**
  * Helper class to get the Network's and InterDeviceLink's between the Network's in one
@@ -45,13 +48,15 @@ import java.io.Serializable;
 public class NetworkInformation implements Serializable {
 
 	/**
-	 * Serial Version UID
+	 * Serial Version UID 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private Network[] networks = null;
 	
 	private InterNetworkLink[] links = null;
+	
+	private HashMap<ID, MapItemPosition> positions = null;
 
 	/**
 	 * @return the networks
@@ -79,6 +84,20 @@ public class NetworkInformation implements Serializable {
 	 */
 	public void setLinks(InterNetworkLink[] links) {
 		this.links = links;
+	}
+
+	/**
+	 * @return the positions
+	 */
+	public HashMap<ID, MapItemPosition> getPositions() {
+		return positions;
+	}
+
+	/**
+	 * @param positions the positions to set
+	 */
+	public void setPositions(HashMap<ID, MapItemPosition> positions) {
+		this.positions = positions;
 	}
 	
 }

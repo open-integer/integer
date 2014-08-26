@@ -33,31 +33,17 @@
 
 package edu.harvard.integer.service.persistance.dao.topology;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
 import edu.harvard.integer.common.BaseEntity;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.managementobject.ManagementObjectStringValue;
 import edu.harvard.integer.common.managementobject.ManagementObjectValue;
-import edu.harvard.integer.common.selection.Filter;
-import edu.harvard.integer.common.selection.FilterNode;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.ServiceElement;
-import edu.harvard.integer.service.persistance.dao.BaseDAO;
-import edu.harvard.integer.service.persistance.dao.managementobject.ManagementObjectValueDAO;
-import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
+import edu.harvard.integer.common.topology.ServiceElementFields;
 
 /**
  * The DAO is responsible for persisting the ServiceElement. All queries will be
@@ -66,7 +52,7 @@ import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
  * @author David Taylor
  * 
  */
-public class ServiceElementDAO extends BaseDAO {
+public class ServiceElementDAO extends ServiceElementFieldsDAO {
 
 	/**
 	 * @param entityManger
@@ -77,372 +63,51 @@ public class ServiceElementDAO extends BaseDAO {
 		super(entityManger, logger, ServiceElement.class);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * edu.harvard.integer.service.persistance.dao.BaseDAO#preSave(edu.harvard
-	 * .integer.common.BaseEntity)
+	private ServiceElement[] castToServiceElement(ServiceElementFields[] serviceElementFields) {
+		ServiceElement[] serviceElements = new ServiceElement[serviceElementFields.length];
+		
+		for (int i = 0; i < serviceElementFields.length; i++) {
+			serviceElements[i] = (ServiceElement) serviceElementFields[i];
+		}
+		
+		return serviceElements;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.topology.ServiceElementFieldsDAO#findTopLevelServiceElements()
 	 */
 	@Override
-	public <T extends BaseEntity> void preSave(T entity)
-			throws IntegerException {
-
-		ServiceElement serviceElement = (ServiceElement) entity;
-
-		if (serviceElement.getValues() != null) {
-			ServiceElementProtocolInstanceIdentifierDAO seiDAO = new ServiceElementProtocolInstanceIdentifierDAO(
-					getEntityManager(), getLogger());
-			serviceElement.setValues(seiDAO.update(serviceElement.getValues()));
-
-		}
-
-		if (serviceElement.getAttributeValues() != null) {
-			ManagementObjectValueDAO valueDao = new ManagementObjectValueDAO(
-					getEntityManager(), getLogger());
-			serviceElement.setAttributeValues(valueDao.update(serviceElement
-					.getAttributeValues()));
-		}
-
-		if (serviceElement.getParentIds() != null
-				&& serviceElement.getParentIds().size() > 0) {
-			ServiceElement parent = findById(serviceElement.getParentIds().get(
-					0));
-			if (parent != null)
-				parent.setHasChildren(true);
-			update(parent);
-		}
-
-		if (serviceElement.getAssociations() != null) {
-			ServiceElementAssociationDAO dao = new ServiceElementAssociationDAO(
-					getEntityManager(), getLogger());
-			serviceElement.setAssociations(dao.update(serviceElement
-					.getAssociations()));
-		}
-		super.preSave(entity);
-	}
-
-	/**
-	 * Find the top level service elements. The service elements that do not
-	 * have parents. Ex. Device
-	 * 
-	 * @param object
-	 * @return
-	 */
 	public ServiceElement[] findTopLevelServiceElements() {
-
-		StringBuffer b = new StringBuffer();
-
-		b.append("select se.* ").append('\n');
-		b.append("from ServiceElement se ").append('\n');
-		b.append(
-				" where not exists (select * from  ServiceElement_parentIds sep ")
-				.append('\n');
-		b.append("where sep.ServiceElement_identifier = se.identifier)");
-
-		Query query = getEntityManager().createNativeQuery(b.toString(),
-				ServiceElement.class);
-
-		@SuppressWarnings("unchecked")
-		List<ServiceElement> resultList = query.getResultList();
-
-		return (ServiceElement[]) resultList
-				.toArray(new ServiceElement[resultList.size()]);
-
+		
+		return castToServiceElement(super.findTopLevelServiceElements());
 	}
 
-	/**
-	 * Get the list of Service elements that are children of the parent service
-	 * element ID.
-	 * 
-	 * @param ID
-	 *            . ID of the parent service element.
-	 * @return ServiceElement[] of child service elements for the given parent
-	 *         id.
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.topology.ServiceElementFieldsDAO#findByParentId(edu.harvard.integer.common.ID)
 	 */
-	public ServiceElement[] findByParentId(ID parent) {
+	@Override
+	public ServiceElementFields[] findByParentId(ID parent) {
+		
+		return castToServiceElement(super.findByParentId(parent));
+	}
 
-		StringBuffer b = new StringBuffer();
-
-		b.append("select se.* ").append('\n');
-		b.append("from ServiceElement se ").append('\n');
-		b.append(
-				"   join ServiceElement_parentIds sep on (sep.ServiceElement_identifier = se.identifier) ")
-				.append('\n');
-		b.append("where sep.identifier = :parent");
-
-		Query query = getEntityManager().createNativeQuery(b.toString(),
-				ServiceElement.class);
-		query.setParameter("parent", parent.getIdentifier());
-
-		@SuppressWarnings("unchecked")
-		List<ServiceElement> resultList = query.getResultList();
-
-		return (ServiceElement[]) resultList
-				.toArray(new ServiceElement[resultList.size()]);
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.topology.ServiceElementFieldsDAO#findByParentIdAndName(edu.harvard.integer.common.ID, java.lang.String)
+	 */
+	@Override
+	public ServiceElementFields[] findByParentIdAndName(ID parent, String name) {
+		
+		return castToServiceElement(super.findByParentIdAndName(parent, name));
 	}
 
 	
-	/**
-	 * Get the list of Service elements that are children of the parent service
-	 * element ID.
-	 * 
-	 * @param ID
-	 *            . ID of the parent service element.
-	 * @return ServiceElement[] of child service elements for the given parent
-	 *         id.
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.service.persistance.dao.topology.ServiceElementFieldsDAO#findBySelection(edu.harvard.integer.common.selection.Selection)
 	 */
-	public ServiceElement[] findByParentIdAndName(ID parent, String name) {
-
-		StringBuffer b = new StringBuffer();
-
-		b.append("select se.* ").append('\n');
-		b.append("from ServiceElement se ").append('\n');
-		b.append(
-				"   join ServiceElement_parentIds sep on (sep.ServiceElement_identifier = se.identifier) ")
-				.append('\n');
-		b.append("where sep.identifier = :parent");
-		b.append("  and se.name = :name");
-
-		Query query = getEntityManager().createNativeQuery(b.toString(),
-				ServiceElement.class);
+	@Override
+	public ServiceElementFields[] findBySelection(Selection selection) {
 		
-		query.setParameter("parent", parent.getIdentifier());
-		query.setParameter("name", name);
-		
-		@SuppressWarnings("unchecked")
-		List<ServiceElement> resultList = query.getResultList();
-
-		return (ServiceElement[]) resultList
-				.toArray(new ServiceElement[resultList.size()]);
-	}
-	
-	/**
-	 * @param parentId
-	 * @param value
-	 * @return
-	 */
-	public ServiceElement findByIdAndValue(ID parentId,
-			ID serviceElementTypeId,
-			@SuppressWarnings("rawtypes") ManagementObjectValue value) {
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-				.getCriteriaBuilder();
-
-		CriteriaQuery<ServiceElement> query = criteriaBuilder
-				.createQuery(ServiceElement.class);
-
-		Root<ServiceElement> from = query.from(ServiceElement.class);
-
-		Join<ServiceElement, ManagementObjectStringValue> join = from
-				.join("valueId");
-
-		// if (value instanceof ManagementObjectStringValue)
-		// from.join(ManagementObjectStringValue.class);
-
-		ParameterExpression<Long> idParam = criteriaBuilder
-				.parameter(Long.class);
-
-		ParameterExpression<ID> serviceElementTypeParam = criteriaBuilder
-				.parameter(ID.class);
-
-		query.select(from).where(
-				criteriaBuilder.and(criteriaBuilder.equal(
-						from.get("identifier"), idParam), criteriaBuilder
-						.equal(from.get("serviceElementTypeId"),
-								serviceElementTypeParam)));
-
-		TypedQuery<ServiceElement> typeQuery = getEntityManager().createQuery(
-				query);
-		typeQuery.setParameter(idParam, parentId.getIdentifier());
-		typeQuery.setParameter(serviceElementTypeParam, serviceElementTypeId);
-
-		@SuppressWarnings("unused")
-		List<ServiceElement> resultList = typeQuery.getResultList();
-
-		return null;
-	}
-
-	/**
-	 * @param selection
-	 * @return
-	 */
-	public ServiceElement[] findBySelection(Selection selection) {
-
-		if (selection.getFilters() == null)
-			return new ServiceElement[0];
-
-		StringBuffer b = new StringBuffer();
-
-		b.append("select se.* ").append('\n');
-		b.append("from ServiceElement se ").append('\n');
-		b.append(
-				"    join ServiceElement_AttributeValues seav on (seav.ServiceElement_identifier = se.identifier) ")
-				.append('\n');
-		b.append(
-				"    join ManagementObjectValue mov on (mov.identifier = seav.attributeValues_identifier) ")
-				.append('\n');
-		b.append(
-				"    join ServiceElementManagementObject mo on (mo.identifier = mov.managementObjectId) ")
-				.append('\n');
-		b.append("    join Capability c on (c.identifier = mo.capabilityId) ")
-				.append('\n');
-		b.append(
-				"    join Mechanism_capabilities mc on (mc.identifier = c.identifier) ")
-				.append('\n');
-		b.append(
-				"    join Mechanism m on (m.identifier = mc.Mechanism_identifier) ")
-				.append('\n');
-		b.append(
-				"    join Technology_mechanisims tm on (tm.identifier = m.identifier) ")
-				.append('\n');
-		b.append(
-				"    join Technology t on (t.identifier = tm.Technology_identifier) ")
-				.append('\n');
-		b.append("where ").append('\n');
-
-		boolean addedOne = false;
-
-		for (Filter filter : selection.getFilters()) {
-			if (filter.getTechnologies() != null)
-				addedOne = addFilterNodeRestriction("t.name",
-						filter.getTechnologies(), addedOne, b, false);
-
-			if (filter.getLinkTechnologies() != null)
-				addedOne = addFilterNodeRestriction("t.name",
-						filter.getLinkTechnologies(), addedOne, b, false);
-
-			if (addedOne)
-				b.append(")").append('\n');
-			else
-				b.append(" 1 = 1 ").append('\n');
-
-			if (filter.getCategories() != null
-					&& filter.getCategories().size() > 0) {
-
-				if (filter.getTechnologies() != null
-						|| filter.getLinkTechnologies() != null)
-					b.append('\n').append(" union ").append('\n');
-
-				b.append("select se.* ").append('\n');
-				b.append("from ServiceElement se ").append('\n');
-				b.append(
-						"  join ServiceElementType selt on (selt.identifier = se.serviceElementTypeId) ")
-						.append('\n');
-				b.append(
-						"  join Category c on (c.identifier = selt.category_identifier) ")
-						.append('\n');
-				b.append("where ").append('\n');
-
-				addedOne = false;
-				addFilterNodeRestriction("c.name", filter.getCategories(),
-						addedOne, b, false);
-				if (!addedOne)
-					b.append(" 1 = 1 ").append('\n');
-
-				b.append('\n').append(" union ").append('\n');
-
-				b.append("select se.* ").append('\n');
-				b.append("from ServiceElement se ").append('\n');
-				b.append(
-						"   join ServiceElementType selt on (selt.identifier = se.serviceElementTypeId) ")
-						.append('\n');
-				b.append(
-						"   join Category c on (c.identifier = selt.category_identifier) ")
-						.append('\n');
-				b.append(
-						"   join Category_childIds cc on (cc.Category_identifier = c.identifier) ")
-						.append('\n');
-				b.append("where ").append('\n');
-				addedOne = false;
-				addFilterNodeRestriction("cc.name", filter.getCategories(),
-						addedOne, b, false);
-				if (!addedOne)
-					b.append(" 1 = 1 ").append('\n');
-
-			}
-
-//			if (filter.getLocations() != null
-//					&& filter.getLocations().size() > 0) {
-//				b.append('\n').append(" union ").append('\n');
-//
-//				b.append("select se.* ").append('\n');
-//				b.append("from ServiceElement se ").append('\n');
-//
-//				addedOne = false;
-//				for (ID locationId : filter.getLocations()) {
-//					if (addedOne)
-//						b.append(" and ");
-//					else
-//						addedOne = true;
-//
-//					b.append(" se.primaryLocationId == ")
-//							.append(locationId.getIdentifier()).append('\n');
-//				}
-//			}
-		}
-
-		b.append(" group by se.identifier");
-
-		Query createQuery = getEntityManager().createNativeQuery(b.toString(),
-				ServiceElement.class);
-
-		@SuppressWarnings("unchecked")
-		List<ServiceElement> resultList = createQuery.getResultList();
-
-		return (ServiceElement[]) resultList
-				.toArray(new ServiceElement[resultList.size()]);
-	}
-
-	private boolean addFilterNodeRestriction(String fieldName,
-			List<FilterNode> techNodes, boolean addedOne, StringBuffer b,
-			boolean isSelected) {
-		for (FilterNode filterNode : techNodes) {
-			if (filterNode == null) {
-				getLogger().warn(
-						"FilterNode is null. Adding nodes for " + fieldName
-								+ " SQL to this point " + b.toString());
-				continue;
-			}
-
-			if (isSelected || Boolean.TRUE.equals(filterNode.getSelected())) {
-				if (addedOne)
-					b.append(" or ");
-				else {
-					b.append("( ");
-					addedOne = true;
-				}
-
-				b.append(" ").append(fieldName).append(" = '")
-						.append(filterNode.getItemId().getName()).append("'");
-
-				if (filterNode.getChildren() != null)
-					addFilterNodeRestriction(fieldName,
-							filterNode.getChildren(), addedOne, b, true);
-			}
-		}
-		return addedOne;
-	}
-
-	/**
-	 * @param name
-	 * @return
-	 */
-	public ServiceElement findByName(String name) {
-
-		return findByStringField(name, "name", ServiceElement.class);
-	}
-
-	/**
-	 * @param childId
-	 * @throws IntegerException 
-	 */
-	public ServiceElement findParent(ID childId) throws IntegerException {
-		ServiceElement child = findById(childId);
-		
-		if (child.getParentIds()  != null && child.getParentIds().size() > 0)
-			return findById(child.getParentIds().get(0));
-	
-		return null;
+		return castToServiceElement(super.findBySelection(selection));
 	}
 
 

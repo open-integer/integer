@@ -87,6 +87,7 @@ import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementAssociationTypeDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementHistoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementInstanceUniqueSignatureDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementManagementObjectDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementProtocolInstanceIdentifierDAO;
@@ -254,6 +255,11 @@ public class PersistenceManager extends BaseManager implements
 		return new ServiceElementDAO(em, logger);
 	}
 
+	@Override
+	public ServiceElementHistoryDAO getServiceElementHistoryDAO() {
+		return new ServiceElementHistoryDAO(em, logger);
+	}
+	
 	/**
 	 * Get the ServiceElementProtocolInstanceIdentifierDAO
 	 * 

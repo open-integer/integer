@@ -150,6 +150,25 @@ public class IntegerProperties {
 		}
 	}
 
+	public <T extends EnumPropertyNameInterface> T getEnumProperty (EnumPropertyNameInterface<T> propName) {
+		
+		if (settings == null) {
+			return propName.getDefaultValue();
+		} else {
+			String value = settings.getProperty(propName.getPropertyName());
+			if (value != null) {
+				for (int i = 0; i < propName.getClass().getEnumConstants().length; i++) {
+					if ( propName.getClass().getEnumConstants()[i].getName().equals(value)) {
+						return (T) propName.getClass().getEnumConstants()[i];
+					}
+				}
+				
+			}
+			
+			return propName.getDefaultValue();
+		}
+	}
+	
 	/**
 	 * Load the Integer type property specified. If the property is not in the
 	 * property file then the default value will be returned.

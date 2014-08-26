@@ -154,7 +154,10 @@ public class Address implements Serializable {
 	}
 
 	public static String getSubNet(Address address) {
-		return getSubNet(address.getAddress(), address.getMask());
+		if (address != null)
+			return getSubNet(address.getAddress(), address.getMask());
+		else
+			return null;
 	}
 	
 	public static String getSubNet(String address, String mask) {

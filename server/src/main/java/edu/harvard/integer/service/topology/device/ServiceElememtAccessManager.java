@@ -34,20 +34,24 @@
 package edu.harvard.integer.service.topology.device;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import edu.harvard.integer.common.ChangedField;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
-import edu.harvard.integer.common.managementobject.ManagementObjectValue;
 import edu.harvard.integer.common.selection.Selection;
 import edu.harvard.integer.common.topology.Credential;
 import edu.harvard.integer.common.topology.DeviceDetails;
 import edu.harvard.integer.common.topology.EnvironmentLevel;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.common.topology.ServiceElementFields;
+import edu.harvard.integer.common.topology.ServiceElementHistory;
 import edu.harvard.integer.common.topology.TopologyElement;
 import edu.harvard.integer.service.BaseManager;
 import edu.harvard.integer.service.distribution.ManagerTypeEnum;
@@ -56,6 +60,7 @@ import edu.harvard.integer.service.persistance.dao.selection.SelectionDAO;
 import edu.harvard.integer.service.persistance.dao.snmp.SnmpV2CredentialDAO;
 import edu.harvard.integer.service.persistance.dao.topology.EnvironmentLevelDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementHistoryDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 
 /**
@@ -99,7 +104,40 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		if (dbServiceElement != null) {
 			logger.info("Found existing service element: " + dbServiceElement.getID().toDebugString() + " Will update instead of create new ");
 			
-			serviceElement = serviceElementDAO.copyFields(dbServiceElement, serviceElement);
+			List<ChangedField> changedFields = serviceElementDAO.copyFieldsGetChanges(dbServiceElement, serviceElement);
+			serviceElement = dbServiceElement;
+			
+			if (changedFields != null && changedFields.size() > 0) {
+				
+					
+				StringBuffer b = new StringBuffer();
+				b.append("Changes for ").append(serviceElement.getID().toDebugString());
+				for (Iterator<ChangedField> itr = changedFields.iterator(); itr.hasNext(); ) {
+					ChangedField change = itr.next();
+				
+					if (change.getFieldName().equals("getIdentifier") || change.getFieldName().equals("getUpdated")) {
+						itr.remove();
+						
+					} else {
+						b.append(" ").append(change.getFieldName());
+						b.append(" new ").append(change.getNewValue());
+						b.append(" old ").append(change.getOldValue());
+					
+					}
+				}
+				
+				if (changedFields.size() > 0) {
+					logger.info(b.toString());
+
+					ServiceElementHistory serviceElementHistory = new ServiceElementHistory();
+					ServiceElementHistoryDAO serviceElementHistoryDAO = dbm.getServiceElementHistoryDAO();
+					serviceElementHistoryDAO.copyFields(serviceElementHistory, serviceElement);
+					serviceElementHistory.setServiceElementId(serviceElement.getID());
+					serviceElementHistory.setChangedFields(changedFields);
+
+					serviceElementHistoryDAO.update(serviceElementHistory);
+				}
+			}
 		}
 		
 		serviceElement = serviceElementDAO.update(serviceElement);
@@ -116,14 +154,14 @@ public class ServiceElememtAccessManager extends BaseManager implements
 
 		if (serviceElement.getParentIds() != null && serviceElement.getParentIds().size() > 0) {
 			for (ID parentId : serviceElement.getParentIds()) {
-				ServiceElement[] dbServiceElement = serviceElementDAO.findByParentIdAndName(parentId, serviceElement.getName());
+				ServiceElementFields[] dbServiceElement = (ServiceElementFields[]) serviceElementDAO.findByParentIdAndName(parentId, serviceElement.getName());
 				if (dbServiceElement != null && dbServiceElement.length > 0)
-					return dbServiceElement[0];
+					return (ServiceElement) dbServiceElement[0];
 			}
 			return null;
 			
 		} else
-			return serviceElementDAO.findByName(serviceElement.getName());
+			return (ServiceElement) serviceElementDAO.findByName(serviceElement.getName());
 	
 	}
 	
@@ -142,14 +180,6 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		return serviceElements;
 	}
 
-	public ServiceElement getServiceElementByUninque(ID parentId,
-			@SuppressWarnings("rawtypes") ManagementObjectValue value) throws IntegerException {
-	//	ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
-
-		return null;
-		// return serviceElementDAO.findByIdAndValue(parentId, value);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -161,7 +191,7 @@ public class ServiceElememtAccessManager extends BaseManager implements
 			throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 
-		ServiceElement[] topLevel = serviceElementDAO
+		ServiceElement[] topLevel = (ServiceElement[]) serviceElementDAO
 				.findTopLevelServiceElements();
 
 		for (int i = 0; i < topLevel.length; i++) {
@@ -188,7 +218,7 @@ public class ServiceElememtAccessManager extends BaseManager implements
 
 		logger.info("Get child service elements for parent " + parentId.toDebugString());
 		
-		ServiceElement[] topLevel = serviceElementDAO.findByParentId(parentId);
+		ServiceElement[] topLevel = (ServiceElement[]) serviceElementDAO.findByParentId(parentId);
 		for (int i = 0; i < topLevel.length; i++) {
 
 			topLevel[i] = serviceElementDAO.createCleanCopy(topLevel[i]);
@@ -212,7 +242,7 @@ public class ServiceElememtAccessManager extends BaseManager implements
 			Selection selection) throws IntegerException {
 		ServiceElementDAO serviceElementDAO = dbm.getServiceElementDAO();
 
-		return serviceElementDAO.findBySelection(selection);
+		return (ServiceElement[]) serviceElementDAO.findBySelection(selection);
 	}
 
 	/*
@@ -283,7 +313,7 @@ public class ServiceElememtAccessManager extends BaseManager implements
 	public ServiceElement getServiceElementByName(String name) throws IntegerException {
 		ServiceElementDAO dao = dbm.getServiceElementDAO();
 		
-		return dao.findByName(name);
+		return (ServiceElement) dao.findByName(name);
 	}
 
 	/*
@@ -330,7 +360,7 @@ public class ServiceElememtAccessManager extends BaseManager implements
 		
 		logger.info("Get ServiceElementsBySeletion " + selection.getID().toDebugString());
 		
-		return dao.findBySelection(selection);
+		return (ServiceElement[]) dao.findBySelection(selection);
 	}
 	
 	/*

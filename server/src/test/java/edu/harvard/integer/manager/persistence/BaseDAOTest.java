@@ -33,6 +33,7 @@
 
 package edu.harvard.integer.manager.persistence;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -40,16 +41,21 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Level;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
 import edu.harvard.integer.common.Address;
+import edu.harvard.integer.common.ChangedField;
+import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
 import edu.harvard.integer.common.snmp.MIBInfo;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPModule;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.service.persistance.dao.snmp.MIBInfoDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
+import edu.harvard.integer.service.persistance.dao.topology.ServiceElementHistoryDAO;
 import edu.harvard.integer.util.LoggerUtil;
 
 /**
@@ -158,5 +164,64 @@ public class BaseDAOTest {
 		
 	}
 	
+	@Test
+	public void getTableName() {
+		org.apache.log4j.Logger.getRootLogger().setLevel(Level.DEBUG);
+		ServiceElementHistoryDAO dao = new ServiceElementHistoryDAO(null, LoggerFactory.getLogger(BaseDAOTest.class));
+		System.out.println("Table name  for ServiceElementHistory " + dao.getTableName());
+		
+		
+		ServiceElementDAO seDao = new ServiceElementDAO(null, LoggerFactory.getLogger(BaseDAOTest.class));
+		System.out.println("Table name  for ServiceElement " + seDao.getTableName());
+	}
 	
+	@Test
+	public void getChangedFields() {
+		ServiceElement serviceElement = new ServiceElement();
+		serviceElement.setName("A Name");
+		serviceElement.setCreated(new Date());
+		serviceElement.setCredentials(new ArrayList<ID>());
+		
+		ServiceElement serviceElement2 = new ServiceElement();
+		serviceElement2.setName("A Name");
+		serviceElement2.setCreated(new Date());
+		
+		ServiceElementDAO dao = new ServiceElementDAO(null, LoggerFactory.getLogger(BaseDAOTest.class));
+		
+		try {
+			List<ChangedField> dirtyFields = dao.copyFieldsGetChanges(serviceElement2, serviceElement);
+			int i = 0;
+			for(ChangedField field : dirtyFields) {
+				System.out.println("1 Dirty Field[" + i++ + "]: " + field.getFieldName()
+						+ " Old " + field.getOldValue() + " New " + field.getNewValue());
+			}
+			
+			assertEquals( 0, i);
+
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+
+		serviceElement2.setIconName("IconName");
+				
+		try {
+			List<ChangedField> dirtyFields = dao.copyFieldsGetChanges(serviceElement2, serviceElement);
+			int i = 0;
+			for(ChangedField field : dirtyFields) {
+				System.out.println("2 Dirty Field[" + i++ + "]: " + field);
+			}
+			
+			assertEquals(1,  i);
+			
+		} catch (IntegerException e) {
+			
+			e.printStackTrace();
+			fail(e.toString());
+		}
+		
+		
+	}
 }

@@ -206,11 +206,12 @@ public class Network extends BaseEntity {
 	 * @return
 	 */
 	public static String createName(Address sourceAddress) {
+		return "0.0.0.0";
 		
-		if (sourceAddress != null)
-			return Address.getSubNet(sourceAddress.getAddress(), sourceAddress.getMask());
-		else
-			return "N/A";
+//		if (sourceAddress != null)
+//			return Address.getSubNet(sourceAddress.getAddress(), sourceAddress.getMask());
+//		else
+//			return "N/A";
 	}
 
 	/**
@@ -226,6 +227,5 @@ public class Network extends BaseEntity {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
-	
+
 }

@@ -147,6 +147,9 @@ public class TopologyManagerTest {
 			
 			assert (position != null);
 			assert (position.getIdentifier() != null);
+			
+			logger.info("Created MapItemPosition " + position.getID().toDebugString() + " MapID " + position.getMapId());
+			
 			return position;
 			
 		} catch (IntegerException e) {
@@ -163,9 +166,12 @@ public class TopologyManagerTest {
 		
 		try {
 			MapItemPosition[] positionsByMap = topologyManager.getPositionsByMap(mapId);
+			logger.info("1 - Found " + positionsByMap.length + " MapItemPositions for map " + mapId.toDebugString());
 			if (positionsByMap == null || positionsByMap.length == 0) {
 				addMapItemPosition();
+				
 				positionsByMap = topologyManager.getPositionsByMap(mapId);
+				logger.info("2 - Found " + positionsByMap.length + " MapItemPositions for map " + mapId.toDebugString());
 			}
 			
 			assert(positionsByMap != null);
@@ -291,6 +297,7 @@ public class TopologyManagerTest {
 	public void addNetwork() {
 		Network network = new Network();
 		
+		network.setName(Network.createName(sourceAddress));
 		network.setCreated(new Date());
 		network.setDescription("My Network");
 		network.setLayer(LayerTypeEnum.TwoAndHalf);
@@ -308,6 +315,7 @@ public class TopologyManagerTest {
 		List<Network> lowerNetworks = new ArrayList<Network>();
 		Network lowerNetwork = new Network();
 		
+		lowerNetwork.setName(Network.createName(destAddress));
 		lowerNetwork.setCreated(new Date());
 		lowerNetwork.setDescription("My Network");
 		lowerNetwork.setLayer(LayerTypeEnum.TwoAndHalf);
@@ -351,7 +359,9 @@ public class TopologyManagerTest {
 				network = topologyManager.getNetworkByAddress(sourceAddress);
 			}
 		
+			
 			destnetwork = topologyManager.getNetworkByAddress(destAddress);
+			
 			
 		} catch (IntegerException e) {
 			
