@@ -356,11 +356,11 @@ public class TopologyManagerTest {
 			if (network == null) {
 				insertInterDeviceLink();
 				
-				network = topologyManager.getNetworkByName(Network.createName(sourceAddress));
+				network = topologyManager.getNetworkByAddress(sourceAddress);
 			}
 		
 			
-			destnetwork = topologyManager.getNetworkByName(Network.createName(destAddress));
+			destnetwork = topologyManager.getNetworkByAddress(destAddress);
 			
 			
 		} catch (IntegerException e) {

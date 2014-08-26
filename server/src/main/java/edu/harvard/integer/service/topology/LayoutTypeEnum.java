@@ -31,77 +31,45 @@
  *      
  */
 
-package edu.harvard.integer.common;
+package edu.harvard.integer.service.topology;
 
-import java.io.Serializable;
-
-import javax.persistence.Embeddable;
+import edu.harvard.integer.common.properties.EnumPropertyNameInterface;
 
 /**
  * @author David Taylor
  *
  */
-@Embeddable
-public class ChangedField implements Serializable {
-
-	/**
-	 * Serial Version UID
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private String fieldName = null;
+public enum LayoutTypeEnum implements EnumPropertyNameInterface<LayoutTypeEnum>{
+	RandomLayout,
+	KKLayout,
+	KKLayoutNoGravity,
+	CircleLayout,
+	ISOMLayout,
+	RadialTreeLayout,
+	MinimumSpanning,
+	FRLayout,
+	Eliptical;
 	
-	private String oldValue = null;
+	private LayoutTypeEnum() {
+		
+	}
 	
-	private String newValue = null;
+	/**
+	 * Get the default value for this Enum. This is used when loading the
+	 * value from the property file and the value is not in the property file.
+	 */
+	public LayoutTypeEnum getDefaultValue() {
+		return Eliptical;
+	}
 
+	/* (non-Javadoc)
+	 * @see edu.harvard.integer.common.properties.EnumPropertyNameInterface#getPropertyName()
+	 */
+	@Override
+	public String getPropertyName() {
 	
-	/**
-	 * @return the fieldName
-	 */
-	public String getFieldName() {
-		return fieldName;
+		return name();
 	}
 
-	/**
-	 * @param fieldName the fieldName to set
-	 */
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
-
-	/**
-	 * @return the oldValue
-	 */
-	public String getOldValue() {
-		return oldValue;
-	}
-
-	/**
-	 * @param oldValue the oldValue to set
-	 */
-	public void setOldValue(String oldValue) {
-		if (oldValue != null && oldValue.length() > 255)
-			this.oldValue = oldValue.substring(0, 255);
-		else
-			this.oldValue = oldValue;
-	}
-
-	/**
-	 * @return the newValue
-	 */
-	public String getNewValue() {
-		return newValue;
-	}
-
-	/**
-	 * @param newValue the newValue to set
-	 */
-	public void setNewValue(String newValue) {
-		if (newValue != null && newValue.length() > 255)
-			this.newValue = newValue.substring(0, 255);
-		else
-			this.newValue = newValue;
-	}
 	
 }

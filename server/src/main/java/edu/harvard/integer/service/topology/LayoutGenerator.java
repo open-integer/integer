@@ -36,7 +36,6 @@ package edu.harvard.integer.service.topology;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.collections15.functors.ConstantTransformer;
 import org.slf4j.Logger;
@@ -52,7 +51,6 @@ import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
-import edu.uci.ics.jung.algorithms.layout.DAGLayout;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
 import edu.uci.ics.jung.algorithms.layout.KKLayout;
@@ -72,15 +70,21 @@ import edu.uci.ics.jung.graph.SparseMultigraph;
  */
 public class LayoutGenerator {
 
-	private static int lastCall = 0;
+	private static LayoutTypeEnum lastCall = LayoutTypeEnum.RandomLayout;
 
 	private Logger logger = LoggerFactory.getLogger(LayoutGenerator.class);
 
-	public LayoutGenerator() {
-
+	private LayoutTypeEnum layoutType = null;
+	
+	public LayoutGenerator( LayoutTypeEnum layoutType) {
+		this.layoutType = layoutType;
+		if (layoutType.equals(LayoutTypeEnum.RandomLayout))
+			lastCall = LayoutTypeEnum.FRLayout;
+		else
+			lastCall = layoutType;
 	}
 
-	public NetworkInformation generatePositions(
+	public HashMap<ID,MapItemPosition> generatePositions(
 			NetworkInformation networkInformation) throws IntegerException {
 
 		Graph<LayoutNode, LayoutLink> graph = null;
@@ -90,15 +94,11 @@ public class LayoutGenerator {
 
 		HashMap<ID, LayoutNode> nodeMap = new HashMap<ID, LayoutNode>();
 
-		LayoutNode rootNode = null;
-
+	
 		for (final Network network : networkInformation.getNetworks()) {
 
 			LayoutNode node = new LayoutNode();
 			node.setItemId(network.getID());
-			
-			if (network.getName() != null && network.getName().equals("0.0.0.0")) 
-				rootNode = node;
 			
 			graph.addVertex(node);
 			forest.addVertex(node);
@@ -122,32 +122,36 @@ public class LayoutGenerator {
 		RadialTreeLayout<LayoutNode, LayoutLink> forestLayout = null;
 		TreeLayout<LayoutNode, LayoutLink> treeLayout = null;
 
+		if (layoutType.equals(LayoutTypeEnum.RandomLayout)) {
+			if (lastCall.ordinal() >= LayoutTypeEnum.values().length)
+				lastCall = LayoutTypeEnum.values()[1];
+			else 
+				lastCall = LayoutTypeEnum.values()[lastCall.ordinal() + 1];
+		}
+			
 		logger.info("Layout method " + lastCall);
 
 		switch (lastCall) {
-		case 0:
+		case KKLayout:
 			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
-			lastCall++;
+			
 			break;
 
-		case 1:
+		case KKLayoutNoGravity:
 			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
 			((KKLayout<LayoutNode, LayoutLink>) layout)
 					.setAdjustForGravity(false);
-			lastCall++;
 			break;
 
-		case 2:
+		case CircleLayout:
 			layout = new CircleLayout<LayoutNode, LayoutLink>(graph);
-			lastCall++;
 			break;
 
-		case 3:
+		case ISOMLayout:
 			layout = new ISOMLayout<LayoutNode, LayoutLink>(graph);
-			lastCall++;
 			break;
 
-		case 4:
+//		case 4:
 //			layout = new DAGLayout<LayoutNode, LayoutLink>(graph);
 //			if (rootNode != null)
 //				((DAGLayout<LayoutNode, LayoutLink>) layout).setRoot(rootNode);
@@ -155,12 +159,12 @@ public class LayoutGenerator {
 //			lastCall++;
 //			break;
 
-		case 5:
+		case RadialTreeLayout:
 			forestLayout = new RadialTreeLayout<LayoutNode, LayoutLink>(forest);
-			lastCall++;
+			
 			break;
 
-		case 6:
+		case MinimumSpanning:
 			MinimumSpanningForest2<LayoutNode, LayoutLink> prim = new MinimumSpanningForest2<LayoutNode, LayoutLink>(
 					graph, new DelegateForest<LayoutNode, LayoutLink>(),
 					DelegateTree.<LayoutNode, LayoutLink> getFactory(),
@@ -169,12 +173,16 @@ public class LayoutGenerator {
 			forest = prim.getForest();
 			treeLayout = new TreeLayout<LayoutNode, LayoutLink>(forest);
 
-			lastCall++;
+			
 			break;
 
+		case Eliptical:
+			break;
+			
+		case FRLayout:
 		default:
 			layout = new FRLayout<LayoutNode, LayoutLink>(graph);
-			lastCall = 0;
+			
 			break;
 		}
 
@@ -213,7 +221,8 @@ public class LayoutGenerator {
 				mapItemPosition.setXposition(transform.getX());
 				mapItemPosition.setYposition(transform.getY());
 
-			} else {
+			} else if (forestLayout != null) {
+ 				
 				PolarPoint polarPoint = forestLayout.getPolarLocations().get(node);
 				if (polarPoint != null) {
 					
@@ -232,9 +241,8 @@ public class LayoutGenerator {
 			positions.put(node.getItemId(), mapItemPosition);
 		}
 
-		networkInformation.setPositions(positions);
 
-		return networkInformation;
+		return positions;
 	}
 
 	public HashMap<ID, MapItemPosition> generatePositions(Network network)
@@ -267,8 +275,21 @@ public class LayoutGenerator {
 				myLink.setDestId(link.getDestinationServiceElementId());
 
 				LayoutNode srcNode = nodeMap.get(link.getSourceServiceElementId());
+				if (srcNode == null) {
+					srcNode = new LayoutNode();
+					srcNode.setItemId(link.getSourceNetworkId());
+					
+					nodeMap.put(srcNode.getItemId(), srcNode);
+				}
 				LayoutNode destNode = nodeMap.get(link
 						.getDestinationServiceElementId());
+				if (destNode == null) {
+					destNode = new LayoutNode();
+					destNode.setItemId(link.getDestinationNetworkId());
+					
+					nodeMap.put(destNode.getItemId(), destNode);
+				}
+					
 				
 				if (srcNode != null && destNode != null) {
 					graph.addEdge(myLink, srcNode, destNode);
@@ -281,51 +302,52 @@ public class LayoutGenerator {
 		TreeLayout<LayoutNode, LayoutLink> treeLayout = null;
 		AbstractLayout<LayoutNode, LayoutLink> layout = null;
 		RadialTreeLayout<LayoutNode, LayoutLink> forestLayout = null;
-
+		
+		if (layoutType.equals(LayoutTypeEnum.RandomLayout)) {
+			if (lastCall.ordinal() >= LayoutTypeEnum.values().length)
+				lastCall = LayoutTypeEnum.values()[1];
+			else 
+				lastCall = LayoutTypeEnum.values()[lastCall.ordinal() + 1];
+		}
+		
 		StringBuffer b = new StringBuffer("Create Layout:  ( ").append(lastCall).append(" )" );
 		switch (lastCall) {
-		case 0:
+		case KKLayout:
 			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
 			b.append("KKLayout");
-			lastCall++;
 			break;
 
-		case 1:
+		case KKLayoutNoGravity:
 			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
 			((KKLayout<LayoutNode, LayoutLink>) layout)
 					.setAdjustForGravity(false);
 			
 			b.append("KKLayout adjustForGravity off");
-			lastCall++;
 			break;
 
-		case 2:
+		case CircleLayout:
 			layout = new CircleLayout<LayoutNode, LayoutLink>(graph);
 			b.append("CircleLayout");
-			lastCall++;
 			break;
 
-		case 3:
+		case ISOMLayout:
 			layout = new ISOMLayout<LayoutNode, LayoutLink>(graph);
 			b.append("ISOMLayout");
-			lastCall++;
 			break;
 
-		case 4:
+//		case 4:
 //			layout = new DAGLayout<LayoutNode, LayoutLink>(graph);
-			lastCall++;
 //			break;
 
-		case 5:
+		case RadialTreeLayout:
 			forestLayout = new RadialTreeLayout<LayoutNode, LayoutLink>(forest);
 			forestLayout.setSize(new Dimension(900, 800));
 			forestLayout.initialize();
 
 			b.append("RadialTreeLayout");
-			lastCall++;
 			break;
 			
-		case 6:
+		case MinimumSpanning:
 			MinimumSpanningForest2<LayoutNode, LayoutLink> prim = new MinimumSpanningForest2<LayoutNode, LayoutLink>(
 					graph, new DelegateForest<LayoutNode, LayoutLink>(),
 					DelegateTree.<LayoutNode, LayoutLink> getFactory(),
@@ -334,13 +356,15 @@ public class LayoutGenerator {
 			forest = prim.getForest();
 			treeLayout = new TreeLayout<LayoutNode, LayoutLink>(forest);
 			b.append("MinimumSpanningForest2");
-			lastCall++;
 			break;
 
+		case Eliptical:
+			break;
+			
+		case FRLayout:
 		default:
 			layout = new FRLayout<LayoutNode, LayoutLink>(graph);
 			b.append("FRLayout");
-			lastCall = 0;
 			break;
 		}
 
@@ -379,7 +403,7 @@ public class LayoutGenerator {
 				mapItemPosition.setXposition(transform.getX());
 				mapItemPosition.setYposition(transform.getY());
 
-			} else {
+			} else if (forestLayout != null) {
 				if (forestLayout.getPolarLocations().get(node) != null) {
 					Point2D transform = forestLayout.transform(node);
 					node.setXposition(transform.getX());

@@ -31,77 +31,16 @@
  *      
  */
 
-package edu.harvard.integer.common;
-
-import java.io.Serializable;
-
-import javax.persistence.Embeddable;
+package edu.harvard.integer.common.properties;
 
 /**
  * @author David Taylor
  *
  */
-@Embeddable
-public class ChangedField implements Serializable {
+public interface EnumPropertyNameInterface<T> {
 
-	/**
-	 * Serial Version UID
-	 */
-	private static final long serialVersionUID = 1L;
+	public T getDefaultValue();
 
-	private String fieldName = null;
-	
-	private String oldValue = null;
-	
-	private String newValue = null;
-
-	
-	/**
-	 * @return the fieldName
-	 */
-	public String getFieldName() {
-		return fieldName;
-	}
-
-	/**
-	 * @param fieldName the fieldName to set
-	 */
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
-
-	/**
-	 * @return the oldValue
-	 */
-	public String getOldValue() {
-		return oldValue;
-	}
-
-	/**
-	 * @param oldValue the oldValue to set
-	 */
-	public void setOldValue(String oldValue) {
-		if (oldValue != null && oldValue.length() > 255)
-			this.oldValue = oldValue.substring(0, 255);
-		else
-			this.oldValue = oldValue;
-	}
-
-	/**
-	 * @return the newValue
-	 */
-	public String getNewValue() {
-		return newValue;
-	}
-
-	/**
-	 * @param newValue the newValue to set
-	 */
-	public void setNewValue(String newValue) {
-		if (newValue != null && newValue.length() > 255)
-			this.newValue = newValue.substring(0, 255);
-		else
-			this.newValue = newValue;
-	}
+	public String getPropertyName();
 	
 }

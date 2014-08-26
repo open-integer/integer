@@ -34,6 +34,7 @@
 package edu.harvard.integer.service.topology.device;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -107,23 +108,35 @@ public class ServiceElememtAccessManager extends BaseManager implements
 			serviceElement = dbServiceElement;
 			
 			if (changedFields != null && changedFields.size() > 0) {
+				
+					
 				StringBuffer b = new StringBuffer();
 				b.append("Changes for ").append(serviceElement.getID().toDebugString());
-				for (ChangedField change : changedFields) {
-					b.append(" ").append(change.getFieldName());
-					b.append(" new ").append(change.getNewValue());
-					b.append(" old ").append(change.getOldValue());
+				for (Iterator<ChangedField> itr = changedFields.iterator(); itr.hasNext(); ) {
+					ChangedField change = itr.next();
+				
+					if (change.getFieldName().equals("getIdentifier") || change.getFieldName().equals("getUpdated")) {
+						itr.remove();
+						
+					} else {
+						b.append(" ").append(change.getFieldName());
+						b.append(" new ").append(change.getNewValue());
+						b.append(" old ").append(change.getOldValue());
+					
+					}
 				}
 				
-				logger.info(b.toString());
-				
-				ServiceElementHistory serviceElementHistory = new ServiceElementHistory();
-				ServiceElementHistoryDAO serviceElementHistoryDAO = dbm.getServiceElementHistoryDAO();
-				serviceElementHistoryDAO.copyFields(serviceElementHistory, serviceElement);
-				serviceElementHistory.setServiceElementId(serviceElement.getID());
-				serviceElementHistory.setChangedFields(changedFields);
-				
-				serviceElementHistoryDAO.update(serviceElementHistory);
+				if (changedFields.size() > 0) {
+					logger.info(b.toString());
+
+					ServiceElementHistory serviceElementHistory = new ServiceElementHistory();
+					ServiceElementHistoryDAO serviceElementHistoryDAO = dbm.getServiceElementHistoryDAO();
+					serviceElementHistoryDAO.copyFields(serviceElementHistory, serviceElement);
+					serviceElementHistory.setServiceElementId(serviceElement.getID());
+					serviceElementHistory.setChangedFields(changedFields);
+
+					serviceElementHistoryDAO.update(serviceElementHistory);
+				}
 			}
 		}
 		

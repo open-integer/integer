@@ -74,7 +74,6 @@ import edu.harvard.integer.common.snmp.MaxAccess;
 import edu.harvard.integer.common.snmp.SNMP;
 import edu.harvard.integer.common.snmp.SNMPTable;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
-import edu.harvard.integer.common.topology.NetworkLayer;
 import edu.harvard.integer.common.topology.ServiceElement;
 import edu.harvard.integer.common.topology.ServiceElementAssociation;
 import edu.harvard.integer.common.topology.ServiceElementAssociationType;

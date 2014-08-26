@@ -43,9 +43,12 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import com.fasterxml.jackson.databind.deser.std.NumberDeserializers.IntegerDeserializer;
+
 import edu.harvard.integer.common.Address;
 import edu.harvard.integer.common.ID;
 import edu.harvard.integer.common.exception.IntegerException;
+import edu.harvard.integer.common.properties.IntegerProperties;
 import edu.harvard.integer.common.topology.InterDeviceLink;
 import edu.harvard.integer.common.topology.InterNetworkLink;
 import edu.harvard.integer.common.topology.LayerTypeEnum;
@@ -160,8 +163,8 @@ public class TopologyManager extends BaseManager implements
 			}
 		}
 		
-		LayoutGenerator generator = new LayoutGenerator();
-		networkInfo = generator.generatePositions(networkInfo);
+		LayoutGenerator generator = new LayoutGenerator(IntegerProperties.getInstance().getEnumProperty(LayoutTypeEnum.CircleLayout));
+		networkInfo.setPositions(generator.generatePositions(networkInfo));
 		
 		for (ID id : networkInfo.getPositions().keySet()) {
 			MapItemPosition mapItemPosition = networkInfo.getPositions().get(id);
@@ -277,12 +280,18 @@ public class TopologyManager extends BaseManager implements
 					+ interDeviceLink.getSourceAddress().getAddress() + " and "
 					+ interDeviceLink.getSourceAddress().getMask());
 
-		String sourceNetworkName = Network.createName(interDeviceLink
-				.getSourceAddress());
+		String sourceNetworkName = interDeviceLink.getSourceServiceElementId().getName(); // Network.createName(interDeviceLink
+				// .getSourceAddress());
 		
 
-		String destNetworkName = Network.createName(interDeviceLink
-				.getDestinationAddress());
+		String destNetworkName = interDeviceLink.getDestinationServiceElementId().getName(); // Network.createName(interDeviceLink
+				// .getDestinationAddress());
+
+		//if (logger.isDebugEnabled())
+			logger.info("Create network name from "
+					+ sourceNetworkName + " and "
+					+ destNetworkName);
+
 		
 		if (sourceNetworkName == null || sourceNetworkName.equals("N/A")) {
 			if (destNetworkName != null && !destNetworkName.equals("N/A"))
@@ -300,7 +309,7 @@ public class TopologyManager extends BaseManager implements
 
 		Network sourceNetwork = networkDao.findByName(sourceNetworkName);
 		if (sourceNetwork == null)
-			sourceNetwork = networkDao.update(createNetwork(interDeviceLink
+			sourceNetwork = networkDao.update(createNetwork(sourceNetworkName, interDeviceLink
 					.getSourceAddress()));
 
 		addInterDeviceLinkToNetwork(interDeviceLink, sourceNetwork);
@@ -309,7 +318,7 @@ public class TopologyManager extends BaseManager implements
 
 		Network destNetwork = networkDao.findByName(destNetworkName);
 		if (destNetwork == null)
-			destNetwork = networkDao.update(createNetwork(interDeviceLink
+			destNetwork = networkDao.update(createNetwork(destNetworkName, interDeviceLink
 					.getDestinationAddress()));
 
 		addServiceElementToNetwork(
@@ -429,11 +438,11 @@ public class TopologyManager extends BaseManager implements
 
 	}
 
-	private Network createNetwork(Address address) {
+	private Network createNetwork(String name, Address address) {
 		Network network = new Network();
 		network.setCreated(new Date());
 		network.setModified(new Date());
-		network.setName(Network.createName(address));
+		network.setName(name);
 		network.setAddress(address);
 		network.setServiceElements(new ArrayList<ServiceElement>());
 		network.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
@@ -497,7 +506,7 @@ public class TopologyManager extends BaseManager implements
 				Network network = networkDao.findByName(sourceNetworkName);
 
 				if (network == null) {
-					network = createNetwork(address);
+					network = createNetwork(topologyElement.getServiceElementId().getName(), address);
 					network = networkDao.update(network);
 				}
 
@@ -668,7 +677,7 @@ public class TopologyManager extends BaseManager implements
 		
 		if (network.getServiceElements() != null && network.getServiceElements().size() > 0) {
 		
-			LayoutGenerator layoutGenerator = new LayoutGenerator();
+			LayoutGenerator layoutGenerator = new LayoutGenerator(IntegerProperties.getInstance().getEnumProperty(LayoutTypeEnum.CircleLayout));
 			generatePositions = layoutGenerator.generatePositions(network);
 		} else 
 			generatePositions = new HashMap<ID, MapItemPosition>();
