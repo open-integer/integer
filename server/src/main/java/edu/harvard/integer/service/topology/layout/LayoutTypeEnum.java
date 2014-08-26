@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.service.topology;
+package edu.harvard.integer.service.topology.layout;
 
 import edu.harvard.integer.common.properties.EnumPropertyNameInterface;
 

@@ -31,81 +31,26 @@
  *      
  */
 
-package edu.harvard.integer.service.topology;
+package edu.harvard.integer.service.topology.layout;
 
-import edu.harvard.integer.common.ID;
+import java.awt.Dimension;
+import java.awt.geom.Point2D;
 
 /**
  * @author David Taylor
- * 
+ *
  */
-public class LayoutNode {
+public interface TopologyTreeLayoutInterface {
 
-	private ID itemId = null;
-
-	private String iconName = null;
+	public void setSize(Dimension size);
 	
-	private double xposition = 0.0;
+	public boolean addLayoutNode(LayoutNode node);
+	
+	public boolean addLayoutLInk(LayoutLink link, LayoutNode sourcetNode, LayoutNode destinationNode);
+	
+	public void initialize();
+	
+	public Point2D getPoint(LayoutNode node);
 
-	private double yposition = 0.0;
-
-	/**
-	 * @return the itemId
-	 */
-	public ID getItemId() {
-		return itemId;
-	}
-
-	/**
-	 * @param itemId
-	 *            the itemId to set
-	 */
-	public void setItemId(ID itemId) {
-		this.itemId = itemId;
-	}
-
-	/**
-	 * @return the xposition
-	 */
-	public double getXposition() {
-		return xposition;
-	}
-
-	/**
-	 * @param xposition
-	 *            the xposition to set
-	 */
-	public void setXposition(double xposition) {
-		this.xposition = xposition;
-	}
-
-	/**
-	 * @return the yposition
-	 */
-	public double getYposition() {
-		return yposition;
-	}
-
-	/**
-	 * @param yposition
-	 *            the yposition to set
-	 */
-	public void setYposition(double yposition) {
-		this.yposition = yposition;
-	}
-
-	/**
-	 * @return the iconName
-	 */
-	public String getIconName() {
-		return iconName;
-	}
-
-	/**
-	 * @param iconName the iconName to set
-	 */
-	public void setIconName(String iconName) {
-		this.iconName = iconName;
-	}
-
+	
 }

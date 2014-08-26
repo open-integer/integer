@@ -70,6 +70,7 @@ import edu.harvard.integer.service.persistance.dao.topology.PathDAO;
 import edu.harvard.integer.service.persistance.dao.topology.ServiceElementDAO;
 import edu.harvard.integer.service.persistance.dao.topology.TopologyElementDAO;
 import edu.harvard.integer.service.persistance.dao.user.LocationDAO;
+import edu.harvard.integer.service.topology.layout.LayoutTypeEnum;
 
 /**
  * 
@@ -275,7 +276,7 @@ public class TopologyManager extends BaseManager implements
 
 		NetworkDAO networkDao = persistenceManager.getNetworkDAO();
 
-		if (logger.isDebugEnabled())
+		if (logger.isDebugEnabled() && interDeviceLink.getSourceAddress() != null)
 			logger.debug("Create network name from "
 					+ interDeviceLink.getSourceAddress().getAddress() + " and "
 					+ interDeviceLink.getSourceAddress().getMask());
@@ -346,14 +347,17 @@ public class TopologyManager extends BaseManager implements
 			link.setCreated(new Date());
 			link.setModified(new Date());
 
-			link.setSourceAddress(new Address(Address.getSubNet(interDeviceLink
-					.getSourceAddress()), interDeviceLink.getSourceAddress()
-					.getMask()));
+			if (interDeviceLink.getSourceAddress() != null) 
+				link.setSourceAddress(new Address(Address.getSubNet(interDeviceLink
+						.getSourceAddress()), interDeviceLink.getSourceAddress()
+						.getMask()));
+			
 			link.setSourceNetworkId(interDeviceLink.getSourceNetworkId());
 
-			link.setDestinationAddress(new Address(Address
-					.getSubNet(interDeviceLink.getDestinationAddress()),
-					interDeviceLink.getDestinationAddress().getMask()));
+			if (interDeviceLink.getDestinationAddress() != null)
+				link.setDestinationAddress(new Address(Address
+						.getSubNet(interDeviceLink.getDestinationAddress()),
+						interDeviceLink.getDestinationAddress().getMask()));
 
 			link.setDestinationNetworkId(interDeviceLink
 					.getDestinationNetworkId());

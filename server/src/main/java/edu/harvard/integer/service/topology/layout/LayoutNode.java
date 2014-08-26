@@ -31,7 +31,7 @@
  *      
  */
 
-package edu.harvard.integer.service.topology;
+package edu.harvard.integer.service.topology.layout;
 
 import edu.harvard.integer.common.ID;
 
@@ -39,57 +39,95 @@ import edu.harvard.integer.common.ID;
  * @author David Taylor
  * 
  */
-public class LayoutLink {
+public class LayoutNode {
 
-	private ID linkId = null;
+	private ID itemId = null;
 
-	private ID sourceId = null;
+	private String iconName = null;
+	
+	private double xposition = 0.0;
 
-	private ID destId = null;
+	private double yposition = 0.0;
 
 	/**
-	 * @return the sourceId
+	 * @return the itemId
 	 */
-	public ID getSourceId() {
-		return sourceId;
+	public ID getItemId() {
+		return itemId;
 	}
 
 	/**
-	 * @param sourceId
-	 *            the sourceId to set
+	 * @param itemId
+	 *            the itemId to set
 	 */
-	public void setSourceId(ID sourceId) {
-		this.sourceId = sourceId;
+	public void setItemId(ID itemId) {
+		this.itemId = itemId;
 	}
 
 	/**
-	 * @return the destId
+	 * @return the xposition
 	 */
-	public ID getDestId() {
-		return destId;
+	public double getXposition() {
+		return xposition;
 	}
 
 	/**
-	 * @param destId
-	 *            the destId to set
+	 * @param xposition
+	 *            the xposition to set
 	 */
-	public void setDestId(ID destId) {
-		this.destId = destId;
+	public void setXposition(double xposition) {
+		this.xposition = xposition;
 	}
 
 	/**
-	 * @return the linkId
+	 * @return the yposition
 	 */
-	public ID getLinkId() {
-		return linkId;
+	public double getYposition() {
+		return yposition;
 	}
 
 	/**
-	 * @param linkId
-	 *            the linkId to set
+	 * @param yposition
+	 *            the yposition to set
 	 */
-	public void setLinkId(ID linkId) {
-		this.linkId = linkId;
+	public void setYposition(double yposition) {
+		this.yposition = yposition;
+	}
+
+	/**
+	 * @return the iconName
+	 */
+	public String getIconName() {
+		return iconName;
+	}
+
+	/**
+	 * @param iconName the iconName to set
+	 */
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+
+		return getItemId().toDebugString().hashCode();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj instanceof LayoutNode) {
+			LayoutNode other = (LayoutNode) obj;
+			return itemId.toDebugString().equals(other.getItemId().toDebugString());
+		} else
+			return super.equals(obj);
 	}
 
 }

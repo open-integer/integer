@@ -49,6 +49,17 @@ import edu.harvard.integer.common.topology.MapItemPosition;
 import edu.harvard.integer.common.topology.Network;
 import edu.harvard.integer.common.topology.NetworkInformation;
 import edu.harvard.integer.common.topology.ServiceElement;
+import edu.harvard.integer.service.topology.layout.LayoutLink;
+import edu.harvard.integer.service.topology.layout.LayoutNode;
+import edu.harvard.integer.service.topology.layout.LayoutTypeEnum;
+import edu.harvard.integer.service.topology.layout.MinimumSpanningTree;
+import edu.harvard.integer.service.topology.layout.TopologyCircleLayout;
+import edu.harvard.integer.service.topology.layout.TopologyFRLayout;
+import edu.harvard.integer.service.topology.layout.TopologyISOMLayout;
+import edu.harvard.integer.service.topology.layout.TopologyKKLayout;
+import edu.harvard.integer.service.topology.layout.TopologyKKLayoutNoGravity;
+import edu.harvard.integer.service.topology.layout.TopologyRadialTree;
+import edu.harvard.integer.service.topology.layout.TopologyTreeLayoutInterface;
 import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
@@ -84,343 +95,159 @@ public class LayoutGenerator {
 			lastCall = layoutType;
 	}
 
+	private TopologyTreeLayoutInterface getTreeLayout() {
+		TopologyTreeLayoutInterface layout = null;
+		
+		switch (layoutType) {
+		case MinimumSpanning:
+			layout = new MinimumSpanningTree();
+			break;
+
+		case RadialTreeLayout:
+			layout = new TopologyRadialTree();
+			break;
+			
+		case CircleLayout:
+			layout = new TopologyCircleLayout();
+			break;
+			
+		case FRLayout:
+			layout = new TopologyFRLayout();
+			break;
+			
+		case ISOMLayout:
+			layout = new TopologyISOMLayout();
+			break;
+			
+		case KKLayout:
+			layout = new TopologyKKLayout();
+			break;
+			
+		case KKLayoutNoGravity:
+			layout = new TopologyKKLayoutNoGravity();
+			break;
+			
+		default:
+			logger.error("Unsupported layout type " + layoutType);
+
+		}
+		
+		return layout;
+	}
+	
 	public HashMap<ID,MapItemPosition> generatePositions(
 			NetworkInformation networkInformation) throws IntegerException {
-
-		Graph<LayoutNode, LayoutLink> graph = null;
-		Forest<LayoutNode, LayoutLink> forest = new DelegateForest<LayoutNode, LayoutLink>();
-
-		graph = new SparseMultigraph<LayoutNode, LayoutLink>();
-
-		HashMap<ID, LayoutNode> nodeMap = new HashMap<ID, LayoutNode>();
-
-	
+		
+		TopologyTreeLayoutInterface layout = getTreeLayout();
+		
+		HashMap<ID, LayoutNode> nodes = new HashMap<ID, LayoutNode>();
+		
+		
 		for (final Network network : networkInformation.getNetworks()) {
 
 			LayoutNode node = new LayoutNode();
 			node.setItemId(network.getID());
 			
-			graph.addVertex(node);
-			forest.addVertex(node);
-
-			nodeMap.put(node.getItemId(), node);
+			if (!layout.addLayoutNode(node) ) {
+				logger.warn("Unable to add " + network.getID().toDebugString() + " To graph!!");
+			}
+			
+			nodes.put(node.getItemId(), node);
+			
 		}
-
+		
 		for (final InterNetworkLink link : networkInformation.getLinks()) {
 			LayoutLink myLink = new LayoutLink();
 			myLink.setLinkId(link.getID());
 			myLink.setSourceId(link.getSourceNetworkId());
+		
 			myLink.setDestId(link.getDestinationNetworkId());
+			
+			
+			if (nodes.get(link.getSourceNetworkId()) == null) {
+				logger.warn("Node " + link.getSourceNetworkId() + " not found for link " + link.getName());
+				continue;
+			}
+			
 
-			graph.addEdge(myLink, nodeMap.get(link.getSourceNetworkId()),
-					nodeMap.get(link.getDestinationNetworkId()));
-			forest.addEdge(myLink, nodeMap.get(link.getSourceNetworkId()),
-					nodeMap.get(link.getDestinationNetworkId()));
+			if (nodes.get(link.getDestinationNetworkId()) == null) {
+				logger.warn("Node " + link.getDestinationNetworkId() + " not found for link " + link.getName());
+				continue;
+			}
+			
+			if (!layout.addLayoutLInk(myLink, nodes.get(link.getSourceNetworkId()), nodes.get(link.getDestinationNetworkId()))) {
+				logger.warn("Unable to add link  from " + link.getSourceNetworkId() + " to " + link.getDestinationNetworkId() + " to graph");
+			}
 		}
-
-		AbstractLayout<LayoutNode, LayoutLink> layout = null;
-		RadialTreeLayout<LayoutNode, LayoutLink> forestLayout = null;
-		TreeLayout<LayoutNode, LayoutLink> treeLayout = null;
-
-		if (layoutType.equals(LayoutTypeEnum.RandomLayout)) {
-			if (lastCall.ordinal() >= LayoutTypeEnum.values().length)
-				lastCall = LayoutTypeEnum.values()[1];
-			else 
-				lastCall = LayoutTypeEnum.values()[lastCall.ordinal() + 1];
-		}
+		
+		return getPositions(layout, nodes);
 			
-		logger.info("Layout method " + lastCall);
+	}
+	
+	private HashMap<ID, MapItemPosition> getPositions(TopologyTreeLayoutInterface layout, HashMap<ID, LayoutNode> nodes) {
 
-		switch (lastCall) {
-		case KKLayout:
-			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
-			
-			break;
-
-		case KKLayoutNoGravity:
-			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
-			((KKLayout<LayoutNode, LayoutLink>) layout)
-					.setAdjustForGravity(false);
-			break;
-
-		case CircleLayout:
-			layout = new CircleLayout<LayoutNode, LayoutLink>(graph);
-			break;
-
-		case ISOMLayout:
-			layout = new ISOMLayout<LayoutNode, LayoutLink>(graph);
-			break;
-
-//		case 4:
-//			layout = new DAGLayout<LayoutNode, LayoutLink>(graph);
-//			if (rootNode != null)
-//				((DAGLayout<LayoutNode, LayoutLink>) layout).setRoot(rootNode);
-//			
-//			lastCall++;
-//			break;
-
-		case RadialTreeLayout:
-			forestLayout = new RadialTreeLayout<LayoutNode, LayoutLink>(forest);
-			
-			break;
-
-		case MinimumSpanning:
-			MinimumSpanningForest2<LayoutNode, LayoutLink> prim = new MinimumSpanningForest2<LayoutNode, LayoutLink>(
-					graph, new DelegateForest<LayoutNode, LayoutLink>(),
-					DelegateTree.<LayoutNode, LayoutLink> getFactory(),
-					new ConstantTransformer(1.0));
-
-			forest = prim.getForest();
-			treeLayout = new TreeLayout<LayoutNode, LayoutLink>(forest);
-
-			
-			break;
-
-		case Eliptical:
-			break;
-			
-		case FRLayout:
-		default:
-			layout = new FRLayout<LayoutNode, LayoutLink>(graph);
-			
-			break;
-		}
-
-		if (layout != null) {
-			layout.setSize(new Dimension(900, 800));
-			layout.initialize();
-		} else if (treeLayout != null) {
-			treeLayout.initialize();
-		} else if (forestLayout != null) {
-			forestLayout.setSize(new Dimension(900, 800));
-			forestLayout.initialize();
-		}
-
+		layout.setSize(new Dimension(900, 800));
+		layout.initialize();
+		
 		HashMap<ID, MapItemPosition> positions = new HashMap<ID, MapItemPosition>();
 
-		for (ID id : nodeMap.keySet()) {
-			LayoutNode node = nodeMap.get(id);
+		for (ID id : nodes.keySet()) {
+			LayoutNode node = nodes.get(id);
+			Point2D position = layout.getPoint(node);
+			
+			if (position != null) {
+				node.setXposition(position.getX());
+				node.setYposition(position.getY());
 
-			MapItemPosition mapItemPosition = null;
-			if (layout != null) {
-				node.setXposition(layout.getX(node));
-				node.setYposition(layout.getY(node));
-
-				mapItemPosition = new MapItemPosition();
+				MapItemPosition mapItemPosition = new MapItemPosition();
 				mapItemPosition.setItemId(node.getItemId());
-				mapItemPosition.setXposition(layout.getX(node));
-				mapItemPosition.setYposition(layout.getY(node));
-			} else if (treeLayout != null) {
-				Point2D transform = treeLayout.transform(node);
+				mapItemPosition.setXposition(position.getX());
+				mapItemPosition.setYposition(position.getY());
 
-				node.setXposition(transform.getX());
-				node.setYposition(transform.getY());
-
-				mapItemPosition = new MapItemPosition();
-				mapItemPosition.setItemId(node.getItemId());
-				mapItemPosition.setXposition(transform.getX());
-				mapItemPosition.setYposition(transform.getY());
-
-			} else if (forestLayout != null) {
- 				
-				PolarPoint polarPoint = forestLayout.getPolarLocations().get(node);
-				if (polarPoint != null) {
-					
-					Point2D transform = polarPoint.polarToCartesian(polarPoint);
-					//Point2D transform = forestLayout.transform(node);
-					node.setXposition(transform.getX());
-					node.setYposition(transform.getY());
-
-					mapItemPosition = new MapItemPosition();
-					mapItemPosition.setItemId(node.getItemId());
-					mapItemPosition.setXposition(transform.getX());
-					mapItemPosition.setYposition(transform.getY());
-				}
-			}
-
-			positions.put(node.getItemId(), mapItemPosition);
+				positions.put(id, mapItemPosition);
+			} else
+				logger.warn("No point found for " + id.toDebugString());
 		}
-
-
-		return positions;
+		
+			return positions;
 	}
-
+	
 	public HashMap<ID, MapItemPosition> generatePositions(Network network)
 			throws IntegerException {
-
-		Graph<LayoutNode, LayoutLink> graph = null;
-		Forest<LayoutNode, LayoutLink> forest = new DelegateForest<LayoutNode, LayoutLink>();
-
-		graph = new SparseMultigraph<LayoutNode, LayoutLink>();
-
-		HashMap<ID, LayoutNode> nodeMap = new HashMap<ID, LayoutNode>();
-
+		
+		TopologyTreeLayoutInterface layout = getTreeLayout();
+		
+		HashMap<ID, LayoutNode> nodes = new HashMap<ID, LayoutNode>();
+		
+		
 		for (final ServiceElement serviceElement : network.getServiceElements()) {
 
 			LayoutNode node = new LayoutNode();
 			node.setItemId(serviceElement.getID());
 			node.setIconName(serviceElement.getIconName());
 			
-			graph.addVertex(node);
-			forest.addVertex(node);
-
-			nodeMap.put(node.getItemId(), node);
+			if (!layout.addLayoutNode(node) ) {
+				logger.warn("Unable to add " + serviceElement.getID().toDebugString() + " To graph!!");
+			}
+			
+			nodes.put(node.getItemId(), node);
+			
 		}
-
-		if (network.getInterDeviceLinks() != null) {
-			for (final InterDeviceLink link : network.getInterDeviceLinks()) {
-				LayoutLink myLink = new LayoutLink();
-				myLink.setLinkId(link.getID());
-				myLink.setSourceId(link.getSourceServiceElementId());
-				myLink.setDestId(link.getDestinationServiceElementId());
-
-				LayoutNode srcNode = nodeMap.get(link.getSourceServiceElementId());
-				if (srcNode == null) {
-					srcNode = new LayoutNode();
-					srcNode.setItemId(link.getSourceNetworkId());
-					
-					nodeMap.put(srcNode.getItemId(), srcNode);
-				}
-				LayoutNode destNode = nodeMap.get(link
-						.getDestinationServiceElementId());
-				if (destNode == null) {
-					destNode = new LayoutNode();
-					destNode.setItemId(link.getDestinationNetworkId());
-					
-					nodeMap.put(destNode.getItemId(), destNode);
-				}
-					
-				
-				if (srcNode != null && destNode != null) {
-					graph.addEdge(myLink, srcNode, destNode);
-
-					forest.addEdge(myLink, srcNode, destNode);
-				}
+		
+		for (final InterDeviceLink link : network.getInterDeviceLinks()) {
+			LayoutLink myLink = new LayoutLink();
+			myLink.setLinkId(link.getID());
+			myLink.setSourceId(link.getSourceNetworkId());
+		
+			myLink.setDestId(link.getDestinationNetworkId());
+			
+			if (!layout.addLayoutLInk(myLink, nodes.get(link.getSourceNetworkId()), nodes.get(link.getDestinationNetworkId()))) {
+				logger.warn("Unable to add link  from " + link.getSourceNetworkId() + " to " + link.getDestinationNetworkId() + " to graph");
 			}
 		}
-
-		TreeLayout<LayoutNode, LayoutLink> treeLayout = null;
-		AbstractLayout<LayoutNode, LayoutLink> layout = null;
-		RadialTreeLayout<LayoutNode, LayoutLink> forestLayout = null;
 		
-		if (layoutType.equals(LayoutTypeEnum.RandomLayout)) {
-			if (lastCall.ordinal() >= LayoutTypeEnum.values().length)
-				lastCall = LayoutTypeEnum.values()[1];
-			else 
-				lastCall = LayoutTypeEnum.values()[lastCall.ordinal() + 1];
-		}
-		
-		StringBuffer b = new StringBuffer("Create Layout:  ( ").append(lastCall).append(" )" );
-		switch (lastCall) {
-		case KKLayout:
-			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
-			b.append("KKLayout");
-			break;
-
-		case KKLayoutNoGravity:
-			layout = new KKLayout<LayoutNode, LayoutLink>(graph);
-			((KKLayout<LayoutNode, LayoutLink>) layout)
-					.setAdjustForGravity(false);
+		return getPositions(layout, nodes);
 			
-			b.append("KKLayout adjustForGravity off");
-			break;
-
-		case CircleLayout:
-			layout = new CircleLayout<LayoutNode, LayoutLink>(graph);
-			b.append("CircleLayout");
-			break;
-
-		case ISOMLayout:
-			layout = new ISOMLayout<LayoutNode, LayoutLink>(graph);
-			b.append("ISOMLayout");
-			break;
-
-//		case 4:
-//			layout = new DAGLayout<LayoutNode, LayoutLink>(graph);
-//			break;
-
-		case RadialTreeLayout:
-			forestLayout = new RadialTreeLayout<LayoutNode, LayoutLink>(forest);
-			forestLayout.setSize(new Dimension(900, 800));
-			forestLayout.initialize();
-
-			b.append("RadialTreeLayout");
-			break;
-			
-		case MinimumSpanning:
-			MinimumSpanningForest2<LayoutNode, LayoutLink> prim = new MinimumSpanningForest2<LayoutNode, LayoutLink>(
-					graph, new DelegateForest<LayoutNode, LayoutLink>(),
-					DelegateTree.<LayoutNode, LayoutLink> getFactory(),
-					new ConstantTransformer(1.0));
-
-			forest = prim.getForest();
-			treeLayout = new TreeLayout<LayoutNode, LayoutLink>(forest);
-			b.append("MinimumSpanningForest2");
-			break;
-
-		case Eliptical:
-			break;
-			
-		case FRLayout:
-		default:
-			layout = new FRLayout<LayoutNode, LayoutLink>(graph);
-			b.append("FRLayout");
-			break;
-		}
-
-		logger.info(b.toString());
-		
-		if (layout != null) {
-			layout.setSize(new Dimension(900, 800));
-			layout.initialize();
-			
-		}
-
-		HashMap<ID, MapItemPosition> positions = new HashMap<ID, MapItemPosition>();
-
-		for (ID id : nodeMap.keySet()) {
-			LayoutNode node = nodeMap.get(id);
-
-			MapItemPosition mapItemPosition = null;
-			if (layout != null) {
-				node.setXposition(layout.getX(node));
-				node.setYposition(layout.getY(node));
-
-				mapItemPosition = new MapItemPosition();
-				mapItemPosition.setItemId(node.getItemId());
-				mapItemPosition.setIconName(node.getIconName());
-				mapItemPosition.setXposition(layout.getX(node));
-				mapItemPosition.setYposition(layout.getY(node));
-			} else if (treeLayout != null) {
-				Point2D transform = treeLayout.transform(node);
-
-				node.setXposition(transform.getX());
-				node.setYposition(transform.getY());
-
-				mapItemPosition = new MapItemPosition();
-				mapItemPosition.setIconName(node.getIconName());
-				mapItemPosition.setItemId(node.getItemId());
-				mapItemPosition.setXposition(transform.getX());
-				mapItemPosition.setYposition(transform.getY());
-
-			} else if (forestLayout != null) {
-				if (forestLayout.getPolarLocations().get(node) != null) {
-					Point2D transform = forestLayout.transform(node);
-					node.setXposition(transform.getX());
-					node.setYposition(transform.getY());
-
-					mapItemPosition = new MapItemPosition();
-					mapItemPosition.setIconName(node.getIconName());
-					mapItemPosition.setItemId(node.getItemId());
-					mapItemPosition.setXposition(transform.getX());
-					mapItemPosition.setYposition(transform.getY());
-				}
-			}
-
-			if (mapItemPosition != null)
-				positions.put(node.getItemId(), mapItemPosition);
-		}
-
-		return positions;
 	}
+	
 }
