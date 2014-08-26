@@ -139,6 +139,8 @@ public class LayoutGenerator {
 			NetworkInformation networkInformation) throws IntegerException {
 		
 		TopologyTreeLayoutInterface layout = getTreeLayout();
+		if (layout == null)
+			return new HashMap<ID, MapItemPosition>();
 		
 		HashMap<ID, LayoutNode> nodes = new HashMap<ID, LayoutNode>();
 		
@@ -216,6 +218,8 @@ public class LayoutGenerator {
 			throws IntegerException {
 		
 		TopologyTreeLayoutInterface layout = getTreeLayout();
+		if (layout == null)
+			return new HashMap<ID, MapItemPosition>();
 		
 		HashMap<ID, LayoutNode> nodes = new HashMap<ID, LayoutNode>();
 		
