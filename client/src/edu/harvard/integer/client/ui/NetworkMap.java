@@ -48,11 +48,16 @@ public class NetworkMap extends IntegerMap {
 		entityMap.clear();
 		iconMap.clear();
 		removeAll();
+		
+		if (networkkInfo.getPositions() != null)
+			positionMap = networkkInfo.getPositions();
+		
 		updateNetworks(networkkInfo.getNetworks());
 		drawLinks(networkkInfo.getLinks());
 		drawDevices(networkkInfo.getNetworks());
 	}
 
+	
 	/**
 	 * Update method will refresh the panel with the given list of ServiceElement objects.
 	 *
@@ -72,7 +77,13 @@ public class NetworkMap extends IntegerMap {
 			if (i >= n)
 				break;
 			
-			Point point = n == 1 ? getCenterPoint() : calculatePoint(n, i++, angle);
+			Point point = null;
+			
+			if (mapItemPosition == null) {
+				point = n == 1 ? getCenterPoint() : calculatePoint(n, i++, angle);
+			} else {
+				point = new Point(mapItemPosition.getXposition(), mapItemPosition.getYposition());
+			}
 			
 			entityMap.put(network.getID(), point);
 			

@@ -158,7 +158,7 @@ public class IntegerProperties {
 			String value = settings.getProperty(propName.getPropertyName());
 			if (value != null) {
 				for (int i = 0; i < propName.getClass().getEnumConstants().length; i++) {
-					if ( propName.getClass().getEnumConstants()[i].getPropertyName().equals(value)) {
+					if ( propName.getClass().getEnumConstants()[i].getName().equals(value)) {
 						return (T) propName.getClass().getEnumConstants()[i];
 					}
 				}

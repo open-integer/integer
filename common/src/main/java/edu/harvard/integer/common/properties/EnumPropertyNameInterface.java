@@ -43,4 +43,6 @@ public interface EnumPropertyNameInterface<T> {
 
 	public String getPropertyName();
 	
+	public String getName();
+	
 }

@@ -68,8 +68,11 @@ public enum LayoutTypeEnum implements EnumPropertyNameInterface<LayoutTypeEnum>{
 	@Override
 	public String getPropertyName() {
 	
-		return name();
+		return "TopologyLayoutType";
 	}
 
+	public String getName() {
+		return name();
+	}
 	
 }

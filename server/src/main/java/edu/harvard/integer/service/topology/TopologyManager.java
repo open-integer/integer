@@ -647,7 +647,7 @@ public class TopologyManager extends BaseManager implements
 		}
 		
 		List<MapItemPosition> positionList = new ArrayList<MapItemPosition>();
-		int i = 0;
+		
 		for (ID id : mapPositions.keySet()) {
 			MapItemPosition position = mapPositions.get(id);
 			if (position != null) {
