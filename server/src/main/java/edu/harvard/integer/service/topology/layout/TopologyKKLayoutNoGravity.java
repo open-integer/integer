@@ -57,6 +57,7 @@ public class TopologyKKLayoutNoGravity implements TopologyTreeLayoutInterface {
 	public void setSize(Dimension size) {
 		layout = new KKLayout<LayoutNode, LayoutLink>(graph);
 		layout.setAdjustForGravity(false);
+		layout.setSize(size);
 	}
 
 	/* (non-Javadoc)
