@@ -359,7 +359,8 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 			logger.info("Update topology element after create link downlink and up link "
 					+ destTe.getName());
 			topologyMgr.updateTopologyElement(destTe);
-		} else {
+		} 
+		else {
 
 			logger.info("No connection node found "
 					+ cdpConn.getRemoteAddress() + " " + dn.getSysName());
@@ -372,6 +373,9 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 					.getRemoteDeviceId());
 			if (nodeSe == null) {
 
+				/**
+				 * This is the case without top service element remote node.
+				 */
 				ServiceElementType set = discMgr
 						.getServiceElementTypeByName("unknownSystem");
 				nodeSe = netDiscover.getUnknownServiceElement(cdpConn
@@ -395,67 +399,213 @@ public class DiscoverCdpTopologyTask implements Callable<Void> {
 					netDiscover.addUnknownServiceElement(
 							cdpConn.getRemoteDeviceId(), nodeSe);
 				}
+				set = discMgr.getServiceElementTypeByName("connectionEndPort");
+				ServiceElement se = new ServiceElement();
+				se.setUpdated(new Date());
+				se.setServiceElementTypeId(set.getID());
+				se.setName(cdpConn.getRemotePort());
+				se.setDescription("Device Port: " + cdpConn.getRemotePort());
+				se.setIconName(set.getIconName());
+				se = accessMgr.updateServiceElement(se);
+
+				InterDeviceLink upLink = new InterDeviceLink();
+				upLink.setCreated(new Date());
+				if (foundTn.getTopologyElm().getAddress() != null
+						&& foundTn.getTopologyElm().getAddress().size() > 0) {
+					upLink.setSourceAddress(foundTn.getTopologyElm().getAddress()
+							.get(0));
+				}
+				Address addr = new Address();
+				addr.setAddress(cdpConn.getRemoteAddress());
+				upLink.setDestinationAddress(addr);
+				upLink.setSourceServiceElementId(dn.getAccessElement().getID());
+				upLink.setDestinationServiceElementId(nodeSe.getID());
+				upLink.setLayer(LayerTypeEnum.Two);
+
+				upLink = topologyMgr.updateInterDeviceLink(upLink);
+
+				sourceTe.getInterDeviceLinks().add(upLink);
+				sourceTe = topologyMgr.updateTopologyElement(sourceTe);
+
+				TopologyElement destTe = new TopologyElement();
+				destTe.setAddress(new ArrayList<Address>());
+				destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
+
+				Address remoteAddr = new Address();
+				remoteAddr.setAddress(cdpConn.getRemoteAddress());
+				destTe.getAddress().add(remoteAddr);
+				destTe.setServiceElementId(se.getID());
+
+				InterDeviceLink downLink = new InterDeviceLink();
+				downLink.setCreated(new Date());
+
+				if (foundTn.getTopologyElm().getAddress() != null
+						&& foundTn.getTopologyElm().getAddress().size() > 0) {
+					downLink.setDestinationAddress(foundTn.getTopologyElm()
+							.getAddress().get(0));
+				}
+
+				downLink.setSourceAddress(addr);
+				downLink.setDestinationServiceElementId(dn.getAccessElement()
+						.getID());
+				downLink.setSourceServiceElementId(nodeSe.getID());
+				downLink.setLayer(LayerTypeEnum.Two);
+				downLink = topologyMgr.updateInterDeviceLink(downLink);
+
+				destTe.getInterDeviceLinks().add(downLink);
+				destTe = topologyMgr.updateTopologyElement(destTe);
+
+				logger.info("Create link for remote ip address "
+						+ cdpConn.getRemoteAddress());
+				
 			}
+			else {		
+				
+				
+				/*  
+				 *  OK we found the service element for the node in DB.  Build the link based on the node in DB.
+				 */
+				ServiceElement ipSe = accessMgr.getServiceElementByIpAddress(cdpConn.getRemoteAddress());
+				if ( ipSe != null ) {
+					
+					/**
+					 * We found the service element contain the remote IP address, build device link based on the service element.
+					 */
+					TopologyElement[] tes = topologyMgr.getTopologyElementsByServiceElement(ipSe.getID());
+					TopologyElement destTe = null;
+					if ( tes != null ) {
+						
+						for ( TopologyElement te : tes ) {
+						
+							for ( Address address : te.getAddress() ) {
+								
+								if ( cdpConn.getRemoteAddress().equals(address.getAddress()) ) {
+									destTe = te;
+									break;
+								}
+							}
+							if ( destTe != null ) {
+								break;
+							}
+						}
+					}
+					if ( destTe == null ) {
+						destTe = new TopologyElement();
+					}
+					destTe.setAddress(new ArrayList<Address>());
+					destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
 
-			ServiceElementType set = discMgr
-					.getServiceElementTypeByName("connectionEndPort");
-			ServiceElement se = new ServiceElement();
-			se.setUpdated(new Date());
-			se.setServiceElementTypeId(set.getID());
-			se.setName(cdpConn.getRemotePort());
-			se.setDescription("Device Port: " + cdpConn.getRemotePort());
-			se.setIconName(set.getIconName());
-			se = accessMgr.updateServiceElement(se);
+					Address remoteAddr = new Address();
+					remoteAddr.setAddress(cdpConn.getRemoteAddress());
+					destTe.getAddress().add(remoteAddr);
+					destTe.setServiceElementId(ipSe.getID());
 
-			InterDeviceLink upLink = new InterDeviceLink();
-			upLink.setCreated(new Date());
-			if (foundTn.getTopologyElm().getAddress() != null
-					&& foundTn.getTopologyElm().getAddress().size() > 0) {
-				upLink.setSourceAddress(foundTn.getTopologyElm().getAddress()
-						.get(0));
+					InterDeviceLink downLink = new InterDeviceLink();
+					downLink.setCreated(new Date());
+
+					if (foundTn.getTopologyElm().getAddress() != null
+							&& foundTn.getTopologyElm().getAddress().size() > 0) {
+						downLink.setDestinationAddress(foundTn.getTopologyElm()
+								.getAddress().get(0));
+					}
+
+					Address sourceAddr = new Address();
+					sourceAddr.setAddress(cdpConn.getLocalAddress());
+					downLink.setDestinationServiceElementId(dn.getAccessElement()
+							.getID());
+					downLink.setSourceServiceElementId(nodeSe.getID());
+					downLink.setLayer(LayerTypeEnum.Two);
+					downLink = topologyMgr.updateInterDeviceLink(downLink);
+
+					destTe.getInterDeviceLinks().add(downLink);
+					destTe = topologyMgr.updateTopologyElement(destTe);
+					
+					InterDeviceLink upLink = new InterDeviceLink();
+
+					upLink.setCreated(new Date());
+					if (foundTn.getTopologyElm().getAddress() != null
+							&& foundTn.getTopologyElm().getAddress().size() > 0) {
+						upLink.setSourceAddress(foundTn.getTopologyElm().getAddress()
+								.get(0));
+					}
+					
+					upLink.setDestinationAddress(sourceAddr);
+					upLink.setSourceServiceElementId(dn.getAccessElement().getID());
+					upLink.setDestinationServiceElementId(ipSe.getID());
+					upLink.setLayer(LayerTypeEnum.Two);
+					topologyMgr.updateInterDeviceLink(upLink);
+
+					sourceTe.getInterDeviceLinks().add(upLink);
+					topologyMgr.updateTopologyElement(sourceTe);
+				}
+				else {
+					
+					/**
+					 * No IP address service element found for that IP, create a connectionEndPort
+					 * to build the link.
+					 */
+					ServiceElementType set = discMgr.getServiceElementTypeByName("connectionEndPort");
+					
+					ServiceElement se = new ServiceElement();
+					se.setUpdated(new Date());
+					se.setServiceElementTypeId(set.getID());
+					se.setName(cdpConn.getRemotePort());
+					se.setDescription("Device Port: " + cdpConn.getRemotePort());
+					se.setIconName(set.getIconName());
+					se = accessMgr.updateServiceElement(se);
+
+					InterDeviceLink upLink = new InterDeviceLink();
+					upLink.setCreated(new Date());
+					if (foundTn.getTopologyElm().getAddress() != null
+							&& foundTn.getTopologyElm().getAddress().size() > 0) {
+						upLink.setSourceAddress(foundTn.getTopologyElm().getAddress()
+								.get(0));
+					}
+					Address addr = new Address();
+					addr.setAddress(cdpConn.getRemoteAddress());
+					upLink.setDestinationAddress(addr);
+					upLink.setSourceServiceElementId(dn.getAccessElement().getID());
+					upLink.setDestinationServiceElementId(nodeSe.getID());
+					upLink.setLayer(LayerTypeEnum.Two);
+
+					upLink = topologyMgr.updateInterDeviceLink(upLink);
+
+					sourceTe.getInterDeviceLinks().add(upLink);
+					sourceTe = topologyMgr.updateTopologyElement(sourceTe);
+
+					TopologyElement destTe = new TopologyElement();
+					destTe.setAddress(new ArrayList<Address>());
+					destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
+
+					Address remoteAddr = new Address();
+					remoteAddr.setAddress(cdpConn.getRemoteAddress());
+					destTe.getAddress().add(remoteAddr);
+					destTe.setServiceElementId(se.getID());
+
+					InterDeviceLink downLink = new InterDeviceLink();
+					downLink.setCreated(new Date());
+
+					if (foundTn.getTopologyElm().getAddress() != null
+							&& foundTn.getTopologyElm().getAddress().size() > 0) {
+						downLink.setDestinationAddress(foundTn.getTopologyElm()
+								.getAddress().get(0));
+					}
+
+					downLink.setSourceAddress(addr);
+					downLink.setDestinationServiceElementId(dn.getAccessElement()
+							.getID());
+					downLink.setSourceServiceElementId(nodeSe.getID());
+					downLink.setLayer(LayerTypeEnum.Two);
+					downLink = topologyMgr.updateInterDeviceLink(downLink);
+
+					destTe.getInterDeviceLinks().add(downLink);
+					destTe = topologyMgr.updateTopologyElement(destTe);
+
+					logger.info("Create link for remote ip address "
+							+ cdpConn.getRemoteAddress());
+					
+				}
 			}
-			Address addr = new Address();
-			addr.setAddress(cdpConn.getRemoteAddress());
-			upLink.setDestinationAddress(addr);
-			upLink.setSourceServiceElementId(dn.getAccessElement().getID());
-			upLink.setDestinationServiceElementId(nodeSe.getID());
-			upLink.setLayer(LayerTypeEnum.Two);
-
-			upLink = topologyMgr.updateInterDeviceLink(upLink);
-
-			sourceTe.getInterDeviceLinks().add(upLink);
-			sourceTe = topologyMgr.updateTopologyElement(sourceTe);
-
-			TopologyElement destTe = new TopologyElement();
-			destTe.setAddress(new ArrayList<Address>());
-			destTe.setInterDeviceLinks(new ArrayList<InterDeviceLink>());
-
-			Address remoteAddr = new Address();
-			remoteAddr.setAddress(cdpConn.getRemoteAddress());
-			destTe.getAddress().add(remoteAddr);
-			destTe.setServiceElementId(se.getID());
-
-			InterDeviceLink downLink = new InterDeviceLink();
-			downLink.setCreated(new Date());
-
-			if (foundTn.getTopologyElm().getAddress() != null
-					&& foundTn.getTopologyElm().getAddress().size() > 0) {
-				downLink.setDestinationAddress(foundTn.getTopologyElm()
-						.getAddress().get(0));
-			}
-
-			downLink.setSourceAddress(addr);
-			downLink.setDestinationServiceElementId(dn.getAccessElement()
-					.getID());
-			downLink.setSourceServiceElementId(nodeSe.getID());
-			downLink.setLayer(LayerTypeEnum.Two);
-			downLink = topologyMgr.updateInterDeviceLink(downLink);
-
-			destTe.getInterDeviceLinks().add(downLink);
-			destTe = topologyMgr.updateTopologyElement(destTe);
-
-			logger.info("Create link for remote ip address "
-					+ cdpConn.getRemoteAddress());
 		}
 
 	}

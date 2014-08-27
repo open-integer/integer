@@ -30,84 +30,43 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *      
  */
-package edu.harvard.integer.service.discovery.snmp;
+package edu.harvard.integer.service.discovery;
 
+import java.util.Date;
+
+import edu.harvard.integer.common.discovery.DiscoveryId;
 
 /**
- * The Enum associates with entity physical MIB table class column.
- *
  * @author dchan
+ *
  */
-public enum EntityClassEnum {
-		
-		/** The other. */
-		other(1),
-		
-		/** The unknown. */
-		unknown(2),
-		
-		/** The chassis. */
-		chassis(3),
-		
-		/** The backplane. */
-		backplane(4),
-		
-		/** The container. */
-		container(5),
-		
-		/** The power supply. */
-		powerSupply(6),
-		
-		/** The fan. */
-		fan(7),
-		
-		/** The sensor. */
-		sensor(8),
-		
-		/** The module. */
-		module(9),
-		
-		/** The port. */
-		port(10),
-		
-		/** The stack. */
-		stack(11),
-		
-		/** The cpu. */
-		cpu(12);
-		
-		/** The value. */
-		private final int value;
+public class SubnetDiscoveringInfo {
 
-	    /**
-    	 * Instantiates a new entity class enum.
-    	 *
-    	 * @param value the value
-    	 */
-    	private EntityClassEnum(int value) {
-	        this.value = value;
-	    }
-
-	    /**
-    	 * Gets the value.
-    	 *
-    	 * @return the value
-    	 */
-    	public int getValue() {
-	        return value;
-	    }
-	    
-	    /**
-    	 * Value of.
-    	 *
-    	 * @param classi the classi
-    	 * @return the entity class enum
-    	 */
-    	public static EntityClassEnum valueOf(int classi) {
-	        for (EntityClassEnum ec : EntityClassEnum.values()) {
-	            if (ec.value == classi) return ec;
-	        } 
-	        return EntityClassEnum.unknown;
-	    }
+	private final DiscoveryId discoverId;
+	private final String subnetId;
+	private final Date startTime;
 	
+
+	public SubnetDiscoveringInfo( DiscoveryId discoverId, String subnetId ) {
+		
+		this.discoverId = discoverId;
+		this.subnetId = subnetId;
+		
+		startTime = new Date();
+	}
+	
+	public DiscoveryId getDiscoverId() {
+		return discoverId;
+	}
+
+	public String getSubnetId() {
+		return subnetId;
+	}
+	
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+
 }

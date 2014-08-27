@@ -34,7 +34,10 @@
 package edu.harvard.integer.service.discovery;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -88,6 +91,10 @@ import edu.harvard.integer.service.topology.device.ServiceElementAccessManagerIn
 public class NetworkDiscovery  implements NetworkDiscoveryBase {
 
 	public static String IPIDENTIFY = "IpIdentify";
+	
+	
+	
+	
 	
 	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(NetworkDiscovery.class);
@@ -152,8 +159,14 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	 */
 	private Map<String, DiscoverNode>  discoverdSystems = new HashMap<>();
 	
-	
+	/**
+	 * Hash map stores remote node which its connection ip without any mask information.
+	 */
 	private ConcurrentHashMap<String, DiscoverNode> missingMaskNodes = new ConcurrentHashMap<>();
+	
+	
+	private static Map<String, SubnetDiscoveringInfo>  discoveringSubnets = new HashMap<>();
+	
 	
 	
 
@@ -206,40 +219,41 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		
 		logger.debug("In discoverNetwork ");
 		
-		try {
-			List<Future<Ipv4Range>> discFuture = new ArrayList<>();
-			/**
-			 * Create subnet tasks based on discover configuration subnet.
-			 */
-			if ( discoverSeeds != null ) {
-				
-				DiscoveryServiceInterface discoveryService = null;
-				try {
-					discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
-				} catch (IntegerException e1) {
-					
-					logger.error("Error getting DiscoveryService " + e1.toString(), e1);
-					return discFuture;
-				}
+		List<Future<Ipv4Range>> discFuture = new ArrayList<>();
+		/**
+		 * Create subnet tasks based on discover configuration subnet.
+		 */
+		if ( discoverSeeds != null ) {
 			
-				for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
+			DiscoveryServiceInterface discoveryService = null;
+			try {
+				discoveryService = DistributionManager.getService(ServiceTypeEnum.DiscoveryService);
+			} catch (IntegerException e1) {
 				
-					/**
-					 * It is possible that discover seed contains exclusive subnets including itself.
-					 * In this case, log it as an warning and go on.
-					 */
-					if ( exclusiveSubnets != null ) {
-						
-						if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
-							logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
-							continue;
-						}
-					}
+				logger.error("Error getting DiscoveryService " + e1.toString(), e1);
+				return discFuture;
+			}
+		
+			for ( IpDiscoverySeed discoverSeed : discoverSeeds ) {
+			
+				/**
+				 * It is possible that discover seed contains exclusive subnets including itself.
+				 * In this case, log it as an warning and go on.
+				 */
+				if ( exclusiveSubnets != null ) {
 					
-					try {
-						
-						logger.info("Discover radius " + discoverSeed.getRadius());
-						DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
+					if ( SubnetUtil.isSubnetInList(discoverSeed.getDiscoverNet(), exclusiveSubnets)) {
+						logger.warn("Would not discover this exclusive subnet " + discoverSeed.getDiscoverNet().getCidr());
+						continue;
+					}
+				}
+				
+				try {
+					
+					logger.info("Discover radius " + discoverSeed.getRadius());
+					DiscoverSubnetAsyncTask<ElementAccess> subTask = null;
+					
+					if ( !markSubnetDiscovering(discoverSeed.getSeedId() ) ) {
 						
 						discoverSeed.getDiscoverNet().setDiscoverYet(true);
 						subTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
@@ -247,20 +261,19 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 						
 						Future<Ipv4Range> v = discoveryService.submitSubnetDiscovery(subTask);
 						discFuture.add(v);
-						
-					} catch (IntegerException e) {
-						
-						logger.equals("Error on submit subnet discover...  " + e.toString() );
-						e.printStackTrace();
-					} 
-				}
+					}
+					else {
+						logger.info("Subnet is already in discovering " + discoverSeed.getSeedId());
+					}
+					
+				} catch (IntegerException e) {
+					
+					logger.equals("Error on submit subnet discover...  " + e.toString() );
+					e.printStackTrace();
+				} 
 			}
-			return discFuture;
 		}
-		finally {
-			
-		}
-		
+		return discFuture;
 	}
 
 
@@ -274,7 +287,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 		
 		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, null);
 		if ( subnetComplete ) {
-			logger.info("Subnet discovery complete " + subnetId);
+			logger.info("Network discovery complete with id " + discoverId.getDiscoveryId());
 		}
 	}
 	
@@ -322,11 +335,7 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			}
 		}
 		
-		boolean subnetComplete = removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, needDiscovers);
-		if ( subnetComplete ) {
-			logger.info("Subnet discovery complete " + subnetId);
-		}
-		
+		removeIpAddressFromSubnet(discoverNode.getIpAddress(), subnetId, needDiscovers);
 	}
 	
 	
@@ -464,15 +473,20 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 										continue;
 									}
 								}
-					    		
 								DiscoverSubnetAsyncTask<ElementAccess> foundSubTask = new DiscoverSubnetAsyncTask(this, discoverSeed);
-								
-								if ( foundSubTask.getDiscoveringNodes().size() > 0 ) {
-									logger.info("Store subnet task with id " + foundSubTask.getSeed().getSeedId());
+								if ( !markSubnetDiscovering(discoverSeed.getSeedId() ) ) {
 									
-					                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), foundSubTask);
-									discoveryService.submitSubnetDiscovery(foundSubTask);
+									if ( foundSubTask.getDiscoveringNodes().size() > 0 ) {
+										logger.info("Store subnet task with id " + foundSubTask.getSeed().getSeedId());
+										
+						                foundSubnetTask.put(foundSubTask.getSeed().getSeedId(), foundSubTask);
+										discoveryService.submitSubnetDiscovery(foundSubTask);
+									}
 								}
+								else {
+									logger.info("Subnet is already in discovering " + discoverSeed.getSeedId());
+								}
+								
 							} catch (IntegerException e) {
 								
 								logger.equals("Error on submit found subnet discover...  " + e.toString() );
@@ -536,8 +550,6 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			}
 			
 		}
-		
-		
 		if ( foundSubnetTask.size() == 0 && subnetTasks.size() == 0 ) {
 			
 			if ( linkLayerConnections.size() > 0 ) {
@@ -549,6 +561,8 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 			else {
 				logger.info("No Linklayer connection found. discover complete.  ");
 			}
+			NetworkDiscovery.cleanSubnetOnDiscover(discoverId);
+			return true;
 		}
 		return false;
 	}
@@ -672,6 +686,64 @@ public class NetworkDiscovery  implements NetworkDiscoveryBase {
 	
 	public List<ExclusiveNode> getExclusiveNodes() {
 		return exclusiveNodes;
+	}
+	
+	/**
+	 * Return false if not yet in discovering.  Else return true.
+	 * 
+	 * @param subnetId
+	 * @return
+	 */
+	public boolean markSubnetDiscovering( String subnetId ) {
+		
+		SubnetDiscoveringInfo subnetInfo = new SubnetDiscoveringInfo(discoverId, subnetId);
+		return subnetOnDiscover(subnetId, subnetInfo);
+	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param subnetId
+	 * @param subnetInfo
+	 * @return
+	 */
+	public static synchronized boolean subnetOnDiscover( String subnetId, SubnetDiscoveringInfo subnetInfo ) {
+		
+		SubnetDiscoveringInfo sInfo = discoveringSubnets.get(subnetId);
+		if ( sInfo != null ) {
+			
+			Date d = new Date();
+			
+			long diff = d.getTime() - sInfo.getStartTime().getTime();
+			if ( diff < (10*60000)) {
+				return true;
+			}
+		}
+		
+		discoveringSubnets.put(subnetId, subnetInfo);
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param discoverId
+	 */
+	public static synchronized void cleanSubnetOnDiscover( DiscoveryId discoverId ) {
+		
+		
+		Collection<SubnetDiscoveringInfo> subnetInfos =  discoveringSubnets.values();	
+		Iterator<SubnetDiscoveringInfo> iter = subnetInfos.iterator();
+		while( iter.hasNext() ) {
+			
+			SubnetDiscoveringInfo subnetInfo = iter.next();
+			if ( subnetInfo.getDiscoverId().getDiscoveryId().longValue() == discoverId.getDiscoveryId().longValue() ) {
+				iter.remove();
+			}
+		}
+		if ( discoveringSubnets.size() == 0 ) {
+			logger.info("No more discovering subnet.  ");
+		}
 	}
 	
 }

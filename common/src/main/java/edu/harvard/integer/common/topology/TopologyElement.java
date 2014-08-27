@@ -47,6 +47,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 
@@ -90,7 +91,7 @@ public class TopologyElement extends BaseEntity {
 	 * one layer. Multiple addresses are possible for an element at a given
 	 * layer.
 	 */
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn(name = "idx")
 	private List<Address> address = null;
 

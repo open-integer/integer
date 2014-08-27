@@ -230,3 +230,6 @@ categories:
         description: inter device links
         parent: category-tree
         
+      - name: unknown
+        description: unknown category
+        parent: category-tree
