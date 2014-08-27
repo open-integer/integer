@@ -75,7 +75,7 @@ public class FilterPanel extends VerticalPanel {
 	/** The refresh button. */
 	private PushButton refreshButton = new PushButton(refreshImage);
 	
-	private Label titleLabel = new Label("Your Selections");
+	private Label titleLabel = new Label("Filter Selections");
 	
 	private HvCheckBoxTree businessTree;
 	private HvCheckBoxTree categoryTree;
@@ -84,9 +84,7 @@ public class FilterPanel extends VerticalPanel {
 	 * Create a new FilterPanel.
 	 */
 	public FilterPanel() {
-		titleToolBar.add(refreshButton);
 		titleToolBar.add(titleLabel);
-		
 		titleToolBar.addStyleName("titleToolBar");
 
 		refreshButton.setSize("16px", "16px");
@@ -97,7 +95,6 @@ public class FilterPanel extends VerticalPanel {
 		scrollPanel.setSize("100%", selectionHeight+"px");
 		
 		add(titleToolBar);
-		//add(actionPanel);
 		add(selectionPanel);
 		
 		// fill up all spaces
