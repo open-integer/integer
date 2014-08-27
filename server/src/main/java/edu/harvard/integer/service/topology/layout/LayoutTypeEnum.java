@@ -59,7 +59,7 @@ public enum LayoutTypeEnum implements EnumPropertyNameInterface<LayoutTypeEnum>{
 	 * value from the property file and the value is not in the property file.
 	 */
 	public LayoutTypeEnum getDefaultValue() {
-		return Eliptical;
+		return MinimumSpanning;
 	}
 
 	/* (non-Javadoc)
