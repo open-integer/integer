@@ -28,6 +28,8 @@ public class EventView extends HvTableViewPanel {
 	public EventView(String title, String[] headers) {
 		super(title, headers);
 
+		setTableSize("100%", EVENT_VIEW_HEIGHT+"px");
+
 		addButton.setVisible(false);
 		flexTable.insertRow(1);
 		flexTable.insertRow(2);
