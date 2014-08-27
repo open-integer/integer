@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<scenario xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2" id="fAT7UTVBibE">
+  <start-date>2014-07-17T12:00:00.000Z</start-date>
+  <prototype-task>
+    <task id="t4294967294">
+      <title>Task 1</title>
+      <effort>28800</effort>
+    </task>
+  </prototype-task>
+  <prototype-task>
+    <task id="t4294967293">
+      <title>Milestone 1</title>
+      <type>milestone</type>
+    </task>
+  </prototype-task>
+  <prototype-task>
+    <task id="t4294967292">
+      <title>Group 1</title>
+      <type>group</type>
+    </task>
+  </prototype-task>
+  <prototype-resource>
+    <resource id="r4294967294">
+      <name>Resource 1</name>
+      <type>Staff</type>
+    </resource>
+  </prototype-resource>
+  <prototype-resource>
+    <resource id="r4294967293">
+      <name>Equipment 1</name>
+      <type>Equipment</type>
+    </resource>
+  </prototype-resource>
+  <prototype-resource>
+    <resource id="r4294967292">
+      <name>Material 1</name>
+      <type>Material</type>
+      <units-available>0</units-available>
+      <efficiency>0</efficiency>
+    </resource>
+  </prototype-resource>
+  <prototype-resource>
+    <resource id="r4294967291">
+      <name>Group 1</name>
+      <type>Group</type>
+    </resource>
+  </prototype-resource>
+  <top-resource idref="r-1"/>
+  <resource id="r-1">
+    <type>Group</type>
+    <child-resource idref="r1"/>
+  </resource>
+  <resource id="r1">
+    <name>Resource 1</name>
+    <type>Staff</type>
+  </resource>
+  <top-task idref="t-1"/>
+  <task id="t-1">
+    <type>group</type>
+    <child-task idref="t55"/>
+    <child-task idref="t56"/>
+    <child-task idref="t57"/>
+    <child-task idref="t58"/>
+    <child-task idref="t59"/>
+    <child-task idref="t60"/>
+    <child-task idref="t61"/>
+    <child-task idref="t62"/>
+    <child-task idref="t63"/>
+    <child-task idref="t64"/>
+  </task>
+  <task id="t55">
+    <title>Allow User to Make Selections</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-30T15:45:00.000Z</start-constraint-date>
+    <child-task idref="t65"/>
+    <child-task idref="t66"/>
+    <child-task idref="t67"/>
+    <child-task idref="t68"/>
+    <child-task idref="t69"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-30T15:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t56">
+    <title>Allow Users to Explore Systems for Which Potentially Important Information is Missing </title>
+    <type>group</type>
+    <start-constraint-date>2014-07-29T13:45:00.000Z</start-constraint-date>
+    <child-task idref="t70"/>
+    <child-task idref="t71"/>
+    <child-task idref="t72"/>
+    <child-task idref="t73"/>
+    <child-task idref="t74"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-29T13:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t57">
+    <title>Allow Users to Organize how the selected ServiceElements and Networks are presented (On screen or in graphic form)</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-25T17:45:00.000Z</start-constraint-date>
+    <child-task idref="t75"/>
+    <child-task idref="t76"/>
+    <child-task idref="t77"/>
+    <child-task idref="t78"/>
+    <child-task idref="t79"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-25T17:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t58">
+    <title>Allow Users the ability to indicate what information they wish to see on the results of the filter evaluation</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-24T17:15:00.000Z</start-constraint-date>
+    <child-task idref="t80"/>
+    <child-task idref="t81"/>
+    <child-task idref="t82"/>
+    <child-task idref="t83"/>
+    <child-task idref="t84"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-24T17:15:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t59">
+    <title>Allow Users to refresh</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-21T20:45:00.000Z</start-constraint-date>
+    <child-task idref="t85"/>
+    <child-task idref="t86"/>
+    <child-task idref="t87"/>
+    <child-task idref="t88"/>
+    <child-task idref="t89"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-21T20:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t60">
+    <title>Allow Users to create new selections</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-18T15:15:00.000Z</start-constraint-date>
+    <child-task idref="t90"/>
+    <child-task idref="t91"/>
+    <child-task idref="t92"/>
+    <child-task idref="t93"/>
+    <child-task idref="t94"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-18T15:15:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t61">
+    <title>Allow users the ability to see the filters that have been defined </title>
+    <type>group</type>
+    <start-constraint-date>2014-07-22T17:30:00.000Z</start-constraint-date>
+    <child-task idref="t95"/>
+    <child-task idref="t96"/>
+    <child-task idref="t97"/>
+    <child-task idref="t98"/>
+    <child-task idref="t99"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-22T17:30:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t62">
+    <title>Allow Users to Modify Selections</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-23T20:00:00.000Z</start-constraint-date>
+    <child-task idref="t100"/>
+    <child-task idref="t101"/>
+    <child-task idref="t102"/>
+    <child-task idref="t103"/>
+    <child-task idref="t104"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-23T20:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t63">
+    <title>Allow users to delete selections</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-28T12:15:00.000Z</start-constraint-date>
+    <child-task idref="t105"/>
+    <child-task idref="t106"/>
+    <child-task idref="t107"/>
+    <child-task idref="t108"/>
+    <child-task idref="t109"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-28T12:15:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t64">
+    <title>Allow users to see current selections</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-30T12:45:00.000Z</start-constraint-date>
+    <child-task idref="t110"/>
+    <child-task idref="t111"/>
+    <child-task idref="t112"/>
+    <child-task idref="t113"/>
+    <child-task idref="t114"/>
+    <style>
+      <value key="font-size">15</value>
+    </style>
+    <start-no-earlier-than>2014-07-30T12:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t65">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t66">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t65"/>
+  </task>
+  <task id="t67">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t66"/>
+  </task>
+  <task id="t68">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t67"/>
+  </task>
+  <task id="t69">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t68"/>
+  </task>
+  <task id="t70">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t71">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t70"/>
+  </task>
+  <task id="t72">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t71"/>
+  </task>
+  <task id="t73">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t72"/>
+  </task>
+  <task id="t74">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t73"/>
+  </task>
+  <task id="t75">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t76">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t75"/>
+  </task>
+  <task id="t77">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t76"/>
+  </task>
+  <task id="t78">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t77"/>
+  </task>
+  <task id="t79">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t78"/>
+  </task>
+  <task id="t80">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t81">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t80"/>
+  </task>
+  <task id="t82">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t81"/>
+  </task>
+  <task id="t83">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t82"/>
+  </task>
+  <task id="t84">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t83"/>
+  </task>
+  <task id="t85">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t86">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t85"/>
+  </task>
+  <task id="t87">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t86"/>
+  </task>
+  <task id="t88">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t87"/>
+  </task>
+  <task id="t89">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t88"/>
+  </task>
+  <task id="t90">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t91">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t90"/>
+  </task>
+  <task id="t92">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t91"/>
+  </task>
+  <task id="t93">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t92"/>
+  </task>
+  <task id="t94">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t93"/>
+  </task>
+  <task id="t95">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t96">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t95"/>
+  </task>
+  <task id="t97">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t96"/>
+  </task>
+  <task id="t98">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t97"/>
+  </task>
+  <task id="t99">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t98"/>
+  </task>
+  <task id="t100">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t101">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t100"/>
+  </task>
+  <task id="t102">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t101"/>
+  </task>
+  <task id="t103">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t102"/>
+  </task>
+  <task id="t104">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t103"/>
+  </task>
+  <task id="t105">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t106">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t105"/>
+  </task>
+  <task id="t107">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t106"/>
+  </task>
+  <task id="t108">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t107"/>
+  </task>
+  <task id="t109">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t108"/>
+  </task>
+  <task id="t110">
+    <title>DC</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t111">
+    <title>DT</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t110"/>
+  </task>
+  <task id="t112">
+    <title>JH</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t111"/>
+  </task>
+  <task id="t113">
+    <title>Task 4</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t112"/>
+  </task>
+  <task id="t114">
+    <title>Task 5</title>
+    <effort>28800</effort>
+    <prerequisite-task idref="t113"/>
+  </task>
+  <critical-path root="-1" enabled="false" resources="false">
+    <color r="1" g="0.5" b="0.5"/>
+  </critical-path>
+</scenario>

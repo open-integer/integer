@@ -1,0 +1,3172 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<scenario xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2" id="ftN8Nk7EXO2">
+  <start-date>2014-06-09T12:00:00.000Z</start-date>
+  <top-resource idref="r-1"/>
+  <resource id="r-1">
+    <type>Group</type>
+    <schedule>
+      <schedule-day day-of-week="sunday"/>
+      <schedule-day day-of-week="monday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="tuesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="wednesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="thursday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="friday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="saturday"/>
+      <calendar name="Time Off" editable="yes" overtime="no"/>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+    <child-resource idref="r1"/>
+    <child-resource idref="r2"/>
+    <child-resource idref="r3"/>
+    <child-resource idref="r4"/>
+    <child-resource idref="r6"/>
+    <child-resource idref="r7"/>
+    <child-resource idref="r8"/>
+  </resource>
+  <resource id="r1">
+    <name>Mark Bombalicki</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r2">
+    <name>David Taylor</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0" g="1" b="1"/>
+      </value>
+    </style>
+  </resource>
+  <resource id="r3">
+    <name>Jon Saperia</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0.8" g="0.4" b="1"/>
+      </value>
+    </style>
+  </resource>
+  <resource id="r4">
+    <name>Eric Remington</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="1" g="0.4" b="0.4"/>
+      </value>
+    </style>
+  </resource>
+  <resource id="r6">
+    <name>Joel Huang</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0.8" g="1" b="0.4"/>
+      </value>
+    </style>
+  </resource>
+  <resource id="r7">
+    <name>David Chan</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0" g="1" b="0.501961"/>
+      </value>
+    </style>
+  </resource>
+  <resource id="r8">
+    <name>Unassigned</name>
+    <type>Staff</type>
+  </resource>
+  <top-task idref="t-1"/>
+  <task id="t-1">
+    <type>group</type>
+    <child-task idref="t295"/>
+    <child-task idref="t289"/>
+    <child-task idref="t276"/>
+    <child-task idref="t264"/>
+    <child-task idref="t287"/>
+    <child-task idref="t263"/>
+    <child-task idref="t261"/>
+    <child-task idref="t5"/>
+    <child-task idref="t284"/>
+    <child-task idref="t288"/>
+    <child-task idref="t4"/>
+    <child-task idref="t286"/>
+    <child-task idref="t285"/>
+    <child-task idref="t262"/>
+    <child-task idref="t1"/>
+    <child-task idref="t280"/>
+    <child-task idref="t307"/>
+    <child-task idref="t255"/>
+    <child-task idref="t293"/>
+    <child-task idref="t294"/>
+    <child-task idref="t292"/>
+    <child-task idref="t299"/>
+    <child-task idref="t300"/>
+    <child-task idref="t301"/>
+    <child-task idref="t302"/>
+    <child-task idref="t303"/>
+    <child-task idref="t62"/>
+    <child-task idref="t72"/>
+    <child-task idref="t61"/>
+    <child-task idref="t113"/>
+  </task>
+  <task id="t1">
+    <title>Deploy Skeleton System</title>
+    <type>group</type>
+    <child-task idref="t461"/>
+    <child-task idref="t462"/>
+    <child-task idref="t463"/>
+    <child-task idref="t464"/>
+    <child-task idref="t465"/>
+    <child-task idref="t466"/>
+    <child-task idref="t467"/>
+    <child-task idref="t509"/>
+    <child-task idref="t468"/>
+    <child-task idref="t138"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color w="0"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Basic system up and running in the data center</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-309</string>
+    </user-data>
+  </task>
+  <task id="t4">
+    <title>Show Discovery Status and Events</title>
+    <type>group</type>
+    <child-task idref="t425"/>
+    <child-task idref="t426"/>
+    <child-task idref="t427"/>
+    <child-task idref="t428"/>
+    <child-task idref="t429"/>
+    <child-task idref="t430"/>
+    <child-task idref="t431"/>
+    <child-task idref="t432"/>
+    <child-task idref="t130"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color w="0"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit> A user has started a discovery (or it has been kicked off by a calendar). They want to see the status of the discovery and any possible errors that come up during the discovery process. This information should be presented via the common alarm and event manager window.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-306</string>
+    </user-data>
+  </task>
+  <task id="t5">
+    <title>Showing Link Information on Graphic Map</title>
+    <type>group</type>
+    <child-task idref="t398"/>
+    <child-task idref="t399"/>
+    <child-task idref="t400"/>
+    <child-task idref="t401"/>
+    <child-task idref="t402"/>
+    <child-task idref="t403"/>
+    <child-task idref="t404"/>
+    <child-task idref="t405"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>A user has been running discovery for a while and would like to see the topology information. They can create a view that limits by location (or any other selection factor that is in the system) what they want to see. Imagine a campus network with core and distribution routers. The user would like to see just the network components and the interconnecting links. Just as a user can select a Device to drill down into (see the contained service elements) they can also drill down on a link to see, if there are vlans on the link or other InterDeviceLinks like CDP or VRRP.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-305</string>
+    </user-data>
+  </task>
+  <task id="t10">
+    <title>Report JSON output of service element</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-300</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t11">
+    <title>Discovery - errors/progress</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-299</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t17">
+    <title>Icon Work</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-293</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t18">
+    <title>Display topology hierarchy</title>
+    <effort>144000</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-292</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t19">
+    <title>User Group, Roles</title>
+    <effort>115200</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-291</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t20">
+    <title>Map Filters</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-290</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t21">
+    <title>Map Views, Providers, Locations, Service</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-289</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t22">
+    <title>Device Discovery Information Screen</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-288</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t24">
+    <title>Report Mgr design</title>
+    <effort>115200</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-286</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t25">
+    <title>Inventory Report Control and Display</title>
+    <effort>144000</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-285</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t27">
+    <title>JMS message receiver.</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-283</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t28">
+    <title>JMS message sender</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-282</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t29">
+    <title>JMS event message</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-281</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t30">
+    <title>JMS, update messages</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-280</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t31">
+    <title>JMS , Config wildfly</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-279</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t32">
+    <title>JMS, Message manager - register for messages</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-278</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t33">
+    <title>Events</title>
+    <effort>144000</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-277</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t34">
+    <title>Advanced System Control</title>
+    <effort>144000</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-276</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t35">
+    <title>Filter, apply to events</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-275</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t36">
+    <title>Filter, apply to queries, service elements</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-274</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t37">
+    <title>Filter add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-273</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t38">
+    <title>Filter, Classes, Tables</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-272</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t39">
+    <title>Filter Design</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-271</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t40">
+    <title>Inventory Manager design</title>
+    <effort>115200</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-270</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t41">
+    <title>implement level 2 topology base on a spanning tree</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-269</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t42">
+    <title>implement the differences matrix for add and delete for sub service element</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-268</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t43">
+    <title>Element on DB the output of the matrix is using for inventory</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-267</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t44">
+    <title>define the differences matrix between a discovered service element against a same service</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-266</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t45">
+    <title>implement the differences matrix for attribute changing during discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-265</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t46">
+    <title>System control, user, role, add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-264</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t47">
+    <title>System Control, Role, add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-263</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t48">
+    <title>System Controls, Vendor discovery template, add, delete, modify</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-262</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t49">
+    <title>Schedule Mgr</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-261</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t50">
+    <title>Discovery, Defaults</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-260</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t51">
+    <title>Discovery , Schedule, Get next runtime</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-259</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t52">
+    <title>Discovery Stop</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-258</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t53">
+    <title>Discovery List</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-257</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t54">
+    <title>Implement SHMP V3 access</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-256</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t55">
+    <title>Vlan study and implementation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-255</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t56">
+    <title>Implement ip routing for layer 3 inter device link</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-254</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t57">
+    <title>Generate instance OID based on different mapping between MiB tables</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-253</string>
+    </user-data>
+    <prerequisite-task idref="t88"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t58">
+    <title>associate the basic service element type designed by loren</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-252</string>
+    </user-data>
+    <prerequisite-task idref="t491"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t61">
+    <title>Parse sys location - Needs to be a plug in</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-249</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t62">
+    <title>INT-241 Save Path</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-248</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t63">
+    <title>INT-241 Save interdevice link</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-247</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t64">
+    <title>INT-241 Simple Design Filter</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-246</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t65">
+    <title>INT-241 Document verify that “invalid, self signal” certs may be used in test instances</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-245</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t66">
+    <title>INT-241 Device Details of Discovery API, Last Times discovered, change found, next planned discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-244</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t67">
+    <title>INT-241 Need system requirements description of configurable items Install/ Config/RMe</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-243</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t68">
+    <title>INT-241 Filter API</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-242</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t70">
+    <title>Study MiBs related to network layers</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-240</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t72">
+    <title>Basic Inter device link creation including physical media association</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-238</string>
+    </user-data>
+    <assignment idref="r8"/>
+  </task>
+  <task id="t73">
+    <title>Associate path and network with inter device link (Basic)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-237</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t74">
+    <title>Topology element creation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-236</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t75">
+    <title>Implement MiB table polling and derterminate for service element type</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-235</string>
+    </user-data>
+    <prerequisite-task idref="t86"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t82">
+    <title>Update complete discovery document</title>
+    <effort>720000</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-228</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t85">
+    <title>Finish Design topology / discovery</title>
+    <effort>720000</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-225</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t86">
+    <title>Complete Hierarchal containment discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-224</string>
+    </user-data>
+    <prerequisite-task idref="t489"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t88">
+    <title>Discovery unique identifier for each service element which includes the top level service element and the sub level service element</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-222</string>
+    </user-data>
+    <prerequisite-task idref="t492"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t96">
+    <title>work with loren and dave chan to bring together technologies/ and discovery and topology</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-214</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t97">
+    <title>YAML, Read in, technology, capability, SET</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-213</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t102">
+    <title>Distributed Install on multiple servers</title>
+    <effort>115200</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-208</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t113">
+    <title>Collect &amp; consolidate SNMP credentials for Harvard’s installation
+
+</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-197</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t116">
+    <title>Make the first version of the technology tree</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-194</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t119">
+    <title>Diagram &amp; describe topology discovery</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-191</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t130">
+    <title>Integration of State information into the model (and later system)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-180</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t136">
+    <title>Save discovery status</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-174</string>
+    </user-data>
+    <prerequisite-task idref="t238"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t137">
+    <title>Log and create audit message for Discovery complete and errors.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-173</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t138">
+    <title>Create class, table and queries to store Distributed manager/services configuration</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-172</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t139">
+    <title>Send update message to GUI (from FE server)</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-171</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t140">
+    <title>Add Message sender (for update messages)</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-170</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t141">
+    <title>Add Message receiver to FE server for update messages</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-169</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t142">
+    <title>Add JMS topic for updates to GUI</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-168</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t148">
+    <title>Discovery of location information and parsing SysLocation</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-162</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t149">
+    <title>Add location information in the Discovery process</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-161</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t150">
+    <title>Add specific location information format to system</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-160</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t151">
+    <title>Layer 3 Discovery</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-159</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t152">
+    <title>Identify Service Element (Routing Load Balance)</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-158</string>
+    </user-data>
+    <prerequisite-task idref="t57"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t154">
+    <title>Design how information about icon locations for different backgrounds/perspectives is saved/used.</title>
+    <effort>10800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-156</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t156">
+    <title>Learn how to get the precise physical location of a device using SNMP at Harvard</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-154</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t159">
+    <title>Nagios Integration</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-151</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t176">
+    <title>Send discovery complete and errors to UI</title>
+    <effort>115200</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-134</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t186">
+    <title>Topology Element Filtered View</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-124</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t187">
+    <title>Service Element Filtered View</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-123</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t188">
+    <title>Filter Selection Panel</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-122</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t189">
+    <title>Show Topology Elements in Database with Single/Multiple Level Zoom</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-121</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t190">
+    <title>Show Device Service Elements with Single/Multiple Level Zoom</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-120</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t191">
+    <title>Show Topology Elements and Adjacencies in Database</title>
+    <effort>115200</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-119</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t192">
+    <title>Basic Multiple Level Zoom</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-118</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t212">
+    <title>Discovery of a device using hierarchical discovery</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-98</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t236">
+    <title>Server - send discovery errors and completion information to UI via API</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-64</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t237">
+    <title>UI - Show discovery errors and completion</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-63</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t238">
+    <title>Discovery - Realtime status information of all discoveries in process</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-62</string>
+    </user-data>
+    <prerequisite-task idref="t239"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t239">
+    <title>Server - Discovery status propagation via API</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-61</string>
+    </user-data>
+    <prerequisite-task idref="t241"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t240">
+    <title>UI Show status of discoveries</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-60</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t241">
+    <title>Discovery - Start stop multiple discoveries</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-59</string>
+    </user-data>
+    <prerequisite-task idref="t236"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t244">
+    <title>Import base data into build process (e.g., MIB Modules, Capabilities, ServiceElementTypes, etc.</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-54</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t255">
+    <title>User installable instance of Integer</title>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>User installable instance of Integer</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-43</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t261">
+    <title>Viewing network and Service element details on the UI</title>
+    <type>group</type>
+    <child-task idref="t389"/>
+    <child-task idref="t390"/>
+    <child-task idref="t391"/>
+    <child-task idref="t392"/>
+    <child-task idref="t393"/>
+    <child-task idref="t394"/>
+    <child-task idref="t395"/>
+    <child-task idref="t506"/>
+    <child-task idref="t396"/>
+    <child-task idref="t156"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Users can see details of Service Elements that have been selected in Filters as well as in reports. For example, expanding out the network interfaces in a router. They will also be able to list all devices on the screen and individually select service elements for expansion.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Part of the information that a user can select is the discovery status of a ServiceElement</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>This same function works for network details and navigating up/down the topology layers.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-37</string>
+    </user-data>
+  </task>
+  <task id="t262">
+    <title>Viewing Reports and ad hoc export of data</title>
+    <type>group</type>
+    <child-task idref="t452"/>
+    <child-task idref="t453"/>
+    <child-task idref="t454"/>
+    <child-task idref="t508"/>
+    <child-task idref="t455"/>
+    <child-task idref="t456"/>
+    <child-task idref="t457"/>
+    <child-task idref="t458"/>
+    <child-task idref="t459"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The user will be able to select which report (s) to view what to print, export and send in mail.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Any report should be able to be filtered by an existing filter.</lit>
+          </run>
+        </p>
+        <p/>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-36</string>
+    </user-data>
+  </task>
+  <task id="t263">
+    <title>Creating Selections</title>
+    <type>group</type>
+    <child-task idref="t380"/>
+    <child-task idref="t381"/>
+    <child-task idref="t382"/>
+    <child-task idref="t383"/>
+    <child-task idref="t384"/>
+    <child-task idref="t385"/>
+    <child-task idref="t386"/>
+    <child-task idref="t387"/>
+    <child-task idref="t68"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>We want users to be able to create, modify and delete selections (selections contain: filters, views and layers – see documentation). We want them be able to list selections and to cause their exectuion with results on the screen, in reports or other export functions - accomplished by the view portion of the selection. That also controls whether the information is graphically displayed or in table form.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>In first release all filters and views are per[user] group.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-35</string>
+    </user-data>
+  </task>
+  <task id="t264">
+    <title>Create a multi-subnet service element and topology discovery and run</title>
+    <type>group</type>
+    <child-task idref="t362"/>
+    <child-task idref="t363"/>
+    <child-task idref="t494"/>
+    <child-task idref="t364"/>
+    <child-task idref="t365"/>
+    <child-task idref="t502"/>
+    <child-task idref="t366"/>
+    <child-task idref="t367"/>
+    <child-task idref="t368"/>
+    <child-task idref="t369"/>
+    <child-task idref="t85"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The user wants an extended service element and layer 2/3 topology discovery of most of the environment that has many subnets. There are certain types of devices they want to include and others to exclude.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>If needed the TopologyElement and Path objects may be delayed from the previous simple service element on a single subnet story until this one.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>At this point the user is not controlling the configuration, it is set. Controlling the configuration of the discovery system is in the next story.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-34</string>
+    </user-data>
+  </task>
+  <task id="t276">
+    <title>Simple Service Element Discovery on a single subnet</title>
+    <type>group</type>
+    <child-task idref="t487"/>
+    <child-task idref="t308"/>
+    <child-task idref="t309"/>
+    <child-task idref="t310"/>
+    <child-task idref="t493"/>
+    <child-task idref="t311"/>
+    <child-task idref="t312"/>
+    <child-task idref="t313"/>
+    <child-task idref="t314"/>
+    <child-task idref="t315"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The idea is to do our first function end to end. After the user logs in, they will be able to start a discovery on a single subnet and find all the devices there. This will also include full service element discovery.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>This requires the implemenation of the SnmpVendorDiscoveryTemplate, ServiceElementDiscoveryManager, ServiceElementDiscoveryPolicy, SnmpVendorContainmentSelector, SnmpServiceElementRelationship, SnmpContainment, SnmpServiceElementTypeDiscriminator and SnmpLevelOID objects. It will also require the basic implementation of the Topology since that is how discovery stars and the IpTopologySeed.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>In addition to the ServiceElement and ServiceElementType implemenations required, the ServiceElementAccessManager must also be implemented to configure access (community strings) for devices.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>This will also include implemenation of the ServiceElementProtocolInstanceIdentifier.</lit>
+          </run>
+        </p>
+        <p/>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-22</string>
+    </user-data>
+  </task>
+  <task id="t279">
+    <title>Security recommendations for integer deployment</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-19</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t280">
+    <title>A full set of deployment and configuration instructions</title>
+    <type>group</type>
+    <child-task idref="t470"/>
+    <child-task idref="t471"/>
+    <child-task idref="t472"/>
+    <child-task idref="t510"/>
+    <child-task idref="t473"/>
+    <child-task idref="t474"/>
+    <child-task idref="t475"/>
+    <child-task idref="t476"/>
+    <child-task idref="t477"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>We need a full set of deployment and configuration instructions for Integer.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-18</string>
+    </user-data>
+  </task>
+  <task id="t284">
+    <title>Defining an Systems Inventory Report</title>
+    <type>group</type>
+    <child-task idref="t406"/>
+    <child-task idref="t407"/>
+    <child-task idref="t408"/>
+    <child-task idref="t409"/>
+    <child-task idref="t410"/>
+    <child-task idref="t411"/>
+    <child-task idref="t412"/>
+    <child-task idref="t413"/>
+    <child-task idref="t414"/>
+    <child-task idref="t507"/>
+    <child-task idref="t176"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The user would like a periodic report (a single report instance is also possible) that lists the entire &apos;inventory&apos; in the system as of a specified date. They will be able to select the fields they would like included for each Service Element, Types of Service Elements, including listing them in a way that includes child Service Elements like disks etc and interfaces. This will also show the parent chiled relationship(s).</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>For now, this report will also be exportable in JSON format.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-13</string>
+    </user-data>
+  </task>
+  <task id="t285">
+    <title>Defining a Change Report</title>
+    <type>group</type>
+    <child-task idref="t443"/>
+    <child-task idref="t444"/>
+    <child-task idref="t445"/>
+    <child-task idref="t446"/>
+    <child-task idref="t447"/>
+    <child-task idref="t448"/>
+    <child-task idref="t449"/>
+    <child-task idref="t450"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The general case is that a user would like periodic reports of information in the system that may change over time. In this case, they are interested in getting a report every 24 hours of the Service Elements that have changed since the last report was run (it may not always be the case that report interval is the same as the time interval to report on). The report rules are defined by the Policy and Inventory Handling parameters in a selected policy.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The InventoryManager must be implemented for this story.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-12</string>
+    </user-data>
+  </task>
+  <task id="t286">
+    <title>Creating and managing topology and service element discovery policies</title>
+    <type>group</type>
+    <child-task idref="t82"/>
+    <child-task idref="t434"/>
+    <child-task idref="t435"/>
+    <child-task idref="t436"/>
+    <child-task idref="t437"/>
+    <child-task idref="t438"/>
+    <child-task idref="t439"/>
+    <child-task idref="t440"/>
+    <child-task idref="t441"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>A user has set up discovery and it is running periodically. They have not yet set up any policies about what to do when new systems are discovered, changed, or missing. They wish to set up policies that tell the system what to do in all these cases as well as define some rules about when a system is deemed changed, missing or new.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>If needed we can delay the implemenation of the ImsSchedulingManager and Calendar and CalendarPolicy in this release.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-11</string>
+    </user-data>
+  </task>
+  <task id="t287">
+    <title>Configure the discovery system</title>
+    <type>group</type>
+    <child-task idref="t371"/>
+    <child-task idref="t372"/>
+    <child-task idref="t373"/>
+    <child-task idref="t374"/>
+    <child-task idref="t375"/>
+    <child-task idref="t376"/>
+    <child-task idref="t505"/>
+    <child-task idref="t377"/>
+    <child-task idref="t378"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The system has just been deployed and the user would like to set up a general discovery by defining the subnets, hops from the seed subnets to search, default community strings for SNMP and their priority on a global and per subnet basis, and which Service Element Types to exclude from the discovery.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>They are also able to control the technologies used in the topology discovery and what to look for in the ServiceElementDiscovery phase.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-10</string>
+    </user-data>
+  </task>
+  <task id="t288">
+    <title>Maintain Users, groups, and access policies and Contact information</title>
+    <type>group</type>
+    <child-task idref="t416"/>
+    <child-task idref="t417"/>
+    <child-task idref="t418"/>
+    <child-task idref="t419"/>
+    <child-task idref="t420"/>
+    <child-task idref="t421"/>
+    <child-task idref="t422"/>
+    <child-task idref="t423"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Allows operators to create new users, change their roles and reset password or disable/delete user. For those users that are externally authenticated such as with CAS, there will be no password.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Classes included in this work are Organization, AuthNInfo, Contact, User, Role, Access Policy and CalendarPolicy.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Also required is the UserContactAndRoleManager.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-9</string>
+    </user-data>
+  </task>
+  <task id="t289">
+    <title>User Logs into System directly.</title>
+    <type>group</type>
+    <child-task idref="t498"/>
+    <child-task idref="t497"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>In some cases, a few operators will have &apos;root&apos; access to integer. These users will be permitted to log into the system without and external authentication system like CAS.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Implementing this first also gives us a way to get started with the system. It requires some amount of implementation of users etc. This will only implement as much as is needed.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-7</string>
+    </user-data>
+  </task>
+  <task id="t290">
+    <title>Integrate LDAP Attribute Service while using CAS</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-6</string>
+    </user-data>
+    <prerequisite-task idref="t291"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t291">
+    <title>Integrate CAS plug-in and software into our System</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-5</string>
+    </user-data>
+    <prerequisite-task idref="t490"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t292">
+    <title>User Access via CAS and LDAP -</title>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>User is able to log into the Integer system using both CAS for authentication and LDAP as an attribute service.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>A user sits at their web browser and types in the the home page URL for Integer. The request is redirected by the server to our CAS server for authentication, and optionally the LDAP repository is queried for attributes like first and last name.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-4</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t293">
+    <title>Write installation/verification software that conforms to security recommendations</title>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Based on the system security requirements, write installation software that checks for conformance to these requirements and informs user of variation with actions to take based on the recommendations.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-3</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t294">
+    <title>Identify and document correct system security configuration for the Integer OD</title>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>We want to identify what the correct security stance should be for an Integer installation. That is, what ports should be open, requirements for keys. This includes inter and intra system communication.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-2</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t295">
+    <title>Integer First Release</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-1</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t299">
+    <title>Sprint 6</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-06-04T21:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-04T21:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t300">
+    <title>Sprint 7</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-06-18T21:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-18T21:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t301">
+    <title>Sprint 8 </title>
+    <type>milestone</type>
+    <start-constraint-date>2014-07-02T21:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-07-02T21:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t302">
+    <title>Sprint 9</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-07-18T21:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-07-18T21:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t303">
+    <title>Sprint 10</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-08-04T21:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-08-04T21:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t307">
+    <title>New System Controls</title>
+    <type>group</type>
+    <start-constraint-date>2014-05-22T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t479"/>
+    <child-task idref="t480"/>
+    <child-task idref="t481"/>
+    <child-task idref="t482"/>
+    <child-task idref="t483"/>
+    <child-task idref="t484"/>
+    <child-task idref="t485"/>
+    <child-task idref="t486"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-fill">
+                <color w="0"/>
+              </value>
+              <value key="font-size">12</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>After the system has been set up and initial information entered, the systems operator will want to be able to control various aspects of the system behavior. These include, distributed component control, start/stop discovery and reporting.  This is a basic set for the first release.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-310</string>
+    </user-data>
+    <start-no-earlier-than>2014-05-22T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t308">
+    <title>Data Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t490"/>
+    <child-task idref="t291"/>
+    <child-task idref="t290"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t309">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t310">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t311">
+    <title>Discovery Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t236"/>
+    <child-task idref="t241"/>
+    <child-task idref="t239"/>
+    <child-task idref="t238"/>
+    <child-task idref="t136"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t312">
+    <title>Domain Knowledge</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t119"/>
+    <child-task idref="t514"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t313">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t314">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t315">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t237"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t362">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t363">
+    <title>Data Storage Functions</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t63"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t364">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t365">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t366">
+    <title>Domain Knowledge</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t116"/>
+    <child-task idref="t504"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t367">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t368">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t369">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t192"/>
+    <child-task idref="t190"/>
+    <child-task idref="t503"/>
+    <child-task idref="t511"/>
+    <child-task idref="t512"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t371">
+    <title>Data Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t49"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t372">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t373">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t374">
+    <title>Discovery Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t11"/>
+    <child-task idref="t53"/>
+    <child-task idref="t52"/>
+    <child-task idref="t51"/>
+    <child-task idref="t50"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t375">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t376">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t377">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t378">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t22"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t380">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t381">
+    <title>Data Storage Functions</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t64"/>
+    <child-task idref="t39"/>
+    <child-task idref="t38"/>
+    <child-task idref="t37"/>
+    <child-task idref="t36"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t382">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t383">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t384">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t385">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t386">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t387">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t20"/>
+    <child-task idref="t186"/>
+    <child-task idref="t188"/>
+    <child-task idref="t149"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t389">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t390">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t391">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t392">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t393">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t394">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t395">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t396">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t18"/>
+    <child-task idref="t21"/>
+    <child-task idref="t154"/>
+    <child-task idref="t187"/>
+    <child-task idref="t189"/>
+    <child-task idref="t17"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t398">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t399">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t400">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t401">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t402">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t403">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t404">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t405">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t191"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t406">
+    <title>associate the basic service element type designed by loren</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-252</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t407">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t408">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t409">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t410">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t411">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t412">
+    <title>Inventory Manager</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t40"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t413">
+    <title>Report Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t10"/>
+    <child-task idref="t24"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t414">
+    <title>User Interface</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t416">
+    <title>Data Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t150"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t417">
+    <title>Data Storage Functions</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t46"/>
+    <child-task idref="t47"/>
+    <child-task idref="t48"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t418">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t419">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t420">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t421">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t422">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t423">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t19"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t425">
+    <title>Data Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t142"/>
+    <child-task idref="t141"/>
+    <child-task idref="t140"/>
+    <child-task idref="t139"/>
+    <child-task idref="t32"/>
+    <child-task idref="t31"/>
+    <child-task idref="t30"/>
+    <child-task idref="t29"/>
+    <child-task idref="t28"/>
+    <child-task idref="t27"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t426">
+    <title>Data Storage Functions</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t35"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t427">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t428">
+    <title>Discovery Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t137"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t429">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t430">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t431">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t432">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t240"/>
+    <child-task idref="t33"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t434">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t435">
+    <title>Data Storage Functions</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t66"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t436">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t437">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t438">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t439">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t440">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t441">
+    <title>User Interface</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t443">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t444">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t445">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t446">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t447">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t448">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t449">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t450">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t25"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t452">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t453">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t454">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t455">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t456">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t457">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t458">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t459">
+    <title>User Interface</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t461">
+    <title>Data Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t67"/>
+    <child-task idref="t65"/>
+    <child-task idref="t96"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t462">
+    <title>Data Storage Functions</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t97"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t463">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t464">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t465">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t466">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t467">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t468">
+    <title>User Interface</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t470">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t471">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t472">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t473">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t474">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t475">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t476">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t477">
+    <title>User Interface</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t479">
+    <title>Data Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t480">
+    <title>Data Storage Functions</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t481">
+    <title>Deployment</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t482">
+    <title>Discovery Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t483">
+    <title>Domain Knowledge</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t484">
+    <title>Inventory Manager</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t485">
+    <title>Report Service</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t486">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t34"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t487">
+    <title>Discovery Manager</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-03T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t212"/>
+    <child-task idref="t488"/>
+    <child-task idref="t513"/>
+    <child-task idref="t489"/>
+    <child-task idref="t86"/>
+    <child-task idref="t75"/>
+    <child-task idref="t491"/>
+    <child-task idref="t58"/>
+    <child-task idref="t492"/>
+    <child-task idref="t88"/>
+    <child-task idref="t57"/>
+    <child-task idref="t152"/>
+    <start-no-earlier-than>2014-06-03T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t488">
+    <title>Execution Stop Command During Discovery</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-03T12:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>After receiving stop command, the discovery manager should not make any new requests to devices.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-319</string>
+    </user-data>
+    <prerequisite-task idref="t212"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-03T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t489">
+    <title>Generate an Unreachable Message During Subnet Discovery for an Existing Service Element</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-324</string>
+    </user-data>
+    <prerequisite-task idref="t513"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t490">
+    <title>Map IPv4 address to Interface as example of generic way to get mappings</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-321</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t491">
+    <title>Implement mac to Ip address mapping</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-239</string>
+    </user-data>
+    <prerequisite-task idref="t75"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t492">
+    <title>Generate instance oid based mapping</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-253</string>
+    </user-data>
+    <prerequisite-task idref="t58"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t493">
+    <title>Infrastructure</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t244"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t494">
+    <title>Discovery Manager</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t73"/>
+    <child-task idref="t495"/>
+    <child-task idref="t70"/>
+    <child-task idref="t74"/>
+    <child-task idref="t56"/>
+    <child-task idref="t55"/>
+    <child-task idref="t500"/>
+    <child-task idref="t501"/>
+    <child-task idref="t41"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t495">
+    <title>Define Topology Discovery Process/Algorithm</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-323</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t496">
+    <title>Add User Log Out</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-329</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t497">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t496"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t498">
+    <title>Data Service</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t499"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t499">
+    <title>Allow User Log Out</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-328</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t500">
+    <title>Implement Layer 3 Topology Algorithm</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-330</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t501">
+    <title>Implement VLAN Algorithm</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-331</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t502">
+    <title>API to GUI for Topology Information</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-332</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t503">
+    <title>Display Topology Information Based on Selection</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-333</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t504">
+    <title>Load domain knowledge for CDP, IpRouteTable, VLANs</title>
+    <effort>720000</effort>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-322</string>
+    </user-data>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t505">
+    <title>Discovery Manager</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t54"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t506">
+    <title>Discovery Manager</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t151"/>
+    <child-task idref="t148"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t507">
+    <title>Discovery Manager</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t42"/>
+    <child-task idref="t43"/>
+    <child-task idref="t44"/>
+    <child-task idref="t45"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t508">
+    <title>Infrastructure</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t159"/>
+    <child-task idref="t515"/>
+    <child-task idref="t516"/>
+    <child-task idref="t517"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t509">
+    <title>Infrastructure</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t102"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t510">
+    <title>Infrastructure</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-04T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t279"/>
+    <start-no-earlier-than>2014-06-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t511">
+    <title>Display Topology Information Based on Selection - Phase 2</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-06T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-335</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t512">
+    <title>Display Topology Information Based on Selection - Phase 3</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-06T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t513">
+    <title>Identify which objects in the Entity MIB and HR MIB and Interfaces MIB Modules to MAP</title>
+    <effort>14400</effort>
+    <start-constraint-date>2014-06-06T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-320</string>
+    </user-data>
+    <prerequisite-task idref="t488"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-06-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t514">
+    <title>Load domain knowledge for CDP, IpRouteTable, VLANs</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-06-06T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-322</string>
+    </user-data>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-06-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t515">
+    <title>Create Nagios Installation in VPC</title>
+    <effort>720000</effort>
+    <start-constraint-date>2014-06-06T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-325</string>
+    </user-data>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-06-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t516">
+    <title>Get information from Tim Hartman about processing JSON file</title>
+    <effort>720000</effort>
+    <start-constraint-date>2014-06-06T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-326</string>
+    </user-data>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-06-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t517">
+    <title>Read Net MRI file and Parse</title>
+    <effort>720000</effort>
+    <start-constraint-date>2014-06-06T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-327</string>
+    </user-data>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-06-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <critical-path root="-1" enabled="true" resources="false">
+    <color r="1" g="0.5" b="0.5"/>
+  </critical-path>
+</scenario>

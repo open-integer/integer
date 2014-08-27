@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<changelog xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2">
+  <version>2.1</version>
+  <task-change-set user="Jon Saperia" date="2014-07-20T17:54:25.205Z" timestamp="2014-07-20T17:54:25.205Z">
+    <change idref="t107" to="t68" to-position="8">
+      <change idref="t107" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t107" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t107" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t107" attribute="title" type="string" to="Technology Discovery"/>
+    </change>
+    <change idref="t112" to="t68" to-position="9">
+      <change idref="t112" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t112" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t112" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t112" attribute="title" type="string" to="Topology/Topology Manager Functions"/>
+    </change>
+    <change idref="t133" to="t75" to-position="3">
+      <change idref="t133" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t133" attribute="title" type="string" to="Task 1"/>
+    </change>
+    <change idref="t81" attribute="title" type="string" from="Retrieve all network interfaces" to="Retrieve all network interfaces including MAC addresses"/>
+    <change idref="t100" to="t92" to-position="4">
+      <change idref="t100" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t100" attribute="title" type="string" to="Subnet Information"/>
+    </change>
+    <change idref="t101" to="t92" to-position="5">
+      <change idref="t101" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t101" attribute="title" type="string" to="Change/Missing Status"/>
+    </change>
+    <change idref="t103" to="t92" to-position="9">
+      <change idref="t103" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t103" attribute="title" type="string" to="Reporting"/>
+    </change>
+    <change idref="t104" to="t92" to-position="10">
+      <change idref="t104" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t104" attribute="title" type="string" to="System Control and Management"/>
+    </change>
+    <change idref="t96" attribute="taskType" type="real" from="0" to="2"/>
+    <change idref="t131" to="t96" to-position="0">
+      <change idref="t131" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t131" attribute="title" type="string" to="Display additional objects collected"/>
+    </change>
+    <change idref="t108" to="t107" to-position="0">
+      <change idref="t108" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t108" attribute="title" type="string" to="YAML for Technology Tree"/>
+    </change>
+    <change idref="t109" to="t107" to-position="1">
+      <change idref="t109" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t109" attribute="title" type="string" to="YAML to connect technology tree to mechanisms and capabilities and SEMOs"/>
+    </change>
+    <change idref="t110" to="t107" to-position="2">
+      <change idref="t110" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t110" attribute="title" type="string" to="YAML to connect to ServiceElementTypes"/>
+    </change>
+    <change idref="t111" to="t107" to-position="3">
+      <change idref="t111" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t111" attribute="title" type="string" to="Definition of technology signatures in YAML and processing same."/>
+    </change>
+    <change idref="t113" to="t112" to-position="0">
+      <change idref="t113" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t113" attribute="title" type="string" to="Starting/Stoping "/>
+    </change>
+    <change idref="t114" to="t112" to-position="1">
+      <change idref="t114" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t114" attribute="title" type="string" to="Following one to many discovery rules each with 1 or more IpTopologySeeds."/>
+    </change>
+    <change idref="t115" to="t112" to-position="2">
+      <change idref="t115" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t115" attribute="title" type="string" to="Correctly handling overlapping topology discovery to avoid duplicate DB entires."/>
+    </change>
+    <change idref="t116" to="t112" to-position="3">
+      <change idref="t116" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t116" attribute="title" type="string" to="Creation of InterDeviceLinks"/>
+    </change>
+    <change idref="t117" to="t112" to-position="4">
+      <change idref="t117" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t117" attribute="title" type="string" to="Creation of Paths and contained InterDeviceLinks"/>
+    </change>
+    <change idref="t118" to="t112" to-position="5">
+      <change idref="t118" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t118" attribute="title" type="string" to="IP and Routing Layer"/>
+    </change>
+    <change idref="t119" to="t112" to-position="6">
+      <change idref="t119" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t119" attribute="title" type="string" to="VLANs"/>
+    </change>
+    <change idref="t120" to="t112" to-position="7">
+      <change idref="t120" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t120" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t120" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t120" attribute="title" type="string" to="Discovery and similar layer 2.5 technologies"/>
+    </change>
+    <change idref="t124" to="t112" to-position="8">
+      <change idref="t124" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t124" attribute="title" type="string" to="Spanning tree information where possible"/>
+    </change>
+    <change idref="t125" to="t112" to-position="9">
+      <change idref="t125" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t125" attribute="title" type="string" to="Link bonding protocols"/>
+    </change>
+    <change idref="t126" to="t112" to-position="10">
+      <change idref="t126" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t126" attribute="title" type="string" to="IPVPN"/>
+    </change>
+    <change idref="t127" to="t112" to-position="11">
+      <change idref="t127" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t127" attribute="title" type="string" to="IPv6"/>
+    </change>
+    <change idref="t128" to="t112" to-position="12">
+      <change idref="t128" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t128" attribute="title" type="string" to="Virtualization infrastructure"/>
+    </change>
+    <change idref="t129" to="t112" to-position="13">
+      <change idref="t129" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t129" attribute="title" type="string" to="Cloud/AWS infrastructure"/>
+    </change>
+    <change idref="t130" to="t112" to-position="14">
+      <change idref="t130" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t130" attribute="title" type="string" to="Storage Infrastructure"/>
+    </change>
+    <change idref="t121" to="t120" to-position="0">
+      <change idref="t121" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t121" attribute="title" type="string" to="CDP"/>
+    </change>
+    <change idref="t122" to="t120" to-position="1">
+      <change idref="t122" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t122" attribute="title" type="string" to="VRRP"/>
+    </change>
+    <change idref="t123" to="t120" to-position="2">
+      <change idref="t123" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-20T04:00:00.000Z"/>
+      <change idref="t123" attribute="title" type="string" to="LLDP"/>
+    </change>
+  </task-change-set>
+  <task-change-set user="Jon Saperia" date="2014-07-23T17:35:28.630Z" timestamp="2014-07-23T17:35:28.630Z">
+    <change idref="t93" attribute="taskType" type="real" from="0" to="2"/>
+    <change idref="t268" to="t93" to-position="0">
+      <change idref="t268" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-23T12:00:00.000Z"/>
+      <change idref="t268" attribute="title" type="string" to="From subnet to subnet"/>
+    </change>
+    <change idref="t269" to="t93" to-position="1">
+      <change idref="t269" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-23T12:00:00.000Z"/>
+      <change idref="t269" attribute="title" type="string" to="Returning to previous subnet/screen"/>
+    </change>
+    <change idref="t270" to="t93" to-position="2">
+      <change idref="t270" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-23T12:00:00.000Z"/>
+      <change idref="t270" attribute="title" type="string" to="Navigation of a service element"/>
+    </change>
+    <change idref="t271" to="t93" to-position="3">
+      <change idref="t271" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-23T12:00:00.000Z"/>
+      <change idref="t271" attribute="title" type="string" to="Navigation of paths and inter device links"/>
+    </change>
+    <change idref="t272" to="t93" to-position="4">
+      <change idref="t272" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-23T12:00:00.000Z"/>
+      <change idref="t272" attribute="title" type="string" to="Navigation between detail screens (e.g., service element details)"/>
+    </change>
+    <change idref="t267" to="t242" to-position="3">
+      <change idref="t267" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-23T12:00:00.000Z"/>
+      <change idref="t267" attribute="title" type="string" to="Collecting messages from distributed components"/>
+    </change>
+  </task-change-set>
+  <task-change-set user="Jon Saperia" date="2014-08-02T14:12:39.750Z" timestamp="2014-08-02T14:12:39.750Z">
+    <change idref="t2" attribute="internalPrerequisitesString" type="string" to="7FS"/>
+    <change idref="t4" attribute="internalPrerequisitesString" type="string" to="3FS"/>
+    <change idref="t5" attribute="internalPrerequisitesString" type="string" to="4FS"/>
+    <change idref="t7" attribute="internalPrerequisitesString" type="string" to="6FS"/>
+    <change idref="t12" attribute="internalPrerequisitesString" type="string" to="11FS"/>
+    <change idref="t13" attribute="internalPrerequisitesString" type="string" to="14FS"/>
+    <change idref="t14" attribute="internalPrerequisitesString" type="string" to="308FS"/>
+    <change idref="t15" attribute="internalPrerequisitesString" type="string" to="390FS"/>
+    <change idref="t17" attribute="internalPrerequisitesString" type="string" to="66FS"/>
+    <change idref="t18" attribute="internalPrerequisitesString" type="string" to="17FS"/>
+    <change idref="t19" attribute="internalPrerequisitesString" type="string" to="18FS"/>
+    <change idref="t20" attribute="internalPrerequisitesString" type="string" to="19FS"/>
+    <change idref="t21" attribute="internalPrerequisitesString" type="string" to="20FS"/>
+    <change idref="t22" attribute="internalPrerequisitesString" type="string" to="13FS"/>
+    <change idref="t34" attribute="internalPrerequisitesString" type="string" to="417FS"/>
+    <change idref="t35" attribute="internalPrerequisitesString" type="string" to="403FS"/>
+    <change idref="t42" attribute="internalPrerequisitesString" type="string" to="41FS"/>
+    <change idref="t43" attribute="internalPrerequisitesString" type="string" to="42FS"/>
+    <change idref="t49" attribute="internalPrerequisitesString" type="string" to="432FS"/>
+    <change idref="t51" attribute="internalPrerequisitesString" type="string" to="50FS"/>
+    <change idref="t52" attribute="internalPrerequisitesString" type="string" to="51FS"/>
+    <change idref="t53" attribute="internalPrerequisitesString" type="string" to="52FS"/>
+    <change idref="t54" attribute="internalPrerequisitesString" type="string" from="432FS" to="53FS, 432FS"/>
+    <change idref="t57" attribute="internalPrerequisitesString" type="string" to="56FS"/>
+    <change idref="t58" attribute="internalPrerequisitesString" type="string" to="57FS"/>
+    <change idref="t59" attribute="internalPrerequisitesString" type="string" to="58FS"/>
+    <change idref="t60" attribute="internalPrerequisitesString" type="string" to="59FS"/>
+    <change idref="t61" attribute="internalPrerequisitesString" type="string" to="60FS"/>
+    <change idref="t63" attribute="internalPrerequisitesString" type="string" to="43FS"/>
+    <change idref="t65" attribute="internalPrerequisitesString" type="string" to="63FS"/>
+    <change idref="t66" attribute="internalPrerequisitesString" type="string" to="24FS"/>
+    <change idref="t68" attribute="internalPrerequisitesString" type="string" from="60FS" to="60FS, 61FS"/>
+    <change idref="t112" attribute="internalPrerequisitesString" type="string" to="91FS"/>
+    <change idref="t184" attribute="internalPrerequisitesString" type="string" to="183FS"/>
+    <change idref="t185" attribute="internalPrerequisitesString" type="string" to="184FS"/>
+    <change idref="t186" attribute="internalPrerequisitesString" type="string" to="185FS"/>
+    <change idref="t187" attribute="internalPrerequisitesString" type="string" to="186FS"/>
+    <change idref="t188" attribute="internalPrerequisitesString" type="string" to="187FS"/>
+    <change idref="t189" attribute="internalPrerequisitesString" type="string" to="188FS"/>
+    <change idref="t224" attribute="internalPrerequisitesString" type="string" to="419FS"/>
+    <change idref="t227" attribute="internalPrerequisitesString" type="string" to="226FS"/>
+    <change idref="t228" attribute="internalPrerequisitesString" type="string" to="416FS"/>
+    <change idref="t229" attribute="internalPrerequisitesString" type="string" to="228FS"/>
+    <change idref="t230" attribute="internalPrerequisitesString" type="string" to="229FS"/>
+    <change idref="t231" attribute="internalPrerequisitesString" type="string" to="230FS"/>
+    <change idref="t232" attribute="internalPrerequisitesString" type="string" to="231FS"/>
+    <change idref="t233" attribute="internalPrerequisitesString" type="string" to="232FS"/>
+    <change idref="t234" attribute="internalPrerequisitesString" type="string" to="233FS"/>
+    <change idref="t236" attribute="internalPrerequisitesString" type="string" to="235FS"/>
+    <change idref="t238" attribute="internalPrerequisitesString" type="string" from="237FS" to="236FS, 237FS"/>
+    <change idref="t239" attribute="internalPrerequisitesString" type="string" to="238FS"/>
+    <change idref="t240" attribute="internalPrerequisitesString" type="string" to="239FS"/>
+    <change idref="t241" attribute="internalPrerequisitesString" type="string" to="240FS"/>
+    <change idref="t244" attribute="internalPrerequisitesString" type="string" to="243FS"/>
+    <change idref="t246" attribute="internalPrerequisitesString" type="string" to="244FS"/>
+    <change idref="t248" attribute="internalPrerequisitesString" type="string" to="35FS"/>
+    <change idref="t275" attribute="internalPrerequisitesString" type="string" to="276FS"/>
+    <change idref="t277" attribute="internalPrerequisitesString" type="string" to="275FS"/>
+    <change idref="t308" attribute="internalPrerequisitesString" type="string" to="12FS"/>
+    <change idref="t318" attribute="internalPrerequisitesString" type="string" to="316FS"/>
+    <change idref="t324" attribute="internalPrerequisitesString" type="string" to="248FS"/>
+    <change idref="t412" attribute="internalPrerequisitesString" type="string" to="411FS"/>
+    <change idref="t413" attribute="internalPrerequisitesString" type="string" to="412FS"/>
+    <change idref="t417" attribute="internalPrerequisitesString" type="string" to="318FS"/>
+    <change idref="t418" attribute="internalPrerequisitesString" type="string" to="324FS"/>
+    <change idref="t419" attribute="internalPrerequisitesString" type="string" to="234FS"/>
+    <change idref="t420" attribute="internalPrerequisitesString" type="string" to="418FS"/>
+    <change idref="t421" attribute="internalPrerequisitesString" type="string" to="246FS"/>
+    <change idref="t422" attribute="internalPrerequisitesString" type="string" to="421FS"/>
+    <change idref="t423" attribute="internalPrerequisitesString" type="string" to="422FS"/>
+    <change idref="t425" attribute="internalPrerequisitesString" type="string" to="423FS"/>
+    <change idref="t426" attribute="internalPrerequisitesString" type="string" to="425FS"/>
+    <change idref="t428" attribute="internalPrerequisitesString" type="string" to="426FS"/>
+    <change idref="t429" attribute="internalPrerequisitesString" type="string" to="428FS"/>
+    <change idref="t431" attribute="internalPrerequisitesString" type="string" to="420FS"/>
+    <change idref="t432" attribute="internalPrerequisitesString" type="string" to="65FS"/>
+    <change idref="t434" attribute="internalPrerequisitesString" type="string" to="433FS"/>
+    <change idref="t435" attribute="internalPrerequisitesString" type="string" to="434FS"/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-04T18:45:46.285Z" timestamp="2014-08-04T18:45:46.285Z">
+    <change idref="t33" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-11T12:00:00.000Z"/>
+    <change idref="t37" attribute="internalPrerequisitesString" type="string" to="354FS"/>
+    <change idref="t37" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t42" attribute="internalPrerequisitesString" type="string" to="37FS"/>
+    <change idref="t42" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t43" attribute="internalPrerequisitesString" type="string" to="42FS"/>
+    <change idref="t43" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t62" attribute="internalPrerequisitesString" type="string" to="43FS"/>
+    <change idref="t62" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t64" attribute="internalPrerequisitesString" type="string" to="382FS"/>
+    <change idref="t64" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t81" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-20T04:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t81" attribute="internalPrerequisitesString" type="string" to="64FS"/>
+    <change idref="t84" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-20T04:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t84" attribute="internalPrerequisitesString" type="string" to="81FS"/>
+    <change idref="t117" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-20T04:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t117" attribute="internalPrerequisitesString" type="string" to="385FS"/>
+    <change idref="t119" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-20T04:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t119" attribute="internalPrerequisitesString" type="string" to="408FS"/>
+    <change idref="t121" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-20T04:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t121" attribute="internalPrerequisitesString" type="string" to="119FS, 313FS"/>
+    <change idref="t282" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-24T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t282" attribute="internalPrerequisitesString" type="string" to="121FS"/>
+    <change idref="t283" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-24T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t283" attribute="internalPrerequisitesString" type="string" to="282FS"/>
+    <change idref="t284" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-24T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t284" attribute="internalPrerequisitesString" type="string" to="283FS"/>
+    <change idref="t311" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-29T12:00:00.000Z" to="2014-08-07T12:00:00.000Z"/>
+    <change idref="t313" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-29T12:00:00.000Z" to="2014-08-07T12:00:00.000Z"/>
+    <change idref="t313" attribute="internalPrerequisitesString" type="string" to="311FS"/>
+    <change idref="t314" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-29T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t314" attribute="internalPrerequisitesString" type="string" to="117FS"/>
+    <change idref="t441" to="t325" to-position="0">
+      <change idref="t441" attribute="effort" type="real" from="28800" to="0"/>
+      <change idref="t441" attribute="internalAssignments" type="string" from="" to="1; 3; 2; 4; 5; 6"/>
+      <change idref="t441" attribute="isSplittableTask" type="real" from="1" to="0"/>
+      <change idref="t441" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-20T12:00:00.000Z"/>
+      <change idref="t441" attribute="percentCompleteForMilestone" type="real" to="0"/>
+      <change idref="t441" attribute="taskType" type="real" from="0" to="1"/>
+      <change idref="t441" attribute="title" type="string" to="Sprint 10"/>
+    </change>
+    <change idref="t442" to="t325" to-position="1">
+      <change idref="t442" attribute="effort" type="real" from="28800" to="0"/>
+      <change idref="t442" attribute="internalAssignments" type="string" from="" to="1; 3; 2; 4; 5; 6"/>
+      <change idref="t442" attribute="isSplittableTask" type="real" from="1" to="0"/>
+      <change idref="t442" attribute="noEarlierThanConstraintDate" type="date" to="2014-09-03T12:00:00.000Z"/>
+      <change idref="t442" attribute="percentCompleteForMilestone" type="real" to="0"/>
+      <change idref="t442" attribute="taskType" type="real" from="0" to="1"/>
+      <change idref="t442" attribute="title" type="string" to="Sprint 11"/>
+    </change>
+    <change idref="t443" to="t325" to-position="2">
+      <change idref="t443" attribute="effort" type="real" from="28800" to="0"/>
+      <change idref="t443" attribute="internalAssignments" type="string" from="" to="1; 3; 2; 4; 5; 6"/>
+      <change idref="t443" attribute="isSplittableTask" type="real" from="1" to="0"/>
+      <change idref="t443" attribute="noEarlierThanConstraintDate" type="date" to="2014-09-17T12:00:00.000Z"/>
+      <change idref="t443" attribute="percentCompleteForMilestone" type="real" to="0"/>
+      <change idref="t443" attribute="taskType" type="real" from="0" to="1"/>
+      <change idref="t443" attribute="title" type="string" to="Sprint 12"/>
+    </change>
+    <change idref="t326" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-30T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t326" attribute="internalPrerequisitesString" type="string" to="348FS"/>
+    <change idref="t327" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-30T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t327" attribute="internalPrerequisitesString" type="string" to="405FS"/>
+    <change idref="t348" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-30T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t348" attribute="internalPrerequisitesString" type="string" to="314FS"/>
+    <change idref="t354" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-30T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t354" attribute="internalPrerequisitesString" type="string" to="33FS"/>
+    <change idref="t382" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-31T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t382" attribute="internalPrerequisitesString" type="string" to="62FS"/>
+    <change idref="t385" attribute="noEarlierThanConstraintDate" type="date" from="2014-07-31T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t385" attribute="internalPrerequisitesString" type="string" to="84FS"/>
+    <change idref="t405" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-01T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t405" attribute="internalPrerequisitesString" type="string" to="326FS"/>
+    <change idref="t406" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-01T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t406" attribute="internalPrerequisitesString" type="string" to="327FS"/>
+    <change idref="t408" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-01T12:00:00.000Z" to="2014-08-12T04:00:00.000Z"/>
+    <change idref="t408" attribute="internalPrerequisitesString" type="string" to="406FS"/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-06T14:34:41.531Z" timestamp="2014-08-06T14:34:41.531Z">
+    <change idref="t33" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-18T12:00:00.000Z" to="2014-08-08T12:00:00.000Z"/>
+    <change idref="t33" attribute="internalEffortDone" type="real" from="14400" to="0"/>
+    <change idref="t37" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-25T12:00:00.000Z"/>
+    <change idref="t37" attribute="internalEffortDone" type="real" from="14400" to="28800"/>
+    <change idref="t42" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-19T12:00:00.000Z" to="2014-08-12T12:00:00.000Z"/>
+    <change idref="t43" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-19T17:00:00.000Z" to="2014-08-12T16:00:00.000Z"/>
+    <change idref="t62" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-26T12:00:00.000Z" to="2014-08-13T12:00:00.000Z"/>
+    <change idref="t63" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-27T12:00:00.000Z"/>
+    <change idref="t64" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-14T12:00:00.000Z" to="2014-08-15T12:00:00.000Z"/>
+    <change idref="t81" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-28T12:15:00.000Z" to="2014-08-19T12:00:00.000Z"/>
+    <change idref="t84" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-29T12:15:00.000Z" to="2014-08-20T12:00:00.000Z"/>
+    <change idref="t117" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-13T12:00:00.000Z" to="2014-08-22T04:00:00.000Z"/>
+    <change idref="t119" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-03T12:00:00.000Z" to="2014-08-26T12:00:00.000Z"/>
+    <change idref="t228" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-13T12:00:00.000Z"/>
+    <change idref="t229" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-14T12:00:00.000Z"/>
+    <change idref="t230" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-15T12:00:00.000Z"/>
+    <change idref="t231" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-18T12:00:00.000Z"/>
+    <change idref="t232" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-19T12:00:00.000Z"/>
+    <change idref="t233" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+    <change idref="t234" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-22T12:00:00.000Z"/>
+    <change idref="t282" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-04T12:15:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t283" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-05T12:15:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t284" attribute="noLaterThanConstrainedTaskEnd" type="real" from="1" to="0"/>
+    <change idref="t284" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-11T04:00:00.000Z" to="2014-08-21T12:00:00.000Z"/>
+    <change idref="t311" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-07T12:00:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t313" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-08T12:00:00.000Z" to="2014-08-07T12:00:00.000Z"/>
+    <change idref="t314" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-29T20:45:00.000Z" to="2014-08-25T12:00:00.000Z"/>
+    <change idref="t318" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-20T12:00:00.000Z" to="2014-08-07T12:00:00.000Z"/>
+    <change idref="t445" to="t325" to-position="0">
+      <change idref="t445" attribute="Next" type="string" to=""/>
+      <change idref="t445" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t445" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-06T12:00:00.000Z"/>
+      <change idref="t445" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t445" attribute="title" type="string" to="Clean up tasks from earlier sprints"/>
+    </change>
+    <change idref="t446" to="t325" to-position="1" resurrection="yes">
+      <change idref="t446" attribute="Next" type="string" to=""/>
+      <change idref="t446" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-06T12:00:00.000Z"/>
+      <change idref="t446" attribute="title" type="string" to="Task 1"/>
+    </change>
+    <change idref="t326" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-20T12:15:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t348" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-14T12:00:00.000Z" to="2014-08-08T12:00:00.000Z"/>
+    <change idref="t354" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-22T12:00:00.000Z" to="2014-08-11T12:00:00.000Z"/>
+    <change idref="t382" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-27T12:00:00.000Z" to="2014-08-14T12:00:00.000Z"/>
+    <change idref="t385" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-19T12:15:00.000Z" to="2014-08-21T12:00:00.000Z"/>
+    <change idref="t404" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-27T16:00:00.000Z"/>
+    <change idref="t405" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-02T12:00:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t406" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-21T12:00:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t406" attribute="internalEffortDone" type="real" from="12960" to="0"/>
+    <change idref="t416" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-11T12:00:00.000Z"/>
+    <change idref="t432" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-25T12:00:00.000Z"/>
+    <change idref="t441" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-21T12:00:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t442" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-04T12:00:00.000Z" to="2014-07-29T04:00:00.000Z"/>
+    <change idref="t313" from="t69" from-position="3" to="t445" to-position="0"/>
+  </task-change-set>
+  <task-change-set user="Jon Saperia" date="2014-08-06T18:02:27.174Z" timestamp="2014-08-06T18:02:27.174Z">
+    <change idref="t441" attribute="Next" type="string" from="" to="10"/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-11T12:42:27.548Z" timestamp="2014-08-11T12:42:27.548Z">
+    <change idref="t62" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t318" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t354" attribute="internalEffortDone" type="real" from="0" to="8100"/>
+    <change idref="t382" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t451" attribute="internalEffortDone" type="real" from="0" to="14400"/>
+  </task-change-set>
+  <task-change-set user="Jon Saperia" date="2014-08-12T18:06:20.094Z" timestamp="2014-08-12T18:06:20.094Z">
+    <change idref="t371" attribute="title" type="string" from="Business Service and Criticality Identification" to="Business Service and Criticality Identification "/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-15T18:27:25.668Z" timestamp="2014-08-15T18:27:25.668Z">
+    <change idref="t33" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t42" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t43" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t64" attribute="internalEffortDone" type="real" from="0" to="57600"/>
+    <change idref="t81" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t84" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t313" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t354" attribute="internalEffortDone" type="real" from="8100" to="28800"/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-18T16:11:05.923Z" timestamp="2014-08-18T16:11:05.923Z">
+    <change idref="t100" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-07T12:00:00.000Z" to="2014-08-25T12:00:00.000Z"/>
+    <change idref="t200" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-12T12:00:00.000Z" to="2014-08-28T12:00:00.000Z"/>
+    <change idref="t201" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-13T12:00:00.000Z" to="2014-08-29T12:00:00.000Z"/>
+    <change idref="t205" attribute="noEarlierThanConstraintDate" type="date" to="2014-09-16T12:00:00.000Z"/>
+    <change idref="t213" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-08T12:00:00.000Z" to="2014-08-26T12:00:00.000Z"/>
+    <change idref="t228" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t229" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t230" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t231" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t232" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t233" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t268" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-19T12:00:00.000Z" to="2014-09-04T12:00:00.000Z"/>
+    <change idref="t269" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-20T12:00:00.000Z" to="2014-09-05T12:00:00.000Z"/>
+    <change idref="t270" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-21T12:00:00.000Z" to="2014-09-08T12:00:00.000Z"/>
+    <change idref="t271" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-14T12:00:00.000Z" to="2014-08-29T20:45:00.000Z"/>
+    <change idref="t335" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-18T12:00:00.000Z" to="2014-09-03T12:00:00.000Z"/>
+    <change idref="t337" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-22T12:00:00.000Z" to="2014-09-09T12:00:00.000Z"/>
+    <change idref="t338" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-25T12:00:00.000Z" to="2014-09-10T12:00:00.000Z"/>
+    <change idref="t339" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-11T12:00:00.000Z" to="2014-08-27T12:00:00.000Z"/>
+    <change idref="t348" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t352" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-26T12:00:00.000Z" to="2014-09-11T12:00:00.000Z"/>
+    <change idref="t386" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+    <change idref="t387" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-15T12:00:00.000Z" to="2014-09-02T12:00:00.000Z"/>
+    <change idref="t416" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t436" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-27T12:00:00.000Z" to="2014-09-12T12:00:00.000Z"/>
+    <change idref="t437" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-28T12:00:00.000Z" to="2014-09-15T12:00:00.000Z"/>
+    <change idref="t444" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-06T12:00:00.000Z" to="2014-08-22T12:00:00.000Z"/>
+    <change idref="t451" attribute="internalEffortDone" type="real" from="14400" to="28800"/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-19T13:02:55.393Z" timestamp="2014-08-19T13:02:55.393Z">
+    <change idref="t231" attribute="internalEffortDone" type="real" from="28800" to="0"/>
+    <change idref="t232" attribute="internalEffortDone" type="real" from="28800" to="0"/>
+    <change idref="t233" attribute="internalEffortDone" type="real" from="28800" to="0"/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-19T17:27:41.435Z" timestamp="2014-08-19T17:27:41.435Z">
+    <change idref="t406" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+  </task-change-set>
+  <task-change-set user="Mark Bombalicki" date="2014-08-20T17:53:39.008Z" timestamp="2014-08-20T17:53:39.008Z">
+    <change idref="t60" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-03T17:00:00.000Z"/>
+    <change idref="t63" attribute="internalEffortDone" type="real" from="0" to="14400"/>
+    <change idref="t452" to="t92" to-position="3">
+      <change idref="t452" attribute="Next" type="string" to=""/>
+      <change idref="t452" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t452" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-20T12:00:00.000Z"/>
+      <change idref="t452" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t452" attribute="title" type="string" to="Bug Fixes"/>
+    </change>
+    <change idref="t100" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-25T12:00:00.000Z" to="2014-09-01T12:00:00.000Z"/>
+    <change idref="t200" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-28T12:00:00.000Z" to="2014-09-04T12:00:00.000Z"/>
+    <change idref="t201" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-29T12:00:00.000Z" to="2014-09-05T12:00:00.000Z"/>
+    <change idref="t205" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-16T12:00:00.000Z" to="2014-09-23T12:00:00.000Z"/>
+    <change idref="t213" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-26T12:00:00.000Z" to="2014-09-02T12:00:00.000Z"/>
+    <change idref="t268" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-04T12:00:00.000Z" to="2014-09-11T12:00:00.000Z"/>
+    <change idref="t269" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-05T12:00:00.000Z" to="2014-09-12T12:00:00.000Z"/>
+    <change idref="t270" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-08T12:00:00.000Z" to="2014-09-15T12:00:00.000Z"/>
+    <change idref="t271" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-29T20:45:00.000Z" to="2014-09-05T20:45:00.000Z"/>
+    <change idref="t314" attribute="internalEffortDone" type="real" from="0" to="23400"/>
+    <change idref="t335" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-03T12:00:00.000Z" to="2014-09-10T12:00:00.000Z"/>
+    <change idref="t337" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-09T12:00:00.000Z" to="2014-09-16T12:00:00.000Z"/>
+    <change idref="t338" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-10T12:00:00.000Z" to="2014-09-17T12:00:00.000Z"/>
+    <change idref="t339" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-27T12:00:00.000Z" to="2014-09-03T12:00:00.000Z"/>
+    <change idref="t352" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-11T12:00:00.000Z" to="2014-09-18T12:00:00.000Z"/>
+    <change idref="t385" attribute="internalEffortDone" type="real" from="0" to="28800"/>
+    <change idref="t386" attribute="internalPrerequisitesString" type="string" to="462FS"/>
+    <change idref="t387" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-02T12:00:00.000Z" to="2014-09-09T12:00:00.000Z"/>
+    <change idref="t436" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-12T12:00:00.000Z" to="2014-09-19T12:00:00.000Z"/>
+    <change idref="t437" attribute="noEarlierThanConstraintDate" type="date" from="2014-09-15T12:00:00.000Z" to="2014-09-22T12:00:00.000Z"/>
+    <change idref="t444" attribute="noEarlierThanConstraintDate" type="date" from="2014-08-22T12:00:00.000Z" to="2014-08-29T12:00:00.000Z"/>
+    <change idref="t453" to="t452" to-position="0">
+      <change idref="t453" attribute="Next" type="string" to=""/>
+      <change idref="t453" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t453" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t453" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t453" attribute="title" type="string" to="Autoscale Screen"/>
+    </change>
+    <change idref="t454" to="t452" to-position="1">
+      <change idref="t454" attribute="Next" type="string" to=""/>
+      <change idref="t454" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t454" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t454" attribute="internalPrerequisitesString" type="string" to="453FS"/>
+      <change idref="t454" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t454" attribute="title" type="string" to="Autoscale map"/>
+    </change>
+    <change idref="t455" to="t452" to-position="2">
+      <change idref="t455" attribute="Next" type="string" to=""/>
+      <change idref="t455" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t455" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t455" attribute="internalPrerequisitesString" type="string" to="454FS"/>
+      <change idref="t455" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t455" attribute="title" type="string" to="Fix Lines - when you zoom in it appears some of the lines are not attached"/>
+    </change>
+    <change idref="t456" to="t452" to-position="3">
+      <change idref="t456" attribute="Next" type="string" to=""/>
+      <change idref="t456" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t456" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t456" attribute="internalPrerequisitesString" type="string" to="455FS"/>
+      <change idref="t456" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t456" attribute="title" type="string" to="Fix Lines - when you move a node the line becomes detached"/>
+    </change>
+    <change idref="t457" to="t452" to-position="4">
+      <change idref="t457" attribute="Next" type="string" to=""/>
+      <change idref="t457" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t457" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t457" attribute="internalPrerequisitesString" type="string" to="456FS"/>
+      <change idref="t457" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t457" attribute="title" type="string" to="Fix lines - it is difficult to click on a line"/>
+    </change>
+    <change idref="t458" to="t452" to-position="5">
+      <change idref="t458" attribute="Next" type="string" to=""/>
+      <change idref="t458" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t458" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t458" attribute="internalPrerequisitesString" type="string" to="457FS"/>
+      <change idref="t458" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t458" attribute="title" type="string" to="Issue with the path list when he expand icon (+) does not display"/>
+    </change>
+    <change idref="t459" to="t452" to-position="6">
+      <change idref="t459" attribute="Next" type="string" to=""/>
+      <change idref="t459" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t459" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t459" attribute="internalPrerequisitesString" type="string" to="458FS"/>
+      <change idref="t459" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t459" attribute="title" type="string" to="Issue regarding the menu bar being in front of the details window "/>
+    </change>
+    <change idref="t460" to="t452" to-position="7">
+      <change idref="t460" attribute="Next" type="string" to=""/>
+      <change idref="t460" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t460" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t460" attribute="internalPrerequisitesString" type="string" to="459FS"/>
+      <change idref="t460" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t460" attribute="title" type="string" to="Log out and clear session "/>
+    </change>
+    <change idref="t461" to="t452" to-position="8">
+      <change idref="t461" attribute="Next" type="string" to=""/>
+      <change idref="t461" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t461" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t461" attribute="internalPrerequisitesString" type="string" to="460FS"/>
+      <change idref="t461" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t461" attribute="title" type="string" to="Know when a session is invalid and direct to login screen"/>
+    </change>
+    <change idref="t462" to="t452" to-position="9">
+      <change idref="t462" attribute="Next" type="string" to=""/>
+      <change idref="t462" attribute="effort" type="real" from="28800" to="14400"/>
+      <change idref="t462" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t462" attribute="internalPrerequisitesString" type="string" to="461FS"/>
+      <change idref="t462" attribute="noEarlierThanConstraintDate" type="date" to="2014-08-21T12:00:00.000Z"/>
+      <change idref="t462" attribute="title" type="string" to="Log out button "/>
+    </change>
+  </task-change-set>
+  <metadata-change-set user="Mark Bombalicki" date="2014-08-04T18:45:46.285Z" timestamp="2014-08-04T18:45:46.285Z">
+    <change idref="m1" attribute="milestoneTaskStyle" type="dict" to="{
+    &quot;gantt-fill-color&quot; =     {
+        b = &quot;0.301961&quot;;
+        g = &quot;0.301961&quot;;
+        r = &quot;0.847059&quot;;
+    };
+}"/>
+  </metadata-change-set>
+</changelog>

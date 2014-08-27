@@ -1,0 +1,3082 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<scenario xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2" id="l7zsay02OzV">
+  <start-date>2014-05-22T12:00:00.000Z</start-date>
+  <top-resource idref="r-1"/>
+  <resource id="r-1">
+    <type>Group</type>
+    <schedule>
+      <schedule-day day-of-week="sunday"/>
+      <schedule-day day-of-week="monday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="tuesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="wednesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="thursday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="friday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="saturday"/>
+      <calendar name="Time Off" editable="yes" overtime="no"/>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+    <child-resource idref="r1"/>
+    <child-resource idref="r2"/>
+    <child-resource idref="r3"/>
+    <child-resource idref="r4"/>
+    <child-resource idref="r5"/>
+    <child-resource idref="r6"/>
+    <child-resource idref="r7"/>
+    <child-resource idref="r8"/>
+  </resource>
+  <resource id="r1">
+    <name>Mark Bombalicki</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r2">
+    <name>David Taylor</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r3">
+    <name>Jon Saperia</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r4">
+    <name>Eric Remington</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r5">
+    <name>Loren Jan Wilson</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r6">
+    <name>Joel Huang</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r7">
+    <name>David Chan</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r8">
+    <name>Unassigned</name>
+    <type>Staff</type>
+  </resource>
+  <top-task idref="t-1"/>
+  <task id="t-1">
+    <type>group</type>
+    <child-task idref="t289"/>
+    <child-task idref="t276"/>
+    <child-task idref="t264"/>
+    <child-task idref="t287"/>
+    <child-task idref="t263"/>
+    <child-task idref="t261"/>
+    <child-task idref="t5"/>
+    <child-task idref="t284"/>
+    <child-task idref="t288"/>
+    <child-task idref="t4"/>
+    <child-task idref="t286"/>
+    <child-task idref="t285"/>
+    <child-task idref="t262"/>
+    <child-task idref="t304"/>
+    <child-task idref="t305"/>
+    <child-task idref="t306"/>
+    <child-task idref="t1"/>
+    <child-task idref="t280"/>
+    <child-task idref="t283"/>
+    <child-task idref="t293"/>
+    <child-task idref="t294"/>
+    <child-task idref="t299"/>
+    <child-task idref="t300"/>
+    <child-task idref="t301"/>
+    <child-task idref="t302"/>
+    <child-task idref="t303"/>
+    <child-task idref="t2"/>
+    <child-task idref="t3"/>
+    <child-task idref="t6"/>
+    <child-task idref="t7"/>
+    <child-task idref="t8"/>
+    <child-task idref="t9"/>
+    <child-task idref="t10"/>
+    <child-task idref="t11"/>
+    <child-task idref="t12"/>
+    <child-task idref="t13"/>
+    <child-task idref="t14"/>
+    <child-task idref="t15"/>
+    <child-task idref="t16"/>
+    <child-task idref="t17"/>
+    <child-task idref="t18"/>
+    <child-task idref="t19"/>
+    <child-task idref="t20"/>
+    <child-task idref="t21"/>
+    <child-task idref="t22"/>
+    <child-task idref="t23"/>
+    <child-task idref="t24"/>
+    <child-task idref="t25"/>
+    <child-task idref="t26"/>
+    <child-task idref="t27"/>
+    <child-task idref="t28"/>
+    <child-task idref="t29"/>
+    <child-task idref="t30"/>
+    <child-task idref="t31"/>
+    <child-task idref="t32"/>
+    <child-task idref="t33"/>
+    <child-task idref="t34"/>
+    <child-task idref="t35"/>
+    <child-task idref="t36"/>
+    <child-task idref="t37"/>
+    <child-task idref="t38"/>
+    <child-task idref="t39"/>
+    <child-task idref="t40"/>
+    <child-task idref="t41"/>
+    <child-task idref="t42"/>
+    <child-task idref="t43"/>
+    <child-task idref="t44"/>
+    <child-task idref="t45"/>
+    <child-task idref="t46"/>
+    <child-task idref="t47"/>
+    <child-task idref="t48"/>
+    <child-task idref="t49"/>
+    <child-task idref="t50"/>
+    <child-task idref="t51"/>
+    <child-task idref="t52"/>
+    <child-task idref="t53"/>
+    <child-task idref="t54"/>
+    <child-task idref="t55"/>
+    <child-task idref="t56"/>
+    <child-task idref="t57"/>
+    <child-task idref="t59"/>
+    <child-task idref="t60"/>
+    <child-task idref="t61"/>
+    <child-task idref="t62"/>
+    <child-task idref="t63"/>
+    <child-task idref="t64"/>
+    <child-task idref="t65"/>
+    <child-task idref="t66"/>
+    <child-task idref="t67"/>
+    <child-task idref="t68"/>
+    <child-task idref="t69"/>
+    <child-task idref="t70"/>
+    <child-task idref="t71"/>
+    <child-task idref="t72"/>
+    <child-task idref="t73"/>
+    <child-task idref="t74"/>
+    <child-task idref="t76"/>
+    <child-task idref="t77"/>
+    <child-task idref="t78"/>
+    <child-task idref="t79"/>
+    <child-task idref="t80"/>
+    <child-task idref="t81"/>
+    <child-task idref="t82"/>
+    <child-task idref="t83"/>
+    <child-task idref="t84"/>
+    <child-task idref="t85"/>
+    <child-task idref="t86"/>
+    <child-task idref="t87"/>
+    <child-task idref="t89"/>
+    <child-task idref="t90"/>
+    <child-task idref="t91"/>
+    <child-task idref="t92"/>
+    <child-task idref="t93"/>
+    <child-task idref="t94"/>
+    <child-task idref="t95"/>
+    <child-task idref="t96"/>
+    <child-task idref="t97"/>
+    <child-task idref="t98"/>
+    <child-task idref="t99"/>
+    <child-task idref="t100"/>
+    <child-task idref="t101"/>
+    <child-task idref="t102"/>
+    <child-task idref="t103"/>
+    <child-task idref="t104"/>
+    <child-task idref="t105"/>
+    <child-task idref="t106"/>
+    <child-task idref="t107"/>
+    <child-task idref="t108"/>
+    <child-task idref="t109"/>
+    <child-task idref="t110"/>
+    <child-task idref="t111"/>
+    <child-task idref="t112"/>
+    <child-task idref="t113"/>
+    <child-task idref="t114"/>
+    <child-task idref="t115"/>
+    <child-task idref="t116"/>
+    <child-task idref="t117"/>
+    <child-task idref="t118"/>
+    <child-task idref="t119"/>
+    <child-task idref="t120"/>
+    <child-task idref="t121"/>
+    <child-task idref="t122"/>
+    <child-task idref="t123"/>
+    <child-task idref="t124"/>
+    <child-task idref="t125"/>
+    <child-task idref="t126"/>
+    <child-task idref="t127"/>
+    <child-task idref="t128"/>
+    <child-task idref="t129"/>
+    <child-task idref="t130"/>
+    <child-task idref="t131"/>
+    <child-task idref="t132"/>
+    <child-task idref="t133"/>
+    <child-task idref="t134"/>
+    <child-task idref="t135"/>
+    <child-task idref="t137"/>
+    <child-task idref="t138"/>
+    <child-task idref="t139"/>
+    <child-task idref="t140"/>
+    <child-task idref="t141"/>
+    <child-task idref="t142"/>
+    <child-task idref="t143"/>
+    <child-task idref="t144"/>
+    <child-task idref="t145"/>
+    <child-task idref="t146"/>
+    <child-task idref="t147"/>
+    <child-task idref="t148"/>
+    <child-task idref="t149"/>
+    <child-task idref="t150"/>
+    <child-task idref="t151"/>
+    <child-task idref="t152"/>
+    <child-task idref="t153"/>
+    <child-task idref="t154"/>
+    <child-task idref="t155"/>
+    <child-task idref="t156"/>
+    <child-task idref="t157"/>
+    <child-task idref="t158"/>
+    <child-task idref="t159"/>
+    <child-task idref="t160"/>
+    <child-task idref="t161"/>
+    <child-task idref="t162"/>
+    <child-task idref="t163"/>
+    <child-task idref="t164"/>
+    <child-task idref="t165"/>
+    <child-task idref="t166"/>
+    <child-task idref="t167"/>
+    <child-task idref="t168"/>
+    <child-task idref="t169"/>
+    <child-task idref="t170"/>
+    <child-task idref="t171"/>
+    <child-task idref="t172"/>
+    <child-task idref="t173"/>
+    <child-task idref="t174"/>
+    <child-task idref="t175"/>
+    <child-task idref="t176"/>
+    <child-task idref="t177"/>
+    <child-task idref="t178"/>
+    <child-task idref="t179"/>
+    <child-task idref="t180"/>
+    <child-task idref="t181"/>
+    <child-task idref="t182"/>
+    <child-task idref="t183"/>
+    <child-task idref="t184"/>
+    <child-task idref="t185"/>
+    <child-task idref="t186"/>
+    <child-task idref="t187"/>
+    <child-task idref="t188"/>
+    <child-task idref="t189"/>
+    <child-task idref="t190"/>
+    <child-task idref="t191"/>
+    <child-task idref="t192"/>
+    <child-task idref="t193"/>
+    <child-task idref="t194"/>
+    <child-task idref="t195"/>
+    <child-task idref="t196"/>
+    <child-task idref="t197"/>
+    <child-task idref="t198"/>
+    <child-task idref="t199"/>
+    <child-task idref="t200"/>
+    <child-task idref="t201"/>
+    <child-task idref="t202"/>
+    <child-task idref="t203"/>
+    <child-task idref="t204"/>
+    <child-task idref="t205"/>
+    <child-task idref="t206"/>
+    <child-task idref="t207"/>
+    <child-task idref="t208"/>
+    <child-task idref="t209"/>
+    <child-task idref="t210"/>
+    <child-task idref="t211"/>
+    <child-task idref="t213"/>
+    <child-task idref="t214"/>
+    <child-task idref="t215"/>
+    <child-task idref="t216"/>
+    <child-task idref="t217"/>
+    <child-task idref="t218"/>
+    <child-task idref="t219"/>
+    <child-task idref="t220"/>
+    <child-task idref="t221"/>
+    <child-task idref="t222"/>
+    <child-task idref="t223"/>
+    <child-task idref="t224"/>
+    <child-task idref="t225"/>
+    <child-task idref="t226"/>
+    <child-task idref="t227"/>
+    <child-task idref="t228"/>
+    <child-task idref="t229"/>
+    <child-task idref="t230"/>
+    <child-task idref="t231"/>
+    <child-task idref="t232"/>
+    <child-task idref="t233"/>
+    <child-task idref="t234"/>
+    <child-task idref="t235"/>
+    <child-task idref="t240"/>
+    <child-task idref="t242"/>
+    <child-task idref="t243"/>
+    <child-task idref="t246"/>
+    <child-task idref="t247"/>
+    <child-task idref="t248"/>
+    <child-task idref="t249"/>
+    <child-task idref="t250"/>
+    <child-task idref="t251"/>
+    <child-task idref="t252"/>
+    <child-task idref="t253"/>
+    <child-task idref="t254"/>
+    <child-task idref="t255"/>
+    <child-task idref="t256"/>
+    <child-task idref="t257"/>
+    <child-task idref="t258"/>
+    <child-task idref="t259"/>
+    <child-task idref="t260"/>
+    <child-task idref="t265"/>
+    <child-task idref="t266"/>
+    <child-task idref="t267"/>
+    <child-task idref="t268"/>
+    <child-task idref="t269"/>
+    <child-task idref="t270"/>
+    <child-task idref="t271"/>
+    <child-task idref="t272"/>
+    <child-task idref="t273"/>
+    <child-task idref="t274"/>
+    <child-task idref="t275"/>
+    <child-task idref="t277"/>
+    <child-task idref="t278"/>
+    <child-task idref="t279"/>
+    <child-task idref="t281"/>
+    <child-task idref="t282"/>
+    <child-task idref="t292"/>
+    <child-task idref="t295"/>
+    <child-task idref="t296"/>
+    <child-task idref="t297"/>
+    <child-task idref="t298"/>
+  </task>
+  <task id="t1">
+    <title>Deploy Skeleton System</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-309</string>
+    </user-data>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t2">
+    <title>Address issues for other group members</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-308</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t3">
+    <title>Address issues for other group members</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-307</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t4">
+    <title>Show Discovery Status and Events</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-306</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t5">
+    <title>Showing Link Information on Graphic Map</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-305</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t6">
+    <title>Finish DNS and other work for our web servers</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-304</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t7">
+    <title>modify jira to use new mail server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-303</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t8">
+    <title>modify confluence, to use new mail server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-302</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t9">
+    <title>Move Confluence to integer.harvard.edu</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-301</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t10">
+    <title>Report JSON output of service element</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-300</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t11">
+    <title>Discovery - errors/progress</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-299</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t12">
+    <title>Business logic of service element summary information description</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-298</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t13">
+    <title>Service Element Summary Information API</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-297</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t14">
+    <title>Map Icon Selection</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-296</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t15">
+    <title>Map Toolbar</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-295</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t16">
+    <title>Help Test</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-294</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t17">
+    <title>Icon Work</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-293</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t18">
+    <title>Display topology hierarchy</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-292</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t19">
+    <title>User Group, Roles</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-291</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t20">
+    <title>Map Filters</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-290</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t21">
+    <title>Map Views, Providers, Locations, Service</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-289</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t22">
+    <title>Device Discovery Information Screen</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-288</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t23">
+    <title>Device Service Element Summary Screen</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-287</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t24">
+    <title>Report Mgr design</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-286</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t25">
+    <title>Inventory Report Control and Display</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-285</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t26">
+    <title>Announce Release 1</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-284</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t27">
+    <title>JMS message receiver.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-283</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t28">
+    <title>JMS message sender</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-282</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t29">
+    <title>JMS event message</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-281</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t30">
+    <title>JMS, update messages</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-280</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t31">
+    <title>JMS , Config wildfly</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-279</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t32">
+    <title>JMS, Message manager - register for messages</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-278</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t33">
+    <title>Events</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-277</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t34">
+    <title>Advanced System Control</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-276</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t35">
+    <title>Filter, apply to events</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-275</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t36">
+    <title>Filter, apply to queries, service elements</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-274</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t37">
+    <title>Filter add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-273</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t38">
+    <title>Filter, Classes, Tables</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-272</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t39">
+    <title>Filter Design</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-271</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t40">
+    <title>Inventory Manager design</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-270</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t41">
+    <title>implement level 2 topology base on a spanning tree</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-269</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t42">
+    <title>implement the differences matrix for add and delete for sub service element</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-268</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t43">
+    <title>Element on DB the output of the matrix is using for inventory</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-267</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t44">
+    <title>define the differences matrix between a discovered service element against a same service</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-266</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t45">
+    <title>implement the differences matrix for attribute changing during discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-265</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t46">
+    <title>System control, user, role, add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-264</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t47">
+    <title>System Control, Role, add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-263</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t48">
+    <title>System Controls, Vendor discovery template, add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-262</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t49">
+    <title>Schedule Mgr</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-261</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t50">
+    <title>Discovery, Defaults</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-260</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t51">
+    <title>Discovery , Schedule, Get next runtime</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-259</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t52">
+    <title>Discovery Stop</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-258</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t53">
+    <title>Discovery List</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-257</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t54">
+    <title>Implement SHMP V3 access</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-256</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t55">
+    <title>Vlan study and implementation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-255</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t56">
+    <title>Implement ip routing for layer 3 inter device link</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-254</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t57">
+    <title>Generate instance oid based on different mapping between min tables</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-253</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t58">
+    <title>associate the basic service element type designed by loren</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-252</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t59">
+    <title>Design and document install automation Part #2</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-251</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t60">
+    <title>External Integer site work with eric and mark</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-250</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t61">
+    <title>Parse sys location - Needs to be a plug in</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-249</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t62">
+    <title>INT-241 Save Path</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-248</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t63">
+    <title>INT-241 Save interdevice link</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-247</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t64">
+    <title>INT-241 Simple Design Filter</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-246</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t65">
+    <title>INT-241 Document verify that “invalid, self signal” certs may be used in test instances</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-245</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t66">
+    <title>INT-241 Device Details of Discovery API, Last Times discovered, change found, next planned discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-244</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t67">
+    <title>INT-241 Need system requirements description of configurable items Install/ Config/RMe</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-243</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t68">
+    <title>INT-241 Filter API</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-242</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t69">
+    <title>Address issues from other group members</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-241</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t70">
+    <title>Study MiBs related to network layers</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-240</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t71">
+    <title>Implement mac to Ip address mapping</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-239</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t72">
+    <title>Basic Inter device link creation including physical media association</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-238</string>
+    </user-data>
+    <assignment idref="r8"/>
+  </task>
+  <task id="t73">
+    <title>Associate path and network with inter device link (Basic)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-237</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t74">
+    <title>Topology element creation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-236</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t75">
+    <title>Implement MiB table polling and derterminate for service element type</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-235</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t76">
+    <title>Modify Build to put all wildfly module JARs into EARs for veracode scan</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-234</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t77">
+    <title>Make technology YAML for CDP</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-233</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t78">
+    <title>Design &amp; Document install automation Part #1</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-232</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t79">
+    <title>Generate SSL certs for “important test servers”</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-231</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t80">
+    <title>Document CAS integration and configuration prep for sprint 7</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-230</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t81">
+    <title>Document required dependencies, installation steps, configuration steps, how to run steps</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-229</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t82">
+    <title>Update complete discovery document</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-228</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t83">
+    <title>Design Confluence Site and HUIT site</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-227</string>
+    </user-data>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t84">
+    <title>Users Filters Views</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-226</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t85">
+    <title>Finish Design topology / discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-225</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t86">
+    <title>Complete Hierarchal containment discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-224</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t87">
+    <title>Make technology YAML for Entity-MIB</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-223</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t88">
+    <title>Discovery unique identifier for each service element which includes the top level service element and the sub level service element</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-222</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t89">
+    <title>Missing vendor identifier for an unknown vendor device handling</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-221</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t90">
+    <title>Generate SNMP containment for host Mib, for a host Mib device when no such SNMP containment is missing on db</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-220</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t91">
+    <title>Complete attributes, retrieve for service element. Be able to handle different data types</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-219</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t92">
+    <title>Add more service element discovery on host resource Mib such as process and installed software etc.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-218</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t93">
+    <title>Set up email for jira</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-217</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t94">
+    <title>YAML =&gt; JSON</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-216</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t95">
+    <title>Distributed - start up</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-215</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t96">
+    <title>work with loren and dave chan to bring together technologies/ and discovery and topology</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-214</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t97">
+    <title>YAML, Read in, technology, capability, SET</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-213</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t98">
+    <title>Distribution call service on remote server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-212</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t99">
+    <title>Distribution - call mgr on remote server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-211</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t100">
+    <title>Start Discover API</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-210</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t101">
+    <title>set up nightly build that will not create an instance but will send a file in veracode scan</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-209</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t102">
+    <title>Distributed Install on multiple servers</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-208</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t103">
+    <title>Publish javadoc somewhere</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-207</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t104">
+    <title>Modify AMI snapshot task to search tags to find Install snapshot</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-206</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t105">
+    <title>Task to destroy stacks past due</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-205</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t106">
+    <title>SSL certs on all services JIRA BUILD, confluence, wiki, mail</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-204</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t107">
+    <title>Create Json so Jenkins can create a test environment with server/db instance and front end instance</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-203</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t108">
+    <title>Decide upon what criteria to auto create test instances-What is an interesting instance</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-202</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t109">
+    <title>System Design DT,L, JOEL</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-201</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t110">
+    <title>Start Button for Discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-200</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t111">
+    <title>Show Large Number of Device Service Elements in Database on Map</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-199</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t112">
+    <title>Show Multiple Level Contained Items of Device Service Elements in Tree</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-198</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t113">
+    <title>Collect &amp; consolidate SNMP credentials for Harvard’s installation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-197</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t114">
+    <title>Make technology YAML for basic MPLS functionality</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-196</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t115">
+    <title>Make technology YAML for a useful subset of Cisco access list functionality</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-195</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t116">
+    <title>Make the first version of the technology tree</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-194</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t117">
+    <title>Define a set of devices for first production runs (with Luke)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-193</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t118">
+    <title>Terminology cleanup</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-192</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t119">
+    <title>Diagram &amp; describe topology discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-191</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t120">
+    <title>Diagram &amp; describe Service Element Type discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-190</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t121">
+    <title>Diagram &amp; describe relationships inside a technology definition</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-189</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t122">
+    <title>Make technology YAML for BGP (generic)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-188</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t123">
+    <title>Make technology YAML for Route table (generic)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-187</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t124">
+    <title>Make technology YAML for OSPF (single process)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-186</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t125">
+    <title>Make technology YAML for Spanning-tree global &amp; rapid pvst+</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-185</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t126">
+    <title>Make technology YAML for IPv4 addresses</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-184</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t127">
+    <title>Make technology YAML for Interfaces MIB</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-183</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t128">
+    <title>modify jenkins, twiki to use new mail server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-182</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t129">
+    <title>Get back with Rick Callixto when mark is used</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-181</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t130">
+    <title>Integration of State information into the model (and later system)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-180</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t131">
+    <title>Get us SNMP read access to more switches in the testlab than just ours</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-179</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t132">
+    <title>Get two servers in the SOC virtualized server environment</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-178</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t133">
+    <title>Upgrade the testlab 3750 to an ipservices image</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-177</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t134">
+    <title>Configure various L2/L3 switching features between the two testlab switches</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-176</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t135">
+    <title>create script to set up and destroy dns names in route53</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-175</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t136">
+    <title>Save discovery status</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-174</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t137">
+    <title>Log and create audit message for Discovery complete and errors.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-173</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t138">
+    <title>Create class, table and queries to store Distributed manager/services configuration</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-172</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t139">
+    <title>Send update message to GUI (from FE server)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-171</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t140">
+    <title>Add Message sender (for update messages)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-170</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t141">
+    <title>Add Message receiver to FE server for update messages</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-169</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t142">
+    <title>Add JMS topic for updates to GUI</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-168</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t143">
+    <title>Add Call get get Toplevel service elements from DB (for the GUI)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-167</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t144">
+    <title>Add call to get list of ManagementObjects by ID</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-166</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t145">
+    <title>Startup logic for DistributionManager</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-165</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t146">
+    <title>Add remote host support to DistributionManager</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-164</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t147">
+    <title>Show Single Level Contained Items of Device Service Elements in Table</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-163</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t148">
+    <title>Discovery of location information and parsing SysLocation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-162</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t149">
+    <title>Add location information in the Discovery process</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-161</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t150">
+    <title>Add specific location information format to system</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-160</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t151">
+    <title>Layer 3 Discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-159</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t152">
+    <title>Identify Service Element (Routing Load Balance)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-158</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t153">
+    <title>Get Addition Attributes for Service Element</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-157</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t154">
+    <title>Design how information about icon locations for different backgrounds/perspectives is saved/used.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-156</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t155">
+    <title>Allow multiple people to deal with a task</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-155</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t156">
+    <title>Learn how to get the precise physical location of a device using SNMP at Harvard</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-154</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t157">
+    <title>(outdated)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-153</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t158">
+    <title>Work with Nick Amento to get both test switches in test lab available to use</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-152</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t159">
+    <title>Integer -&gt; Nagios integration</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-151</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t160">
+    <title>Installation/Verification Design</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-150</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t161">
+    <title>Check resources/requirements whenever Integer Starts.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-149</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t162">
+    <title>Problem when entering wrong credentials on build-test system</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-148</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t163">
+    <title>make list of confusing terminology</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-147</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t164">
+    <title>Work with Daves to bring together Technology work and Discovery/Topology work</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-146</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t165">
+    <title>Describe Discovery Service (was: Make diagram/flowchart for discovery)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-145</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t166">
+    <title>Develop Script to parse and load cisco product and entity vendor type MIBs</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-144</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t167">
+    <title>Modify Instance install process to load vendor data into db.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-143</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t168">
+    <title>Make Loren an account on the AWS admin interface</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-142</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t169">
+    <title>Add Loren&apos;s ssh key to the testing environment in AWS</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-141</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t170">
+    <title>Make a Jira account for Loren</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-140</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t171">
+    <title>Give Loren an account in twiki and associate him with the magic group</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-139</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t172">
+    <title>Tie in github account for Loren (lorenjanwilson)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-138</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t173">
+    <title>Add Start/stop of discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-137</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t174">
+    <title>Create Call to get vendor based on sysOid</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-136</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t175">
+    <title>Add call to get vendor based on SystemOID</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-135</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t176">
+    <title>Send discovery complete and errors to UI</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-134</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t177">
+    <title>Add SNMP OID Association with Capability</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-133</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t178">
+    <title>Show SNMP OID Table</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-132</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t179">
+    <title>Add Capability Association with Mechanism</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-131</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t180">
+    <title>Mechanism Modify and Delete</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-130</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t181">
+    <title>Capability Modify and Delete</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-129</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t182">
+    <title>Add Mechanism</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-128</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t183">
+    <title>Add Capability</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-127</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t184">
+    <title>Show Mechanism Table</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-126</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t185">
+    <title>Show Capability Table</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-125</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t186">
+    <title>Topology Element Filtered View</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-124</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t187">
+    <title>Service Element Filtered View</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-123</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t188">
+    <title>Filter Selection Panel</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-122</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t189">
+    <title>Show Topology Elements in Database with Single/Multiple Level Zoom</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-121</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t190">
+    <title>Show Device Service Elements with Single/Multiple Level Zoom</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-120</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t191">
+    <title>Show Topology Elements and Adjacencies in Database</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-119</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t192">
+    <title>Basic Multiple Level Zoom</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-118</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t193">
+    <title>Basic Single Level Zoom</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-117</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t194">
+    <title>Capability to Show Icons Group</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-116</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t195">
+    <title>Show Device Service Elements in Database on Map</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-115</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t196">
+    <title>Capability to drag icon and associated links together</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-114</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t197">
+    <title>Capability to show lines between icons</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-113</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t198">
+    <title>Implement Manager Calls for ServiceElementDiscoveryManager and DiscoveryServices</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-112</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t199">
+    <title>Write rules about what to do with conflicting rules as a general principle throughout the system</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-111</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t200">
+    <title>Create definitions and examples of multiple calendar policy types.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-110</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t201">
+    <title>Place holder for installation and configuration guide and for site preparation guild</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-109</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t202">
+    <title>Create an instance at successful build, install and start bits.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-108</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t203">
+    <title>Database Authentication for Direct Login</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-107</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t204">
+    <title>Description and stories for how we Integrate AWS and the Automation technologies.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-106</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t205">
+    <title>Integration of various technologies like Puppet</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-105</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t206">
+    <title>Integrated environmental alerting and reporting</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-104</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t207">
+    <title>Create 3 month priority list</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-103</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t208">
+    <title>Do a performance and price comparison of MySql/MariaDB on RDS vs. EC2</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-102</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t209">
+    <title>Write installation requirements</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-101</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t210">
+    <title>DNS Related Issues</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-100</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t211">
+    <title>Collect and save additional attributes for service elements</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-99</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t212">
+    <title>Discovery of a device using hierarchical discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-98</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t213">
+    <title>Save all information based on Entity MIB.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-97</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t214">
+    <title>Discovery processes a service element based on entity MIB structure</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-96</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t215">
+    <title>Complete Vendor, Model, and related information</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-95</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t216">
+    <title>Use VendorDiscoveryTemplate to determine SnmpVendorContainmentSelector</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-94</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t217">
+    <title>Determine vendor based on system group retrieval</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-93</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t218">
+    <title>Placeholder in code for plugging other discovery technoloies like ssh, puppet, etc.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-92</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t219">
+    <title>Implement alternate snmp port logic</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-91</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t220">
+    <title>Implement SNMP version failover options.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-90</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t221">
+    <title>Retrieve the system group from selected systems</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-89</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t222">
+    <title>Determin address range to querry</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-88</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t223">
+    <title>Discovery retrieves community priority list from Global Objects and local overides</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-87</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t224">
+    <title>Discovery reads and set starting point for one or more subnets</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-86</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t225">
+    <title>sending email from our VPC from our systems</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-85</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t226">
+    <title>Resolve integer namining</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-84</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t227">
+    <title>Servers that use IP address in a VPC that are externally accessible</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-83</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t228">
+    <title>INT-15 Overview/Description of the UI Framework to this point.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-82</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t229">
+    <title>INT-77 Design of Usr manager, and other manager pieces in first 3 sprints.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-81</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t230">
+    <title>INT-77 Overall Core System Design</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-80</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t231">
+    <title>INT-76 Write detailed description of how service element discovery works with SNMP</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-79</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t232">
+    <title>Complete Persistence Layer Design Document</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-77</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t233">
+    <title>Complete design document for the discovery system</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-76</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t234">
+    <title>Discovery finish service element discovery engine.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-66</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t235">
+    <title>Discovery - Send completion information and errors to server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-65</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t236">
+    <title>Server - send discovery errors and completion information to UI via API</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-64</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t237">
+    <title>UI - Show discovery errors and completion</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-63</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t238">
+    <title>Discovery - Realtime status information of all discoveries in process</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-62</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t239">
+    <title>Server - Discovery status propagation via API</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-61</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t240">
+    <title>UI Show status of discoveries</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-60</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t241">
+    <title>Discovery - Start stop multiple discoveries</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-59</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t242">
+    <title>Server - Start stop discovier(ies) multiple at a time.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-58</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t243">
+    <title>Server - Create, delete, modify discovery policy including topology seed.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-56</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t244">
+    <title>Import base data into build process (e.g., MIB Modules, Capabilities, ServiceElementTypes, etc.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-54</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t245">
+    <title>Map OIDs to Capabilities and create capabilities objects enough to support this story</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-53</string>
+    </user-data>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t246">
+    <title>INT-22 Import MIB Modules - Clean up</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-52</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t247">
+    <title>Add session control to WildFly</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-51</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t248">
+    <title>Create main Integer page</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-50</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t249">
+    <title>UI Handling of Server Result</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-49</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t250">
+    <title>Send login credentials based on login type to server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-48</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t251">
+    <title>Create Page for Login that allows for different login types</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-47</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t252">
+    <title>Security Audit Manager Implementation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-46</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t253">
+    <title>Implement classes to support user manager</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-45</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t254">
+    <title>Implement User Contact and Role Manager on server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-44</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t255">
+    <title>User installable instance of Integer</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-43</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t256">
+    <title>Install SNMP Simulator in VPC instance</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-42</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t257">
+    <title>Customize objects to use for service element and network topology discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-41</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t258">
+    <title>Management of SNMP MIB Modules</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-40</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t259">
+    <title>Discovery and view of Virtualized Environments (VMware)</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-39</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t260">
+    <title>Ability to discover, view and manage network storage systems</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-38</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t261">
+    <title>Viewing network and Service element details on the UI</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-37</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t262">
+    <title>Viewing Reports and ad hoc export of data</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-36</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t263">
+    <title>Creating Selections</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-35</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t264">
+    <title>Create a multi-subnet service element and topology discovery and run</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-34</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t265">
+    <title>Full support for our wireless environment.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-33</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t266">
+    <title>AWS monitoring and support of Multi-homed applications</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-32</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t267">
+    <title>Integration of Accounting, Security data collection and reporting</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-31</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t268">
+    <title>Allows us to retire statseeker, Nagios SNMPoll</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-30</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t269">
+    <title>Refinement of of policy controls, clean up from previous releases</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-29</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t270">
+    <title>Framework and support for key applications.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-28</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t271">
+    <title>Create a VPC and Show configuration</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-27</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t272">
+    <title>Adds full configuraiton control for network elements to the Access Control in previous release.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-26</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t273">
+    <title>Configuraiton of Access control for Network Elements</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-25</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t274">
+    <title>Create, Modify and Delete Entire Service Hierarcy</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-24</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t275">
+    <title>A follow on release with features related to the base system and discovery</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-23</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t276">
+    <title>Simple Service Element Discovery on a single subnet</title>
+    <type>group</type>
+    <child-task idref="t58"/>
+    <child-task idref="t75"/>
+    <child-task idref="t88"/>
+    <child-task idref="t136"/>
+    <child-task idref="t212"/>
+    <child-task idref="t236"/>
+    <child-task idref="t237"/>
+    <child-task idref="t238"/>
+    <child-task idref="t239"/>
+    <child-task idref="t241"/>
+    <child-task idref="t244"/>
+    <child-task idref="t245"/>
+    <child-task idref="t290"/>
+    <child-task idref="t291"/>
+    <user-data>
+      <key>Key</key>
+      <string>INT-22</string>
+    </user-data>
+  </task>
+  <task id="t277">
+    <title>Manage Locations, Contacts, Providers, Organizations etc.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-21</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t278">
+    <title>Add access to Twiki site for collaborators until we get CAS/LDAP connection</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-20</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t279">
+    <title>Security recommendations for integer deployment</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-19</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t280">
+    <title>A full set of deployment and configuration instructions</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-18</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t281">
+    <title>Integrate Vericode into build process</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-17</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t282">
+    <title>Complete User Interface Design Document with Sample Screens</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-15</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t283">
+    <title>User defines the schedule for report generation</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-14</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t284">
+    <title>Defining an Systems Inventory Report</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-13</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t285">
+    <title>Defining a Change Report</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-12</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t286">
+    <title>Creating and managing topology and service element discovery policies</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-11</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t287">
+    <title>Configure the discovery system</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-10</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t288">
+    <title>Maintain Users, groups, and access policies and Contact information</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-9</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t289">
+    <title>User Logs into System directly.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-7</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t290">
+    <title>Integrate LDAP Attribute Service while using CAS</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-6</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t291">
+    <title>Integrate CAS plug-in and software into our System</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-5</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t292">
+    <title>User Access via CAS and LDAP -</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-4</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t293">
+    <title>Write installation/verification software that conforms to security recommendations</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-3</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t294">
+    <title>Identify and document correct system security configuration for the Integer OD</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-2</string>
+    </user-data>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t295">
+    <title>Integer First Release</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-1</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t296">
+    <effort>28800</effort>
+  </task>
+  <task id="t297">
+    <effort>28800</effort>
+  </task>
+  <task id="t298">
+    <effort>28800</effort>
+  </task>
+  <task id="t299">
+    <title>Sprint 6</title>
+    <type>milestone</type>
+  </task>
+  <task id="t300">
+    <title>Sprint 7</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t301">
+    <title>Sprint 8 </title>
+    <effort>28800</effort>
+  </task>
+  <task id="t302">
+    <title>Sprint 9</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t303">
+    <title>Sprint 10</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t304">
+    <title>Task 1</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t305">
+    <title>Task 2</title>
+    <effort>28800</effort>
+  </task>
+  <task id="t306">
+    <title>Task 3</title>
+    <effort>28800</effort>
+  </task>
+  <critical-path root="-1" enabled="true" resources="false">
+    <color r="1" g="0.5" b="0.5"/>
+  </critical-path>
+</scenario>

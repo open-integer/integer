@@ -1,0 +1,2050 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<scenario xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2" id="lJbIs73zEiK">
+  <start-date>2014-05-22T12:00:00.000Z</start-date>
+  <top-resource idref="r-1"/>
+  <resource id="r-1">
+    <type>Group</type>
+    <schedule>
+      <schedule-day day-of-week="sunday"/>
+      <schedule-day day-of-week="monday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="tuesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="wednesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="thursday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="friday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="saturday"/>
+      <calendar name="Time Off" editable="yes" overtime="no"/>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+    <child-resource idref="r1"/>
+    <child-resource idref="r2"/>
+    <child-resource idref="r3"/>
+    <child-resource idref="r6"/>
+    <child-resource idref="r7"/>
+    <child-resource idref="r8"/>
+  </resource>
+  <resource id="r1">
+    <name>Mark Bombalicki</name>
+    <type>Staff</type>
+    <efficiency>0.799999952316284</efficiency>
+  </resource>
+  <resource id="r2">
+    <name>David Taylor</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0" g="1" b="1"/>
+      </value>
+    </style>
+    <efficiency>0.799999952316284</efficiency>
+    <schedule>
+      <calendar name="Time Off" editable="yes" overtime="no">
+        <event start="2014-07-02T12:00:00.000Z" end="2014-07-04T21:00:00.000Z" sd="4930" st="28800" ed="4932" et="61200"/>
+        <event start="2014-07-21T12:00:00.000Z" end="2014-07-25T21:15:00.000Z" sd="4949" st="28800" ed="4953" et="62100"/>
+      </calendar>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+  </resource>
+  <resource id="r3">
+    <name>Jon Saperia</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0.8" g="0.4" b="1"/>
+      </value>
+    </style>
+    <efficiency>0.799999952316284</efficiency>
+    <schedule>
+      <calendar name="Time Off" editable="yes" overtime="no">
+        <event start="2014-07-04T12:00:00.000Z" end="2014-07-04T21:00:00.000Z" sd="4932" st="28800" ed="4932" et="61200"/>
+        <event start="2014-07-07T12:00:00.000Z" end="2014-07-11T21:00:00.000Z" sd="4935" st="28800" ed="4939" et="61200"/>
+        <event start="2014-07-14T12:00:00.000Z" end="2014-07-16T21:00:00.000Z" sd="4942" st="28800" ed="4944" et="61200"/>
+      </calendar>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+  </resource>
+  <resource id="r6">
+    <name>Joel Huang</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0.8" g="1" b="0.4"/>
+      </value>
+    </style>
+    <efficiency>0.799999952316284</efficiency>
+    <schedule>
+      <calendar name="Time Off" editable="yes" overtime="no">
+        <event start="2014-07-04T12:00:00.000Z" end="2014-07-04T21:00:00.000Z" sd="4932" st="28800" ed="4932" et="61200"/>
+        <event start="2014-07-24T12:00:00.000Z" end="2014-07-24T21:00:00.000Z" sd="4952" st="28800" ed="4952" et="61200"/>
+        <event start="2014-08-04T12:00:00.000Z" end="2014-08-04T21:00:00.000Z" sd="4963" st="28800" ed="4963" et="61200"/>
+        <event start="2014-08-05T12:00:00.000Z" end="2014-08-05T21:00:00.000Z" sd="4964" st="28800" ed="4964" et="61200"/>
+        <event start="2014-08-07T12:00:00.000Z" end="2014-08-07T21:00:00.000Z" sd="4966" st="28800" ed="4966" et="61200"/>
+        <event start="2014-08-08T12:00:00.000Z" end="2014-08-08T21:00:00.000Z" sd="4967" st="28800" ed="4967" et="61200"/>
+      </calendar>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+  </resource>
+  <resource id="r7">
+    <name>David Chan</name>
+    <type>Staff</type>
+    <style>
+      <value key="gantt-fill-color">
+        <color r="0" g="1" b="0.501961"/>
+      </value>
+    </style>
+    <efficiency>0.799999952316284</efficiency>
+    <schedule>
+      <calendar name="Time Off" editable="yes" overtime="no">
+        <event start="2014-07-04T12:00:00.000Z" end="2014-07-04T21:00:00.000Z" sd="4932" st="28800" ed="4932" et="61200"/>
+      </calendar>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+  </resource>
+  <resource id="r8">
+    <name>Eric Remington</name>
+    <type>Staff</type>
+    <efficiency>0.799999952316284</efficiency>
+  </resource>
+  <top-task idref="t-1"/>
+  <task id="t-1">
+    <type>group</type>
+    <child-task idref="t608"/>
+    <child-task idref="t614"/>
+    <child-task idref="t618"/>
+    <child-task idref="t622"/>
+    <child-task idref="t627"/>
+    <child-task idref="t263"/>
+  </task>
+  <task id="t17">
+    <title>Icon Work</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-293</string>
+    </user-data>
+    <prerequisite-task idref="t587"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t18">
+    <title>Display topology hierarchy</title>
+    <leveled-start>2014-07-02T12:00:00.000Z</leveled-start>
+    <effort>0</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-292</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t20">
+    <title>Map Filters</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-290</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t21">
+    <title>Map Views, Providers, Locations, Service</title>
+    <leveled-start>2014-07-02T12:00:00.000Z</leveled-start>
+    <effort>0</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-289</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t36">
+    <title>Filter, apply to queries, service elements</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-08T15:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-274</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-08T15:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t37">
+    <title>Filter add, delete, modify</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-273</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t38">
+    <title>Filter, Classes, Tables</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-272</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t39">
+    <title>Filter Design</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-271</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t55">
+    <title>Vlan study and implementation</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-18T20:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-255</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-18T20:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t56">
+    <title>Implement ip routing for layer 3 inter device link</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-254</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t63">
+    <title>Save interdevice link</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-07T19:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-247</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-07T19:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t68">
+    <title>INT-241 Filter API</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-242</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t70">
+    <title>Study MiBs related to network layers</title>
+    <leveled-start>2014-07-02T12:00:00.000Z</leveled-start>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-240</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t74">
+    <title>Topology element creation</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-236</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t148">
+    <title>Discovery of location information and parsing SysLocation</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-162</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t149">
+    <title>Add location information in the Discovery process</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-161</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t151">
+    <title>Layer 3 Discovery</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-159</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t154">
+    <title>Design how information about icon locations for different backgrounds/perspectives is saved/used.</title>
+    <effort>10800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-156</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t186">
+    <title>Topology Element Filtered View</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-124</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t187">
+    <title>Service Element Filtered View</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-123</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t188">
+    <title>Filter Selection Panel</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-122</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t189">
+    <title>Show Topology Elements in Database with Single/Multiple Level Zoom</title>
+    <effort>86400</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-121</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t190">
+    <title>Show Device Service Elements with Single/Multiple Level Zoom</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-120</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t191">
+    <title>Show Topology Elements and Adjacencies in Database</title>
+    <leveled-start>2014-07-02T12:00:00.000Z</leveled-start>
+    <effort>0</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-119</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t192">
+    <title>Basic Multiple Level Zoom</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-118</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t236">
+    <title>Server - send discovery errors and completion information to UI via API</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-64</string>
+    </user-data>
+    <prerequisite-task idref="t556"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t241">
+    <title>Discovery - Start stop multiple discoveries</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-59</string>
+    </user-data>
+    <prerequisite-task idref="t236"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t263">
+    <title>Creating Selections</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <child-task idref="t381"/>
+    <child-task idref="t382"/>
+    <child-task idref="t583"/>
+    <child-task idref="t387"/>
+    <child-task idref="t68"/>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>We want users to be able to create, modify and delete selections (selections contain: filters, views and layers – see documentation). We want them be able to list selections and to cause their exectuion with results on the screen, in reports or other export functions - accomplished by the view portion of the selection. That also controls whether the information is graphically displayed or in table form.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Times New Roman</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="kerning-adjust">0</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>In first release all filters and views are per[user] group.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Key</key>
+      <string>INT-35</string>
+    </user-data>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t381">
+    <title>Data Storage Functions</title>
+    <type>group</type>
+    <child-task idref="t39"/>
+    <child-task idref="t38"/>
+    <child-task idref="t37"/>
+    <child-task idref="t580"/>
+    <child-task idref="t581"/>
+    <child-task idref="t582"/>
+  </task>
+  <task id="t382">
+    <title>API for Ad-Hoc selections</title>
+    <effort>7200</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-404</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t387">
+    <title>User Interface</title>
+    <type>group</type>
+    <start-constraint-date>2014-06-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t20"/>
+    <child-task idref="t186"/>
+    <child-task idref="t188"/>
+    <child-task idref="t541"/>
+    <child-task idref="t542"/>
+    <child-task idref="t543"/>
+    <child-task idref="t544"/>
+    <child-task idref="t149"/>
+    <start-no-earlier-than>2014-06-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t500">
+    <title>Implement Layer 3 Topology Algorithm</title>
+    <effort>86400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-330</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t503">
+    <title>Display Topology - Links</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-10T14:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-333</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-10T14:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t511">
+    <title>Display Topology Information Based on Selection - Drag Links</title>
+    <effort>57600</effort>
+    <effort-done>43199.99609375</effort-done>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-335</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t512">
+    <title>Display Topology Tooltips</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-14T18:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-336</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-14T18:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t518">
+    <title>Save Path</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-08T20:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-248</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-08T20:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t530">
+    <title>Finish Design Topology / Discovery</title>
+    <leveled-start>2014-05-22T12:00:00.000Z</leveled-start>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-352</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t531">
+    <title>Design for UI for the Display of Selections</title>
+    <leveled-start>2014-05-22T12:00:00.000Z</leveled-start>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-354</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t532">
+    <title>Define Graphic Topology Layout Algorithms</title>
+    <leveled-start>2014-05-22T12:00:00.000Z</leveled-start>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-356</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t533">
+    <title>Finish Design Topology / Discovery</title>
+    <effort>14400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-350</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t534">
+    <title>Design for UI for the display of selections</title>
+    <effort>14400</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-353</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t535">
+    <title>Define graphic topology layout algoritms</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-357</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t541">
+    <title>Filter Selection Panel - Location by Filter class</title>
+    <leveled-start>2014-07-03T12:00:00.000Z</leveled-start>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-314</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t542">
+    <title>Filter Selection Panel - Location Control</title>
+    <leveled-start>2014-07-03T12:00:00.000Z</leveled-start>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-315</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t543">
+    <title>Filter Selection Panel - Technology Tree Control</title>
+    <leveled-start>2014-07-03T12:00:00.000Z</leveled-start>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-313</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t544">
+    <title>Filter Selection Panel - Technology Tree by Filter Class</title>
+    <leveled-start>2014-07-03T12:00:00.000Z</leveled-start>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-312</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t549">
+    <title>Display Topology Information Based on Selection - Display link Interface</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-15T20:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-370</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-15T20:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t550">
+    <title>Display Topology - Link Details screen</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-11T19:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-369</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-11T19:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t554">
+    <title>Import YAML for category</title>
+    <leveled-start>2014-07-07T12:00:00.000Z</leveled-start>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-375</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t555">
+    <title>Change DB to store category tree.</title>
+    <effort>14400</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-376</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t556">
+    <title>Create TopologyManager</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-377</string>
+    </user-data>
+    <prerequisite-task idref="t560"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t560">
+    <title>Calendar discoveryStartTask</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-381</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t566">
+    <title>API to stop a discovery</title>
+    <effort>14400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-387</string>
+    </user-data>
+    <prerequisite-task idref="t579"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t567">
+    <title>API to get service element type by signature</title>
+    <effort>28800</effort>
+    <effort-done>23759.19921875</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-388</string>
+    </user-data>
+    <prerequisite-task idref="t574"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t568">
+    <title>API to save TopologyElement and InterDevice link</title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-389</string>
+    </user-data>
+    <prerequisite-task idref="t572"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t571">
+    <title>Add logic to not run multiple discoveries on a subnet</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-392</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t572">
+    <title>Add API to get PATH and InterDeviceLinks for discovery use</title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-393</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t573">
+    <title>API to get Network objects</title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <start-constraint-date>2014-07-07T15:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-394</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-07T15:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t574">
+    <title>API to get InterDeviceLink objects</title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-395</string>
+    </user-data>
+    <prerequisite-task idref="t575"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t575">
+    <title>API to get ToplogyElements for a service element</title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-396</string>
+    </user-data>
+    <prerequisite-task idref="t568"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t576">
+    <title>API to get ServiceElements by Selection (limited)</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-16T15:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-397</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-16T15:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t577">
+    <title>API to get Network objects by selection (limited)</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-16T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-398</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t578">
+    <title>API to get InterDeviceLinks by selection (limited)</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-16T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-399</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t579">
+    <title>API to get SEMO&apos;s for a capability</title>
+    <effort>14400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-400</string>
+    </user-data>
+    <prerequisite-task idref="t684"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t580">
+    <title>Filter on business service, provider, criticality, service element type, location and organization</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-401</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t581">
+    <title>Filter on Layer attribtues</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-402</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t582">
+    <title>Add sort to selection</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-403</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t583">
+    <title>API to get list of selections</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-405</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t584">
+    <title>Tabular Display for All Netowrks</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-406</string>
+    </user-data>
+    <prerequisite-task idref="t605"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t585">
+    <title>Tabular Display for All Service Element</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-407</string>
+    </user-data>
+    <prerequisite-task idref="t584"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t586">
+    <title>Folder Display for Topology Networks</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-408</string>
+    </user-data>
+    <prerequisite-task idref="t585"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t587">
+    <title>Folder Display for Topology Service Elements</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-409</string>
+    </user-data>
+    <prerequisite-task idref="t586"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t588">
+    <title>Graphics Topology for Networks</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-02T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-410</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-02T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t589">
+    <title>Network Icon Selection in Graphics Topology for Networks</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-16T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-411</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t590">
+    <title>Network Map for User Selected Network with Connected Service Elements</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-16T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-412</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t591">
+    <title>Research on Network Layout Algorithms</title>
+    <leveled-start>2014-07-02T12:00:00.000Z</leveled-start>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-413</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t592">
+    <title>Using Third Party&apos;s Network Layout Algorithms for Network Map</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-07T12:30:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-414</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-07T12:30:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t593">
+    <title>Contained Service Elements Hierarchy Tree View</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-415</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t594">
+    <title>Selection Functions for Networks</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-416</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t595">
+    <title>Selection Functions for Technology
+
+</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-417</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t596">
+    <title>Selection Functions for Category</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-418</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t597">
+    <title>Selection Functions for Category</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-419</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t598">
+    <title>Ability to see objects (e.g., SNMP object) that are behind the properties displayed (i.e., Capability)</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-420</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t600">
+    <title>Alarm View</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-422</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t601">
+    <title>Email Report</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-423</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t602">
+    <title>Design Email Report</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-06-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-424</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-06-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t604">
+    <title>Modify Selection</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-426</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t605">
+    <title>Delete Selection</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-03T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-428</string>
+    </user-data>
+    <prerequisite-task idref="t604"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-03T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t608">
+    <title>Sprint 7</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t610"/>
+    <child-task idref="t611"/>
+    <child-task idref="t613"/>
+    <start-no-earlier-than>2014-07-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t609">
+    <title>API for UI to get technology tree</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-10T18:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-311</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-10T18:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t610">
+    <title>Dave Taylor</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-07T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t554"/>
+    <child-task idref="t573"/>
+    <child-task idref="t63"/>
+    <child-task idref="t36"/>
+    <child-task idref="t518"/>
+    <child-task idref="t609"/>
+    <child-task idref="t652"/>
+    <start-no-earlier-than>2014-07-07T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t611">
+    <title>Joel Huang</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t591"/>
+    <child-task idref="t592"/>
+    <child-task idref="t653"/>
+    <child-task idref="t503"/>
+    <child-task idref="t550"/>
+    <child-task idref="t512"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t612">
+    <title>Device Service Element Summary Screen </title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-287</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t613">
+    <title>Dave Chan</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-01T20:45:00.000Z</start-constraint-date>
+    <child-task idref="t651"/>
+    <child-task idref="t640"/>
+    <child-task idref="t635"/>
+    <child-task idref="t637"/>
+    <child-task idref="t638"/>
+    <child-task idref="t631"/>
+    <child-task idref="t629"/>
+    <child-task idref="t650"/>
+    <start-no-earlier-than>2014-07-01T20:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t614">
+    <title>Sprint 8</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-16T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t615"/>
+    <child-task idref="t616"/>
+    <child-task idref="t617"/>
+    <start-no-earlier-than>2014-07-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t615">
+    <title>Dave Taylor</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t572"/>
+    <child-task idref="t568"/>
+    <child-task idref="t575"/>
+    <child-task idref="t574"/>
+    <child-task idref="t567"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t616">
+    <title>Joel Huang</title>
+    <type>group</type>
+    <child-task idref="t589"/>
+    <child-task idref="t590"/>
+    <child-task idref="t662"/>
+    <child-task idref="t661"/>
+    <child-task idref="t511"/>
+  </task>
+  <task id="t617">
+    <title>David Chan</title>
+    <type>group</type>
+    <child-task idref="t657"/>
+    <child-task idref="t658"/>
+    <child-task idref="t654"/>
+    <child-task idref="t656"/>
+    <child-task idref="t55"/>
+    <child-task idref="t663"/>
+    <child-task idref="t664"/>
+    <child-task idref="t636"/>
+    <child-task idref="t634"/>
+    <child-task idref="t633"/>
+  </task>
+  <task id="t618">
+    <title>Sprint 9</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-30T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t619"/>
+    <child-task idref="t620"/>
+    <child-task idref="t621"/>
+    <start-no-earlier-than>2014-07-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t619">
+    <title>Dave Taylor</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t699"/>
+    <child-task idref="t668"/>
+    <child-task idref="t687"/>
+    <child-task idref="t684"/>
+    <child-task idref="t579"/>
+    <child-task idref="t566"/>
+    <child-task idref="t665"/>
+    <child-task idref="t697"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t620">
+    <title>Joel Huang</title>
+    <type>group</type>
+    <child-task idref="t673"/>
+    <child-task idref="t693"/>
+    <child-task idref="t677"/>
+    <child-task idref="t671"/>
+    <child-task idref="t674"/>
+    <child-task idref="t672"/>
+    <child-task idref="t689"/>
+    <child-task idref="t670"/>
+    <child-task idref="t678"/>
+    <child-task idref="t676"/>
+  </task>
+  <task id="t621">
+    <title>Dave Chan</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t679"/>
+    <child-task idref="t695"/>
+    <child-task idref="t694"/>
+    <child-task idref="t686"/>
+    <child-task idref="t685"/>
+    <child-task idref="t641"/>
+    <child-task idref="t696"/>
+    <child-task idref="t690"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t622">
+    <title>Sprint 10</title>
+    <type>group</type>
+    <start-constraint-date>2014-08-14T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t623"/>
+    <child-task idref="t624"/>
+    <start-no-earlier-than>2014-08-14T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t623">
+    <title>Dave Taylor</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t560"/>
+    <child-task idref="t556"/>
+    <child-task idref="t236"/>
+    <child-task idref="t241"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t624">
+    <title>Joel Huang</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t682"/>
+    <child-task idref="t683"/>
+    <child-task idref="t593"/>
+    <child-task idref="t628"/>
+    <child-task idref="t675"/>
+    <child-task idref="t604"/>
+    <child-task idref="t605"/>
+    <child-task idref="t584"/>
+    <child-task idref="t585"/>
+    <child-task idref="t586"/>
+    <child-task idref="t587"/>
+    <child-task idref="t17"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t625">
+    <title>Service Element Filtered View</title>
+    <effort>57600</effort>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-123</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t626">
+    <title>Advanced System Control</title>
+    <effort>144000</effort>
+    <start-constraint-date>2014-07-01T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-276</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-01T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t627">
+    <title>Need to be scheduled</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-02T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t576"/>
+    <child-task idref="t666"/>
+    <child-task idref="t669"/>
+    <child-task idref="t667"/>
+    <child-task idref="t571"/>
+    <child-task idref="t602"/>
+    <child-task idref="t601"/>
+    <child-task idref="t600"/>
+    <child-task idref="t190"/>
+    <child-task idref="t192"/>
+    <child-task idref="t625"/>
+    <child-task idref="t626"/>
+    <child-task idref="t187"/>
+    <child-task idref="t191"/>
+    <child-task idref="t535"/>
+    <child-task idref="t534"/>
+    <child-task idref="t18"/>
+    <child-task idref="t21"/>
+    <child-task idref="t612"/>
+    <child-task idref="t594"/>
+    <child-task idref="t596"/>
+    <child-task idref="t595"/>
+    <child-task idref="t597"/>
+    <child-task idref="t598"/>
+    <child-task idref="t533"/>
+    <child-task idref="t500"/>
+    <child-task idref="t56"/>
+    <child-task idref="t588"/>
+    <child-task idref="t555"/>
+    <child-task idref="t189"/>
+    <child-task idref="t154"/>
+    <child-task idref="t70"/>
+    <child-task idref="t74"/>
+    <child-task idref="t151"/>
+    <child-task idref="t148"/>
+    <child-task idref="t549"/>
+    <child-task idref="t531"/>
+    <child-task idref="t532"/>
+    <child-task idref="t530"/>
+    <child-task idref="t655"/>
+    <child-task idref="t681"/>
+    <child-task idref="t659"/>
+    <child-task idref="t578"/>
+    <child-task idref="t577"/>
+    <start-no-earlier-than>2014-07-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t628">
+    <title>Display Paths in Graphics</title>
+    <effort>43200</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-462</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t629">
+    <title>Implement CDP Data Link discover based on CDP Data Link discovery algorithm.</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-465</string>
+    </user-data>
+    <prerequisite-task idref="t631"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t631">
+    <title>Design CDP Data Link Discovery algorithm.</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-455</string>
+    </user-data>
+    <prerequisite-task idref="t638"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t633">
+    <title>Network devices data link capability determination.</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-444</string>
+    </user-data>
+    <prerequisite-task idref="t634"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t634">
+    <title>Network forwarding capability determination.</title>
+    <effort>21600</effort>
+    <effort-done>21600</effort-done>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-443</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t635">
+    <title>Extended Service Element Type selection based on technology capabilities or Current configured. For example,</title>
+    <leveled-start>2014-07-03T17:30:02.000Z</leveled-start>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-442</string>
+    </user-data>
+    <prerequisite-task idref="t640"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t636">
+    <title>Vendor Containment selector based on signature. The result of the selection will include the top service element type and the containment.</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-24T18:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-440</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-24T18:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t637">
+    <title>Cisco CDP global Service Element Type creation.</title>
+    <leveled-start>2014-07-07T19:30:03.000Z</leveled-start>
+    <effort>7200</effort>
+    <effort-done>7200</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-434</string>
+    </user-data>
+    <prerequisite-task idref="t635"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t638">
+    <title>Cisco CDP cache Service Element Type creation</title>
+    <leveled-start>2014-07-08T13:00:04.000Z</leveled-start>
+    <effort>7200</effort>
+    <effort-done>7200</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-433</string>
+    </user-data>
+    <prerequisite-task idref="t637"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t640">
+    <title>Input Service Element Type extension from Yaml file.</title>
+    <leveled-start>2014-07-02T20:30:01.000Z</leveled-start>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-431</string>
+    </user-data>
+    <prerequisite-task idref="t651"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t641">
+    <title>Generic SNMP devices Service Element Type creation.</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-430</string>
+    </user-data>
+    <prerequisite-task idref="t685"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t650">
+    <title>Completion of discover stages flow from Subnet scan to layer2 toplogy discovery</title>
+    <effort>7200</effort>
+    <effort-done>7200</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-467</string>
+    </user-data>
+    <prerequisite-task idref="t629"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t651">
+    <title>Discover Stages flow from Subnet scan to layer2 topology discovery.</title>
+    <leveled-start>2014-07-02T12:00:00.000Z</leveled-start>
+    <effort>21600</effort>
+    <effort-done>21600</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-466</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t652">
+    <title>Get Vendor containment selector by vendor signature</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-14T18:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-463</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-14T18:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t653">
+    <title>Create Single Circular Layout Algorithms for Network Map</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-09T13:30:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-468</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-09T13:30:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t654">
+    <title>SNMP syntax conner case errors fix</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-17T18:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-469</string>
+    </user-data>
+    <prerequisite-task idref="t658"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-17T18:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t655">
+    <title>Discover more Cisco information specially on the top level service element</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-470</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t656">
+    <title>select SET by Signature - code &amp; YAML</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-18T20:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-472</string>
+    </user-data>
+    <prerequisite-task idref="t654"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-18T20:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t657">
+    <title>create unknown SET type when discovery can not talk to system on other end of interdevice link. YAML</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-15T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-473</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-15T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t658">
+    <title>Put in YAML unique identifier for 5 common S.E.T.</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-16T15:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-474</string>
+    </user-data>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-16T15:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t659">
+    <title>API does this ServiceElement exist base on Service</title>
+    <effort>14400</effort>
+    <start-constraint-date>2014-07-16T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-475</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t661">
+    <title>InterNetworkLink Graph Screen</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-23T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-471</string>
+    </user-data>
+    <prerequisite-task idref="t662"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-23T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t662">
+    <title>InterDeviceLink Graph Screen</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-18T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-476</string>
+    </user-data>
+    <prerequisite-task idref="t590"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-18T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t663">
+    <title>Define Cisco VLAN service element type yaml and transaction to interface.</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-22T13:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-480</string>
+    </user-data>
+    <prerequisite-task idref="t55"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-22T13:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t664">
+    <title>Implement CISCO VLAN based on VLAN service element type defined on INT480</title>
+    <effort>57600</effort>
+    <effort-done>57600</effort-done>
+    <start-constraint-date>2014-07-23T15:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-481</string>
+    </user-data>
+    <prerequisite-task idref="t663"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-23T15:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t665">
+    <title>Collect &amp; consolidate SNMP credentials for Harvard’s installation</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-197</string>
+    </user-data>
+    <prerequisite-task idref="t566"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t666">
+    <title>Filter add, delete, modify</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-273</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t667">
+    <title>Filter Design</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-271</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t668">
+    <title>Categories are not displaying correctly</title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <start-constraint-date>2014-07-31T14:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-490</string>
+    </user-data>
+    <prerequisite-task idref="t699"/>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-31T14:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t669">
+    <title>Filter, Classes, Tables</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-272</string>
+    </user-data>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t670">
+    <title>Add icons for server</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-488</string>
+    </user-data>
+    <prerequisite-task idref="t689"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t671">
+    <title>Modify the link details dialogue box so it displays all layers of information such as VLAN and CDP</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-486</string>
+    </user-data>
+    <prerequisite-task idref="t673"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t672">
+    <title>On the drop down menu from the navigation bar delete the following....</title>
+    <effort>3600</effort>
+    <effort-done>3600</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-485</string>
+    </user-data>
+    <prerequisite-task idref="t674"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t673">
+    <title>List discovery rule and ip topology seed and SNMP global read credentials</title>
+    <effort>57600</effort>
+    <effort-done>11519.9993133545</effort-done>
+    <start-constraint-date>2014-07-31T17:30:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-483</string>
+    </user-data>
+    <prerequisite-task idref="t699"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-31T17:30:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t674">
+    <title>Create an scroll bar Vertical and horizontal in the map</title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <user-data>
+      <key>Key</key>
+      <string>INT-482</string>
+    </user-data>
+    <prerequisite-task idref="t671"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t675">
+    <title>Progress Bar indication showing client is busy in rederering</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-479</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t676">
+    <title>Close Tab Panel from Tab</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-478</string>
+    </user-data>
+    <prerequisite-task idref="t678"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t677">
+    <title>speed up sliding in the system between maps/tabs</title>
+    <effort>1800</effort>
+    <effort-done>1800</effort-done>
+    <start-constraint-date>2014-07-30T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-489</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-30T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t678">
+    <title>Change the start discovery dialogue box to contain the List of Discovery Rules
+</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-484</string>
+    </user-data>
+    <prerequisite-task idref="t670"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t679">
+    <title>Implement association relation between two different service element type general case</title>
+    <effort>28800</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-491</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t681">
+    <title>TaCreate simple interface to interface path and network with via inter device link (Basic)sk 6</title>
+    <effort>14400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-237</string>
+    </user-data>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t682">
+    <title>Implement SNMP global read credentials</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-493</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t683">
+    <title>Implement discovery ip topology seed</title>
+    <effort>57600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-492</string>
+    </user-data>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t684">
+    <title>Support the replacement of service elements on each discovery</title>
+    <effort>3600</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-495</string>
+    </user-data>
+    <prerequisite-task idref="t687"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t685">
+    <title>Discovery manager replaces service element on each discovery</title>
+    <effort>14400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-494</string>
+    </user-data>
+    <prerequisite-task idref="t686"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t686">
+    <title>Create interdevicelinks for VLAN interfaces Create interdevice links even when there is no destination as long as there is a source </title>
+    <effort>18000</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-496</string>
+    </user-data>
+    <prerequisite-task idref="t694"/>
+    <assignment idref="r7"/>
+  </task>
+  <task id="t687">
+    <title>define the api to return VLAN information to UI </title>
+    <effort>0</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-497</string>
+    </user-data>
+    <prerequisite-task idref="t668"/>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t689">
+    <title>Add category attribute to the general tab</title>
+    <effort>14400</effort>
+    <user-data>
+      <key>Key</key>
+      <string>INT-499</string>
+    </user-data>
+    <prerequisite-task idref="t672"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t690">
+    <title>Eric Remington</title>
+    <type>group</type>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t691"/>
+    <child-task idref="t692"/>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t691">
+    <title>ERIC - configure snmpd on the soc core server</title>
+    <effort>0</effort>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-500</string>
+    </user-data>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t692">
+    <title>Eric - post soc server  - madgian </title>
+    <effort>0</effort>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t693">
+    <title>Verify navigation from network to service elements and the elements contained in the service elements.  </title>
+    <effort>14400</effort>
+    <effort-done>14400</effort-done>
+    <start-constraint-date>2014-07-30T13:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-501</string>
+    </user-data>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-07-30T13:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t694">
+    <title>make association between VLAN interfaces and parent interface via YAML and Test</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-502</string>
+    </user-data>
+    <prerequisite-task idref="t695"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t695">
+    <title>Parse YAML for association between service element types general case</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-504</string>
+    </user-data>
+    <prerequisite-task idref="t679"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t696">
+    <title>define additional YAML for SET that are new to us</title>
+    <effort>14400</effort>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-505</string>
+    </user-data>
+    <prerequisite-task idref="t641"/>
+    <assignment idref="r7"/>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t697">
+    <title>Define Harvard specific initial discovery rule ip topology seeds and global credentials </title>
+    <effort>10800</effort>
+    <start-constraint-date>2014-07-28T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-503</string>
+    </user-data>
+    <prerequisite-task idref="t665"/>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t699">
+    <title>API and Data for List Discovery Rule, IP Topology Seed and SNMP Global Read Credentials</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-07-29T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Key</key>
+      <string>INT-506</string>
+    </user-data>
+    <assignment idref="r2"/>
+    <start-no-earlier-than>2014-07-29T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <critical-path root="-1" enabled="true" resources="false">
+    <color r="1" g="0.5" b="0.5"/>
+  </critical-path>
+</scenario>

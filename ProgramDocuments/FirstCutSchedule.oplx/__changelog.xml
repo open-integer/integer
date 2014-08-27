@@ -1,0 +1,1627 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<changelog xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2">
+  <version>2.1</version>
+  <task-change-set user="Jon Saperia" date="2014-05-22T17:40:11.973Z" timestamp="2014-05-22T17:40:11.973Z">
+    <change idref="t-1" attribute="isGroup" type="real" from="0" to="1" resolved="yes"/>
+    <change idref="t-1" attribute="isSplittableTask" type="real" from="1" resolved="yes"/>
+    <change idref="t-1" attribute="taskType" type="real" from="0" to="2" resolved="yes"/>
+    <change idref="t-1" attribute="resourceAssignmentType" type="real" from="0" resolved="yes"/>
+    <change idref="t-1" attribute="staticCost" type="real" from="0" resolved="yes"/>
+    <change idref="t-1" attribute="effort" type="real" from="28800" resolved="yes"/>
+    <change idref="t-1" attribute="isSplitChunk" type="real" from="0" resolved="yes"/>
+    <change idref="t-1" attribute="scheduleType" type="real" from="0" resolved="yes"/>
+    <change idref="t-1" attribute="internalAssignments" type="string" from="" resolved="yes"/>
+    <change idref="t-1" attribute="Key" type="string" to="" resolved="yes"/>
+    <change idref="t-1" attribute="isSplitTask" type="real" from="0" resolved="yes"/>
+    <change idref="t-1" attribute="internalEffortDone" type="real" from="0" resolved="yes"/>
+    <change idref="t1" to="t-1" to-position="0" resolved="yes">
+      <change idref="t1" attribute="Key" type="string" to="INT-309"/>
+      <change idref="t1" attribute="internalAssignments" type="string" from="" to="1"/>
+      <change idref="t1" attribute="title" type="string" to="Deploy Skeleton System"/>
+    </change>
+    <change idref="t2" to="t-1" to-position="1" resolved="yes">
+      <change idref="t2" attribute="Key" type="string" to="INT-308"/>
+      <change idref="t2" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t2" attribute="title" type="string" to="Address issues for other group members"/>
+    </change>
+    <change idref="t3" to="t-1" to-position="2" resolved="yes">
+      <change idref="t3" attribute="Key" type="string" to="INT-307"/>
+      <change idref="t3" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t3" attribute="title" type="string" to="Address issues for other group members"/>
+    </change>
+    <change idref="t4" to="t-1" to-position="3" resolved="yes">
+      <change idref="t4" attribute="Key" type="string" to="INT-306"/>
+      <change idref="t4" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t4" attribute="title" type="string" to="Show Discovery Status and Events"/>
+    </change>
+    <change idref="t5" to="t-1" to-position="4" resolved="yes">
+      <change idref="t5" attribute="Key" type="string" to="INT-305"/>
+      <change idref="t5" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t5" attribute="title" type="string" to="Showing Link Information on Graphic Map"/>
+    </change>
+    <change idref="t6" to="t-1" to-position="5" resolved="yes">
+      <change idref="t6" attribute="Key" type="string" to="INT-304"/>
+      <change idref="t6" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t6" attribute="title" type="string" to="Finish DNS and other work for our web servers"/>
+    </change>
+    <change idref="t7" to="t-1" to-position="6" resolved="yes">
+      <change idref="t7" attribute="Key" type="string" to="INT-303"/>
+      <change idref="t7" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t7" attribute="title" type="string" to="modify jira to use new mail server"/>
+    </change>
+    <change idref="t8" to="t-1" to-position="7" resolved="yes">
+      <change idref="t8" attribute="Key" type="string" to="INT-302"/>
+      <change idref="t8" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t8" attribute="title" type="string" to="modify confluence, to use new mail server"/>
+    </change>
+    <change idref="t9" to="t-1" to-position="8" resolved="yes">
+      <change idref="t9" attribute="Key" type="string" to="INT-301"/>
+      <change idref="t9" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t9" attribute="title" type="string" to="Move Confluence to integer.harvard.edu"/>
+    </change>
+    <change idref="t10" to="t-1" to-position="9" resolved="yes">
+      <change idref="t10" attribute="Key" type="string" to="INT-300"/>
+      <change idref="t10" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t10" attribute="title" type="string" to="Report JSON output of service element"/>
+    </change>
+    <change idref="t11" to="t-1" to-position="10" resolved="yes">
+      <change idref="t11" attribute="Key" type="string" to="INT-299"/>
+      <change idref="t11" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t11" attribute="title" type="string" to="Discovery - errors/progress"/>
+    </change>
+    <change idref="t12" to="t-1" to-position="11" resolved="yes">
+      <change idref="t12" attribute="Key" type="string" to="INT-298"/>
+      <change idref="t12" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t12" attribute="title" type="string" to="Business logic of service element summary information description"/>
+    </change>
+    <change idref="t13" to="t-1" to-position="12" resolved="yes">
+      <change idref="t13" attribute="Key" type="string" to="INT-297"/>
+      <change idref="t13" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t13" attribute="title" type="string" to="Service Element Summary Information API"/>
+    </change>
+    <change idref="t14" to="t-1" to-position="13" resolved="yes">
+      <change idref="t14" attribute="Key" type="string" to="INT-296"/>
+      <change idref="t14" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t14" attribute="title" type="string" to="Map Icon Selection"/>
+    </change>
+    <change idref="t15" to="t-1" to-position="14" resolved="yes">
+      <change idref="t15" attribute="Key" type="string" to="INT-295"/>
+      <change idref="t15" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t15" attribute="title" type="string" to="Map Toolbar"/>
+    </change>
+    <change idref="t16" to="t-1" to-position="15" resolved="yes">
+      <change idref="t16" attribute="Key" type="string" to="INT-294"/>
+      <change idref="t16" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t16" attribute="title" type="string" to="Help Test"/>
+    </change>
+    <change idref="t17" to="t-1" to-position="16" resolved="yes">
+      <change idref="t17" attribute="Key" type="string" to="INT-293"/>
+      <change idref="t17" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t17" attribute="title" type="string" to="Icon Work"/>
+    </change>
+    <change idref="t18" to="t-1" to-position="17" resolved="yes">
+      <change idref="t18" attribute="Key" type="string" to="INT-292"/>
+      <change idref="t18" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t18" attribute="title" type="string" to="Display topology hierarchy"/>
+    </change>
+    <change idref="t19" to="t-1" to-position="18" resolved="yes">
+      <change idref="t19" attribute="Key" type="string" to="INT-291"/>
+      <change idref="t19" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t19" attribute="title" type="string" to="User Group, Roles"/>
+    </change>
+    <change idref="t20" to="t-1" to-position="19" resolved="yes">
+      <change idref="t20" attribute="Key" type="string" to="INT-290"/>
+      <change idref="t20" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t20" attribute="title" type="string" to="Map Filters"/>
+    </change>
+    <change idref="t21" to="t-1" to-position="20" resolved="yes">
+      <change idref="t21" attribute="Key" type="string" to="INT-289"/>
+      <change idref="t21" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t21" attribute="title" type="string" to="Map Views, Providers, Locations, Service"/>
+    </change>
+    <change idref="t22" to="t-1" to-position="21" resolved="yes">
+      <change idref="t22" attribute="Key" type="string" to="INT-288"/>
+      <change idref="t22" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t22" attribute="title" type="string" to="Device Discovery Information Screen"/>
+    </change>
+    <change idref="t23" to="t-1" to-position="22" resolved="yes">
+      <change idref="t23" attribute="Key" type="string" to="INT-287"/>
+      <change idref="t23" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t23" attribute="title" type="string" to="Device Service Element Summary Screen"/>
+    </change>
+    <change idref="t24" to="t-1" to-position="23" resolved="yes">
+      <change idref="t24" attribute="Key" type="string" to="INT-286"/>
+      <change idref="t24" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t24" attribute="title" type="string" to="Report Mgr design"/>
+    </change>
+    <change idref="t25" to="t-1" to-position="24" resolved="yes">
+      <change idref="t25" attribute="Key" type="string" to="INT-285"/>
+      <change idref="t25" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t25" attribute="title" type="string" to="Inventory Report Control and Display"/>
+    </change>
+    <change idref="t26" to="t-1" to-position="25" resolved="yes">
+      <change idref="t26" attribute="Key" type="string" to="INT-284"/>
+      <change idref="t26" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t26" attribute="title" type="string" to="Announce Release 1"/>
+    </change>
+    <change idref="t27" to="t-1" to-position="26" resolved="yes">
+      <change idref="t27" attribute="Key" type="string" to="INT-283"/>
+      <change idref="t27" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t27" attribute="title" type="string" to="JMS message receiver."/>
+    </change>
+    <change idref="t28" to="t-1" to-position="27" resolved="yes">
+      <change idref="t28" attribute="Key" type="string" to="INT-282"/>
+      <change idref="t28" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t28" attribute="title" type="string" to="JMS message sender"/>
+    </change>
+    <change idref="t29" to="t-1" to-position="28" resolved="yes">
+      <change idref="t29" attribute="Key" type="string" to="INT-281"/>
+      <change idref="t29" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t29" attribute="title" type="string" to="JMS event message"/>
+    </change>
+    <change idref="t30" to="t-1" to-position="29" resolved="yes">
+      <change idref="t30" attribute="Key" type="string" to="INT-280"/>
+      <change idref="t30" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t30" attribute="title" type="string" to="JMS, update messages"/>
+    </change>
+    <change idref="t31" to="t-1" to-position="30" resolved="yes">
+      <change idref="t31" attribute="Key" type="string" to="INT-279"/>
+      <change idref="t31" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t31" attribute="title" type="string" to="JMS , Config wildfly"/>
+    </change>
+    <change idref="t32" to="t-1" to-position="31" resolved="yes">
+      <change idref="t32" attribute="Key" type="string" to="INT-278"/>
+      <change idref="t32" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t32" attribute="title" type="string" to="JMS, Message manager - register for messages"/>
+    </change>
+    <change idref="t33" to="t-1" to-position="32" resolved="yes">
+      <change idref="t33" attribute="Key" type="string" to="INT-277"/>
+      <change idref="t33" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t33" attribute="title" type="string" to="Events"/>
+    </change>
+    <change idref="t34" to="t-1" to-position="33" resolved="yes">
+      <change idref="t34" attribute="Key" type="string" to="INT-276"/>
+      <change idref="t34" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t34" attribute="title" type="string" to="Advanced System Control"/>
+    </change>
+    <change idref="t35" to="t-1" to-position="34" resolved="yes">
+      <change idref="t35" attribute="Key" type="string" to="INT-275"/>
+      <change idref="t35" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t35" attribute="title" type="string" to="Filter, apply to events"/>
+    </change>
+    <change idref="t36" to="t-1" to-position="35" resolved="yes">
+      <change idref="t36" attribute="Key" type="string" to="INT-274"/>
+      <change idref="t36" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t36" attribute="title" type="string" to="Filter, apply to queries, service elements"/>
+    </change>
+    <change idref="t37" to="t-1" to-position="36" resolved="yes">
+      <change idref="t37" attribute="Key" type="string" to="INT-273"/>
+      <change idref="t37" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t37" attribute="title" type="string" to="Filter add, delete, modify"/>
+    </change>
+    <change idref="t38" to="t-1" to-position="37" resolved="yes">
+      <change idref="t38" attribute="Key" type="string" to="INT-272"/>
+      <change idref="t38" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t38" attribute="title" type="string" to="Filter, Classes, Tables"/>
+    </change>
+    <change idref="t39" to="t-1" to-position="38" resolved="yes">
+      <change idref="t39" attribute="Key" type="string" to="INT-271"/>
+      <change idref="t39" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t39" attribute="title" type="string" to="Filter Design"/>
+    </change>
+    <change idref="t40" to="t-1" to-position="39" resolved="yes">
+      <change idref="t40" attribute="Key" type="string" to="INT-270"/>
+      <change idref="t40" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t40" attribute="title" type="string" to="Inventory Manager design"/>
+    </change>
+    <change idref="t41" to="t-1" to-position="40" resolved="yes">
+      <change idref="t41" attribute="Key" type="string" to="INT-269"/>
+      <change idref="t41" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t41" attribute="title" type="string" to="implement level 2 topology base on a spanning tree"/>
+    </change>
+    <change idref="t42" to="t-1" to-position="41" resolved="yes">
+      <change idref="t42" attribute="Key" type="string" to="INT-268"/>
+      <change idref="t42" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t42" attribute="title" type="string" to="implement the differences matrix for add and delete for sub service element"/>
+    </change>
+    <change idref="t43" to="t-1" to-position="42" resolved="yes">
+      <change idref="t43" attribute="Key" type="string" to="INT-267"/>
+      <change idref="t43" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t43" attribute="title" type="string" to="Element on DB the output of the matrix is using for inventory"/>
+    </change>
+    <change idref="t44" to="t-1" to-position="43" resolved="yes">
+      <change idref="t44" attribute="Key" type="string" to="INT-266"/>
+      <change idref="t44" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t44" attribute="title" type="string" to="define the differences matrix between a discovered service element against a same service"/>
+    </change>
+    <change idref="t45" to="t-1" to-position="44" resolved="yes">
+      <change idref="t45" attribute="Key" type="string" to="INT-265"/>
+      <change idref="t45" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t45" attribute="title" type="string" to="implement the differences matrix for attribute changing during discovery"/>
+    </change>
+    <change idref="t46" to="t-1" to-position="45" resolved="yes">
+      <change idref="t46" attribute="Key" type="string" to="INT-264"/>
+      <change idref="t46" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t46" attribute="title" type="string" to="System control, user, role, add, delete, modify"/>
+    </change>
+    <change idref="t47" to="t-1" to-position="46" resolved="yes">
+      <change idref="t47" attribute="Key" type="string" to="INT-263"/>
+      <change idref="t47" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t47" attribute="title" type="string" to="System Control, Role, add, delete, modify"/>
+    </change>
+    <change idref="t48" to="t-1" to-position="47" resolved="yes">
+      <change idref="t48" attribute="Key" type="string" to="INT-262"/>
+      <change idref="t48" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t48" attribute="title" type="string" to="System Controls, Vendor discovery template, add, delete, modify"/>
+    </change>
+    <change idref="t49" to="t-1" to-position="48" resolved="yes">
+      <change idref="t49" attribute="Key" type="string" to="INT-261"/>
+      <change idref="t49" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t49" attribute="title" type="string" to="Schedule Mgr"/>
+    </change>
+    <change idref="t50" to="t-1" to-position="49" resolved="yes">
+      <change idref="t50" attribute="Key" type="string" to="INT-260"/>
+      <change idref="t50" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t50" attribute="title" type="string" to="Discovery, Defaults"/>
+    </change>
+    <change idref="t51" to="t-1" to-position="50" resolved="yes">
+      <change idref="t51" attribute="Key" type="string" to="INT-259"/>
+      <change idref="t51" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t51" attribute="title" type="string" to="Discovery , Schedule, Get next runtime"/>
+    </change>
+    <change idref="t52" to="t-1" to-position="51" resolved="yes">
+      <change idref="t52" attribute="Key" type="string" to="INT-258"/>
+      <change idref="t52" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t52" attribute="title" type="string" to="Discovery Stop"/>
+    </change>
+    <change idref="t53" to="t-1" to-position="52" resolved="yes">
+      <change idref="t53" attribute="Key" type="string" to="INT-257"/>
+      <change idref="t53" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t53" attribute="title" type="string" to="Discovery List"/>
+    </change>
+    <change idref="t54" to="t-1" to-position="53" resolved="yes">
+      <change idref="t54" attribute="Key" type="string" to="INT-256"/>
+      <change idref="t54" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t54" attribute="title" type="string" to="Implement SHMP V3 access"/>
+    </change>
+    <change idref="t55" to="t-1" to-position="54" resolved="yes">
+      <change idref="t55" attribute="Key" type="string" to="INT-255"/>
+      <change idref="t55" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t55" attribute="title" type="string" to="Vlan study and implementation"/>
+    </change>
+    <change idref="t56" to="t-1" to-position="55" resolved="yes">
+      <change idref="t56" attribute="Key" type="string" to="INT-254"/>
+      <change idref="t56" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t56" attribute="title" type="string" to="Implement ip routing for layer 3 inter device link"/>
+    </change>
+    <change idref="t57" to="t-1" to-position="56" resolved="yes">
+      <change idref="t57" attribute="Key" type="string" to="INT-253"/>
+      <change idref="t57" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t57" attribute="title" type="string" to="Generate instance oid based on different mapping between min tables"/>
+    </change>
+    <change idref="t58" to="t-1" to-position="57" resolved="yes">
+      <change idref="t58" attribute="Key" type="string" to="INT-252"/>
+      <change idref="t58" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t58" attribute="title" type="string" to="associate the basic service element type designed by loren"/>
+    </change>
+    <change idref="t59" to="t-1" to-position="58" resolved="yes">
+      <change idref="t59" attribute="Key" type="string" to="INT-251"/>
+      <change idref="t59" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t59" attribute="title" type="string" to="Design and document install automation Part #2"/>
+    </change>
+    <change idref="t60" to="t-1" to-position="59" resolved="yes">
+      <change idref="t60" attribute="Key" type="string" to="INT-250"/>
+      <change idref="t60" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t60" attribute="title" type="string" to="External Integer site work with eric and mark"/>
+    </change>
+    <change idref="t61" to="t-1" to-position="60" resolved="yes">
+      <change idref="t61" attribute="Key" type="string" to="INT-249"/>
+      <change idref="t61" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t61" attribute="title" type="string" to="Parse sys location - Needs to be a plug in"/>
+    </change>
+    <change idref="t62" to="t-1" to-position="61" resolved="yes">
+      <change idref="t62" attribute="Key" type="string" to="INT-248"/>
+      <change idref="t62" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t62" attribute="title" type="string" to="INT-241 Save Path"/>
+    </change>
+    <change idref="t63" to="t-1" to-position="62" resolved="yes">
+      <change idref="t63" attribute="Key" type="string" to="INT-247"/>
+      <change idref="t63" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t63" attribute="title" type="string" to="INT-241 Save interdevice link"/>
+    </change>
+    <change idref="t64" to="t-1" to-position="63" resolved="yes">
+      <change idref="t64" attribute="Key" type="string" to="INT-246"/>
+      <change idref="t64" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t64" attribute="title" type="string" to="INT-241 Simple Design Filter"/>
+    </change>
+    <change idref="t65" to="t-1" to-position="64" resolved="yes">
+      <change idref="t65" attribute="Key" type="string" to="INT-245"/>
+      <change idref="t65" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t65" attribute="title" type="string" to="INT-241 Document verify that “invalid, self signal” certs may be used in test instances"/>
+    </change>
+    <change idref="t66" to="t-1" to-position="65" resolved="yes">
+      <change idref="t66" attribute="Key" type="string" to="INT-244"/>
+      <change idref="t66" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t66" attribute="title" type="string" to="INT-241 Device Details of Discovery API, Last Times discovered, change found, next planned discovery"/>
+    </change>
+    <change idref="t67" to="t-1" to-position="66" resolved="yes">
+      <change idref="t67" attribute="Key" type="string" to="INT-243"/>
+      <change idref="t67" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t67" attribute="title" type="string" to="INT-241 Need system requirements description of configurable items Install/ Config/RMe"/>
+    </change>
+    <change idref="t68" to="t-1" to-position="67" resolved="yes">
+      <change idref="t68" attribute="Key" type="string" to="INT-242"/>
+      <change idref="t68" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t68" attribute="title" type="string" to="INT-241 Filter API"/>
+    </change>
+    <change idref="t69" to="t-1" to-position="68" resolved="yes">
+      <change idref="t69" attribute="Key" type="string" to="INT-241"/>
+      <change idref="t69" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t69" attribute="title" type="string" to="Address issues from other group members"/>
+    </change>
+    <change idref="t70" to="t-1" to-position="69" resolved="yes">
+      <change idref="t70" attribute="Key" type="string" to="INT-240"/>
+      <change idref="t70" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t70" attribute="title" type="string" to="Study MiBs related to network layers"/>
+    </change>
+    <change idref="t71" to="t-1" to-position="70" resolved="yes">
+      <change idref="t71" attribute="Key" type="string" to="INT-239"/>
+      <change idref="t71" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t71" attribute="title" type="string" to="Implement mac to Ip address mapping"/>
+    </change>
+    <change idref="t72" to="t-1" to-position="71" resolved="yes">
+      <change idref="t72" attribute="Key" type="string" to="INT-238"/>
+      <change idref="t72" attribute="internalAssignments" type="string" from="" to="8"/>
+      <change idref="t72" attribute="title" type="string" to="Basic Inter device link creation including physical media association"/>
+    </change>
+    <change idref="t73" to="t-1" to-position="72" resolved="yes">
+      <change idref="t73" attribute="Key" type="string" to="INT-237"/>
+      <change idref="t73" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t73" attribute="title" type="string" to="Associate path and network with inter device link (Basic)"/>
+    </change>
+    <change idref="t74" to="t-1" to-position="73" resolved="yes">
+      <change idref="t74" attribute="Key" type="string" to="INT-236"/>
+      <change idref="t74" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t74" attribute="title" type="string" to="Topology element creation"/>
+    </change>
+    <change idref="t75" to="t-1" to-position="74" resolved="yes">
+      <change idref="t75" attribute="Key" type="string" to="INT-235"/>
+      <change idref="t75" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t75" attribute="title" type="string" to="Implement MiB table polling and derterminate for service element type"/>
+    </change>
+    <change idref="t76" to="t-1" to-position="75" resolved="yes">
+      <change idref="t76" attribute="Key" type="string" to="INT-234"/>
+      <change idref="t76" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t76" attribute="title" type="string" to="Modify Build to put all wildfly module JARs into EARs for veracode scan"/>
+    </change>
+    <change idref="t77" to="t-1" to-position="76" resolved="yes">
+      <change idref="t77" attribute="Key" type="string" to="INT-233"/>
+      <change idref="t77" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t77" attribute="title" type="string" to="Make technology YAML for CDP"/>
+    </change>
+    <change idref="t78" to="t-1" to-position="77" resolved="yes">
+      <change idref="t78" attribute="Key" type="string" to="INT-232"/>
+      <change idref="t78" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t78" attribute="title" type="string" to="Design &amp; Document install automation Part #1"/>
+    </change>
+    <change idref="t79" to="t-1" to-position="78" resolved="yes">
+      <change idref="t79" attribute="Key" type="string" to="INT-231"/>
+      <change idref="t79" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t79" attribute="title" type="string" to="Generate SSL certs for “important test servers”"/>
+    </change>
+    <change idref="t80" to="t-1" to-position="79" resolved="yes">
+      <change idref="t80" attribute="Key" type="string" to="INT-230"/>
+      <change idref="t80" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t80" attribute="title" type="string" to="Document CAS integration and configuration prep for sprint 7"/>
+    </change>
+    <change idref="t81" to="t-1" to-position="80" resolved="yes">
+      <change idref="t81" attribute="Key" type="string" to="INT-229"/>
+      <change idref="t81" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t81" attribute="title" type="string" to="Document required dependencies, installation steps, configuration steps, how to run steps"/>
+    </change>
+    <change idref="t82" to="t-1" to-position="81" resolved="yes">
+      <change idref="t82" attribute="Key" type="string" to="INT-228"/>
+      <change idref="t82" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t82" attribute="title" type="string" to="Update complete discovery document"/>
+    </change>
+    <change idref="t83" to="t-1" to-position="82" resolved="yes">
+      <change idref="t83" attribute="Key" type="string" to="INT-227"/>
+      <change idref="t83" attribute="internalAssignments" type="string" from="" to="1"/>
+      <change idref="t83" attribute="title" type="string" to="Design Confluence Site and HUIT site"/>
+    </change>
+    <change idref="t84" to="t-1" to-position="83" resolved="yes">
+      <change idref="t84" attribute="Key" type="string" to="INT-226"/>
+      <change idref="t84" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t84" attribute="title" type="string" to="Users Filters Views"/>
+    </change>
+    <change idref="t85" to="t-1" to-position="84" resolved="yes">
+      <change idref="t85" attribute="Key" type="string" to="INT-225"/>
+      <change idref="t85" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t85" attribute="title" type="string" to="Finish Design topology / discovery"/>
+    </change>
+    <change idref="t86" to="t-1" to-position="85" resolved="yes">
+      <change idref="t86" attribute="Key" type="string" to="INT-224"/>
+      <change idref="t86" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t86" attribute="title" type="string" to="Complete Hierarchal containment discovery"/>
+    </change>
+    <change idref="t87" to="t-1" to-position="86" resolved="yes">
+      <change idref="t87" attribute="Key" type="string" to="INT-223"/>
+      <change idref="t87" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t87" attribute="title" type="string" to="Make technology YAML for Entity-MIB"/>
+    </change>
+    <change idref="t88" to="t-1" to-position="87" resolved="yes">
+      <change idref="t88" attribute="Key" type="string" to="INT-222"/>
+      <change idref="t88" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t88" attribute="title" type="string" to="Discovery unique identifier for each service element which includes the top level service element and the sub level service element"/>
+    </change>
+    <change idref="t89" to="t-1" to-position="88" resolved="yes">
+      <change idref="t89" attribute="Key" type="string" to="INT-221"/>
+      <change idref="t89" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t89" attribute="title" type="string" to="Missing vendor identifier for an unknown vendor device handling"/>
+    </change>
+    <change idref="t90" to="t-1" to-position="89" resolved="yes">
+      <change idref="t90" attribute="Key" type="string" to="INT-220"/>
+      <change idref="t90" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t90" attribute="title" type="string" to="Generate SNMP containment for host Mib, for a host Mib device when no such SNMP containment is missing on db"/>
+    </change>
+    <change idref="t91" to="t-1" to-position="90" resolved="yes">
+      <change idref="t91" attribute="Key" type="string" to="INT-219"/>
+      <change idref="t91" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t91" attribute="title" type="string" to="Complete attributes, retrieve for service element. Be able to handle different data types"/>
+    </change>
+    <change idref="t92" to="t-1" to-position="91" resolved="yes">
+      <change idref="t92" attribute="Key" type="string" to="INT-218"/>
+      <change idref="t92" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t92" attribute="title" type="string" to="Add more service element discovery on host resource Mib such as process and installed software etc."/>
+    </change>
+    <change idref="t93" to="t-1" to-position="92" resolved="yes">
+      <change idref="t93" attribute="Key" type="string" to="INT-217"/>
+      <change idref="t93" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t93" attribute="title" type="string" to="Set up email for jira"/>
+    </change>
+    <change idref="t94" to="t-1" to-position="93" resolved="yes">
+      <change idref="t94" attribute="Key" type="string" to="INT-216"/>
+      <change idref="t94" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t94" attribute="title" type="string" to="YAML =&gt; JSON"/>
+    </change>
+    <change idref="t95" to="t-1" to-position="94" resolved="yes">
+      <change idref="t95" attribute="Key" type="string" to="INT-215"/>
+      <change idref="t95" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t95" attribute="title" type="string" to="Distributed - start up"/>
+    </change>
+    <change idref="t96" to="t-1" to-position="95" resolved="yes">
+      <change idref="t96" attribute="Key" type="string" to="INT-214"/>
+      <change idref="t96" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t96" attribute="title" type="string" to="work with loren and dave chan to bring together technologies/ and discovery and topology"/>
+    </change>
+    <change idref="t97" to="t-1" to-position="96" resolved="yes">
+      <change idref="t97" attribute="Key" type="string" to="INT-213"/>
+      <change idref="t97" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t97" attribute="title" type="string" to="YAML, Read in, technology, capability, SET"/>
+    </change>
+    <change idref="t98" to="t-1" to-position="97" resolved="yes">
+      <change idref="t98" attribute="Key" type="string" to="INT-212"/>
+      <change idref="t98" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t98" attribute="title" type="string" to="Distribution call service on remote server"/>
+    </change>
+    <change idref="t99" to="t-1" to-position="98" resolved="yes">
+      <change idref="t99" attribute="Key" type="string" to="INT-211"/>
+      <change idref="t99" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t99" attribute="title" type="string" to="Distribution - call mgr on remote server"/>
+    </change>
+    <change idref="t100" to="t-1" to-position="99" resolved="yes">
+      <change idref="t100" attribute="Key" type="string" to="INT-210"/>
+      <change idref="t100" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t100" attribute="title" type="string" to="Start Discover API"/>
+    </change>
+    <change idref="t101" to="t-1" to-position="100" resolved="yes">
+      <change idref="t101" attribute="Key" type="string" to="INT-209"/>
+      <change idref="t101" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t101" attribute="title" type="string" to="set up nightly build that will not create an instance but will send a file in veracode scan"/>
+    </change>
+    <change idref="t102" to="t-1" to-position="101" resolved="yes">
+      <change idref="t102" attribute="Key" type="string" to="INT-208"/>
+      <change idref="t102" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t102" attribute="title" type="string" to="Distributed Install on multiple servers"/>
+    </change>
+    <change idref="t103" to="t-1" to-position="102" resolved="yes">
+      <change idref="t103" attribute="Key" type="string" to="INT-207"/>
+      <change idref="t103" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t103" attribute="title" type="string" to="Publish javadoc somewhere"/>
+    </change>
+    <change idref="t104" to="t-1" to-position="103" resolved="yes">
+      <change idref="t104" attribute="Key" type="string" to="INT-206"/>
+      <change idref="t104" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t104" attribute="title" type="string" to="Modify AMI snapshot task to search tags to find Install snapshot"/>
+    </change>
+    <change idref="t105" to="t-1" to-position="104" resolved="yes">
+      <change idref="t105" attribute="Key" type="string" to="INT-205"/>
+      <change idref="t105" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t105" attribute="title" type="string" to="Task to destroy stacks past due"/>
+    </change>
+    <change idref="t106" to="t-1" to-position="105" resolved="yes">
+      <change idref="t106" attribute="Key" type="string" to="INT-204"/>
+      <change idref="t106" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t106" attribute="title" type="string" to="SSL certs on all services JIRA BUILD, confluence, wiki, mail"/>
+    </change>
+    <change idref="t107" to="t-1" to-position="106" resolved="yes">
+      <change idref="t107" attribute="Key" type="string" to="INT-203"/>
+      <change idref="t107" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t107" attribute="title" type="string" to="Create Json so Jenkins can create a test environment with server/db instance and front end instance"/>
+    </change>
+    <change idref="t108" to="t-1" to-position="107" resolved="yes">
+      <change idref="t108" attribute="Key" type="string" to="INT-202"/>
+      <change idref="t108" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t108" attribute="title" type="string" to="Decide upon what criteria to auto create test instances-What is an interesting instance"/>
+    </change>
+    <change idref="t109" to="t-1" to-position="108" resolved="yes">
+      <change idref="t109" attribute="Key" type="string" to="INT-201"/>
+      <change idref="t109" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t109" attribute="title" type="string" to="System Design DT,L, JOEL"/>
+    </change>
+    <change idref="t110" to="t-1" to-position="109" resolved="yes">
+      <change idref="t110" attribute="Key" type="string" to="INT-200"/>
+      <change idref="t110" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t110" attribute="title" type="string" to="Start Button for Discovery"/>
+    </change>
+    <change idref="t111" to="t-1" to-position="110" resolved="yes">
+      <change idref="t111" attribute="Key" type="string" to="INT-199"/>
+      <change idref="t111" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t111" attribute="title" type="string" to="Show Large Number of Device Service Elements in Database on Map"/>
+    </change>
+    <change idref="t112" to="t-1" to-position="111" resolved="yes">
+      <change idref="t112" attribute="Key" type="string" to="INT-198"/>
+      <change idref="t112" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t112" attribute="title" type="string" to="Show Multiple Level Contained Items of Device Service Elements in Tree"/>
+    </change>
+    <change idref="t113" to="t-1" to-position="112" resolved="yes">
+      <change idref="t113" attribute="Key" type="string" to="INT-197"/>
+      <change idref="t113" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t113" attribute="title" type="string" to="Collect &amp; consolidate SNMP credentials for Harvard’s installation"/>
+    </change>
+    <change idref="t114" to="t-1" to-position="113" resolved="yes">
+      <change idref="t114" attribute="Key" type="string" to="INT-196"/>
+      <change idref="t114" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t114" attribute="title" type="string" to="Make technology YAML for basic MPLS functionality"/>
+    </change>
+    <change idref="t115" to="t-1" to-position="114" resolved="yes">
+      <change idref="t115" attribute="Key" type="string" to="INT-195"/>
+      <change idref="t115" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t115" attribute="title" type="string" to="Make technology YAML for a useful subset of Cisco access list functionality"/>
+    </change>
+    <change idref="t116" to="t-1" to-position="115" resolved="yes">
+      <change idref="t116" attribute="Key" type="string" to="INT-194"/>
+      <change idref="t116" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t116" attribute="title" type="string" to="Make the first version of the technology tree"/>
+    </change>
+    <change idref="t117" to="t-1" to-position="116" resolved="yes">
+      <change idref="t117" attribute="Key" type="string" to="INT-193"/>
+      <change idref="t117" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t117" attribute="title" type="string" to="Define a set of devices for first production runs (with Luke)"/>
+    </change>
+    <change idref="t118" to="t-1" to-position="117" resolved="yes">
+      <change idref="t118" attribute="Key" type="string" to="INT-192"/>
+      <change idref="t118" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t118" attribute="title" type="string" to="Terminology cleanup"/>
+    </change>
+    <change idref="t119" to="t-1" to-position="118" resolved="yes">
+      <change idref="t119" attribute="Key" type="string" to="INT-191"/>
+      <change idref="t119" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t119" attribute="title" type="string" to="Diagram &amp; describe topology discovery"/>
+    </change>
+    <change idref="t120" to="t-1" to-position="119" resolved="yes">
+      <change idref="t120" attribute="Key" type="string" to="INT-190"/>
+      <change idref="t120" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t120" attribute="title" type="string" to="Diagram &amp; describe Service Element Type discovery"/>
+    </change>
+    <change idref="t121" to="t-1" to-position="120" resolved="yes">
+      <change idref="t121" attribute="Key" type="string" to="INT-189"/>
+      <change idref="t121" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t121" attribute="title" type="string" to="Diagram &amp; describe relationships inside a technology definition"/>
+    </change>
+    <change idref="t122" to="t-1" to-position="121" resolved="yes">
+      <change idref="t122" attribute="Key" type="string" to="INT-188"/>
+      <change idref="t122" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t122" attribute="title" type="string" to="Make technology YAML for BGP (generic)"/>
+    </change>
+    <change idref="t123" to="t-1" to-position="122" resolved="yes">
+      <change idref="t123" attribute="Key" type="string" to="INT-187"/>
+      <change idref="t123" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t123" attribute="title" type="string" to="Make technology YAML for Route table (generic)"/>
+    </change>
+    <change idref="t124" to="t-1" to-position="123" resolved="yes">
+      <change idref="t124" attribute="Key" type="string" to="INT-186"/>
+      <change idref="t124" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t124" attribute="title" type="string" to="Make technology YAML for OSPF (single process)"/>
+    </change>
+    <change idref="t125" to="t-1" to-position="124" resolved="yes">
+      <change idref="t125" attribute="Key" type="string" to="INT-185"/>
+      <change idref="t125" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t125" attribute="title" type="string" to="Make technology YAML for Spanning-tree global &amp; rapid pvst+"/>
+    </change>
+    <change idref="t126" to="t-1" to-position="125" resolved="yes">
+      <change idref="t126" attribute="Key" type="string" to="INT-184"/>
+      <change idref="t126" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t126" attribute="title" type="string" to="Make technology YAML for IPv4 addresses"/>
+    </change>
+    <change idref="t127" to="t-1" to-position="126" resolved="yes">
+      <change idref="t127" attribute="Key" type="string" to="INT-183"/>
+      <change idref="t127" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t127" attribute="title" type="string" to="Make technology YAML for Interfaces MIB"/>
+    </change>
+    <change idref="t128" to="t-1" to-position="127" resolved="yes">
+      <change idref="t128" attribute="Key" type="string" to="INT-182"/>
+      <change idref="t128" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t128" attribute="title" type="string" to="modify jenkins, twiki to use new mail server"/>
+    </change>
+    <change idref="t129" to="t-1" to-position="128" resolved="yes">
+      <change idref="t129" attribute="Key" type="string" to="INT-181"/>
+      <change idref="t129" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t129" attribute="title" type="string" to="Get back with Rick Callixto when mark is used"/>
+    </change>
+    <change idref="t130" to="t-1" to-position="129" resolved="yes">
+      <change idref="t130" attribute="Key" type="string" to="INT-180"/>
+      <change idref="t130" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t130" attribute="title" type="string" to="Integration of State information into the model (and later system)"/>
+    </change>
+    <change idref="t131" to="t-1" to-position="130" resolved="yes">
+      <change idref="t131" attribute="Key" type="string" to="INT-179"/>
+      <change idref="t131" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t131" attribute="title" type="string" to="Get us SNMP read access to more switches in the testlab than just ours"/>
+    </change>
+    <change idref="t132" to="t-1" to-position="131" resolved="yes">
+      <change idref="t132" attribute="Key" type="string" to="INT-178"/>
+      <change idref="t132" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t132" attribute="title" type="string" to="Get two servers in the SOC virtualized server environment"/>
+    </change>
+    <change idref="t133" to="t-1" to-position="132" resolved="yes">
+      <change idref="t133" attribute="Key" type="string" to="INT-177"/>
+      <change idref="t133" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t133" attribute="title" type="string" to="Upgrade the testlab 3750 to an ipservices image"/>
+    </change>
+    <change idref="t134" to="t-1" to-position="133" resolved="yes">
+      <change idref="t134" attribute="Key" type="string" to="INT-176"/>
+      <change idref="t134" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t134" attribute="title" type="string" to="Configure various L2/L3 switching features between the two testlab switches"/>
+    </change>
+    <change idref="t135" to="t-1" to-position="134" resolved="yes">
+      <change idref="t135" attribute="Key" type="string" to="INT-175"/>
+      <change idref="t135" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t135" attribute="title" type="string" to="create script to set up and destroy dns names in route53"/>
+    </change>
+    <change idref="t136" to="t-1" to-position="135" resolved="yes">
+      <change idref="t136" attribute="Key" type="string" to="INT-174"/>
+      <change idref="t136" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t136" attribute="title" type="string" to="Save discovery status"/>
+    </change>
+    <change idref="t137" to="t-1" to-position="136" resolved="yes">
+      <change idref="t137" attribute="Key" type="string" to="INT-173"/>
+      <change idref="t137" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t137" attribute="title" type="string" to="Log and create audit message for Discovery complete and errors."/>
+    </change>
+    <change idref="t138" to="t-1" to-position="137" resolved="yes">
+      <change idref="t138" attribute="Key" type="string" to="INT-172"/>
+      <change idref="t138" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t138" attribute="title" type="string" to="Create class, table and queries to store Distributed manager/services configuration"/>
+    </change>
+    <change idref="t139" to="t-1" to-position="138" resolved="yes">
+      <change idref="t139" attribute="Key" type="string" to="INT-171"/>
+      <change idref="t139" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t139" attribute="title" type="string" to="Send update message to GUI (from FE server)"/>
+    </change>
+    <change idref="t140" to="t-1" to-position="139" resolved="yes">
+      <change idref="t140" attribute="Key" type="string" to="INT-170"/>
+      <change idref="t140" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t140" attribute="title" type="string" to="Add Message sender (for update messages)"/>
+    </change>
+    <change idref="t141" to="t-1" to-position="140" resolved="yes">
+      <change idref="t141" attribute="Key" type="string" to="INT-169"/>
+      <change idref="t141" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t141" attribute="title" type="string" to="Add Message receiver to FE server for update messages"/>
+    </change>
+    <change idref="t142" to="t-1" to-position="141" resolved="yes">
+      <change idref="t142" attribute="Key" type="string" to="INT-168"/>
+      <change idref="t142" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t142" attribute="title" type="string" to="Add JMS topic for updates to GUI"/>
+    </change>
+    <change idref="t143" to="t-1" to-position="142" resolved="yes">
+      <change idref="t143" attribute="Key" type="string" to="INT-167"/>
+      <change idref="t143" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t143" attribute="title" type="string" to="Add Call get get Toplevel service elements from DB (for the GUI)"/>
+    </change>
+    <change idref="t144" to="t-1" to-position="143" resolved="yes">
+      <change idref="t144" attribute="Key" type="string" to="INT-166"/>
+      <change idref="t144" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t144" attribute="title" type="string" to="Add call to get list of ManagementObjects by ID"/>
+    </change>
+    <change idref="t145" to="t-1" to-position="144" resolved="yes">
+      <change idref="t145" attribute="Key" type="string" to="INT-165"/>
+      <change idref="t145" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t145" attribute="title" type="string" to="Startup logic for DistributionManager"/>
+    </change>
+    <change idref="t146" to="t-1" to-position="145" resolved="yes">
+      <change idref="t146" attribute="Key" type="string" to="INT-164"/>
+      <change idref="t146" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t146" attribute="title" type="string" to="Add remote host support to DistributionManager"/>
+    </change>
+    <change idref="t147" to="t-1" to-position="146" resolved="yes">
+      <change idref="t147" attribute="Key" type="string" to="INT-163"/>
+      <change idref="t147" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t147" attribute="title" type="string" to="Show Single Level Contained Items of Device Service Elements in Table"/>
+    </change>
+    <change idref="t148" to="t-1" to-position="147" resolved="yes">
+      <change idref="t148" attribute="Key" type="string" to="INT-162"/>
+      <change idref="t148" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t148" attribute="title" type="string" to="Discovery of location information and parsing SysLocation"/>
+    </change>
+    <change idref="t149" to="t-1" to-position="148" resolved="yes">
+      <change idref="t149" attribute="Key" type="string" to="INT-161"/>
+      <change idref="t149" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t149" attribute="title" type="string" to="Add location information in the Discovery process"/>
+    </change>
+    <change idref="t150" to="t-1" to-position="149" resolved="yes">
+      <change idref="t150" attribute="Key" type="string" to="INT-160"/>
+      <change idref="t150" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t150" attribute="title" type="string" to="Add specific location information format to system"/>
+    </change>
+    <change idref="t151" to="t-1" to-position="150" resolved="yes">
+      <change idref="t151" attribute="Key" type="string" to="INT-159"/>
+      <change idref="t151" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t151" attribute="title" type="string" to="Layer 3 Discovery"/>
+    </change>
+    <change idref="t152" to="t-1" to-position="151" resolved="yes">
+      <change idref="t152" attribute="Key" type="string" to="INT-158"/>
+      <change idref="t152" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t152" attribute="title" type="string" to="Identify Service Element (Routing Load Balance)"/>
+    </change>
+    <change idref="t153" to="t-1" to-position="152" resolved="yes">
+      <change idref="t153" attribute="Key" type="string" to="INT-157"/>
+      <change idref="t153" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t153" attribute="title" type="string" to="Get Addition Attributes for Service Element"/>
+    </change>
+    <change idref="t154" to="t-1" to-position="153" resolved="yes">
+      <change idref="t154" attribute="Key" type="string" to="INT-156"/>
+      <change idref="t154" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t154" attribute="title" type="string" to="Design how information about icon locations for different backgrounds/perspectives is saved/used."/>
+    </change>
+    <change idref="t155" to="t-1" to-position="154" resolved="yes">
+      <change idref="t155" attribute="Key" type="string" to="INT-155"/>
+      <change idref="t155" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t155" attribute="title" type="string" to="Allow multiple people to deal with a task"/>
+    </change>
+    <change idref="t156" to="t-1" to-position="155" resolved="yes">
+      <change idref="t156" attribute="Key" type="string" to="INT-154"/>
+      <change idref="t156" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t156" attribute="title" type="string" to="Learn how to get the precise physical location of a device using SNMP at Harvard"/>
+    </change>
+    <change idref="t157" to="t-1" to-position="156" resolved="yes">
+      <change idref="t157" attribute="Key" type="string" to="INT-153"/>
+      <change idref="t157" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t157" attribute="title" type="string" to="(outdated)"/>
+    </change>
+    <change idref="t158" to="t-1" to-position="157" resolved="yes">
+      <change idref="t158" attribute="Key" type="string" to="INT-152"/>
+      <change idref="t158" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t158" attribute="title" type="string" to="Work with Nick Amento to get both test switches in test lab available to use"/>
+    </change>
+    <change idref="t159" to="t-1" to-position="158" resolved="yes">
+      <change idref="t159" attribute="Key" type="string" to="INT-151"/>
+      <change idref="t159" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t159" attribute="title" type="string" to="Integer -&gt; Nagios integration"/>
+    </change>
+    <change idref="t160" to="t-1" to-position="159" resolved="yes">
+      <change idref="t160" attribute="Key" type="string" to="INT-150"/>
+      <change idref="t160" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t160" attribute="title" type="string" to="Installation/Verification Design"/>
+    </change>
+    <change idref="t161" to="t-1" to-position="160" resolved="yes">
+      <change idref="t161" attribute="Key" type="string" to="INT-149"/>
+      <change idref="t161" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t161" attribute="title" type="string" to="Check resources/requirements whenever Integer Starts."/>
+    </change>
+    <change idref="t162" to="t-1" to-position="161" resolved="yes">
+      <change idref="t162" attribute="Key" type="string" to="INT-148"/>
+      <change idref="t162" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t162" attribute="title" type="string" to="Problem when entering wrong credentials on build-test system"/>
+    </change>
+    <change idref="t163" to="t-1" to-position="162" resolved="yes">
+      <change idref="t163" attribute="Key" type="string" to="INT-147"/>
+      <change idref="t163" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t163" attribute="title" type="string" to="make list of confusing terminology"/>
+    </change>
+    <change idref="t164" to="t-1" to-position="163" resolved="yes">
+      <change idref="t164" attribute="Key" type="string" to="INT-146"/>
+      <change idref="t164" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t164" attribute="title" type="string" to="Work with Daves to bring together Technology work and Discovery/Topology work"/>
+    </change>
+    <change idref="t165" to="t-1" to-position="164" resolved="yes">
+      <change idref="t165" attribute="Key" type="string" to="INT-145"/>
+      <change idref="t165" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t165" attribute="title" type="string" to="Describe Discovery Service (was: Make diagram/flowchart for discovery)"/>
+    </change>
+    <change idref="t166" to="t-1" to-position="165" resolved="yes">
+      <change idref="t166" attribute="Key" type="string" to="INT-144"/>
+      <change idref="t166" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t166" attribute="title" type="string" to="Develop Script to parse and load cisco product and entity vendor type MIBs"/>
+    </change>
+    <change idref="t167" to="t-1" to-position="166" resolved="yes">
+      <change idref="t167" attribute="Key" type="string" to="INT-143"/>
+      <change idref="t167" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t167" attribute="title" type="string" to="Modify Instance install process to load vendor data into db."/>
+    </change>
+    <change idref="t168" to="t-1" to-position="167" resolved="yes">
+      <change idref="t168" attribute="Key" type="string" to="INT-142"/>
+      <change idref="t168" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t168" attribute="title" type="string" to="Make Loren an account on the AWS admin interface"/>
+    </change>
+    <change idref="t169" to="t-1" to-position="168" resolved="yes">
+      <change idref="t169" attribute="Key" type="string" to="INT-141"/>
+      <change idref="t169" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t169" attribute="title" type="string" to="Add Loren&apos;s ssh key to the testing environment in AWS"/>
+    </change>
+    <change idref="t170" to="t-1" to-position="169" resolved="yes">
+      <change idref="t170" attribute="Key" type="string" to="INT-140"/>
+      <change idref="t170" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t170" attribute="title" type="string" to="Make a Jira account for Loren"/>
+    </change>
+    <change idref="t171" to="t-1" to-position="170" resolved="yes">
+      <change idref="t171" attribute="Key" type="string" to="INT-139"/>
+      <change idref="t171" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t171" attribute="title" type="string" to="Give Loren an account in twiki and associate him with the magic group"/>
+    </change>
+    <change idref="t172" to="t-1" to-position="171" resolved="yes">
+      <change idref="t172" attribute="Key" type="string" to="INT-138"/>
+      <change idref="t172" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t172" attribute="title" type="string" to="Tie in github account for Loren (lorenjanwilson)"/>
+    </change>
+    <change idref="t173" to="t-1" to-position="172" resolved="yes">
+      <change idref="t173" attribute="Key" type="string" to="INT-137"/>
+      <change idref="t173" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t173" attribute="title" type="string" to="Add Start/stop of discovery"/>
+    </change>
+    <change idref="t174" to="t-1" to-position="173" resolved="yes">
+      <change idref="t174" attribute="Key" type="string" to="INT-136"/>
+      <change idref="t174" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t174" attribute="title" type="string" to="Create Call to get vendor based on sysOid"/>
+    </change>
+    <change idref="t175" to="t-1" to-position="174" resolved="yes">
+      <change idref="t175" attribute="Key" type="string" to="INT-135"/>
+      <change idref="t175" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t175" attribute="title" type="string" to="Add call to get vendor based on SystemOID"/>
+    </change>
+    <change idref="t176" to="t-1" to-position="175" resolved="yes">
+      <change idref="t176" attribute="Key" type="string" to="INT-134"/>
+      <change idref="t176" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t176" attribute="title" type="string" to="Send discovery complete and errors to UI"/>
+    </change>
+    <change idref="t177" to="t-1" to-position="176" resolved="yes">
+      <change idref="t177" attribute="Key" type="string" to="INT-133"/>
+      <change idref="t177" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t177" attribute="title" type="string" to="Add SNMP OID Association with Capability"/>
+    </change>
+    <change idref="t178" to="t-1" to-position="177" resolved="yes">
+      <change idref="t178" attribute="Key" type="string" to="INT-132"/>
+      <change idref="t178" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t178" attribute="title" type="string" to="Show SNMP OID Table"/>
+    </change>
+    <change idref="t179" to="t-1" to-position="178" resolved="yes">
+      <change idref="t179" attribute="Key" type="string" to="INT-131"/>
+      <change idref="t179" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t179" attribute="title" type="string" to="Add Capability Association with Mechanism"/>
+    </change>
+    <change idref="t180" to="t-1" to-position="179" resolved="yes">
+      <change idref="t180" attribute="Key" type="string" to="INT-130"/>
+      <change idref="t180" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t180" attribute="title" type="string" to="Mechanism Modify and Delete"/>
+    </change>
+    <change idref="t181" to="t-1" to-position="180" resolved="yes">
+      <change idref="t181" attribute="Key" type="string" to="INT-129"/>
+      <change idref="t181" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t181" attribute="title" type="string" to="Capability Modify and Delete"/>
+    </change>
+    <change idref="t182" to="t-1" to-position="181" resolved="yes">
+      <change idref="t182" attribute="Key" type="string" to="INT-128"/>
+      <change idref="t182" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t182" attribute="title" type="string" to="Add Mechanism"/>
+    </change>
+    <change idref="t183" to="t-1" to-position="182" resolved="yes">
+      <change idref="t183" attribute="Key" type="string" to="INT-127"/>
+      <change idref="t183" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t183" attribute="title" type="string" to="Add Capability"/>
+    </change>
+    <change idref="t184" to="t-1" to-position="183" resolved="yes">
+      <change idref="t184" attribute="Key" type="string" to="INT-126"/>
+      <change idref="t184" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t184" attribute="title" type="string" to="Show Mechanism Table"/>
+    </change>
+    <change idref="t185" to="t-1" to-position="184" resolved="yes">
+      <change idref="t185" attribute="Key" type="string" to="INT-125"/>
+      <change idref="t185" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t185" attribute="title" type="string" to="Show Capability Table"/>
+    </change>
+    <change idref="t186" to="t-1" to-position="185" resolved="yes">
+      <change idref="t186" attribute="Key" type="string" to="INT-124"/>
+      <change idref="t186" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t186" attribute="title" type="string" to="Topology Element Filtered View"/>
+    </change>
+    <change idref="t187" to="t-1" to-position="186" resolved="yes">
+      <change idref="t187" attribute="Key" type="string" to="INT-123"/>
+      <change idref="t187" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t187" attribute="title" type="string" to="Service Element Filtered View"/>
+    </change>
+    <change idref="t188" to="t-1" to-position="187" resolved="yes">
+      <change idref="t188" attribute="Key" type="string" to="INT-122"/>
+      <change idref="t188" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t188" attribute="title" type="string" to="Filter Selection Panel"/>
+    </change>
+    <change idref="t189" to="t-1" to-position="188" resolved="yes">
+      <change idref="t189" attribute="Key" type="string" to="INT-121"/>
+      <change idref="t189" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t189" attribute="title" type="string" to="Show Topology Elements in Database with Single/Multiple Level Zoom"/>
+    </change>
+    <change idref="t190" to="t-1" to-position="189" resolved="yes">
+      <change idref="t190" attribute="Key" type="string" to="INT-120"/>
+      <change idref="t190" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t190" attribute="title" type="string" to="Show Device Service Elements with Single/Multiple Level Zoom"/>
+    </change>
+    <change idref="t191" to="t-1" to-position="190" resolved="yes">
+      <change idref="t191" attribute="Key" type="string" to="INT-119"/>
+      <change idref="t191" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t191" attribute="title" type="string" to="Show Topology Elements and Adjacencies in Database"/>
+    </change>
+    <change idref="t192" to="t-1" to-position="191" resolved="yes">
+      <change idref="t192" attribute="Key" type="string" to="INT-118"/>
+      <change idref="t192" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t192" attribute="title" type="string" to="Basic Multiple Level Zoom"/>
+    </change>
+    <change idref="t193" to="t-1" to-position="192" resolved="yes">
+      <change idref="t193" attribute="Key" type="string" to="INT-117"/>
+      <change idref="t193" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t193" attribute="title" type="string" to="Basic Single Level Zoom"/>
+    </change>
+    <change idref="t194" to="t-1" to-position="193" resolved="yes">
+      <change idref="t194" attribute="Key" type="string" to="INT-116"/>
+      <change idref="t194" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t194" attribute="title" type="string" to="Capability to Show Icons Group"/>
+    </change>
+    <change idref="t195" to="t-1" to-position="194" resolved="yes">
+      <change idref="t195" attribute="Key" type="string" to="INT-115"/>
+      <change idref="t195" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t195" attribute="title" type="string" to="Show Device Service Elements in Database on Map"/>
+    </change>
+    <change idref="t196" to="t-1" to-position="195" resolved="yes">
+      <change idref="t196" attribute="Key" type="string" to="INT-114"/>
+      <change idref="t196" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t196" attribute="title" type="string" to="Capability to drag icon and associated links together"/>
+    </change>
+    <change idref="t197" to="t-1" to-position="196" resolved="yes">
+      <change idref="t197" attribute="Key" type="string" to="INT-113"/>
+      <change idref="t197" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t197" attribute="title" type="string" to="Capability to show lines between icons"/>
+    </change>
+    <change idref="t198" to="t-1" to-position="197" resolved="yes">
+      <change idref="t198" attribute="Key" type="string" to="INT-112"/>
+      <change idref="t198" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t198" attribute="title" type="string" to="Implement Manager Calls for ServiceElementDiscoveryManager and DiscoveryServices"/>
+    </change>
+    <change idref="t199" to="t-1" to-position="198" resolved="yes">
+      <change idref="t199" attribute="Key" type="string" to="INT-111"/>
+      <change idref="t199" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t199" attribute="title" type="string" to="Write rules about what to do with conflicting rules as a general principle throughout the system"/>
+    </change>
+    <change idref="t200" to="t-1" to-position="199" resolved="yes">
+      <change idref="t200" attribute="Key" type="string" to="INT-110"/>
+      <change idref="t200" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t200" attribute="title" type="string" to="Create definitions and examples of multiple calendar policy types."/>
+    </change>
+    <change idref="t201" to="t-1" to-position="200" resolved="yes">
+      <change idref="t201" attribute="Key" type="string" to="INT-109"/>
+      <change idref="t201" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t201" attribute="title" type="string" to="Place holder for installation and configuration guide and for site preparation guild"/>
+    </change>
+    <change idref="t202" to="t-1" to-position="201" resolved="yes">
+      <change idref="t202" attribute="Key" type="string" to="INT-108"/>
+      <change idref="t202" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t202" attribute="title" type="string" to="Create an instance at successful build, install and start bits."/>
+    </change>
+    <change idref="t203" to="t-1" to-position="202" resolved="yes">
+      <change idref="t203" attribute="Key" type="string" to="INT-107"/>
+      <change idref="t203" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t203" attribute="title" type="string" to="Database Authentication for Direct Login"/>
+    </change>
+    <change idref="t204" to="t-1" to-position="203" resolved="yes">
+      <change idref="t204" attribute="Key" type="string" to="INT-106"/>
+      <change idref="t204" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t204" attribute="title" type="string" to="Description and stories for how we Integrate AWS and the Automation technologies."/>
+    </change>
+    <change idref="t205" to="t-1" to-position="204" resolved="yes">
+      <change idref="t205" attribute="Key" type="string" to="INT-105"/>
+      <change idref="t205" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t205" attribute="title" type="string" to="Integration of various technologies like Puppet"/>
+    </change>
+    <change idref="t206" to="t-1" to-position="205" resolved="yes">
+      <change idref="t206" attribute="Key" type="string" to="INT-104"/>
+      <change idref="t206" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t206" attribute="title" type="string" to="Integrated environmental alerting and reporting"/>
+    </change>
+    <change idref="t207" to="t-1" to-position="206" resolved="yes">
+      <change idref="t207" attribute="Key" type="string" to="INT-103"/>
+      <change idref="t207" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t207" attribute="title" type="string" to="Create 3 month priority list"/>
+    </change>
+    <change idref="t208" to="t-1" to-position="207" resolved="yes">
+      <change idref="t208" attribute="Key" type="string" to="INT-102"/>
+      <change idref="t208" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t208" attribute="title" type="string" to="Do a performance and price comparison of MySql/MariaDB on RDS vs. EC2"/>
+    </change>
+    <change idref="t209" to="t-1" to-position="208" resolved="yes">
+      <change idref="t209" attribute="Key" type="string" to="INT-101"/>
+      <change idref="t209" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t209" attribute="title" type="string" to="Write installation requirements"/>
+    </change>
+    <change idref="t210" to="t-1" to-position="209" resolved="yes">
+      <change idref="t210" attribute="Key" type="string" to="INT-100"/>
+      <change idref="t210" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t210" attribute="title" type="string" to="DNS Related Issues"/>
+    </change>
+    <change idref="t211" to="t-1" to-position="210" resolved="yes">
+      <change idref="t211" attribute="Key" type="string" to="INT-99"/>
+      <change idref="t211" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t211" attribute="title" type="string" to="Collect and save additional attributes for service elements"/>
+    </change>
+    <change idref="t212" to="t-1" to-position="211" resolved="yes">
+      <change idref="t212" attribute="Key" type="string" to="INT-98"/>
+      <change idref="t212" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t212" attribute="title" type="string" to="Discovery of a device using hierarchical discovery"/>
+    </change>
+    <change idref="t213" to="t-1" to-position="212" resolved="yes">
+      <change idref="t213" attribute="Key" type="string" to="INT-97"/>
+      <change idref="t213" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t213" attribute="title" type="string" to="Save all information based on Entity MIB."/>
+    </change>
+    <change idref="t214" to="t-1" to-position="213" resolved="yes">
+      <change idref="t214" attribute="Key" type="string" to="INT-96"/>
+      <change idref="t214" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t214" attribute="title" type="string" to="Discovery processes a service element based on entity MIB structure"/>
+    </change>
+    <change idref="t215" to="t-1" to-position="214" resolved="yes">
+      <change idref="t215" attribute="Key" type="string" to="INT-95"/>
+      <change idref="t215" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t215" attribute="title" type="string" to="Complete Vendor, Model, and related information"/>
+    </change>
+    <change idref="t216" to="t-1" to-position="215" resolved="yes">
+      <change idref="t216" attribute="Key" type="string" to="INT-94"/>
+      <change idref="t216" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t216" attribute="title" type="string" to="Use VendorDiscoveryTemplate to determine SnmpVendorContainmentSelector"/>
+    </change>
+    <change idref="t217" to="t-1" to-position="216" resolved="yes">
+      <change idref="t217" attribute="Key" type="string" to="INT-93"/>
+      <change idref="t217" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t217" attribute="title" type="string" to="Determine vendor based on system group retrieval"/>
+    </change>
+    <change idref="t218" to="t-1" to-position="217" resolved="yes">
+      <change idref="t218" attribute="Key" type="string" to="INT-92"/>
+      <change idref="t218" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t218" attribute="title" type="string" to="Placeholder in code for plugging other discovery technoloies like ssh, puppet, etc."/>
+    </change>
+    <change idref="t219" to="t-1" to-position="218" resolved="yes">
+      <change idref="t219" attribute="Key" type="string" to="INT-91"/>
+      <change idref="t219" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t219" attribute="title" type="string" to="Implement alternate snmp port logic"/>
+    </change>
+    <change idref="t220" to="t-1" to-position="219" resolved="yes">
+      <change idref="t220" attribute="Key" type="string" to="INT-90"/>
+      <change idref="t220" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t220" attribute="title" type="string" to="Implement SNMP version failover options."/>
+    </change>
+    <change idref="t221" to="t-1" to-position="220" resolved="yes">
+      <change idref="t221" attribute="Key" type="string" to="INT-89"/>
+      <change idref="t221" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t221" attribute="title" type="string" to="Retrieve the system group from selected systems"/>
+    </change>
+    <change idref="t222" to="t-1" to-position="221" resolved="yes">
+      <change idref="t222" attribute="Key" type="string" to="INT-88"/>
+      <change idref="t222" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t222" attribute="title" type="string" to="Determin address range to querry"/>
+    </change>
+    <change idref="t223" to="t-1" to-position="222" resolved="yes">
+      <change idref="t223" attribute="Key" type="string" to="INT-87"/>
+      <change idref="t223" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t223" attribute="title" type="string" to="Discovery retrieves community priority list from Global Objects and local overides"/>
+    </change>
+    <change idref="t224" to="t-1" to-position="223" resolved="yes">
+      <change idref="t224" attribute="Key" type="string" to="INT-86"/>
+      <change idref="t224" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t224" attribute="title" type="string" to="Discovery reads and set starting point for one or more subnets"/>
+    </change>
+    <change idref="t225" to="t-1" to-position="224" resolved="yes">
+      <change idref="t225" attribute="Key" type="string" to="INT-85"/>
+      <change idref="t225" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t225" attribute="title" type="string" to="sending email from our VPC from our systems"/>
+    </change>
+    <change idref="t226" to="t-1" to-position="225" resolved="yes">
+      <change idref="t226" attribute="Key" type="string" to="INT-84"/>
+      <change idref="t226" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t226" attribute="title" type="string" to="Resolve integer namining"/>
+    </change>
+    <change idref="t227" to="t-1" to-position="226" resolved="yes">
+      <change idref="t227" attribute="Key" type="string" to="INT-83"/>
+      <change idref="t227" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t227" attribute="title" type="string" to="Servers that use IP address in a VPC that are externally accessible"/>
+    </change>
+    <change idref="t228" to="t-1" to-position="227" resolved="yes">
+      <change idref="t228" attribute="Key" type="string" to="INT-82"/>
+      <change idref="t228" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t228" attribute="title" type="string" to="INT-15 Overview/Description of the UI Framework to this point."/>
+    </change>
+    <change idref="t229" to="t-1" to-position="228" resolved="yes">
+      <change idref="t229" attribute="Key" type="string" to="INT-81"/>
+      <change idref="t229" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t229" attribute="title" type="string" to="INT-77 Design of Usr manager, and other manager pieces in first 3 sprints."/>
+    </change>
+    <change idref="t230" to="t-1" to-position="229" resolved="yes">
+      <change idref="t230" attribute="Key" type="string" to="INT-80"/>
+      <change idref="t230" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t230" attribute="title" type="string" to="INT-77 Overall Core System Design"/>
+    </change>
+    <change idref="t231" to="t-1" to-position="230" resolved="yes">
+      <change idref="t231" attribute="Key" type="string" to="INT-79"/>
+      <change idref="t231" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t231" attribute="title" type="string" to="INT-76 Write detailed description of how service element discovery works with SNMP"/>
+    </change>
+    <change idref="t232" to="t-1" to-position="231" resolved="yes">
+      <change idref="t232" attribute="Key" type="string" to="INT-77"/>
+      <change idref="t232" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t232" attribute="title" type="string" to="Complete Persistence Layer Design Document"/>
+    </change>
+    <change idref="t233" to="t-1" to-position="232" resolved="yes">
+      <change idref="t233" attribute="Key" type="string" to="INT-76"/>
+      <change idref="t233" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t233" attribute="title" type="string" to="Complete design document for the discovery system"/>
+    </change>
+    <change idref="t234" to="t-1" to-position="233" resolved="yes">
+      <change idref="t234" attribute="Key" type="string" to="INT-66"/>
+      <change idref="t234" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t234" attribute="title" type="string" to="Discovery finish service element discovery engine."/>
+    </change>
+    <change idref="t235" to="t-1" to-position="234" resolved="yes">
+      <change idref="t235" attribute="Key" type="string" to="INT-65"/>
+      <change idref="t235" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t235" attribute="title" type="string" to="Discovery - Send completion information and errors to server"/>
+    </change>
+    <change idref="t236" to="t-1" to-position="235" resolved="yes">
+      <change idref="t236" attribute="Key" type="string" to="INT-64"/>
+      <change idref="t236" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t236" attribute="title" type="string" to="Server - send discovery errors and completion information to UI via API"/>
+    </change>
+    <change idref="t237" to="t-1" to-position="236" resolved="yes">
+      <change idref="t237" attribute="Key" type="string" to="INT-63"/>
+      <change idref="t237" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t237" attribute="title" type="string" to="UI - Show discovery errors and completion"/>
+    </change>
+    <change idref="t238" to="t-1" to-position="237" resolved="yes">
+      <change idref="t238" attribute="Key" type="string" to="INT-62"/>
+      <change idref="t238" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t238" attribute="title" type="string" to="Discovery - Realtime status information of all discoveries in process"/>
+    </change>
+    <change idref="t239" to="t-1" to-position="238" resolved="yes">
+      <change idref="t239" attribute="Key" type="string" to="INT-61"/>
+      <change idref="t239" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t239" attribute="title" type="string" to="Server - Discovery status propagation via API"/>
+    </change>
+    <change idref="t240" to="t-1" to-position="239" resolved="yes">
+      <change idref="t240" attribute="Key" type="string" to="INT-60"/>
+      <change idref="t240" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t240" attribute="title" type="string" to="UI Show status of discoveries"/>
+    </change>
+    <change idref="t241" to="t-1" to-position="240" resolved="yes">
+      <change idref="t241" attribute="Key" type="string" to="INT-59"/>
+      <change idref="t241" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t241" attribute="title" type="string" to="Discovery - Start stop multiple discoveries"/>
+    </change>
+    <change idref="t242" to="t-1" to-position="241" resolved="yes">
+      <change idref="t242" attribute="Key" type="string" to="INT-58"/>
+      <change idref="t242" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t242" attribute="title" type="string" to="Server - Start stop discovier(ies) multiple at a time."/>
+    </change>
+    <change idref="t243" to="t-1" to-position="242" resolved="yes">
+      <change idref="t243" attribute="Key" type="string" to="INT-56"/>
+      <change idref="t243" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t243" attribute="title" type="string" to="Server - Create, delete, modify discovery policy including topology seed."/>
+    </change>
+    <change idref="t244" to="t-1" to-position="243" resolved="yes">
+      <change idref="t244" attribute="Key" type="string" to="INT-54"/>
+      <change idref="t244" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t244" attribute="title" type="string" to="Import base data into build process (e.g., MIB Modules, Capabilities, ServiceElementTypes, etc."/>
+    </change>
+    <change idref="t245" to="t-1" to-position="244" resolved="yes">
+      <change idref="t245" attribute="Key" type="string" to="INT-53"/>
+      <change idref="t245" attribute="internalAssignments" type="string" from="" to="5"/>
+      <change idref="t245" attribute="title" type="string" to="Map OIDs to Capabilities and create capabilities objects enough to support this story"/>
+    </change>
+    <change idref="t246" to="t-1" to-position="245" resolved="yes">
+      <change idref="t246" attribute="Key" type="string" to="INT-52"/>
+      <change idref="t246" attribute="internalAssignments" type="string" from="" to="7"/>
+      <change idref="t246" attribute="title" type="string" to="INT-22 Import MIB Modules - Clean up"/>
+    </change>
+    <change idref="t247" to="t-1" to-position="246" resolved="yes">
+      <change idref="t247" attribute="Key" type="string" to="INT-51"/>
+      <change idref="t247" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t247" attribute="title" type="string" to="Add session control to WildFly"/>
+    </change>
+    <change idref="t248" to="t-1" to-position="247" resolved="yes">
+      <change idref="t248" attribute="Key" type="string" to="INT-50"/>
+      <change idref="t248" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t248" attribute="title" type="string" to="Create main Integer page"/>
+    </change>
+    <change idref="t249" to="t-1" to-position="248" resolved="yes">
+      <change idref="t249" attribute="Key" type="string" to="INT-49"/>
+      <change idref="t249" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t249" attribute="title" type="string" to="UI Handling of Server Result"/>
+    </change>
+    <change idref="t250" to="t-1" to-position="249" resolved="yes">
+      <change idref="t250" attribute="Key" type="string" to="INT-48"/>
+      <change idref="t250" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t250" attribute="title" type="string" to="Send login credentials based on login type to server"/>
+    </change>
+    <change idref="t251" to="t-1" to-position="250" resolved="yes">
+      <change idref="t251" attribute="Key" type="string" to="INT-47"/>
+      <change idref="t251" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t251" attribute="title" type="string" to="Create Page for Login that allows for different login types"/>
+    </change>
+    <change idref="t252" to="t-1" to-position="251" resolved="yes">
+      <change idref="t252" attribute="Key" type="string" to="INT-46"/>
+      <change idref="t252" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t252" attribute="title" type="string" to="Security Audit Manager Implementation"/>
+    </change>
+    <change idref="t253" to="t-1" to-position="252" resolved="yes">
+      <change idref="t253" attribute="Key" type="string" to="INT-45"/>
+      <change idref="t253" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t253" attribute="title" type="string" to="Implement classes to support user manager"/>
+    </change>
+    <change idref="t254" to="t-1" to-position="253" resolved="yes">
+      <change idref="t254" attribute="Key" type="string" to="INT-44"/>
+      <change idref="t254" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t254" attribute="title" type="string" to="Implement User Contact and Role Manager on server"/>
+    </change>
+    <change idref="t255" to="t-1" to-position="254" resolved="yes">
+      <change idref="t255" attribute="Key" type="string" to="INT-43"/>
+      <change idref="t255" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t255" attribute="title" type="string" to="User installable instance of Integer"/>
+    </change>
+    <change idref="t256" to="t-1" to-position="255" resolved="yes">
+      <change idref="t256" attribute="Key" type="string" to="INT-42"/>
+      <change idref="t256" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t256" attribute="title" type="string" to="Install SNMP Simulator in VPC instance"/>
+    </change>
+    <change idref="t257" to="t-1" to-position="256" resolved="yes">
+      <change idref="t257" attribute="Key" type="string" to="INT-41"/>
+      <change idref="t257" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t257" attribute="title" type="string" to="Customize objects to use for service element and network topology discovery"/>
+    </change>
+    <change idref="t258" to="t-1" to-position="257" resolved="yes">
+      <change idref="t258" attribute="Key" type="string" to="INT-40"/>
+      <change idref="t258" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t258" attribute="title" type="string" to="Management of SNMP MIB Modules"/>
+    </change>
+    <change idref="t259" to="t-1" to-position="258" resolved="yes">
+      <change idref="t259" attribute="Key" type="string" to="INT-39"/>
+      <change idref="t259" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t259" attribute="title" type="string" to="Discovery and view of Virtualized Environments (VMware)"/>
+    </change>
+    <change idref="t260" to="t-1" to-position="259" resolved="yes">
+      <change idref="t260" attribute="Key" type="string" to="INT-38"/>
+      <change idref="t260" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t260" attribute="title" type="string" to="Ability to discover, view and manage network storage systems"/>
+    </change>
+    <change idref="t261" to="t-1" to-position="260" resolved="yes">
+      <change idref="t261" attribute="Key" type="string" to="INT-37"/>
+      <change idref="t261" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t261" attribute="title" type="string" to="Viewing network and Service element details on the UI"/>
+    </change>
+    <change idref="t262" to="t-1" to-position="261" resolved="yes">
+      <change idref="t262" attribute="Key" type="string" to="INT-36"/>
+      <change idref="t262" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t262" attribute="title" type="string" to="Viewing Reports and ad hoc export of data"/>
+    </change>
+    <change idref="t263" to="t-1" to-position="262" resolved="yes">
+      <change idref="t263" attribute="Key" type="string" to="INT-35"/>
+      <change idref="t263" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t263" attribute="title" type="string" to="Creating Selections"/>
+    </change>
+    <change idref="t264" to="t-1" to-position="263" resolved="yes">
+      <change idref="t264" attribute="Key" type="string" to="INT-34"/>
+      <change idref="t264" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t264" attribute="title" type="string" to="Create a multi-subnet service element and topology discovery and run"/>
+    </change>
+    <change idref="t265" to="t-1" to-position="264" resolved="yes">
+      <change idref="t265" attribute="Key" type="string" to="INT-33"/>
+      <change idref="t265" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t265" attribute="title" type="string" to="Full support for our wireless environment."/>
+    </change>
+    <change idref="t266" to="t-1" to-position="265" resolved="yes">
+      <change idref="t266" attribute="Key" type="string" to="INT-32"/>
+      <change idref="t266" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t266" attribute="title" type="string" to="AWS monitoring and support of Multi-homed applications"/>
+    </change>
+    <change idref="t267" to="t-1" to-position="266" resolved="yes">
+      <change idref="t267" attribute="Key" type="string" to="INT-31"/>
+      <change idref="t267" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t267" attribute="title" type="string" to="Integration of Accounting, Security data collection and reporting"/>
+    </change>
+    <change idref="t268" to="t-1" to-position="267" resolved="yes">
+      <change idref="t268" attribute="Key" type="string" to="INT-30"/>
+      <change idref="t268" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t268" attribute="title" type="string" to="Allows us to retire statseeker, Nagios SNMPoll"/>
+    </change>
+    <change idref="t269" to="t-1" to-position="268" resolved="yes">
+      <change idref="t269" attribute="Key" type="string" to="INT-29"/>
+      <change idref="t269" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t269" attribute="title" type="string" to="Refinement of of policy controls, clean up from previous releases"/>
+    </change>
+    <change idref="t270" to="t-1" to-position="269" resolved="yes">
+      <change idref="t270" attribute="Key" type="string" to="INT-28"/>
+      <change idref="t270" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t270" attribute="title" type="string" to="Framework and support for key applications."/>
+    </change>
+    <change idref="t271" to="t-1" to-position="270" resolved="yes">
+      <change idref="t271" attribute="Key" type="string" to="INT-27"/>
+      <change idref="t271" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t271" attribute="title" type="string" to="Create a VPC and Show configuration"/>
+    </change>
+    <change idref="t272" to="t-1" to-position="271" resolved="yes">
+      <change idref="t272" attribute="Key" type="string" to="INT-26"/>
+      <change idref="t272" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t272" attribute="title" type="string" to="Adds full configuraiton control for network elements to the Access Control in previous release."/>
+    </change>
+    <change idref="t273" to="t-1" to-position="272" resolved="yes">
+      <change idref="t273" attribute="Key" type="string" to="INT-25"/>
+      <change idref="t273" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t273" attribute="title" type="string" to="Configuraiton of Access control for Network Elements"/>
+    </change>
+    <change idref="t274" to="t-1" to-position="273" resolved="yes">
+      <change idref="t274" attribute="Key" type="string" to="INT-24"/>
+      <change idref="t274" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t274" attribute="title" type="string" to="Create, Modify and Delete Entire Service Hierarcy"/>
+    </change>
+    <change idref="t275" to="t-1" to-position="274" resolved="yes">
+      <change idref="t275" attribute="Key" type="string" to="INT-23"/>
+      <change idref="t275" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t275" attribute="title" type="string" to="A follow on release with features related to the base system and discovery"/>
+    </change>
+    <change idref="t276" to="t-1" to-position="275" resolved="yes">
+      <change idref="t276" attribute="Key" type="string" to="INT-22"/>
+      <change idref="t276" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t276" attribute="title" type="string" to="Simple Service Element Discovery on a single subnet"/>
+    </change>
+    <change idref="t277" to="t-1" to-position="276" resolved="yes">
+      <change idref="t277" attribute="Key" type="string" to="INT-21"/>
+      <change idref="t277" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t277" attribute="title" type="string" to="Manage Locations, Contacts, Providers, Organizations etc."/>
+    </change>
+    <change idref="t278" to="t-1" to-position="277" resolved="yes">
+      <change idref="t278" attribute="Key" type="string" to="INT-20"/>
+      <change idref="t278" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t278" attribute="title" type="string" to="Add access to Twiki site for collaborators until we get CAS/LDAP connection"/>
+    </change>
+    <change idref="t279" to="t-1" to-position="278" resolved="yes">
+      <change idref="t279" attribute="Key" type="string" to="INT-19"/>
+      <change idref="t279" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t279" attribute="title" type="string" to="Security recommendations for integer deployment"/>
+    </change>
+    <change idref="t280" to="t-1" to-position="279" resolved="yes">
+      <change idref="t280" attribute="Key" type="string" to="INT-18"/>
+      <change idref="t280" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t280" attribute="title" type="string" to="A full set of deployment and configuration instructions"/>
+    </change>
+    <change idref="t281" to="t-1" to-position="280" resolved="yes">
+      <change idref="t281" attribute="Key" type="string" to="INT-17"/>
+      <change idref="t281" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t281" attribute="title" type="string" to="Integrate Vericode into build process"/>
+    </change>
+    <change idref="t282" to="t-1" to-position="281" resolved="yes">
+      <change idref="t282" attribute="Key" type="string" to="INT-15"/>
+      <change idref="t282" attribute="internalAssignments" type="string" from="" to="6"/>
+      <change idref="t282" attribute="title" type="string" to="Complete User Interface Design Document with Sample Screens"/>
+    </change>
+    <change idref="t283" to="t-1" to-position="282" resolved="yes">
+      <change idref="t283" attribute="Key" type="string" to="INT-14"/>
+      <change idref="t283" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t283" attribute="title" type="string" to="User defines the schedule for report generation"/>
+    </change>
+    <change idref="t284" to="t-1" to-position="283" resolved="yes">
+      <change idref="t284" attribute="Key" type="string" to="INT-13"/>
+      <change idref="t284" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t284" attribute="title" type="string" to="Defining an Systems Inventory Report"/>
+    </change>
+    <change idref="t285" to="t-1" to-position="284" resolved="yes">
+      <change idref="t285" attribute="Key" type="string" to="INT-12"/>
+      <change idref="t285" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t285" attribute="title" type="string" to="Defining a Change Report"/>
+    </change>
+    <change idref="t286" to="t-1" to-position="285" resolved="yes">
+      <change idref="t286" attribute="Key" type="string" to="INT-11"/>
+      <change idref="t286" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t286" attribute="title" type="string" to="Creating and managing topology and service element discovery policies"/>
+    </change>
+    <change idref="t287" to="t-1" to-position="286" resolved="yes">
+      <change idref="t287" attribute="Key" type="string" to="INT-10"/>
+      <change idref="t287" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t287" attribute="title" type="string" to="Configure the discovery system"/>
+    </change>
+    <change idref="t288" to="t-1" to-position="287" resolved="yes">
+      <change idref="t288" attribute="Key" type="string" to="INT-9"/>
+      <change idref="t288" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t288" attribute="title" type="string" to="Maintain Users, groups, and access policies and Contact information"/>
+    </change>
+    <change idref="t289" to="t-1" to-position="288" resolved="yes">
+      <change idref="t289" attribute="Key" type="string" to="INT-7"/>
+      <change idref="t289" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t289" attribute="title" type="string" to="User Logs into System directly."/>
+    </change>
+    <change idref="t290" to="t-1" to-position="289" resolved="yes">
+      <change idref="t290" attribute="Key" type="string" to="INT-6"/>
+      <change idref="t290" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t290" attribute="title" type="string" to="Integrate LDAP Attribute Service while using CAS"/>
+    </change>
+    <change idref="t291" to="t-1" to-position="290" resolved="yes">
+      <change idref="t291" attribute="Key" type="string" to="INT-5"/>
+      <change idref="t291" attribute="internalAssignments" type="string" from="" to="2"/>
+      <change idref="t291" attribute="title" type="string" to="Integrate CAS plug-in and software into our System"/>
+    </change>
+    <change idref="t292" to="t-1" to-position="291" resolved="yes">
+      <change idref="t292" attribute="Key" type="string" to="INT-4"/>
+      <change idref="t292" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t292" attribute="title" type="string" to="User Access via CAS and LDAP -"/>
+    </change>
+    <change idref="t293" to="t-1" to-position="292" resolved="yes">
+      <change idref="t293" attribute="Key" type="string" to="INT-3"/>
+      <change idref="t293" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t293" attribute="title" type="string" to="Write installation/verification software that conforms to security recommendations"/>
+    </change>
+    <change idref="t294" to="t-1" to-position="293" resolved="yes">
+      <change idref="t294" attribute="Key" type="string" to="INT-2"/>
+      <change idref="t294" attribute="internalAssignments" type="string" from="" to="4"/>
+      <change idref="t294" attribute="title" type="string" to="Identify and document correct system security configuration for the Integer OD"/>
+    </change>
+    <change idref="t295" to="t-1" to-position="294" resolved="yes">
+      <change idref="t295" attribute="Key" type="string" to="INT-1"/>
+      <change idref="t295" attribute="internalAssignments" type="string" from="" to="3"/>
+      <change idref="t295" attribute="title" type="string" to="Integer First Release"/>
+    </change>
+    <change idref="t296" to="t-1" to-position="295" resolved="yes">
+      <change idref="t296" attribute="Key" type="string" to=""/>
+    </change>
+    <change idref="t297" to="t-1" to-position="296" resolved="yes">
+      <change idref="t297" attribute="Key" type="string" to=""/>
+    </change>
+    <change idref="t298" to="t-1" to-position="297" resolved="yes">
+      <change idref="t298" attribute="Key" type="string" to=""/>
+    </change>
+  </task-change-set>
+  <task-change-set user="Jon Saperia" date="2014-05-22T17:53:24.631Z" timestamp="2014-05-22T17:53:24.631Z">
+    <change idref="t289" from="t-1" from-position="288" to="t-1" to-position="0" resolved="yes"/>
+    <change idref="t276" from="t-1" from-position="276" to="t-1" to-position="1" resolved="yes"/>
+    <change idref="t264" from="t-1" from-position="265" to="t-1" to-position="2" resolved="yes"/>
+    <change idref="t287" from="t-1" from-position="287" to="t-1" to-position="3" resolved="yes"/>
+    <change idref="t263" from="t-1" from-position="266" to="t-1" to-position="4" resolved="yes"/>
+    <change idref="t261" from="t-1" from-position="265" to="t-1" to-position="5" resolved="yes"/>
+    <change idref="t5" from="t-1" from-position="10" to="t-1" to-position="6" resolved="yes"/>
+    <change idref="t284" from="t-1" from-position="285" to="t-1" to-position="7" resolved="yes"/>
+    <change idref="t288" from="t-1" from-position="288" to="t-1" to-position="8" resolved="yes"/>
+    <change idref="t4" from="t-1" from-position="12" to="t-1" to-position="9" resolved="yes"/>
+    <change idref="t286" from="t-1" from-position="288" to="t-1" to-position="10" resolved="yes"/>
+    <change idref="t285" from="t-1" from-position="288" to="t-1" to-position="11" resolved="yes"/>
+    <change idref="t262" from="t-1" from-position="270" to="t-1" to-position="12" resolved="yes"/>
+    <change idref="t304" to="t-1" to-position="13" resolved="yes">
+      <change idref="t304" attribute="Key" type="string" to=""/>
+      <change idref="t304" attribute="title" type="string" to="Task 1"/>
+    </change>
+    <change idref="t305" to="t-1" to-position="14" resolved="yes">
+      <change idref="t305" attribute="Key" type="string" to=""/>
+      <change idref="t305" attribute="title" type="string" to="Task 2"/>
+    </change>
+    <change idref="t306" to="t-1" to-position="15" resolved="yes">
+      <change idref="t306" attribute="Key" type="string" to=""/>
+      <change idref="t306" attribute="title" type="string" to="Task 3"/>
+    </change>
+    <change idref="t280" from="t-1" from-position="288" to="t-1" to-position="17" resolved="yes"/>
+    <change idref="t283" from="t-1" from-position="291" to="t-1" to-position="18" resolved="yes"/>
+    <change idref="t293" from="t-1" from-position="295" to="t-1" to-position="19" resolved="yes"/>
+    <change idref="t294" from="t-1" from-position="296" to="t-1" to-position="20" resolved="yes"/>
+    <change idref="t299" to="t-1" to-position="21" resolved="yes">
+      <change idref="t299" attribute="Key" type="string" to=""/>
+      <change idref="t299" attribute="effort" type="real" from="28800" to="0"/>
+      <change idref="t299" attribute="isSplittableTask" type="real" from="1" to="0"/>
+      <change idref="t299" attribute="percentCompleteForMilestone" type="real" to="0"/>
+      <change idref="t299" attribute="taskType" type="real" from="0" to="1"/>
+      <change idref="t299" attribute="title" type="string" to="Sprint 6"/>
+    </change>
+    <change idref="t300" to="t-1" to-position="22" resolved="yes">
+      <change idref="t300" attribute="Key" type="string" to=""/>
+      <change idref="t300" attribute="title" type="string" to="Sprint 7"/>
+    </change>
+    <change idref="t301" to="t-1" to-position="23" resolved="yes">
+      <change idref="t301" attribute="Key" type="string" to=""/>
+      <change idref="t301" attribute="title" type="string" to="Sprint 8 "/>
+    </change>
+    <change idref="t302" to="t-1" to-position="24" resolved="yes">
+      <change idref="t302" attribute="Key" type="string" to=""/>
+      <change idref="t302" attribute="title" type="string" to="Sprint 9"/>
+    </change>
+    <change idref="t303" to="t-1" to-position="25" resolved="yes">
+      <change idref="t303" attribute="Key" type="string" to=""/>
+      <change idref="t303" attribute="title" type="string" to="Sprint 10"/>
+    </change>
+  </task-change-set>
+  <task-change-set user="Jon Saperia" date="2014-05-22T17:59:00.849Z" timestamp="2014-05-22T17:59:00.849Z">
+    <change idref="t276" attribute="isGroup" type="real" from="0" to="1" resolved="yes"/>
+    <change idref="t276" attribute="isSplittableTask" type="real" from="1" resolved="yes"/>
+    <change idref="t276" attribute="taskType" type="real" from="0" to="2" resolved="yes"/>
+    <change idref="t276" attribute="resourceAssignmentType" type="real" from="0" resolved="yes"/>
+    <change idref="t276" attribute="staticCost" type="real" from="0" resolved="yes"/>
+    <change idref="t276" attribute="effort" type="real" from="28800" resolved="yes"/>
+    <change idref="t276" attribute="isSplitChunk" type="real" from="0" resolved="yes"/>
+    <change idref="t276" attribute="scheduleType" type="real" from="0" resolved="yes"/>
+    <change idref="t276" attribute="internalAssignments" type="string" from="3" resolved="yes"/>
+    <change idref="t276" attribute="isSplitTask" type="real" from="0" resolved="yes"/>
+    <change idref="t276" attribute="internalEffortDone" type="real" from="0" resolved="yes"/>
+    <change idref="t58" from="t-1" from-position="80" to="t276" to-position="0" resolved="yes"/>
+    <change idref="t75" from="t-1" from-position="97" to="t276" to-position="1" resolved="yes"/>
+    <change idref="t88" from="t-1" from-position="110" to="t276" to-position="2" resolved="yes"/>
+    <change idref="t136" from="t-1" from-position="158" to="t276" to-position="3" resolved="yes"/>
+    <change idref="t212" from="t-1" from-position="234" to="t276" to-position="4" resolved="yes"/>
+    <change idref="t236" from="t-1" from-position="258" to="t276" to-position="5" resolved="yes"/>
+    <change idref="t237" from="t-1" from-position="259" to="t276" to-position="6" resolved="yes"/>
+    <change idref="t238" from="t-1" from-position="260" to="t276" to-position="7" resolved="yes"/>
+    <change idref="t239" from="t-1" from-position="261" to="t276" to-position="8" resolved="yes"/>
+    <change idref="t241" from="t-1" from-position="263" to="t276" to-position="9" resolved="yes"/>
+    <change idref="t244" from="t-1" from-position="266" to="t276" to-position="10" resolved="yes"/>
+    <change idref="t245" from="t-1" from-position="267" to="t276" to-position="11" resolved="yes"/>
+    <change idref="t290" from="t-1" from-position="299" to="t276" to-position="12" resolved="yes"/>
+    <change idref="t291" from="t-1" from-position="300" to="t276" to-position="13" resolved="yes"/>
+  </task-change-set>
+  <resource-change-set user="Jon Saperia" date="2014-05-22T17:40:11.959Z" timestamp="2014-05-22T17:40:11.959Z">
+    <change idref="r-1" attribute="isGroup" type="real" from="0" to="1" resolved="yes"/>
+    <change idref="r-1" attribute="costPerHour" type="real" from="0" resolved="yes"/>
+    <change idref="r-1" attribute="efficiency" type="real" from="1" resolved="yes"/>
+    <change idref="r-1" attribute="resourceTypeRank" type="real" from="0" to="3" resolved="yes"/>
+    <change idref="r-1" attribute="costPerUse" type="real" from="0" resolved="yes"/>
+    <change idref="r-1" attribute="unitsAvailable" type="real" from="1" resolved="yes"/>
+    <change idref="r1" to="r-1" to-position="0" resolved="yes">
+      <change idref="r1" attribute="name" type="string" to="Mark Bombalicki"/>
+    </change>
+    <change idref="r2" to="r-1" to-position="1" resolved="yes">
+      <change idref="r2" attribute="name" type="string" to="David Taylor"/>
+    </change>
+    <change idref="r3" to="r-1" to-position="2" resolved="yes">
+      <change idref="r3" attribute="name" type="string" to="Jon Saperia"/>
+    </change>
+    <change idref="r4" to="r-1" to-position="3" resolved="yes">
+      <change idref="r4" attribute="name" type="string" to="Eric Remington"/>
+    </change>
+    <change idref="r5" to="r-1" to-position="4" resolved="yes">
+      <change idref="r5" attribute="name" type="string" to="Loren Jan Wilson"/>
+    </change>
+    <change idref="r6" to="r-1" to-position="5" resolved="yes">
+      <change idref="r6" attribute="name" type="string" to="Joel Huang"/>
+    </change>
+    <change idref="r7" to="r-1" to-position="6" resolved="yes">
+      <change idref="r7" attribute="name" type="string" to="David Chan"/>
+    </change>
+    <change idref="r8" to="r-1" to-position="7" resolved="yes">
+      <change idref="r8" attribute="name" type="string" to="Unassigned"/>
+    </change>
+  </resource-change-set>
+  <metadata-change-set user="Jon Saperia" date="2014-05-22T17:40:11.959Z" timestamp="2014-05-22T17:40:11.959Z">
+    <change idref="m1" attribute="taskUserDataKeyString" type="dict" from="{
+    k =     (
+    );
+}" to="{
+    k =     (
+        Key
+    );
+}" resolved="yes"/>
+    <change idref="m1" attribute="fixedDate" type="date" to="2014-05-22T12:00:00.000Z" resolved="yes"/>
+  </metadata-change-set>
+</changelog>

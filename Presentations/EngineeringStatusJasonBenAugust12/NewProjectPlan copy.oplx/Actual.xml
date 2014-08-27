@@ -1,0 +1,3562 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<scenario xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2" id="kx-C72ZTzuZ">
+  <start-date>2014-07-18T12:00:00.000Z</start-date>
+  <prototype-task>
+    <task id="t4294967294">
+      <title>Task 1</title>
+      <effort>28800</effort>
+    </task>
+  </prototype-task>
+  <prototype-task>
+    <task id="t4294967293">
+      <title>Milestone 1</title>
+      <type>milestone</type>
+    </task>
+  </prototype-task>
+  <prototype-task>
+    <task id="t4294967292">
+      <title>Group 1</title>
+      <type>group</type>
+    </task>
+  </prototype-task>
+  <prototype-resource>
+    <resource id="r4294967294">
+      <name>Resource 1</name>
+      <type>Staff</type>
+    </resource>
+  </prototype-resource>
+  <prototype-resource>
+    <resource id="r4294967293">
+      <name>Equipment 1</name>
+      <type>Equipment</type>
+    </resource>
+  </prototype-resource>
+  <prototype-resource>
+    <resource id="r4294967292">
+      <name>Material 1</name>
+      <type>Material</type>
+      <units-available>0</units-available>
+      <efficiency>0</efficiency>
+    </resource>
+  </prototype-resource>
+  <prototype-resource>
+    <resource id="r4294967291">
+      <name>Group 1</name>
+      <type>Group</type>
+    </resource>
+  </prototype-resource>
+  <top-resource idref="r-1"/>
+  <resource id="r-1">
+    <type>Group</type>
+    <schedule>
+      <schedule-day day-of-week="sunday"/>
+      <schedule-day day-of-week="monday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="tuesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="wednesday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="thursday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="friday">
+        <time-span start-time="28800" end-time="43200"/>
+        <time-span start-time="46800" end-time="61200"/>
+      </schedule-day>
+      <schedule-day day-of-week="saturday"/>
+      <calendar name="Time Off" editable="yes" overtime="no"/>
+      <calendar name="Overtime" editable="yes" overtime="yes"/>
+    </schedule>
+    <child-resource idref="r1"/>
+    <child-resource idref="r2"/>
+    <child-resource idref="r3"/>
+    <child-resource idref="r4"/>
+    <child-resource idref="r5"/>
+    <child-resource idref="r6"/>
+  </resource>
+  <resource id="r1">
+    <name>Dave Taylor</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r2">
+    <name>Eric Remington</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r3">
+    <name>David Chan</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r4">
+    <name>Joel Huang</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r5">
+    <name>Jon Saperia</name>
+    <type>Staff</type>
+  </resource>
+  <resource id="r6">
+    <name>Mark Bombalicki</name>
+    <type>Staff</type>
+  </resource>
+  <top-task idref="t-1"/>
+  <task id="t-1">
+    <type>group</type>
+    <child-task idref="t325"/>
+  </task>
+  <task id="t1">
+    <title>Basic User Authentication/Login/out</title>
+    <type>group</type>
+    <child-task idref="t6"/>
+    <child-task idref="t7"/>
+  </task>
+  <task id="t2">
+    <title>Pre-defined users</title>
+    <type>group</type>
+    <child-task idref="t3"/>
+    <child-task idref="t4"/>
+  </task>
+  <task id="t3">
+    <title>Public User</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t4">
+    <title>Administrator</title>
+    <priority>9</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t5">
+    <title>System Distribution</title>
+    <type>group</type>
+    <child-task idref="t11"/>
+    <child-task idref="t12"/>
+    <child-task idref="t308"/>
+    <child-task idref="t14"/>
+    <child-task idref="t13"/>
+  </task>
+  <task id="t6">
+    <title>Access via direct log-in single server system</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t7">
+    <title>Access via direct log-in to a front end and back end system</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t11">
+    <title>As a single server instance in AWS</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t12">
+    <title>As a core/FE system in AWS</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t13">
+    <title>In a Virtualized (VMware environment) with same options as AWS</title>
+    <effort>28800</effort>
+    <effort-done>19295.998046875</effort-done>
+    <start-constraint-date>2014-07-18T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-07-18T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t14">
+    <title>As a single server instance on Mavericks</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t15">
+    <title>Support for distributed functions</title>
+    <type>group</type>
+    <child-task idref="t16"/>
+  </task>
+  <task id="t16">
+    <title>Distributed Discovery across N different discovery systems</title>
+    <type>group</type>
+    <child-task idref="t24"/>
+    <child-task idref="t66"/>
+    <child-task idref="t17"/>
+    <child-task idref="t18"/>
+    <child-task idref="t19"/>
+    <child-task idref="t20"/>
+    <child-task idref="t21"/>
+  </task>
+  <task id="t17">
+    <title>Distribution of DiscoveryRules across systems</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t18">
+    <title>Integration according to rules of data collected from distributed components</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t19">
+    <title>Coordination of time across servers - ensure that NTP is correctly installed and configured on all Integer servers.</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t20">
+    <title>Updates/changes/additions to discovery rules</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t21">
+    <title>Shutdown and startup of distributed systems</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t22">
+    <title>Discovery - General</title>
+    <type>group</type>
+    <child-task idref="t317"/>
+    <child-task idref="t25"/>
+    <child-task idref="t34"/>
+    <child-task idref="t46"/>
+  </task>
+  <task id="t24">
+    <title>Support for many Discovery and Topology Managers</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t25">
+    <title>Initial communication with Service Elements</title>
+    <type>group</type>
+    <child-task idref="t26"/>
+    <child-task idref="t27"/>
+    <child-task idref="t33"/>
+    <child-task idref="t354"/>
+  </task>
+  <task id="t26">
+    <title>Calculating range of systems on a subnet to contact</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t27">
+    <title>Establishing which SNMP version to use.</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t33">
+    <title>Establishing correct community string. This includes not only global, but ipTopologySeed and previously discovered systems, it includes updates to service elements</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-08T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t27"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-08T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t34">
+    <title>Discovery Rule and IpTopologySeed Processing</title>
+    <type>group</type>
+    <child-task idref="t36"/>
+    <child-task idref="t40"/>
+    <child-task idref="t49"/>
+    <child-task idref="t54"/>
+    <child-task idref="t61"/>
+  </task>
+  <task id="t35">
+    <title>Discovery rule and IpTopology Seed calendar implementation this includes tasks for general use of calendar in the system by other components like reporting and the inventory manager.</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t36">
+    <title>Support for different discovery types/options:</title>
+    <type>group</type>
+    <child-task idref="t309"/>
+    <child-task idref="t37"/>
+    <child-task idref="t38"/>
+    <child-task idref="t39"/>
+  </task>
+  <task id="t37">
+    <title>Service Element Only</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t38">
+    <title>Topology Only</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t39">
+    <title>Technologies like servers or firewalls. (does not include determination of how they impact traffic) This requires signatures for technologies per service element type.</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <prerequisite-task idref="t354"/>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t40">
+    <title>Processing multiple IpTopology Seeds in a discovery rule</title>
+    <type>group</type>
+    <child-task idref="t41"/>
+    <child-task idref="t42"/>
+    <child-task idref="t43"/>
+    <child-task idref="t63"/>
+    <child-task idref="t44"/>
+    <child-task idref="t62"/>
+    <child-task idref="t382"/>
+    <child-task idref="t64"/>
+    <child-task idref="t67"/>
+    <child-task idref="t65"/>
+    <child-task idref="t404"/>
+    <child-task idref="t432"/>
+  </task>
+  <task id="t41">
+    <title>Handling updates to one or more IpTopologySeeds while discovery service is running. Does not require changing an in process discovery.</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t42">
+    <title>Excluding/Including one or more networks in one or more seeds</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-12T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t39"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-12T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t43">
+    <title>Excluding/Including one or more specific service elements in one or more seeds</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-12T16:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t42"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-12T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t44">
+    <title>Processing the order of SNMP versions (e.g., v2c and then v3).</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t46">
+    <title>SNMPv3 Support</title>
+    <type>group</type>
+  </task>
+  <task id="t49">
+    <title>Time out processing</title>
+    <type>group</type>
+    <child-task idref="t50"/>
+    <child-task idref="t51"/>
+    <child-task idref="t52"/>
+    <child-task idref="t53"/>
+  </task>
+  <task id="t50">
+    <title>SNMP timeouts for the service element discovery manager</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t51">
+    <title>SNMP retries fro the service element discovery manager</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t52">
+    <title>SNMP timeouts for the topology manager</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t53">
+    <title>SNMP retries for the topology manager</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t54">
+    <title>Processing the SnmpServiceElementOverride associated with a ServiceElementType</title>
+    <type>group</type>
+    <child-task idref="t56"/>
+    <child-task idref="t57"/>
+    <child-task idref="t58"/>
+    <child-task idref="t59"/>
+    <child-task idref="t60"/>
+  </task>
+  <task id="t56">
+    <title>Handling for the service element types for which there is an override</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-05T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t404"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-05T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t57">
+    <title>Handling retries and time out for the topology manager based on service element types</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-05T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t56"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-05T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t58">
+    <title>Handling retries and time outs for the discovery manager based on service element type</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-08T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t57"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-08T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t59">
+    <title>Following max messages outstanding limit</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-08T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t58"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-08T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t60">
+    <title>Following the maximum rate of transmission limit.</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-03T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t59"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-03T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t61">
+    <title>Support for SNMP Global defaults for SNMP Port, Community Strings</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t62">
+    <title>Starting at initial gateway</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-13T12:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>460</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t63"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-13T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t63">
+    <title>Excluding/Including gateways in the gateway exclusion list</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-27T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t43"/>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-27T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t64">
+    <title>Supporting N hops (radius) This includes logic to be sure that you are not including a system more than once.</title>
+    <priority>1</priority>
+    <effort>57600</effort>
+    <start-constraint-date>2014-08-15T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t382"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-15T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t65">
+    <title>Override Global SNMP parameters with specifics in the IpTopologySeed</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t66">
+    <title>Following the distribution rule (that is which systems do what discoveries based on the integerDiscoverySystemId - this means that the discovery rule says which discovery system does the work.</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t67">
+    <title>Supporting one or more technologies to include or exclude from the discovery</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <prerequisite-task idref="t64"/>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t68">
+    <title>Service Element Discovery</title>
+    <type>group</type>
+    <child-task idref="t79"/>
+    <child-task idref="t311"/>
+    <child-task idref="t69"/>
+    <child-task idref="t73"/>
+    <child-task idref="t75"/>
+    <child-task idref="t80"/>
+    <child-task idref="t86"/>
+    <child-task idref="t107"/>
+    <child-task idref="t112"/>
+  </task>
+  <task id="t69">
+    <title>Vendor Containment Selector</title>
+    <type>group</type>
+    <child-task idref="t70"/>
+    <child-task idref="t71"/>
+    <child-task idref="t312"/>
+  </task>
+  <task id="t70">
+    <title>Based on Vendor Signature select the correct containment</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t71">
+    <title>Correctly process top 10 vendors and create YAML and Document for Vendor Signature and containment and supporting LevelOID and discriminator objects - using the entity mib.</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-01T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t311"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-01T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t72">
+    <title>For top 10 vendors create YAML for SNMPVendorDiscoveryTemplate and document YAML for entity MIB</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-17T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t124"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-17T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t73">
+    <title>Correctly assign category for each service element in defined in YAML Files</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <start-constraint-date>2014-08-08T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-08T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t75">
+    <title>ServiceElementType Identification and data collection</title>
+    <type>group</type>
+    <child-task idref="t77"/>
+    <child-task idref="t78"/>
+    <child-task idref="t133"/>
+  </task>
+  <task id="t76">
+    <title>Develop YAML signatures and related information for top 15 vendor/models and the subcomponents </title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-24T16:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <prerequisite-task idref="t315"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-24T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t77">
+    <title>Based on configured YAML information determine correct ServiceElementType for systems after the category has been established in the service element discovery process. This extends from the top level service element down to the lowest level including all interfaces. This includes additional objects.</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>448 and 441 and 439</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t78">
+    <title>Correctly handle cases where do not have identification information</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t79">
+    <title>Create Unknown types for when we do not have signatures for serviceElementTypes</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t80">
+    <title>Network Interface and Network Object Information</title>
+    <type>group</type>
+    <child-task idref="t81"/>
+    <child-task idref="t83"/>
+    <child-task idref="t84"/>
+    <child-task idref="t85"/>
+    <child-task idref="t385"/>
+    <child-task idref="t451"/>
+  </task>
+  <task id="t81">
+    <title>Retrieve all network interfaces including MAC addresses where there is a MAC address.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-19T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t312"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-19T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t83">
+    <title>Make associations between interfaces showing parent/child or other relationships</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t84">
+    <title>Correctly assign layer to the interface based on YAML in the Technology file. When assigning layer to a topology element assignment comes from service element type.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-20T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t81"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-20T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t85">
+    <title>Create associated TopologyElement, InterDeviceLink And Network object.</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t86">
+    <title>Location Information</title>
+    <type>group</type>
+    <child-task idref="t87"/>
+    <child-task idref="t88"/>
+    <child-task idref="t89"/>
+    <child-task idref="t90"/>
+    <child-task idref="t91"/>
+  </task>
+  <task id="t87">
+    <title>Read sysLocation </title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-18T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t385"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-18T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t88">
+    <title>Determine if there is a location pattern to be used and process if needed.</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-19T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t87"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-19T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t89">
+    <title>Create a location if there is no parse pattern and dump the full contents of sysLocation in the &apos;other&apos; attribute.</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-22T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t88"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-22T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t90">
+    <title>Define YAML format for location.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t91">
+    <title>Populate Location information from YAML</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t92">
+    <title>User Interface</title>
+    <type>group</type>
+    <child-task idref="t356"/>
+    <child-task idref="t436"/>
+    <child-task idref="t437"/>
+    <child-task idref="t328"/>
+    <child-task idref="t96"/>
+    <child-task idref="t98"/>
+    <child-task idref="t95"/>
+    <child-task idref="t99"/>
+    <child-task idref="t214"/>
+    <child-task idref="t103"/>
+    <child-task idref="t134"/>
+    <child-task idref="t104"/>
+    <child-task idref="t135"/>
+    <child-task idref="t357"/>
+    <child-task idref="t371"/>
+  </task>
+  <task id="t93">
+    <title>Navigation</title>
+    <type>group</type>
+    <child-task idref="t268"/>
+    <child-task idref="t269"/>
+    <child-task idref="t270"/>
+    <child-task idref="t271"/>
+    <child-task idref="t444"/>
+    <child-task idref="t272"/>
+  </task>
+  <task id="t95">
+    <title>Selections</title>
+    <type>group</type>
+    <child-task idref="t394"/>
+    <child-task idref="t140"/>
+    <child-task idref="t180"/>
+    <child-task idref="t141"/>
+    <child-task idref="t142"/>
+    <child-task idref="t143"/>
+    <child-task idref="t144"/>
+    <child-task idref="t145"/>
+    <child-task idref="t146"/>
+  </task>
+  <task id="t96">
+    <title>Service Element Information/Display(s)</title>
+    <type>group</type>
+    <child-task idref="t346"/>
+    <child-task idref="t131"/>
+    <child-task idref="t340"/>
+  </task>
+  <task id="t98">
+    <title>Discovery Control and Status</title>
+    <type>group</type>
+    <child-task idref="t200"/>
+    <child-task idref="t201"/>
+    <child-task idref="t352"/>
+    <child-task idref="t203"/>
+    <child-task idref="t204"/>
+    <child-task idref="t205"/>
+  </task>
+  <task id="t99">
+    <title>Alarm and Event Window</title>
+    <type>group</type>
+    <child-task idref="t395"/>
+    <child-task idref="t172"/>
+    <child-task idref="t173"/>
+    <child-task idref="t256"/>
+    <child-task idref="t263"/>
+  </task>
+  <task id="t100">
+    <title>Subnet Information details (would be nice to show all VLANS) this is general information about the subnet</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-07T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-07T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t101">
+    <title>Show Change/Missing Status per device</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t103">
+    <title>Reporting and Data Export</title>
+    <type>group</type>
+    <child-task idref="t397"/>
+    <child-task idref="t219"/>
+    <child-task idref="t222"/>
+    <child-task idref="t260"/>
+    <child-task idref="t261"/>
+  </task>
+  <task id="t104">
+    <title>System Control and Management</title>
+    <type>group</type>
+    <child-task idref="t206"/>
+    <child-task idref="t209"/>
+    <child-task idref="t213"/>
+  </task>
+  <task id="t107">
+    <title>Technology Discovery</title>
+    <type>group</type>
+    <child-task idref="t108"/>
+    <child-task idref="t109"/>
+    <child-task idref="t111"/>
+  </task>
+  <task id="t108">
+    <title>YAML for Technology Tree</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t109">
+    <title>YAML to connect technology tree to mechanisms and capabilities and SEMOs</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-15T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t89"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-15T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t111">
+    <title>Definition of technology signatures in YAML and processing same. For example is this service element doing load balancing, NAT, database, middleware or other functions.</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <prerequisite-task idref="t109"/>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t112">
+    <title>Topology/Discovery Manager Functions</title>
+    <type>group</type>
+    <child-task idref="t113"/>
+    <child-task idref="t114"/>
+    <child-task idref="t115"/>
+    <child-task idref="t116"/>
+    <child-task idref="t117"/>
+    <child-task idref="t314"/>
+    <child-task idref="t348"/>
+    <child-task idref="t118"/>
+    <child-task idref="t119"/>
+    <child-task idref="t120"/>
+    <child-task idref="t124"/>
+    <child-task idref="t130"/>
+  </task>
+  <task id="t113">
+    <title>Starting/Stoping </title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t114">
+    <title>Following one to many discovery rules each with 1 or more IpTopologySeeds.</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t115">
+    <title>Correctly handling overlapping topology discovery to avoid duplicate DB entires.</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-02T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t111"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-02T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t116">
+    <title>Creation of InterDeviceLinks</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t117">
+    <title>Creation of Paths and contained InterDeviceLinks</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-22T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t115"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-22T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t118">
+    <title>IP and Routing Layer</title>
+    <type>group</type>
+    <child-task idref="t409"/>
+    <child-task idref="t390"/>
+    <child-task idref="t388"/>
+    <child-task idref="t326"/>
+    <child-task idref="t405"/>
+    <child-task idref="t327"/>
+    <child-task idref="t406"/>
+    <child-task idref="t408"/>
+  </task>
+  <task id="t119">
+    <title>VLANs</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-26T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-26T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t120">
+    <title>Layer 2.5 technologies</title>
+    <type>group</type>
+    <child-task idref="t389"/>
+    <child-task idref="t121"/>
+  </task>
+  <task id="t121">
+    <title>CDP</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t124">
+    <title>Spanning tree information where possible</title>
+    <priority>6</priority>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>269</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <prerequisite-task idref="t406"/>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t130">
+    <title>Storage Infrastructure</title>
+    <type>group</type>
+    <priority>11</priority>
+    <child-task idref="t289"/>
+  </task>
+  <task id="t131">
+    <title>Display additional objects collected  in general tab</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t133">
+    <title>For each service element type and category collect the additional attributes specified.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t134">
+    <title>Search Functions</title>
+    <type>group</type>
+    <child-task idref="t398"/>
+    <child-task idref="t190"/>
+    <child-task idref="t191"/>
+    <child-task idref="t192"/>
+  </task>
+  <task id="t135">
+    <title>Help functions</title>
+    <priority>10</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t140">
+    <title>When user logs in return them to their last selection</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t141">
+    <title>When user logs in, if no previous selection set, default for the group the user is in.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t142">
+    <title>Pick selection from a list.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t143">
+    <title>Delete and existing selection.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t144">
+    <title>Update an existing selection.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t145">
+    <title>Allow creation of an ad-hoc selection</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t146">
+    <title>Create a Filter</title>
+    <type>group</type>
+    <child-task idref="t147"/>
+    <child-task idref="t157"/>
+    <child-task idref="t158"/>
+    <child-task idref="t165"/>
+    <child-task idref="t166"/>
+    <child-task idref="t174"/>
+  </task>
+  <task id="t147">
+    <title>Selecting filter elements based on</title>
+    <type>group</type>
+    <child-task idref="t148"/>
+    <child-task idref="t149"/>
+    <child-task idref="t150"/>
+    <child-task idref="t151"/>
+    <child-task idref="t152"/>
+    <child-task idref="t153"/>
+    <child-task idref="t154"/>
+    <child-task idref="t155"/>
+    <child-task idref="t156"/>
+  </task>
+  <task id="t148">
+    <title>Business service</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t149">
+    <title>Service technologies</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t150">
+    <title>Networks</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t151">
+    <title>Provider</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t152">
+    <title>Criticality</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t153">
+    <title>Category</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t154">
+    <title>Service Element Types</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t155">
+    <title>Location</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t156">
+    <title>Organization</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t157">
+    <title>Allow for selection of combinations of these filter elements</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t158">
+    <title>Select grouping</title>
+    <type>group</type>
+    <child-task idref="t159"/>
+    <child-task idref="t160"/>
+    <child-task idref="t161"/>
+    <child-task idref="t162"/>
+    <child-task idref="t163"/>
+    <child-task idref="t164"/>
+  </task>
+  <task id="t159">
+    <title>Subnet</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t160">
+    <title>Location and Subnet</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t161">
+    <title>Location, service element type and subnet</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t162">
+    <title>Business service and service element type and subnet</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t163">
+    <title>Business service and location</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t164">
+    <title>Business service location and service element type and subnet</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t165">
+    <title>Include inter-device links and paths or not along with technologies of links</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t166">
+    <title>Select layers</title>
+    <type>group</type>
+    <child-task idref="t167"/>
+    <child-task idref="t168"/>
+  </task>
+  <task id="t167">
+    <title>Definition of what data is to be displayed beyond service element &apos;additional attributes&apos;.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t168">
+    <title>Discovery status</title>
+    <type>group</type>
+    <child-task idref="t169"/>
+    <child-task idref="t170"/>
+    <child-task idref="t171"/>
+  </task>
+  <task id="t169">
+    <title>New</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t170">
+    <title>Missing (along with access in a tool tip or something like to to rule)</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t171">
+    <title>Changed (along with change information)</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t172">
+    <title>Integer system log</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t173">
+    <title>Discovery Information</title>
+    <type>group</type>
+    <child-task idref="t250"/>
+    <child-task idref="t251"/>
+    <child-task idref="t252"/>
+    <child-task idref="t253"/>
+    <child-task idref="t254"/>
+    <child-task idref="t255"/>
+  </task>
+  <task id="t174">
+    <title>Views</title>
+    <type>group</type>
+    <child-task idref="t175"/>
+    <child-task idref="t176"/>
+    <child-task idref="t177"/>
+    <child-task idref="t178"/>
+    <child-task idref="t179"/>
+  </task>
+  <task id="t175">
+    <title>Graphical form with navigation</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t176">
+    <title>Grid/tabular form (e.g., for screen or report)</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t177">
+    <title>Expandable folder</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t178">
+    <title>Output to alarm</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t179">
+    <title>Output to email</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t180">
+    <title>Show user current selection</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t182">
+    <title>Business Service and Criticality Identification Data Storage support of UI and other Functions</title>
+    <type>group</type>
+    <child-task idref="t183"/>
+    <child-task idref="t184"/>
+    <child-task idref="t185"/>
+    <child-task idref="t186"/>
+    <child-task idref="t187"/>
+    <child-task idref="t188"/>
+    <child-task idref="t189"/>
+  </task>
+  <task id="t183">
+    <title>Select service element in user interface and assign criticality</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t184">
+    <title>Select service element in user interface and assign one or more business services</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t185">
+    <title>Select multiple service elements (using usual selection criteria) and assign one or more business services</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t186">
+    <title>Select multiple service elements (using usual selection criteria) and assign a criticality</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t187">
+    <title>Preserve business service and criticality attributes across discovery/topology passes</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t188">
+    <title>Display business service and criticality in user interfaces</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t189">
+    <title>Assign business service based on signature during discovery (signature TBD)</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t190">
+    <title>Search within selection - that is search is confined to the current selection.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t191">
+    <title>Search in entire system.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t192">
+    <title>Search based on values entered for:</title>
+    <type>group</type>
+    <child-task idref="t194"/>
+    <child-task idref="t195"/>
+    <child-task idref="t196"/>
+    <child-task idref="t197"/>
+    <child-task idref="t198"/>
+    <child-task idref="t199"/>
+  </task>
+  <task id="t194">
+    <title>Address</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t195">
+    <title>DNS Name</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t196">
+    <title>Category</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t197">
+    <title>Subnet or VLAN</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t198">
+    <title>Location name</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t199">
+    <title>Business service</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t200">
+    <title>View discovery rules and topology seeds</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-12T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-12T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t201">
+    <title>Edit existing discovery rule and topology seed</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-13T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-13T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t203">
+    <title>Start discovery system</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t204">
+    <title>Stop discovery system</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t205">
+    <title>Create new discovery rule and topology seeds.</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t206">
+    <title>Manage distributed elements</title>
+    <type>group</type>
+    <child-task idref="t207"/>
+    <child-task idref="t208"/>
+  </task>
+  <task id="t207">
+    <title>Start and stop/restart</title>
+    <priority>9</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t208">
+    <title>Assign Discovery Rules </title>
+    <priority>9</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t209">
+    <title>Service Element Type specific parameters</title>
+    <type>group</type>
+    <child-task idref="t210"/>
+    <child-task idref="t211"/>
+  </task>
+  <task id="t210">
+    <title>SNMP Time outs and retries for discovery manager</title>
+    <priority>9</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t211">
+    <title>SNMP Time outs and retries for topology manager.</title>
+    <priority>9</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t213">
+    <title>Global SNMP Credential list.</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-08T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-08T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t214">
+    <title>Inventory</title>
+    <type>group</type>
+    <child-task idref="t396"/>
+    <child-task idref="t249"/>
+    <child-task idref="t215"/>
+    <child-task idref="t216"/>
+    <child-task idref="t218"/>
+    <child-task idref="t217"/>
+  </task>
+  <task id="t215">
+    <title>View inventory and inventory change and consistency rules</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t216">
+    <title>Edit existing inventory and inventory change and consistency rules</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t217">
+    <title>Create inventory and inventory change consistency rules</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t218">
+    <title>Delete inventory and inventory change and consistency rules</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t219">
+    <title>List report templates</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t222">
+    <title>Create new template </title>
+    <type>group</type>
+    <priority>7</priority>
+  </task>
+  <task id="t223">
+    <title>Inventory Service/Manager</title>
+    <type>group</type>
+    <child-task idref="t416"/>
+    <child-task idref="t228"/>
+    <child-task idref="t229"/>
+    <child-task idref="t230"/>
+    <child-task idref="t231"/>
+    <child-task idref="t232"/>
+    <child-task idref="t233"/>
+    <child-task idref="t234"/>
+    <child-task idref="t419"/>
+  </task>
+  <task id="t224">
+    <title>Reporting Service</title>
+    <type>group</type>
+    <child-task idref="t235"/>
+    <child-task idref="t236"/>
+    <child-task idref="t238"/>
+    <child-task idref="t239"/>
+    <child-task idref="t240"/>
+    <child-task idref="t241"/>
+  </task>
+  <task id="t225">
+    <title>External Integration</title>
+    <type>group</type>
+    <child-task idref="t226"/>
+    <child-task idref="t227"/>
+  </task>
+  <task id="t226">
+    <title>Export to JSON (this is part of reporting but may involve some sort of file transfer).</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-22T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-22T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t227">
+    <title>ServiceNow integration via the RESTful interface they provide.</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-23T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-23T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t228">
+    <title>Create and save inventory and change and consistency rules</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-13T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-13T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t229">
+    <title>Modify and save inventory and change and consistency rules</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-14T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-14T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t230">
+    <title>Delete inventory rule</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-15T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-15T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t231">
+    <title>Run as scheduled times controlled by the discovery service</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-18T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-18T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t232">
+    <title>Save previous version</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-19T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-19T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t233">
+    <title>Identify differences based on rules</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-20T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-20T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t234">
+    <title>Send events as defined in rules</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-21T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-21T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t235">
+    <title>Create and save report definition and related objects</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-24T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-24T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t236">
+    <title>Delete report definition and related objects</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-29T16:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-29T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t238">
+    <title>Generate reports in specified formats.</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-19T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-19T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t239">
+    <title>Email as required</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-25T16:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-25T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t240">
+    <title>Send events as required</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-30T16:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-30T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t241">
+    <title>Output (see external integration)</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-26T16:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-26T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t242">
+    <title>Messaging Services (alarms and Events)</title>
+    <type>group</type>
+    <child-task idref="t243"/>
+    <child-task idref="t244"/>
+    <child-task idref="t246"/>
+    <child-task idref="t421"/>
+    <child-task idref="t422"/>
+    <child-task idref="t423"/>
+    <child-task idref="t425"/>
+    <child-task idref="t426"/>
+    <child-task idref="t428"/>
+    <child-task idref="t429"/>
+  </task>
+  <task id="t243">
+    <title>System state notifications</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-17T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-17T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t244">
+    <title>Discovery status notifications and events this includes processing based on Inventory and Inventory Change rules</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-01T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-01T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t246">
+    <title>Sending log information</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-02T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-02T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t248">
+    <title>Support creation, editing and deletions of calendars in the for inventory rules</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t249">
+    <title>Control status of inventory rules (like enabled or not enabled)</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t250">
+    <title>Ongoing status of running portions like distributed nodes.</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t251">
+    <title>Status of each manager (topology and service element discovery)</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t252">
+    <title>Work done to do for each manager</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t253">
+    <title>Work done/to do for entire service</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t254">
+    <title>Failures/errors</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t255">
+    <title>When a discovery is complete</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t256">
+    <title>Inventory Rule Status Violations</title>
+    <type>group</type>
+    <child-task idref="t257"/>
+    <child-task idref="t258"/>
+    <child-task idref="t259"/>
+  </task>
+  <task id="t257">
+    <title>Missing Devices</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t258">
+    <title>Changed Devices</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t259">
+    <title>New Devices</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t260">
+    <title>List saved reports</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t261">
+    <title>View one or more saved reports</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t263">
+    <title>System Events Window</title>
+    <type>group</type>
+    <child-task idref="t264"/>
+    <child-task idref="t266"/>
+  </task>
+  <task id="t264">
+    <title>Distributed system events failures</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t266">
+    <title>Distributed systems events like start and stop.</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t268">
+    <title>From subnet to subnet</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-19T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-19T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t269">
+    <title>Returning to previous subnet/screen</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-20T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-20T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t270">
+    <title>Navigation of a service element</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-21T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-21T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t271">
+    <title>Navigation of paths and inter device links</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-14T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-14T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t272">
+    <title>Navigation between detail screens (e.g., service element details)</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t273">
+    <title>Domain Knowledge and YAML</title>
+    <type>group</type>
+    <child-task idref="t274"/>
+    <child-task idref="t278"/>
+  </task>
+  <task id="t274">
+    <title>General Functions</title>
+    <type>group</type>
+    <child-task idref="t276"/>
+    <child-task idref="t275"/>
+    <child-task idref="t277"/>
+  </task>
+  <task id="t275">
+    <title>Reload and update existing YAML</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-26T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-26T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t276">
+    <title>Load new YAML</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-25T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-25T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t277">
+    <title>Delete YAML file</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-27T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-27T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t278">
+    <title>YAML File Types and Information</title>
+    <type>group</type>
+    <child-task idref="t72"/>
+    <child-task idref="t315"/>
+    <child-task idref="t279"/>
+    <child-task idref="t76"/>
+    <child-task idref="t280"/>
+    <child-task idref="t281"/>
+    <child-task idref="t287"/>
+    <child-task idref="t438"/>
+  </task>
+  <task id="t279">
+    <title>Category tree</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t280">
+    <title>Technology Tree to last level before mechanisms</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t281">
+    <title>Service Element Type Definition</title>
+    <type>group</type>
+    <child-task idref="t282"/>
+    <child-task idref="t283"/>
+    <child-task idref="t284"/>
+    <child-task idref="t285"/>
+  </task>
+  <task id="t282">
+    <title>Category</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-11T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t76"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-11T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t283">
+    <title>Capability</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-12T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t282"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-12T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t284">
+    <title>Capability to Service Element Management Objects or Groups</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-23T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <prerequisite-task idref="t283"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-23T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t285">
+    <title>Connection of Capability to mechanisms and technologies</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-29T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <prerequisite-task idref="t284"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-29T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t287">
+    <title>Load network elements with community strings</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <prerequisite-task idref="t285"/>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t289">
+    <title>DNS - The system will resolve to the interface level DNS names. They are stored in the TopologyElement and changes tracked like other attributes.</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-25T16:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-25T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t290">
+    <title>Installation and Upgrade</title>
+    <type>group</type>
+    <child-task idref="t296"/>
+    <child-task idref="t291"/>
+    <child-task idref="t292"/>
+    <child-task idref="t293"/>
+    <child-task idref="t294"/>
+    <child-task idref="t295"/>
+    <child-task idref="t392"/>
+  </task>
+  <task id="t291">
+    <title>Install a single server instance in AWS</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t292">
+    <title>Install a front and back end instance in AWS</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t293">
+    <title>Install a front and back end and distributed discovery system in AWS</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t294">
+    <title>Adapt AWS installs for data center</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t295">
+    <title>Define and implement upgrade from one specific version to the next</title>
+    <priority>8</priority>
+    <effort>28800</effort>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t296">
+    <title>General install software including requirements checking</title>
+    <effort>28800</effort>
+    <effort-done>20160</effort-done>
+    <assignment idref="r2"/>
+  </task>
+  <task id="t297">
+    <title>Users and Rolls</title>
+    <type>group</type>
+    <child-task idref="t298"/>
+  </task>
+  <task id="t298">
+    <title>Support for multiple users and login/outs creation and association of</title>
+    <type>group</type>
+  </task>
+  <task id="t308">
+    <title>As a core/FE and discovery node.</title>
+    <priority>9</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t309">
+    <title>Service element and then topology </title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t311">
+    <title>Create unknown category when needed.</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-28T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t60"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-28T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t312">
+    <title>Correctly process top 10 vendors and create YAML and Document for Vendor Signature and containment and supporting LevelOID and discriminator objects using the host resources MIB.</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t71"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t313">
+    <title>Create unknown when we can not figure out containment.</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-07T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-07T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t314">
+    <title>Get subnet/mask information from routers for &apos;newly&apos; discovered subnets (not in seeds) but within scope of radius and kick of service element discovery on that subnet (if service element discovery has been selected.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-25T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t117"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-25T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t315">
+    <title>For top 10 vendors create YAML for SNMPVendorDiscoveryTemplate and document YAML for host resources MIB</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-26T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <prerequisite-task idref="t72"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-26T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t316">
+    <title>Start and stop the services</title>
+    <type>group</type>
+    <priority>7</priority>
+    <child-task idref="t318"/>
+  </task>
+  <task id="t317">
+    <title>Discovery and Topology Service Controls</title>
+    <type>group</type>
+    <child-task idref="t316"/>
+    <child-task idref="t417"/>
+  </task>
+  <task id="t318">
+    <title>Start and stop by discovery rules</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-07T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-07T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t320">
+    <title>CAS Based Authentication</title>
+    <type>group</type>
+  </task>
+  <task id="t322">
+    <title>Calendar-Specific Functions including modifications to UI</title>
+    <type>group</type>
+    <child-task idref="t403"/>
+    <child-task idref="t35"/>
+    <child-task idref="t248"/>
+    <child-task idref="t324"/>
+    <child-task idref="t418"/>
+    <child-task idref="t420"/>
+    <child-task idref="t431"/>
+  </task>
+  <task id="t324">
+    <title>Calendar support for reporting and data export </title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t325">
+    <title>Discovery</title>
+    <type>group</type>
+    <child-task idref="t452"/>
+    <child-task idref="t458"/>
+    <child-task idref="t457"/>
+    <child-task idref="t445"/>
+    <child-task idref="t441"/>
+    <child-task idref="t442"/>
+    <child-task idref="t443"/>
+    <child-task idref="t449"/>
+    <child-task idref="t450"/>
+    <child-task idref="t1"/>
+    <child-task idref="t2"/>
+    <child-task idref="t5"/>
+    <child-task idref="t22"/>
+    <child-task idref="t68"/>
+    <child-task idref="t15"/>
+    <child-task idref="t242"/>
+    <child-task idref="t223"/>
+    <child-task idref="t224"/>
+    <child-task idref="t225"/>
+    <child-task idref="t322"/>
+    <child-task idref="t410"/>
+    <child-task idref="t273"/>
+    <child-task idref="t290"/>
+    <child-task idref="t320"/>
+    <child-task idref="t297"/>
+    <child-task idref="t92"/>
+  </task>
+  <task id="t326">
+    <title>Using IPRouteNext hop for adjacent network  - including design</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-09T12:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>459 and 458</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t388"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-09T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t327">
+    <title>Getting net mask from addEntry for adjacent networks to kick off further topology and service Element Discovery.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t328">
+    <title>Main Screen</title>
+    <type>group</type>
+    <child-task idref="t93"/>
+    <child-task idref="t329"/>
+  </task>
+  <task id="t329">
+    <title>Information Windows in Main Display</title>
+    <type>group</type>
+    <child-task idref="t330"/>
+    <child-task idref="t336"/>
+  </task>
+  <task id="t330">
+    <title>Main/top level subnet (all items are result of selection)</title>
+    <type>group</type>
+    <child-task idref="t387"/>
+    <child-task idref="t331"/>
+    <child-task idref="t332"/>
+    <child-task idref="t100"/>
+    <child-task idref="t386"/>
+    <child-task idref="t101"/>
+    <child-task idref="t333"/>
+    <child-task idref="t334"/>
+    <child-task idref="t335"/>
+  </task>
+  <task id="t331">
+    <title>Show devices of all types</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t332">
+    <title>Show peer and child network connections</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t333">
+    <title>Last time service element discovery ran</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t334">
+    <title>Last time topology ran</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t335">
+    <title>Lines between device on screen are the highest level (as defined in input YAML) included in selection</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-18T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-18T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t336">
+    <title>Subnets (or non-top level as defined in selection) networks</title>
+    <type>group</type>
+    <child-task idref="t337"/>
+    <child-task idref="t338"/>
+    <child-task idref="t339"/>
+  </task>
+  <task id="t337">
+    <title>Show all information as in main window</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-22T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-22T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t338">
+    <title>Show connections to parent networks there may be several</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-25T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-25T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t339">
+    <title>Show connections to child and peers</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-11T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-11T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t340">
+    <title>Tabs/information about</title>
+    <type>group</type>
+    <child-task idref="t341"/>
+    <child-task idref="t342"/>
+    <child-task idref="t343"/>
+    <child-task idref="t344"/>
+    <child-task idref="t345"/>
+    <child-task idref="t347"/>
+  </task>
+  <task id="t341">
+    <title>Discovery state/status/scheduled times</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t342">
+    <title>Location</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t343">
+    <title>Technical Services Offered</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t344">
+    <title>Business services to which it has been assigned</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t345">
+    <title>Supporting Organization Information</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t346">
+    <title>General Information</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t347">
+    <title>Connectivity details - details about all layers of connection in this service element and device</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t348">
+    <title>Rules for aggregation of multiple subnets into a navigable hierarchy.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-08T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-08T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t352">
+    <title>Delete one or more discovery rules and/or IpTopology seeds</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-26T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-26T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t354">
+    <title>Implement algorithm for uniquely identifying if parts of a device, like and interface have already been discovered and belong to the main chassis. </title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-11T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t33"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-11T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t356">
+    <title>Login</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t357">
+    <title>Log-in and out and user functions</title>
+    <type>group</type>
+    <child-task idref="t358"/>
+    <child-task idref="t359"/>
+  </task>
+  <task id="t358">
+    <title>Log out of system</title>
+    <priority>10</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t359">
+    <title>Support of User administration</title>
+    <type>group</type>
+    <child-task idref="t360"/>
+  </task>
+  <task id="t360">
+    <title>Create</title>
+    <type>group</type>
+  </task>
+  <task id="t371">
+    <title>Business Service and Criticality Identification</title>
+    <type>group</type>
+    <child-task idref="t400"/>
+    <child-task idref="t372"/>
+    <child-task idref="t373"/>
+    <child-task idref="t374"/>
+    <child-task idref="t375"/>
+    <child-task idref="t377"/>
+    <child-task idref="t379"/>
+  </task>
+  <task id="t372">
+    <title>Select service element in user interface and assign criticality</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t373">
+    <title>Select service element in user interface and assign one or more business services</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t374">
+    <title>Select multiple service elements (using usual selection criteria) and assign one or more business services</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t375">
+    <title>Select multiple service elements (using usual selection criteria) and assign a criticality</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t377">
+    <title>Display business service and criticality in user interfaces</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t379">
+    <title>Modify/remove service elements from a business service</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t382">
+    <title>Starting at initial subnet</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-14T12:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>461</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t62"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-14T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t385">
+    <title>Create required Path Object</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-21T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t84"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-21T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t386">
+    <title>Show details on paths, links.  This is information about the details of each path and link that the user clicks on. </title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t387">
+    <title>Review list of details to display for each of the items in this task grouping with Jon and Dave Taylor</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-15T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-15T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t388">
+    <title>Understand, develop and write YAML for service element Types and all other required system information to tie these to the rest of the technology, and other trees for all of the IP and Routing Layer protocols.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t390"/>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t389">
+    <title>Understand, develop and write YAML for service element Types and all other required system information to tie these to the rest of the technology, and other trees for all of the layer 2.5 technologies.</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+  </task>
+  <task id="t390">
+    <title>Revise discovery document topology section based on what we have learned to date.  Draw the Topology discovery process for all layers.</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-24T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <prerequisite-task idref="t409"/>
+    <assignment idref="r1"/>
+    <assignment idref="r3"/>
+    <assignment idref="r5"/>
+    <start-no-earlier-than>2014-09-24T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t392">
+    <title>Documentation for Installation and basic site preparation guide</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <assignment idref="r2"/>
+    <assignment idref="r6"/>
+  </task>
+  <task id="t394">
+    <title>User interface design document and review for selections</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t395">
+    <title>User Interface design document and review for the alarm and event window.</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t396">
+    <title>User interface design and review for inventory functions</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t397">
+    <title>User interface design and document review for reporting and data export functions</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t398">
+    <title>User Interface design and review for search functions</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <assignment idref="r4"/>
+  </task>
+  <task id="t400">
+    <title>User interface design and document review for business service and criticality identification</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+  </task>
+  <task id="t403">
+    <title>Calendar function design and document review</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+    <assignment idref="r4"/>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t404">
+    <title>Use per service element type specific signature for uniquely identifying an instance of a service element of a specific type</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-27T16:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>453</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <prerequisite-task idref="t67"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-27T16:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t405">
+    <title>Full layer topology</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-10T12:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>457</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t326"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-10T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t406">
+    <title>Map an IP route to a specific interface this includes the cases when the interface (local) does not have an IP address.</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-29T17:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>446</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <prerequisite-task idref="t405"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-08-29T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t408">
+    <title>MAP VLAN to a specific interface</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>445</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <assignment idref="r3"/>
+  </task>
+  <task id="t409">
+    <title>Refine layer 3/routing topology discovery algorithm</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-16T12:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <lit>330</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <prerequisite-task idref="t314"/>
+    <assignment idref="r3"/>
+    <start-no-earlier-than>2014-09-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t410">
+    <title>Data storage and server logic to support user interface.</title>
+    <type>group</type>
+    <child-task idref="t411"/>
+    <child-task idref="t412"/>
+    <child-task idref="t413"/>
+    <child-task idref="t182"/>
+  </task>
+  <task id="t411">
+    <title>Topology link, subnet  and path information</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-28T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-28T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t412">
+    <title>Service Element Information</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-29T17:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>11</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-29T17:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t413">
+    <title>Selections</title>
+    <type>group</type>
+    <priority>1</priority>
+    <child-task idref="t433"/>
+    <child-task idref="t434"/>
+    <child-task idref="t435"/>
+  </task>
+  <task id="t416">
+    <title>Design</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-11T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-11T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t417">
+    <title>Discovery List</title>
+    <effort>28800</effort>
+    <effort-done>28800</effort-done>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t418">
+    <title>Schedule Manager</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t419">
+    <title>List changes for UI</title>
+    <priority>2</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-18T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>13</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-18T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t420">
+    <title>Definition of calendar types, recurring, one-shot.</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t421">
+    <title>JMS, Message manager - register for messages</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-04T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-04T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t422">
+    <title>Filter, apply to events</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-09T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-09T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t423">
+    <title>JMS, update messages</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-10T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-10T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t425">
+    <title>JMS message receiver.</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-11T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-11T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t426">
+    <title>JMS message sender</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-11T20:45:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-11T20:45:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t428">
+    <title>Send update message to GUI (from FE server)</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-15T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-15T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t429">
+    <title>Add JMS topic for updates to GUI</title>
+    <priority>4</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-09-16T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>12</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-09-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t431">
+    <title>Calendar - get status of a task, Stop a task</title>
+    <priority>7</priority>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-spacing">12</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>The calendar service will</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-spacing">12</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>start the quartz service on startup</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-spacing">12</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>stop the quartz service when the server shuts down.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-spacing">12</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>hold a reference to the quartz service.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-spacing">12</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>This will hide quartz from the rest of the system. No call are allowed timer.</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t432">
+    <title>Add logic to not run multiple discoveries on a subnet</title>
+    <priority>3</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-22T12:00:00.000Z</start-constraint-date>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>Add logic to not run multiple discoveries on a subnet. Need to avoid overlaps of discovery runs.</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+            </style>
+            <lit>This will also queue the discoveries that overlap and run the discovery when the first discovery completes. (Do we need a flag to Not run discovery or queue Discovery?)</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-22T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t433">
+    <title>API to get InterDeviceLinks by selection (limited)</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	API go get InterDeviceLink’s by selection (limited to)</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By Network</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By Technology</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By Category</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By any combination of network, technology or category</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t434">
+    <title>API to get ServiceElements by Selection (limited)</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	API to get ServiceElements by Selection (limited to)</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By Network</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By Technology</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By Category</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	By any combination of network, technology or category</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t435">
+    <title>API to get Network objects by selection (limited)</title>
+    <priority>5</priority>
+    <effort>28800</effort>
+    <note>
+      <text>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	API go get Network objects by selection. (limited to)</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	technology</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	category</lit>
+          </run>
+        </p>
+        <p>
+          <run>
+            <style>
+              <value key="font-family">Arial</value>
+              <value key="font-fill">
+                <color r="0.14902" g="0.14902" b="0.14902"/>
+              </value>
+              <value key="font-size">14</value>
+              <value key="paragraph-alignment">left</value>
+              <value key="paragraph-base-writing-direction">left-to-right</value>
+              <value key="paragraph-head-indent">36</value>
+              <value key="paragraph-tab-stop-interval">36</value>
+              <value key="paragraph-tab-stops">11L,36L</value>
+            </style>
+            <lit>	•	Combination of technology and category</lit>
+          </run>
+        </p>
+      </text>
+    </note>
+    <user-data>
+      <key>Next</key>
+      <string>14</string>
+    </user-data>
+    <assignment idref="r1"/>
+  </task>
+  <task id="t436">
+    <title>Finalize menu structure windows and tabs</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-27T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-27T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t437">
+    <title>Finalize cosmetic style/look and conventions</title>
+    <priority>1</priority>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-28T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-28T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t438">
+    <title>Finalization/Revisions of YAML</title>
+    <type>group</type>
+    <child-task idref="t439"/>
+    <child-task idref="t440"/>
+  </task>
+  <task id="t439">
+    <title>Hierarchical Locations and grouping</title>
+    <effort>28800</effort>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t440">
+    <title>Association between organization and locations and service providers</title>
+    <effort>28800</effort>
+    <assignment idref="r5"/>
+  </task>
+  <task id="t441">
+    <title>Sprint 10</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-08-21T04:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <assignment idref="r3"/>
+    <assignment idref="r2"/>
+    <assignment idref="r4"/>
+    <assignment idref="r5"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-08-21T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t442">
+    <title>Sprint 11</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-09-04T04:00:00.000Z</start-constraint-date>
+    <assignment idref="r1"/>
+    <assignment idref="r3"/>
+    <assignment idref="r2"/>
+    <assignment idref="r4"/>
+    <assignment idref="r5"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-09-04T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t443">
+    <title>Sprint 12</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-09-18T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r1"/>
+    <assignment idref="r3"/>
+    <assignment idref="r2"/>
+    <assignment idref="r4"/>
+    <assignment idref="r5"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-09-18T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t444">
+    <title>Display information about links and paths</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-06T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r4"/>
+    <start-no-earlier-than>2014-08-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t445">
+    <title>Clean up tasks from earlier sprints</title>
+    <type>group</type>
+    <start-constraint-date>2014-08-06T12:00:00.000Z</start-constraint-date>
+    <child-task idref="t313"/>
+    <start-no-earlier-than>2014-08-06T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t449">
+    <title>Sprint 13</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-10-02T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r1"/>
+    <assignment idref="r3"/>
+    <assignment idref="r2"/>
+    <assignment idref="r4"/>
+    <assignment idref="r5"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-10-02T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t450">
+    <title>Sprint 14</title>
+    <type>milestone</type>
+    <start-constraint-date>2014-10-16T12:00:00.000Z</start-constraint-date>
+    <assignment idref="r1"/>
+    <assignment idref="r3"/>
+    <assignment idref="r2"/>
+    <assignment idref="r4"/>
+    <assignment idref="r5"/>
+    <assignment idref="r6"/>
+    <start-no-earlier-than>2014-10-16T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t451">
+    <title>API to retrieve and save the coordinates on our display of the network objects.</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-07T12:00:00.000Z</start-constraint-date>
+    <user-data>
+      <key>Next</key>
+      <string>10</string>
+    </user-data>
+    <assignment idref="r1"/>
+    <start-no-earlier-than>2014-08-07T12:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t452">
+    <title>Previous work to August</title>
+    <effort>9504000</effort>
+    <effort-done>9504000</effort-done>
+    <start-constraint-date>2014-08-09T04:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-08-09T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t457">
+    <title>Task 1</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-09T04:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-08-09T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t458">
+    <title>Task 2</title>
+    <effort>28800</effort>
+    <start-constraint-date>2014-08-09T04:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2014-08-09T04:00:00.000Z</start-no-earlier-than>
+  </task>
+  <critical-path root="-1" enabled="false" resources="false">
+    <color r="1" g="0.5" b="0.5"/>
+  </critical-path>
+</scenario>

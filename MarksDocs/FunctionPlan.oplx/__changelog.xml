@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<changelog xmlns="http://www.omnigroup.com/namespace/OmniPlan/v2">
+  <version>2.1</version>
+  <task-change-set user="Mark Bombalicki" date="2014-07-18T00:32:27.789Z" timestamp="2014-07-18T00:32:27.789Z">
+    <change idref="t1" from="t-1" from-position="0">
+      <change idref="t1" attribute="title" type="string" to="Task 1"/>
+    </change>
+    <change idref="t55" to="t-1" to-position="0">
+      <change idref="t55" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t55" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-30T15:45:00.000Z"/>
+      <change idref="t55" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t55" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t55" attribute="title" type="string" to="Allow User to Make Selections"/>
+    </change>
+    <change idref="t56" to="t-1" to-position="1">
+      <change idref="t56" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t56" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-29T13:45:00.000Z"/>
+      <change idref="t56" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t56" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t56" attribute="title" type="string" to="Allow Users to Explore Systems for Which Potentially Important Information is Missing "/>
+    </change>
+    <change idref="t57" to="t-1" to-position="2">
+      <change idref="t57" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t57" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-25T17:45:00.000Z"/>
+      <change idref="t57" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t57" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t57" attribute="title" type="string" to="Allow Users to Organize how the selected ServiceElements and Networks are presented (On screen or in graphic form)"/>
+    </change>
+    <change idref="t58" to="t-1" to-position="3">
+      <change idref="t58" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t58" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-24T17:15:00.000Z"/>
+      <change idref="t58" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t58" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t58" attribute="title" type="string" to="Allow Users the ability to indicate what information they wish to see on the results of the filter evaluation"/>
+    </change>
+    <change idref="t59" to="t-1" to-position="4">
+      <change idref="t59" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t59" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-21T20:45:00.000Z"/>
+      <change idref="t59" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t59" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t59" attribute="title" type="string" to="Allow Users to refresh"/>
+    </change>
+    <change idref="t60" to="t-1" to-position="5">
+      <change idref="t60" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t60" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-18T15:15:00.000Z"/>
+      <change idref="t60" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t60" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t60" attribute="title" type="string" to="Allow Users to create new selections"/>
+    </change>
+    <change idref="t61" to="t-1" to-position="6">
+      <change idref="t61" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t61" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-22T17:30:00.000Z"/>
+      <change idref="t61" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t61" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t61" attribute="title" type="string" to="Allow users the ability to see the filters that have been defined "/>
+    </change>
+    <change idref="t62" to="t-1" to-position="7">
+      <change idref="t62" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t62" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-23T20:00:00.000Z"/>
+      <change idref="t62" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t62" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t62" attribute="title" type="string" to="Allow Users to Modify Selections"/>
+    </change>
+    <change idref="t63" to="t-1" to-position="8">
+      <change idref="t63" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t63" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-28T12:15:00.000Z"/>
+      <change idref="t63" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t63" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t63" attribute="title" type="string" to="Allow users to delete selections"/>
+    </change>
+    <change idref="t64" to="t-1" to-position="9">
+      <change idref="t64" attribute="isGroup" type="real" from="0" to="1"/>
+      <change idref="t64" attribute="noEarlierThanConstraintDate" type="date" to="2014-07-30T12:45:00.000Z"/>
+      <change idref="t64" attribute="styleDict" type="dict" to="{
+    &quot;font-size&quot; = 15;
+}"/>
+      <change idref="t64" attribute="taskType" type="real" from="0" to="2"/>
+      <change idref="t64" attribute="title" type="string" to="Allow users to see current selections"/>
+    </change>
+    <change idref="t70" to="t56" to-position="0">
+      <change idref="t70" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t71" to="t56" to-position="1">
+      <change idref="t71" attribute="internalPrerequisitesString" type="string" to="70FS"/>
+      <change idref="t71" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t72" to="t56" to-position="2">
+      <change idref="t72" attribute="internalPrerequisitesString" type="string" to="71FS"/>
+      <change idref="t72" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t73" to="t56" to-position="3">
+      <change idref="t73" attribute="internalPrerequisitesString" type="string" to="72FS"/>
+      <change idref="t73" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t74" to="t56" to-position="4">
+      <change idref="t74" attribute="internalPrerequisitesString" type="string" to="73FS"/>
+      <change idref="t74" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t75" to="t57" to-position="0">
+      <change idref="t75" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t76" to="t57" to-position="1">
+      <change idref="t76" attribute="internalPrerequisitesString" type="string" to="75FS"/>
+      <change idref="t76" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t77" to="t57" to-position="2">
+      <change idref="t77" attribute="internalPrerequisitesString" type="string" to="76FS"/>
+      <change idref="t77" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t78" to="t57" to-position="3">
+      <change idref="t78" attribute="internalPrerequisitesString" type="string" to="77FS"/>
+      <change idref="t78" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t79" to="t57" to-position="4">
+      <change idref="t79" attribute="internalPrerequisitesString" type="string" to="78FS"/>
+      <change idref="t79" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t80" to="t58" to-position="0">
+      <change idref="t80" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t81" to="t58" to-position="1">
+      <change idref="t81" attribute="internalPrerequisitesString" type="string" to="80FS"/>
+      <change idref="t81" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t82" to="t58" to-position="2">
+      <change idref="t82" attribute="internalPrerequisitesString" type="string" to="81FS"/>
+      <change idref="t82" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t83" to="t58" to-position="3">
+      <change idref="t83" attribute="internalPrerequisitesString" type="string" to="82FS"/>
+      <change idref="t83" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t84" to="t58" to-position="4">
+      <change idref="t84" attribute="internalPrerequisitesString" type="string" to="83FS"/>
+      <change idref="t84" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t85" to="t59" to-position="0">
+      <change idref="t85" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t86" to="t59" to-position="1">
+      <change idref="t86" attribute="internalPrerequisitesString" type="string" to="85FS"/>
+      <change idref="t86" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t87" to="t59" to-position="2">
+      <change idref="t87" attribute="internalPrerequisitesString" type="string" to="86FS"/>
+      <change idref="t87" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t88" to="t59" to-position="3">
+      <change idref="t88" attribute="internalPrerequisitesString" type="string" to="87FS"/>
+      <change idref="t88" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t89" to="t59" to-position="4">
+      <change idref="t89" attribute="internalPrerequisitesString" type="string" to="88FS"/>
+      <change idref="t89" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t90" to="t60" to-position="0">
+      <change idref="t90" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t91" to="t60" to-position="1">
+      <change idref="t91" attribute="internalPrerequisitesString" type="string" to="90FS"/>
+      <change idref="t91" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t92" to="t60" to-position="2">
+      <change idref="t92" attribute="internalPrerequisitesString" type="string" to="91FS"/>
+      <change idref="t92" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t93" to="t60" to-position="3">
+      <change idref="t93" attribute="internalPrerequisitesString" type="string" to="92FS"/>
+      <change idref="t93" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t94" to="t60" to-position="4">
+      <change idref="t94" attribute="internalPrerequisitesString" type="string" to="93FS"/>
+      <change idref="t94" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t95" to="t61" to-position="0">
+      <change idref="t95" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t96" to="t61" to-position="1">
+      <change idref="t96" attribute="internalPrerequisitesString" type="string" to="95FS"/>
+      <change idref="t96" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t97" to="t61" to-position="2">
+      <change idref="t97" attribute="internalPrerequisitesString" type="string" to="96FS"/>
+      <change idref="t97" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t98" to="t61" to-position="3">
+      <change idref="t98" attribute="internalPrerequisitesString" type="string" to="97FS"/>
+      <change idref="t98" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t99" to="t61" to-position="4">
+      <change idref="t99" attribute="internalPrerequisitesString" type="string" to="98FS"/>
+      <change idref="t99" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t100" to="t62" to-position="0">
+      <change idref="t100" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t101" to="t62" to-position="1">
+      <change idref="t101" attribute="internalPrerequisitesString" type="string" to="100FS"/>
+      <change idref="t101" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t102" to="t62" to-position="2">
+      <change idref="t102" attribute="internalPrerequisitesString" type="string" to="101FS"/>
+      <change idref="t102" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t103" to="t62" to-position="3">
+      <change idref="t103" attribute="internalPrerequisitesString" type="string" to="102FS"/>
+      <change idref="t103" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t104" to="t62" to-position="4">
+      <change idref="t104" attribute="internalPrerequisitesString" type="string" to="103FS"/>
+      <change idref="t104" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t105" to="t63" to-position="0">
+      <change idref="t105" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t106" to="t63" to-position="1">
+      <change idref="t106" attribute="internalPrerequisitesString" type="string" to="105FS"/>
+      <change idref="t106" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t107" to="t63" to-position="2">
+      <change idref="t107" attribute="internalPrerequisitesString" type="string" to="106FS"/>
+      <change idref="t107" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t108" to="t63" to-position="3">
+      <change idref="t108" attribute="internalPrerequisitesString" type="string" to="107FS"/>
+      <change idref="t108" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t109" to="t63" to-position="4">
+      <change idref="t109" attribute="internalPrerequisitesString" type="string" to="108FS"/>
+      <change idref="t109" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t110" to="t64" to-position="0">
+      <change idref="t110" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t111" to="t64" to-position="1">
+      <change idref="t111" attribute="internalPrerequisitesString" type="string" to="110FS"/>
+      <change idref="t111" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t112" to="t64" to-position="2">
+      <change idref="t112" attribute="internalPrerequisitesString" type="string" to="111FS"/>
+      <change idref="t112" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t113" to="t64" to-position="3">
+      <change idref="t113" attribute="internalPrerequisitesString" type="string" to="112FS"/>
+      <change idref="t113" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t114" to="t64" to-position="4">
+      <change idref="t114" attribute="internalPrerequisitesString" type="string" to="113FS"/>
+      <change idref="t114" attribute="title" type="string" to="Task 5"/>
+    </change>
+    <change idref="t65" to="t55" to-position="0">
+      <change idref="t65" attribute="title" type="string" to="DC"/>
+    </change>
+    <change idref="t66" to="t55" to-position="1">
+      <change idref="t66" attribute="internalPrerequisitesString" type="string" to="65FS"/>
+      <change idref="t66" attribute="title" type="string" to="DT"/>
+    </change>
+    <change idref="t67" to="t55" to-position="2">
+      <change idref="t67" attribute="internalPrerequisitesString" type="string" to="66FS"/>
+      <change idref="t67" attribute="title" type="string" to="JH"/>
+    </change>
+    <change idref="t68" to="t55" to-position="3">
+      <change idref="t68" attribute="internalPrerequisitesString" type="string" to="67FS"/>
+      <change idref="t68" attribute="title" type="string" to="Task 4"/>
+    </change>
+    <change idref="t69" to="t55" to-position="4">
+      <change idref="t69" attribute="internalPrerequisitesString" type="string" to="68FS"/>
+      <change idref="t69" attribute="title" type="string" to="Task 5"/>
+    </change>
+  </task-change-set>
+  <metadata-change-set user="Mark Bombalicki" date="2014-07-18T00:32:27.789Z" timestamp="2014-07-18T00:32:27.789Z">
+    <change idref="m1" attribute="fixedDate" type="date" from="2007-01-01T20:00:00.000Z" to="2014-07-17T12:00:00.000Z"/>
+  </metadata-change-set>
+</changelog>
