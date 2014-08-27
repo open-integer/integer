@@ -19,6 +19,7 @@ def gwtWarPath = 'war'                  // WebContent directory
 // lib-gwt-file
 def libGwtFileVersion = '0.3.3'			// lib-gwt-file version
 def lienzoCoreVersion = '1.2-RELEASE' 	// lienzo-core version
+def smartGwtVersion = '2.4'				// SmartGWT version
 
 def gwtServerHost = 'localhost'
 def gwtServerPort = 8888
@@ -57,6 +58,7 @@ dependencies {
 	// Also includes the servlet-api
 	compile "com.google.gwt:gwt-user:${gwtVersion}"
 	compile "com.google.gwt:gwt-dev:${gwtVersion}"
+	compile "com.google.gwt:gwt-servlet:${gwtVersion}"
 
 	// Needed for GWT compile and at runtime for RequestBuilder
 	// Specify two artifacts as workaround for GRADLE-1934
@@ -78,6 +80,8 @@ dependencies {
 	// Compile lienzo-core, for graphics
 	compile "com.emitrom:lienzo-core:${lienzoCoreVersion}"
 	
+	// SmartGWT
+	compile "com.smartgwt:smartgwt:${smartGwtVersion}"
 }
 
 task gwtc (dependsOn: classes, type: JavaExec) {
@@ -99,7 +103,7 @@ task gwtc (dependsOn: classes, type: JavaExec) {
 		'-style',  'PRETTY'
 	]
 
-	maxHeapSize = '256M'
+	maxHeapSize = '512M'
 }
 
 task devmode (dependsOn: classes, type: JavaExec) {

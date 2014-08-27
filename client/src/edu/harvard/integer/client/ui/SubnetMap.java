@@ -353,7 +353,7 @@ public class SubnetMap extends IntegerMap {
             
 			@Override
 			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
-				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX() + 15;
+				int x = FilterPanel.FILTER_PANEL_WIDTH + event.getX() + 15;
 				int y = 100 + event.getY() - 15;
 
 				tooltip.setPopupPosition(x, y);

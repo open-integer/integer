@@ -27,9 +27,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 	
 	/** The Constant CONTENT_HEIGHT. */
 	public static final int CONTENT_HEIGHT = 550;
-	
-	/** The Constant WESTPANEL_WIDTH. */
-	public static final int WESTPANEL_WIDTH = 250;
 
 	/** The east panel. */
 	private SplitLayoutPanel eastPanel = new SplitLayoutPanel(MainClient.SPLITTER_SIZE);
@@ -51,7 +48,6 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
         
 		// clean up tabPanel
 		tabPanel.clear();
-
 		setSize("100%", CONTENT_HEIGHT+"px");
         
         // Event View
@@ -67,7 +63,7 @@ public class SystemSplitViewPanel extends SplitLayoutPanel {
 		eastPanel.setWidgetHidden(eventView, false);
 		
 		ScrollPanel filterScrollPanel = filterPanel.getScrollPanel();
-		addWest(filterScrollPanel, WESTPANEL_WIDTH);
+		addWest(filterScrollPanel, FilterPanel.FILTER_PANEL_WIDTH);
 		setWidgetToggleDisplayAllowed(filterScrollPanel, true);
 		
 		add(eastPanel);

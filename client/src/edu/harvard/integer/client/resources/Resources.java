@@ -24,6 +24,7 @@ public interface Resources {
 		
 		@Source("/images/Unknown.png")
 		ImageResource unknown();
+		
 	}
 	
 	public interface Icons extends ClientBundle {
@@ -40,5 +41,7 @@ public interface Resources {
 		@Source("/icons/disk.png")
 		ImageResource disk();
 
+		@Source("/icons/refresh.png")
+		ImageResource refresh();
 	}
 }

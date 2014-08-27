@@ -98,6 +98,20 @@ h4 {
 	display: block;
 }
 
+.titleToolBar { 
+	background-color: #68228B;
+	height: 30px;
+    font-size: 1.0em;
+	font-family: arial;
+    font-weight: bold;
+    color: white;
+    padding-top: 6px;
+	padding-right: auto;
+	padding-bottom: 6px;
+	padding-left: 6px;
+	display: block;
+}
+
 .toolbar {
 	background-color: CYAN;
 	color: #FFFFFF;

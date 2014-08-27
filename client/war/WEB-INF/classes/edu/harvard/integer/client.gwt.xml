@@ -23,6 +23,8 @@
   <inherits name='org.vectomatic.libgwtfile'/>
   
   <inherits name='com.emitrom.lienzo.Lienzo' />
+  
+  <inherits name='com.smartgwt.SmartGwt' />
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='edu.harvard.integer.client.MainClient'/>

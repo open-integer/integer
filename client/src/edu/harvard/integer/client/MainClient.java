@@ -164,12 +164,18 @@ public class MainClient implements EntryPoint {
 		});
 	}
 	
+	/**
+	 * Adjust window size per current window size
+	 */
 	private void adjustWindowSize() {
-		int height = Window.getClientHeight();
-		int contentHeight = height - 128;
+		int windowWidth = Window.getClientWidth();
+		int windowHeight = Window.getClientHeight();
+		int contentHeight = windowHeight - 128;
 		RootPanel.get("root").setHeight(contentHeight+"px");
 		systemPanel.setSize("100%", contentHeight+"px");
-		systemPanel.getFilterPanel().resetHeight(contentHeight);
+		int contentWidth = SystemSplitViewPanel.getTabPanel().getOffsetWidth();
+		int filterWidth = windowWidth - contentWidth;
+		systemPanel.getFilterPanel().resetSize(filterWidth, contentHeight);
 	}
 
 	/**
@@ -240,6 +246,8 @@ public class MainClient implements EntryPoint {
 					RootPanel.get("root").remove(currentWidget);
 				currentWidget = flexTable;
 				RootPanel.get("root").add(currentWidget);
+				
+				adjustWindowSize();
 			}
 		});
 	}
@@ -600,6 +608,8 @@ public class MainClient implements EntryPoint {
 
 				currentWidget = view;
 				RootPanel.get("root").add(currentWidget);
+				
+				adjustWindowSize();
 			}
 		});
 	}
@@ -638,6 +648,8 @@ public class MainClient implements EntryPoint {
 
 				currentWidget = ipTopologySeedView;
 				RootPanel.get("root").add(currentWidget);
+				
+				adjustWindowSize();
 			}
 		});
 	}
@@ -676,6 +688,8 @@ public class MainClient implements EntryPoint {
 
 				currentWidget = view;
 				RootPanel.get("root").add(currentWidget);
+				
+				adjustWindowSize();
 			}
 		});
 	}

@@ -112,6 +112,10 @@ public class NetworkMap extends IntegerMap {
 		for (Network network : networks) {
 			ServiceElementWidget icon = iconMap.get(network.getID());
 			Point point = entityMap.get(network.getID());
+			
+			if (icon == null || point == null)
+				continue;
+			
 			icon.draw((int)point.getX(), (int)point.getY());
 			add(icon);
 		}
@@ -183,7 +187,7 @@ public class NetworkMap extends IntegerMap {
             
 			@Override
 			public void onNodeMouseEnter(NodeMouseEnterEvent event) {
-				int x = SystemSplitViewPanel.WESTPANEL_WIDTH + event.getX();
+				int x = FilterPanel.FILTER_PANEL_WIDTH + event.getX();
 				int y = 200 + event.getY();
 
 				tooltip.setPopupPosition(x, y);
