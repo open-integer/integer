@@ -201,7 +201,7 @@ buildmenu: function($, setting){
 	}
 
 	$topheaders.each(function(){
-		var $curobj=$(this).css({zIndex: (setting.zindexvalue || smoothmenu.zindexvalue) + zsub--}); //reference current LI header
+		var $curobj=$(this).css({zIndex: (setting.zindexvalue) + zsub--}); //reference current LI header
 		var $subul=$curobj.children('ul:eq(0)').css({display:'block'}).data('timers', {});
 		var $link = $curobj.children("a:eq(0)").css({paddingRight: smoothmenu.arrowimages[orient][2]}).append( //add arrow images
 			'<span style="display: block;" class="' + smoothmenu.arrowimages[orient][0] + '"></span>'
