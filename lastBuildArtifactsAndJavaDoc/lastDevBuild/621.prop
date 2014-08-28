@@ -1,0 +1,7 @@
+CLEANUP=/var/lib/jenkins/jobs/BuildInteger/workspace/621.prop
+ExpiresDate=08/29/2014
+BN=621
+JN=BuildInteger
+InstanceType=Testing
+invokingUser=undefined
+AMIimage=ami-183ce670
