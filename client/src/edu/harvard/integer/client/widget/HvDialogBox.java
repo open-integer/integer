@@ -70,7 +70,7 @@ public class HvDialogBox extends DialogBox {
 	    setAnimationEnabled(true);
 
 		VerticalPanel dialogContents = new VerticalPanel();
-		dialogContents.setStyleName("dialogVPanel");
+		addStyleName("dialogVPanel");
 
 	    setWidget(dialogContents);
 
