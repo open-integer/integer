@@ -355,7 +355,7 @@ public class MainClient implements EntryPoint {
 				MIBImportPanel importPanel = new MIBImportPanel();
 				HvDialogBox importDialog = new HvDialogBox("Import MIB",
 						importPanel);
-				importDialog.setSize("500px", "200px");
+				importDialog.setSize("500px", "140px");
 				importDialog.center();
 				importDialog.show();
 			}
@@ -566,7 +566,7 @@ public class MainClient implements EntryPoint {
 				StartDiscoveryPanel panel = new StartDiscoveryPanel();
 				HvDialogBox dialog = new HvDialogBox("Start Discovery",
 						panel);
-				dialog.setSize("400px", "250px");
+				dialog.setSize("500px", "180px");
 				dialog.center();
 				dialog.show();
 			}
