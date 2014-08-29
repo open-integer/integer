@@ -50,7 +50,7 @@ arrowimages: {down:['downarrowclass', 'images/down.gif', 23], right:['rightarrow
 transition: {overtime:300, outtime:300}, //duration of slide in/ out animation, in milliseconds
 shadow: true, //enable shadow? (offsets now set in ddsmoothmenu.css stylesheet)
 showhidedelay: {showdelay: 100, hidedelay: 200}, //set delay in milliseconds before sub menus appear and disappear, respectively
-zindexvalue: 1000, //set z-index value for menus
+zindexvalue: 321000, //set z-index value for menus
 closeonnonmenuclick: true, //when clicking outside of any "toggle" method menu, should all "toggle" menus close? 
 closeonmouseout: false, //when leaving a "toggle" menu, should all "toggle" menus close? Will not work on touchscreen
 
@@ -201,7 +201,7 @@ buildmenu: function($, setting){
 	}
 
 	$topheaders.each(function(){
-		var $curobj=$(this).css({zIndex: (setting.zindexvalue) + zsub--}); //reference current LI header
+		var $curobj=$(this).css({zIndex: (setting.zindexvalue || smoothmenu.zindexvalue) + zsub--}); //reference current LI header
 		var $subul=$curobj.children('ul:eq(0)').css({display:'block'}).data('timers', {});
 		var $link = $curobj.children("a:eq(0)").css({paddingRight: smoothmenu.arrowimages[orient][2]}).append( //add arrow images
 			'<span style="display: block;" class="' + smoothmenu.arrowimages[orient][0] + '"></span>'
