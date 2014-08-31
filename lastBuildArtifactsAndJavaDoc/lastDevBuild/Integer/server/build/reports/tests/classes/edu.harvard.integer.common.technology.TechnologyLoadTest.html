@@ -1,0 +1,2083 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Test results - Class edu.harvard.integer.common.technology.TechnologyLoadTest</title>
+<link href="css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script src="js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class edu.harvard.integer.common.technology.TechnologyLoadTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/edu.harvard.integer.common.technology.html">edu.harvard.integer.common.technology</a> &gt; TechnologyLoadTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">10</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">2.901s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">readCDPServiceElementType</td>
+<td>0.190s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readCDPTechnology</td>
+<td>0.233s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readCategories</td>
+<td>0.906s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readEntityMibServiceElementType</td>
+<td>0.430s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readEnvironment</td>
+<td>0.035s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readOrganization</td>
+<td>0.209s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readService</td>
+<td>0.047s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readTechnologyTree</td>
+<td>0.691s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readVendorContainment</td>
+<td>0.086s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">readVendorParentChildContainment</td>
+<td>0.074s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[0m?[0m15:16:22,232 INFO  [org.jboss.as.repository] (management-handler-thread - 15) JBAS014900: Content added at location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/0c/6286b9c4eef6a37f8b4811d9979556599fcb6f/content
+?[0m?[0m15:16:22,233 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-9) JBAS015876: Starting deployment of &quot;SelectionManagerTest.war&quot; (runtime-name: &quot;SelectionManagerTest.war&quot;)
+?[0m?[0m15:16:24,042 INFO  [org.jboss.as.jpa] (MSC service thread 1-2) JBAS011401: Read persistence.xml for primary
+?[0m?[0m15:16:24,587 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-13) JBAS010400: Bound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:16:24,587 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 303) JBAS011409: Starting Persistence Unit (phase 1 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:16:24,588 INFO  [org.hibernate.jpa.internal.util.LogHelper] (ServerService Thread Pool -- 303) HHH000204: Processing PersistenceUnitInfo [
+	name: primary
+	...]
+?[0m?[0m15:16:34,238 INFO  [org.jboss.weld.deployer] (MSC service thread 1-4) JBAS016002: Processing weld deployment SelectionManagerTest.war
+?[0m?[0m15:16:34,253 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named TopologyManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:app/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:global/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:app/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+
+?[0m?[0m15:16:34,254 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named SelectionManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:app/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:global/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:app/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+
+?[0m?[0m15:16:34,255 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named DistributionService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:app/SelectionManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:module/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:jboss/exported/SelectionManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:global/SelectionManagerTest/DistributionService
+	java:app/SelectionManagerTest/DistributionService
+	java:module/DistributionService
+
+?[0m?[0m15:16:34,256 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named TechnologyManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:app/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:global/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:app/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+
+?[0m?[0m15:16:34,257 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named YamlManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:app/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:global/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:app/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+
+?[0m?[0m15:16:34,258 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named MibLoader in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:app/SelectionManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:module/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:global/SelectionManagerTest/MibLoader
+	java:app/SelectionManagerTest/MibLoader
+	java:module/MibLoader
+
+?[0m?[0m15:16:34,258 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named ServiceElememtAccessManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:app/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:global/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:app/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+
+?[0m?[0m15:16:34,260 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named SnmpManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:app/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:global/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:app/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+
+?[0m?[0m15:16:34,261 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named SecurityAndAuditManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:app/SelectionManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:module/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:global/SelectionManagerTest/SecurityAndAuditManager
+	java:app/SelectionManagerTest/SecurityAndAuditManager
+	java:module/SecurityAndAuditManager
+
+?[0m?[0m15:16:34,261 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named UserManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:app/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:global/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:app/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+
+?[0m?[0m15:16:34,262 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named SelectionService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:app/SelectionManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:module/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:global/SelectionManagerTest/SelectionService
+	java:app/SelectionManagerTest/SelectionService
+	java:module/SelectionService
+
+?[0m?[0m15:16:34,263 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named MibService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:app/SelectionManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:module/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:global/SelectionManagerTest/MibService
+	java:app/SelectionManagerTest/MibService
+	java:module/MibService
+
+?[0m?[0m15:16:34,264 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named StateManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:app/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:global/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:app/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+
+?[0m?[0m15:16:34,265 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named ServiceElementDiscoveryManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:app/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:global/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:app/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+
+?[0m?[0m15:16:34,266 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named EventManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:app/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:global/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:app/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+
+?[0m?[0m15:16:34,267 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named DiscoveryManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:app/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:global/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:app/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+
+?[0m?[0m15:16:34,268 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named DiscoveryService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:app/SelectionManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:module/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:global/SelectionManagerTest/DiscoveryService
+	java:app/SelectionManagerTest/DiscoveryService
+	java:module/DiscoveryService
+
+?[0m?[0m15:16:34,269 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named InventoryManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:app/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:global/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:app/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+
+?[0m?[0m15:16:34,270 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named TopologyService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:app/SelectionManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:module/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:global/SelectionManagerTest/TopologyService
+	java:app/SelectionManagerTest/TopologyService
+	java:module/TopologyService
+
+?[0m?[0m15:16:34,271 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named PersistenceService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:app/SelectionManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:module/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:global/SelectionManagerTest/PersistenceService
+	java:app/SelectionManagerTest/PersistenceService
+	java:module/PersistenceService
+
+?[0m?[0m15:16:34,271 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named DataLoader in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:app/SelectionManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:module/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:global/SelectionManagerTest/DataLoader
+	java:app/SelectionManagerTest/DataLoader
+	java:module/DataLoader
+
+?[0m?[0m15:16:34,272 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named ManagementObjectCapabilityManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:app/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:global/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:app/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+
+?[0m?[0m15:16:34,274 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named SecurityService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:app/SelectionManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:module/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:global/SelectionManagerTest/SecurityService
+	java:app/SelectionManagerTest/SecurityService
+	java:module/SecurityService
+
+?[0m?[0m15:16:34,274 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-4) JNDI bindings for session bean named PersistenceManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:app/SelectionManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:module/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:global/SelectionManagerTest/PersistenceManager
+	java:app/SelectionManagerTest/PersistenceManager
+	java:module/PersistenceManager
+
+?[0m?[0m15:16:34,400 INFO  [org.jboss.weld.deployer] (MSC service thread 1-1) JBAS016005: Starting Services for CDI deployment: SelectionManagerTest.war
+?[0m?[0m15:16:34,410 INFO  [org.jboss.weld.deployer] (MSC service thread 1-2) JBAS016008: Starting weld service for deployment SelectionManagerTest.war
+?[0m?[0m15:16:34,416 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 303) JBAS011409: Starting Persistence Unit (phase 2 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:16:34,443 INFO  [org.hibernate.dialect.Dialect] (ServerService Thread Pool -- 303) HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+?[0m?[0m15:16:34,592 INFO  [org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory] (ServerService Thread Pool -- 303) HHH000397: Using ASTQueryTranslatorFactory
+?[0m?[0m15:16:35,046 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 303) HHH000227: Running hbm2ddl schema export
+?[0m?[0m15:16:51,697 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 303) HHH000230: Schema export complete
+?[0m?[0m15:16:51,932 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:52,033 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLogger because of underlying class loading error: Type org.slf4j.Logger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:52,227 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkSTBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:52,738 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpManager because of underlying class loading error: Type uk.co.westhawk.snmp.stack.PduException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[33m15:16:52,801 WARN  [org.jboss.modules] (weld-worker-2) Failed to define class org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 in Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader: java.lang.LinkageError: Failed to link org/jboss/as/arquillian/container/OSGiApplicationArchiveProcessor$1 (Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader)
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:487) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.loadClassLocal(ModuleClassLoader.java:277) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader$1.loadClassLocal(ModuleClassLoader.java:92) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.Module.loadModuleClass(Module.java:568) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:205) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.as.weld.WeldModuleResourceLoader.classForName(WeldModuleResourceLoader.java:68) [wildfly-weld-8.1.0.Final.jar:8.1.0.Final]
+	at org.jboss.weld.bootstrap.BeanDeployer.loadClass(BeanDeployer.java:106) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.BeanDeployer.addClass(BeanDeployer.java:94) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:62) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:53) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [rt.jar:1.7.0_51]
+	at java.lang.Thread.run(Thread.java:744) [rt.jar:1.7.0_51]
+Caused by: java.lang.NoClassDefFoundError: org/jboss/arquillian/container/osgi/AbstractOSGiApplicationArchiveProcessor
+	at java.lang.ClassLoader.defineClass1(Native Method) [rt.jar:1.7.0_51]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:800) [rt.jar:1.7.0_51]
+	at org.jboss.modules.ModuleClassLoader.doDefineOrLoadClass(ModuleClassLoader.java:361) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:482) [jboss-modules.jar:1.3.3.Final]
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:213) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	... 23 more
+
+?[0m?[0m15:16:52,818 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 because of underlying class loading error: Type org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:52,938 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLocationAwareLogger because of underlying class loading error: Type org.slf4j.spi.LocationAwareLogger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:53,013 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpResponse because of underlying class loading error: Type uk.co.westhawk.snmp.pdu.BlockPdu from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:53,181 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.matrix.GraphMatrixOperations because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:53,574 INFO  [org.jboss.weld.Bootstrap] (weld-worker-7) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.MarkovCentrality because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix1D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:53,594 INFO  [org.jboss.weld.Bootstrap] (weld-worker-7) WELD-000119: Not generating any bean definitions from org.jboss.net.protocol.http.DavURLLister because of underlying class loading error: Type org.apache.commons.httpclient.HttpException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:53,642 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassTable because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:53,643 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from org.jboss.logging.Log4jLogger because of underlying class loading error: Type org.apache.log4j.Priority from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:16:53,711 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassResolver because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[33m15:16:56,305 WARN  [edu.harvard.integer.service.selection.SelectionService] (ServerService Thread Pool -- 306) SelectionService is starting
+?[0m?[0m15:16:56,305 INFO  [edu.harvard.integer.service.security.SecurityService] (ServerService Thread Pool -- 316) Create SecurityService
+?[0m?[31m15:16:56,309 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 313) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,309 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (ServerService Thread Pool -- 303) Discovery service starting.... on server 1
+?[0m?[0m15:16:56,314 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) DistributionService starting
+?[0m?[0m15:16:56,315 INFO  [stdout] (ServerService Thread Pool -- 307) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[0m15:16:56,315 INFO  [stdout] (ServerService Thread Pool -- 307) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[31m15:16:56,327 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[33m15:16:56,327 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Need to get sever port from Wildfly
+?[0m?[0m15:16:56,328 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) got http port 8585 from System properties
+?[0m?[0m15:16:56,332 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Created IntegerServer edu.harvard.integer.common.distribution.IntegerServer:1
+?[0m?[0m15:16:56,333 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Have 1 IntegerServers
+?[0m?[33m15:16:56,336 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Create managers on 'localhost'
+?[0m?[31m15:16:56,337 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,339 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager PersistenceManager ID: PersistenceManager(edu.harvard.integer.common.distribution.DistributedManager:1)
+?[0m?[31m15:16:56,339 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,340 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager ServiceElementDiscoveryManager ID: ServiceElementDiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:2)
+?[0m?[31m15:16:56,340 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,341 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager SnmpManager ID: SnmpManager(edu.harvard.integer.common.distribution.DistributedManager:3)
+?[0m?[31m15:16:56,342 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,343 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager ServiceElementAccessManager ID: ServiceElementAccessManager(edu.harvard.integer.common.distribution.DistributedManager:4)
+?[0m?[31m15:16:56,343 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,345 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager ManagementObjectCapabilityManager ID: ManagementObjectCapabilityManager(edu.harvard.integer.common.distribution.DistributedManager:5)
+?[0m?[31m15:16:56,345 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,346 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager StateManager ID: StateManager(edu.harvard.integer.common.distribution.DistributedManager:6)
+?[0m?[31m15:16:56,347 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,348 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager SelectionManager ID: SelectionManager(edu.harvard.integer.common.distribution.DistributedManager:7)
+?[0m?[31m15:16:56,349 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,350 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager TechnologyManager ID: TechnologyManager(edu.harvard.integer.common.distribution.DistributedManager:8)
+?[0m?[31m15:16:56,350 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,351 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager DiscoveryManager ID: DiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:9)
+?[0m?[31m15:16:56,352 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,353 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager EventManager ID: EventManager(edu.harvard.integer.common.distribution.DistributedManager:10)
+?[0m?[31m15:16:56,354 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,355 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager YamlManager ID: YamlManager(edu.harvard.integer.common.distribution.DistributedManager:11)
+?[0m?[31m15:16:56,355 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,356 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager TopologyManager ID: TopologyManager(edu.harvard.integer.common.distribution.DistributedManager:12)
+?[0m?[31m15:16:56,356 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,357 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager UserManager ID: UserManager(edu.harvard.integer.common.distribution.DistributedManager:13)
+?[0m?[31m15:16:56,358 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,359 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Added Manager InventoryManager ID: InventoryManager(edu.harvard.integer.common.distribution.DistributedManager:14)
+?[0m?[0m15:16:56,360 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Have 14 DistributeManagers
+?[0m?[33m15:16:56,363 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Create service on 'localhost'
+?[0m?[31m15:16:56,364 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[31m15:16:56,366 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[31m15:16:56,367 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[31m15:16:56,368 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[31m15:16:56,369 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,371 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Have 5 DistributeServices
+?[0m?[31m15:16:56,371 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[31m15:16:56,372 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 307) Unable to load properties from integer.properties
+?[0m?[0m15:16:56,372 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Server null ID: 1 127.0.0.1 My ID: 1 started null
+?[0m?[0m15:16:56,374 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Found 14 managers [Ledu.harvard.integer.common.distribution.DistributedManager;@7dd484ab
+?[0m?[0m15:16:56,374 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager PersistenceManager type PersistenceManager
+?[0m?[0m15:16:56,375 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager ServiceElementDiscoveryManager type ServiceElementDiscoveryManager
+?[0m?[0m15:16:56,375 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager SnmpManager type SnmpManager
+?[0m?[0m15:16:56,375 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager ServiceElementAccessManager type ServiceElementAccessManager
+?[0m?[0m15:16:56,375 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager ManagementObjectCapabilityManager type ManagementObjectCapabilityManager
+?[0m?[0m15:16:56,376 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager StateManager type StateManager
+?[0m?[0m15:16:56,376 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager SelectionManager type SelectionManager
+?[0m?[0m15:16:56,376 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager TechnologyManager type TechnologyManager
+?[0m?[0m15:16:56,376 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager DiscoveryManager type DiscoveryManager
+?[0m?[0m15:16:56,377 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager EventManager type EventManager
+?[0m?[0m15:16:56,377 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager YamlManager type YamlManager
+?[0m?[0m15:16:56,377 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager TopologyManager type TopologyManager
+?[0m?[0m15:16:56,377 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager UserManager type UserManager
+?[0m?[0m15:16:56,378 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 307) Manager InventoryManager type InventoryManager
+?[0m?[33m15:16:56,730 WARN  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 307) PersistenceServices is starting
+?[0m?[0m15:16:56,734 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 307) Loading preload data files
+?[0m?[0m15:16:56,735 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 307) Number of preloads 0
+?[0m?[0m15:16:56,735 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 307) Number of preloads 0
+?[0m?[0m15:16:56,771 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-12) Deploying javax.ws.rs.core.Application: class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:16:56,772 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-12) Adding class resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:16:56,773 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-12) Adding singleton resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:16:56,779 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-12) JBAS017534: Registered web context: /SelectionManagerTest
+?[0m?[0m15:16:57,337 INFO  [org.jboss.as.server] (management-handler-thread - 15) JBAS018559: Deployed &quot;SelectionManagerTest.war&quot; (runtime-name : &quot;SelectionManagerTest.war&quot;)
+?[0m?[0m15:16:57,524 INFO  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-28) ServiceElement read in: !!edu.harvard.integer.common.yaml.YamlDomainData
+serviceElementTypes:
+- accessMethod:
+    accessMethod: null
+    index: [entPhysicalIndex]
+    mapping: null
+    mib: ENTITY-MIB
+    protocol: SNMP
+    table: null
+  associations: null
+  description: The physical table in the ENTITY-MIB.
+  extendServiceElementType: null
+  managementObjects:
+  - {capability: physical-description, categories: null, extension: null, name: entPhysicalDescr,
+    specificAttribute: null, unique: 0, unit: null, uri: entPhysicalDescr}
+  - {capability: physical-vendorType, categories: null, extension: null, name: entPhysicalVendorType,
+    specificAttribute: null, unique: 0, unit: null, uri: entPhysicalVendorType}
+  - {capability: physical-name, categories: null, extension: null, name: entPhysicalClass,
+    specificAttribute: null, unique: 0, unit: null, uri: entPhysicalClass}
+  - {capability: physical-relativePosition, categories: null, extension: null, name: entPhysicalParentRelPos,
+    specificAttribute: null, unique: 0, unit: null, uri: entPhysicalParentRelPos}
+  - {capability: physical-name, categories: null, extension: null, name: entPhysicalName,
+    specificAttribute: null, unique: 0, unit: null, uri: entPhysicalName}
+  - capability: physical-hardwareRevision
+    categories: [module chassis]
+    extension: null
+    name: entPhysicalHardwareRev
+    specificAttribute: null
+    unique: 0
+    unit: null
+    uri: entPhysicalHardwareRev
+  - capability: physical-firmwareRevision
+    categories: [module chassis]
+    extension: null
+    name: entPhysicalFirmwareRev
+    specificAttribute: firmware
+    unique: 0
+    unit: null
+    uri: entPhysicalFirmwareRev
+  - capability: physical-softwareRevision
+    categories: [module chassis]
+    extension: null
+    name: entPhysicalSoftwareRev
+    specificAttribute: null
+    unique: 0
+    unit: null
+    uri: entPhysicalSoftwareRev
+  - capability: physical-serialNumber
+    categories: [module chassis]
+    extension: null
+    name: entPhysicalSerialNum
+    specificAttribute: null
+    unique: 1
+    unit: null
+    uri: entPhysicalSerialNum
+  - {capability: physical-vendor, categories: null, extension: null, name: entPhysicalMfgName,
+    specificAttribute: null, unique: 0, unit: null, uri: entPhysicalMfgName}
+  - {capability: physical-model, categories: null, extension: null, name: entPhysicalModelName,
+    specificAttribute: model, unique: 0, unit: null, uri: entPhysicalModelName}
+  - {capability: physical-fru, categories: null, extension: null, name: entPhysicalIsFRU,
+    specificAttribute: null, unique: 0, unit: null, uri: entPhysicalIsFRU}
+  name: entity-physical
+  serviceElementTypeTranslates:
+  - {category: Chassis, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevChassis, networkLayer: null}
+  - {category: Backplane, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevBackplane, networkLayer: null}
+  - {category: Container, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevContainer, networkLayer: null}
+  - {category: Power Supply, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevPowerSupply, networkLayer: null}
+  - {category: Fan, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevFan, networkLayer: null}
+  - {category: Sensor, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevSensor, networkLayer: null}
+  - {category: Module, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevModule, networkLayer: null}
+  - {category: Port, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevPort, networkLayer: null}
+  - {category: Stack, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevStack, networkLayer: null}
+  - {category: Midplane, defaultNameCabability: null, iconName: null, mapping: subObjIdentify,
+    name: cevMidplane, networkLayer: null}
+  uniqueInstanceSignature: null
+  vendor: cisco
+technologies: null
+
+?[0m?[0m15:16:57,555 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-28) YAML Object is edu.harvard.integer.common.yaml.YamlDomainData
+?[0m?[31m15:16:57,560 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-28) Unable to load properties from integer.properties
+?[0m?[31m15:16:57,562 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-28) Unable to load properties from integer.properties
+?[0m?[31m15:16:57,570 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,571 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,572 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,573 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,574 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,575 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,576 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,577 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,578 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,579 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,580 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,581 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,581 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevChassis
+?[0m?[33m15:16:57,590 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevChassis
+?[0m?[31m15:16:57,592 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,593 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,594 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,595 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,596 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,597 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,598 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,599 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,600 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,601 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,602 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,603 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,603 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevBackplane
+?[0m?[33m15:16:57,607 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevBackplane
+?[0m?[31m15:16:57,608 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,609 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,610 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,611 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,612 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,613 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,614 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,615 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,616 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,617 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,618 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,619 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,619 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevContainer
+?[0m?[33m15:16:57,623 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevContainer
+?[0m?[31m15:16:57,625 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,626 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,627 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,628 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,629 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,630 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,632 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,633 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,634 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,635 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,636 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,637 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,637 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevPowerSupply
+?[0m?[33m15:16:57,641 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevPowerSupply
+?[0m?[31m15:16:57,642 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,643 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,644 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,645 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,646 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,647 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,648 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,649 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,650 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,651 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,652 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,653 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,653 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevFan
+?[0m?[33m15:16:57,657 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevFan
+?[0m?[31m15:16:57,658 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,659 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,660 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,661 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,662 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,663 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,664 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,665 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,666 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,667 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,668 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,669 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,669 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevSensor
+?[0m?[33m15:16:57,673 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevSensor
+?[0m?[31m15:16:57,674 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,675 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,676 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,677 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,678 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,679 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,680 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,681 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,682 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,683 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,684 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,685 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,685 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevModule
+?[0m?[33m15:16:57,689 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevModule
+?[0m?[31m15:16:57,691 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,692 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,693 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,694 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,695 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,696 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,697 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,698 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,699 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,700 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,700 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,701 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,702 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevPort
+?[0m?[33m15:16:57,705 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevPort
+?[0m?[31m15:16:57,707 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,708 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,709 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,710 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,711 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,712 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,713 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,714 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,715 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,716 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,717 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,718 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,718 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevStack
+?[0m?[33m15:16:57,722 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevStack
+?[0m?[31m15:16:57,723 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalDescr
+?[0m?[31m15:16:57,724 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalVendorType
+?[0m?[31m15:16:57,725 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalClass
+?[0m?[31m15:16:57,726 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalParentRelPos
+?[0m?[31m15:16:57,727 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalName
+?[0m?[31m15:16:57,728 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalHardwareRev
+?[0m?[31m15:16:57,729 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalFirmwareRev
+?[0m?[31m15:16:57,748 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSoftwareRev
+?[0m?[31m15:16:57,749 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalSerialNum
+?[0m?[31m15:16:57,756 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalMfgName
+?[0m?[31m15:16:57,757 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalModelName
+?[0m?[31m15:16:57,846 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) No SNMP object found with name entPhysicalIsFRU
+?[0m?[0m15:16:57,847 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Setting Attributes [] On cevMidplane
+?[0m?[33m15:16:57,851 WARN  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-28) Cannot find sub-tree cevMidplane
+?[0m?[0m15:16:57,895 INFO  [stdout] (default task-36) YAML Object is edu.harvard.integer.common.yaml.YamlTechnology
+?[0m?[0m15:16:57,909 INFO  [stdout] (default task-36) Technology read in: !!edu.harvard.integer.common.yaml.YamlTechnology
+?[0m?[0m15:16:57,909 INFO  [stdout] (default task-36) description: null
+?[0m?[0m15:16:57,909 INFO  [stdout] (default task-36) discovery: null
+?[0m?[0m15:16:57,910 INFO  [stdout] (default task-36) layer: null
+?[0m?[0m15:16:57,910 INFO  [stdout] (default task-36) mechanisms: null
+?[0m?[0m15:16:57,910 INFO  [stdout] (default task-36) name: null
+?[0m?[0m15:16:57,910 INFO  [stdout] (default task-36) parent: null
+?[0m?[0m15:16:57,910 INFO  [stdout] (default task-36) provides: null
+?[0m?[0m15:16:57,911 INFO  [stdout] (default task-36) technologies:
+?[0m?[0m15:16:57,911 INFO  [stdout] (default task-36) - description: Cisco Discovery Protocol
+?[0m?[0m15:16:57,911 INFO  [stdout] (default task-36)   discovery: null
+?[0m?[0m15:16:57,911 INFO  [stdout] (default task-36)   layer: null
+?[0m?[0m15:16:57,911 INFO  [stdout] (default task-36)   mechanisms:
+?[0m?[0m15:16:57,911 INFO  [stdout] (default task-36)   - capabilities:
+?[0m?[0m15:16:57,912 INFO  [stdout] (default task-36)     - {description: Whether CDP is running on this device., name: cdp-global-run,
+?[0m?[0m15:16:57,912 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,912 INFO  [stdout] (default task-36)     - {description: The global device ID being advertised via CDP., name: cdp-global-deviceId,
+?[0m?[0m15:16:57,912 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,912 INFO  [stdout] (default task-36)     - {description: The time for the receiving device holds CDP message., name: cdp-global-cdpGlobalHoldTime,
+?[0m?[0m15:16:57,913 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,913 INFO  [stdout] (default task-36)     - {description: Indicates the time when the cache table was last changed., name: cdp-global-cdpGlobalLastChange,
+?[0m?[0m15:16:57,913 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,913 INFO  [stdout] (default task-36)     - {description: Indicate the Device-Id format capability of the device., name: cdp-global-cdpGlobalDeviceIdFormatCpb,
+?[0m?[0m15:16:57,913 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,914 INFO  [stdout] (default task-36)     - {description: An indication of the format of Device-Id contained in the corresponding instance of cdpGlobalDeviceId.,
+?[0m?[0m15:16:57,914 INFO  [stdout] (default task-36)       name: cdp-global-cdpGlobalDeviceIdFormat, type: null}
+?[0m?[0m15:16:57,914 INFO  [stdout] (default task-36)     - {description: The interval at which CDP messages are to be generated., name: cdp-global-cdpGlobalMessageInterval,
+?[0m?[0m15:16:57,914 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,914 INFO  [stdout] (default task-36)     description: CDP global information on this device.
+?[0m?[0m15:16:57,915 INFO  [stdout] (default task-36)     index: null
+?[0m?[0m15:16:57,915 INFO  [stdout] (default task-36)     name: cdp-global
+?[0m?[0m15:16:57,915 INFO  [stdout] (default task-36)     parent: null
+?[0m?[0m15:16:57,915 INFO  [stdout] (default task-36)   - capabilities:
+?[0m?[0m15:16:57,915 INFO  [stdout] (default task-36)     - {description: The name of each interface as advertised by CDP., name: cdp-interface-name,
+?[0m?[0m15:16:57,915 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,916 INFO  [stdout] (default task-36)     - {description: Whether CDP is enabled on each interface., name: cdp-interface-enable,
+?[0m?[0m15:16:57,916 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,916 INFO  [stdout] (default task-36)     - {description: Indicates the value to be sent by Extended Trust TLV., name: cdp-interface-cdpInterfaceExtendedTrust,
+?[0m?[0m15:16:57,916 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,916 INFO  [stdout] (default task-36)     - {description: The interval at which CDP messages are to be generated on this interface.,
+?[0m?[0m15:16:57,917 INFO  [stdout] (default task-36)       name: cdp-interface-cdpInterfaceMessageInterval, type: null}
+?[0m?[0m15:16:57,917 INFO  [stdout] (default task-36)     - {description: Indicates the value to be sent by COS for Untrusted Ports TLV.,
+?[0m?[0m15:16:57,917 INFO  [stdout] (default task-36)       name: cdp-interface-cdpInterfaceCosForUntrustedPort, type: null}
+?[0m?[0m15:16:57,917 INFO  [stdout] (default task-36)     - {description: The type of VLAN membership assigned to this port., name: vmVlanType,
+?[0m?[0m15:16:57,917 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,918 INFO  [stdout] (default task-36)     - {description: The VLAN id of the VLAN the port is assigned to when vmVlanType is set to static or dynamic.,
+?[0m?[0m15:16:57,918 INFO  [stdout] (default task-36)       name: vmVlan, type: null}
+?[0m?[0m15:16:57,918 INFO  [stdout] (default task-36)     - {description: An indication of the current VLAN status of the port., name: vmPortStatus,
+?[0m?[0m15:16:57,918 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,918 INFO  [stdout] (default task-36)     description: |
+?[0m?[0m15:16:57,919 INFO  [stdout] (default task-36)       Each interface on the box that is capable of doing CDP has a corresponding CDP interface service element (certain types of physical interfaces only).
+?[0m?[0m15:16:57,919 INFO  [stdout] (default task-36)     index: [cdp-interface-index]
+?[0m?[0m15:16:57,919 INFO  [stdout] (default task-36)     name: cdp-interface
+?[0m?[0m15:16:57,919 INFO  [stdout] (default task-36)     parent: null
+?[0m?[0m15:16:57,919 INFO  [stdout] (default task-36)   - capabilities:
+?[0m?[0m15:16:57,919 INFO  [stdout] (default task-36)     - description: |
+?[0m?[0m15:16:57,920 INFO  [stdout] (default task-36)         The type of address advertised by the remote device. (e.g. IP, IPv6, CLNS)
+?[0m?[0m15:16:57,920 INFO  [stdout] (default task-36)       name: cdp-cache-addressType
+?[0m?[0m15:16:57,920 INFO  [stdout] (default task-36)       type: null
+?[0m?[0m15:16:57,920 INFO  [stdout] (default task-36)     - {description: The address advertised by the remote device., name: cdp-cache-address,
+?[0m?[0m15:16:57,920 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,921 INFO  [stdout] (default task-36)     - {description: The OS version string advertised by the remote device., name: cdp-cache-version,
+?[0m?[0m15:16:57,921 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,921 INFO  [stdout] (default task-36)     - {description: The device ID of the remote device., name: cdp-cache-deviceId,
+?[0m?[0m15:16:57,921 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,921 INFO  [stdout] (default task-36)     - {description: The port on the remote device that we're connected to., name: cdp-cache-devicePort,
+?[0m?[0m15:16:57,922 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,922 INFO  [stdout] (default task-36)     - {description: The remote device's hardware platform., name: cdp-cache-platform,
+?[0m?[0m15:16:57,922 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,922 INFO  [stdout] (default task-36)     description: |
+?[0m?[0m15:16:57,922 INFO  [stdout] (default task-36)       For every remote CDP neighbor on each interface, there is a device entry in the local CDP cache.
+?[0m?[0m15:16:57,923 INFO  [stdout] (default task-36)     index: [cdp-cache-ifIndex, cdp-cache-deviceIndex]
+?[0m?[0m15:16:57,923 INFO  [stdout] (default task-36)     name: cdp-cache
+?[0m?[0m15:16:57,923 INFO  [stdout] (default task-36)     parent: null
+?[0m?[0m15:16:57,923 INFO  [stdout] (default task-36)   name: CDP
+?[0m?[0m15:16:57,923 INFO  [stdout] (default task-36)   parent: neighbor discovery
+?[0m?[0m15:16:57,923 INFO  [stdout] (default task-36)   provides: null
+?[0m?[0m15:16:57,924 INFO  [stdout] (default task-36)   technologies: null
+?[0m?[0m15:16:57,924 INFO  [stdout] (default task-36) - description: VLAN
+?[0m?[0m15:16:57,924 INFO  [stdout] (default task-36)   discovery: null
+?[0m?[0m15:16:57,924 INFO  [stdout] (default task-36)   layer: null
+?[0m?[0m15:16:57,924 INFO  [stdout] (default task-36)   mechanisms:
+?[0m?[0m15:16:57,924 INFO  [stdout] (default task-36)   - capabilities:
+?[0m?[0m15:16:57,925 INFO  [stdout] (default task-36)     - {description: The VLAN-id of this VLAN on ISL or 802.1q trunks., name: vtpVlanIndex,
+?[0m?[0m15:16:57,925 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,925 INFO  [stdout] (default task-36)     - {description: The state of this VLAN, name: vtpVlanState, type: null}
+?[0m?[0m15:16:57,925 INFO  [stdout] (default task-36)     - {description: The type of this VLAN., name: vtpVlanType, type: null}
+?[0m?[0m15:16:57,925 INFO  [stdout] (default task-36)     - {description: The name of this VLAN., name: vtpVlanName, type: null}
+?[0m?[0m15:16:57,926 INFO  [stdout] (default task-36)     - {description: 'The MTU size on this VLAN,', name: vtpVlanMtu, type: null}
+?[0m?[0m15:16:57,926 INFO  [stdout] (default task-36)     - {description: The value of the 802.10 SAID field for this VLAN., name: vtpVlanDot10Said,
+?[0m?[0m15:16:57,926 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,926 INFO  [stdout] (default task-36)     - {description: A VLAN to which this VLAN is being translational-bridged., name: vtpVlanTranslationalVlan1,
+?[0m?[0m15:16:57,926 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,927 INFO  [stdout] (default task-36)     - {description: 'Another VLAN, i.e., other than that indicated by vtpVlanTranslationalVlan1,
+?[0m?[0m15:16:57,927 INFO  [stdout] (default task-36)         to which this VLAN is being translational-bridged.', name: vtpVlanTranslationalVlan2,
+?[0m?[0m15:16:57,927 INFO  [stdout] (default task-36)       type: null}
+?[0m?[0m15:16:57,927 INFO  [stdout] (default task-36)     - {description: The parent VLAN for this VLAN., name: vtpVlanParentVlan, type: null}
+?[0m?[0m15:16:57,927 INFO  [stdout] (default task-36)     - {description: The ring number of this VLAN., name: vtpVlanRingNumber, type: null}
+?[0m?[0m15:16:57,928 INFO  [stdout] (default task-36)     - {description: The type of the Source Route bridging mode in use on this VLAN,
+?[0m?[0m15:16:57,928 INFO  [stdout] (default task-36)       name: vtpVlanBridgeType, type: null}
+?[0m?[0m15:16:57,928 INFO  [stdout] (default task-36)     - {description: The type of the Spanning Tree Protocol (STP) running on this VLAN.,
+?[0m?[0m15:16:57,928 INFO  [stdout] (default task-36)       name: vtpVlanStpType, type: null}
+?[0m?[0m15:16:57,928 INFO  [stdout] (default task-36)     - {description: The bridge number of the VTP-capable switches for this VLAN.,
+?[0m?[0m15:16:57,929 INFO  [stdout] (default task-36)       name: vtpVlanBridgeNumber, type: null}
+?[0m?[0m15:16:57,929 INFO  [stdout] (default task-36)     description: Cisco VLAN
+?[0m?[0m15:16:57,929 INFO  [stdout] (default task-36)     index: null
+?[0m?[0m15:16:57,929 INFO  [stdout] (default task-36)     name: cisco-vlan
+?[0m?[0m15:16:57,929 INFO  [stdout] (default task-36)     parent: null
+?[0m?[0m15:16:57,930 INFO  [stdout] (default task-36)   name: VLAN Tagging Protocols
+?[0m?[0m15:16:57,930 INFO  [stdout] (default task-36)   parent: vlan discovery
+?[0m?[0m15:16:57,930 INFO  [stdout] (default task-36)   provides: null
+?[0m?[0m15:16:57,930 INFO  [stdout] (default task-36)   technologies: null
+?[0m?[0m15:16:57,930 INFO  [stdout] (default task-36) 
+?[0m?[0m15:16:57,942 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-36) YAML Object is edu.harvard.integer.common.yaml.YamlTechnology
+?[0m?[31m15:16:57,943 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-36) Unable to load properties from integer.properties
+?[0m?[31m15:16:57,944 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-36) Unable to load properties from integer.properties
+?[0m?[0m15:16:58,155 INFO  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-40) ServiceElement read in: !!edu.harvard.integer.common.yaml.YamlDomainData
+serviceElementTypes:
+- accessMethod: {accessMethod: null, index: null, mapping: null, mib: null, protocol: SNMP,
+    table: null}
+  associations: null
+  description: Cisco system
+  extendServiceElementType: systemCommon
+  managementObjects:
+  - {capability: cdp-global-run, categories: null, extension: null, name: cdpGlobalRun,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpGlobalRun}
+  - {capability: cdp-global-deviceId, categories: null, extension: null, name: cdpGlobalDeviceId,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpGlobalDeviceId}
+  - {capability: cdp-global-cdpGlobalMessageInterval, categories: null, extension: null,
+    name: cdpGlobalMessageInterval, specificAttribute: null, unique: 0, unit: null,
+    uri: cdpGlobalMessageInterval}
+  - {capability: cdp-global-cdpGlobalHoldTime, categories: null, extension: null,
+    name: cdpGlobalHoldTime, specificAttribute: null, unique: 0, unit: null, uri: cdpGlobalHoldTime}
+  name: cisco-system
+  serviceElementTypeTranslates:
+  - {category: System, defaultNameCabability: null, iconName: Router, mapping: direct,
+    name: ciscoSystem, networkLayer: null}
+  uniqueInstanceSignature:
+    changeSemos: null
+    description: CISCO system Instance Signature.
+    name: ciscoSystemInstanceSignature
+    uniqueSemos: [entPhysicalSerialNum, entPhysicalModelName]
+  vendor: cisco
+- accessMethod: {accessMethod: null, index: null, mapping: null, mib: null, protocol: SNMP,
+    table: null}
+  associations:
+  - associateServiceElementTypeName: ciscoVtpVlan
+    managementObjects:
+    - {capability: vmVlanType, categories: null, extension: null, name: vmVlanType,
+      specificAttribute: null, unique: 0, unit: null, uri: vmVlanType}
+    - {capability: vmVlan, categories: null, extension: null, name: vmVlan, specificAttribute: null,
+      unique: 0, unit: null, uri: vmVlan}
+    - {capability: vmPortStatus, categories: null, extension: null, name: vmPortStatus,
+      specificAttribute: null, unique: 0, unit: null, uri: vmPortStatus}
+    name: ifVlanAssociation
+  description: CISCO interface which contains CISCO own attributes and associations with VLAN SE.
+  extendServiceElementType: interface
+  managementObjects: null
+  name: vlanInterface
+  serviceElementTypeTranslates:
+  - {category: Interface, defaultNameCabability: null, iconName: null, mapping: direct,
+    name: vlanInterface, networkLayer: null}
+  uniqueInstanceSignature: null
+  vendor: cisco
+- accessMethod:
+    accessMethod: null
+    index: [cdpInterfaceIfIndex]
+    mapping: null
+    mib: CISCO-CDP-MIB
+    protocol: SNMP
+    table: null
+  associations: null
+  description: Cisco enterprise CDP MIB, per-interface attributes.
+  extendServiceElementType: vlanInterface
+  managementObjects:
+  - {capability: cdp-interface-enable, categories: null, extension: null, name: cdpInterfaceEnable,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpInterfaceEnable}
+  - {capability: cdp-interface-name, categories: null, extension: null, name: cdpInterfaceName,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpInterfaceName}
+  name: cisco-cdp-interface
+  serviceElementTypeTranslates:
+  - {category: Interface, defaultNameCabability: null, iconName: null, mapping: direct,
+    name: cdpInterface, networkLayer: Layer2_5}
+  uniqueInstanceSignature: null
+  vendor: cisco
+- accessMethod: {accessMethod: null, index: null, mapping: null, mib: null, protocol: SNMP,
+    table: null}
+  associations: null
+  description: Cisco IP v4 Address
+  extendServiceElementType: ipv4Address
+  managementObjects:
+  - {capability: ipReasmMaxSize, categories: null, extension: null, name: ipAdEntReasmMaxSize,
+    specificAttribute: null, unique: 0, unit: null, uri: ipAdEntReasmMaxSize}
+  name: cisco-ipv4Addr
+  serviceElementTypeTranslates:
+  - {category: Network, defaultNameCabability: null, iconName: null, mapping: direct,
+    name: ciscoIpv4Addr, networkLayer: null}
+  uniqueInstanceSignature: null
+  vendor: cisco
+- accessMethod:
+    accessMethod: null
+    index: [cdpCacheIfIndex, cdpCacheDeviceIndex]
+    mapping: null
+    mib: CISCO-CDP-MIB
+    protocol: SNMP
+    table: null
+  associations: null
+  description: Cisco enterprise CDP MIB, device cache per interface.
+  extendServiceElementType: null
+  managementObjects:
+  - {capability: cdp-cache-addressType, categories: null, extension: null, name: cdpCacheAddressType,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpCacheAddressType}
+  - {capability: cdp-cache-address, categories: null, extension: null, name: cdpCacheAddress,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpCacheAddress}
+  - {capability: cdp-cache-version, categories: null, extension: null, name: cdpCacheVersion,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpCacheVersion}
+  - {capability: cdp-cache-deviceId, categories: null, extension: null, name: cdpCacheDeviceId,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpCacheDeviceId}
+  - {capability: cdp-cache-devicePort, categories: null, extension: null, name: cdpCacheDevicePort,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpCacheDevicePort}
+  - {capability: cdp-cache-platform, categories: null, extension: null, name: cdpCachePlatform,
+    specificAttribute: null, unique: 0, unit: null, uri: cdpCachePlatform}
+  name: cisco-cdp-cache
+  serviceElementTypeTranslates:
+  - {category: Network Element Specific Components, defaultNameCabability: null, iconName: null,
+    mapping: direct, name: cdpCache, networkLayer: null}
+  uniqueInstanceSignature: null
+  vendor: cisco
+technologies: null
+
+?[0m?[0m15:16:58,176 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-40) YAML Object is edu.harvard.integer.common.yaml.YamlDomainData
+?[0m?[31m15:16:58,180 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-40) Unable to load properties from integer.properties
+?[0m?[31m15:16:58,181 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-40) Unable to load properties from integer.properties
+?[0m?[31m15:16:58,184 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpGlobalRun
+?[0m?[31m15:16:58,186 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpGlobalDeviceId
+?[0m?[31m15:16:58,186 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpGlobalMessageInterval
+?[0m?[31m15:16:58,187 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpGlobalHoldTime
+?[0m?[0m15:16:58,188 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) Setting Attributes [] On ciscoSystem
+?[0m?[0m15:16:58,212 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) Setting Attributes [] On vlanInterface
+?[0m?[31m15:16:58,223 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpInterfaceEnable
+?[0m?[31m15:16:58,224 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpInterfaceName
+?[0m?[0m15:16:58,224 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) Setting Attributes [] On cdpInterface
+?[0m?[31m15:16:58,237 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name ipAdEntReasmMaxSize
+?[0m?[0m15:16:58,238 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) Setting Attributes [] On ciscoIpv4Addr
+?[0m?[31m15:16:58,248 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpCacheAddressType
+?[0m?[31m15:16:58,250 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpCacheAddress
+?[0m?[31m15:16:58,251 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpCacheVersion
+?[0m?[31m15:16:58,252 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpCacheDeviceId
+?[0m?[31m15:16:58,254 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpCacheDevicePort
+?[0m?[31m15:16:58,255 ERROR [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) No SNMP object found with name cdpCachePlatform
+?[0m?[0m15:16:58,255 INFO  [edu.harvard.integer.service.yaml.YamlServiceElementTypeParser] (default task-40) Setting Attributes [] On cdpCache
+?[0m?[0m15:16:58,318 INFO  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-44) ServiceElement read in: !!edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment
+name: hostMibContainment
+signatures:
+- {name: Vendor, operator: Equal, value: net-snmp}
+snmpContainment:
+  containmentType: HostResourcesMib
+  contextOID: null
+  serviceElementType: null
+  serviceElementTypeName: hostSystem
+  snmpLevels:
+  - associations: null
+    category: null
+    children: null
+    containmentRelationship: null
+    contextOID: hrDeviceEntry
+    descriminatorOID: hrDeviceType
+    disriminators:
+    - discriminatorValue: 1.3.6.1.2.1.25.3.1.3
+      globaldiscriminatorValue: null
+      serviceElementType:
+        attributes: [hrDeviceDescr, hrDeviceID, hrProcessorFrwID]
+        category: cpu
+        defaultNameCabability: hrDeviceDescr
+        description: null
+        fieldReplaceableUnit: 'false'
+        iconName: null
+        name: CPU
+        uniqueIdentifierCapabilities: [hrDeviceIndex]
+        uniqueInstanceSignature: null
+      serviceElementTypeName: null
+    - discriminatorValue: 1.3.6.1.2.1.25.3.1.5
+      globaldiscriminatorValue: null
+      serviceElementType:
+        attributes: [hrDeviceDescr, hrDeviceID, hrPrinterDetectedErrorState]
+        category: printer
+        defaultNameCabability: hrDeviceDescr
+        description: null
+        fieldReplaceableUnit: 'false'
+        iconName: null
+        name: Printer
+        uniqueIdentifierCapabilities: [hrDeviceIndex]
+        uniqueInstanceSignature: null
+      serviceElementTypeName: null
+    - discriminatorValue: 1.3.6.1.2.1.25.3.1.4
+      globaldiscriminatorValue: null
+      serviceElementType:
+        attributes: [hrDeviceDescr, hrDeviceID, hrNetworkIfIndex]
+        category: port
+        defaultNameCabability: hrDeviceDescr
+        description: null
+        fieldReplaceableUnit: 'false'
+        iconName: null
+        name: PortIf
+        uniqueIdentifierCapabilities: [hrDeviceIndex]
+        uniqueInstanceSignature: null
+      serviceElementTypeName: null
+    - discriminatorValue: 1.3.6.1.2.1.25.3.1.6
+      globaldiscriminatorValue: null
+      serviceElementType:
+        attributes: [hrDeviceDescr, hrDeviceID, hrDiskStorageAccess, hrDiskStorageMedia,
+          hrDiskStorageRemoveble]
+        category: disk
+        defaultNameCabability: hrDeviceDescr
+        description: null
+        fieldReplaceableUnit: 'false'
+        iconName: null
+        name: Disk
+        uniqueIdentifierCapabilities: [hrDeviceIndex]
+        uniqueInstanceSignature: null
+      serviceElementTypeName: null
+    globalDescriminatorOID: null
+    name: HostResourcesMIbContainment
+    parentChildRelationship: {containmentOid: hrDeviceEntry, mappingType: FullOid,
+      modelOid: null, siblingOid: hrStorageDescr, softwareVersionOid: null, subTypeOid: null}
+  - associations: null
+    category: null
+    children: null
+    containmentRelationship: null
+    contextOID: hrSWInstalledEntry
+    descriminatorOID: null
+    disriminators:
+    - discriminatorValue: null
+      globaldiscriminatorValue: null
+      serviceElementType:
+        attributes: [hrSWInstalledID, hrSWInstalledType, hrSWInstalledDate, hrSWInstalledIndex,
+          hrSWInstalledName]
+        category: software
+        defaultNameCabability: hrSWInstalledName
+        description: null
+        fieldReplaceableUnit: 'false'
+        iconName: null
+        name: Software
+        uniqueIdentifierCapabilities: [hrSWInstalledIndex]
+        uniqueInstanceSignature: null
+      serviceElementTypeName: null
+    globalDescriminatorOID: null
+    name: HostMibSWInstalled
+    parentChildRelationship: null
+  - associations: null
+    category: null
+    children: null
+    containmentRelationship: null
+    contextOID: hrStorageEntry
+    descriminatorOID: null
+    disriminators:
+    - discriminatorValue: null
+      globaldiscriminatorValue: null
+      serviceElementType:
+        attributes: [hrStorageAllocationUnits, hrStorageSize, hrStorageType, hrStorageDescr]
+        category: storage
+        defaultNameCabability: hrStorageDescr
+        description: null
+        fieldReplaceableUnit: 'false'
+        iconName: null
+        name: Storage
+        uniqueIdentifierCapabilities: [hrSWInstalledIndex]
+        uniqueInstanceSignature: null
+      serviceElementTypeName: null
+    globalDescriminatorOID: null
+    name: HostMibStorage
+    parentChildRelationship: null
+  sysOidValue: null
+  uniqueDescriminators: null
+
+?[0m?[0m15:16:58,337 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-44) YAML Object is edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment
+?[0m?[31m15:16:58,338 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-44) Unable to load properties from integer.properties
+?[0m?[0m15:16:58,346 INFO  [edu.harvard.integer.service.persistance.PersistenceManager] (default task-44) findBySelector query Select vc.* from VendorContainmentSelector vc 
+ join VendorContainmentSelector_VendorSignature vcss0 on (vcss0.VendorContainmentSelector_identifier = vc.identifier)
+ join VendorSignature vs0 on (vs0.identifier = vcss0.signatures_identifier)
+ join SignatureValueOperator vco0 on (vco0.identifier = vs0.valueOperator_identifier)
+ where lower(vco0.value) = :value0
+?[0m?[0m15:16:58,347 INFO  [edu.harvard.integer.service.persistance.PersistenceManager] (default task-44) value0 = net-snmp
+?[0m?[0m15:16:58,349 INFO  [edu.harvard.integer.service.persistance.PersistenceManager] (default task-44) Got 1 VendorContainmentSelector's
+?[0m?[0m15:16:58,350 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-44) SnmpContainment name: Vendor Equal net-snmp
+?[0m?[31m15:16:58,353 ERROR [edu.harvard.integer.service.yaml.YamlManager] (default task-44) OID not found for hrDeviceEntry Unable to create SnmpLevelOID!
+?[0m?[33m15:16:58,364 WARN  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-44) OID not found! HostResourcesContinment not read!!
+?[0m?[0m15:16:58,400 INFO  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-45) ServiceElement read in: !!edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment
+name: ciscoPhysicalContainment
+signatures:
+- {name: Vendor, operator: Equal, value: cisco}
+snmpContainment:
+  containmentType: EntityMib
+  contextOID: null
+  serviceElementType: null
+  serviceElementTypeName: ciscoSystem
+  snmpLevels:
+  - associations: null
+    category: null
+    children: null
+    containmentRelationship: null
+    contextOID: entPhysicalEntry
+    descriminatorOID: null
+    disriminators: null
+    globalDescriminatorOID: null
+    name: entityParentChild
+    parentChildRelationship: {containmentOid: entPhysicalContainedIn, mappingType: null,
+      modelOid: entPhysicalModelName, siblingOid: entPhysicalParentRelPos, softwareVersionOid: entPhysicalSoftwareRev,
+      subTypeOid: entPhysicalVendorType}
+  - associations:
+    - associationName: ifVlanAssociation
+      containmentRelationship: {childTable: null, mappingOid: vmVlan, mappingTable: vmMembershipEntry,
+        mappingType: null, valueIsParent: 'false'}
+      name: ifVlanAssociation
+    category: port
+    children:
+    - associations: null
+      category: null
+      children: null
+      containmentRelationship: null
+      contextOID: cdpCacheEntry
+      descriminatorOID: null
+      disriminators:
+      - {discriminatorValue: null, globaldiscriminatorValue: null, serviceElementType: null,
+        serviceElementTypeName: cdpCache}
+      globalDescriminatorOID: null
+      name: cdpCacheMapping
+      parentChildRelationship: null
+    - associations: null
+      category: null
+      children: null
+      containmentRelationship: {childTable: null, mappingOid: ipAdEntIfIndex, mappingTable: ipAddrEntry,
+        mappingType: InstanceOnly, valueIsParent: 'true'}
+      contextOID: ipAddrEntry
+      descriminatorOID: null
+      disriminators:
+      - {discriminatorValue: null, globaldiscriminatorValue: null, serviceElementType: null,
+        serviceElementTypeName: ciscoIpv4Addr}
+      globalDescriminatorOID: null
+      name: interfaceIpAddress
+      parentChildRelationship: null
+    containmentRelationship: {childTable: null, mappingOid: entAliasMappingIdentifier,
+      mappingTable: entAliasMappingEntry, mappingType: FullOid, valueIsParent: 'false'}
+    contextOID: ifEntry
+    descriminatorOID: cdpInterfaceEnable
+    disriminators:
+    - {discriminatorValue: 'false', globaldiscriminatorValue: 'false', serviceElementType: null,
+      serviceElementTypeName: vlanInterface}
+    - {discriminatorValue: 'false', globaldiscriminatorValue: 'true', serviceElementType: null,
+      serviceElementTypeName: vlanInterface}
+    - {discriminatorValue: 'true', globaldiscriminatorValue: 'true', serviceElementType: null,
+      serviceElementTypeName: cdpInterface}
+    globalDescriminatorOID: cdpGlobalRun
+    name: portInterfaceMapping
+    parentChildRelationship: null
+  - associations: null
+    category: System
+    children:
+    - associations: null
+      category: null
+      children: null
+      containmentRelationship: {childTable: null, mappingOid: vtpVlanIfIndex, mappingTable: vtpVlanEntry,
+        mappingType: InstanceOnly, valueIsParent: 'false'}
+      contextOID: ifEntry
+      descriminatorOID: null
+      disriminators:
+      - {discriminatorValue: null, globaldiscriminatorValue: null, serviceElementType: null,
+        serviceElementTypeName: interface}
+      globalDescriminatorOID: null
+      name: vlanVurtualIfMapping
+      parentChildRelationship: null
+    containmentRelationship: null
+    contextOID: vtpVlanEntry
+    descriminatorOID: null
+    disriminators:
+    - {discriminatorValue: null, globaldiscriminatorValue: null, serviceElementType: null,
+      serviceElementTypeName: ciscoVtpVlan}
+    globalDescriminatorOID: null
+    name: ciscoVlanLevel
+    parentChildRelationship: null
+  sysOidValue: null
+  uniqueDescriminators:
+  - contaxtOID: entPhysicalEntry
+    discriminatorOID: entPhysicalClass
+    discriminatorValue: '3'
+    name: ciscoSystemUniqueDescriminator
+    uniqueIdentifierSemos: [entPhysicalSerialNum, entPhysicalModelName]
+
+?[0m?[0m15:16:58,416 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-45) YAML Object is edu.harvard.integer.common.yaml.vendorcontainment.YamlVendorContainment
+?[0m?[31m15:16:58,417 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-45) Unable to load properties from integer.properties
+?[0m?[0m15:16:58,423 INFO  [edu.harvard.integer.service.persistance.PersistenceManager] (default task-45) findBySelector query Select vc.* from VendorContainmentSelector vc 
+ join VendorContainmentSelector_VendorSignature vcss0 on (vcss0.VendorContainmentSelector_identifier = vc.identifier)
+ join VendorSignature vs0 on (vs0.identifier = vcss0.signatures_identifier)
+ join SignatureValueOperator vco0 on (vco0.identifier = vs0.valueOperator_identifier)
+ where lower(vco0.value) = :value0
+?[0m?[0m15:16:58,424 INFO  [edu.harvard.integer.service.persistance.PersistenceManager] (default task-45) value0 = cisco
+?[0m?[0m15:16:58,426 INFO  [edu.harvard.integer.service.persistance.PersistenceManager] (default task-45) Got 1 VendorContainmentSelector's
+?[0m?[0m15:16:58,427 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-45) SnmpContainment name: Vendor Equal cisco
+?[0m?[31m15:16:58,429 ERROR [edu.harvard.integer.service.yaml.YamlManager] (default task-45) OID not found for entPhysicalEntry Unable to create SnmpLevelOID!
+?[0m?[33m15:16:58,438 WARN  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-45) OID not found! ParentChildContainment not read!!
+?[0m?[0m15:16:58,490 INFO  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-47) Category read in: !!edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory
+categories:
+- categories:
+  - categories:
+    - {categories: null, description: interface, discovery: null, layer: null, name: Interface,
+      parent: virtual, parents: null}
+    description: virtual
+    discovery: null
+    layer: null
+    name: Virtual
+    parent: system
+    parents: null
+  - categories:
+    - categories:
+      - {categories: null, description: rack, discovery: null, layer: null, name: Rack,
+        parent: passive, parents: null}
+      - {categories: null, description: switch panel, discovery: null, layer: null,
+        name: Switch Panel, parent: passive, parents: null}
+      - {categories: null, description: fiber, discovery: null, layer: null, name: Fiber,
+        parent: passive, parents: null}
+      description: passive
+      discovery: null
+      layer: null
+      name: Passive
+      parent: physical
+      parents: null
+    - categories:
+      - {categories: null, description: router, discovery: null, layer: null, name: Router,
+        parent: network element categories, parents: null}
+      - {categories: null, description: switch, discovery: null, layer: null, name: Switch,
+        parent: network element categories, parents: null}
+      - {categories: null, description: switch/router, discovery: null, layer: null,
+        name: Switch/Router, parent: network element categories, parents: null}
+      - {categories: null, description: firewall, discovery: null, layer: null, name: Firewall,
+        parent: network element categories, parents: null}
+      - {categories: null, description: vlan, discovery: null, layer: null, name: Vlan,
+        parent: network element categories, parents: null}
+      - {categories: null, description: nat, discovery: null, layer: null, name: NAT,
+        parent: network element categories, parents: null}
+      - {categories: null, description: load balancer, discovery: null, layer: null,
+        name: Load Balancer, parent: network element categories, parents: null}
+      - categories:
+        - {categories: null, description: slot is one type of container, discovery: null,
+          layer: null, name: Container, parent: network element specific components,
+          parents: null}
+        - {categories: null, description: 'linecard, fpc, etc.', discovery: null,
+          layer: null, name: Module, parent: network element specific components,
+          parents: null}
+        - {categories: null, description: routing engine, discovery: null, layer: null,
+          name: Routing Engine, parent: network element specific components, parents: null}
+        - {categories: null, description: supervisor board, discovery: null, layer: null,
+          name: Supervisor Board, parent: network element specific components, parents: null}
+        - {categories: null, description: 'crypto, ssl, extra processing, etc.', discovery: null,
+          layer: null, name: Feature Card, parent: network element spefic components,
+          parents: null}
+        description: network element specific components
+        discovery: null
+        layer: null
+        name: Network Element Specific Components
+        parent: network element categories
+        parents: null
+      description: Network Element Categories
+      discovery: null
+      layer: null
+      name: Network Element Categories
+      parent: null
+      parents: [physical, virtual]
+    - categories:
+      - {categories: null, description: general purpose, discovery: null, layer: null,
+        name: General Purpose, parent: server categories, parents: null}
+      - {categories: null, description: web, discovery: null, layer: null, name: Web,
+        parent: server categories, parents: null}
+      - {categories: null, description: web, discovery: null, layer: null, name: Database,
+        parent: server categories, parents: null}
+      - {categories: null, description: LDAP, discovery: null, layer: null, name: LDAP,
+        parent: server categories, parents: null}
+      - {categories: null, description: file, discovery: null, layer: null, name: File,
+        parent: server categories, parents: null}
+      - {categories: null, description: storage, discovery: null, layer: null, name: Storage,
+        parent: server categories, parents: null}
+      - {categories: null, description: application, discovery: null, layer: null,
+        name: Application, parent: server categories, parents: null}
+      - categories:
+        - {categories: null, description: raid array, discovery: null, layer: null,
+          name: Raid Array, parent: hardware, parents: null}
+        - {categories: null, description: raid controller, discovery: null, layer: null,
+          name: Raid Controller, parent: hardware, parents: null}
+        description: server specific components
+        discovery: null
+        layer: null
+        name: Server Specific Components
+        parent: server categories
+        parents: null
+      description: server categories
+      discovery: null
+      layer: null
+      name: Server Categories
+      parent: null
+      parents: [physical, virtual]
+    - categories:
+      - {categories: null, description: chassis, discovery: null, layer: null, name: Chassis,
+        parent: common system components, parents: null}
+      - {categories: null, description: backplane, discovery: null, layer: null, name: Backplane,
+        parent: common system components, parents: null}
+      - {categories: null, description: midplane, discovery: null, layer: null, name: Midplane,
+        parent: common system components, parents: null}
+      - {categories: null, description: memory, discovery: null, layer: null, name: Memory,
+        parent: common system components, parents: null}
+      - {categories: null, description: stack, discovery: null, layer: null, name: Stack,
+        parent: common system components, parents: null}
+      - {categories: null, description: port, discovery: null, layer: null, name: Port,
+        parent: common system components, parents: null}
+      - {categories: null, description: optic, discovery: null, layer: null, name: Optic,
+        parent: common system components, parents: null}
+      - {categories: null, description: fan, discovery: null, layer: null, name: Fan,
+        parent: common system components, parents: null}
+      - {categories: null, description: power supply, discovery: null, layer: null,
+        name: Power Supply, parent: common system components, parents: null}
+      - {categories: null, description: sensor, discovery: null, layer: null, name: Sensor,
+        parent: common system components, parents: null}
+      - {categories: null, description: cpu, discovery: null, layer: null, name: CPU,
+        parent: common system components, parents: null}
+      - {categories: null, description: pcmcia card, discovery: null, layer: null,
+        name: PCMCIA Card, parent: common system components, parents: null}
+      - {categories: null, description: disk, discovery: null, layer: null, name: Disk,
+        parent: common system components, parents: null}
+      description: common system components
+      discovery: null
+      layer: null
+      name: Common System Components
+      parent: null
+      parents: [network element categories, server categories]
+    description: physical
+    discovery: null
+    layer: null
+    name: Physical
+    parent: system
+    parents: null
+  description: system
+  discovery: null
+  layer: null
+  name: System
+  parent: category-tree
+  parents: null
+- categories:
+  - {categories: null, description: overall operating system, discovery: null, layer: null,
+    name: Overall Operating System, parent: software, parents: null}
+  - {categories: null, description: per-card operating system, discovery: null, layer: null,
+    name: Per-card Operating System, parent: software, parents: null}
+  - {categories: null, description: middleware/application server, discovery: null,
+    layer: null, name: Middleware/Application Server, parent: software, parents: null}
+  - {categories: null, description: database, discovery: null, layer: null, name: Database,
+    parent: software, parents: null}
+  - {categories: null, description: file service, discovery: null, layer: null, name: File Service,
+    parent: software, parents: null}
+  - {categories: null, description: network, discovery: null, layer: null, name: Network,
+    parent: software, parents: null}
+  - {categories: null, description: other undefined, discovery: null, layer: null,
+    name: Other Undefined, parent: software, parents: null}
+  description: software
+  discovery: null
+  layer: null
+  name: Software
+  parent: category-tree
+  parents: null
+- {categories: null, description: inter device links, discovery: null, layer: null,
+  name: Inter Device Links, parent: category-tree, parents: null}
+- {categories: null, description: unknown category, discovery: null, layer: null,
+  name: unknown, parent: category-tree, parents: null}
+description: category-tree
+discovery: null
+layer: null
+name: Category-tree
+parent: root
+parents: null
+
+?[0m?[0m15:16:58,517 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-47) YAML Object is edu.harvard.integer.common.yaml.vendorcontainment.YamlCategory
+?[0m?[0m15:16:59,363 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-59) YAML Object is edu.harvard.integer.common.yaml.YamlService
+?[0m?[31m15:16:59,364 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-59) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,421 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-60) YAML Object is edu.harvard.integer.common.yaml.YamlOrganization
+?[0m?[31m15:16:59,422 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,428 INFO  [stdout] (default task-60) Add Organization: Harvard With 3 children
+?[0m?[0m15:16:59,428 INFO  [stdout] (default task-60) Add Organization: Schools With 15 children
+?[0m?[0m15:16:59,428 INFO  [stdout] (default task-60) Add Organization: Harvard College With no children
+?[0m?[0m15:16:59,432 INFO  [stdout] (default task-60) Add Organization: Harvard School of Dental Medicine With no children
+?[0m?[0m15:16:59,434 INFO  [stdout] (default task-60) Add Organization: Harvard Divinity School With no children
+?[0m?[0m15:16:59,436 INFO  [stdout] (default task-60) Add Organization: School of Engineering and Applied Sciences With no children
+?[0m?[0m15:16:59,438 INFO  [stdout] (default task-60) Add Organization: Graduate School of Arts and Sciences With no children
+?[0m?[0m15:16:59,440 INFO  [stdout] (default task-60) Add Organization: Harvard Medical School With 1 children
+?[0m?[0m15:16:59,440 INFO  [stdout] (default task-60) Add Organization: HMS Affiliates With 16 children
+?[0m?[0m15:16:59,440 INFO  [stdout] (default task-60) Add Organization: Beth Israel Deaconess Medical Center With no children
+?[0m?[0m15:16:59,442 INFO  [stdout] (default task-60) Add Organization: Boston Children's Hospital With no children
+?[0m?[0m15:16:59,444 INFO  [stdout] (default task-60) Add Organization: Brigham and Women's Hospital With no children
+?[0m?[0m15:16:59,446 INFO  [stdout] (default task-60) Add Organization: Cambridge Health Alliance With no children
+?[0m?[0m15:16:59,448 INFO  [stdout] (default task-60) Add Organization: Dana-Farber Cancer Institute With no children
+?[0m?[0m15:16:59,450 INFO  [stdout] (default task-60) Add Organization: Harvard Pilgrim Health Care Institute With no children
+?[0m?[0m15:16:59,452 INFO  [stdout] (default task-60) Add Organization: Hebrew SeniorLive With no children
+?[0m?[0m15:16:59,454 INFO  [stdout] (default task-60) Add Organization: Joslin Diabetes Center With no children
+?[0m?[0m15:16:59,455 INFO  [stdout] (default task-60) Add Organization: Judge Baker's Children's Center With no children
+?[0m?[0m15:16:59,457 INFO  [stdout] (default task-60) Add Organization: Massachusetts Eye and Ear With no children
+?[0m?[0m15:16:59,460 INFO  [stdout] (default task-60) Add Organization: Massachusetts General Hospital With no children
+?[0m?[0m15:16:59,462 INFO  [stdout] (default task-60) Add Organization: McLean Hospital With no children
+?[0m?[0m15:16:59,464 INFO  [stdout] (default task-60) Add Organization: Mount Auburn Hospital With no children
+?[0m?[0m15:16:59,466 INFO  [stdout] (default task-60) Add Organization: Schepens Eye Research Institute With no children
+?[0m?[0m15:16:59,468 INFO  [stdout] (default task-60) Add Organization: Spaulding Rehabilitation Hospital With no children
+?[0m?[0m15:16:59,470 INFO  [stdout] (default task-60) Add Organization: VA Boston Healthcare System With no children
+?[0m?[0m15:16:59,475 INFO  [stdout] (default task-60) Add Organization: Radcliffe Institue for Advanced Study With no children
+?[0m?[0m15:16:59,477 INFO  [stdout] (default task-60) Add Organization: Harvard Business School With no children
+?[0m?[0m15:16:59,479 INFO  [stdout] (default task-60) Add Organization: Division of Continuing Education With no children
+?[0m?[0m15:16:59,480 INFO  [stdout] (default task-60) Add Organization: Faculty of Arts and Sciences With no children
+?[0m?[0m15:16:59,482 INFO  [stdout] (default task-60) Add Organization: Graduate School of Design With no children
+?[0m?[0m15:16:59,484 INFO  [stdout] (default task-60) Add Organization: Harvard Graduate School of Education With no children
+?[0m?[0m15:16:59,486 INFO  [stdout] (default task-60) Add Organization: Harvard Kennedy School With no children
+?[0m?[0m15:16:59,488 INFO  [stdout] (default task-60) Add Organization: Harvard Law School With no children
+?[0m?[0m15:16:59,490 INFO  [stdout] (default task-60) Add Organization: Harvard School of Public Health With no children
+?[0m?[0m15:16:59,493 INFO  [stdout] (default task-60) Add Organization: Allied Institutions With 6 children
+?[0m?[0m15:16:59,493 INFO  [stdout] (default task-60) Add Organization: American Repertory Theater With no children
+?[0m?[0m15:16:59,495 INFO  [stdout] (default task-60) Add Organization: Arnold Arboretum With no children
+?[0m?[0m15:16:59,497 INFO  [stdout] (default task-60) Add Organization: Harvard Art Museums With no children
+?[0m?[0m15:16:59,500 INFO  [stdout] (default task-60) Add Organization: Harvard University Press With no children
+?[0m?[0m15:16:59,501 INFO  [stdout] (default task-60) Add Organization: Nieman Foundation With no children
+?[0m?[0m15:16:59,503 INFO  [stdout] (default task-60) Add Organization: Villa I Tatti With no children
+?[0m?[0m15:16:59,507 INFO  [stdout] (default task-60) Add Organization: Harvard University Information Technology With 2 children
+?[0m?[0m15:16:59,507 INFO  [stdout] (default task-60) Add Organization: Infrastructure With 4 children
+?[0m?[0m15:16:59,507 INFO  [stdout] (default task-60) Add Organization: Network With no children
+?[0m?[31m15:16:59,508 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,512 INFO  [stdout] (default task-60) Add Organization: Unified Communications With no children
+?[0m?[31m15:16:59,512 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,522 INFO  [stdout] (default task-60) Add Organization: Enterprise Computing With no children
+?[0m?[31m15:16:59,523 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,528 INFO  [stdout] (default task-60) Add Organization: Storage With no children
+?[0m?[31m15:16:59,529 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,534 INFO  [stdout] (default task-60) Add Organization: Service delivery With 8 children
+?[0m?[0m15:16:59,534 INFO  [stdout] (default task-60) Add Organization: Academic Technology Services With no children
+?[0m?[0m15:16:59,536 INFO  [stdout] (default task-60) Add Organization: Support Services With no children
+?[0m?[0m15:16:59,538 INFO  [stdout] (default task-60) Add Organization: Information Security With no children
+?[0m?[0m15:16:59,540 INFO  [stdout] (default task-60) Add Organization: Administrative Technology Services With no children
+?[0m?[31m15:16:59,540 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,547 INFO  [stdout] (default task-60) Add Organization: Student Information Systems With no children
+?[0m?[31m15:16:59,548 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,553 INFO  [stdout] (default task-60) Add Organization: Identity and Access Management With no children
+?[0m?[31m15:16:59,553 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,557 INFO  [stdout] (default task-60) Add Organization: Teaching and Learning Technologies With no children
+?[0m?[31m15:16:59,557 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,562 INFO  [stdout] (default task-60) Add Organization: Library Resources With no children
+?[0m?[31m15:16:59,562 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-60) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,616 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-64) YAML Object is [Ledu.harvard.integer.common.yaml.YamlEnvironment;
+?[0m?[31m15:16:59,617 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-64) Unable to load properties from integer.properties
+?[0m?[0m15:16:59,724 INFO  [edu.harvard.integer.common.technology.TechnologyLoadTest] (default task-66) Technology read in: !!edu.harvard.integer.common.yaml.YamlTechnology
+description: technology-tree
+discovery: null
+layer: null
+mechanisms: null
+name: technology-tree
+parent: root
+provides: null
+technologies:
+- description: networking
+  discovery: null
+  layer: null
+  mechanisms: null
+  name: Networking
+  parent: technology-tree
+  provides: null
+  technologies:
+  - description: physical connectivity
+    discovery: null
+    layer: null
+    mechanisms: null
+    name: Physical Connectivity
+    parent: networking
+    provides: null
+    technologies:
+    - description: ethernet physical layer
+      discovery: [ServiceElement]
+      layer: '1'
+      mechanisms: null
+      name: Ethernet Physical Layer
+      parent: physical connectivity
+      provides: null
+      technologies:
+      - {description: 1000base-T, discovery: null, layer: null, mechanisms: null,
+        name: 1000base-T, parent: ethernet physical layer, provides: null, technologies: null}
+      - {description: 10GBASE-SR, discovery: null, layer: null, mechanisms: null,
+        name: 10GBASE-SR, parent: ethernet physical layer, provides: null, technologies: null}
+    - description: Wi-Fi
+      discovery: [ServiceElement]
+      layer: '2'
+      mechanisms: null
+      name: 802.11 wireless LAN
+      parent: physical connectivity
+      provides: null
+      technologies: null
+    - description: WiMAX
+      discovery: [ServiceElement]
+      layer: '2'
+      mechanisms: null
+      name: 802.16 wireless MAN
+      parent: physical connectivity
+      provides: null
+      technologies: null
+    - description: link layer protocols
+      discovery: null
+      layer: '2'
+      mechanisms: null
+      name: Link Layer Protocols
+      parent: networking
+      provides: null
+      technologies:
+      - description: data link protocols
+        discovery: null
+        layer: null
+        mechanisms: null
+        name: Data Link Protocols
+        parent: link layer protocols
+        provides: null
+        technologies:
+        - {description: Ethernet, discovery: null, layer: null, mechanisms: null,
+          name: Ethernet, parent: data link protocols, provides: null, technologies: null}
+        - {description: PPP, discovery: null, layer: null, mechanisms: null, name: PPP,
+          parent: data link protocols, provides: null, technologies: null}
+        - {description: PPTP, discovery: null, layer: null, mechanisms: null, name: PPTP,
+          parent: data link protocols, provides: null, technologies: null}
+      - description: neighbor discovery
+        discovery: [Topology]
+        layer: '2.5'
+        mechanisms: null
+        name: Neighbor Discovery
+        parent: link layer protocols
+        provides: null
+        technologies:
+        - {description: Cisco Discovery Protocol, discovery: null, layer: null, mechanisms: null,
+          name: CDP, parent: neighbor discovery, provides: null, technologies: null}
+        - {description: Link-layer Discovery Protocol, discovery: null, layer: null,
+          mechanisms: null, name: LLDP, parent: neighbor discovery, provides: null,
+          technologies: null}
+        - {description: Link-layer Discovery Protocol Media Endpoint Discovery, discovery: null,
+          layer: null, mechanisms: null, name: LLDP-MED, parent: neighbor discovery,
+          provides: null, technologies: null}
+        - {description: IPv6 Neighbor Discovery Protocol, discovery: null, layer: null,
+          mechanisms: null, name: NDP, parent: neighbor discovery, provides: null,
+          technologies: null}
+        - {description: Foundry Discovery Protocol, discovery: null, layer: null,
+          mechanisms: null, name: FDP, parent: neighbor discovery, provides: null,
+          technologies: null}
+        - {description: Extreme Discovery Protocol, discovery: null, layer: null,
+          mechanisms: null, name: EDP, parent: neighbor discovery, provides: null,
+          technologies: null}
+        - {description: Microsoft Link-layer Topology Discovery protocol, discovery: null,
+          layer: null, mechanisms: null, name: LLTD, parent: neighbor discovery, provides: null,
+          technologies: null}
+      - description: link bonding
+        discovery: [ServiceElement]
+        layer: '2'
+        mechanisms: null
+        name: Link Bonding
+        parent: link layer protocols
+        provides: null
+        technologies:
+        - description: host-to-host bonded link schemes
+          discovery: null
+          layer: null
+          mechanisms: null
+          name: Host-to-host Bonded Link Schemes
+          parent: link bonding
+          provides: null
+          technologies:
+          - {description: Cisco EtherChannel, discovery: null, layer: null, mechanisms: null,
+            name: Cisco EtherChannel, parent: host-to-host bonded link schemes, provides: null,
+            technologies: null}
+          - {description: juniper aggregated ethernet, discovery: null, layer: null,
+            mechanisms: null, name: Juniper Aggregated Ethernet, parent: host-to-host bonded link schemes,
+            provides: null, technologies: null}
+          - {description: avaya multi-link trunking, discovery: null, layer: null,
+            mechanisms: null, name: Avaya Multi-Link Trunking, parent: host-to-host bonded link schemes,
+            provides: null, technologies: null}
+          - {description: Linux Bonding driver, discovery: null, layer: null, mechanisms: null,
+            name: Linux Bonding driver, parent: host-to-host bonded link schemes,
+            provides: null, technologies: null}
+          - {description: Linux Team driver, discovery: null, layer: null, mechanisms: null,
+            name: Linux Team driver, parent: host-to-host bonded link schemes, provides: null,
+            technologies: null}
+          - {description: microsoft load balancing and failover, discovery: null,
+            layer: null, mechanisms: null, name: Microsoft Load Balancing and Failover,
+            parent: host-to-host bonded link schemes, provides: null, technologies: null}
+        - description: link bonding types
+          discovery: null
+          layer: '2.5'
+          mechanisms: null
+          name: Link Bonding Types
+          parent: link layer protocols
+          provides: null
+          technologies:
+          - description: host-only
+            discovery: null
+            layer: null
+            mechanisms: null
+            name: Static Single-sided Sonfiguration
+            parent: link bonding types
+            provides: null
+            technologies:
+            - {description: active-backup, discovery: null, layer: null, mechanisms: null,
+              name: Active-backup, parent: static single-sided configuration, provides: null,
+              technologies: null}
+            - {description: broadcast, discovery: null, layer: null, mechanisms: null,
+              name: Broadcast, parent: static single-sided configuration, provides: null,
+              technologies: null}
+            - {description: adaptive transmit, discovery: null, layer: null, mechanisms: null,
+              name: Adaptive Transmit, parent: static single-sided configuration,
+              provides: null, technologies: null}
+            - {description: adaptive transmit and receive, discovery: null, layer: null,
+              mechanisms: null, name: Adaptive Transmit and Receive, parent: static single-sided configuration,
+              provides: null, technologies: null}
+          - description: static dual-sided configuration
+            discovery: null
+            layer: null
+            mechanisms: null
+            name: Static Dual-sided Configuration
+            parent: link bonding types
+            provides: null
+            technologies:
+            - {description: round-robin, discovery: null, layer: null, mechanisms: null,
+              name: Round-robin, parent: static dual-sided configuration, provides: null,
+              technologies: null}
+            - {description: xor, discovery: null, layer: null, mechanisms: null, name: xor,
+              parent: static dual-sided configuration, provides: null, technologies: null}
+          - description: dynamic protocols
+            discovery: null
+            layer: null
+            mechanisms: null
+            name: Dynamic Protocols
+            parent: link bonding types
+            provides: null
+            technologies:
+            - {description: lacp, discovery: null, layer: null, mechanisms: null,
+              name: lacp, parent: dynamic protocols, provides: null, technologies: null}
+            - {description: pagp, discovery: null, layer: null, mechanisms: null,
+              name: pagp, parent: dynamic protocols, provides: null, technologies: null}
+        - description: switch-side proprietary, host-side LACP
+          discovery: null
+          layer: '2.5'
+          mechanisms: null
+          name: Proprietary Multi-chassis Bonding Schemes
+          parent: link bonding
+          provides: null
+          technologies:
+          - {description: Alcatel-Lucent, discovery: null, layer: null, mechanisms: null,
+            name: Juniper Multi-Chassis Link Aggregation, parent: proprietary multi-chassis bonding schemes,
+            provides: null, technologies: null}
+          - {description: Brocade Multi-Chassis Trunking, discovery: null, layer: null,
+            mechanisms: null, name: Brocade Multi-Chassis Trunking, parent: proprietary multi-chassis bonding schemes,
+            provides: null, technologies: null}
+          - {description: Arista Multi-Chassis Link Aggregation, discovery: null,
+            layer: null, mechanisms: null, name: Arista Multi-Chassis Link Aggregation,
+            parent: proprietary multi-chassis bonding schemes, provides: null, technologies: null}
+          - {description: vPC, discovery: null, layer: null, mechanisms: null, name: Cisco Virtual Port Channel,
+            parent: proprietary multi-chassis bonding schemes, provides: null, technologies: null}
+          - {description: Force10 Virtual Link Trunking, discovery: null, layer: null,
+            mechanisms: null, name: Force10 Virtual Link Trunking, parent: proprietary multi-chassis bonding schemes,
+            provides: null, technologies: null}
+  - description: Virtual Local Area Networks
+    discovery: null
+    layer: null
+    mechanisms: null
+    name: VLANs
+    parent: networking
+    provides: null
+    technologies:
+    - description: VLAN tagging protocols
+      discovery: [ServiceElement, Topology]
+      layer: '2'
+      mechanisms: null
+      name: VLAN Tagging Protocols
+      parent: VLANs
+      provides: null
+      technologies:
+      - {description: 802.1q vlan trunking, discovery: null, layer: null, mechanisms: null,
+        name: 802.1q VLAN Trunking, parent: VLAN tagging protocols, provides: null,
+        technologies: null}
+      - {description: or IEEE 802.10, discovery: null, layer: null, mechanisms: null,
+        name: Cisco ISL, parent: VLAN tagging protocols, provides: null, technologies: null}
+      - {description: LAN emulation, discovery: null, layer: null, mechanisms: null,
+        name: LANE, parent: VLAN tagging protocols, provides: null, technologies: null}
+    - description: VLAN registration protocols
+      discovery: [None]
+      layer: '2.5'
+      mechanisms: null
+      name: VLAN Registration Protocols
+      parent: VLANs
+      provides: null
+      technologies:
+      - {description: VLAN Trunking Protocol, discovery: null, layer: null, mechanisms: null,
+        name: Cisco VTP, parent: VLAN registration protocols, provides: null, technologies: null}
+      - {description: 'Multiple VLAN Registration Protocol, part of MRP (IEEE 802.1ak)',
+        discovery: null, layer: null, mechanisms: null, name: MVRP, parent: VLAN registration protocols,
+        provides: null, technologies: null}
+    - description: VLAN trunk negotiation protocols
+      discovery: [None]
+      layer: null
+      mechanisms: null
+      name: VLAN Trunk Negotiation Protocols
+      parent: VLANs
+      provides: null
+      technologies:
+      - {description: Dynamic Trunking Protocol, discovery: null, layer: null, mechanisms: null,
+        name: Cisco DTP, parent: VLAN trunk negotiation protocols, provides: null,
+        technologies: null}
+    - description: Spanning-tree protocol versions and alternatives
+      discovery: [Topology]
+      layer: '2'
+      mechanisms: null
+      name: Spanning-tree Protocol Versions and Alternatives
+      parent: VLANs
+      provides: null
+      technologies:
+      - description: 802.1d) - RSTP (802.1w, 802.1d-2004) - MSTP (Multiple Spanning Tree Protocol) (802.1s, 802.1q-2005
+        discovery: null
+        layer: null
+        mechanisms: null
+        name: Standards-based Spanning-tree Versions - IEEE STP
+        parent: Spanning-tree protocol versions and alternatives
+        provides: null
+        technologies:
+        - description: vendor-proprietary spanning-tree implementations
+          discovery: null
+          layer: null
+          mechanisms: null
+          name: Vendor-proprietary Spanning-tree Implementations
+          parent: Spanning-tree protocol versions and alternatives
+          provides: null
+          technologies:
+          - {description: Cisco PVST, discovery: null, layer: null, mechanisms: null,
+            name: Cisco PVST, parent: vendor-proprietary spanning-tree implementations,
+            provides: null, technologies: null}
+          - {description: Cisco PVST+, discovery: null, layer: null, mechanisms: null,
+            name: Cisco PVST+, parent: vendor-proprietary spanning-tree implementations,
+            provides: null, technologies: null}
+          - {description: Cisco RPVST, discovery: null, layer: null, mechanisms: null,
+            name: Cisco RPVST, parent: vendor-proprietary spanning-tree implementations,
+            provides: null, technologies: null}
+          - {description: Cisco MISTP, discovery: null, layer: null, mechanisms: null,
+            name: Cisco MISTP, parent: vendor-proprietary spanning-tree implementations,
+            provides: null, technologies: null}
+          - {description: Extreme EAPS, discovery: null, layer: null, mechanisms: null,
+            name: Extreme EAPS, parent: vendor-proprietary spanning-tree implementations,
+            provides: null, technologies: null}
+    - description: Spanning-tree replacement protocols
+      discovery: null
+      layer: null
+      mechanisms: null
+      name: Spanning-tree Replacement Protocols
+      parent: VLANs
+      provides: null
+      technologies:
+      - {description: Shortest Path Bridging, discovery: null, layer: null, mechanisms: null,
+        name: SPB, parent: Spanning-tree replacement protocols, provides: null, technologies: null}
+      - {description: Transparent Interconnection of Lots of Links, discovery: null,
+        layer: null, mechanisms: null, name: TRILL, parent: Spanning-tree replacement protocols,
+        provides: null, technologies: null}
+  - description: traffic encryption protocols
+    discovery: null
+    layer: null
+    mechanisms: null
+    name: Traffic Encryption Protocols
+    parent: networking
+    provides: null
+    technologies:
+    - description: IPSEC
+      discovery: null
+      layer: null
+      mechanisms: null
+      name: IPSEC
+      parent: traffic encryption protocols
+      provides: null
+      technologies:
+      - {description: AH, discovery: null, layer: null, mechanisms: null, name: AH,
+        parent: IPSEC, provides: null, technologies: null}
+      - {description: ESP, discovery: null, layer: null, mechanisms: null, name: ESP,
+        parent: IPSEC, provides: null, technologies: null}
+      - {description: SA, discovery: null, layer: null, mechanisms: null, name: SA,
+        parent: IPSEC, provides: null, technologies: null}
+- description: packet-switched networking
+  discovery: [ServiceElement, Topology]
+  layer: '2.5'
+  mechanisms: null
+  name: Packet-switched Networking
+  parent: networking
+  provides: null
+  technologies:
+  - {description: Frame Relay, discovery: null, layer: null, mechanisms: null, name: Frame Relay,
+    parent: packet-switched networking, provides: null, technologies: null}
+  - {description: ATM, discovery: null, layer: null, mechanisms: null, name: ATM,
+    parent: packet-switched networking, provides: null, technologies: null}
+  - {description: MPLS, discovery: null, layer: null, mechanisms: null, name: MPLS,
+    parent: packet-switched networking, provides: null, technologies: null}
+- description: tunneling
+  discovery: null
+  layer: '2.5'
+  mechanisms: null
+  name: Tunneling
+  parent: technology-tree
+  provides: null
+  technologies:
+  - {description: 'Generic Routing Encapsulation, virtual point-to-point links', discovery: null,
+    layer: null, mechanisms: null, name: Cisco GRE, parent: tunneling, provides: null,
+    technologies: null}
+  - {description: multipoint GRE, discovery: null, layer: null, mechanisms: null,
+    name: mGRE, parent: tunneling, provides: null, technologies: null}
+  - description: based on PPP and IPSEC
+    discovery: null
+    layer: null
+    mechanisms: null
+    name: IP-VPN
+    parent: tunneling
+    provides: null
+    technologies:
+    - description: MPLS VPN tunnels
+      discovery: null
+      layer: null
+      mechanisms: null
+      name: MPLS VPN tunnels
+      parent: tunneling
+      provides: null
+      technologies:
+      - {description: pseudowire, discovery: null, layer: null, mechanisms: null,
+        name: PW/point-to-point, parent: MPLS VPN tunnels, provides: null, technologies: null}
+      - {description: Virtual Private LAN Service, discovery: null, layer: null, mechanisms: null,
+        name: VPLS, parent: MPLS VPN tunnels, provides: null, technologies: null}
+      - {description: Virtual Private Routed Network, discovery: null, layer: null,
+        mechanisms: null, name: VPRN, parent: MPLS VPN tunnels, provides: null, technologies: null}
+- description: switching
+  discovery: null
+  layer: null
+  mechanisms: null
+  name: Switching
+  parent: networking
+  provides: null
+  technologies:
+  - description: ethernet switching
+    discovery: null
+    layer: '2'
+    mechanisms: null
+    name: Ethernet Switching
+    parent: switching
+    provides: null
+    technologies:
+    - {description: CAM table, discovery: null, layer: null, mechanisms: null, name: CAM table,
+      parent: ethernet switching, provides: null, technologies: null}
+- description: network layer protocols
+  discovery: null
+  layer: '3'
+  mechanisms: null
+  name: Network Layer Protocols
+  parent: networking
+  provides: null
+  technologies:
+  - {description: IPv4, discovery: null, layer: null, mechanisms: null, name: IPv4,
+    parent: network layer protocols, provides: null, technologies: null}
+  - {description: IPv6, discovery: null, layer: null, mechanisms: null, name: IPv6,
+    parent: network layer protocols, provides: null, technologies: null}
+  - {description: CLNS, discovery: null, layer: null, mechanisms: null, name: CLNS,
+    parent: network layer protocols, provides: null, technologies: null}
+- description: routing
+  discovery: null
+  layer: null
+  mechanisms: null
+  name: Routing
+  parent: technology-tree
+  provides: null
+  technologies:
+  - description: routing table
+    discovery: [ServiceElement, Topology]
+    layer: '3'
+    mechanisms: null
+    name: Routing Table
+    parent: routing
+    provides: null
+    technologies:
+    - description: protocol-generated
+      discovery: null
+      layer: null
+      mechanisms: null
+      name: Dynamic Routes
+      parent: routing table
+      provides: null
+      technologies:
+      - description: interior gateway protocols
+        discovery: null
+        layer: null
+        mechanisms: null
+        name: Interior Gateway Protocols
+        parent: routing table
+        provides: null
+        technologies:
+        - description: link-state
+          discovery: null
+          layer: null
+          mechanisms: null
+          name: Link-State
+          parent: interior gateway protocols
+          provides: null
+          technologies:
+          - {description: IPv4, discovery: null, layer: null, mechanisms: null, name: OSPFv2,
+            parent: link-state, provides: null, technologies: null}
+          - {description: IPv6, discovery: null, layer: null, mechanisms: null, name: OSPFv3,
+            parent: link-state, provides: null, technologies: null}
+          - {description: IS-IS, discovery: null, layer: null, mechanisms: null, name: IS-IS,
+            parent: link-state, provides: null, technologies: null}
+        - description: distance vector
+          discovery: null
+          layer: null
+          mechanisms: null
+          name: Distance Vector
+          parent: interior gateway protocols
+          provides: null
+          technologies:
+          - {description: RIP, discovery: null, layer: null, mechanisms: null, name: RIP,
+            parent: distance vector, provides: null, technologies: null}
+          - {description: RIPv2, discovery: null, layer: null, mechanisms: null, name: RIPv2,
+            parent: distance vector, provides: null, technologies: null}
+          - {description: IGRP, discovery: null, layer: null, mechanisms: null, name: IGRP,
+            parent: distance vector, provides: null, technologies: null}
+          - {description: EIGRP, discovery: null, layer: null, mechanisms: null, name: EIGRP,
+            parent: distance vector, provides: null, technologies: null}
+      - description: exterior gateway protocols
+        discovery: null
+        layer: null
+        mechanisms: null
+        name: Exterior Gateway Protocols
+        parent: IP routing protocols
+        provides: null
+        technologies:
+        - {description: BGP - iBGP - EBGP, discovery: null, layer: null, mechanisms: null,
+          name: BGP - iBGP - EBGP, parent: exterior gateway protocols, provides: null,
+          technologies: null}
+      - description: protocols for delivery of multicast services
+        discovery: null
+        layer: null
+        mechanisms: null
+        name: IP Multicast Protocols
+        parent: routing table
+        provides: null
+        technologies:
+        - {description: IGMP, discovery: null, layer: null, mechanisms: null, name: IGMP,
+          parent: IP multicast protocols, provides: null, technologies: null}
+        - {description: protocol independent multicast, discovery: null, layer: null,
+          mechanisms: null, name: PIM, parent: IP multicast protocols, provides: null,
+          technologies: null}
+        - {description: distance vector multicast routing protocol, discovery: null,
+          layer: null, mechanisms: null, name: DVMRP, parent: IP multicast protocols,
+          provides: null, technologies: null}
+        - {description: MOSPF, discovery: null, layer: null, mechanisms: null, name: MOSPF,
+          parent: IP multicast protocols, provides: null, technologies: null}
+        - {description: MBGP, discovery: null, layer: null, mechanisms: null, name: MBGP,
+          parent: IP multicast protocols, provides: null, technologies: null}
+        - {description: GMRP, discovery: null, layer: null, mechanisms: null, name: GMRP,
+          parent: IP multicast protocols, provides: null, technologies: null}
+        - {description: MLD, discovery: null, layer: null, mechanisms: null, name: MLD,
+          parent: IP multicast protocols, provides: null, technologies: null}
+    - description: static routes
+      discovery: [ServiceElement, Topology]
+      layer: '3'
+      mechanisms: null
+      name: Static Routes
+      parent: routing table
+      provides: null
+      technologies: null
+    - description: directly-connected routes
+      discovery: [ServiceElement, Topology]
+      layer: '3'
+      mechanisms: null
+      name: Directly-connected Routes
+      parent: routing table
+      provides: null
+      technologies: null
+    - description: locally-generated routes
+      discovery: [ServiceElement, Topology]
+      layer: '3'
+      mechanisms: null
+      name: Locally-generated Routes
+      parent: routing table
+      provides: null
+      technologies: null
+- description: servers
+  discovery: null
+  layer: null
+  mechanisms: null
+  name: Servers
+  parent: technology-tree
+  provides: null
+  technologies:
+  - description: operating system
+    discovery: null
+    layer: null
+    mechanisms: null
+    name: Operating System
+    parent: servers
+    provides: null
+    technologies:
+    - {description: unix, discovery: null, layer: null, mechanisms: null, name: Unix,
+      parent: operating system, provides: null, technologies: null}
+    - {description: microsoft, discovery: null, layer: null, mechanisms: null, name: Microsoft,
+      parent: operating system, provides: null, technologies: null}
+    - {description: apple, discovery: null, layer: null, mechanisms: null, name: Apple,
+      parent: operating system, provides: null, technologies: null}
+  - {description: middleware, discovery: null, layer: null, mechanisms: null, name: Middleware,
+    parent: servers, provides: null, technologies: null}
+  - {description: web, discovery: null, layer: null, mechanisms: null, name: Web,
+    parent: servers, provides: null, technologies: null}
+  - {description: file services, discovery: null, layer: null, mechanisms: null, name: File Services,
+    parent: servers, provides: null, technologies: null}
+  - description: network infrastructure
+    discovery: null
+    layer: null
+    mechanisms: null
+    name: Network Infrastructure
+    parent: servers
+    provides: null
+    technologies:
+    - {description: dns, discovery: null, layer: null, mechanisms: null, name: DNS,
+      parent: network infrastructure, provides: null, technologies: null}
+  - {description: other undefined, discovery: null, layer: null, mechanisms: null,
+    name: Other Undefined, parent: servers, provides: null, technologies: null}
+- {description: virtualization, discovery: null, layer: null, mechanisms: null, name: Virtualization,
+  parent: technology-tree, provides: null, technologies: null}
+- {description: storage, discovery: null, layer: null, mechanisms: null, name: Storage,
+  parent: technology-tree, provides: null, technologies: null}
+
+?[0m?[0m15:16:59,782 INFO  [edu.harvard.integer.service.yaml.YamlManager] (default task-66) YAML Object is edu.harvard.integer.common.yaml.YamlTechnology
+?[0m?[31m15:16:59,782 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-66) Unable to load properties from integer.properties
+?[0m?[31m15:16:59,783 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-66) Unable to load properties from integer.properties
+?[0m?[0m15:17:00,334 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-13) JBAS017535: Unregistered web context: /SelectionManagerTest
+?[0m?[0m15:17:00,344 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 305) JBAS011410: Stopping Persistence Unit (phase 2 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:17:00,345 INFO  [org.jboss.weld.deployer] (MSC service thread 1-1) JBAS016009: Stopping weld service for deployment SelectionManagerTest.war
+?[0m?[0m15:17:00,355 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 305) JBAS011410: Stopping Persistence Unit (phase 1 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:17:00,356 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-15) JBAS010409: Unbound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:17:00,662 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-9) JBAS015877: Stopped deployment SelectionManagerTest.war (runtime-name: SelectionManagerTest.war) in 328ms
+?[0m?[0m15:17:00,793 INFO  [org.jboss.as.repository] (management-handler-thread - 13) JBAS014901: Content removed from location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/0c/6286b9c4eef6a37f8b4811d9979556599fcb6f/content
+?[0m?[0m15:17:00,793 INFO  [org.jboss.as.server] (management-handler-thread - 13) JBAS018558: Undeployed &quot;SelectionManagerTest.war&quot; (runtime-name: &quot;SelectionManagerTest.war&quot;)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>Generated by 
+<a href="http://www.gradle.org">Gradle 1.12</a> at Aug 27, 2014 3:20:37 PM</p>
+</div>
+</div>
+</body>

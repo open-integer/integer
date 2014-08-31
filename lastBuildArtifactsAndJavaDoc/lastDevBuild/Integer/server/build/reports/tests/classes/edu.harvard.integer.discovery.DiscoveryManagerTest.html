@@ -1,0 +1,814 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Test results - Class edu.harvard.integer.discovery.DiscoveryManagerTest</title>
+<link href="css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script src="js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class edu.harvard.integer.discovery.DiscoveryManagerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/edu.harvard.integer.discovery.html">edu.harvard.integer.discovery</a> &gt; DiscoveryManagerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">7</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.890s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">addDiscoveryRule</td>
+<td>0.042s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addGlobalCredentails</td>
+<td>0.194s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAllDiscoveryRules</td>
+<td>0.042s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAllGlobalCredentails</td>
+<td>0.019s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAllIpTopologySeeds</td>
+<td>0.023s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">startDiscoveryRule</td>
+<td>1.150s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">stopDiscoveryRule</td>
+<td>0.420s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[0m?[0m15:12:08,030 INFO  [org.jboss.as.repository] (management-handler-thread - 11) JBAS014900: Content added at location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/da/6840af294bd4cc59c914570812f00bf46e49eb/content
+?[0m?[0m15:12:08,031 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-14) JBAS015876: Starting deployment of &quot;DiscoveryManagerTest.war&quot; (runtime-name: &quot;DiscoveryManagerTest.war&quot;)
+?[0m?[0m15:12:09,798 INFO  [org.jboss.as.jpa] (MSC service thread 1-5) JBAS011401: Read persistence.xml for primary
+?[0m?[0m15:12:10,283 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-10) JBAS010400: Bound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:12:10,284 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 151) JBAS011409: Starting Persistence Unit (phase 1 of 2) Service 'DiscoveryManagerTest.war#primary'
+?[0m?[0m15:12:10,284 INFO  [org.hibernate.jpa.internal.util.LogHelper] (ServerService Thread Pool -- 151) HHH000204: Processing PersistenceUnitInfo [
+	name: primary
+	...]
+?[0m?[0m15:12:10,379 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (Timer-2) SNMP scan response on 10.251.41.171
+?[0m?[0m15:12:10,380 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (Timer-2) SNMP scan response on 10.251.41.170
+?[0m?[0m15:12:10,380 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (Timer-2) SNMP scan response on 10.251.41.169
+?[0m?[0m15:12:10,380 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (Timer-2) SNMP scan response on 10.251.41.172
+?[0m?[0m15:12:10,380 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (Timer-2) SNMP scan response on 10.251.41.174
+?[0m?[0m15:12:10,381 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (Timer-2) SNMP scan response on 10.251.41.173
+?[0m?[0m15:12:19,381 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (Timer-2) SNMP scan response on 10.251.41.174
+?[0m?[31m15:12:19,382 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (Timer-2) Unable to load properties from integer.properties
+?[0m?[0m15:12:19,382 INFO  [edu.harvard.integer.service.distribution.DistributionManager] (Timer-2) Manager java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface not found!! javax.naming.NameNotFoundException: java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+?[0m?[31m15:12:19,384 ERROR [edu.harvard.integer.service.distribution.DistributionManager] (Timer-2) Error getting service java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterfaceManagerNotFound: ManagerNotFound
+	at edu.harvard.integer.service.distribution.DistributionManager.lookupBean(DistributionManager.java:822) [classes:]
+	at edu.harvard.integer.service.distribution.DistributionManager.lookupLocalBean(DistributionManager.java:663) [classes:]
+	at edu.harvard.integer.service.distribution.DistributionManager.getManager(DistributionManager.java:567) [classes:]
+	at edu.harvard.integer.service.distribution.DistributionManager.getManager(DistributionManager.java:471) [classes:]
+	at edu.harvard.integer.service.discovery.NetworkDiscovery.ipAddressNoResponse(NetworkDiscovery.java:387) [classes:]
+	at edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask.onResponse(DiscoverSubnetAsyncTask.java:445) [classes:]
+	at org.snmp4j.Snmp$PendingRequest.run(Snmp.java:1721) [classes:]
+	at java.util.TimerThread.mainLoop(Timer.java:555) [rt.jar:1.7.0_51]
+	at java.util.TimerThread.run(Timer.java:505) [rt.jar:1.7.0_51]
+
+?[0m?[31m15:12:19,384 ERROR [edu.harvard.integer.service.distribution.DistributionManager] (Timer-2) Failed to get manager ServiceElementAccessManager Error ManagerNotFound
+?[0m?[31m15:12:19,385 ERROR [stderr] (Timer-2) Exception in thread &quot;Timer-2&quot; java.lang.NullPointerException
+?[0m?[31m15:12:19,385 ERROR [stderr] (Timer-2) 	at edu.harvard.integer.service.discovery.NetworkDiscovery.ipAddressNoResponse(NetworkDiscovery.java:388)
+?[0m?[31m15:12:19,385 ERROR [stderr] (Timer-2) 	at edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask.onResponse(DiscoverSubnetAsyncTask.java:445)
+?[0m?[31m15:12:19,385 ERROR [stderr] (Timer-2) 	at org.snmp4j.Snmp$PendingRequest.run(Snmp.java:1721)
+?[0m?[31m15:12:19,385 ERROR [stderr] (Timer-2) 	at java.util.TimerThread.mainLoop(Timer.java:555)
+?[0m?[31m15:12:19,386 ERROR [stderr] (Timer-2) 	at java.util.TimerThread.run(Timer.java:505)
+?[0m?[0m15:12:19,786 INFO  [org.jboss.weld.deployer] (MSC service thread 1-9) JBAS016002: Processing weld deployment DiscoveryManagerTest.war
+?[0m?[0m15:12:19,804 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named TopologyManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:app/DiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:global/DiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:app/DiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+
+?[0m?[0m15:12:19,806 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named SelectionManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:app/DiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:global/DiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:app/DiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+
+?[0m?[0m15:12:19,807 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named DistributionService in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:app/DiscoveryManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:module/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:jboss/exported/DiscoveryManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:global/DiscoveryManagerTest/DistributionService
+	java:app/DiscoveryManagerTest/DistributionService
+	java:module/DistributionService
+
+?[0m?[0m15:12:19,808 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named TechnologyManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:app/DiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:global/DiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:app/DiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+
+?[0m?[0m15:12:19,809 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named YamlManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:app/DiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:global/DiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:app/DiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+
+?[0m?[0m15:12:19,810 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named MibLoader in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:app/DiscoveryManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:module/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:global/DiscoveryManagerTest/MibLoader
+	java:app/DiscoveryManagerTest/MibLoader
+	java:module/MibLoader
+
+?[0m?[0m15:12:19,810 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named ServiceElememtAccessManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:app/DiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:global/DiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:app/DiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+
+?[0m?[0m15:12:19,812 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named SnmpManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:app/DiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:global/DiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:app/DiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+
+?[0m?[0m15:12:19,813 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named SecurityAndAuditManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:app/DiscoveryManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:module/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:global/DiscoveryManagerTest/SecurityAndAuditManager
+	java:app/DiscoveryManagerTest/SecurityAndAuditManager
+	java:module/SecurityAndAuditManager
+
+?[0m?[0m15:12:19,814 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named UserManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:app/DiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:global/DiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:app/DiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+
+?[0m?[0m15:12:19,815 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named SelectionService in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:app/DiscoveryManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:module/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:global/DiscoveryManagerTest/SelectionService
+	java:app/DiscoveryManagerTest/SelectionService
+	java:module/SelectionService
+
+?[0m?[0m15:12:19,816 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named MibService in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:app/DiscoveryManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:module/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:global/DiscoveryManagerTest/MibService
+	java:app/DiscoveryManagerTest/MibService
+	java:module/MibService
+
+?[0m?[0m15:12:19,817 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named StateManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:app/DiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:global/DiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:app/DiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+
+?[0m?[0m15:12:19,818 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named ServiceElementDiscoveryManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:app/DiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:global/DiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:app/DiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+
+?[0m?[0m15:12:19,819 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named EventManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:app/DiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:global/DiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:app/DiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+
+?[0m?[0m15:12:19,820 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named DiscoveryManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:app/DiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:global/DiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:app/DiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+
+?[0m?[0m15:12:19,821 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named DiscoveryService in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:app/DiscoveryManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:module/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:global/DiscoveryManagerTest/DiscoveryService
+	java:app/DiscoveryManagerTest/DiscoveryService
+	java:module/DiscoveryService
+
+?[0m?[0m15:12:19,822 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named InventoryManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:app/DiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:global/DiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:app/DiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+
+?[0m?[0m15:12:19,823 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named TopologyService in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:app/DiscoveryManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:module/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:global/DiscoveryManagerTest/TopologyService
+	java:app/DiscoveryManagerTest/TopologyService
+	java:module/TopologyService
+
+?[0m?[0m15:12:19,824 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named PersistenceService in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:app/DiscoveryManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:module/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:global/DiscoveryManagerTest/PersistenceService
+	java:app/DiscoveryManagerTest/PersistenceService
+	java:module/PersistenceService
+
+?[0m?[0m15:12:19,825 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named DataLoader in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:app/DiscoveryManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:module/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:global/DiscoveryManagerTest/DataLoader
+	java:app/DiscoveryManagerTest/DataLoader
+	java:module/DataLoader
+
+?[0m?[0m15:12:19,826 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named ManagementObjectCapabilityManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:app/DiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:global/DiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:app/DiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:jboss/exported/DiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+
+?[0m?[0m15:12:19,827 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named SecurityService in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:app/DiscoveryManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:module/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:global/DiscoveryManagerTest/SecurityService
+	java:app/DiscoveryManagerTest/SecurityService
+	java:module/SecurityService
+
+?[0m?[0m15:12:19,828 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-9) JNDI bindings for session bean named PersistenceManager in deployment unit deployment &quot;DiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/DiscoveryManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:app/DiscoveryManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:module/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:global/DiscoveryManagerTest/PersistenceManager
+	java:app/DiscoveryManagerTest/PersistenceManager
+	java:module/PersistenceManager
+
+?[0m?[0m15:12:20,029 INFO  [org.jboss.weld.deployer] (MSC service thread 1-12) JBAS016005: Starting Services for CDI deployment: DiscoveryManagerTest.war
+?[0m?[0m15:12:20,038 INFO  [org.jboss.weld.deployer] (MSC service thread 1-11) JBAS016008: Starting weld service for deployment DiscoveryManagerTest.war
+?[0m?[0m15:12:20,050 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 151) JBAS011409: Starting Persistence Unit (phase 2 of 2) Service 'DiscoveryManagerTest.war#primary'
+?[0m?[0m15:12:20,077 INFO  [org.hibernate.dialect.Dialect] (ServerService Thread Pool -- 151) HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+?[0m?[0m15:12:20,243 INFO  [org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory] (ServerService Thread Pool -- 151) HHH000397: Using ASTQueryTranslatorFactory
+?[0m?[0m15:12:20,773 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 151) HHH000227: Running hbm2ddl schema export
+?[0m?[0m15:12:37,228 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 151) HHH000230: Schema export complete
+?[0m?[0m15:12:37,395 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:37,450 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLogger because of underlying class loading error: Type org.slf4j.Logger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:37,567 INFO  [org.jboss.weld.Bootstrap] (weld-worker-4) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkSTBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:37,966 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpManager because of underlying class loading error: Type uk.co.westhawk.snmp.stack.PduException from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[33m15:12:38,015 WARN  [org.jboss.modules] (weld-worker-8) Failed to define class org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 in Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader: java.lang.LinkageError: Failed to link org/jboss/as/arquillian/container/OSGiApplicationArchiveProcessor$1 (Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader)
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:487) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.loadClassLocal(ModuleClassLoader.java:277) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader$1.loadClassLocal(ModuleClassLoader.java:92) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.Module.loadModuleClass(Module.java:568) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:205) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.as.weld.WeldModuleResourceLoader.classForName(WeldModuleResourceLoader.java:68) [wildfly-weld-8.1.0.Final.jar:8.1.0.Final]
+	at org.jboss.weld.bootstrap.BeanDeployer.loadClass(BeanDeployer.java:106) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.BeanDeployer.addClass(BeanDeployer.java:94) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:62) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:53) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [rt.jar:1.7.0_51]
+	at java.lang.Thread.run(Thread.java:744) [rt.jar:1.7.0_51]
+Caused by: java.lang.NoClassDefFoundError: org/jboss/arquillian/container/osgi/AbstractOSGiApplicationArchiveProcessor
+	at java.lang.ClassLoader.defineClass1(Native Method) [rt.jar:1.7.0_51]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:800) [rt.jar:1.7.0_51]
+	at org.jboss.modules.ModuleClassLoader.doDefineOrLoadClass(ModuleClassLoader.java:361) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:482) [jboss-modules.jar:1.3.3.Final]
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:213) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	... 23 more
+
+?[0m?[0m15:12:38,026 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 because of underlying class loading error: Type org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,125 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLocationAwareLogger because of underlying class loading error: Type org.slf4j.spi.LocationAwareLogger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,190 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpResponse because of underlying class loading error: Type uk.co.westhawk.snmp.pdu.BlockPdu from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,345 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.matrix.GraphMatrixOperations because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,588 INFO  [org.jboss.weld.Bootstrap] (weld-worker-7) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.MarkovCentrality because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix1D from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,602 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from org.jboss.net.protocol.http.DavURLLister because of underlying class loading error: Type org.apache.commons.httpclient.HttpException from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,642 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassTable because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,644 INFO  [org.jboss.weld.Bootstrap] (weld-worker-7) WELD-000119: Not generating any bean definitions from org.jboss.logging.Log4jLogger because of underlying class loading error: Type org.apache.log4j.Priority from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:12:38,703 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassResolver because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.DiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[33m15:12:41,014 WARN  [edu.harvard.integer.service.selection.SelectionService] (ServerService Thread Pool -- 188) SelectionService is starting
+?[0m?[0m15:12:41,015 INFO  [edu.harvard.integer.service.security.SecurityService] (ServerService Thread Pool -- 194) Create SecurityService
+?[0m?[31m15:12:41,016 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 200) Unable to load properties from integer.properties
+?[0m?[31m15:12:41,016 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 190) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,017 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (ServerService Thread Pool -- 190) Discovery service starting.... on server 1
+?[0m?[0m15:12:41,021 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) DistributionService starting
+?[0m?[0m15:12:41,022 INFO  [stdout] (ServerService Thread Pool -- 193) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[0m15:12:41,022 INFO  [stdout] (ServerService Thread Pool -- 193) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[31m15:12:41,033 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[33m15:12:41,033 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Need to get sever port from Wildfly
+?[0m?[0m15:12:41,034 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) got http port 8585 from System properties
+?[0m?[0m15:12:41,038 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Created IntegerServer edu.harvard.integer.common.distribution.IntegerServer:1
+?[0m?[0m15:12:41,039 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Have 1 IntegerServers
+?[0m?[33m15:12:41,042 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Create managers on 'localhost'
+?[0m?[31m15:12:41,042 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,044 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager PersistenceManager ID: PersistenceManager(edu.harvard.integer.common.distribution.DistributedManager:1)
+?[0m?[31m15:12:41,044 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,045 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager ServiceElementDiscoveryManager ID: ServiceElementDiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:2)
+?[0m?[31m15:12:41,046 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,046 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager SnmpManager ID: SnmpManager(edu.harvard.integer.common.distribution.DistributedManager:3)
+?[0m?[31m15:12:41,047 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,048 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager ServiceElementAccessManager ID: ServiceElementAccessManager(edu.harvard.integer.common.distribution.DistributedManager:4)
+?[0m?[31m15:12:41,048 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,049 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager ManagementObjectCapabilityManager ID: ManagementObjectCapabilityManager(edu.harvard.integer.common.distribution.DistributedManager:5)
+?[0m?[31m15:12:41,050 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,051 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager StateManager ID: StateManager(edu.harvard.integer.common.distribution.DistributedManager:6)
+?[0m?[31m15:12:41,051 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,052 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager SelectionManager ID: SelectionManager(edu.harvard.integer.common.distribution.DistributedManager:7)
+?[0m?[31m15:12:41,052 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,053 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager TechnologyManager ID: TechnologyManager(edu.harvard.integer.common.distribution.DistributedManager:8)
+?[0m?[31m15:12:41,054 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,055 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager DiscoveryManager ID: DiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:9)
+?[0m?[31m15:12:41,055 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,056 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager EventManager ID: EventManager(edu.harvard.integer.common.distribution.DistributedManager:10)
+?[0m?[31m15:12:41,056 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,057 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager YamlManager ID: YamlManager(edu.harvard.integer.common.distribution.DistributedManager:11)
+?[0m?[31m15:12:41,058 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,059 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager TopologyManager ID: TopologyManager(edu.harvard.integer.common.distribution.DistributedManager:12)
+?[0m?[31m15:12:41,059 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,060 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager UserManager ID: UserManager(edu.harvard.integer.common.distribution.DistributedManager:13)
+?[0m?[31m15:12:41,060 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,061 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Added Manager InventoryManager ID: InventoryManager(edu.harvard.integer.common.distribution.DistributedManager:14)
+?[0m?[0m15:12:41,062 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Have 14 DistributeManagers
+?[0m?[33m15:12:41,066 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Create service on 'localhost'
+?[0m?[31m15:12:41,066 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[31m15:12:41,068 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[31m15:12:41,069 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[31m15:12:41,070 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[31m15:12:41,071 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,073 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Have 5 DistributeServices
+?[0m?[31m15:12:41,073 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[31m15:12:41,074 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 193) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,074 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Server null ID: 1 127.0.0.1 My ID: 1 started null
+?[0m?[0m15:12:41,076 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Found 14 managers [Ledu.harvard.integer.common.distribution.DistributedManager;@7b3c763b
+?[0m?[0m15:12:41,076 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager PersistenceManager type PersistenceManager
+?[0m?[0m15:12:41,076 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager ServiceElementDiscoveryManager type ServiceElementDiscoveryManager
+?[0m?[0m15:12:41,077 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager SnmpManager type SnmpManager
+?[0m?[0m15:12:41,077 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager ServiceElementAccessManager type ServiceElementAccessManager
+?[0m?[0m15:12:41,077 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager ManagementObjectCapabilityManager type ManagementObjectCapabilityManager
+?[0m?[0m15:12:41,078 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager StateManager type StateManager
+?[0m?[0m15:12:41,078 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager SelectionManager type SelectionManager
+?[0m?[0m15:12:41,078 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager TechnologyManager type TechnologyManager
+?[0m?[0m15:12:41,079 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager DiscoveryManager type DiscoveryManager
+?[0m?[0m15:12:41,079 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager EventManager type EventManager
+?[0m?[0m15:12:41,079 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager YamlManager type YamlManager
+?[0m?[0m15:12:41,080 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager TopologyManager type TopologyManager
+?[0m?[0m15:12:41,080 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager UserManager type UserManager
+?[0m?[0m15:12:41,080 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 193) Manager InventoryManager type InventoryManager
+?[0m?[33m15:12:41,090 WARN  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 193) PersistenceServices is starting
+?[0m?[0m15:12:41,093 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 193) Loading preload data files
+?[0m?[0m15:12:41,093 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 193) Number of preloads 0
+?[0m?[0m15:12:41,094 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 193) Number of preloads 0
+?[0m?[0m15:12:41,125 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-1) Deploying javax.ws.rs.core.Application: class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:12:41,126 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-1) Adding class resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:12:41,126 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-1) Adding singleton resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:12:41,131 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-1) JBAS017534: Registered web context: /DiscoveryManagerTest
+?[0m?[0m15:12:41,158 INFO  [org.jboss.as.server] (management-handler-thread - 11) JBAS018559: Deployed &quot;DiscoveryManagerTest.war&quot; (runtime-name : &quot;DiscoveryManagerTest.war&quot;)
+?[0m?[0m15:12:41,326 INFO  [edu.harvard.integer.service.discovery.DiscoveryManager] (default task-126) Start discovery of SubnetDiscovery: 1.2.3.0::255.255.255.0
+?[0m?[31m15:12:41,327 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-126) Unable to load properties from integer.properties
+?[0m?[31m15:12:41,340 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-126) OID 1.3.6.1.2.1.1.4 not found!!
+?[0m?[31m15:12:41,341 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-126) OID 1.3.6.1.2.1.1.1 not found!!
+?[0m?[31m15:12:41,342 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-126) OID 1.3.6.1.2.1.1.6 not found!!
+?[0m?[31m15:12:41,342 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-126) OID 1.3.6.1.2.1.1.5 not found!!
+?[0m?[31m15:12:41,343 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-126) OID 1.3.6.1.2.1.1.2 not found!!
+?[0m?[31m15:12:41,344 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-126) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,345 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-126) Discover radius 0
+?[0m?[31m15:12:41,345 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-126) Unable to load properties from integer.properties
+?[0m?[0m15:12:41,347 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Discover subnet startip 1.2.3.1 endip 1.2.3.254
+?[0m?[0m15:12:41,354 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.1
+?[0m?[0m15:12:41,358 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.2
+?[0m?[0m15:12:41,361 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.3
+?[0m?[0m15:12:41,365 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.4
+?[0m?[0m15:12:41,368 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.5
+?[0m?[0m15:12:41,371 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.6
+?[0m?[0m15:12:41,374 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.7
+?[0m?[0m15:12:41,378 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.8
+?[0m?[0m15:12:41,381 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.9
+?[0m?[0m15:12:41,384 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.10
+?[0m?[0m15:12:41,388 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.11
+?[0m?[0m15:12:41,391 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.12
+?[0m?[0m15:12:41,394 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.13
+?[0m?[0m15:12:41,397 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.14
+?[0m?[0m15:12:41,400 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.15
+?[0m?[0m15:12:41,405 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.16
+?[0m?[0m15:12:41,408 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.17
+?[0m?[0m15:12:41,411 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.18
+?[0m?[0m15:12:41,414 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.19
+?[0m?[0m15:12:41,417 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.20
+?[0m?[0m15:12:41,420 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.21
+?[0m?[0m15:12:41,423 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.22
+?[0m?[0m15:12:41,426 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.23
+?[0m?[0m15:12:41,430 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.24
+?[0m?[0m15:12:41,433 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.25
+?[0m?[0m15:12:41,436 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.26
+?[0m?[0m15:12:41,439 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.27
+?[0m?[0m15:12:41,442 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.28
+?[0m?[0m15:12:41,445 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.29
+?[0m?[0m15:12:41,448 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.30
+?[0m?[0m15:12:41,451 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.31
+?[0m?[0m15:12:41,455 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.32
+?[0m?[0m15:12:41,458 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.33
+?[0m?[0m15:12:41,461 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.34
+?[0m?[0m15:12:41,464 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.35
+?[0m?[0m15:12:41,467 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.36
+?[0m?[0m15:12:41,470 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.37
+?[0m?[0m15:12:41,473 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.38
+?[0m?[0m15:12:41,476 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.39
+?[0m?[0m15:12:41,480 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.40
+?[0m?[0m15:12:41,483 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.41
+?[0m?[0m15:12:41,486 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.42
+?[0m?[0m15:12:41,489 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.43
+?[0m?[0m15:12:41,492 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.44
+?[0m?[0m15:12:41,495 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.45
+?[0m?[0m15:12:41,498 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.46
+?[0m?[0m15:12:41,501 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.47
+?[0m?[0m15:12:41,505 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.48
+?[0m?[0m15:12:41,508 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.49
+?[0m?[0m15:12:41,511 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.50
+?[0m?[0m15:12:41,514 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.51
+?[0m?[0m15:12:41,517 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.52
+?[0m?[0m15:12:41,520 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.53
+?[0m?[0m15:12:41,523 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.54
+?[0m?[0m15:12:41,526 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.55
+?[0m?[0m15:12:41,530 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.56
+?[0m?[0m15:12:41,533 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.57
+?[0m?[0m15:12:41,536 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.58
+?[0m?[0m15:12:41,539 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.59
+?[0m?[0m15:12:41,542 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.60
+?[0m?[0m15:12:41,545 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.61
+?[0m?[0m15:12:41,548 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.62
+?[0m?[0m15:12:41,551 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.63
+?[0m?[0m15:12:41,554 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.64
+?[0m?[0m15:12:41,558 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.65
+?[0m?[0m15:12:41,561 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.66
+?[0m?[0m15:12:41,564 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.67
+?[0m?[0m15:12:41,567 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.68
+?[0m?[0m15:12:41,570 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.69
+?[0m?[0m15:12:41,573 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.70
+?[0m?[0m15:12:41,576 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.71
+?[0m?[0m15:12:41,579 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.72
+?[0m?[0m15:12:41,582 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.73
+?[0m?[0m15:12:41,586 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.74
+?[0m?[0m15:12:41,589 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.75
+?[0m?[0m15:12:41,592 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.76
+?[0m?[0m15:12:41,595 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.77
+?[0m?[0m15:12:41,598 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.78
+?[0m?[0m15:12:41,601 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.79
+?[0m?[0m15:12:41,604 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.80
+?[0m?[0m15:12:41,607 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.81
+?[0m?[0m15:12:41,611 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.82
+?[0m?[0m15:12:41,614 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.83
+?[0m?[0m15:12:41,618 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.84
+?[0m?[0m15:12:41,621 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.85
+?[0m?[0m15:12:41,624 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.86
+?[0m?[0m15:12:41,627 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.87
+?[0m?[0m15:12:41,630 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.88
+?[0m?[0m15:12:41,633 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.89
+?[0m?[0m15:12:41,637 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.90
+?[0m?[0m15:12:41,640 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.91
+?[0m?[0m15:12:41,643 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.92
+?[0m?[0m15:12:41,646 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.93
+?[0m?[0m15:12:41,650 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.94
+?[0m?[0m15:12:41,653 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.95
+?[0m?[0m15:12:41,656 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.96
+?[0m?[0m15:12:41,659 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.97
+?[0m?[0m15:12:41,662 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.98
+?[0m?[0m15:12:41,665 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.99
+?[0m?[0m15:12:41,668 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.100
+?[0m?[0m15:12:41,671 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.101
+?[0m?[0m15:12:41,674 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.102
+?[0m?[0m15:12:41,677 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.103
+?[0m?[0m15:12:41,680 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.104
+?[0m?[0m15:12:41,684 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.105
+?[0m?[0m15:12:41,687 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.106
+?[0m?[0m15:12:41,690 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.107
+?[0m?[0m15:12:41,693 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.108
+?[0m?[0m15:12:41,696 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.109
+?[0m?[0m15:12:41,699 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.110
+?[0m?[0m15:12:41,702 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.111
+?[0m?[0m15:12:41,705 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.112
+?[0m?[0m15:12:41,708 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.113
+?[0m?[0m15:12:41,711 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.114
+?[0m?[0m15:12:41,715 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.115
+?[0m?[0m15:12:41,718 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.116
+?[0m?[0m15:12:41,721 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.117
+?[0m?[0m15:12:41,724 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.118
+?[0m?[0m15:12:41,727 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.119
+?[0m?[0m15:12:41,730 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.120
+?[0m?[0m15:12:41,733 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.121
+?[0m?[0m15:12:41,736 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.122
+?[0m?[0m15:12:41,739 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.123
+?[0m?[0m15:12:41,742 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.124
+?[0m?[0m15:12:41,745 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.125
+?[0m?[0m15:12:41,749 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.126
+?[0m?[0m15:12:41,752 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.127
+?[0m?[0m15:12:41,755 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.128
+?[0m?[0m15:12:41,758 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.129
+?[0m?[0m15:12:41,761 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.130
+?[0m?[0m15:12:41,764 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.131
+?[0m?[0m15:12:41,767 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.132
+?[0m?[0m15:12:41,770 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.133
+?[0m?[0m15:12:41,773 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.134
+?[0m?[0m15:12:41,776 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.135
+?[0m?[0m15:12:41,779 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.136
+?[0m?[0m15:12:41,783 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.137
+?[0m?[0m15:12:41,786 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.138
+?[0m?[0m15:12:41,789 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.139
+?[0m?[0m15:12:41,792 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.140
+?[0m?[0m15:12:41,795 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.141
+?[0m?[0m15:12:41,798 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.142
+?[0m?[0m15:12:41,801 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.143
+?[0m?[0m15:12:41,804 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.144
+?[0m?[0m15:12:41,807 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.145
+?[0m?[0m15:12:41,810 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.146
+?[0m?[0m15:12:41,813 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.147
+?[0m?[0m15:12:41,816 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.148
+?[0m?[0m15:12:41,820 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.149
+?[0m?[0m15:12:41,823 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.150
+?[0m?[0m15:12:41,826 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.151
+?[0m?[0m15:12:41,829 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.152
+?[0m?[0m15:12:41,832 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.153
+?[0m?[0m15:12:41,835 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.154
+?[0m?[0m15:12:41,838 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.155
+?[0m?[0m15:12:41,841 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.156
+?[0m?[0m15:12:41,844 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.157
+?[0m?[0m15:12:41,847 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.158
+?[0m?[0m15:12:41,851 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.159
+?[0m?[0m15:12:41,854 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.160
+?[0m?[0m15:12:41,857 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.161
+?[0m?[0m15:12:41,860 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.162
+?[0m?[0m15:12:41,864 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.163
+?[0m?[0m15:12:41,867 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.164
+?[0m?[0m15:12:41,870 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.165
+?[0m?[0m15:12:41,873 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.166
+?[0m?[0m15:12:41,876 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.167
+?[0m?[0m15:12:41,879 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.168
+?[0m?[0m15:12:41,882 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.169
+?[0m?[0m15:12:41,886 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.170
+?[0m?[0m15:12:41,889 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.171
+?[0m?[0m15:12:41,892 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.172
+?[0m?[0m15:12:41,895 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.173
+?[0m?[0m15:12:41,898 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.174
+?[0m?[0m15:12:41,901 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.175
+?[0m?[0m15:12:41,904 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.176
+?[0m?[0m15:12:41,907 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.177
+?[0m?[0m15:12:41,910 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.178
+?[0m?[0m15:12:41,914 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.179
+?[0m?[0m15:12:41,917 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.180
+?[0m?[0m15:12:41,920 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.181
+?[0m?[0m15:12:41,923 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.182
+?[0m?[0m15:12:41,926 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.183
+?[0m?[0m15:12:41,929 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.184
+?[0m?[0m15:12:41,932 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.185
+?[0m?[0m15:12:41,935 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.186
+?[0m?[0m15:12:41,939 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.187
+?[0m?[0m15:12:41,942 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.188
+?[0m?[0m15:12:41,945 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.189
+?[0m?[0m15:12:41,948 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.190
+?[0m?[0m15:12:41,951 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.191
+?[0m?[0m15:12:41,954 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.192
+?[0m?[0m15:12:41,958 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.193
+?[0m?[0m15:12:41,961 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.194
+?[0m?[0m15:12:41,964 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.195
+?[0m?[0m15:12:41,967 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.196
+?[0m?[0m15:12:41,970 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.197
+?[0m?[0m15:12:41,973 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.198
+?[0m?[0m15:12:41,977 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.199
+?[0m?[0m15:12:41,980 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.200
+?[0m?[0m15:12:41,983 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.201
+?[0m?[0m15:12:41,986 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.202
+?[0m?[0m15:12:41,989 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.203
+?[0m?[0m15:12:41,992 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.204
+?[0m?[0m15:12:41,995 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.205
+?[0m?[0m15:12:41,998 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.206
+?[0m?[0m15:12:42,002 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.207
+?[0m?[0m15:12:42,005 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.208
+?[0m?[0m15:12:42,008 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.209
+?[0m?[0m15:12:42,011 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.210
+?[0m?[0m15:12:42,014 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.211
+?[0m?[0m15:12:42,017 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.212
+?[0m?[0m15:12:42,020 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.213
+?[0m?[0m15:12:42,024 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.214
+?[0m?[0m15:12:42,027 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.215
+?[0m?[0m15:12:42,030 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.216
+?[0m?[0m15:12:42,033 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.217
+?[0m?[0m15:12:42,036 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.218
+?[0m?[0m15:12:42,039 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.219
+?[0m?[0m15:12:42,042 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.220
+?[0m?[0m15:12:42,045 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.221
+?[0m?[0m15:12:42,048 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.222
+?[0m?[0m15:12:42,051 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.223
+?[0m?[0m15:12:42,054 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.224
+?[0m?[0m15:12:42,057 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.225
+?[0m?[0m15:12:42,060 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.226
+?[0m?[0m15:12:42,063 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.227
+?[0m?[0m15:12:42,066 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.228
+?[0m?[0m15:12:42,069 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.229
+?[0m?[0m15:12:42,072 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.230
+?[0m?[0m15:12:42,075 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.231
+?[0m?[0m15:12:42,078 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.232
+?[0m?[0m15:12:42,081 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.233
+?[0m?[0m15:12:42,084 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.234
+?[0m?[0m15:12:42,087 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.235
+?[0m?[0m15:12:42,091 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.236
+?[0m?[0m15:12:42,094 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.237
+?[0m?[0m15:12:42,097 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.238
+?[0m?[0m15:12:42,100 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.239
+?[0m?[0m15:12:42,103 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.240
+?[0m?[0m15:12:42,106 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.241
+?[0m?[0m15:12:42,109 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.242
+?[0m?[0m15:12:42,112 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.243
+?[0m?[0m15:12:42,115 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.244
+?[0m?[0m15:12:42,118 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.245
+?[0m?[0m15:12:42,121 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.246
+?[0m?[0m15:12:42,124 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.247
+?[0m?[0m15:12:42,127 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.248
+?[0m?[0m15:12:42,130 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.249
+?[0m?[0m15:12:42,133 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.250
+?[0m?[0m15:12:42,136 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.251
+?[0m?[0m15:12:42,139 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.252
+?[0m?[0m15:12:42,142 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.253
+?[0m?[0m15:12:42,145 INFO  [edu.harvard.integer.service.discovery.subnet.DiscoverSubnetAsyncTask] (default task-126) Scan IP address 1.2.3.254
+?[0m?[0m15:12:42,146 INFO  [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-126) Start ServiceElement discovery of 1.2.3.0/255.255.255.0
+?[0m?[0m15:12:42,146 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (default task-126) Add to running queue ServiceElement discovery of 1.2.3.0/255.255.255.0
+?[0m?[0m15:12:42,621 INFO  [edu.harvard.integer.service.discovery.DiscoveryManager] (default task-11) Start discovery of SubnetDiscovery: 1.2.3.0::255.255.255.0
+?[0m?[31m15:12:42,624 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-11) Unable to load properties from integer.properties
+?[0m?[31m15:12:42,627 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-11) OID 1.3.6.1.2.1.1.4 not found!!
+?[0m?[31m15:12:42,628 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-11) OID 1.3.6.1.2.1.1.1 not found!!
+?[0m?[31m15:12:42,629 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-11) OID 1.3.6.1.2.1.1.6 not found!!
+?[0m?[31m15:12:42,630 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-11) OID 1.3.6.1.2.1.1.5 not found!!
+?[0m?[31m15:12:42,631 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-11) OID 1.3.6.1.2.1.1.2 not found!!
+?[0m?[31m15:12:42,632 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-11) Unable to load properties from integer.properties
+?[0m?[0m15:12:42,632 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-11) Discover radius 0
+?[0m?[0m15:12:42,633 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-11) Subnet is already in discovering 1.2.3.0/255.255.255.0
+?[0m?[0m15:12:42,633 INFO  [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-11) Start ServiceElement discovery of 1.2.3.0/255.255.255.0
+?[0m?[0m15:12:42,634 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (default task-11) Add to running queue ServiceElement discovery of 1.2.3.0/255.255.255.0
+?[0m?[0m15:12:42,834 INFO  [stdout] (default task-11) Call Discovery edu.harvard.integer.common.discovery.DiscoveryId@1c16e49c
+?[0m?[0m15:12:43,144 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-3) JBAS017535: Unregistered web context: /DiscoveryManagerTest
+?[0m?[0m15:12:43,153 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 205) JBAS011410: Stopping Persistence Unit (phase 2 of 2) Service 'DiscoveryManagerTest.war#primary'
+?[0m?[0m15:12:43,155 INFO  [org.jboss.weld.deployer] (MSC service thread 1-5) JBAS016009: Stopping weld service for deployment DiscoveryManagerTest.war
+?[0m?[0m15:12:43,168 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 205) JBAS011410: Stopping Persistence Unit (phase 1 of 2) Service 'DiscoveryManagerTest.war#primary'
+?[0m?[0m15:12:43,169 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-9) JBAS010409: Unbound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:12:43,451 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-15) JBAS015877: Stopped deployment DiscoveryManagerTest.war (runtime-name: DiscoveryManagerTest.war) in 308ms
+?[0m?[0m15:12:43,580 INFO  [org.jboss.as.repository] (management-handler-thread - 6) JBAS014901: Content removed from location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/da/6840af294bd4cc59c914570812f00bf46e49eb/content
+?[0m?[0m15:12:43,581 INFO  [org.jboss.as.server] (management-handler-thread - 6) JBAS018558: Undeployed &quot;DiscoveryManagerTest.war&quot; (runtime-name: &quot;DiscoveryManagerTest.war&quot;)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>Generated by 
+<a href="http://www.gradle.org">Gradle 1.12</a> at Aug 27, 2014 3:20:37 PM</p>
+</div>
+</div>
+</body>

@@ -1,0 +1,1086 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Test results - Class edu.harvard.integer.security.SecurityAndAuditMangerTest</title>
+<link href="css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script src="js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class edu.harvard.integer.security.SecurityAndAuditMangerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/edu.harvard.integer.security.html">edu.harvard.integer.security</a> &gt; SecurityAndAuditMangerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.617s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">addDirectUser</td>
+<td>0.331s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAllDirectUsers</td>
+<td>0.033s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">loginUser</td>
+<td>0.253s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[0m15:05:35,439 INFO  [org.jboss.modules] (main) JBoss Modules version 1.3.3.Final
+?[0m?[0m15:05:35,691 INFO  [org.jboss.msc] (main) JBoss MSC version 1.2.2.Final
+?[0m?[0m15:05:35,791 INFO  [org.jboss.as] (MSC service thread 1-6) JBAS015899: WildFly 8.1.0.Final &quot;Kenny&quot; starting
+?[0m?[0m15:05:36,897 INFO  [org.jboss.as.server] (Controller Boot Thread) JBAS015888: Creating http management service using socket-binding (management-http)
+?[0m?[0m15:05:36,917 INFO  [org.xnio] (MSC service thread 1-8) XNIO version 3.2.2.Final
+?[0m?[0m15:05:36,926 INFO  [org.xnio.nio] (MSC service thread 1-8) XNIO NIO Implementation Version 3.2.2.Final
+?[0m?[0m15:05:36,955 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 33) JBAS010280: Activating Infinispan subsystem.
+?[0m?[0m15:05:36,957 INFO  [org.wildfly.extension.io] (ServerService Thread Pool -- 32) WFLYIO001: Worker 'default' has auto-configured to 16 core threads with 128 task threads based on your 8 available processors
+?[0m?[0m15:05:36,969 INFO  [org.jboss.as.jsf] (ServerService Thread Pool -- 39) JBAS012615: Activated the following JSF Implementations: [main]
+?[0m?[0m15:05:36,970 INFO  [org.jboss.as.security] (ServerService Thread Pool -- 46) JBAS013171: Activating Security Subsystem
+?[0m?[33m15:05:36,972 WARN  [org.jboss.as.txn] (ServerService Thread Pool -- 48) JBAS010153: Node identifier property is set to the default value. Please make sure it is unique.
+?[0m?[0m15:05:36,976 INFO  [org.jboss.as.naming] (ServerService Thread Pool -- 41) JBAS011800: Activating Naming Subsystem
+?[0m?[0m15:05:36,984 INFO  [org.jboss.as.security] (MSC service thread 1-14) JBAS013170: Current PicketBox version=4.0.21.Beta1
+?[0m?[0m15:05:36,988 INFO  [org.jboss.as.webservices] (ServerService Thread Pool -- 50) JBAS015537: Activating WebServices Extension
+?[0m?[0m15:05:37,000 INFO  [org.jboss.remoting] (MSC service thread 1-8) JBoss Remoting version 4.0.3.Final
+?[0m?[0m15:05:37,003 INFO  [org.jboss.as.connector.logging] (MSC service thread 1-5) JBAS010408: Starting JCA Subsystem (IronJacamar 1.1.5.Final)
+?[0m?[0m15:05:37,049 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-9) JBAS017502: Undertow 1.0.15.Final starting
+?[0m?[0m15:05:37,049 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 49) JBAS017502: Undertow 1.0.15.Final starting
+?[0m?[0m15:05:37,095 INFO  [org.jboss.as.connector.subsystems.datasources] (ServerService Thread Pool -- 28) JBAS010403: Deploying JDBC-compliant driver class org.h2.Driver (version 1.3)
+?[0m?[0m15:05:37,101 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-11) JBAS010417: Started Driver service with driver-name = h2
+?[0m?[0m15:05:37,104 INFO  [org.jboss.as.naming] (MSC service thread 1-9) JBAS011802: Starting Naming Service
+?[0m?[0m15:05:37,104 INFO  [org.jboss.as.mail.extension] (MSC service thread 1-12) JBAS015400: Bound mail session [java:jboss/mail/Default]
+?[0m?[0m15:05:37,134 INFO  [org.jboss.as.connector.subsystems.datasources] (ServerService Thread Pool -- 28) JBAS010404: Deploying non-JDBC-compliant driver class com.mysql.jdbc.Driver (version 5.1)
+?[0m?[0m15:05:37,137 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-5) JBAS010417: Started Driver service with driver-name = com.mysql
+?[0m?[0m15:05:37,241 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 49) JBAS017527: Creating file handler for path /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/welcome-content
+?[0m?[0m15:05:37,257 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-12) JBAS017525: Started server default-server.
+?[0m?[0m15:05:37,278 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-11) JBAS017531: Host default-host starting
+?[0m?[0m15:05:37,325 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-12) JBAS017519: Undertow HTTP listener default listening on /127.0.0.1:8585
+?[0m?[0m15:05:37,548 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-14) JBAS010400: Bound data source [java:jboss/datasources/ExampleDS]
+?[0m?[0m15:05:37,548 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-9) JBAS010400: Bound data source [java:jboss/datasources/IntegerDS]
+?[0m?[0m15:05:37,563 INFO  [org.jboss.as.server.deployment.scanner] (MSC service thread 1-4) JBAS015012: Started FileSystemDeploymentService for directory /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/deployments
+?[0m?[0m15:05:37,964 INFO  [org.jboss.ws.common.management] (MSC service thread 1-10) JBWS022052: Starting JBoss Web Services - Stack CXF Server 4.2.4.Final
+?[0m?[0m15:05:38,060 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015961: Http management interface listening on http://127.0.0.1:9990/management
+?[0m?[0m15:05:38,061 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015951: Admin console listening on http://127.0.0.1:9990
+?[0m?[0m15:05:38,062 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 8.1.0.Final &quot;Kenny&quot; started in 3148ms - Started 192 of 241 services (81 services are lazy, passive or on-demand)
+?[0m?[0m15:05:50,145 INFO  [org.jboss.as.repository] (management-handler-thread - 2) JBAS014900: Content added at location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/a8/50058558bd26ff101b7f509057e9e365f4cf93/content
+?[0m?[0m15:05:50,166 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-1) JBAS015876: Starting deployment of &quot;SecurityAndAuditMangerTest.war&quot; (runtime-name: &quot;SecurityAndAuditMangerTest.war&quot;)
+?[0m?[0m15:05:53,003 INFO  [org.jboss.as.jpa] (MSC service thread 1-7) JBAS011401: Read persistence.xml for primary
+?[0m?[0m15:05:53,693 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-16) JBAS010400: Bound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:05:53,695 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 11) JBAS011409: Starting Persistence Unit (phase 1 of 2) Service 'SecurityAndAuditMangerTest.war#primary'
+?[0m?[0m15:05:53,704 INFO  [org.hibernate.jpa.internal.util.LogHelper] (ServerService Thread Pool -- 11) HHH000204: Processing PersistenceUnitInfo [
+	name: primary
+	...]
+?[0m?[0m15:05:53,776 INFO  [org.hibernate.Version] (ServerService Thread Pool -- 11) HHH000412: Hibernate Core {4.3.5.Final}
+?[0m?[0m15:05:53,779 INFO  [org.hibernate.cfg.Environment] (ServerService Thread Pool -- 11) HHH000206: hibernate.properties not found
+?[0m?[0m15:05:53,781 INFO  [org.hibernate.cfg.Environment] (ServerService Thread Pool -- 11) HHH000021: Bytecode provider name : javassist
+?[0m?[0m15:06:04,317 INFO  [org.jboss.weld.deployer] (MSC service thread 1-11) JBAS016002: Processing weld deployment SecurityAndAuditMangerTest.war
+?[0m?[0m15:06:04,421 INFO  [org.hibernate.validator.internal.util.Version] (MSC service thread 1-11) HV000001: Hibernate Validator 5.1.0.Final
+?[0m?[0m15:06:04,493 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named TopologyManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:global/SecurityAndAuditMangerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+
+?[0m?[0m15:06:04,495 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named SelectionManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:global/SecurityAndAuditMangerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+
+?[0m?[0m15:06:04,498 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named DistributionService in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:app/SecurityAndAuditMangerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:module/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:global/SecurityAndAuditMangerTest/DistributionService
+	java:app/SecurityAndAuditMangerTest/DistributionService
+	java:module/DistributionService
+
+?[0m?[0m15:06:04,500 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named TechnologyManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:global/SecurityAndAuditMangerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+
+?[0m?[0m15:06:04,503 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named YamlManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:global/SecurityAndAuditMangerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+
+?[0m?[0m15:06:04,505 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named MibLoader in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:app/SecurityAndAuditMangerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:module/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:global/SecurityAndAuditMangerTest/MibLoader
+	java:app/SecurityAndAuditMangerTest/MibLoader
+	java:module/MibLoader
+
+?[0m?[0m15:06:04,507 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named ServiceElememtAccessManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:global/SecurityAndAuditMangerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+
+?[0m?[0m15:06:04,509 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named SnmpManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:global/SecurityAndAuditMangerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+
+?[0m?[0m15:06:04,511 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named SecurityAndAuditManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:app/SecurityAndAuditMangerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:module/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:global/SecurityAndAuditMangerTest/SecurityAndAuditManager
+	java:app/SecurityAndAuditMangerTest/SecurityAndAuditManager
+	java:module/SecurityAndAuditManager
+
+?[0m?[0m15:06:04,513 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named UserManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:global/SecurityAndAuditMangerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+
+?[0m?[0m15:06:04,514 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named SelectionService in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:app/SecurityAndAuditMangerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:module/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:global/SecurityAndAuditMangerTest/SelectionService
+	java:app/SecurityAndAuditMangerTest/SelectionService
+	java:module/SelectionService
+
+?[0m?[0m15:06:04,516 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named MibService in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:app/SecurityAndAuditMangerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:module/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:global/SecurityAndAuditMangerTest/MibService
+	java:app/SecurityAndAuditMangerTest/MibService
+	java:module/MibService
+
+?[0m?[0m15:06:04,517 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named StateManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:global/SecurityAndAuditMangerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+
+?[0m?[0m15:06:04,519 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named ServiceElementDiscoveryManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:global/SecurityAndAuditMangerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+
+?[0m?[0m15:06:04,520 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named EventManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:global/SecurityAndAuditMangerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+
+?[0m?[0m15:06:04,522 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named DiscoveryManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:global/SecurityAndAuditMangerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+
+?[0m?[0m15:06:04,524 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named DiscoveryService in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:app/SecurityAndAuditMangerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:module/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:global/SecurityAndAuditMangerTest/DiscoveryService
+	java:app/SecurityAndAuditMangerTest/DiscoveryService
+	java:module/DiscoveryService
+
+?[0m?[0m15:06:04,525 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named InventoryManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:global/SecurityAndAuditMangerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+
+?[0m?[0m15:06:04,527 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named TopologyService in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:app/SecurityAndAuditMangerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:module/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:global/SecurityAndAuditMangerTest/TopologyService
+	java:app/SecurityAndAuditMangerTest/TopologyService
+	java:module/TopologyService
+
+?[0m?[0m15:06:04,529 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named PersistenceService in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:app/SecurityAndAuditMangerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:module/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:global/SecurityAndAuditMangerTest/PersistenceService
+	java:app/SecurityAndAuditMangerTest/PersistenceService
+	java:module/PersistenceService
+
+?[0m?[0m15:06:04,532 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named DataLoader in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:app/SecurityAndAuditMangerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:module/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:global/SecurityAndAuditMangerTest/DataLoader
+	java:app/SecurityAndAuditMangerTest/DataLoader
+	java:module/DataLoader
+
+?[0m?[0m15:06:04,534 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named ManagementObjectCapabilityManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:app/SecurityAndAuditMangerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:global/SecurityAndAuditMangerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:app/SecurityAndAuditMangerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:jboss/exported/SecurityAndAuditMangerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+
+?[0m?[0m15:06:04,537 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named SecurityService in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:app/SecurityAndAuditMangerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:module/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:global/SecurityAndAuditMangerTest/SecurityService
+	java:app/SecurityAndAuditMangerTest/SecurityService
+	java:module/SecurityService
+
+?[0m?[0m15:06:04,539 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-11) JNDI bindings for session bean named PersistenceManager in deployment unit deployment &quot;SecurityAndAuditMangerTest.war&quot; are as follows:
+
+	java:global/SecurityAndAuditMangerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:app/SecurityAndAuditMangerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:module/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:global/SecurityAndAuditMangerTest/PersistenceManager
+	java:app/SecurityAndAuditMangerTest/PersistenceManager
+	java:module/PersistenceManager
+
+?[0m?[0m15:06:05,251 INFO  [org.jboss.weld.deployer] (MSC service thread 1-16) JBAS016005: Starting Services for CDI deployment: SecurityAndAuditMangerTest.war
+?[0m?[0m15:06:05,283 INFO  [org.jboss.weld.Version] (MSC service thread 1-16) WELD-000900: 2.1.2 (Final)
+?[0m?[0m15:06:05,332 INFO  [org.jboss.weld.deployer] (MSC service thread 1-9) JBAS016008: Starting weld service for deployment SecurityAndAuditMangerTest.war
+?[0m?[0m15:06:05,496 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 11) JBAS011409: Starting Persistence Unit (phase 2 of 2) Service 'SecurityAndAuditMangerTest.war#primary'
+?[0m?[0m15:06:05,575 INFO  [org.hibernate.annotations.common.Version] (ServerService Thread Pool -- 11) HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+?[0m?[0m15:06:05,861 INFO  [org.hibernate.dialect.Dialect] (ServerService Thread Pool -- 11) HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+?[0m?[0m15:06:06,496 INFO  [org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory] (ServerService Thread Pool -- 11) HHH000397: Using ASTQueryTranslatorFactory
+?[0m?[0m15:06:08,377 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000227: Running hbm2ddl schema export
+?[0m?[31m15:06:08,405 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_Permissions drop foreign key FK_3vxkg4fowbhadvq45fkice9et
+?[0m?[31m15:06:08,405 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_Permissions' doesn't exist
+?[0m?[31m15:06:08,406 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_domains drop foreign key FK_4oihub78cxpvtrklunu8tr20g
+?[0m?[31m15:06:08,406 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_domains' doesn't exist
+?[0m?[31m15:06:08,407 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_instances drop foreign key FK_a8wf8rekqtlxr1ov6yr5g64ds
+?[0m?[31m15:06:08,407 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_instances' doesn't exist
+?[0m?[31m15:06:08,408 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_locations drop foreign key FK_srlt1rav7h1lyandb8mnmogfu
+?[0m?[31m15:06:08,408 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_locations' doesn't exist
+?[0m?[31m15:06:08,409 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_orginizations drop foreign key FK_l70j24sdetd7kv7aw7d5kr9hm
+?[0m?[31m15:06:08,409 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_orginizations' doesn't exist
+?[0m?[31m15:06:08,410 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_requiredAuths drop foreign key FK_nwskywgf44al9vjcylicnkp7e
+?[0m?[31m15:06:08,410 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_requiredAuths' doesn't exist
+?[0m?[31m15:06:08,411 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_roles drop foreign key FK_6ar5tks1oh644x4saqqc4k9ih
+?[0m?[31m15:06:08,411 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_roles' doesn't exist
+?[0m?[31m15:06:08,412 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table AccessPolicy_serviceElementTypes drop foreign key FK_4erups257pm71765tuin154vn
+?[0m?[31m15:06:08,412 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.AccessPolicy_serviceElementTypes' doesn't exist
+?[0m?[31m15:06:08,413 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Applicability_managementObjects drop foreign key FK_ap1yus2kcpoebken0acehf4sk
+?[0m?[31m15:06:08,413 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Applicability_managementObjects' doesn't exist
+?[0m?[31m15:06:08,414 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Applicability_serviceElementTypes drop foreign key FK_dftq7ew0k7sl59nup0ucx91su
+?[0m?[31m15:06:08,414 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Applicability_serviceElementTypes' doesn't exist
+?[0m?[31m15:06:08,415 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Capability_fcaps drop foreign key FK_bevp49ra6iaxhkkykmynv9jus
+?[0m?[31m15:06:08,415 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Capability_fcaps' doesn't exist
+?[0m?[31m15:06:08,416 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Capability_parameters drop foreign key FK_ai8x1nhr9j9h1fcl7a5ikb073
+?[0m?[31m15:06:08,416 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Capability_parameters' doesn't exist
+?[0m?[31m15:06:08,417 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Category_childIds drop foreign key FK_mxe74ay1wyu7er81hawh0n4e4
+?[0m?[31m15:06:08,418 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Category_childIds' doesn't exist
+?[0m?[31m15:06:08,418 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table DiscoveryParseString_DiscoveryParseElement drop foreign key FK_jptbrpvsisi9rklyj9umrwleh
+?[0m?[31m15:06:08,419 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.DiscoveryParseString_DiscoveryParseElement' doesn't exist
+?[0m?[31m15:06:08,419 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table DiscoveryParseString_DiscoveryParseElement drop foreign key FK_9t55s6ow87uly9sj6mjsa9tvv
+?[0m?[31m15:06:08,420 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.DiscoveryParseString_DiscoveryParseElement' doesn't exist
+?[0m?[31m15:06:08,421 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table DiscoveryRule_CalendarPolicy drop foreign key FK_hfa9s5eemmx9ohgp7mk5nweiu
+?[0m?[31m15:06:08,421 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.DiscoveryRule_CalendarPolicy' doesn't exist
+?[0m?[31m15:06:08,422 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table DiscoveryRule_CalendarPolicy drop foreign key FK_ju2k7l5u3aeb67ooe2krbi8x3
+?[0m?[31m15:06:08,422 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.DiscoveryRule_CalendarPolicy' doesn't exist
+?[0m?[31m15:06:08,423 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table DiscoveryRule_IpTopologySeed drop foreign key FK_dwr63nch9th2akrnoywvu6mxi
+?[0m?[31m15:06:08,423 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.DiscoveryRule_IpTopologySeed' doesn't exist
+?[0m?[31m15:06:08,424 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table DiscoveryRule_IpTopologySeed drop foreign key FK_6dcj0o5wqgdgdyutkf2ap4271
+?[0m?[31m15:06:08,424 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.DiscoveryRule_IpTopologySeed' doesn't exist
+?[0m?[31m15:06:08,425 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table EmailList_emailAddresses drop foreign key FK_h2g106cbqnskcli7ielul4nm4
+?[0m?[31m15:06:08,425 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.EmailList_emailAddresses' doesn't exist
+?[0m?[31m15:06:08,425 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterLinkTechnologies drop foreign key FK_5wdt2qbblknpof7plc4ai43fq
+?[0m?[31m15:06:08,426 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterLinkTechnologies' doesn't exist
+?[0m?[31m15:06:08,426 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterLinkTechnologies drop foreign key FK_56dy1ah4g96ldgp7pvxvrhdyx
+?[0m?[31m15:06:08,427 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterLinkTechnologies' doesn't exist
+?[0m?[31m15:06:08,427 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterNode_FilterNode drop foreign key FK_htt3enaekm6sa25pfjvy616rb
+?[0m?[31m15:06:08,428 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterNode_FilterNode' doesn't exist
+?[0m?[31m15:06:08,428 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterNode_FilterNode drop foreign key FK_vkhrms33mrsslckj8kynrn8p
+?[0m?[31m15:06:08,429 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterNode_FilterNode' doesn't exist
+?[0m?[31m15:06:08,429 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterOrginizations drop foreign key FK_jq1l650kfshrk2ynyi7d0634w
+?[0m?[31m15:06:08,430 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterOrginizations' doesn't exist
+?[0m?[31m15:06:08,430 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterOrginizations drop foreign key FK_j4im2m8q785li1sqy84s5ihyk
+?[0m?[31m15:06:08,430 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterOrginizations' doesn't exist
+?[0m?[31m15:06:08,431 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterTechnologies drop foreign key FK_3c2yxvxg5um0fmotv1eay7jpq
+?[0m?[31m15:06:08,431 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterTechnologies' doesn't exist
+?[0m?[31m15:06:08,432 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table FilterTechnologies drop foreign key FK_lck61be71qv6xhmi49mxeh9bj
+?[0m?[31m15:06:08,432 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.FilterTechnologies' doesn't exist
+?[0m?[31m15:06:08,433 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Filter_FilterNode drop foreign key FK_cm5labsasljthjfq88bc62lul
+?[0m?[31m15:06:08,433 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Filter_FilterNode' doesn't exist
+?[0m?[31m15:06:08,434 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Filter_FilterNode drop foreign key FK_8b5d7imqby3mjk4y35jwx7k1p
+?[0m?[31m15:06:08,434 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Filter_FilterNode' doesn't exist
+?[0m?[31m15:06:08,435 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Filter_FilterNode drop foreign key FK_jqi4ckco5e9ui4fuafuj2ubke
+?[0m?[31m15:06:08,436 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Filter_FilterNode' doesn't exist
+?[0m?[31m15:06:08,436 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Filter_FilterNode drop foreign key FK_gelsilkoqj3tsv4j3gdp21mmt
+?[0m?[31m15:06:08,437 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Filter_FilterNode' doesn't exist
+?[0m?[31m15:06:08,437 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Filter_criticalities drop foreign key FK_rt0iexfen7y1gwwx5ekmd8r5t
+?[0m?[31m15:06:08,438 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Filter_criticalities' doesn't exist
+?[0m?[31m15:06:08,438 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Filter_environmentLevel drop foreign key FK_d3xj16moe0tw9jrhu7sawlxex
+?[0m?[31m15:06:08,439 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Filter_environmentLevel' doesn't exist
+?[0m?[31m15:06:08,439 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Filter_providers drop foreign key FK_epmvssdsboo3xy4l6r6j3vglw
+?[0m?[31m15:06:08,440 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Filter_providers' doesn't exist
+?[0m?[31m15:06:08,460 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table InterDeviceLink_lowerLevelLinks drop foreign key FK_jyrg40kigt7cml7sxo2yhsnec
+?[0m?[31m15:06:08,460 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.InterDeviceLink_lowerLevelLinks' doesn't exist
+?[0m?[31m15:06:08,461 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table IpTopologySeed_Credentials drop foreign key FK_gls1sdx8shnww8w3mfqktctdl
+?[0m?[31m15:06:08,461 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.IpTopologySeed_Credentials' doesn't exist
+?[0m?[31m15:06:08,462 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table IpTopologySeed_Credentials drop foreign key FK_s3hl9vbtqigm13w8las7990g8
+?[0m?[31m15:06:08,462 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.IpTopologySeed_Credentials' doesn't exist
+?[0m?[31m15:06:08,463 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table IpTopologySeed_DiscoveryOrder drop foreign key FK_1sv8lbtpf2waxbe9gagbg4rbc
+?[0m?[31m15:06:08,463 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.IpTopologySeed_DiscoveryOrder' doesn't exist
+?[0m?[31m15:06:08,464 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table IpTopologySeed_alternateSNMPports drop foreign key FK_75gv6c3tu1vt6rcjivrjtuf7x
+?[0m?[31m15:06:08,464 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.IpTopologySeed_alternateSNMPports' doesn't exist
+?[0m?[31m15:06:08,465 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table IpTopologySeed_gatewayExclusuions drop foreign key FK_oxgkq9ldj9prs1xmcqky2qu7v
+?[0m?[31m15:06:08,467 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.IpTopologySeed_gatewayExclusuions' doesn't exist
+?[0m?[31m15:06:08,468 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table IpTopologySeed_netExclustions drop foreign key FK_1jry469n72ukksyf95siu4a0p
+?[0m?[31m15:06:08,468 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.IpTopologySeed_netExclustions' doesn't exist
+?[0m?[31m15:06:08,469 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table IpTopologySeed_technologys drop foreign key FK_hog9p7mumx5elwnffh3pyr7q9
+?[0m?[31m15:06:08,469 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.IpTopologySeed_technologys' doesn't exist
+?[0m?[31m15:06:08,472 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table LayerInformation drop foreign key FK_j0cd0eeyp10qvwsp6fghjjsrk
+?[0m?[31m15:06:08,472 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.LayerInformation' doesn't exist
+?[0m?[31m15:06:08,473 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Layer_LayerInformation drop foreign key FK_ns88dybxej70obtekwtqic2ib
+?[0m?[31m15:06:08,473 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Layer_LayerInformation' doesn't exist
+?[0m?[31m15:06:08,474 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Layer_LayerInformation drop foreign key FK_fwt16wq7vlgkunuj1mdcdau0k
+?[0m?[31m15:06:08,474 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Layer_LayerInformation' doesn't exist
+?[0m?[31m15:06:08,475 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table MIBInfo drop foreign key FK_dlpncfo125x4ssohjr5u6caf3
+?[0m?[31m15:06:08,475 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.MIBInfo' doesn't exist
+?[0m?[31m15:06:08,475 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table MIBInfo_SNMP drop foreign key FK_m3q6kwiqbhjlfuyqym9wv7i9k
+?[0m?[31m15:06:08,476 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.MIBInfo_SNMP' doesn't exist
+?[0m?[31m15:06:08,476 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table MIBInfo_SNMP drop foreign key FK_ex5ig99du2a3o3sdae7vsytwg
+?[0m?[31m15:06:08,476 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.MIBInfo_SNMP' doesn't exist
+?[0m?[31m15:06:08,477 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table MIBInfo_SNMPTable drop foreign key FK_p53hrnxnl99ivhlg91h441nin
+?[0m?[31m15:06:08,477 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.MIBInfo_SNMPTable' doesn't exist
+?[0m?[31m15:06:08,478 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table MIBInfo_SNMPTable drop foreign key FK_7slp8gutj02ow8fxmqlvjejs6
+?[0m?[31m15:06:08,478 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.MIBInfo_SNMPTable' doesn't exist
+?[0m?[31m15:06:08,479 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Mechanism_capabilities drop foreign key FK_l3cpw5np4hh4ft6spop7ys9ax
+?[0m?[31m15:06:08,479 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Mechanism_capabilities' doesn't exist
+?[0m?[31m15:06:08,479 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Network_InterDeviceLink drop foreign key FK_q7f6btncv3g2p2yoxaf6voc4c
+?[0m?[31m15:06:08,480 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Network_InterDeviceLink' doesn't exist
+?[0m?[31m15:06:08,480 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Network_InterDeviceLink drop foreign key FK_ml12m3rxkji346xheqvkhtp7t
+?[0m?[31m15:06:08,481 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Network_InterDeviceLink' doesn't exist
+?[0m?[31m15:06:08,481 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Network_Network drop foreign key FK_9adfefubnw9i6ox95xlki2n3e
+?[0m?[31m15:06:08,481 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Network_Network' doesn't exist
+?[0m?[31m15:06:08,482 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Network_Network drop foreign key FK_4nsh8l660fek5cwgvoq67sffw
+?[0m?[31m15:06:08,482 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Network_Network' doesn't exist
+?[0m?[31m15:06:08,483 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Network_ServiceElement drop foreign key FK_77frkfg5p3ncmq1yqyca01c1k
+?[0m?[31m15:06:08,483 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Network_ServiceElement' doesn't exist
+?[0m?[31m15:06:08,483 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Network_ServiceElement drop foreign key FK_ebnv565t5tbufiq63ld999vm4
+?[0m?[31m15:06:08,484 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Network_ServiceElement' doesn't exist
+?[0m?[31m15:06:08,484 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Organization_businessServices drop foreign key FK_och05t23u1xieyk91skaxfpdg
+?[0m?[31m15:06:08,485 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Organization_businessServices' doesn't exist
+?[0m?[31m15:06:08,485 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Organization_childOrginizations drop foreign key FK_mi0h293f2ic52hocvs1jw8ox
+?[0m?[31m15:06:08,485 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Organization_childOrginizations' doesn't exist
+?[0m?[31m15:06:08,486 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Organization_locations drop foreign key FK_48u71yc9fcmljmm1upf5vq58o
+?[0m?[31m15:06:08,486 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Organization_locations' doesn't exist
+?[0m?[31m15:06:08,487 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Organization_parentOrganizations drop foreign key FK_n79rmlplu0a418klu3jxo3d32
+?[0m?[31m15:06:08,487 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Organization_parentOrganizations' doesn't exist
+?[0m?[31m15:06:08,488 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Organization_technologies drop foreign key FK_ckii4x0judk3ftqom9lwdlhr9
+?[0m?[31m15:06:08,488 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Organization_technologies' doesn't exist
+?[0m?[31m15:06:08,488 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Path_InterDeviceLink drop foreign key FK_a6utxj6vvco5xn0dk6n9ofp8p
+?[0m?[31m15:06:08,489 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Path_InterDeviceLink' doesn't exist
+?[0m?[31m15:06:08,489 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Path_InterDeviceLink drop foreign key FK_cm91udh4u11ll90w3a029yjgm
+?[0m?[31m15:06:08,490 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Path_InterDeviceLink' doesn't exist
+?[0m?[31m15:06:08,490 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Role_calendarPolicies drop foreign key FK_oae0375gvw5ajfgootc44uaxs
+?[0m?[31m15:06:08,490 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Role_calendarPolicies' doesn't exist
+?[0m?[31m15:06:08,491 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SNMPModule_history drop foreign key FK_gcj9nexwvd4jpan9y0a7osgd8
+?[0m?[31m15:06:08,491 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SNMPModule_history' doesn't exist
+?[0m?[31m15:06:08,492 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SNMPTable_Index drop foreign key FK_rtpmekvbiysns9uumxrjuoy6h
+?[0m?[31m15:06:08,492 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SNMPTable_Index' doesn't exist
+?[0m?[31m15:06:08,492 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SNMPTable_Index drop foreign key FK_c7l0605w4ylnu7aq6wmmxek2o
+?[0m?[31m15:06:08,493 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SNMPTable_Index' doesn't exist
+?[0m?[31m15:06:08,493 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SNMPTable_OIDS drop foreign key FK_25c7tb5mj4dd2muuoi2xq745f
+?[0m?[31m15:06:08,494 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SNMPTable_OIDS' doesn't exist
+?[0m?[31m15:06:08,494 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SNMPTable_OIDS drop foreign key FK_kg90sbaodviescdknfcve5o53
+?[0m?[31m15:06:08,494 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SNMPTable_OIDS' doesn't exist
+?[0m?[31m15:06:08,495 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Selection_Filter drop foreign key FK_tqjy8odnanj6obahip5xm5j1h
+?[0m?[31m15:06:08,495 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Selection_Filter' doesn't exist
+?[0m?[31m15:06:08,496 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Selection_Filter drop foreign key FK_d0skfxx5jfh1294owrmaqbalc
+?[0m?[31m15:06:08,496 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Selection_Filter' doesn't exist
+?[0m?[31m15:06:08,497 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Selection_Layer drop foreign key FK_5p367tthj8mh63xgrjje43jff
+?[0m?[31m15:06:08,497 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Selection_Layer' doesn't exist
+?[0m?[31m15:06:08,497 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Selection_Layer drop foreign key FK_askgknd55pkpc7uyumy0t4u8t
+?[0m?[31m15:06:08,498 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Selection_Layer' doesn't exist
+?[0m?[31m15:06:08,498 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Selection_View drop foreign key FK_juijam4mfjnjbagov72maujoh
+?[0m?[31m15:06:08,498 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Selection_View' doesn't exist
+?[0m?[31m15:06:08,499 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Selection_View drop foreign key FK_ocqflr7f4n1oqj3rklo2axufx
+?[0m?[31m15:06:08,499 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Selection_View' doesn't exist
+?[0m?[31m15:06:08,500 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement drop foreign key FK_3ks5iaqkwm8v9ul8khkh5p5ix
+?[0m?[31m15:06:08,500 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement' doesn't exist
+?[0m?[31m15:06:08,501 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementAssociationType_attributeIds drop foreign key FK_r2b0vlq5h54tj6skb5vw8973o
+?[0m?[31m15:06:08,501 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementAssociationType_attributeIds' doesn't exist
+?[0m?[31m15:06:08,501 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementAssociation_ManagementObjectValue drop foreign key FK_40e9ecb8vjecuw0egsxiq3nur
+?[0m?[31m15:06:08,502 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementAssociation_ManagementObjectValue' doesn't exist
+?[0m?[31m15:06:08,502 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementAssociation_ManagementObjectValue drop foreign key FK_1n5kmb71lwjd7yd0t7ivqlii8
+?[0m?[31m15:06:08,503 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementAssociation_ManagementObjectValue' doesn't exist
+?[0m?[31m15:06:08,503 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementAssociation_Values drop foreign key FK_6rui5754gsboewgcypyqyq8ox
+?[0m?[31m15:06:08,503 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementAssociation_Values' doesn't exist
+?[0m?[31m15:06:08,504 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementAssociation_Values drop foreign key FK_3j2u7gcwwv2ykrwvs6x8olh7m
+?[0m?[31m15:06:08,504 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementAssociation_Values' doesn't exist
+?[0m?[31m15:06:08,505 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory drop foreign key FK_9qiyuj6gj9o7xe8noa305aluj
+?[0m?[31m15:06:08,505 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory' doesn't exist
+?[0m?[31m15:06:08,506 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_ManagementObjectValue drop foreign key FK_pejltesfgj8ncx68ko7o6hc79
+?[0m?[31m15:06:08,506 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_ManagementObjectValue' doesn't exist
+?[0m?[31m15:06:08,506 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_ManagementObjectValue drop foreign key FK_n9v9lklpja7eq64sf8wa86ytk
+?[0m?[31m15:06:08,507 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_ManagementObjectValue' doesn't exist
+?[0m?[31m15:06:08,507 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_ServiceElementAssociation drop foreign key FK_d3spap5w3cox09gt32fijnuo5
+?[0m?[31m15:06:08,508 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_ServiceElementAssociation' doesn't exist
+?[0m?[31m15:06:08,509 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_ServiceElementAssociation drop foreign key FK_gmjn28g5xgd6vt7y9dslncwcd
+?[0m?[31m15:06:08,509 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_ServiceElementAssociation' doesn't exist
+?[0m?[31m15:06:08,510 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_ServiceElementProtocolInstanceIdentifier drop foreign key FK_op3sl60leo2u2kuhhynsg9qml
+?[0m?[31m15:06:08,510 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_ServiceElementProtocolInstanceIdentifier' doesn't exist
+?[0m?[31m15:06:08,511 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_ServiceElementProtocolInstanceIdentifier drop foreign key FK_63ahm20fdtkfcrnjrl1q0f3nx
+?[0m?[31m15:06:08,511 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_ServiceElementProtocolInstanceIdentifier' doesn't exist
+?[0m?[31m15:06:08,511 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_capabilites drop foreign key FK_5gwkmjkh8d5dwhgqr7n1cl2a7
+?[0m?[31m15:06:08,512 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_capabilites' doesn't exist
+?[0m?[31m15:06:08,512 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_changedFields drop foreign key FK_alxa9tsl98v1w2lem5h7abjwx
+?[0m?[31m15:06:08,513 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_changedFields' doesn't exist
+?[0m?[31m15:06:08,513 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_credentials drop foreign key FK_paxckcpqpg5ygy9v7pt2dn550
+?[0m?[31m15:06:08,513 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_credentials' doesn't exist
+?[0m?[31m15:06:08,514 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_parentIds drop foreign key FK_divicwqcwy9tqyo376wctpxi
+?[0m?[31m15:06:08,514 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_parentIds' doesn't exist
+?[0m?[31m15:06:08,515 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_serviceElementProtocolInstanceIdentifiers drop foreign key FK_h8yodpw3uwblt1r4ppc2snr2v
+?[0m?[31m15:06:08,515 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_serviceElementProtocolInstanceIdentifiers' doesn't exist
+?[0m?[31m15:06:08,516 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementHistory_uniqueIdentifierIds drop foreign key FK_d2g7f56d0hf4v4xl9qcp8pdf6
+?[0m?[31m15:06:08,516 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementHistory_uniqueIdentifierIds' doesn't exist
+?[0m?[31m15:06:08,516 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementInstanceUniqueSignature_ChangeSEMO drop foreign key FK_8lyqx7g051603tqrpvp5hj3lt
+?[0m?[31m15:06:08,517 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementInstanceUniqueSignature_ChangeSEMO' doesn't exist
+?[0m?[31m15:06:08,517 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementInstanceUniqueSignature_ChangeSEMO drop foreign key FK_no5jqh43jwspf464r1mkhsfoo
+?[0m?[31m15:06:08,518 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementInstanceUniqueSignature_ChangeSEMO' doesn't exist
+?[0m?[31m15:06:08,518 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementInstanceUniqueSignature_SEMO drop foreign key FK_c19dff0d63939cxbv28xqlrae
+?[0m?[31m15:06:08,518 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementInstanceUniqueSignature_SEMO' doesn't exist
+?[0m?[31m15:06:08,519 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementInstanceUniqueSignature_SEMO drop foreign key FK_5mp7hqhrqnj7ovcxva7n9j7p
+?[0m?[31m15:06:08,519 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementInstanceUniqueSignature_SEMO' doesn't exist
+?[0m?[31m15:06:08,520 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementManagementObject drop foreign key FK_g58gwls6emm4jrj9d7vbloyhd
+?[0m?[31m15:06:08,520 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementManagementObject' doesn't exist
+?[0m?[31m15:06:08,521 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementManagementObject_serviceElementTypes drop foreign key FK_kaip1inkitpr9m3bv966ien0c
+?[0m?[31m15:06:08,521 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementManagementObject_serviceElementTypes' doesn't exist
+?[0m?[31m15:06:08,521 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType drop foreign key FK_ehiewswigqtxb8rykcsim5ht9
+?[0m?[31m15:06:08,522 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType' doesn't exist
+?[0m?[31m15:06:08,522 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_Signature drop foreign key FK_rm1p5xl3b75gn19llsbtqta6v
+?[0m?[31m15:06:08,522 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_Signature' doesn't exist
+?[0m?[31m15:06:08,523 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_Signature drop foreign key FK_buoacryakuw482o9waf2uw3yv
+?[0m?[31m15:06:08,524 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_Signature' doesn't exist
+?[0m?[31m15:06:08,524 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_applicabilities drop foreign key FK_fayl4tiob5qvt53fd1m8g1e1v
+?[0m?[31m15:06:08,525 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_applicabilities' doesn't exist
+?[0m?[31m15:06:08,526 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_associations drop foreign key FK_6juayb8unrg3plpfw219gjqh1
+?[0m?[31m15:06:08,526 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_associations' doesn't exist
+?[0m?[31m15:06:08,526 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_attributeIds drop foreign key FK_odpixt5ls8v6gy6m095k0r470
+?[0m?[31m15:06:08,527 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_attributeIds' doesn't exist
+?[0m?[31m15:06:08,527 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_capabilityIds drop foreign key FK_qk6w9cgqi9yffqfgmxuvovav8
+?[0m?[31m15:06:08,527 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_capabilityIds' doesn't exist
+?[0m?[31m15:06:08,528 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_childServiceElementTypes drop foreign key FK_av8eplyxrlyitkky1eb2ce5dn
+?[0m?[31m15:06:08,528 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_childServiceElementTypes' doesn't exist
+?[0m?[31m15:06:08,529 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElementType_uniqueIdentifierCapabilities drop foreign key FK_s6du3odcob2svkk2sbkwi10jn
+?[0m?[31m15:06:08,529 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElementType_uniqueIdentifierCapabilities' doesn't exist
+?[0m?[31m15:06:08,530 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_ManagementObjectValue drop foreign key FK_c6vl8d2whxau1f2smi49lsigs
+?[0m?[31m15:06:08,530 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_ManagementObjectValue' doesn't exist
+?[0m?[31m15:06:08,531 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_ManagementObjectValue drop foreign key FK_m4d75wpouckhfun17wjqdwyul
+?[0m?[31m15:06:08,531 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_ManagementObjectValue' doesn't exist
+?[0m?[31m15:06:08,531 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_ServiceElementAssociation drop foreign key FK_f2pwyccb3aekuesr840y9oip4
+?[0m?[31m15:06:08,532 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_ServiceElementAssociation' doesn't exist
+?[0m?[31m15:06:08,532 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_ServiceElementAssociation drop foreign key FK_abqylaj6dq26h1uxxxtseny7i
+?[0m?[31m15:06:08,532 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_ServiceElementAssociation' doesn't exist
+?[0m?[31m15:06:08,537 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_ServiceElementProtocolInstanceIdentifier drop foreign key FK_r182kwcojgph4c078s20ndhvx
+?[0m?[31m15:06:08,537 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_ServiceElementProtocolInstanceIdentifier' doesn't exist
+?[0m?[31m15:06:08,538 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_ServiceElementProtocolInstanceIdentifier drop foreign key FK_hd8ba33jr2shrwb4vmb1efxsg
+?[0m?[31m15:06:08,538 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_ServiceElementProtocolInstanceIdentifier' doesn't exist
+?[0m?[31m15:06:08,539 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_capabilites drop foreign key FK_oehfuthheb0a86jut5j7uua6l
+?[0m?[31m15:06:08,539 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_capabilites' doesn't exist
+?[0m?[31m15:06:08,540 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_credentials drop foreign key FK_nn9lt9otet6577gnh7m1wqhc1
+?[0m?[31m15:06:08,540 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_credentials' doesn't exist
+?[0m?[31m15:06:08,540 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_parentIds drop foreign key FK_f411q5v73vsbcm8n0b15fr087
+?[0m?[31m15:06:08,541 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_parentIds' doesn't exist
+?[0m?[31m15:06:08,541 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_serviceElementProtocolInstanceIdentifiers drop foreign key FK_c1vppibend3m9tmjur0k71gl2
+?[0m?[31m15:06:08,542 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_serviceElementProtocolInstanceIdentifiers' doesn't exist
+?[0m?[31m15:06:08,542 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table ServiceElement_uniqueIdentifierIds drop foreign key FK_7ofykhw8wlqcufwkikd081k6u
+?[0m?[31m15:06:08,542 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.ServiceElement_uniqueIdentifierIds' doesn't exist
+?[0m?[31m15:06:08,543 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Service_childServices drop foreign key FK_n4ansc0788c0amc3nvj4gntw7
+?[0m?[31m15:06:08,543 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Service_childServices' doesn't exist
+?[0m?[31m15:06:08,544 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Service_dependsOn drop foreign key FK_kcdq8qfwmn6301bofcg82orr
+?[0m?[31m15:06:08,544 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Service_dependsOn' doesn't exist
+?[0m?[31m15:06:08,545 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Service_technologies drop foreign key FK_thlvuh5rgk01j0921xs38esxr
+?[0m?[31m15:06:08,545 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Service_technologies' doesn't exist
+?[0m?[31m15:06:08,546 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Signature_SignatureValueOperator drop foreign key FK_p6c3km3aj1rfn1b5ovu1vj973
+?[0m?[31m15:06:08,546 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Signature_SignatureValueOperator' doesn't exist
+?[0m?[31m15:06:08,546 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Signature_SignatureValueOperator drop foreign key FK_3xpexr8rw2sg2npnexu5k1bd8
+?[0m?[31m15:06:08,547 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Signature_SignatureValueOperator' doesn't exist
+?[0m?[31m15:06:08,547 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpAssociation drop foreign key FK_gxcix965lfm5s6w28ktmxlf12
+?[0m?[31m15:06:08,547 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpAssociation' doesn't exist
+?[0m?[31m15:06:08,548 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpContainment_SnmpLevelOID drop foreign key FK_5x0g82jegpxiqaihiquwy7hx0
+?[0m?[31m15:06:08,548 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpContainment_SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,549 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpContainment_SnmpLevelOID drop foreign key FK_4onsoq660bsi6el8uca9mfsrk
+?[0m?[31m15:06:08,549 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpContainment_SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,550 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpContainment_SnmpUniqueDiscriminator drop foreign key FK_jjb7lwkgyrr3xwoqv4pk596hg
+?[0m?[31m15:06:08,550 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpContainment_SnmpUniqueDiscriminator' doesn't exist
+?[0m?[31m15:06:08,550 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpContainment_SnmpUniqueDiscriminator drop foreign key FK_g909fuiptq167yotnt21dbdyo
+?[0m?[31m15:06:08,551 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpContainment_SnmpUniqueDiscriminator' doesn't exist
+?[0m?[31m15:06:08,551 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpGlobalReadCredential_Credential drop foreign key FK_6f5cqy6bn7457x8rnm9yr35g5
+?[0m?[31m15:06:08,551 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpGlobalReadCredential_Credential' doesn't exist
+?[0m?[31m15:06:08,552 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpGlobalReadCredential_Credential drop foreign key FK_1kh5h8iek8av4afiq1t3ydf0
+?[0m?[31m15:06:08,552 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpGlobalReadCredential_Credential' doesn't exist
+?[0m?[31m15:06:08,553 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpGlobalReadCredential_alternatePorts drop foreign key FK_n6sg01fti4hyrmwsd4f38tk9
+?[0m?[31m15:06:08,553 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpGlobalReadCredential_alternatePorts' doesn't exist
+?[0m?[31m15:06:08,554 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID drop foreign key FK_mb73sq339jesprqn9h8ouw872
+?[0m?[31m15:06:08,554 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,554 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID drop foreign key FK_epaqs1p05xb3yp5096mn428y8
+?[0m?[31m15:06:08,555 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,555 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID drop foreign key FK_307tmryacb1dja5pyohohs7iq
+?[0m?[31m15:06:08,556 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,556 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID drop foreign key FK_5v4bp2uj0je7eu72bq1ci6w3l
+?[0m?[31m15:06:08,556 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,557 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID drop foreign key FK_asjfw9udwjix55vowpq7kmwk4
+?[0m?[31m15:06:08,557 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,558 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID_SnmpAssociation drop foreign key FK_s958j9sgg5rjst6xe7bbgo50k
+?[0m?[31m15:06:08,558 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID_SnmpAssociation' doesn't exist
+?[0m?[31m15:06:08,559 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID_SnmpAssociation drop foreign key FK_7l1t96h11r5ljvidphha6ps4r
+?[0m?[31m15:06:08,559 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID_SnmpAssociation' doesn't exist
+?[0m?[31m15:06:08,559 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID_SnmpLevelOID drop foreign key FK_5nnxwcn7djucsu2wiq6xsklt3
+?[0m?[31m15:06:08,560 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID_SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,560 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID_SnmpLevelOID drop foreign key FK_prw1cobm68xdlrdr8ji33at6o
+?[0m?[31m15:06:08,560 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID_SnmpLevelOID' doesn't exist
+?[0m?[31m15:06:08,561 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID_SnmpServiceElementTypeDiscriminator drop foreign key FK_fiq7t3itpiisbhpij22m0vwek
+?[0m?[31m15:06:08,561 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID_SnmpServiceElementTypeDiscriminator' doesn't exist
+?[0m?[31m15:06:08,562 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpLevelOID_SnmpServiceElementTypeDiscriminator drop foreign key FK_dug4kb9889gmadxvlm3sflr01
+?[0m?[31m15:06:08,566 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpLevelOID_SnmpServiceElementTypeDiscriminator' doesn't exist
+?[0m?[31m15:06:08,567 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_2ab73qbojo4bdegsc23sa4qv5
+?[0m?[31m15:06:08,567 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,567 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_4t2bmbawi4qtflvo8a5p2aqtg
+?[0m?[31m15:06:08,568 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,570 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_ksgc9audqr5rwjkyucabag8vx
+?[0m?[31m15:06:08,571 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,571 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_mbqoslx74e2xfafxslxq1rjd9
+?[0m?[31m15:06:08,571 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,572 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_tgxminhevulfg7i180ks8e8mm
+?[0m?[31m15:06:08,572 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,573 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_obr60q8u2qgnlnx0y3pg2hya
+?[0m?[31m15:06:08,573 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,573 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_4nwhdk0s048v12e1v9ngmbp3k
+?[0m?[31m15:06:08,574 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,574 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_e7j8a7qk7vo3f7g4piielh1jf
+?[0m?[31m15:06:08,575 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,575 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpRelationship drop foreign key FK_b0a04yeh0i5efcvgktoosf290
+?[0m?[31m15:06:08,575 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpRelationship' doesn't exist
+?[0m?[31m15:06:08,576 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpServiceElementTypeDiscriminator drop foreign key FK_9n5p0pb4oerkglhb2vi5x4xy4
+?[0m?[31m15:06:08,576 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpServiceElementTypeDiscriminator' doesn't exist
+?[0m?[31m15:06:08,577 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpServiceElementTypeDiscriminator drop foreign key FK_q1jxm9x3s1km33xprqhllu657
+?[0m?[31m15:06:08,577 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpServiceElementTypeDiscriminator' doesn't exist
+?[0m?[31m15:06:08,577 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpSyntax_SnmpEnumValue drop foreign key FK_qmh24p6ek448b5t5aw6ohr1uy
+?[0m?[31m15:06:08,578 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpSyntax_SnmpEnumValue' doesn't exist
+?[0m?[31m15:06:08,578 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpSyntax_SnmpEnumValue drop foreign key FK_bf6y3q9h1l9v10koq0u0bvsa0
+?[0m?[31m15:06:08,578 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpSyntax_SnmpEnumValue' doesn't exist
+?[0m?[31m15:06:08,579 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpUniqueDiscriminator drop foreign key FK_eryb418g7g642kipskmqb58tg
+?[0m?[31m15:06:08,579 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpUniqueDiscriminator' doesn't exist
+?[0m?[31m15:06:08,580 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpUniqueDiscriminator drop foreign key FK_mgyf9coe4dl0g72gyx9lbdqvj
+?[0m?[31m15:06:08,580 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpUniqueDiscriminator' doesn't exist
+?[0m?[31m15:06:08,581 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpUniqueDiscriminator drop foreign key FK_d5ru4g4pmjqnklg00maxjw2v5
+?[0m?[31m15:06:08,581 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpUniqueDiscriminator' doesn't exist
+?[0m?[31m15:06:08,581 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpUniqueDiscriminator_uniqueIdentifierSemos drop foreign key FK_px0f5eygiydachl49o2gltylq
+?[0m?[31m15:06:08,582 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpUniqueDiscriminator_uniqueIdentifierSemos' doesn't exist
+?[0m?[31m15:06:08,582 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpVendorDiscoveryTemplate drop foreign key FK_afal50ntmod028nd1kh16cguk
+?[0m?[31m15:06:08,582 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpVendorDiscoveryTemplate' doesn't exist
+?[0m?[31m15:06:08,583 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpVendorDiscoveryTemplate drop foreign key FK_aftlc20bw1bt1k83pu36lkpem
+?[0m?[31m15:06:08,583 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpVendorDiscoveryTemplate' doesn't exist
+?[0m?[31m15:06:08,584 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpVendorDiscoveryTemplate drop foreign key FK_di9snbk5i1dcd8p3b7v7t6blk
+?[0m?[31m15:06:08,584 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpVendorDiscoveryTemplate' doesn't exist
+?[0m?[31m15:06:08,584 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table SnmpVendorDiscoveryTemplate drop foreign key FK_8p75bscinaw61vyir2s33yowo
+?[0m?[31m15:06:08,585 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.SnmpVendorDiscoveryTemplate' doesn't exist
+?[0m?[31m15:06:08,585 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Technology_discoveryTypes drop foreign key FK_dyfkrngkgt2a3n24l2sa7acw3
+?[0m?[31m15:06:08,586 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Technology_discoveryTypes' doesn't exist
+?[0m?[31m15:06:08,586 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table Technology_mechanisims drop foreign key FK_qh64p47iqv3kawhoq01r86l7u
+?[0m?[31m15:06:08,586 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.Technology_mechanisims' doesn't exist
+?[0m?[31m15:06:08,587 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table TopologyElement_InterDeviceLink drop foreign key FK_j1h2pwrbul3t31mft2c7kb64w
+?[0m?[31m15:06:08,587 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.TopologyElement_InterDeviceLink' doesn't exist
+?[0m?[31m15:06:08,588 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table TopologyElement_InterDeviceLink drop foreign key FK_nq5va9l9vd3fqwvawuaw9xs1s
+?[0m?[31m15:06:08,588 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.TopologyElement_InterDeviceLink' doesn't exist
+?[0m?[31m15:06:08,588 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table TopologyElement_address drop foreign key FK_ow9jycdfo94wj2lcvrcip58nd
+?[0m?[31m15:06:08,589 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.TopologyElement_address' doesn't exist
+?[0m?[31m15:06:08,589 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table User_organizations drop foreign key FK_19yd49crx62dpgiet5wtgd5yj
+?[0m?[31m15:06:08,590 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.User_organizations' doesn't exist
+?[0m?[31m15:06:08,590 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table User_orginizations drop foreign key FK_m653bvpq3o4umbtqps1wixd8
+?[0m?[31m15:06:08,590 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.User_orginizations' doesn't exist
+?[0m?[31m15:06:08,591 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table User_roles drop foreign key FK_9u2iq5wf9ng6sdwv0gelttnoo
+?[0m?[31m15:06:08,591 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.User_roles' doesn't exist
+?[0m?[31m15:06:08,592 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table VendorContainmentSelector_VendorSignature drop foreign key FK_32vsexdhgoe4xo7y4tlyo2pvh
+?[0m?[31m15:06:08,592 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.VendorContainmentSelector_VendorSignature' doesn't exist
+?[0m?[31m15:06:08,592 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table VendorContainmentSelector_VendorSignature drop foreign key FK_aywkjr8c1e93o3in0kp7dn21y
+?[0m?[31m15:06:08,593 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.VendorContainmentSelector_VendorSignature' doesn't exist
+?[0m?[31m15:06:08,593 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table VendorSignature drop foreign key FK_q6elgcmqr7iak95it60uxyih6
+?[0m?[31m15:06:08,594 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.VendorSignature' doesn't exist
+?[0m?[31m15:06:08,594 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table View_EmailList drop foreign key FK_jbt3yu327ywugjhtudlk2hawd
+?[0m?[31m15:06:08,595 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.View_EmailList' doesn't exist
+?[0m?[31m15:06:08,595 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table View_EmailList drop foreign key FK_cwng5dcls3m9ro8oxt9lmecor
+?[0m?[31m15:06:08,596 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.View_EmailList' doesn't exist
+?[0m?[31m15:06:08,596 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000389: Unsuccessful: alter table View_viewTypes drop foreign key FK_sihgl130v0764u71hrce5h922
+?[0m?[31m15:06:08,597 ERROR [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) Table 'TestConfig.View_viewTypes' doesn't exist
+?[0m?[0m15:06:19,148 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 11) HHH000230: Schema export complete
+?[0m?[0m15:06:19,692 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:19,826 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLogger because of underlying class loading error: Type org.slf4j.Logger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:20,136 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkSTBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:20,704 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpManager because of underlying class loading error: Type uk.co.westhawk.snmp.stack.PduException from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[33m15:06:20,773 WARN  [org.jboss.modules] (weld-worker-1) Failed to define class org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 in Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader: java.lang.LinkageError: Failed to link org/jboss/as/arquillian/container/OSGiApplicationArchiveProcessor$1 (Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader)
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:487) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.loadClassLocal(ModuleClassLoader.java:277) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader$1.loadClassLocal(ModuleClassLoader.java:92) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.Module.loadModuleClass(Module.java:568) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:205) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.as.weld.WeldModuleResourceLoader.classForName(WeldModuleResourceLoader.java:68) [wildfly-weld-8.1.0.Final.jar:8.1.0.Final]
+	at org.jboss.weld.bootstrap.BeanDeployer.loadClass(BeanDeployer.java:106) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.BeanDeployer.addClass(BeanDeployer.java:94) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:62) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:53) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [rt.jar:1.7.0_51]
+	at java.lang.Thread.run(Thread.java:744) [rt.jar:1.7.0_51]
+Caused by: java.lang.NoClassDefFoundError: org/jboss/arquillian/container/osgi/AbstractOSGiApplicationArchiveProcessor
+	at java.lang.ClassLoader.defineClass1(Native Method) [rt.jar:1.7.0_51]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:800) [rt.jar:1.7.0_51]
+	at org.jboss.modules.ModuleClassLoader.doDefineOrLoadClass(ModuleClassLoader.java:361) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:482) [jboss-modules.jar:1.3.3.Final]
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:213) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	... 23 more
+
+?[0m?[0m15:06:20,790 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 because of underlying class loading error: Type org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:20,924 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLocationAwareLogger because of underlying class loading error: Type org.slf4j.spi.LocationAwareLogger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:21,006 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpResponse because of underlying class loading error: Type uk.co.westhawk.snmp.pdu.BlockPdu from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:21,210 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.matrix.GraphMatrixOperations because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:21,629 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.MarkovCentrality because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix1D from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:21,653 INFO  [org.jboss.weld.Bootstrap] (weld-worker-7) WELD-000119: Not generating any bean definitions from org.jboss.net.protocol.http.DavURLLister because of underlying class loading error: Type org.apache.commons.httpclient.HttpException from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:21,731 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassTable because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:21,737 INFO  [org.jboss.weld.Bootstrap] (weld-worker-5) WELD-000119: Not generating any bean definitions from org.jboss.logging.Log4jLogger because of underlying class loading error: Type org.apache.log4j.Priority from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:21,834 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassResolver because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.SecurityAndAuditMangerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:06:28,532 INFO  [edu.harvard.integer.service.security.SecurityService] (ServerService Thread Pool -- 54) Create SecurityService
+?[0m?[33m15:06:28,533 WARN  [edu.harvard.integer.service.selection.SelectionService] (ServerService Thread Pool -- 55) SelectionService is starting
+?[0m?[31m15:06:28,536 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 58) Unable to load properties from integer.properties
+?[0m?[31m15:06:28,543 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 68) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,543 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (ServerService Thread Pool -- 68) Discovery service starting.... on server 1
+?[0m?[0m15:06:28,548 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) DistributionService starting
+?[0m?[0m15:06:28,549 INFO  [stdout] (ServerService Thread Pool -- 56) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[0m15:06:28,550 INFO  [stdout] (ServerService Thread Pool -- 56) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[31m15:06:28,824 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[33m15:06:28,825 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Need to get sever port from Wildfly
+?[0m?[0m15:06:28,825 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) got http port 8585 from System properties
+?[0m?[0m15:06:28,890 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Created IntegerServer edu.harvard.integer.common.distribution.IntegerServer:1
+?[0m?[0m15:06:28,897 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Have 1 IntegerServers
+?[0m?[33m15:06:28,903 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Create managers on 'localhost'
+?[0m?[31m15:06:28,904 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,908 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager PersistenceManager ID: PersistenceManager(edu.harvard.integer.common.distribution.DistributedManager:1)
+?[0m?[31m15:06:28,909 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,910 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager ServiceElementDiscoveryManager ID: ServiceElementDiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:2)
+?[0m?[31m15:06:28,911 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,913 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager SnmpManager ID: SnmpManager(edu.harvard.integer.common.distribution.DistributedManager:3)
+?[0m?[31m15:06:28,914 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,916 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager ServiceElementAccessManager ID: ServiceElementAccessManager(edu.harvard.integer.common.distribution.DistributedManager:4)
+?[0m?[31m15:06:28,917 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,918 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager ManagementObjectCapabilityManager ID: ManagementObjectCapabilityManager(edu.harvard.integer.common.distribution.DistributedManager:5)
+?[0m?[31m15:06:28,919 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,921 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager StateManager ID: StateManager(edu.harvard.integer.common.distribution.DistributedManager:6)
+?[0m?[31m15:06:28,922 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,924 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager SelectionManager ID: SelectionManager(edu.harvard.integer.common.distribution.DistributedManager:7)
+?[0m?[31m15:06:28,924 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,926 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager TechnologyManager ID: TechnologyManager(edu.harvard.integer.common.distribution.DistributedManager:8)
+?[0m?[31m15:06:28,927 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,929 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager DiscoveryManager ID: DiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:9)
+?[0m?[31m15:06:28,929 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,931 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager EventManager ID: EventManager(edu.harvard.integer.common.distribution.DistributedManager:10)
+?[0m?[31m15:06:28,932 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,934 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager YamlManager ID: YamlManager(edu.harvard.integer.common.distribution.DistributedManager:11)
+?[0m?[31m15:06:28,935 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,937 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager TopologyManager ID: TopologyManager(edu.harvard.integer.common.distribution.DistributedManager:12)
+?[0m?[31m15:06:28,937 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,939 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager UserManager ID: UserManager(edu.harvard.integer.common.distribution.DistributedManager:13)
+?[0m?[31m15:06:28,940 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,942 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Added Manager InventoryManager ID: InventoryManager(edu.harvard.integer.common.distribution.DistributedManager:14)
+?[0m?[0m15:06:28,945 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Have 14 DistributeManagers
+?[0m?[33m15:06:28,952 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Create service on 'localhost'
+?[0m?[31m15:06:28,953 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[31m15:06:28,956 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[31m15:06:28,959 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[31m15:06:28,961 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[31m15:06:28,963 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,967 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Have 5 DistributeServices
+?[0m?[31m15:06:28,968 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[31m15:06:28,968 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 56) Unable to load properties from integer.properties
+?[0m?[0m15:06:28,969 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Server null ID: 1 127.0.0.1 My ID: 1 started null
+?[0m?[0m15:06:28,973 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Found 14 managers [Ledu.harvard.integer.common.distribution.DistributedManager;@48b94c7c
+?[0m?[0m15:06:28,974 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager PersistenceManager type PersistenceManager
+?[0m?[0m15:06:28,974 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager ServiceElementDiscoveryManager type ServiceElementDiscoveryManager
+?[0m?[0m15:06:28,975 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager SnmpManager type SnmpManager
+?[0m?[0m15:06:28,975 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager ServiceElementAccessManager type ServiceElementAccessManager
+?[0m?[0m15:06:28,976 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager ManagementObjectCapabilityManager type ManagementObjectCapabilityManager
+?[0m?[0m15:06:28,976 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager StateManager type StateManager
+?[0m?[0m15:06:28,977 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager SelectionManager type SelectionManager
+?[0m?[0m15:06:28,977 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager TechnologyManager type TechnologyManager
+?[0m?[0m15:06:28,978 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager DiscoveryManager type DiscoveryManager
+?[0m?[0m15:06:28,978 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager EventManager type EventManager
+?[0m?[0m15:06:28,979 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager YamlManager type YamlManager
+?[0m?[0m15:06:28,979 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager TopologyManager type TopologyManager
+?[0m?[0m15:06:28,979 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager UserManager type UserManager
+?[0m?[0m15:06:28,980 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 56) Manager InventoryManager type InventoryManager
+?[0m?[33m15:06:28,998 WARN  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 68) PersistenceServices is starting
+?[0m?[0m15:06:29,008 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 68) Loading preload data files
+?[0m?[0m15:06:29,008 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 68) Number of preloads 0
+?[0m?[0m15:06:29,009 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 68) Number of preloads 0
+?[0m?[0m15:06:29,354 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-7) Deploying javax.ws.rs.core.Application: class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:06:29,355 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-7) Adding class resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:06:29,356 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-7) Adding singleton resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:06:29,404 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-7) JBAS017534: Registered web context: /SecurityAndAuditMangerTest
+?[0m?[0m15:06:29,500 INFO  [org.jboss.as.server] (management-handler-thread - 2) JBAS018559: Deployed &quot;SecurityAndAuditMangerTest.war&quot; (runtime-name : &quot;SecurityAndAuditMangerTest.war&quot;)
+?[0m?[0m15:06:33,336 INFO  [edu.harvard.integer.security.SecurityAndAuditMangerTest] (default task-6) Found 1 Direct user logins
+?[0m?[0m15:06:33,337 INFO  [edu.harvard.integer.security.SecurityAndAuditMangerTest] (default task-6) Found direct login admin
+?[0m?[31m15:06:33,526 ERROR [stderr] (default task-8) UserNamePasswordNotValid
+?[0m?[31m15:06:33,528 ERROR [stderr] (default task-8) 	at edu.harvard.integer.service.security.SecurityAndAuditManager.loginUser(SecurityAndAuditManager.java:125)
+?[0m?[31m15:06:33,528 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:06:33,529 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:06:33,529 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,530 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,530 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.ManagedReferenceMethodInterceptor.processInvocation(ManagedReferenceMethodInterceptor.java:52)
+?[0m?[31m15:06:33,531 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,531 ERROR [stderr] (default task-8) 	at org.jboss.invocation.WeavedInterceptor.processInvocation(WeavedInterceptor.java:53)
+?[0m?[31m15:06:33,532 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.interceptors.UserInterceptorFactory$1.processInvocation(UserInterceptorFactory.java:63)
+?[0m?[31m15:06:33,532 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,533 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext$Invocation.proceed(InterceptorContext.java:407)
+?[0m?[31m15:06:33,533 ERROR [stderr] (default task-8) 	at org.jboss.as.weld.ejb.Jsr299BindingsInterceptor.doMethodInterception(Jsr299BindingsInterceptor.java:82)
+?[0m?[31m15:06:33,534 ERROR [stderr] (default task-8) 	at org.jboss.as.weld.ejb.Jsr299BindingsInterceptor.processInvocation(Jsr299BindingsInterceptor.java:93)
+?[0m?[31m15:06:33,534 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.interceptors.UserInterceptorFactory$1.processInvocation(UserInterceptorFactory.java:63)
+?[0m?[31m15:06:33,535 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,535 ERROR [stderr] (default task-8) 	at org.jboss.invocation.WeavedInterceptor.processInvocation(WeavedInterceptor.java:53)
+?[0m?[31m15:06:33,536 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.interceptors.UserInterceptorFactory$1.processInvocation(UserInterceptorFactory.java:63)
+?[0m?[31m15:06:33,538 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,539 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.component.invocationmetrics.ExecutionTimeInterceptor.processInvocation(ExecutionTimeInterceptor.java:43)
+?[0m?[31m15:06:33,539 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,540 ERROR [stderr] (default task-8) 	at org.jboss.as.jpa.interceptor.SBInvocationInterceptor.processInvocation(SBInvocationInterceptor.java:47)
+?[0m?[31m15:06:33,540 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,540 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext$Invocation.proceed(InterceptorContext.java:407)
+?[0m?[31m15:06:33,541 ERROR [stderr] (default task-8) 	at org.jboss.weld.ejb.AbstractEJBRequestScopeActivationInterceptor.aroundInvoke(AbstractEJBRequestScopeActivationInterceptor.java:46)
+?[0m?[31m15:06:33,541 ERROR [stderr] (default task-8) 	at org.jboss.as.weld.ejb.EjbRequestScopeActivationInterceptor.processInvocation(EjbRequestScopeActivationInterceptor.java:83)
+?[0m?[31m15:06:33,541 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,542 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.concurrent.ConcurrentContextInterceptor.processInvocation(ConcurrentContextInterceptor.java:45)
+?[0m?[31m15:06:33,542 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,542 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InitialInterceptor.processInvocation(InitialInterceptor.java:21)
+?[0m?[31m15:06:33,543 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,543 ERROR [stderr] (default task-8) 	at org.jboss.invocation.ChainedInterceptor.processInvocation(ChainedInterceptor.java:61)
+?[0m?[31m15:06:33,543 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.interceptors.ComponentDispatcherInterceptor.processInvocation(ComponentDispatcherInterceptor.java:53)
+?[0m?[31m15:06:33,544 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,544 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.component.interceptors.NonPooledEJBComponentInstanceAssociatingInterceptor.processInvocation(NonPooledEJBComponentInstanceAssociatingInterceptor.java:59)
+?[0m?[31m15:06:33,544 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,545 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.tx.CMTTxInterceptor.invokeInOurTx(CMTTxInterceptor.java:273)
+?[0m?[31m15:06:33,545 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.tx.CMTTxInterceptor.required(CMTTxInterceptor.java:340)
+?[0m?[31m15:06:33,545 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.tx.CMTTxInterceptor.processInvocation(CMTTxInterceptor.java:239)
+?[0m?[31m15:06:33,546 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,546 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.component.interceptors.CurrentInvocationContextInterceptor.processInvocation(CurrentInvocationContextInterceptor.java:41)
+?[0m?[31m15:06:33,546 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,547 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.component.invocationmetrics.WaitTimeInterceptor.processInvocation(WaitTimeInterceptor.java:43)
+?[0m?[31m15:06:33,547 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,547 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.security.SecurityContextInterceptor.processInvocation(SecurityContextInterceptor.java:95)
+?[0m?[31m15:06:33,548 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,548 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.component.interceptors.ShutDownInterceptorFactory$1.processInvocation(ShutDownInterceptorFactory.java:64)
+?[0m?[31m15:06:33,549 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,549 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.component.interceptors.LoggingInterceptor.processInvocation(LoggingInterceptor.java:59)
+?[0m?[31m15:06:33,549 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,549 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.NamespaceContextInterceptor.processInvocation(NamespaceContextInterceptor.java:50)
+?[0m?[31m15:06:33,550 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,550 ERROR [stderr] (default task-8) 	at org.jboss.as.ejb3.component.interceptors.AdditionalSetupInterceptor.processInvocation(AdditionalSetupInterceptor.java:55)
+?[0m?[31m15:06:33,551 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,551 ERROR [stderr] (default task-8) 	at org.jboss.invocation.ContextClassLoaderInterceptor.processInvocation(ContextClassLoaderInterceptor.java:64)
+?[0m?[31m15:06:33,551 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,552 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.run(InterceptorContext.java:326)
+?[0m?[31m15:06:33,552 ERROR [stderr] (default task-8) 	at org.wildfly.security.manager.WildFlySecurityManager.doChecked(WildFlySecurityManager.java:448)
+?[0m?[31m15:06:33,552 ERROR [stderr] (default task-8) 	at org.jboss.invocation.AccessCheckingInterceptor.processInvocation(AccessCheckingInterceptor.java:61)
+?[0m?[31m15:06:33,553 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,553 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.run(InterceptorContext.java:326)
+?[0m?[31m15:06:33,553 ERROR [stderr] (default task-8) 	at org.jboss.invocation.PrivilegedWithCombinerInterceptor.processInvocation(PrivilegedWithCombinerInterceptor.java:80)
+?[0m?[31m15:06:33,554 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,554 ERROR [stderr] (default task-8) 	at org.jboss.invocation.ChainedInterceptor.processInvocation(ChainedInterceptor.java:61)
+?[0m?[31m15:06:33,554 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.ViewService$View.invoke(ViewService.java:185)
+?[0m?[31m15:06:33,555 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.ViewDescription$1.processInvocation(ViewDescription.java:182)
+?[0m?[31m15:06:33,555 ERROR [stderr] (default task-8) 	at org.jboss.invocation.InterceptorContext.proceed(InterceptorContext.java:309)
+?[0m?[31m15:06:33,555 ERROR [stderr] (default task-8) 	at org.jboss.invocation.ChainedInterceptor.processInvocation(ChainedInterceptor.java:61)
+?[0m?[31m15:06:33,556 ERROR [stderr] (default task-8) 	at org.jboss.as.ee.component.ProxyInvocationHandler.invoke(ProxyInvocationHandler.java:73)
+?[0m?[31m15:06:33,556 ERROR [stderr] (default task-8) 	at edu.harvard.integer.service.security.SecurityAndAuditManagerInterface$$$view15.loginUser(Unknown Source)
+?[0m?[31m15:06:33,557 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:06:33,557 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:06:33,557 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,558 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,558 ERROR [stderr] (default task-8) 	at org.jboss.weld.util.reflection.Reflections.invokeAndUnwrap(Reflections.java:401)
+?[0m?[31m15:06:33,558 ERROR [stderr] (default task-8) 	at org.jboss.weld.bean.proxy.EnterpriseBeanProxyMethodHandler.invoke(EnterpriseBeanProxyMethodHandler.java:99)
+?[0m?[31m15:06:33,558 ERROR [stderr] (default task-8) 	at org.jboss.weld.bean.proxy.EnterpriseTargetBeanInstance.invoke(EnterpriseTargetBeanInstance.java:56)
+?[0m?[31m15:06:33,559 ERROR [stderr] (default task-8) 	at org.jboss.weld.bean.proxy.InjectionPointPropagatingEnterpriseTargetBeanInstance.invoke(InjectionPointPropagatingEnterpriseTargetBeanInstance.java:65)
+?[0m?[31m15:06:33,559 ERROR [stderr] (default task-8) 	at org.jboss.weld.bean.proxy.ProxyMethodHandler.invoke(ProxyMethodHandler.java:100)
+?[0m?[31m15:06:33,559 ERROR [stderr] (default task-8) 	at edu.harvard.integer.service.security.SecurityAndAuditManagerInterface$1831319645$Proxy$_$$_Weld$EnterpriseProxy$.loginUser(Unknown Source)
+?[0m?[31m15:06:33,560 ERROR [stderr] (default task-8) 	at edu.harvard.integer.security.SecurityAndAuditMangerTest.loginUser(SecurityAndAuditMangerTest.java:107)
+?[0m?[31m15:06:33,560 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:06:33,560 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:06:33,561 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,561 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,561 ERROR [stderr] (default task-8) 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+?[0m?[31m15:06:33,562 ERROR [stderr] (default task-8) 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+?[0m?[31m15:06:33,562 ERROR [stderr] (default task-8) 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+?[0m?[31m15:06:33,562 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian$6$1.invoke(Arquillian.java:301)
+?[0m?[31m15:06:33,563 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.container.test.impl.execution.LocalTestExecuter.execute(LocalTestExecuter.java:60)
+?[0m?[31m15:06:33,563 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:06:33,563 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:06:33,563 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,564 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,564 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:06:33,564 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:06:33,565 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:06:33,565 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:06:33,565 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:116)
+?[0m?[31m15:06:33,566 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventImpl.fire(EventImpl.java:67)
+?[0m?[31m15:06:33,566 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.container.test.impl.execution.ContainerTestExecuter.execute(ContainerTestExecuter.java:38)
+?[0m?[31m15:06:33,566 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:06:33,566 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:06:33,567 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,567 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,567 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:06:33,568 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:06:33,568 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:06:33,568 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.test.impl.TestContextHandler.createClassContext(TestContextHandler.java:84)
+?[0m?[31m15:06:33,569 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:06:33,569 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:06:33,569 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,570 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,570 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:06:33,570 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:06:33,570 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.test.impl.TestContextHandler.createSuiteContext(TestContextHandler.java:65)
+?[0m?[31m15:06:33,571 ERROR [stderr] (default task-8) 	at sun.reflect.GeneratedMethodAccessor19.invoke(Unknown Source)
+?[0m?[31m15:06:33,571 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,571 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,572 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:06:33,572 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:06:33,572 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.test.impl.TestContextHandler.createTestContext(TestContextHandler.java:102)
+?[0m?[31m15:06:33,573 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:06:33,573 ERROR [stderr] (default task-8) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:06:33,573 ERROR [stderr] (default task-8) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:06:33,574 ERROR [stderr] (default task-8) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:06:33,574 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:06:33,574 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:06:33,574 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:06:33,575 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.test.impl.EventTestRunnerAdaptor.test(EventTestRunnerAdaptor.java:111)
+?[0m?[31m15:06:33,575 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian$6.evaluate(Arquillian.java:294)
+?[0m?[31m15:06:33,575 ERROR [stderr] (default task-8) 	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+?[0m?[31m15:06:33,576 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian$5.evaluate(Arquillian.java:267)
+?[0m?[31m15:06:33,576 ERROR [stderr] (default task-8) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:76)
+?[0m?[31m15:06:33,576 ERROR [stderr] (default task-8) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+?[0m?[31m15:06:33,577 ERROR [stderr] (default task-8) 	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+?[0m?[31m15:06:33,577 ERROR [stderr] (default task-8) 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+?[0m?[31m15:06:33,577 ERROR [stderr] (default task-8) 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+?[0m?[31m15:06:33,577 ERROR [stderr] (default task-8) 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+?[0m?[31m15:06:33,578 ERROR [stderr] (default task-8) 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+?[0m?[31m15:06:33,578 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian$2.evaluate(Arquillian.java:193)
+?[0m?[31m15:06:33,578 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian.multiExecute(Arquillian.java:345)
+?[0m?[31m15:06:33,579 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian.access$200(Arquillian.java:49)
+?[0m?[31m15:06:33,579 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian$3.evaluate(Arquillian.java:207)
+?[0m?[31m15:06:33,580 ERROR [stderr] (default task-8) 	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+?[0m?[31m15:06:33,580 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.Arquillian.run(Arquillian.java:155)
+?[0m?[31m15:06:33,580 ERROR [stderr] (default task-8) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:157)
+?[0m?[31m15:06:33,581 ERROR [stderr] (default task-8) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:136)
+?[0m?[31m15:06:33,581 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.junit.container.JUnitTestRunner.execute(JUnitTestRunner.java:66)
+?[0m?[31m15:06:33,581 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.executeTest(ServletTestRunner.java:159)
+?[0m?[31m15:06:33,581 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.execute(ServletTestRunner.java:125)
+?[0m?[31m15:06:33,582 ERROR [stderr] (default task-8) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.doGet(ServletTestRunner.java:89)
+?[0m?[31m15:06:33,582 ERROR [stderr] (default task-8) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)
+?[0m?[31m15:06:33,582 ERROR [stderr] (default task-8) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)
+?[0m?[31m15:06:33,583 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:85)
+?[0m?[31m15:06:33,583 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:61)
+?[0m?[31m15:06:33,583 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+?[0m?[31m15:06:33,584 ERROR [stderr] (default task-8) 	at org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+?[0m?[31m15:06:33,584 ERROR [stderr] (default task-8) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:06:33,584 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:113)
+?[0m?[31m15:06:33,585 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:56)
+?[0m?[31m15:06:33,585 ERROR [stderr] (default task-8) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:06:33,585 ERROR [stderr] (default task-8) 	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:45)
+?[0m?[31m15:06:33,585 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:61)
+?[0m?[31m15:06:33,586 ERROR [stderr] (default task-8) 	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:58)
+?[0m?[31m15:06:33,586 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:70)
+?[0m?[31m15:06:33,586 ERROR [stderr] (default task-8) 	at io.undertow.security.handlers.SecurityInitialHandler.handleRequest(SecurityInitialHandler.java:76)
+?[0m?[31m15:06:33,587 ERROR [stderr] (default task-8) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:06:33,587 ERROR [stderr] (default task-8) 	at org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+?[0m?[31m15:06:33,587 ERROR [stderr] (default task-8) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:06:33,588 ERROR [stderr] (default task-8) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:06:33,588 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:240)
+?[0m?[31m15:06:33,588 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:227)
+?[0m?[31m15:06:33,589 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:73)
+?[0m?[31m15:06:33,589 ERROR [stderr] (default task-8) 	at io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:146)
+?[0m?[31m15:06:33,589 ERROR [stderr] (default task-8) 	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:177)
+?[0m?[31m15:06:33,590 ERROR [stderr] (default task-8) 	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:727)
+?[0m?[31m15:06:33,590 ERROR [stderr] (default task-8) 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+?[0m?[31m15:06:33,590 ERROR [stderr] (default task-8) 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+?[0m?[31m15:06:33,590 ERROR [stderr] (default task-8) 	at java.lang.Thread.run(Thread.java:744)
+?[0m?[0m15:06:33,613 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-4) JBAS017535: Unregistered web context: /SecurityAndAuditMangerTest
+?[0m?[0m15:06:33,627 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 59) JBAS011410: Stopping Persistence Unit (phase 2 of 2) Service 'SecurityAndAuditMangerTest.war#primary'
+?[0m?[0m15:06:33,630 INFO  [org.jboss.weld.deployer] (MSC service thread 1-5) JBAS016009: Stopping weld service for deployment SecurityAndAuditMangerTest.war
+?[0m?[0m15:06:33,675 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 59) JBAS011410: Stopping Persistence Unit (phase 1 of 2) Service 'SecurityAndAuditMangerTest.war#primary'
+?[0m?[0m15:06:33,679 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-7) JBAS010409: Unbound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:06:34,030 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-8) JBAS015877: Stopped deployment SecurityAndAuditMangerTest.war (runtime-name: SecurityAndAuditMangerTest.war) in 423ms
+?[0m?[0m15:06:34,163 INFO  [org.jboss.as.repository] (management-handler-thread - 2) JBAS014901: Content removed from location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/a8/50058558bd26ff101b7f509057e9e365f4cf93/content
+?[0m?[0m15:06:34,164 INFO  [org.jboss.as.server] (management-handler-thread - 2) JBAS018558: Undeployed &quot;SecurityAndAuditMangerTest.war&quot; (runtime-name: &quot;SecurityAndAuditMangerTest.war&quot;)
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>log4j:WARN No appenders could be found for logger (org.jboss.logging).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Aug 27, 2014 3:05:34 PM org.jboss.as.arquillian.container.managed.ManagedDeployableContainer startInternal
+INFO: Starting container with: [/usr/java/default/jre//bin/java, -Djboss.http.port=8585, -Xmx1024m, -XX:MaxPermSize=512m, -ea, -Djboss.home.dir=/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final, -Dorg.jboss.boot.log.file=/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/log/server.log, -Dlogging.configuration=file:/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/configuration/logging.properties, -Djboss.bundles.dir=/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/bundles, -jar, /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/jboss-modules.jar, -mp, /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules, org.jboss.as.standalone, -server-config, standalone.xml]
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>Generated by 
+<a href="http://www.gradle.org">Gradle 1.12</a> at Aug 27, 2014 3:20:37 PM</p>
+</div>
+</div>
+</body>

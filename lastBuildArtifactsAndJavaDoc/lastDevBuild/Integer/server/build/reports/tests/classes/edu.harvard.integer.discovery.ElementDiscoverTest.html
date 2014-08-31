@@ -1,0 +1,860 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Test results - Class edu.harvard.integer.discovery.ElementDiscoverTest</title>
+<link href="css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script src="js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class edu.harvard.integer.discovery.ElementDiscoverTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/edu.harvard.integer.discovery.html">edu.harvard.integer.discovery</a> &gt; ElementDiscoverTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">45.307s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">discoverTestRouter</td>
+<td>30.224s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">hostMibTest</td>
+<td>15.083s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[0m?[0m15:13:31,461 INFO  [org.jboss.as.repository] (management-handler-thread - 6) JBAS014900: Content added at location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/4e/9e5da2c3c7430e757f469fb728ef7e28e71bee/content
+?[0m?[0m15:13:31,463 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-16) JBAS015876: Starting deployment of &quot;ServiceElementDiscoveryManagerTest.war&quot; (runtime-name: &quot;ServiceElementDiscoveryManagerTest.war&quot;)
+?[0m?[0m15:13:33,618 INFO  [org.jboss.as.jpa] (MSC service thread 1-16) JBAS011401: Read persistence.xml for primary
+?[0m?[0m15:13:34,202 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-3) JBAS010400: Bound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:13:34,202 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 228) JBAS011409: Starting Persistence Unit (phase 1 of 2) Service 'ServiceElementDiscoveryManagerTest.war#primary'
+?[0m?[0m15:13:34,202 INFO  [org.hibernate.jpa.internal.util.LogHelper] (ServerService Thread Pool -- 228) HHH000204: Processing PersistenceUnitInfo [
+	name: primary
+	...]
+?[0m?[0m15:13:43,611 INFO  [org.jboss.weld.deployer] (MSC service thread 1-8) JBAS016002: Processing weld deployment ServiceElementDiscoveryManagerTest.war
+?[0m?[0m15:13:43,630 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named TopologyManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:global/ServiceElementDiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+
+?[0m?[0m15:13:43,631 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named SelectionManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:global/ServiceElementDiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+
+?[0m?[0m15:13:43,632 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named DistributionService in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:app/ServiceElementDiscoveryManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:module/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:global/ServiceElementDiscoveryManagerTest/DistributionService
+	java:app/ServiceElementDiscoveryManagerTest/DistributionService
+	java:module/DistributionService
+
+?[0m?[0m15:13:43,633 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named TechnologyManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:global/ServiceElementDiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+
+?[0m?[0m15:13:43,634 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named YamlManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:global/ServiceElementDiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+
+?[0m?[0m15:13:43,635 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named MibLoader in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:module/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:global/ServiceElementDiscoveryManagerTest/MibLoader
+	java:app/ServiceElementDiscoveryManagerTest/MibLoader
+	java:module/MibLoader
+
+?[0m?[0m15:13:43,636 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named ServiceElememtAccessManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:global/ServiceElementDiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+
+?[0m?[0m15:13:43,637 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named SnmpManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:global/ServiceElementDiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+
+?[0m?[0m15:13:43,639 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named SecurityAndAuditManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:app/ServiceElementDiscoveryManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:module/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:global/ServiceElementDiscoveryManagerTest/SecurityAndAuditManager
+	java:app/ServiceElementDiscoveryManagerTest/SecurityAndAuditManager
+	java:module/SecurityAndAuditManager
+
+?[0m?[0m15:13:43,640 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named UserManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:global/ServiceElementDiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+
+?[0m?[0m15:13:43,640 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named SelectionService in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:app/ServiceElementDiscoveryManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:module/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:global/ServiceElementDiscoveryManagerTest/SelectionService
+	java:app/ServiceElementDiscoveryManagerTest/SelectionService
+	java:module/SelectionService
+
+?[0m?[0m15:13:43,641 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named MibService in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:app/ServiceElementDiscoveryManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:module/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:global/ServiceElementDiscoveryManagerTest/MibService
+	java:app/ServiceElementDiscoveryManagerTest/MibService
+	java:module/MibService
+
+?[0m?[0m15:13:43,642 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named StateManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:global/ServiceElementDiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+
+?[0m?[0m15:13:43,643 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named ServiceElementDiscoveryManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:global/ServiceElementDiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+
+?[0m?[0m15:13:43,644 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named EventManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:global/ServiceElementDiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+
+?[0m?[0m15:13:43,645 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named DiscoveryManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:global/ServiceElementDiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+
+?[0m?[0m15:13:43,647 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named DiscoveryService in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:app/ServiceElementDiscoveryManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:module/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:global/ServiceElementDiscoveryManagerTest/DiscoveryService
+	java:app/ServiceElementDiscoveryManagerTest/DiscoveryService
+	java:module/DiscoveryService
+
+?[0m?[0m15:13:43,647 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named InventoryManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:global/ServiceElementDiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+
+?[0m?[0m15:13:43,649 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named TopologyService in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:app/ServiceElementDiscoveryManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:module/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:global/ServiceElementDiscoveryManagerTest/TopologyService
+	java:app/ServiceElementDiscoveryManagerTest/TopologyService
+	java:module/TopologyService
+
+?[0m?[0m15:13:43,650 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named PersistenceService in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:app/ServiceElementDiscoveryManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:module/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:global/ServiceElementDiscoveryManagerTest/PersistenceService
+	java:app/ServiceElementDiscoveryManagerTest/PersistenceService
+	java:module/PersistenceService
+
+?[0m?[0m15:13:43,650 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named DataLoader in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:app/ServiceElementDiscoveryManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:module/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:global/ServiceElementDiscoveryManagerTest/DataLoader
+	java:app/ServiceElementDiscoveryManagerTest/DataLoader
+	java:module/DataLoader
+
+?[0m?[0m15:13:43,651 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named ManagementObjectCapabilityManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:app/ServiceElementDiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:global/ServiceElementDiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:app/ServiceElementDiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:jboss/exported/ServiceElementDiscoveryManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+
+?[0m?[0m15:13:43,653 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named SecurityService in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:app/ServiceElementDiscoveryManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:module/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:global/ServiceElementDiscoveryManagerTest/SecurityService
+	java:app/ServiceElementDiscoveryManagerTest/SecurityService
+	java:module/SecurityService
+
+?[0m?[0m15:13:43,653 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-8) JNDI bindings for session bean named PersistenceManager in deployment unit deployment &quot;ServiceElementDiscoveryManagerTest.war&quot; are as follows:
+
+	java:global/ServiceElementDiscoveryManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:app/ServiceElementDiscoveryManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:module/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:global/ServiceElementDiscoveryManagerTest/PersistenceManager
+	java:app/ServiceElementDiscoveryManagerTest/PersistenceManager
+	java:module/PersistenceManager
+
+?[0m?[0m15:13:43,842 INFO  [org.jboss.weld.deployer] (MSC service thread 1-16) JBAS016005: Starting Services for CDI deployment: ServiceElementDiscoveryManagerTest.war
+?[0m?[0m15:13:43,851 INFO  [org.jboss.weld.deployer] (MSC service thread 1-6) JBAS016008: Starting weld service for deployment ServiceElementDiscoveryManagerTest.war
+?[0m?[0m15:13:43,858 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 228) JBAS011409: Starting Persistence Unit (phase 2 of 2) Service 'ServiceElementDiscoveryManagerTest.war#primary'
+?[0m?[0m15:13:43,887 INFO  [org.hibernate.dialect.Dialect] (ServerService Thread Pool -- 228) HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+?[0m?[0m15:13:44,050 INFO  [org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory] (ServerService Thread Pool -- 228) HHH000397: Using ASTQueryTranslatorFactory
+?[0m?[0m15:13:44,525 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 228) HHH000227: Running hbm2ddl schema export
+?[0m?[0m15:14:02,831 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 228) HHH000230: Schema export complete
+?[0m?[0m15:14:03,015 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:03,077 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLogger because of underlying class loading error: Type org.slf4j.Logger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:03,274 INFO  [org.jboss.weld.Bootstrap] (weld-worker-5) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkSTBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:03,732 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpManager because of underlying class loading error: Type uk.co.westhawk.snmp.stack.PduException from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[33m15:14:03,781 WARN  [org.jboss.modules] (weld-worker-3) Failed to define class org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 in Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader: java.lang.LinkageError: Failed to link org/jboss/as/arquillian/container/OSGiApplicationArchiveProcessor$1 (Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader)
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:487) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.loadClassLocal(ModuleClassLoader.java:277) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader$1.loadClassLocal(ModuleClassLoader.java:92) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.Module.loadModuleClass(Module.java:568) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:205) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.as.weld.WeldModuleResourceLoader.classForName(WeldModuleResourceLoader.java:68) [wildfly-weld-8.1.0.Final.jar:8.1.0.Final]
+	at org.jboss.weld.bootstrap.BeanDeployer.loadClass(BeanDeployer.java:106) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.BeanDeployer.addClass(BeanDeployer.java:94) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:62) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:53) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [rt.jar:1.7.0_51]
+	at java.lang.Thread.run(Thread.java:744) [rt.jar:1.7.0_51]
+Caused by: java.lang.NoClassDefFoundError: org/jboss/arquillian/container/osgi/AbstractOSGiApplicationArchiveProcessor
+	at java.lang.ClassLoader.defineClass1(Native Method) [rt.jar:1.7.0_51]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:800) [rt.jar:1.7.0_51]
+	at org.jboss.modules.ModuleClassLoader.doDefineOrLoadClass(ModuleClassLoader.java:361) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:482) [jboss-modules.jar:1.3.3.Final]
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:213) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	... 23 more
+
+?[0m?[0m15:14:03,790 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 because of underlying class loading error: Type org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:03,864 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLocationAwareLogger because of underlying class loading error: Type org.slf4j.spi.LocationAwareLogger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:03,909 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpResponse because of underlying class loading error: Type uk.co.westhawk.snmp.pdu.BlockPdu from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:04,040 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.matrix.GraphMatrixOperations because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:04,381 INFO  [org.jboss.weld.Bootstrap] (weld-worker-5) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.MarkovCentrality because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix1D from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:04,405 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from org.jboss.net.protocol.http.DavURLLister because of underlying class loading error: Type org.apache.commons.httpclient.HttpException from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:04,458 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassTable because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:04,461 INFO  [org.jboss.weld.Bootstrap] (weld-worker-2) WELD-000119: Not generating any bean definitions from org.jboss.logging.Log4jLogger because of underlying class loading error: Type org.apache.log4j.Priority from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:04,532 INFO  [org.jboss.weld.Bootstrap] (weld-worker-4) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassResolver because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.ServiceElementDiscoveryManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:14:07,072 INFO  [edu.harvard.integer.service.security.SecurityService] (ServerService Thread Pool -- 244) Create SecurityService
+?[0m?[33m15:14:07,085 WARN  [edu.harvard.integer.service.selection.SelectionService] (ServerService Thread Pool -- 235) SelectionService is starting
+?[0m?[31m15:14:07,085 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 229) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,087 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 228) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,087 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (ServerService Thread Pool -- 228) Discovery service starting.... on server 1
+?[0m?[0m15:14:07,087 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) DistributionService starting
+?[0m?[0m15:14:07,088 INFO  [stdout] (ServerService Thread Pool -- 237) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[0m15:14:07,089 INFO  [stdout] (ServerService Thread Pool -- 237) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[31m15:14:07,107 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[33m15:14:07,108 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Need to get sever port from Wildfly
+?[0m?[0m15:14:07,108 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) got http port 8585 from System properties
+?[0m?[0m15:14:07,117 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Created IntegerServer edu.harvard.integer.common.distribution.IntegerServer:1
+?[0m?[0m15:14:07,121 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Have 1 IntegerServers
+?[0m?[33m15:14:07,124 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Create managers on 'localhost'
+?[0m?[31m15:14:07,125 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,126 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager PersistenceManager ID: PersistenceManager(edu.harvard.integer.common.distribution.DistributedManager:1)
+?[0m?[31m15:14:07,127 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,128 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager ServiceElementDiscoveryManager ID: ServiceElementDiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:2)
+?[0m?[31m15:14:07,128 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,129 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager SnmpManager ID: SnmpManager(edu.harvard.integer.common.distribution.DistributedManager:3)
+?[0m?[31m15:14:07,129 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,130 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager ServiceElementAccessManager ID: ServiceElementAccessManager(edu.harvard.integer.common.distribution.DistributedManager:4)
+?[0m?[31m15:14:07,130 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,131 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager ManagementObjectCapabilityManager ID: ManagementObjectCapabilityManager(edu.harvard.integer.common.distribution.DistributedManager:5)
+?[0m?[31m15:14:07,131 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,132 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager StateManager ID: StateManager(edu.harvard.integer.common.distribution.DistributedManager:6)
+?[0m?[31m15:14:07,132 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,133 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager SelectionManager ID: SelectionManager(edu.harvard.integer.common.distribution.DistributedManager:7)
+?[0m?[31m15:14:07,134 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,134 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager TechnologyManager ID: TechnologyManager(edu.harvard.integer.common.distribution.DistributedManager:8)
+?[0m?[31m15:14:07,135 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,135 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager DiscoveryManager ID: DiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:9)
+?[0m?[31m15:14:07,136 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,137 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager EventManager ID: EventManager(edu.harvard.integer.common.distribution.DistributedManager:10)
+?[0m?[31m15:14:07,137 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,138 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager YamlManager ID: YamlManager(edu.harvard.integer.common.distribution.DistributedManager:11)
+?[0m?[31m15:14:07,138 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,139 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager TopologyManager ID: TopologyManager(edu.harvard.integer.common.distribution.DistributedManager:12)
+?[0m?[31m15:14:07,139 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,140 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager UserManager ID: UserManager(edu.harvard.integer.common.distribution.DistributedManager:13)
+?[0m?[31m15:14:07,140 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,141 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Added Manager InventoryManager ID: InventoryManager(edu.harvard.integer.common.distribution.DistributedManager:14)
+?[0m?[0m15:14:07,142 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Have 14 DistributeManagers
+?[0m?[33m15:14:07,145 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Create service on 'localhost'
+?[0m?[31m15:14:07,146 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,148 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,149 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,150 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,151 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,152 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Have 5 DistributeServices
+?[0m?[31m15:14:07,153 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,153 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 237) Unable to load properties from integer.properties
+?[0m?[0m15:14:07,153 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Server null ID: 1 127.0.0.1 My ID: 1 started null
+?[0m?[0m15:14:07,155 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Found 14 managers [Ledu.harvard.integer.common.distribution.DistributedManager;@672454d3
+?[0m?[0m15:14:07,155 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager PersistenceManager type PersistenceManager
+?[0m?[0m15:14:07,156 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager ServiceElementDiscoveryManager type ServiceElementDiscoveryManager
+?[0m?[0m15:14:07,156 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager SnmpManager type SnmpManager
+?[0m?[0m15:14:07,156 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager ServiceElementAccessManager type ServiceElementAccessManager
+?[0m?[0m15:14:07,156 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager ManagementObjectCapabilityManager type ManagementObjectCapabilityManager
+?[0m?[0m15:14:07,157 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager StateManager type StateManager
+?[0m?[0m15:14:07,157 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager SelectionManager type SelectionManager
+?[0m?[0m15:14:07,157 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager TechnologyManager type TechnologyManager
+?[0m?[0m15:14:07,157 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager DiscoveryManager type DiscoveryManager
+?[0m?[0m15:14:07,157 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager EventManager type EventManager
+?[0m?[0m15:14:07,158 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager YamlManager type YamlManager
+?[0m?[0m15:14:07,158 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager TopologyManager type TopologyManager
+?[0m?[0m15:14:07,158 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager UserManager type UserManager
+?[0m?[0m15:14:07,158 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 237) Manager InventoryManager type InventoryManager
+?[0m?[33m15:14:07,168 WARN  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 237) PersistenceServices is starting
+?[0m?[0m15:14:07,171 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 237) Loading preload data files
+?[0m?[0m15:14:07,171 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 237) Number of preloads 0
+?[0m?[0m15:14:07,172 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 237) Number of preloads 0
+?[0m?[0m15:14:07,206 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-16) Deploying javax.ws.rs.core.Application: class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:14:07,207 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-16) Adding class resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:14:07,207 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-16) Adding singleton resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:14:07,212 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-16) JBAS017534: Registered web context: /ServiceElementDiscoveryManagerTest
+?[0m?[0m15:14:07,238 INFO  [org.jboss.as.server] (management-handler-thread - 6) JBAS018559: Deployed &quot;ServiceElementDiscoveryManagerTest.war&quot; (runtime-name : &quot;ServiceElementDiscoveryManagerTest.war&quot;)
+?[0m?[0m15:14:07,381 INFO  [edu.harvard.integer.discovery.ElementDiscoverTest] (default task-30) Loaded all MIBs!!
+?[0m?[0m15:14:07,382 INFO  [stdout] (default task-30) Start service element task ******************************************** .
+?[0m?[31m15:14:07,391 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-30) OID 1.3.6.1.2.1.1.4 not found!!
+?[0m?[31m15:14:07,392 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-30) OID 1.3.6.1.2.1.1.1 not found!!
+?[0m?[31m15:14:07,393 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-30) OID 1.3.6.1.2.1.1.6 not found!!
+?[0m?[31m15:14:07,394 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-30) OID 1.3.6.1.2.1.1.5 not found!!
+?[0m?[31m15:14:07,395 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-30) OID 1.3.6.1.2.1.1.2 not found!!
+?[0m?[31m15:14:07,397 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,398 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[31m15:14:07,400 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[0m15:14:22,420 INFO  [edu.harvard.integer.access.snmp.SnmpService] (default task-30) SNMP Request error PDU 
+
+?[0m?[31m15:14:22,421 ERROR [stderr] (default task-30) CannotReach
+?[0m?[31m15:14:22,422 ERROR [stderr] (default task-30) 	at edu.harvard.integer.access.snmp.SnmpService.assertPDU(SnmpService.java:306)
+?[0m?[31m15:14:22,422 ERROR [stderr] (default task-30) 	at edu.harvard.integer.access.snmp.SnmpService.sendPdu(SnmpService.java:193)
+?[0m?[31m15:14:22,422 ERROR [stderr] (default task-30) 	at edu.harvard.integer.access.snmp.SnmpService.getPdu(SnmpService.java:131)
+?[0m?[31m15:14:22,422 ERROR [stderr] (default task-30) 	at edu.harvard.integer.service.discovery.element.ElementDiscoverTask.call(ElementDiscoverTask.java:173)
+?[0m?[31m15:14:22,422 ERROR [stderr] (default task-30) 	at edu.harvard.integer.discovery.ElementDiscoverTest.discoverTestRouter(ElementDiscoverTest.java:227)
+?[0m?[31m15:14:22,422 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:22,423 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:22,423 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:22,423 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:22,423 ERROR [stderr] (default task-30) 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+?[0m?[31m15:14:22,423 ERROR [stderr] (default task-30) 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+?[0m?[31m15:14:22,424 ERROR [stderr] (default task-30) 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+?[0m?[31m15:14:22,424 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$6$1.invoke(Arquillian.java:301)
+?[0m?[31m15:14:22,424 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.container.test.impl.execution.LocalTestExecuter.execute(LocalTestExecuter.java:60)
+?[0m?[31m15:14:22,424 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:22,424 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:22,424 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:22,425 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:22,425 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:22,425 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:14:22,425 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:14:22,425 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:14:22,425 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:116)
+?[0m?[31m15:14:22,426 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventImpl.fire(EventImpl.java:67)
+?[0m?[31m15:14:22,426 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.container.test.impl.execution.ContainerTestExecuter.execute(ContainerTestExecuter.java:38)
+?[0m?[31m15:14:22,426 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:22,427 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:22,427 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:22,427 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:22,427 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:22,428 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:14:22,428 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:14:22,428 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.TestContextHandler.createClassContext(TestContextHandler.java:84)
+?[0m?[31m15:14:22,428 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:22,429 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:22,429 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:22,429 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:22,429 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:22,430 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:22,430 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.TestContextHandler.createSuiteContext(TestContextHandler.java:65)
+?[0m?[31m15:14:22,430 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:22,430 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:22,431 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:22,431 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:22,431 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:22,432 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:22,432 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.TestContextHandler.createTestContext(TestContextHandler.java:102)
+?[0m?[31m15:14:22,432 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:22,432 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:22,433 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:22,433 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:22,433 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:22,433 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:22,434 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:14:22,434 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.EventTestRunnerAdaptor.test(EventTestRunnerAdaptor.java:111)
+?[0m?[31m15:14:22,434 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$6.evaluate(Arquillian.java:294)
+?[0m?[31m15:14:22,434 ERROR [stderr] (default task-30) 	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+?[0m?[31m15:14:22,435 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$5.evaluate(Arquillian.java:267)
+?[0m?[31m15:14:22,435 ERROR [stderr] (default task-30) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:76)
+?[0m?[31m15:14:22,435 ERROR [stderr] (default task-30) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+?[0m?[31m15:14:22,436 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+?[0m?[31m15:14:22,436 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+?[0m?[31m15:14:22,436 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+?[0m?[31m15:14:22,436 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+?[0m?[31m15:14:22,437 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+?[0m?[31m15:14:22,437 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$2.evaluate(Arquillian.java:193)
+?[0m?[31m15:14:22,437 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian.multiExecute(Arquillian.java:345)
+?[0m?[31m15:14:22,437 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian.access$200(Arquillian.java:49)
+?[0m?[31m15:14:22,438 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$3.evaluate(Arquillian.java:207)
+?[0m?[31m15:14:22,438 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+?[0m?[31m15:14:22,438 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian.run(Arquillian.java:155)
+?[0m?[31m15:14:22,438 ERROR [stderr] (default task-30) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:157)
+?[0m?[31m15:14:22,439 ERROR [stderr] (default task-30) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:136)
+?[0m?[31m15:14:22,439 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.container.JUnitTestRunner.execute(JUnitTestRunner.java:66)
+?[0m?[31m15:14:22,439 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.executeTest(ServletTestRunner.java:159)
+?[0m?[31m15:14:22,439 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.execute(ServletTestRunner.java:125)
+?[0m?[31m15:14:22,440 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.doGet(ServletTestRunner.java:89)
+?[0m?[31m15:14:22,440 ERROR [stderr] (default task-30) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)
+?[0m?[31m15:14:22,440 ERROR [stderr] (default task-30) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)
+?[0m?[31m15:14:22,440 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:85)
+?[0m?[31m15:14:22,441 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:61)
+?[0m?[31m15:14:22,441 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+?[0m?[31m15:14:22,441 ERROR [stderr] (default task-30) 	at org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+?[0m?[31m15:14:22,442 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:22,442 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:113)
+?[0m?[31m15:14:22,442 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:56)
+?[0m?[31m15:14:22,442 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:22,443 ERROR [stderr] (default task-30) 	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:45)
+?[0m?[31m15:14:22,443 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:61)
+?[0m?[31m15:14:22,443 ERROR [stderr] (default task-30) 	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:58)
+?[0m?[31m15:14:22,444 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:70)
+?[0m?[31m15:14:22,444 ERROR [stderr] (default task-30) 	at io.undertow.security.handlers.SecurityInitialHandler.handleRequest(SecurityInitialHandler.java:76)
+?[0m?[31m15:14:22,444 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:22,444 ERROR [stderr] (default task-30) 	at org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+?[0m?[31m15:14:22,445 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:22,445 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:22,445 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:240)
+?[0m?[31m15:14:22,446 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:227)
+?[0m?[31m15:14:22,446 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:73)
+?[0m?[31m15:14:22,446 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:146)
+?[0m?[31m15:14:22,446 ERROR [stderr] (default task-30) 	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:177)
+?[0m?[31m15:14:22,447 ERROR [stderr] (default task-30) 	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:727)
+?[0m?[31m15:14:22,447 ERROR [stderr] (default task-30) 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+?[0m?[31m15:14:22,447 ERROR [stderr] (default task-30) 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+?[0m?[31m15:14:22,447 ERROR [stderr] (default task-30) 	at java.lang.Thread.run(Thread.java:744)
+?[0m?[0m15:14:22,448 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) Exception during discovery.  null
+?[0m?[31m15:14:22,448 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[31m15:14:22,451 ERROR [edu.harvard.integer.service.discovery.DiscoveryService] (default task-30) Error during discovery edu.harvard.integer.common.discovery.DiscoveryId@5dd9f79b Error CannotReach
+?[0m?[31m15:14:22,464 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[0m15:14:22,466 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (default task-30) Found ServiceElemet edu.harvard.integer.common.ID@1
+?[0m?[0m15:14:22,471 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) Remove ip 10.240.127.121 null
+?[0m?[31m15:14:22,471 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[0m15:14:22,471 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) foundSubnetTasks size 0 subnetTasks size 0
+?[0m?[0m15:14:22,472 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) No Linklayer connection found. discover complete.  
+?[0m?[0m15:14:22,472 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) No more discovering subnet.  
+?[0m?[0m15:14:22,473 INFO  [stdout] (default task-30) After creation element discover task *********************************************************** 
+?[0m?[31m15:14:22,473 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[31m15:14:22,474 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[31m15:14:22,474 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[0m15:14:37,474 INFO  [edu.harvard.integer.access.snmp.SnmpService] (default task-30) SNMP Request error PDU 
+
+?[0m?[31m15:14:37,474 ERROR [stderr] (default task-30) CannotReach
+?[0m?[31m15:14:37,475 ERROR [stderr] (default task-30) 	at edu.harvard.integer.access.snmp.SnmpService.assertPDU(SnmpService.java:306)
+?[0m?[31m15:14:37,475 ERROR [stderr] (default task-30) 	at edu.harvard.integer.access.snmp.SnmpService.sendPdu(SnmpService.java:193)
+?[0m?[31m15:14:37,475 ERROR [stderr] (default task-30) 	at edu.harvard.integer.access.snmp.SnmpService.getPdu(SnmpService.java:131)
+?[0m?[31m15:14:37,475 ERROR [stderr] (default task-30) 	at edu.harvard.integer.service.discovery.element.ElementDiscoverTask.call(ElementDiscoverTask.java:173)
+?[0m?[31m15:14:37,475 ERROR [stderr] (default task-30) 	at edu.harvard.integer.discovery.ElementDiscoverTest.discoverTestRouter(ElementDiscoverTest.java:253)
+?[0m?[31m15:14:37,475 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:37,476 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:37,476 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:37,476 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:37,476 ERROR [stderr] (default task-30) 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+?[0m?[31m15:14:37,476 ERROR [stderr] (default task-30) 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+?[0m?[31m15:14:37,477 ERROR [stderr] (default task-30) 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+?[0m?[31m15:14:37,477 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$6$1.invoke(Arquillian.java:301)
+?[0m?[31m15:14:37,477 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.container.test.impl.execution.LocalTestExecuter.execute(LocalTestExecuter.java:60)
+?[0m?[31m15:14:37,477 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:37,477 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:37,477 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:37,478 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:37,478 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:37,478 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:14:37,478 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:14:37,478 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:14:37,478 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:116)
+?[0m?[31m15:14:37,478 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventImpl.fire(EventImpl.java:67)
+?[0m?[31m15:14:37,479 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.container.test.impl.execution.ContainerTestExecuter.execute(ContainerTestExecuter.java:38)
+?[0m?[31m15:14:37,479 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:37,479 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:37,479 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:37,479 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:37,479 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:37,480 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:14:37,480 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:14:37,480 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.TestContextHandler.createClassContext(TestContextHandler.java:84)
+?[0m?[31m15:14:37,480 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:37,480 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:37,480 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:37,481 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:37,481 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:37,481 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:37,481 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.TestContextHandler.createSuiteContext(TestContextHandler.java:65)
+?[0m?[31m15:14:37,481 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:37,481 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:37,482 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:37,482 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:37,482 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:37,482 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:37,482 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.TestContextHandler.createTestContext(TestContextHandler.java:102)
+?[0m?[31m15:14:37,482 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:37,483 ERROR [stderr] (default task-30) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:37,483 ERROR [stderr] (default task-30) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:37,483 ERROR [stderr] (default task-30) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:37,484 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:37,484 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:37,484 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:14:37,484 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.test.impl.EventTestRunnerAdaptor.test(EventTestRunnerAdaptor.java:111)
+?[0m?[31m15:14:37,485 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$6.evaluate(Arquillian.java:294)
+?[0m?[31m15:14:37,485 ERROR [stderr] (default task-30) 	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+?[0m?[31m15:14:37,485 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$5.evaluate(Arquillian.java:267)
+?[0m?[31m15:14:37,485 ERROR [stderr] (default task-30) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:76)
+?[0m?[31m15:14:37,486 ERROR [stderr] (default task-30) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+?[0m?[31m15:14:37,486 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+?[0m?[31m15:14:37,486 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+?[0m?[31m15:14:37,487 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+?[0m?[31m15:14:37,487 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+?[0m?[31m15:14:37,487 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+?[0m?[31m15:14:37,488 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$2.evaluate(Arquillian.java:193)
+?[0m?[31m15:14:37,488 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian.multiExecute(Arquillian.java:345)
+?[0m?[31m15:14:37,488 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian.access$200(Arquillian.java:49)
+?[0m?[31m15:14:37,489 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian$3.evaluate(Arquillian.java:207)
+?[0m?[31m15:14:37,489 ERROR [stderr] (default task-30) 	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+?[0m?[31m15:14:37,489 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.Arquillian.run(Arquillian.java:155)
+?[0m?[31m15:14:37,490 ERROR [stderr] (default task-30) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:157)
+?[0m?[31m15:14:37,490 ERROR [stderr] (default task-30) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:136)
+?[0m?[31m15:14:37,490 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.junit.container.JUnitTestRunner.execute(JUnitTestRunner.java:66)
+?[0m?[31m15:14:37,490 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.executeTest(ServletTestRunner.java:159)
+?[0m?[31m15:14:37,491 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.execute(ServletTestRunner.java:125)
+?[0m?[31m15:14:37,491 ERROR [stderr] (default task-30) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.doGet(ServletTestRunner.java:89)
+?[0m?[31m15:14:37,491 ERROR [stderr] (default task-30) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)
+?[0m?[31m15:14:37,491 ERROR [stderr] (default task-30) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)
+?[0m?[31m15:14:37,492 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:85)
+?[0m?[31m15:14:37,492 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:61)
+?[0m?[31m15:14:37,492 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+?[0m?[31m15:14:37,492 ERROR [stderr] (default task-30) 	at org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+?[0m?[31m15:14:37,493 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:37,493 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:113)
+?[0m?[31m15:14:37,493 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:56)
+?[0m?[31m15:14:37,494 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:37,494 ERROR [stderr] (default task-30) 	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:45)
+?[0m?[31m15:14:37,494 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:61)
+?[0m?[31m15:14:37,494 ERROR [stderr] (default task-30) 	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:58)
+?[0m?[31m15:14:37,495 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:70)
+?[0m?[31m15:14:37,495 ERROR [stderr] (default task-30) 	at io.undertow.security.handlers.SecurityInitialHandler.handleRequest(SecurityInitialHandler.java:76)
+?[0m?[31m15:14:37,495 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:37,495 ERROR [stderr] (default task-30) 	at org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+?[0m?[31m15:14:37,496 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:37,496 ERROR [stderr] (default task-30) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:37,496 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:240)
+?[0m?[31m15:14:37,497 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:227)
+?[0m?[31m15:14:37,497 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:73)
+?[0m?[31m15:14:37,497 ERROR [stderr] (default task-30) 	at io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:146)
+?[0m?[31m15:14:37,497 ERROR [stderr] (default task-30) 	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:177)
+?[0m?[31m15:14:37,498 ERROR [stderr] (default task-30) 	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:727)
+?[0m?[31m15:14:37,498 ERROR [stderr] (default task-30) 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+?[0m?[31m15:14:37,498 ERROR [stderr] (default task-30) 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+?[0m?[31m15:14:37,498 ERROR [stderr] (default task-30) 	at java.lang.Thread.run(Thread.java:744)
+?[0m?[0m15:14:37,499 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) Exception during discovery.  null
+?[0m?[31m15:14:37,499 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[31m15:14:37,500 ERROR [edu.harvard.integer.service.discovery.DiscoveryService] (default task-30) Error during discovery edu.harvard.integer.common.discovery.DiscoveryId@5dd9f79b Error CannotReach
+?[0m?[31m15:14:37,523 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[0m15:14:37,525 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (default task-30) Found ServiceElemet edu.harvard.integer.common.ID@1
+?[0m?[0m15:14:37,546 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) Remove ip 10.240.127.144 null
+?[0m?[31m15:14:37,546 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-30) Unable to load properties from integer.properties
+?[0m?[0m15:14:37,547 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) foundSubnetTasks size 0 subnetTasks size 0
+?[0m?[0m15:14:37,547 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) No Linklayer connection found. discover complete.  
+?[0m?[0m15:14:37,547 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-30) No more discovering subnet.  
+?[0m?[0m15:14:37,564 INFO  [edu.harvard.integer.discovery.ElementDiscoverTest] (default task-79) Loaded all MIBs!!
+?[0m?[31m15:14:37,568 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-79) OID 1.3.6.1.2.1.1.4 not found!!
+?[0m?[31m15:14:37,569 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-79) OID 1.3.6.1.2.1.1.1 not found!!
+?[0m?[31m15:14:37,570 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-79) OID 1.3.6.1.2.1.1.6 not found!!
+?[0m?[31m15:14:37,571 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-79) OID 1.3.6.1.2.1.1.5 not found!!
+?[0m?[31m15:14:37,572 ERROR [edu.harvard.integer.service.discovery.ServiceElementDiscoveryManager] (default task-79) OID 1.3.6.1.2.1.1.2 not found!!
+?[0m?[0m15:14:37,572 INFO  [stdout] (default task-79) After creation element discover task for host MIB test 
+?[0m?[31m15:14:37,573 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-79) Unable to load properties from integer.properties
+?[0m?[31m15:14:37,573 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-79) Unable to load properties from integer.properties
+?[0m?[31m15:14:37,574 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-79) Unable to load properties from integer.properties
+?[0m?[0m15:14:52,574 INFO  [edu.harvard.integer.access.snmp.SnmpService] (default task-79) SNMP Request error PDU 
+
+?[0m?[31m15:14:52,576 ERROR [stderr] (default task-79) CannotReach
+?[0m?[31m15:14:52,577 ERROR [stderr] (default task-79) 	at edu.harvard.integer.access.snmp.SnmpService.assertPDU(SnmpService.java:306)
+?[0m?[31m15:14:52,577 ERROR [stderr] (default task-79) 	at edu.harvard.integer.access.snmp.SnmpService.sendPdu(SnmpService.java:193)
+?[0m?[31m15:14:52,577 ERROR [stderr] (default task-79) 	at edu.harvard.integer.access.snmp.SnmpService.getPdu(SnmpService.java:131)
+?[0m?[31m15:14:52,577 ERROR [stderr] (default task-79) 	at edu.harvard.integer.service.discovery.element.ElementDiscoverTask.call(ElementDiscoverTask.java:173)
+?[0m?[31m15:14:52,578 ERROR [stderr] (default task-79) 	at edu.harvard.integer.discovery.ElementDiscoverTest.hostMibTest(ElementDiscoverTest.java:150)
+?[0m?[31m15:14:52,578 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:52,578 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:52,579 ERROR [stderr] (default task-79) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:52,579 ERROR [stderr] (default task-79) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:52,579 ERROR [stderr] (default task-79) 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+?[0m?[31m15:14:52,579 ERROR [stderr] (default task-79) 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+?[0m?[31m15:14:52,580 ERROR [stderr] (default task-79) 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+?[0m?[31m15:14:52,580 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian$6$1.invoke(Arquillian.java:301)
+?[0m?[31m15:14:52,580 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.container.test.impl.execution.LocalTestExecuter.execute(LocalTestExecuter.java:60)
+?[0m?[31m15:14:52,581 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:52,581 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:52,581 ERROR [stderr] (default task-79) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:52,582 ERROR [stderr] (default task-79) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:52,582 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:52,582 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:14:52,583 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:14:52,583 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:14:52,583 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:116)
+?[0m?[31m15:14:52,584 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventImpl.fire(EventImpl.java:67)
+?[0m?[31m15:14:52,584 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.container.test.impl.execution.ContainerTestExecuter.execute(ContainerTestExecuter.java:38)
+?[0m?[31m15:14:52,584 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:52,584 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:52,585 ERROR [stderr] (default task-79) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:52,585 ERROR [stderr] (default task-79) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:52,585 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:52,586 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers(EventContextImpl.java:99)
+?[0m?[31m15:14:52,586 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:81)
+?[0m?[31m15:14:52,586 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.test.impl.TestContextHandler.createClassContext(TestContextHandler.java:84)
+?[0m?[31m15:14:52,587 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:52,587 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:52,587 ERROR [stderr] (default task-79) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:52,588 ERROR [stderr] (default task-79) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:52,588 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:52,588 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:52,589 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.test.impl.TestContextHandler.createSuiteContext(TestContextHandler.java:65)
+?[0m?[31m15:14:52,589 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:52,589 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:52,590 ERROR [stderr] (default task-79) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:52,590 ERROR [stderr] (default task-79) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:52,590 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:52,591 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:52,591 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.test.impl.TestContextHandler.createTestContext(TestContextHandler.java:102)
+?[0m?[31m15:14:52,591 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0m?[31m15:14:52,591 ERROR [stderr] (default task-79) 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+?[0m?[31m15:14:52,592 ERROR [stderr] (default task-79) 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0m?[31m15:14:52,592 ERROR [stderr] (default task-79) 	at java.lang.reflect.Method.invoke(Method.java:606)
+?[0m?[31m15:14:52,592 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ObserverImpl.invoke(ObserverImpl.java:94)
+?[0m?[31m15:14:52,593 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.EventContextImpl.proceed(EventContextImpl.java:88)
+?[0m?[31m15:14:52,593 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.core.impl.ManagerImpl.fire(ManagerImpl.java:145)
+?[0m?[31m15:14:52,593 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.test.impl.EventTestRunnerAdaptor.test(EventTestRunnerAdaptor.java:111)
+?[0m?[31m15:14:52,594 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian$6.evaluate(Arquillian.java:294)
+?[0m?[31m15:14:52,594 ERROR [stderr] (default task-79) 	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+?[0m?[31m15:14:52,594 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian$5.evaluate(Arquillian.java:267)
+?[0m?[31m15:14:52,595 ERROR [stderr] (default task-79) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:76)
+?[0m?[31m15:14:52,595 ERROR [stderr] (default task-79) 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+?[0m?[31m15:14:52,595 ERROR [stderr] (default task-79) 	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+?[0m?[31m15:14:52,596 ERROR [stderr] (default task-79) 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+?[0m?[31m15:14:52,596 ERROR [stderr] (default task-79) 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+?[0m?[31m15:14:52,596 ERROR [stderr] (default task-79) 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+?[0m?[31m15:14:52,597 ERROR [stderr] (default task-79) 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+?[0m?[31m15:14:52,597 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian$2.evaluate(Arquillian.java:193)
+?[0m?[31m15:14:52,597 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian.multiExecute(Arquillian.java:345)
+?[0m?[31m15:14:52,597 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian.access$200(Arquillian.java:49)
+?[0m?[31m15:14:52,598 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian$3.evaluate(Arquillian.java:207)
+?[0m?[31m15:14:52,598 ERROR [stderr] (default task-79) 	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+?[0m?[31m15:14:52,598 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.Arquillian.run(Arquillian.java:155)
+?[0m?[31m15:14:52,599 ERROR [stderr] (default task-79) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:157)
+?[0m?[31m15:14:52,599 ERROR [stderr] (default task-79) 	at org.junit.runner.JUnitCore.run(JUnitCore.java:136)
+?[0m?[31m15:14:52,599 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.junit.container.JUnitTestRunner.execute(JUnitTestRunner.java:66)
+?[0m?[31m15:14:52,600 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.executeTest(ServletTestRunner.java:159)
+?[0m?[31m15:14:52,600 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.execute(ServletTestRunner.java:125)
+?[0m?[31m15:14:52,600 ERROR [stderr] (default task-79) 	at org.jboss.arquillian.protocol.servlet.runner.ServletTestRunner.doGet(ServletTestRunner.java:89)
+?[0m?[31m15:14:52,601 ERROR [stderr] (default task-79) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)
+?[0m?[31m15:14:52,601 ERROR [stderr] (default task-79) 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)
+?[0m?[31m15:14:52,601 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:85)
+?[0m?[31m15:14:52,602 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:61)
+?[0m?[31m15:14:52,602 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+?[0m?[31m15:14:52,602 ERROR [stderr] (default task-79) 	at org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)
+?[0m?[31m15:14:52,603 ERROR [stderr] (default task-79) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:52,603 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:113)
+?[0m?[31m15:14:52,603 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:56)
+?[0m?[31m15:14:52,604 ERROR [stderr] (default task-79) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:52,604 ERROR [stderr] (default task-79) 	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:45)
+?[0m?[31m15:14:52,604 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:61)
+?[0m?[31m15:14:52,605 ERROR [stderr] (default task-79) 	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:58)
+?[0m?[31m15:14:52,605 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:70)
+?[0m?[31m15:14:52,605 ERROR [stderr] (default task-79) 	at io.undertow.security.handlers.SecurityInitialHandler.handleRequest(SecurityInitialHandler.java:76)
+?[0m?[31m15:14:52,606 ERROR [stderr] (default task-79) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:52,606 ERROR [stderr] (default task-79) 	at org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest(JACCContextIdHandler.java:61)
+?[0m?[31m15:14:52,606 ERROR [stderr] (default task-79) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:52,607 ERROR [stderr] (default task-79) 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:25)
+?[0m?[31m15:14:52,607 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:240)
+?[0m?[31m15:14:52,607 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:227)
+?[0m?[31m15:14:52,608 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:73)
+?[0m?[31m15:14:52,608 ERROR [stderr] (default task-79) 	at io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:146)
+?[0m?[31m15:14:52,608 ERROR [stderr] (default task-79) 	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:177)
+?[0m?[31m15:14:52,609 ERROR [stderr] (default task-79) 	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:727)
+?[0m?[31m15:14:52,609 ERROR [stderr] (default task-79) 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+?[0m?[31m15:14:52,609 ERROR [stderr] (default task-79) 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+?[0m?[31m15:14:52,609 ERROR [stderr] (default task-79) 	at java.lang.Thread.run(Thread.java:744)
+?[0m?[0m15:14:52,610 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-79) Exception during discovery.  null
+?[0m?[31m15:14:52,610 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-79) Unable to load properties from integer.properties
+?[0m?[31m15:14:52,611 ERROR [edu.harvard.integer.service.discovery.DiscoveryService] (default task-79) Error during discovery edu.harvard.integer.common.discovery.DiscoveryId@34de2a4b Error CannotReach
+?[0m?[31m15:14:52,625 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-79) Unable to load properties from integer.properties
+?[0m?[0m15:14:52,627 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (default task-79) Found ServiceElemet edu.harvard.integer.common.ID@1
+?[0m?[0m15:14:52,633 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-79) Remove ip 127.0.0.1 null
+?[0m?[31m15:14:52,633 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-79) Unable to load properties from integer.properties
+?[0m?[0m15:14:52,633 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-79) foundSubnetTasks size 0 subnetTasks size 0
+?[0m?[0m15:14:52,634 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-79) No Linklayer connection found. discover complete.  
+?[0m?[0m15:14:52,634 INFO  [edu.harvard.integer.service.discovery.NetworkDiscovery] (default task-79) No more discovering subnet.  
+?[0m?[0m15:14:52,642 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-2) JBAS017535: Unregistered web context: /ServiceElementDiscoveryManagerTest
+?[0m?[0m15:14:52,660 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 260) JBAS011410: Stopping Persistence Unit (phase 2 of 2) Service 'ServiceElementDiscoveryManagerTest.war#primary'
+?[0m?[0m15:14:52,662 INFO  [org.jboss.weld.deployer] (MSC service thread 1-10) JBAS016009: Stopping weld service for deployment ServiceElementDiscoveryManagerTest.war
+?[0m?[0m15:14:52,671 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 260) JBAS011410: Stopping Persistence Unit (phase 1 of 2) Service 'ServiceElementDiscoveryManagerTest.war#primary'
+?[0m?[0m15:14:52,672 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-8) JBAS010409: Unbound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:14:52,958 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-12) JBAS015877: Stopped deployment ServiceElementDiscoveryManagerTest.war (runtime-name: ServiceElementDiscoveryManagerTest.war) in 317ms
+?[0m?[0m15:14:53,051 INFO  [org.jboss.as.repository] (management-handler-thread - 12) JBAS014901: Content removed from location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/4e/9e5da2c3c7430e757f469fb728ef7e28e71bee/content
+?[0m?[0m15:14:53,052 INFO  [org.jboss.as.server] (management-handler-thread - 12) JBAS018558: Undeployed &quot;ServiceElementDiscoveryManagerTest.war&quot; (runtime-name: &quot;ServiceElementDiscoveryManagerTest.war&quot;)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>Generated by 
+<a href="http://www.gradle.org">Gradle 1.12</a> at Aug 27, 2014 3:20:37 PM</p>
+</div>
+</div>
+</body>

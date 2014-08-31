@@ -1,0 +1,9 @@
+edu.harvard.integer.cas.filter
+edu.harvard.integer.client
+edu.harvard.integer.client.model
+edu.harvard.integer.client.resources
+edu.harvard.integer.client.ui
+edu.harvard.integer.client.utils
+edu.harvard.integer.client.widget
+edu.harvard.integer.server
+edu.harvard.integer.shared

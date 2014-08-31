@@ -1,0 +1,524 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Test results - Class edu.harvard.integer.service.selection.SelectionManagerTest</title>
+<link href="css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script src="js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class edu.harvard.integer.service.selection.SelectionManagerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/edu.harvard.integer.service.selection.html">edu.harvard.integer.service.selection</a> &gt; SelectionManagerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">4</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.325s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">getAllSelections</td>
+<td>0.058s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getBlankSelection</td>
+<td>0.175s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getServiceElementsBySelection</td>
+<td>0.040s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">updateSelection</td>
+<td>0.052s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[0m?[0m15:07:24,217 INFO  [org.jboss.as.repository] (management-handler-thread - 2) JBAS014900: Content added at location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/b8/60df30d305b5e9b5ce054f0a17f54c06f4bd8a/content
+?[0m?[0m15:07:24,220 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) JBAS015876: Starting deployment of &quot;SelectionManagerTest.war&quot; (runtime-name: &quot;SelectionManagerTest.war&quot;)
+?[0m?[0m15:07:26,039 INFO  [org.jboss.as.jpa] (MSC service thread 1-11) JBAS011401: Read persistence.xml for primary
+?[0m?[0m15:07:26,535 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-1) JBAS010400: Bound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:07:26,535 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 83) JBAS011409: Starting Persistence Unit (phase 1 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:07:26,555 INFO  [org.hibernate.jpa.internal.util.LogHelper] (ServerService Thread Pool -- 83) HHH000204: Processing PersistenceUnitInfo [
+	name: primary
+	...]
+?[0m?[0m15:07:36,207 INFO  [org.jboss.weld.deployer] (MSC service thread 1-15) JBAS016002: Processing weld deployment SelectionManagerTest.war
+?[0m?[0m15:07:36,239 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named TopologyManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:app/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerRemoteInterface
+	java:global/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:app/SelectionManagerTest/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+	java:module/TopologyManager!edu.harvard.integer.service.topology.TopologyManagerLocalInterface
+
+?[0m?[0m15:07:36,240 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named SelectionManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:app/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerRemoteInterface
+	java:global/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:app/SelectionManagerTest/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+	java:module/SelectionManager!edu.harvard.integer.service.selection.SelectionManagerLocalInterface
+
+?[0m?[0m15:07:36,241 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named DistributionService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:app/SelectionManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:module/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:jboss/exported/SelectionManagerTest/DistributionService!edu.harvard.integer.service.distribution.DistributionServiceInterface
+	java:global/SelectionManagerTest/DistributionService
+	java:app/SelectionManagerTest/DistributionService
+	java:module/DistributionService
+
+?[0m?[0m15:07:36,242 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named TechnologyManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:app/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerLocalInterface
+	java:global/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:app/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:module/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/TechnologyManager!edu.harvard.integer.service.technology.TechnologyManagerRemoteInterface
+
+?[0m?[0m15:07:36,242 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named YamlManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:app/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerLocalInterface
+	java:global/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:app/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:module/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/YamlManager!edu.harvard.integer.service.yaml.YamlManagerRemoteInterface
+
+?[0m?[0m15:07:36,243 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named MibLoader in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:app/SelectionManagerTest/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:module/MibLoader!edu.harvard.integer.service.managementobject.snmp.MibLoaderLocalInterface
+	java:global/SelectionManagerTest/MibLoader
+	java:app/SelectionManagerTest/MibLoader
+	java:module/MibLoader
+
+?[0m?[0m15:07:36,244 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named ServiceElememtAccessManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:app/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerLocalInterface
+	java:global/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:app/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:module/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/ServiceElememtAccessManager!edu.harvard.integer.service.topology.device.ServiceElementAccessManagerRemoteInterface
+
+?[0m?[0m15:07:36,245 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named SnmpManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:app/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerLocalInterface
+	java:global/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:app/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:module/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/SnmpManager!edu.harvard.integer.service.managementobject.snmp.SnmpManagerRemoteInterface
+
+?[0m?[0m15:07:36,245 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named SecurityAndAuditManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:app/SelectionManagerTest/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:module/SecurityAndAuditManager!edu.harvard.integer.service.security.SecurityAndAuditManagerInterface
+	java:global/SelectionManagerTest/SecurityAndAuditManager
+	java:app/SelectionManagerTest/SecurityAndAuditManager
+	java:module/SecurityAndAuditManager
+
+?[0m?[0m15:07:36,246 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named UserManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:app/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerRemoteInterface
+	java:global/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:app/SelectionManagerTest/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+	java:module/UserManager!edu.harvard.integer.service.user.UserManagerLocalInterface
+
+?[0m?[0m15:07:36,248 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named SelectionService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:app/SelectionManagerTest/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:module/SelectionService!edu.harvard.integer.service.selection.SelectionServiceInterface
+	java:global/SelectionManagerTest/SelectionService
+	java:app/SelectionManagerTest/SelectionService
+	java:module/SelectionService
+
+?[0m?[0m15:07:36,249 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named MibService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:app/SelectionManagerTest/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:module/MibService!edu.harvard.integer.service.managementobject.snmp.MibService
+	java:global/SelectionManagerTest/MibService
+	java:app/SelectionManagerTest/MibService
+	java:module/MibService
+
+?[0m?[0m15:07:36,251 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named StateManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:app/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerRemoteInterface
+	java:global/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:app/SelectionManagerTest/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+	java:module/StateManager!edu.harvard.integer.service.distribution.StateManagerLocalInterface
+
+?[0m?[0m15:07:36,252 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named ServiceElementDiscoveryManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:app/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerRemoteInterface
+	java:global/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:app/SelectionManagerTest/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+	java:module/ServiceElementDiscoveryManager!edu.harvard.integer.service.discovery.ServiceElementDiscoveryManagerLocalInterface
+
+?[0m?[0m15:07:36,254 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named EventManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:app/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerLocalInterface
+	java:global/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:app/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:module/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/EventManager!edu.harvard.integer.service.event.EventManagerRemoteInterface
+
+?[0m?[0m15:07:36,255 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named DiscoveryManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:app/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerRemoteInterface
+	java:global/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:app/SelectionManagerTest/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+	java:module/DiscoveryManager!edu.harvard.integer.service.discovery.DiscoveryManagerLocalInterface
+
+?[0m?[0m15:07:36,257 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named DiscoveryService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:app/SelectionManagerTest/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:module/DiscoveryService!edu.harvard.integer.service.discovery.DiscoveryServiceInterface
+	java:global/SelectionManagerTest/DiscoveryService
+	java:app/SelectionManagerTest/DiscoveryService
+	java:module/DiscoveryService
+
+?[0m?[0m15:07:36,259 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named InventoryManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:app/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerRemoteInterface
+	java:global/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:app/SelectionManagerTest/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+	java:module/InventoryManager!edu.harvard.integer.service.inventory.InventoryManagerLocalInterface
+
+?[0m?[0m15:07:36,261 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named TopologyService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:app/SelectionManagerTest/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:module/TopologyService!edu.harvard.integer.service.topology.TopologyServiceInterface
+	java:global/SelectionManagerTest/TopologyService
+	java:app/SelectionManagerTest/TopologyService
+	java:module/TopologyService
+
+?[0m?[0m15:07:36,263 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named PersistenceService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:app/SelectionManagerTest/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:module/PersistenceService!edu.harvard.integer.service.persistance.PersistenceServiceInterface
+	java:global/SelectionManagerTest/PersistenceService
+	java:app/SelectionManagerTest/PersistenceService
+	java:module/PersistenceService
+
+?[0m?[0m15:07:36,264 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named DataLoader in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:app/SelectionManagerTest/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:module/DataLoader!edu.harvard.integer.service.persistance.DataLoaderInterface
+	java:global/SelectionManagerTest/DataLoader
+	java:app/SelectionManagerTest/DataLoader
+	java:module/DataLoader
+
+?[0m?[0m15:07:36,266 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named ManagementObjectCapabilityManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:app/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerLocalInterface
+	java:global/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:app/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:module/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+	java:jboss/exported/SelectionManagerTest/ManagementObjectCapabilityManager!edu.harvard.integer.service.managementobject.ManagementObjectCapabilityManagerRemoteInterface
+
+?[0m?[0m15:07:36,268 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named SecurityService in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:app/SelectionManagerTest/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:module/SecurityService!edu.harvard.integer.service.security.SecurityServiceInterface
+	java:global/SelectionManagerTest/SecurityService
+	java:app/SelectionManagerTest/SecurityService
+	java:module/SecurityService
+
+?[0m?[0m15:07:36,270 INFO  [org.jboss.as.ejb3.deployment.processors.EjbJndiBindingsDeploymentUnitProcessor] (MSC service thread 1-15) JNDI bindings for session bean named PersistenceManager in deployment unit deployment &quot;SelectionManagerTest.war&quot; are as follows:
+
+	java:global/SelectionManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:app/SelectionManagerTest/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:module/PersistenceManager!edu.harvard.integer.service.persistance.PersistenceManagerInterface
+	java:global/SelectionManagerTest/PersistenceManager
+	java:app/SelectionManagerTest/PersistenceManager
+	java:module/PersistenceManager
+
+?[0m?[0m15:07:36,469 INFO  [org.jboss.weld.deployer] (MSC service thread 1-14) JBAS016005: Starting Services for CDI deployment: SelectionManagerTest.war
+?[0m?[0m15:07:36,486 INFO  [org.jboss.weld.deployer] (MSC service thread 1-14) JBAS016008: Starting weld service for deployment SelectionManagerTest.war
+?[0m?[0m15:07:36,493 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 83) JBAS011409: Starting Persistence Unit (phase 2 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:07:36,525 INFO  [org.hibernate.dialect.Dialect] (ServerService Thread Pool -- 83) HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+?[0m?[0m15:07:36,733 INFO  [org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory] (ServerService Thread Pool -- 83) HHH000397: Using ASTQueryTranslatorFactory
+?[0m?[0m15:07:37,635 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 83) HHH000227: Running hbm2ddl schema export
+?[0m?[0m15:07:57,190 INFO  [org.hibernate.tool.hbm2ddl.SchemaExport] (ServerService Thread Pool -- 83) HHH000230: Schema export complete
+?[0m?[0m15:07:57,383 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:57,460 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLogger because of underlying class loading error: Type org.slf4j.Logger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:57,618 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.RandomWalkSTBetweenness because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,089 INFO  [org.jboss.weld.Bootstrap] (weld-worker-1) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpManager because of underlying class loading error: Type uk.co.westhawk.snmp.stack.PduException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[33m15:07:58,142 WARN  [org.jboss.modules] (weld-worker-4) Failed to define class org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 in Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader: java.lang.LinkageError: Failed to link org/jboss/as/arquillian/container/OSGiApplicationArchiveProcessor$1 (Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader)
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:487) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.loadClassLocal(ModuleClassLoader.java:277) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader$1.loadClassLocal(ModuleClassLoader.java:92) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.Module.loadModuleClass(Module.java:568) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:205) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.as.weld.WeldModuleResourceLoader.classForName(WeldModuleResourceLoader.java:68) [wildfly-weld-8.1.0.Final.jar:8.1.0.Final]
+	at org.jboss.weld.bootstrap.BeanDeployer.loadClass(BeanDeployer.java:106) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.BeanDeployer.addClass(BeanDeployer.java:94) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:62) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.bootstrap.ConcurrentBeanDeployer$1.doWork(ConcurrentBeanDeployer.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:60) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at org.jboss.weld.executor.IterativeWorkerTaskFactory$1.call(IterativeWorkerTaskFactory.java:53) [weld-core-impl-2.1.2.Final.jar:2014-01-09 09:23]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [rt.jar:1.7.0_51]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [rt.jar:1.7.0_51]
+	at java.lang.Thread.run(Thread.java:744) [rt.jar:1.7.0_51]
+Caused by: java.lang.NoClassDefFoundError: org/jboss/arquillian/container/osgi/AbstractOSGiApplicationArchiveProcessor
+	at java.lang.ClassLoader.defineClass1(Native Method) [rt.jar:1.7.0_51]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:800) [rt.jar:1.7.0_51]
+	at org.jboss.modules.ModuleClassLoader.doDefineOrLoadClass(ModuleClassLoader.java:361) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ModuleClassLoader.defineClass(ModuleClassLoader.java:482) [jboss-modules.jar:1.3.3.Final]
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader]
+	at org.jboss.modules.ModuleClassLoader.findClass(ModuleClassLoader.java:213) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassUnchecked(ConcurrentClassLoader.java:459) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClassChecked(ConcurrentClassLoader.java:408) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:389) [jboss-modules.jar:1.3.3.Final]
+	at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:134) [jboss-modules.jar:1.3.3.Final]
+	... 23 more
+
+?[0m?[0m15:07:58,162 INFO  [org.jboss.weld.Bootstrap] (weld-worker-4) WELD-000119: Not generating any bean definitions from org.jboss.as.arquillian.container.OSGiApplicationArchiveProcessor$1 because of underlying class loading error: Type org.jboss.arquillian.container.osgi.AbstractOSGiApplicationArchiveProcessor from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,265 INFO  [org.jboss.weld.Bootstrap] (weld-worker-6) WELD-000119: Not generating any bean definitions from org.jboss.logging.Slf4jLocationAwareLogger because of underlying class loading error: Type org.slf4j.spi.LocationAwareLogger from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,327 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from net.percederberg.mibble.browser.SnmpResponse because of underlying class loading error: Type uk.co.westhawk.snmp.pdu.BlockPdu from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,488 INFO  [org.jboss.weld.Bootstrap] (weld-worker-5) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.matrix.GraphMatrixOperations because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix2D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,812 INFO  [org.jboss.weld.Bootstrap] (weld-worker-5) WELD-000119: Not generating any bean definitions from edu.uci.ics.jung.algorithms.importance.MarkovCentrality because of underlying class loading error: Type cern.colt.matrix.DoubleMatrix1D from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,828 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from org.jboss.net.protocol.http.DavURLLister because of underlying class loading error: Type org.apache.commons.httpclient.HttpException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,875 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassTable because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,876 INFO  [org.jboss.weld.Bootstrap] (weld-worker-3) WELD-000119: Not generating any bean definitions from org.jboss.logging.Log4jLogger because of underlying class loading error: Type org.apache.log4j.Priority from [Module &quot;org.jboss.logging:main&quot; from local module loader @66c9844e (finder: local module finder @380d519a (roots: /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules,/var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/modules/system/layers/base))] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[0m15:07:58,949 INFO  [org.jboss.weld.Bootstrap] (weld-worker-8) WELD-000119: Not generating any bean definitions from org.jboss.marshalling.ModularClassResolver because of underlying class loading error: Type org.jboss.modules.ModuleLoadException from [Module &quot;deployment.SelectionManagerTest.war:main&quot; from Service Module Loader] not found.  If this is unexpected, enable DEBUG logging to see the full error.
+?[0m?[31m15:08:00,445 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 96) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,447 INFO  [edu.harvard.integer.service.security.SecurityService] (ServerService Thread Pool -- 85) Create SecurityService
+?[0m?[33m15:08:00,447 WARN  [edu.harvard.integer.service.selection.SelectionService] (ServerService Thread Pool -- 97) SelectionService is starting
+?[0m?[31m15:08:00,450 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 89) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,451 INFO  [edu.harvard.integer.service.discovery.DiscoveryService] (ServerService Thread Pool -- 89) Discovery service starting.... on server 1
+?[0m?[0m15:08:00,454 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) DistributionService starting
+?[0m?[0m15:08:00,455 INFO  [stdout] (ServerService Thread Pool -- 100) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[0m15:08:00,456 INFO  [stdout] (ServerService Thread Pool -- 100) NULL LOGGER!!! Add Rest path @javax.ws.rs.Path(value=/DistributionService)/@javax.ws.rs.Path(value=/AllManagers)
+?[0m?[31m15:08:00,469 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[33m15:08:00,470 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Need to get sever port from Wildfly
+?[0m?[0m15:08:00,470 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) got http port 8585 from System properties
+?[0m?[0m15:08:00,477 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Created IntegerServer edu.harvard.integer.common.distribution.IntegerServer:1
+?[0m?[0m15:08:00,479 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Have 1 IntegerServers
+?[0m?[33m15:08:00,484 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Create managers on 'localhost'
+?[0m?[31m15:08:00,485 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,487 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager PersistenceManager ID: PersistenceManager(edu.harvard.integer.common.distribution.DistributedManager:1)
+?[0m?[31m15:08:00,488 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,489 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager ServiceElementDiscoveryManager ID: ServiceElementDiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:2)
+?[0m?[31m15:08:00,489 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,491 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager SnmpManager ID: SnmpManager(edu.harvard.integer.common.distribution.DistributedManager:3)
+?[0m?[31m15:08:00,491 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,493 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager ServiceElementAccessManager ID: ServiceElementAccessManager(edu.harvard.integer.common.distribution.DistributedManager:4)
+?[0m?[31m15:08:00,493 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,494 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager ManagementObjectCapabilityManager ID: ManagementObjectCapabilityManager(edu.harvard.integer.common.distribution.DistributedManager:5)
+?[0m?[31m15:08:00,495 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,496 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager StateManager ID: StateManager(edu.harvard.integer.common.distribution.DistributedManager:6)
+?[0m?[31m15:08:00,497 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,498 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager SelectionManager ID: SelectionManager(edu.harvard.integer.common.distribution.DistributedManager:7)
+?[0m?[31m15:08:00,499 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,500 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager TechnologyManager ID: TechnologyManager(edu.harvard.integer.common.distribution.DistributedManager:8)
+?[0m?[31m15:08:00,500 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,502 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager DiscoveryManager ID: DiscoveryManager(edu.harvard.integer.common.distribution.DistributedManager:9)
+?[0m?[31m15:08:00,502 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,503 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager EventManager ID: EventManager(edu.harvard.integer.common.distribution.DistributedManager:10)
+?[0m?[31m15:08:00,504 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,505 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager YamlManager ID: YamlManager(edu.harvard.integer.common.distribution.DistributedManager:11)
+?[0m?[31m15:08:00,506 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,507 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager TopologyManager ID: TopologyManager(edu.harvard.integer.common.distribution.DistributedManager:12)
+?[0m?[31m15:08:00,508 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,509 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager UserManager ID: UserManager(edu.harvard.integer.common.distribution.DistributedManager:13)
+?[0m?[31m15:08:00,509 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,511 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Added Manager InventoryManager ID: InventoryManager(edu.harvard.integer.common.distribution.DistributedManager:14)
+?[0m?[0m15:08:00,513 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Have 14 DistributeManagers
+?[0m?[33m15:08:00,519 WARN  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Create service on 'localhost'
+?[0m?[31m15:08:00,520 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[31m15:08:00,523 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[31m15:08:00,524 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[31m15:08:00,526 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[31m15:08:00,529 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,533 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Have 5 DistributeServices
+?[0m?[31m15:08:00,533 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[31m15:08:00,534 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (ServerService Thread Pool -- 100) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,534 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Server null ID: 1 127.0.0.1 My ID: 1 started null
+?[0m?[0m15:08:00,538 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Found 14 managers [Ledu.harvard.integer.common.distribution.DistributedManager;@61d041c2
+?[0m?[0m15:08:00,538 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager PersistenceManager type PersistenceManager
+?[0m?[0m15:08:00,539 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager ServiceElementDiscoveryManager type ServiceElementDiscoveryManager
+?[0m?[0m15:08:00,539 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager SnmpManager type SnmpManager
+?[0m?[0m15:08:00,539 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager ServiceElementAccessManager type ServiceElementAccessManager
+?[0m?[0m15:08:00,539 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager ManagementObjectCapabilityManager type ManagementObjectCapabilityManager
+?[0m?[0m15:08:00,540 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager StateManager type StateManager
+?[0m?[0m15:08:00,540 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager SelectionManager type SelectionManager
+?[0m?[0m15:08:00,540 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager TechnologyManager type TechnologyManager
+?[0m?[0m15:08:00,540 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager DiscoveryManager type DiscoveryManager
+?[0m?[0m15:08:00,541 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager EventManager type EventManager
+?[0m?[0m15:08:00,541 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager YamlManager type YamlManager
+?[0m?[0m15:08:00,541 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager TopologyManager type TopologyManager
+?[0m?[0m15:08:00,541 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager UserManager type UserManager
+?[0m?[0m15:08:00,541 INFO  [edu.harvard.integer.service.distribution.DistributionService] (ServerService Thread Pool -- 100) Manager InventoryManager type InventoryManager
+?[0m?[33m15:08:00,552 WARN  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 100) PersistenceServices is starting
+?[0m?[0m15:08:00,557 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 100) Loading preload data files
+?[0m?[0m15:08:00,557 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 100) Number of preloads 0
+?[0m?[0m15:08:00,557 INFO  [edu.harvard.integer.service.persistance.PersistenceService] (ServerService Thread Pool -- 100) Number of preloads 0
+?[0m?[0m15:08:00,596 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-4) Deploying javax.ws.rs.core.Application: class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:08:00,597 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-4) Adding class resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:08:00,597 INFO  [org.jboss.resteasy.spi.ResteasyDeployment] (MSC service thread 1-4) Adding singleton resource edu.harvard.integer.service.distribution.DistributionService from Application class edu.harvard.integer.server.IntegerApplication$Proxy$_$$_WeldClientProxy
+?[0m?[0m15:08:00,603 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-4) JBAS017534: Registered web context: /SelectionManagerTest
+?[0m?[0m15:08:00,631 INFO  [org.jboss.as.server] (management-handler-thread - 2) JBAS018559: Deployed &quot;SelectionManagerTest.war&quot; (runtime-name : &quot;SelectionManagerTest.war&quot;)
+?[0m?[0m15:08:00,799 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) Create Selection 1 TopLevel Technology's
+?[0m?[0m15:08:00,800 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel Node null ID Routers(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,800 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel::null Node null ID Router1(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,801 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel::null Node null ID Router2(edu.harvard.integer.common.technology.Technology:2)
+?[0m?[0m15:08:00,801 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel::null Node null ID Router3(edu.harvard.integer.common.technology.Technology:3)
+?[0m?[0m15:08:00,801 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel Node null ID Routers(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,802 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel::null Node null ID Server1(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,802 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel::null Node null ID Server2(edu.harvard.integer.common.technology.Technology:2)
+?[0m?[0m15:08:00,802 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) TopLevel::null Node null ID Server3(edu.harvard.integer.common.technology.Technology:3)
+?[0m?[31m15:08:00,911 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-14) Unable to load properties from integer.properties
+?[0m?[0m15:08:00,918 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-14) Found 0 TopLevel Technology's
+?[0m?[0m15:08:00,939 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) Create Selection 1 TopLevel Technology's
+?[0m?[0m15:08:00,940 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel Node null ID Routers(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,940 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel::null Node null ID Router1(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,941 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel::null Node null ID Router2(edu.harvard.integer.common.technology.Technology:2)
+?[0m?[0m15:08:00,941 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel::null Node null ID Router3(edu.harvard.integer.common.technology.Technology:3)
+?[0m?[0m15:08:00,941 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel Node null ID Routers(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,942 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel::null Node null ID Server1(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,942 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel::null Node null ID Server2(edu.harvard.integer.common.technology.Technology:2)
+?[0m?[0m15:08:00,942 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-17) TopLevel::null Node null ID Server3(edu.harvard.integer.common.technology.Technology:3)
+?[0m?[0m15:08:00,992 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) Create Selection 1 TopLevel Technology's
+?[0m?[0m15:08:00,993 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel Node null ID Routers(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,993 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel::null Node null ID Router1(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,993 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel::null Node null ID Router2(edu.harvard.integer.common.technology.Technology:2)
+?[0m?[0m15:08:00,994 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel::null Node null ID Router3(edu.harvard.integer.common.technology.Technology:3)
+?[0m?[0m15:08:00,994 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel Node null ID Routers(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,994 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel::null Node null ID Server1(edu.harvard.integer.common.technology.Technology:1)
+?[0m?[0m15:08:00,994 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel::null Node null ID Server2(edu.harvard.integer.common.technology.Technology:2)
+?[0m?[0m15:08:00,995 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-19) TopLevel::null Node null ID Server3(edu.harvard.integer.common.technology.Technology:3)
+?[0m?[31m15:08:01,062 ERROR [edu.harvard.integer.common.properties.IntegerProperties] (default task-21) Unable to load properties from integer.properties
+?[0m?[0m15:08:01,068 INFO  [edu.harvard.integer.service.topology.device.ServiceElememtAccessManager] (default task-21) Get ServiceElementsBySeletion (edu.harvard.integer.common.selection.Selection:null)
+?[0m?[0m15:08:01,073 INFO  [edu.harvard.integer.service.selection.SelectionManagerTest] (default task-21) Found 0 ServiceElements for Selection
+?[0m?[0m15:08:01,083 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-15) JBAS017535: Unregistered web context: /SelectionManagerTest
+?[0m?[0m15:08:01,094 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 97) JBAS011410: Stopping Persistence Unit (phase 2 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:08:01,101 INFO  [org.jboss.weld.deployer] (MSC service thread 1-6) JBAS016009: Stopping weld service for deployment SelectionManagerTest.war
+?[0m?[0m15:08:01,116 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 97) JBAS011410: Stopping Persistence Unit (phase 1 of 2) Service 'SelectionManagerTest.war#primary'
+?[0m?[0m15:08:01,117 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-11) JBAS010409: Unbound data source [java:jboss/datasources/IntegerTestDS]
+?[0m?[0m15:08:02,437 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-14) JBAS015877: Stopped deployment SelectionManagerTest.war (runtime-name: SelectionManagerTest.war) in 1355ms
+?[0m?[0m15:08:02,531 INFO  [org.jboss.as.repository] (management-handler-thread - 4) JBAS014901: Content removed from location /var/lib/jenkins/jobs/BuildInteger/workspace/wildfly-8.1.0.Final/standalone/data/content/b8/60df30d305b5e9b5ce054f0a17f54c06f4bd8a/content
+?[0m?[0m15:08:02,532 INFO  [org.jboss.as.server] (management-handler-thread - 4) JBAS018558: Undeployed &quot;SelectionManagerTest.war&quot; (runtime-name: &quot;SelectionManagerTest.war&quot;)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>Generated by 
+<a href="http://www.gradle.org">Gradle 1.12</a> at Aug 27, 2014 3:20:37 PM</p>
+</div>
+</div>
+</body>
