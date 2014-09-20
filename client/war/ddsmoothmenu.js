@@ -50,7 +50,7 @@ arrowimages: {down:['downarrowclass', 'images/down.gif', 23], right:['rightarrow
 transition: {overtime:300, outtime:300}, //duration of slide in/ out animation, in milliseconds
 shadow: true, //enable shadow? (offsets now set in ddsmoothmenu.css stylesheet)
 showhidedelay: {showdelay: 100, hidedelay: 200}, //set delay in milliseconds before sub menus appear and disappear, respectively
-zindexvalue: 1000, //set z-index value for menus
+zindexvalue: 321000, //set z-index value for menus
 closeonnonmenuclick: true, //when clicking outside of any "toggle" method menu, should all "toggle" menus close? 
 closeonmouseout: false, //when leaving a "toggle" menu, should all "toggle" menus close? Will not work on touchscreen
 

@@ -201,8 +201,9 @@ h4 {
 }
 
 .dialogVPanel {
-  margin: 5px;
-  padding: 2px, 2px;
+  	margin: 5px;
+  	padding: 2px, 2px;
+    z-index: 654321;
 }
 
 .dialogVPanel.padding {
